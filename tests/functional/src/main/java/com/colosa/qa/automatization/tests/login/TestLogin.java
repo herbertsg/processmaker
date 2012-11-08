@@ -10,6 +10,9 @@ import org.junit.Rule;
 import com.colosa.qa.automatization.pages.Pages;
 import com.colosa.qa.automatization.common.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class TestLogin{
 /*
 	@Test
@@ -22,7 +25,7 @@ public class TestLogin{
 */
 
 	@Test
-	public void canLoginUser(){
+	public void canLoginUser() throws Exception{
 		Pages.Login().gotoUrl();
 		//System.out.println("se abrio el login\n"); 
 		Assert.assertTrue(Pages.Login().isAtLoginPage());

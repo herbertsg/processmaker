@@ -57,5 +57,4 @@ public class ConfigurationSettings{
 		this.applicationProperties.store(fos, comment);
 		fos.close();
 	}
-	
 }
