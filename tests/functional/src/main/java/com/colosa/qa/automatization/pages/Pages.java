@@ -13,4 +13,10 @@ public class Pages{
 
 		return mainPage;
 	}
+
+	public static Home Home() throws Exception{
+		Home page = new Home();
+
+		return page;
+	}	
 }
