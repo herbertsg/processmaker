@@ -7,4 +7,10 @@ public class Pages{
 		
 		return loginPage;
 	}
+
+	public static Main Main() throws Exception{
+		Main mainPage = new Main();
+
+		return mainPage;
+	}
 }

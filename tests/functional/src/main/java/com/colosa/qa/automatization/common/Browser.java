@@ -42,7 +42,7 @@ public class Browser {
 		if(str==null)
 			throw new Exception("The the search criteria must be specified");
 		str = ConfigurationSettings.getInstance().getSetting(str);
-		if(str.lastIndexOf("___")==-1)
+		if(str == null || str.lastIndexOf("___")==-1)
 			throw new Exception("The search prefix to find the element must be specified");
 		String[] searchCriteria = str.split("___");
 		WebElement we = null;

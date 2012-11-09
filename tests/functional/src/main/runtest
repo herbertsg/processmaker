@@ -5,4 +5,5 @@
 # ln -s /usr/share/selenium/selenium-java-2.25.0.jar selenium-java.jar
 # ln -s /usr/share/selenium/libs/ libs
 #Run TestLogin
-java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.login.TestLogin
+#java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.login.TestLogin
+java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.main.TestMain
