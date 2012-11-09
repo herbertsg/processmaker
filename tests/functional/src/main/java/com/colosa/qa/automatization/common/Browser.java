@@ -46,35 +46,26 @@ public class Browser {
 			throw new Exception("The search prefix to find the element must be specified");
 		String[] searchCriteria = str.split("___");
 		WebElement we = null;
-		switch(searchCriteria[0])
-		{
-			case "id":
-				we = Browser.driver().findElement(By.id(searchCriteria[1]));
-				break;
-			case "cssSelector":
-				we = Browser.driver().findElement(By.cssSelector(searchCriteria[1]));
-				break;
-			case "className":
-				we = Browser.driver().findElement(By.className(searchCriteria[1]));
-				break;
-			case "linkText":
-				we = Browser.driver().findElement(By.linkText(searchCriteria[1]));
-				break;
-			case "name":
-				we = Browser.driver().findElement(By.name(searchCriteria[1]));
-				break;
-			case "partialLinkText":
-				we = Browser.driver().findElement(By.partialLinkText(searchCriteria[1]));
-				break;
-			case "tagName":
-				we = Browser.driver().findElement(By.tagName(searchCriteria[1]));
-				break;
-			case "xpath":
-				we = Browser.driver().findElement(By.xpath(searchCriteria[1]));
-				break;
-			default:
-				throw new Exception("Invalid search prefix");
-		}
+
+		if(searchCriteria[0].equals("id"))
+			we = Browser.driver().findElement(By.id(searchCriteria[1]));
+		else if(searchCriteria[0].equals("cssSelector"))
+			we = Browser.driver().findElement(By.cssSelector(searchCriteria[1]));
+		else if(searchCriteria[0].equals("className"))
+			we = Browser.driver().findElement(By.className(searchCriteria[1]));
+		else if(searchCriteria[0].equals("linkText"))
+			we = Browser.driver().findElement(By.linkText(searchCriteria[1]));
+		else if(searchCriteria[0].equals("name"))
+			we = Browser.driver().findElement(By.name(searchCriteria[1]));
+		else if(searchCriteria[0].equals("partialLinkText"))
+			we = Browser.driver().findElement(By.partialLinkText(searchCriteria[1]));
+		else if(searchCriteria[0].equals("tagName"))
+			we = Browser.driver().findElement(By.tagName(searchCriteria[1]));
+		else if(searchCriteria[0].equals("xpathh"))
+			we = Browser.driver().findElement(By.xpath(searchCriteria[1]));
+		else
+			throw new Exception("Invalid search prefix");
+
 		return we;
 	}
 }
