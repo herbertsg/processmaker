@@ -47,16 +47,18 @@ class AppCacheView extends BaseAppCacheView
 
     public function getListCounters($type, $userUid, $processSummary)
     {
+        $distinct = true;
+
         switch ($type) {
             case 'to_do':
                 $criteria = $this->getToDoCountCriteria($userUid);
+                $distinct = false;
                 break;
             case 'draft':
                 $criteria = $this->getDraftCountCriteria($userUid);
                 break;
             case 'sent':
                 $criteria = $this->getSentCountCriteria($userUid);
-                //return AppCacheViewPeer::doCount($criteria, true);
                 break;
             case 'selfservice':
                 $criteria = $this->getUnassignedCountCriteria($userUid);
@@ -77,7 +79,7 @@ class AppCacheView extends BaseAppCacheView
                 return $type;
         }
 
-        return AppCacheViewPeer::doCount($criteria);
+        return AppCacheViewPeer::doCount($criteria, $distinct);
     }
 
     /**
@@ -100,7 +102,11 @@ class AppCacheView extends BaseAppCacheView
         $criteria->addSelectColumn(AppCacheViewPeer::PRO_UID);
 
         $criteria->add(AppCacheViewPeer::APP_STATUS, "TO_DO", CRITERIA::EQUAL);
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
+
         $criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
         $criteria->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
         $criteria->add(AppCacheViewPeer::DEL_THREAD_STATUS, 'OPEN');
@@ -145,7 +151,10 @@ class AppCacheView extends BaseAppCacheView
         }
 
         $criteria->add(AppCacheViewPeer::APP_STATUS, "DRAFT", CRITERIA::EQUAL);
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
 
         //$criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
         $criteria->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
@@ -175,27 +184,31 @@ class AppCacheView extends BaseAppCacheView
     }
 
     /**
-     * gets the SENT cases list criteria
-     * param $userUid the current userUid
-     * param $doCount if true this will return the criteria for count cases only
-     * @return Criteria object $Criteria
+     * Gets the criteria object of the sent cases
+     *
+     * Return the criteria object of the sent cases
+     *
+     * @param string $userUid The user ID
+     * @param bool $doCount If true this will return the criteria for count cases only
+     * @return criteria Object criteria
      */
     public function getSent($userUid, $doCount)
     {
-        //adding configuration fields from the configuration options
+        //Adding configuration fields from the configuration options
         //and forming the criteria object
-        if ($doCount && !isset($this->confCasesList['PMTable']) && !empty($this->confCasesList['PMTable'])) {
-            $criteria = new Criteria('workflow');
+        if ($doCount && !isset($this->confCasesList["PMTable"]) && !empty($this->confCasesList["PMTable"])) {
+            $criteria = new Criteria("workflow");
         } else {
-            $criteria = $this->addPMFieldsToCriteria('sent');
+            $criteria = $this->addPMFieldsToCriteria("sent");
         }
 
-        $criteria->add(AppCacheViewPeer::APP_STATUS, "DRAFT", CRITERIA::EQUAL);
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
 
-        //$criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-        $criteria->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
-        $criteria->add(AppCacheViewPeer::DEL_THREAD_STATUS, 'OPEN');
+        if (!$doCount) {
+            $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+        }
 
         return $criteria;
     }
@@ -213,7 +226,9 @@ class AppCacheView extends BaseAppCacheView
         $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
 
         return $criteria;*/
-        return $this->getSentListCriteria($userUid);
+        //return $this->getSentListCriteria($userUid);
+
+        return $this->getSent($userUid, true);
     }
 
     /**
@@ -223,6 +238,7 @@ class AppCacheView extends BaseAppCacheView
      */
     public function getSentListCriteria ($userUid)
     {
+        /*
         $criteria = $this->addPMFieldsToCriteria('sent');
 
         //$criteria->addAsColumn('MAX_DEL_INDEX', 'MAX(' . AppDelegationPeer::DEL_INDEX . ')');
@@ -234,6 +250,9 @@ class AppCacheView extends BaseAppCacheView
         $criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
 
         return $criteria;
+        */
+
+        return $this->getSent($userUid, false);
     }
 
     public function getSentListProcessCriteria($userUid)
@@ -419,6 +438,50 @@ class AppCacheView extends BaseAppCacheView
         return $this->getUnassigned($userUid, false);
     }
 
+    public function getProUidSupervisor($userUid)
+    {
+        //finding cases PRO_UID where $userUid is supervising
+        require_once ('classes/model/ProcessUser.php');
+        require_once ('classes/model/GroupUser.php');
+
+        $oCriteria = new Criteria('workflow');
+
+        if (!empty($userUid)) {
+            $oCriteria->add(ProcessUserPeer::USR_UID, $userUid);
+        }
+
+        $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
+        $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aProcesses = array();
+
+        while ($aRow = $oDataset->getRow()) {
+            $aProcesses[] = $aRow['PRO_UID'];
+            $oDataset->next();
+        }
+
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn(ProcessUserPeer::PRO_UID);
+        $oCriteria->add(ProcessUserPeer::PU_TYPE, 'GROUP_SUPERVISOR');
+        $oCriteria->addJoin(ProcessUserPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
+
+        if (!empty($userUid)) {
+            $oCriteria->add(GroupUserPeer::USR_UID, $userUid);
+        }
+
+        $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+
+        while ($aRow = $oDataset->getRow()) {
+            $aProcesses[] = $aRow['PRO_UID'];
+            $oDataset->next();
+        }
+
+        return $aProcesses;
+    }
+
     /**
      * gets the PAUSED cases list criteria
      * param $userUid the current userUid
@@ -435,12 +498,27 @@ class AppCacheView extends BaseAppCacheView
             $criteria = $this->addPMFieldsToCriteria('paused');
         }
 
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        $aProcesses = $this->getProUidSupervisor($userUid);
+
+        //add a validation to show the processes of which $userUid is supervisor
+        //$criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $criteria->add(
+                $criteria->getNewCriterion(AppCacheViewPeer::USR_UID, $userUid)->addOr(
+                $criteria->getNewCriterion(AppCacheViewPeer::PRO_UID, $aProcesses, Criteria::IN))
+            );
+        } else {
+            if (count($aProcesses) > 0) {
+                $criteria->add(AppCacheViewPeer::PRO_UID, $aProcesses, Criteria::IN);
+            }
+        }
 
         //join with APP_DELAY table using APP_UID and DEL_INDEX
-        $appDelayConds[] = array(AppCacheViewPeer::APP_UID, AppDelayPeer::APP_UID);
-        $appDelayConds[] = array(AppCacheViewPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
-        $criteria->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
+        $arrayCondition = array();
+        $arrayCondition[] = array(AppCacheViewPeer::APP_UID, AppDelayPeer::APP_UID);
+        $arrayCondition[] = array(AppCacheViewPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
+        $criteria->addJoinMC($arrayCondition, Criteria::LEFT_JOIN);
 
         $criteria->add(
             $criteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->
@@ -481,38 +559,7 @@ class AppCacheView extends BaseAppCacheView
      */
     public function getToRevise($userUid, $doCount)
     {
-        require_once ('classes/model/ProcessUser.php');
-        require_once ('classes/model/GroupUser.php');
-
-        //adding configuration fields from the configuration options
-        //and forming the criteria object
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->add(ProcessUserPeer::USR_UID, $userUid);
-        $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
-        $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aProcesses = array();
-
-        while ($aRow = $oDataset->getRow()) {
-            $aProcesses[] = $aRow['PRO_UID'];
-            $oDataset->next();
-        }
-
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->addSelectColumn(ProcessUserPeer::PRO_UID);
-        $oCriteria->add(ProcessUserPeer::PU_TYPE, 'GROUP_SUPERVISOR');
-        $oCriteria->addJoin(ProcessUserPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
-        $oCriteria->add(GroupUserPeer::USR_UID, $userUid);
-        $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-
-        while ($aRow = $oDataset->getRow()) {
-            $aProcesses[] = $aRow['PRO_UID'];
-            $oDataset->next();
-        }
-
+        $aProcesses = $this->getProUidSupervisor($userUid, $doCount);
 
         if ($doCount && !isset($this->confCasesList['PMTable']) && !empty($this->confCasesList['PMTable'])) {
             $c = new Criteria('workflow');
@@ -566,15 +613,14 @@ class AppCacheView extends BaseAppCacheView
         }
 
         $criteria->add(AppCacheViewPeer::APP_STATUS, "COMPLETED", CRITERIA::EQUAL);
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
 
-        //$criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-        $criteria->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
-        $criteria->add(AppCacheViewPeer::DEL_THREAD_STATUS, 'OPEN');
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
 
-
-        //$c->add(AppDelegationPeer::DEL_PREVIOUS, '0', Criteria::NOT_EQUAL);
-        $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+        if (!$doCount) {
+            $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+        }
 
         return $criteria;
     }
@@ -616,7 +662,11 @@ class AppCacheView extends BaseAppCacheView
         }
 
         $criteria->add(AppCacheViewPeer::APP_STATUS, "CANCELLED", CRITERIA::EQUAL);
-        $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
+
         $criteria->add(AppCacheViewPeer::DEL_THREAD_STATUS, 'CLOSED');
 
         return $criteria;
@@ -888,7 +938,10 @@ class AppCacheView extends BaseAppCacheView
     public function getAllCasesCountCriteria($userUid)
     {
         $oCriteria = $this->getGeneralCases(true);
-        $oCriteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $oCriteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
 
         return $oCriteria;
     }
@@ -900,9 +953,120 @@ class AppCacheView extends BaseAppCacheView
     public function getAllCasesListCriteria($userUid)
     {
         $oCriteria = $this->getGeneralCases(false);
-        $oCriteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+        if (!empty($userUid)) {
+            $oCriteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
 
         return $oCriteria;
+    }
+
+    /**
+     * Gets the SQL string for an case
+     *
+     * Return the SQL string for an case
+     *
+     * @param string $fieldAppUid The field APP_UID
+     * @param string $fieldDelIndex The field DEL_INDEX
+     * @return string SQL string
+     */
+    public function getAppDelaySql($fieldAppUid, $fieldDelIndex)
+    {
+        $sql = "SELECT DISTINCT " . AppDelayPeer::APP_UID . "
+                FROM   " . AppDelayPeer::TABLE_NAME . "
+                WHERE  " . AppDelayPeer::APP_UID . " = $fieldAppUid AND
+                       " . AppDelayPeer::APP_DEL_INDEX . " = $fieldDelIndex AND
+                       (" . AppDelayPeer::APP_DISABLE_ACTION_USER . " IS NULL OR " . AppDelayPeer::APP_DISABLE_ACTION_USER . " = '0') AND
+                       " . AppDelayPeer::APP_DELAY_UID . " IS NOT NULL AND
+                       " . AppDelayPeer::APP_TYPE . " = 'PAUSE'";
+
+        return $sql;
+    }
+
+    /**
+     * Gets the criteria object of all cases
+     *
+     * Return the criteria object of all cases
+     *
+     * @param string $userUid The user ID
+     * @param bool $doCount If true this will return the criteria for count cases only
+     * @return criteria Object criteria
+     */
+    public function getAllCases2($userUid, $doCount)
+    {
+        //Adding configuration fields from the configuration options
+        //and forming the criteria object
+        if ($doCount && !isset($this->confCasesList["PMTable"]) && !empty($this->confCasesList["PMTable"])) {
+            $criteria = new Criteria("workflow");
+        } else {
+            $criteria = $this->addPMFieldsToCriteria("all");
+        }
+
+        if (!empty($userUid)) {
+            $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
+
+        //Paused
+        $sqlAppDelay = $this->getAppDelaySql(AppCacheViewPeer::APP_UID, AppCacheViewPeer::DEL_INDEX);
+
+        $criteria->add(
+            //ToDo - getToDo()
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "TO_DO", CRITERIA::EQUAL)->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL))->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_THREAD_STATUS, "OPEN"))->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "OPEN"))
+        )->addOr(
+            //Draft - getDraft()
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "DRAFT", CRITERIA::EQUAL)->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_THREAD_STATUS, "OPEN"))->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "OPEN"))
+        )->addOr(
+            //Paused
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "PAUSED")->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_UID, AppCacheViewPeer::APP_UID . " IN ($sqlAppDelay)", Criteria::CUSTOM))
+        )->addOr(
+            //Cancelled - getCancelled()
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "CANCELLED", CRITERIA::EQUAL)->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "CLOSED"))
+        )->addOr(
+            //Completed - getCompleted()
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "COMPLETED", CRITERIA::EQUAL)
+        );
+
+        if (!$doCount) {
+            //Completed - getCompleted()
+            $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+
+            //$criteria->addGroupByColumn(AppCacheViewPeer::USR_UID);
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * Gets the criteria object of all cases for the list
+     *
+     * Return the criteria object of all cases for the list
+     *
+     * @param string $userUid The user ID
+     * @return criteria Object criteria
+     */
+    public function getAllCasesListCriteria2($userUid)
+    {
+        return $this->getAllCases2($userUid, false);
+    }
+
+    /**
+     * Gets the criteria object of all cases for the count
+     *
+     * Return the criteria object of all cases for the count
+     *
+     * @param string $userUid The user ID
+     * @return criteria Object criteria
+     */
+    public function getAllCasesCountCriteria2($userUid)
+    {
+        return $this->getAllCases2($userUid, true);
     }
 
     /**
@@ -923,7 +1087,7 @@ class AppCacheView extends BaseAppCacheView
         return $this->getGeneralCases(false);
     }
 
-    public function getToReassign($doCount)
+    public function getToReassign($userUid, $doCount)
     {
         if ($doCount && !isset($this->confCasesList['PMTable']) && !empty($this->confCasesList['PMTable'])) {
             $oCriteria = new Criteria('workflow');
@@ -932,6 +1096,11 @@ class AppCacheView extends BaseAppCacheView
         }
 
         $oCriteria->add(AppCacheViewPeer::APP_STATUS, 'TO_DO');
+
+        if (!empty($userUid)) {
+            $oCriteria->add(AppCacheViewPeer::USR_UID, $userUid);
+        }
+
         $oCriteria->add(AppCacheViewPeer::APP_CURRENT_USER, '', Criteria::NOT_EQUAL);
         $oCriteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
         $oCriteria->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
@@ -945,18 +1114,18 @@ class AppCacheView extends BaseAppCacheView
      * gets the ALL cases list criteria for count
      * @return Criteria object $Criteria
      */
-    public function getToReassignCountCriteria()
+    public function getToReassignCountCriteria($userUid)
     {
-        return $this->getToReassign(true);
+        return $this->getToReassign($userUid, true);
     }
 
     /**
      * gets the ALL cases list criteria for list
      * @return Criteria object $Criteria
      */
-    public function getToReassignListCriteria()
+    public function getToReassignListCriteria($userUid)
     {
-        return $this->getToReassign(false);
+        return $this->getToReassign($userUid, false);
     }
 
     public function getDefaultFields()
