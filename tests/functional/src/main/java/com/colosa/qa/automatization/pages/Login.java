@@ -22,20 +22,20 @@ public class Login extends Page{
 		//System.out.println("Login contructor....:" + url); 
 	}
 
-	public void initWebElements() throws FileNotFoundException, IOException{
-		this.systemInformationLink = Browser.driver().findElement(By.linkText(ConfigurationSettings.getInstance().getSetting("login.webElement.systemInformationLink.linkText")));
-		this.user = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("login.webElement.userName.id")));
-		this.password = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("login.webElement.password.id")));
-		this.workspace = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("login.webElement.workspace.id")));
-		this.submitButton = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("login.webElement.submitButton.id")));
+	public void initWebElements() throws Exception{
+		this.systemInformationLink = Browser.getElement("login.webElement.systemInformationLink");
+		this.user = Browser.getElement("login.webElement.userName");
+		this.password = Browser.getElement("login.webElement.password");
+		this.workspace = Browser.getElement("login.webElement.workspace");
+		this.submitButton = Browser.getElement("login.webElement.submitButton");
 	}
 
-	public boolean isAtLoginPage() throws FileNotFoundException, IOException{
+	public boolean isAtLoginPage() throws Exception{
 		this.initWebElements();
 		return (this.systemInformationLink != null); 
 	}
 
-	public void loginDefaultUser() throws FileNotFoundException, IOException{		
+	public void loginDefaultUser() throws Exception{		
 		this.initWebElements();
 		this.user.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultUserName"));
 		this.password.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultPassword"));
@@ -43,7 +43,7 @@ public class Login extends Page{
 		this.submitButton.click();
 	}
 
-	public void loginUser(String userName, String password, String workspace) throws FileNotFoundException, IOException{
+	public void loginUser(String userName, String password, String workspace) throws Exception{
 		this.initWebElements();
 
 		this.user.sendKeys(userName);
@@ -52,8 +52,8 @@ public class Login extends Page{
 		this.submitButton.click();
 	}
 
-	public boolean isUserLogged() throws FileNotFoundException, IOException{
-		this.logOutLink = Browser.driver().findElement(By.linkText("Logout"));
+	public boolean isUserLogged() throws Exception{
+		this.logOutLink = Browser.getElement("login.WebElement.logoutButton");
 
 		return (this.logOutLink != null);
 	}
