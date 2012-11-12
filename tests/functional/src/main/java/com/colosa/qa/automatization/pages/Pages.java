@@ -18,5 +18,11 @@ public class Pages{
 		Home page = new Home();
 
 		return page;
+	}
+
+	public static Documents Documents() throws Exception{
+		Documents document = new Documents();
+
+		return document;
 	}	
 }
