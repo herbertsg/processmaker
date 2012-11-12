@@ -16,3 +16,6 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 
 #compile tests main
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/main/*.java
+
+#compile tests documents
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/documents/*.java
