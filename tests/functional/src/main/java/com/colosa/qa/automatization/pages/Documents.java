@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.common.extJs.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
