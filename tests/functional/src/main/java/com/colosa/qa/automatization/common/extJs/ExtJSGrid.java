@@ -5,7 +5,7 @@ http://duhnnie.net
 last update: 2012-10-22 Hrs. 14:34
 */
 
-package com.colosa.qa.automatization.extJs;
+package com.colosa.qa.automatization.common.extJs;
 
 import java.util.List;
 //import java.util.concurrent.TimeUnit;
