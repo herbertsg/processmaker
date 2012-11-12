@@ -14,6 +14,7 @@ public class Login extends Page{
 	WebElement workspace;
 	WebElement submitButton;
 	WebElement logOutLink;
+	WebElement language;
 
 	public Login() throws FileNotFoundException, IOException{
 		url = ConfigurationSettings.getInstance().getSetting("server.url");
@@ -28,6 +29,8 @@ public class Login extends Page{
 		this.password = Browser.getElement("login.webElement.password");
 		this.workspace = Browser.getElement("login.webElement.workspace");
 		this.submitButton = Browser.getElement("login.webElement.submitButton");
+
+		this.language = Browser.getElement("login.webElement.language");
 	}
 
 	public boolean isAtLoginPage() throws Exception{
