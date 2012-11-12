@@ -58,7 +58,9 @@ public class ExtJSGrid{
 			WebDriverWait wait = new WebDriverWait(this.driver, this.timeout);
 			//try{
 				//wait.until(new PageStatusChanged(this.grid.findElement(By.xpath("div/div[3]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td/div")).getText().trim()));
-			wait.until(new PageStatusChanged(""));
+				//wait.until(new PageStatusChanged(""));
+			String[] statuses = {"", "Displaying Empty"};
+			wait.until(new PageStatusChanged(statuses));
 			//}
 		}
 		this.updateCurrentPage();
@@ -82,6 +84,7 @@ public class ExtJSGrid{
 	}
 
 	public int nextPage(){
+		System.out.println("next");
 		return this.moveToPage(1);
 	}
 
@@ -101,9 +104,40 @@ public class ExtJSGrid{
 		return this.moveToPage(4);
 	}
 
-	/*public WebElement getRowByColumn(String columnName, String columnValue){
+	public List<WebElement> getRows(){
+		return this.grid.findElements(By.xpath("div/div[2]/div/div[1]/div[2]/div/div"));
+	}
 
-	}*/
+	public WebElement getRowByColumnValue(String columnName, String columnValue) throws Exception{
+		WebElement header = this.grid.findElement(By.xpath("div/div[2]/div/div[1]/div[1]"));
+		List<WebElement> headerFields = header.findElements(By.xpath("div/div/table/thead/tr/td"));
+		int columnNumber = 1;
+		boolean flag = false;
+		for(WebElement field:headerFields)
+		{
+			if(field.getText().trim().equals(columnName))
+			{
+				flag = true;
+				break;
+			}
+			columnNumber++;
+		}
+		if(!flag)
+			throw new Exception("No se encontro una columna en el grid con el nombre \""+columnName+"\"");
+		flag = false;
+		while(this.currentPage <= this.totalPages)
+		{	
+			headerFields = this.getRows();
+			System.out.println(headerFields.size()+"   "+this.currentPage +" de "+ this.totalPages);
+			for(WebElement row:headerFields)
+				if(row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(columnNumber)+"]/div")).getText().trim().equals(columnValue))		
+					return row;
+			if(this.currentPage == this.totalPages)
+				break;
+			this.nextPage();
+		}
+		return null;
+	}
 
 	private int moveToPage(int option){
 		WebDriverWait wait = new WebDriverWait(this.driver, this.timeout);
@@ -144,13 +178,25 @@ public class ExtJSGrid{
 		return this.getCurrentPage();
 	}
 
+	private int inArray(String[] arr, String str){
+		for(int i=0; i<arr.length; i++)
+			if(arr[i].equals(str))
+				return i;
+		return -1;
+	}
+
 	private class PageStatusChanged implements ExpectedCondition<Boolean>{
 
 		private String status;
+		private String[] statuses = {};
 
 		public PageStatusChanged(String status){
 			this.status = status;
-			//System.out.println("actual "+this.status);
+			System.out.println("actual "+this.status);
+		}
+
+		public PageStatusChanged(String[] statuses){
+			this.statuses = statuses;
 		}
 
 		public PageStatusChanged(){
@@ -162,7 +208,10 @@ public class ExtJSGrid{
 		public Boolean apply(WebDriver input) {
 			String actual = grid.findElement(By.xpath("div/div[3]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td/div")).getText().trim();
 			//System.out.println(actual+" / "+this.status+" => "+!actual.equals(this.status));
-			return !actual.equals(this.status);
+			if(this.statuses.length == 0)
+				return !actual.equals(this.status);
+			else
+				return !(inArray(this.statuses, actual)>-1);
 		}	  
 	}
 
