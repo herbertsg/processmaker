@@ -7,7 +7,10 @@ import com.colosa.qa.automatization.common.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
-public class Home /*extends Main*/{
+public class Home extends Main{
+
+	public Home() throws Exception{
+	}
 
 	private static String[] pathToArray(String path){
 		if(path.charAt(0) == '/')
@@ -17,43 +20,12 @@ public class Home /*extends Main*/{
 
 		return path.split("/");
 	}
-	public static boolean goSection(String sectionName) throws Exception{
-
-		WebElement we = null;
-		List<WebElement> wel;
-		Browser.driver().switchTo().defaultContent();
-		System.out.println("Redireccionando a seccion "+sectionName+"...");
-		/*if(this.skin == 0)
-		{*/
-			//this.waitForElementPresent(By.cssSelector("ul#pm_menu li a"),60);
-			we = Browser.driver().findElement(By.id("pm_menu"));
-			we = we.findElement(By.linkText(sectionName));
-		/*}
-		else
-		{
-			this.waitForElementPresent(By.xpath("//div[@id='mainTabPanel']"), 60);
-			wel = Browser.driver().findElements(By.xpath("//div[@id='mainTabPanel']/div/div/ul/li"));
-			for(WebElement we2:wel)
-			{
-				we = we2.findElement(By.xpath("a[2]/em/span/span"));
-				if(we.getText().equals(sectionName))
-					break;
-			}
-		}*/
-		System.out.println(we); //raro pero se necesita esta linea para que funcione correctamente
-		if(we == null)
-			return false;
-		we.click();
-		return true;
-	}
 
 	public static void selectMenuTreePanelOption(String path) throws Exception{
 		List<WebElement> wel;
 		WebElement option = null;
 		String[] pathLevels;
 		String aux="";
-
-		Browser.driver().switchTo().defaultContent();
 
 		if(path.length() == 0)
 			throw new Exception("The option path must be specified");		
@@ -109,16 +81,8 @@ public class Home /*extends Main*/{
 				throw new Exception("No se encontró opción: \""+pathLevels[1] + "\" en el grupo de opciones: \""+pathLevels[0]+"\"");
 		}
 		option.findElement(By.xpath("div/a/span")).click();
-	}
 
-	public static boolean iAmIn() throws Exception{
-		System.out.println("URL ----> "+Browser.driver().getCurrentUrl());
-		try{
-			Browser.driver().findElement(By.id("casesFrame")).getAttribute("src");
-		}catch(NoSuchElementException e){
-			return false;
-		}
-		return true;
+		Browser.driver().switchTo().defaultContent();
 	}
 
 	public static void gotoNewCase() throws Exception{
@@ -168,7 +132,10 @@ public class Home /*extends Main*/{
 		boolean flag = false;
 		int value = 0;
 
+		Browser.driver().switchTo().defaultContent();
 		Home.selectMenuTreePanelOption("Cases/New case");
+		Browser.driver().switchTo().defaultContent();
+		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
 		WebElement we = Browser.driver().findElement(By.id("startCaseTreePanel"));
 		if(path.length>2)
