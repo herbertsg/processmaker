@@ -24,5 +24,11 @@ public class Pages{
 		Documents document = new Documents();
 
 		return document;
+	}
+
+	public static ProcessList ProcessList() throws Exception{
+		ProcessList processList = new ProcessList();
+
+		return processList;
 	}	
 }
