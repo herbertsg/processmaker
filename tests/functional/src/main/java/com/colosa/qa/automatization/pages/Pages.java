@@ -30,5 +30,11 @@ public class Pages{
 		ProcessList processList = new ProcessList();
 
 		return processList;
+	}
+
+	public static InputDocProcess InputDocProcess() throws Exception{
+		InputDocProcess inputDocProcess = new InputDocProcess();
+
+		return inputDocProcess;
 	}	
 }
