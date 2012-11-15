@@ -19,3 +19,12 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 
 #compile tests documents
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/documents/*.java
+
+#compile tests designerlist
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/processlist/*.java
+
+#compile tests input document process
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/inputDocuments/TestInputDocProcess.java
+
+#compile tests output document process
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/outputDocuments/TestOutputDocProcess.java

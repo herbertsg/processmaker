@@ -36,5 +36,11 @@ public class Pages{
 		InputDocProcess inputDocProcess = new InputDocProcess();
 
 		return inputDocProcess;
+	}
+
+	public static OutputDocProcess OutputDocProcess() throws Exception{
+		OutputDocProcess outputDocProcess = new OutputDocProcess();
+
+		return outputDocProcess;
 	}	
 }
