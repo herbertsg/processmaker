@@ -18,12 +18,18 @@ public class InputDocProcess extends Page{
 
 	}
 
-	public void uploadFile(String filePath, String description) throws Exception{
+	public void selectOpenCaseFrame() throws Exception{
 
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
 		Browser.driver().switchTo().frame("openCaseFrame");
+
+	}
+
+	public void uploadFile(String filePath, String description) throws Exception{
+
+		
 		Browser.getElement("inputDocProcess.webelement.new").click();
 	
 		Browser.getElement("inputDocProcess.webelement.path").sendKeys(filePath);

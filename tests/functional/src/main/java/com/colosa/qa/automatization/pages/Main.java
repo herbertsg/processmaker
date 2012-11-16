@@ -18,26 +18,6 @@ public class Main extends Page{
 
 	}
 
-	/*public void goSection(String sectionName) throws FileNotFoundException, IOException, Exception{
-
-		//this.we = null;
-		Browser.driver().switchTo().defaultContent();
-		System.out.println("Redireccionando a seccion "+sectionName+"...");
-		//this.waitForElementPresent(By.cssSelector("ul#pm_menu li a"),60);
-		//this.we = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("main.menu")));
-
-		this.weMainMenu = Browser.getElement("main.WebElement.DashboardMenu");
-
-		this.weSectionButton = this.weMainMenu.findElement(By.linkText(sectionName));
-		
-		
-		//System.out.println(this.we); //raro pero se necesita esta linea para que funcione correctamente
-		if(this.weSectionButton == null)
-			throw new Exception("Invalid section name.");
-
-		this.weSectionButton.click();
-	}*/
-
 	public void goHome() throws FileNotFoundException, IOException, Exception{
 		this.weSectionButton = Browser.getElement("main.WebElement.HomeMenu");
 		
@@ -64,8 +44,7 @@ public class Main extends Page{
 	}
 
 	public void logout() throws FileNotFoundException, IOException, Exception{
-		//Browser.driver().switchTo().defaultContent();
-		//if(this.skin==0)
+		
 		Browser.getElement("main.WebElement.Logout").click();
 	}
 

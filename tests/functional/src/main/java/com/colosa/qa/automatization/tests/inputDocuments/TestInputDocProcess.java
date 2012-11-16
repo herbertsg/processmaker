@@ -20,6 +20,7 @@ public class TestInputDocProcess{
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();
 		Pages.Home().startCase("inputDocProcess (Task 1)");
+		Pages.InputDocProcess().selectOpenCaseFrame();
 		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
 		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
 		Pages.InputDocProcess().continuebtn();
