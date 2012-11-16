@@ -1,9 +1,7 @@
 #!/bin/bash
 # must be executed from ..../processmaker/tests/functional/src/main
-# must create symlinks to libraries of selenium and junit
-# ln -s /usr/share/junit/junit-4.8.2.jar junit.jar
-# ln -s /usr/share/selenium/selenium-java-2.25.0.jar selenium-java.jar
-# ln -s /usr/share/selenium/libs/ libs
+# must include selenium libs and junit in resources folder
 #Run TestLogin
-#java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.login.TestLogin
-java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.main.TestMain
+#java -cp .:./resources/libs/*:./resources/selenium-java-2.25.0.jar:./java/:./resources/junit-4.10.jar com.colosa.qa.automatization.tests.login.TestSelectMenuTreePanelOption
+#Run Test extjs tree class
+java -cp .:./resources/libs/*:./resources/selenium-java-2.25.0.jar:./java/:./resources/junit-4.10.jar com.colosa.qa.automatization.tests.login.TreeTest
