@@ -17,13 +17,12 @@ public class DropDownOptions extends ControlOptions{
 	@Override
 	public void fillForm() throws Exception{
 		super.fillForm();
-		int i = 1;
+		int i = 1;/*
 		String criteria = ConfigurationSettings-getInstance().getSetting("dynaformDesigner.webElement.dropdownModal.gridElementLocator");
 		for(DropDownOption opt:this.options)
 		{
-			System.out.println(opt.getValue());
-			
-		}
+			System.out.println(opt.getValue());	
+		}*/
 	}
 	
 }
