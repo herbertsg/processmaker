@@ -31,7 +31,7 @@ public class ProcessDesignerTest{
 
                 Browser.driver().switchTo().defaultContent();
                 DynaformDesigner dynaform = ProcessDesigner.newBlankDynaform(new java.util.Date().toString(), ProcessDesigner.DynaformSubType.NORMAL);
-                TextFieldOptions options = new TextFieldOptions();
+                /*TextFieldOptions options = new TextFieldOptions();
                 options.fieldName = "myText";
                 options.label = "ingrese un texto";
                 options.maxLength = 6;
@@ -47,18 +47,18 @@ public class ProcessDesignerTest{
                 options.mode = ControlOptions.Mode.EDIT;
                 options.sqlConnection = ControlOptions.SQLConnection.REPORT;
                 options.sql = "some sql sentence";
-                dynaform.addTextField(options);
+                dynaform.addTextField(options);*/
 
-
-
-/*
                 DropDownOptions options = new DropDownOptions();
                 options.fieldName = "myText";
-                options.label = "seleccione una opción";
+                options.label = "seleccione un país";
                 options.required = true;
+                options.sql = "some sql sentence for this dropdown";
 
-                options.addOption("", "");
-                dynaform.addDropDown(options);*/
+                options.addOption("Argentina", "arg");
+                options.addOption("Bolivia", "bol");
+                options.addOption("Brasil", "bra");
+                dynaform.addDropDown(options);
 
 		System.out.println("----fin..");
 	}
