@@ -1,6 +1,6 @@
 package com.colosa.qa.automatization.common.dynaform.controls.selection;
 
-public class DropDownOption(){
+public class DropDownOption{
 	
 	private String key = null;
 	private String value = null;
@@ -14,7 +14,7 @@ public class DropDownOption(){
 		return this.key;
 	}
 
-	public void setValue(String[] value){
+	public void setValue(String value){
 		this.value = value;
 	}
 
