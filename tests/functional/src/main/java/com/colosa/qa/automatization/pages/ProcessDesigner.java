@@ -3,9 +3,43 @@ package com.colosa.qa.automatization.pages;
 import java.util.List;
 import java.lang.Exception;
 import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.ConfigurationSettings;
+import com.colosa.qa.automatization.common.dynaform.DynaformDesigner;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class ProcessDesigner{
+
+	public enum DynaformType{
+		BLANK("blankType"),
+		PM_TABLE("pmTableType");
+
+		private String id;
+
+		DynaformType(String id){
+			this.id = id;
+		}
+
+		public String getId(){
+			return this.id;
+		}
+
+	};
+
+	public enum DynaformSubType{
+		NORMAL("normalType"),
+		GRID("gridType");
+
+		private String id;
+
+		DynaformSubType(String id){
+			this.id = id;
+		}
+
+		public String getId(){
+			return this.id;
+		}
+	}
 
 	public enum MenuOption{
 		DYNAFORMS("dynaforms"), 
@@ -16,23 +50,24 @@ public class ProcessDesigner{
 		DATABASE_CONNECTIONS("databaseConnections"), 
 		CASE_SCHEDULER("caseScheduler");
 
-		private String identifier;
+		private String id;
 
 		MenuOption(String id){
-			this.identifier = id;
+			this.id = id;
 		}
 
 		public String getId(){
-			return this.identifier;
+			return this.id;
 		}
-	}
+	};
 	
 	public static void open(MenuOption option) throws Exception{
 		Browser.driver().switchTo().frame("frameMain");
-		Browser.getElement("designerProcesses.webElement.menuItems."+option.getId()).click();
+		Browser.getElement("processDesigner.webElement.menuItems."+option.getId()).click();
+		Browser.driver().switchTo().defaultContent();
 	}
 
-	public static void openDynaforms() throws Exception{
+	private static void openDynaforms() throws Exception{
 		ProcessDesigner.open(ProcessDesigner.MenuOption.DYNAFORMS);
 	}
 
@@ -60,4 +95,24 @@ public class ProcessDesigner{
 		ProcessDesigner.open(ProcessDesigner.MenuOption.CASE_SCHEDULER);
 	}
 
+	public static void newDynaform(DynaformType type) throws Exception{
+		ProcessDesigner.openDynaforms();
+		Browser.driver().switchTo().frame("frameMain");
+		Browser.getElement("processDesigner.webElement.panelNewButton").click();
+		Browser.getElement("processDesigner.webElement.newDynaform."+type.getId()).click();
+		Browser.getElement("processDesigner.webElement.newDynaform.selectDynaformTypeButton").click();
+	}
+
+	public static DynaformDesigner newBlankDynaform(String title, DynaformSubType type, String description) throws Exception{
+		ProcessDesigner.newDynaform(ProcessDesigner.DynaformType.BLANK);
+		Browser.getElement("processDesigner.webElement.newBlankDynaform.title").sendKeys(title);
+		new Select(Browser.getElement("processDesigner.webElement.newBlankDynaform.type")).selectByValue(ConfigurationSettings.getInstance().getSetting("processDesigner.webElement.newBlankDynaform.type."+type.getId()));
+		Browser.getElement("processDesigner.webElement.newBlankDynaform.description").sendKeys(description);
+		Browser.getElement("processDesigner.webElement.newBlankDynaform.saveOpen").click();
+		return new DynaformDesigner(Browser.getElement("processDesigner.webElement.newBlankDynaform.designer"));
+	}
+
+	public static DynaformDesigner newBlankDynaform(String title, DynaformSubType type) throws Exception{
+		return ProcessDesigner.newBlankDynaform(title, type, "");
+	}
 }

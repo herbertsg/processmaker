@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import com.colosa.qa.automatization.common.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 
 public class Home extends Main{
 
@@ -187,6 +188,20 @@ public class Home extends Main{
 
         value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8));
         return value;
+	}
+
+	public void openCase(int numCase)throws Exception{
+		ExtJSGrid grid;
+		Actions action = new Actions(Browser.driver());
+		this.selectMenuTreePanelOption("Cases/Inbox");
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+		if(row==null)
+			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
+		action.doubleClick(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
+        action.perform();
 	}
 
 }

@@ -18,7 +18,6 @@ public class Main extends Page{
 
 	}
 
-
 	/*public void goSection(String sectionName) throws FileNotFoundException, IOException, Exception{
 
 		//this.we = null;
