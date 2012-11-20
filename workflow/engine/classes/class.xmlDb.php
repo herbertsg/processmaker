@@ -44,7 +44,7 @@ class XMLDB
      * @param string $dsn
      * @return array $options
      */
-    public function &connect ($dsn, $options = array())
+    function &connect ($dsn, $options = array())
     {
         //Needed for $mysql_real_escape_string
         $mresdbc = new DBConnection();
@@ -63,7 +63,7 @@ class XMLDB
      * @param string $result
      * @return boolean is_a($result, 'DB_Error')
      */
-    public function isError ($result)
+    function isError ($result)
     {
         return is_a( $result, 'DB_Error' );
     }
@@ -82,7 +82,7 @@ class XMLConnection
 {
     var $phptype = 'myxml';
     var $caseFolding = true;
-    var $xmldoc = null;
+    var $xmldoc = NULL;
     var $xmlFile = '';
 
     /**
@@ -91,7 +91,7 @@ class XMLConnection
      * @param string $file
      * @return void
      */
-    public function XMLConnection ($file)
+    function XMLConnection ($file)
     {
         $this->xmldoc = new Xml_Document();
         $this->xmldoc->parseXmlFile( $file );
@@ -105,7 +105,7 @@ class XMLConnection
      * @param string $sql
      * @return object(XMLResult) $result
      */
-    public function &query ($sql)
+    function &query ($sql)
     {
         if (! isset( $this->xmldoc )) {
             $err = new DB_Error( "Error: Closed xmlConnection." );
@@ -127,8 +127,8 @@ class XMLConnection
                 $fieldsList[$name] = $match[1][$r][0];
             }
             /* End Block */
-            /* Start Block: Order list */
-            $count = preg_match_all( '/\s*(\*|[\w\.]+)(\s+ASC|\s+DESC)?\s*,?/im', $sqlOrderBy, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
+      /* Start Block: Order list */
+      $count = preg_match_all( '/\s*(\*|[\w\.]+)(\s+ASC|\s+DESC)?\s*,?/im', $sqlOrderBy, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
             $orderList = array ();
             for ($r = $count - 1; $r >= 0; $r --) {
                 $direction = (is_array( $match[2][$r] ) && $match[2][$r][0] !== '') ? $match[2][$r][0] : 'ASC';
@@ -173,22 +173,21 @@ class XMLConnection
                 for ($r = 0; $r < sizeof( $res ); $r ++) {
                     $evalWhere = false;
                     @eval( '$evalWhere = ' . $sqlWhere . ';' );
-                    if ($evalWhere) {
+                    if ($evalWhere)
                         $newRes[] = $res[$r];
-                    }
                 }
                 $res = $newRes;
             }
             /* End Block */
-            /* Start Block: Expands the resultant data according to fill an array
-             *              with the required fields in the query.
-             */
-            for ($r = 0; $r < sizeof( $res ); $r ++) {
+      /* Start Block: Expands the resultant data according to fill an array
+       *              with the required fields in the query.
+       */
+      for ($r = 0; $r < sizeof( $res ); $r ++) {
                 $res[$r] = $this->expandFields( $res[$r], $fieldsList );
             }
             /* End Block */
-            /* Start Block: ORDER BY*/
-            foreach ($orderList as $field => $direction) {
+      /* Start Block: ORDER BY*/
+      foreach ($orderList as $field => $direction) {
                 for ($i = 0; $i < sizeof( $res ); $i ++) {
                     for ($j = $i + 1; $j < sizeof( $res ); $j ++) {
                         $condition = ($direction === 'ASC') ? ($res[$j] < $res[$i]) : ($res[$j] > $res[$i]);
@@ -201,8 +200,8 @@ class XMLConnection
                 }
             }
             /* End Block */
-            /* Start Block: Apply limits */
-            if ($sqlLowLimit != '' && $sqlHighLimit != '') {
+      /* Start Block: Apply limits */
+      if ($sqlLowLimit != '' && $sqlHighLimit != '') {
                 $sqlLowLimit = (int) $sqlLowLimit;
                 $sqlHighLimit = (int) $sqlHighLimit;
                 $res = array_slice( $res, $sqlLowLimit, $sqlHighLimit );
@@ -214,8 +213,8 @@ class XMLConnection
             $sqlFrom = isset( $matches[1] ) ? $matches[1] : '';
             $sqlWhere = isset( $matches[2] ) ? $matches[2] : '1';
             /* Start Block: WHERE*/
-            /*Start Block: Replace the operator */
-            $blocks = preg_split( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\')/im', $sqlWhere, - 1, PREG_SPLIT_DELIM_CAPTURE );
+        /*Start Block: Replace the operator */
+        $blocks = preg_split( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\')/im', $sqlWhere, - 1, PREG_SPLIT_DELIM_CAPTURE );
             $sqlWhere = '';
             for ($r = 0; $r < sizeof( $blocks ); $r ++) {
                 if (($r % 2) === 0) {
@@ -275,8 +274,8 @@ class XMLConnection
                 $fieldsList[] = $match[1][$r][0];
             }
             /* End Block */
-            /* Start Block: Fields Values */
-            $count = preg_match_all( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\'|\d+)/im', $sqlValues, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
+      /* Start Block: Fields Values */
+      $count = preg_match_all( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\'|\d+)/im', $sqlValues, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
             $fieldsValues = array ();
             for ($r = 0; $r < $count; $r ++) {
                 if (substr( $match[1][$r][0], 0, 1 ) === '"') {
@@ -319,8 +318,8 @@ class XMLConnection
                 $fieldsValues[$match[1][$r][0]] = $match[2][$r][0];
             }
             /* Start Block: WHERE*/
-            /*Start Block: Replace the operator */
-            $blocks = preg_split( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\')/im', $sqlWhere, - 1, PREG_SPLIT_DELIM_CAPTURE );
+        /*Start Block: Replace the operator */
+        $blocks = preg_split( '/("(?:(?:[^"]|"")*)"|\'(?:(?:[^\']|\'\')*)\')/im', $sqlWhere, - 1, PREG_SPLIT_DELIM_CAPTURE );
             $sqlWhere = '';
             for ($r = 0; $r < sizeof( $blocks ); $r ++) {
                 if (($r % 2) === 0) {
@@ -378,7 +377,7 @@ class XMLConnection
      * @param string $a
      * @return void $b
      */
-    public function sqlLike ($a, $b)
+    function sqlLike ($a, $b)
     {
         $b = addcslashes( $b, '[]()\/{}.?' );
         $b = str_replace( "%", '.*', $b );
@@ -393,16 +392,15 @@ class XMLConnection
      * @param string $fieldsList
      * @return array $res
      */
-    public function expandFields ($resRow, $fieldsList)
+    function expandFields ($resRow, $fieldsList)
     {
         $res = array ();
         foreach ($fieldsList as $key => $value) {
             if ($key === '*') {
-                foreach ($resRow as $k => $v) {
+                foreach ($resRow as $k => $v)
                     $res[$k] = $v;
-                }
             } else {
-                $res[$key] = array_key_exists( $value, $resRow ) ? $resRow[$value] : null;
+                $res[$key] = array_key_exists( $value, $resRow ) ? $resRow[$value] : NULL;
             }
         }
         return $res;
@@ -414,14 +412,13 @@ class XMLConnection
      * @param object &$node
      * @return array $res
      */
-    public function fetchNode (&$node)
+    function fetchNode (&$node)
     {
         $res = array ('XMLNODE_NAME' => $node->name,'XMLNODE_TYPE' => $node->type,'XMLNODE_VALUE' => $node->value
         );
         foreach ($node->attributes as $name => $value) {
-            if ($this->caseFolding) {
+            if ($this->caseFolding)
                 $name = strtoupper( $name );
-            }
             $res[$name] = $value;
         }
         return $res;
@@ -433,7 +430,7 @@ class XMLConnection
      * @param string &$node
      * @return array $res
      */
-    public function fetchChildren (&$node)
+    function fetchChildren (&$node)
     {
         $res = array ();
         foreach ($node->children as $name => $child) {
@@ -447,7 +444,7 @@ class XMLConnection
      *
      * @return void
      */
-    public function disconnect ()
+    function disconnect ()
     {
         unset( $this->xmldoc );
     }
@@ -457,7 +454,7 @@ class XMLConnection
      * @param array $match
      * @return object(DB_Error) $err
      */
-    public function sqlWhereLike ($match)
+    function sqlWhereLike ($match)
     {
         switch (substr( $match[2], 0, 1 )) {
             case '"':
@@ -479,7 +476,7 @@ class XMLConnection
      * @param array $match
      * @return object(DB_Error) $err
      */
-    public function sqlString ($match)
+    function sqlString ($match)
     {
         switch (substr( $match[0], 0, 1 )) {
             case '"':
@@ -510,7 +507,7 @@ class XMLConnection
      * @param object $values
      * @return void
      */
-    public function insertRow (&$node, $values)
+    function insertRow (&$node, $values)
     {
         $attributes = array ();
         foreach ($values as $field => $value) {
@@ -536,7 +533,7 @@ class XMLConnection
      * @param object $values
      * @return void
      */
-    public function updateRow (&$node, $values)
+    function updateRow (&$node, $values)
     {
         foreach ($values as $field => $value) {
             switch ($field) {
@@ -576,7 +573,7 @@ class XMLResult
      * @param array $result
      * @return void
      */
-    public function XMLResult ($result = array())
+    function XMLResult ($result = array())
     {
         $this->result = $result;
         $this->cursor = 0;
@@ -587,7 +584,7 @@ class XMLResult
      *
      * @return integer sizeof($this->result)
      */
-    public function numRows ()
+    function numRows ()
     {
         return sizeof( $this->result );
     }
@@ -598,11 +595,10 @@ class XMLResult
      * @param string $const
      * @return integer $this->result[ $this->cursor-1 ];
      */
-    public function fetchRow ($const)
+    function fetchRow ($const)
     {
-        if ($this->cursor >= $this->numRows()) {
-            return null;
-        }
+        if ($this->cursor >= $this->numRows())
+            return NULL;
         $this->cursor ++;
         return $this->result[$this->cursor - 1];
     }
@@ -625,3 +621,4 @@ function getNames ($children)
     return $names;
 }
 
+?>

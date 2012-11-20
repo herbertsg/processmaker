@@ -153,8 +153,6 @@ try {
                 //                     str_replace ( '"', '', $paramDefaultValue ) ) );
                 $paramValue = $_GET[trim( str_replace( "$", "", $paramName ) )];
                 $template->assign ( 'ADD_TRI_VALUE', str_replace("\'", "&apos;", $paramValue) );
-                //turn single quotes to double quotes into an array asignation
-                $template->assign ( 'ADD_TRI_VALUE', str_replace("'", "&#34;", $paramValue) );
                 if ($paramDefaultValue != "") {
                     $fieldDescription = $paramDescription . "<br>";
                     $fieldDescription .= $paramDefaultValue . " | " . $paramType;
@@ -181,3 +179,4 @@ try {
     die ( $oException->getMessage () );
 }
 unset ( $_SESSION ['PROCESS'] );
+ 

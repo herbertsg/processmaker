@@ -135,7 +135,10 @@ Ext.onReady(function(){
                   supervisorButton.disable();
                   break;
           case 1: Ext.getCmp('removeButton').enable();
-                  supervisorButton.enable();
+                  if (availableGrid.hidden)
+                    supervisorButton.enable();
+                  else
+                	supervisorButton.disable();  
                   break;
           default: Ext.getCmp('removeButton').enable();
                    supervisorButton.disable();

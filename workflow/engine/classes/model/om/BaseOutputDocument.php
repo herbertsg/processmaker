@@ -12,7 +12,7 @@ include_once 'classes/model/OutputDocumentPeer.php';
 /**
  * Base class that represents a row from the 'OUTPUT_DOCUMENT' table.
  *
- *
+ * 
  *
  * @package    workflow.classes.model.om
  */
@@ -38,12 +38,6 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
      * @var        string
      */
     protected $pro_uid = '';
-
-    /**
-     * The value for the out_doc_report_generator field.
-     * @var        string
-     */
-    protected $out_doc_report_generator = 'HTML2PDF';
 
     /**
      * The value for the out_doc_landscape field.
@@ -163,7 +157,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_uid] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocUid()
@@ -174,7 +168,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [pro_uid] column value.
-     *
+     * 
      * @return     string
      */
     public function getProUid()
@@ -184,19 +178,8 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [out_doc_report_generator] column value.
-     *
-     * @return     string
-     */
-    public function getOutDocReportGenerator()
-    {
-
-        return $this->out_doc_report_generator;
-    }
-
-    /**
      * Get the [out_doc_landscape] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocLandscape()
@@ -207,7 +190,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_media] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocMedia()
@@ -218,7 +201,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_left_margin] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocLeftMargin()
@@ -229,7 +212,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_right_margin] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocRightMargin()
@@ -240,7 +223,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_top_margin] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocTopMargin()
@@ -251,7 +234,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_bottom_margin] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocBottomMargin()
@@ -262,7 +245,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_generate] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocGenerate()
@@ -273,7 +256,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_type] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocType()
@@ -284,7 +267,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_current_revision] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocCurrentRevision()
@@ -295,7 +278,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_field_mapping] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocFieldMapping()
@@ -306,7 +289,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_versioning] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocVersioning()
@@ -317,7 +300,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_destination_path] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocDestinationPath()
@@ -328,7 +311,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_tags] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocTags()
@@ -339,7 +322,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_pdf_security_enabled] column value.
-     *
+     * 
      * @return     int
      */
     public function getOutDocPdfSecurityEnabled()
@@ -350,7 +333,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_pdf_security_open_password] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocPdfSecurityOpenPassword()
@@ -361,7 +344,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_pdf_security_owner_password] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocPdfSecurityOwnerPassword()
@@ -372,7 +355,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Get the [out_doc_pdf_security_permissions] column value.
-     *
+     * 
      * @return     string
      */
     public function getOutDocPdfSecurityPermissions()
@@ -383,7 +366,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_uid] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -405,7 +388,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [pro_uid] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -426,30 +409,8 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
     } // setProUid()
 
     /**
-     * Set the value of [out_doc_report_generator] column.
-     *
-     * @param      string $v new value
-     * @return     void
-     */
-    public function setOutDocReportGenerator($v)
-    {
-
-        // Since the native PHP type for this column is string,
-        // we will cast the input to a string (if it is not).
-        if ($v !== null && !is_string($v)) {
-            $v = (string) $v;
-        }
-
-        if ($this->out_doc_report_generator !== $v || $v === 'HTML2PDF') {
-            $this->out_doc_report_generator = $v;
-            $this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_REPORT_GENERATOR;
-        }
-
-    } // setOutDocReportGenerator()
-
-    /**
      * Set the value of [out_doc_landscape] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -471,7 +432,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_media] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -493,7 +454,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_left_margin] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -515,7 +476,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_right_margin] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -537,7 +498,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_top_margin] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -559,7 +520,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_bottom_margin] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -581,7 +542,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_generate] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -603,7 +564,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_type] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -625,7 +586,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_current_revision] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -647,7 +608,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_field_mapping] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -669,7 +630,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_versioning] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -691,7 +652,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_destination_path] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -713,7 +674,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_tags] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -735,7 +696,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_pdf_security_enabled] column.
-     *
+     * 
      * @param      int $v new value
      * @return     void
      */
@@ -757,7 +718,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_pdf_security_open_password] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -779,7 +740,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_pdf_security_owner_password] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -801,7 +762,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
     /**
      * Set the value of [out_doc_pdf_security_permissions] column.
-     *
+     * 
      * @param      string $v new value
      * @return     void
      */
@@ -842,48 +803,46 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
             $this->pro_uid = $rs->getString($startcol + 1);
 
-            $this->out_doc_report_generator = $rs->getString($startcol + 2);
+            $this->out_doc_landscape = $rs->getInt($startcol + 2);
 
-            $this->out_doc_landscape = $rs->getInt($startcol + 3);
+            $this->out_doc_media = $rs->getString($startcol + 3);
 
-            $this->out_doc_media = $rs->getString($startcol + 4);
+            $this->out_doc_left_margin = $rs->getInt($startcol + 4);
 
-            $this->out_doc_left_margin = $rs->getInt($startcol + 5);
+            $this->out_doc_right_margin = $rs->getInt($startcol + 5);
 
-            $this->out_doc_right_margin = $rs->getInt($startcol + 6);
+            $this->out_doc_top_margin = $rs->getInt($startcol + 6);
 
-            $this->out_doc_top_margin = $rs->getInt($startcol + 7);
+            $this->out_doc_bottom_margin = $rs->getInt($startcol + 7);
 
-            $this->out_doc_bottom_margin = $rs->getInt($startcol + 8);
+            $this->out_doc_generate = $rs->getString($startcol + 8);
 
-            $this->out_doc_generate = $rs->getString($startcol + 9);
+            $this->out_doc_type = $rs->getString($startcol + 9);
 
-            $this->out_doc_type = $rs->getString($startcol + 10);
+            $this->out_doc_current_revision = $rs->getInt($startcol + 10);
 
-            $this->out_doc_current_revision = $rs->getInt($startcol + 11);
+            $this->out_doc_field_mapping = $rs->getString($startcol + 11);
 
-            $this->out_doc_field_mapping = $rs->getString($startcol + 12);
+            $this->out_doc_versioning = $rs->getInt($startcol + 12);
 
-            $this->out_doc_versioning = $rs->getInt($startcol + 13);
+            $this->out_doc_destination_path = $rs->getString($startcol + 13);
 
-            $this->out_doc_destination_path = $rs->getString($startcol + 14);
+            $this->out_doc_tags = $rs->getString($startcol + 14);
 
-            $this->out_doc_tags = $rs->getString($startcol + 15);
+            $this->out_doc_pdf_security_enabled = $rs->getInt($startcol + 15);
 
-            $this->out_doc_pdf_security_enabled = $rs->getInt($startcol + 16);
+            $this->out_doc_pdf_security_open_password = $rs->getString($startcol + 16);
 
-            $this->out_doc_pdf_security_open_password = $rs->getString($startcol + 17);
+            $this->out_doc_pdf_security_owner_password = $rs->getString($startcol + 17);
 
-            $this->out_doc_pdf_security_owner_password = $rs->getString($startcol + 18);
-
-            $this->out_doc_pdf_security_permissions = $rs->getString($startcol + 19);
+            $this->out_doc_pdf_security_permissions = $rs->getString($startcol + 18);
 
             $this->resetModified();
 
             $this->setNew(false);
 
             // FIXME - using NUM_COLUMNS may be clearer.
-            return $startcol + 20; // 20 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
+            return $startcol + 19; // 19 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
 
         } catch (Exception $e) {
             throw new PropelException("Error populating OutputDocument object", $e);
@@ -1038,7 +997,7 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
      * an aggreagated array of ValidationFailed objects will be returned.
      *
      * @param      array $columns Array of column names to validate.
-     * @return     mixed <code>true</code> if all validations pass;
+     * @return     mixed <code>true</code> if all validations pass; 
                    array of <code>ValidationFailed</code> objects otherwise.
      */
     protected function doValidate($columns = null)
@@ -1094,57 +1053,54 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
                 return $this->getProUid();
                 break;
             case 2:
-                return $this->getOutDocReportGenerator();
-                break;
-            case 3:
                 return $this->getOutDocLandscape();
                 break;
-            case 4:
+            case 3:
                 return $this->getOutDocMedia();
                 break;
-            case 5:
+            case 4:
                 return $this->getOutDocLeftMargin();
                 break;
-            case 6:
+            case 5:
                 return $this->getOutDocRightMargin();
                 break;
-            case 7:
+            case 6:
                 return $this->getOutDocTopMargin();
                 break;
-            case 8:
+            case 7:
                 return $this->getOutDocBottomMargin();
                 break;
-            case 9:
+            case 8:
                 return $this->getOutDocGenerate();
                 break;
-            case 10:
+            case 9:
                 return $this->getOutDocType();
                 break;
-            case 11:
+            case 10:
                 return $this->getOutDocCurrentRevision();
                 break;
-            case 12:
+            case 11:
                 return $this->getOutDocFieldMapping();
                 break;
-            case 13:
+            case 12:
                 return $this->getOutDocVersioning();
                 break;
-            case 14:
+            case 13:
                 return $this->getOutDocDestinationPath();
                 break;
-            case 15:
+            case 14:
                 return $this->getOutDocTags();
                 break;
-            case 16:
+            case 15:
                 return $this->getOutDocPdfSecurityEnabled();
                 break;
-            case 17:
+            case 16:
                 return $this->getOutDocPdfSecurityOpenPassword();
                 break;
-            case 18:
+            case 17:
                 return $this->getOutDocPdfSecurityOwnerPassword();
                 break;
-            case 19:
+            case 18:
                 return $this->getOutDocPdfSecurityPermissions();
                 break;
             default:
@@ -1169,24 +1125,23 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
         $result = array(
             $keys[0] => $this->getOutDocUid(),
             $keys[1] => $this->getProUid(),
-            $keys[2] => $this->getOutDocReportGenerator(),
-            $keys[3] => $this->getOutDocLandscape(),
-            $keys[4] => $this->getOutDocMedia(),
-            $keys[5] => $this->getOutDocLeftMargin(),
-            $keys[6] => $this->getOutDocRightMargin(),
-            $keys[7] => $this->getOutDocTopMargin(),
-            $keys[8] => $this->getOutDocBottomMargin(),
-            $keys[9] => $this->getOutDocGenerate(),
-            $keys[10] => $this->getOutDocType(),
-            $keys[11] => $this->getOutDocCurrentRevision(),
-            $keys[12] => $this->getOutDocFieldMapping(),
-            $keys[13] => $this->getOutDocVersioning(),
-            $keys[14] => $this->getOutDocDestinationPath(),
-            $keys[15] => $this->getOutDocTags(),
-            $keys[16] => $this->getOutDocPdfSecurityEnabled(),
-            $keys[17] => $this->getOutDocPdfSecurityOpenPassword(),
-            $keys[18] => $this->getOutDocPdfSecurityOwnerPassword(),
-            $keys[19] => $this->getOutDocPdfSecurityPermissions(),
+            $keys[2] => $this->getOutDocLandscape(),
+            $keys[3] => $this->getOutDocMedia(),
+            $keys[4] => $this->getOutDocLeftMargin(),
+            $keys[5] => $this->getOutDocRightMargin(),
+            $keys[6] => $this->getOutDocTopMargin(),
+            $keys[7] => $this->getOutDocBottomMargin(),
+            $keys[8] => $this->getOutDocGenerate(),
+            $keys[9] => $this->getOutDocType(),
+            $keys[10] => $this->getOutDocCurrentRevision(),
+            $keys[11] => $this->getOutDocFieldMapping(),
+            $keys[12] => $this->getOutDocVersioning(),
+            $keys[13] => $this->getOutDocDestinationPath(),
+            $keys[14] => $this->getOutDocTags(),
+            $keys[15] => $this->getOutDocPdfSecurityEnabled(),
+            $keys[16] => $this->getOutDocPdfSecurityOpenPassword(),
+            $keys[17] => $this->getOutDocPdfSecurityOwnerPassword(),
+            $keys[18] => $this->getOutDocPdfSecurityPermissions(),
         );
         return $result;
     }
@@ -1225,57 +1180,54 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
                 $this->setProUid($value);
                 break;
             case 2:
-                $this->setOutDocReportGenerator($value);
-                break;
-            case 3:
                 $this->setOutDocLandscape($value);
                 break;
-            case 4:
+            case 3:
                 $this->setOutDocMedia($value);
                 break;
-            case 5:
+            case 4:
                 $this->setOutDocLeftMargin($value);
                 break;
-            case 6:
+            case 5:
                 $this->setOutDocRightMargin($value);
                 break;
-            case 7:
+            case 6:
                 $this->setOutDocTopMargin($value);
                 break;
-            case 8:
+            case 7:
                 $this->setOutDocBottomMargin($value);
                 break;
-            case 9:
+            case 8:
                 $this->setOutDocGenerate($value);
                 break;
-            case 10:
+            case 9:
                 $this->setOutDocType($value);
                 break;
-            case 11:
+            case 10:
                 $this->setOutDocCurrentRevision($value);
                 break;
-            case 12:
+            case 11:
                 $this->setOutDocFieldMapping($value);
                 break;
-            case 13:
+            case 12:
                 $this->setOutDocVersioning($value);
                 break;
-            case 14:
+            case 13:
                 $this->setOutDocDestinationPath($value);
                 break;
-            case 15:
+            case 14:
                 $this->setOutDocTags($value);
                 break;
-            case 16:
+            case 15:
                 $this->setOutDocPdfSecurityEnabled($value);
                 break;
-            case 17:
+            case 16:
                 $this->setOutDocPdfSecurityOpenPassword($value);
                 break;
-            case 18:
+            case 17:
                 $this->setOutDocPdfSecurityOwnerPassword($value);
                 break;
-            case 19:
+            case 18:
                 $this->setOutDocPdfSecurityPermissions($value);
                 break;
         } // switch()
@@ -1310,75 +1262,71 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
         }
 
         if (array_key_exists($keys[2], $arr)) {
-            $this->setOutDocReportGenerator($arr[$keys[2]]);
+            $this->setOutDocLandscape($arr[$keys[2]]);
         }
 
         if (array_key_exists($keys[3], $arr)) {
-            $this->setOutDocLandscape($arr[$keys[3]]);
+            $this->setOutDocMedia($arr[$keys[3]]);
         }
 
         if (array_key_exists($keys[4], $arr)) {
-            $this->setOutDocMedia($arr[$keys[4]]);
+            $this->setOutDocLeftMargin($arr[$keys[4]]);
         }
 
         if (array_key_exists($keys[5], $arr)) {
-            $this->setOutDocLeftMargin($arr[$keys[5]]);
+            $this->setOutDocRightMargin($arr[$keys[5]]);
         }
 
         if (array_key_exists($keys[6], $arr)) {
-            $this->setOutDocRightMargin($arr[$keys[6]]);
+            $this->setOutDocTopMargin($arr[$keys[6]]);
         }
 
         if (array_key_exists($keys[7], $arr)) {
-            $this->setOutDocTopMargin($arr[$keys[7]]);
+            $this->setOutDocBottomMargin($arr[$keys[7]]);
         }
 
         if (array_key_exists($keys[8], $arr)) {
-            $this->setOutDocBottomMargin($arr[$keys[8]]);
+            $this->setOutDocGenerate($arr[$keys[8]]);
         }
 
         if (array_key_exists($keys[9], $arr)) {
-            $this->setOutDocGenerate($arr[$keys[9]]);
+            $this->setOutDocType($arr[$keys[9]]);
         }
 
         if (array_key_exists($keys[10], $arr)) {
-            $this->setOutDocType($arr[$keys[10]]);
+            $this->setOutDocCurrentRevision($arr[$keys[10]]);
         }
 
         if (array_key_exists($keys[11], $arr)) {
-            $this->setOutDocCurrentRevision($arr[$keys[11]]);
+            $this->setOutDocFieldMapping($arr[$keys[11]]);
         }
 
         if (array_key_exists($keys[12], $arr)) {
-            $this->setOutDocFieldMapping($arr[$keys[12]]);
+            $this->setOutDocVersioning($arr[$keys[12]]);
         }
 
         if (array_key_exists($keys[13], $arr)) {
-            $this->setOutDocVersioning($arr[$keys[13]]);
+            $this->setOutDocDestinationPath($arr[$keys[13]]);
         }
 
         if (array_key_exists($keys[14], $arr)) {
-            $this->setOutDocDestinationPath($arr[$keys[14]]);
+            $this->setOutDocTags($arr[$keys[14]]);
         }
 
         if (array_key_exists($keys[15], $arr)) {
-            $this->setOutDocTags($arr[$keys[15]]);
+            $this->setOutDocPdfSecurityEnabled($arr[$keys[15]]);
         }
 
         if (array_key_exists($keys[16], $arr)) {
-            $this->setOutDocPdfSecurityEnabled($arr[$keys[16]]);
+            $this->setOutDocPdfSecurityOpenPassword($arr[$keys[16]]);
         }
 
         if (array_key_exists($keys[17], $arr)) {
-            $this->setOutDocPdfSecurityOpenPassword($arr[$keys[17]]);
+            $this->setOutDocPdfSecurityOwnerPassword($arr[$keys[17]]);
         }
 
         if (array_key_exists($keys[18], $arr)) {
-            $this->setOutDocPdfSecurityOwnerPassword($arr[$keys[18]]);
-        }
-
-        if (array_key_exists($keys[19], $arr)) {
-            $this->setOutDocPdfSecurityPermissions($arr[$keys[19]]);
+            $this->setOutDocPdfSecurityPermissions($arr[$keys[18]]);
         }
 
     }
@@ -1398,10 +1346,6 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
 
         if ($this->isColumnModified(OutputDocumentPeer::PRO_UID)) {
             $criteria->add(OutputDocumentPeer::PRO_UID, $this->pro_uid);
-        }
-
-        if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_REPORT_GENERATOR)) {
-            $criteria->add(OutputDocumentPeer::OUT_DOC_REPORT_GENERATOR, $this->out_doc_report_generator);
         }
 
         if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_LANDSCAPE)) {
@@ -1527,8 +1471,6 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
     {
 
         $copyObj->setProUid($this->pro_uid);
-
-        $copyObj->setOutDocReportGenerator($this->out_doc_report_generator);
 
         $copyObj->setOutDocLandscape($this->out_doc_landscape);
 

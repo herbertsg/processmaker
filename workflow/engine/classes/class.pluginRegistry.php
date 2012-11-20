@@ -32,18 +32,18 @@
 
 class pluginDetail
 {
-    public $sNamespace;
-    public $sClassName;
-    public $sFriendlyName = null;
-    public $sDescription = null;
-    public $sSetupPage = null;
-    public $sFilename;
-    public $sPluginFolder = '';
-    public $sCompanyLogo = '';
-    public $iVersion = 0;
-    public $enabled = false;
-    public $aWorkspaces = null;
-    public $bPrivate = false;
+    var $sNamespace;
+    var $sClassName;
+    var $sFriendlyName = null;
+    var $sDescription = null;
+    var $sSetupPage = null;
+    var $sFilename;
+    var $sPluginFolder = '';
+    var $sCompanyLogo = '';
+    var $iVersion = 0;
+    var $enabled = false;
+    var $aWorkspaces = null;
+    var $bPrivate = false;
 
     /**
      * This function is the constructor of the pluginDetail class
@@ -58,7 +58,7 @@ class pluginDetail
      * @param integer $iVersion
      * @return void
      */
-    public function __construct ($sNamespace, $sClassName, $sFilename, $sFriendlyName = '', $sPluginFolder = '', $sDescription = '', $sSetupPage = '', $iVersion = 0)
+    function __construct ($sNamespace, $sClassName, $sFilename, $sFriendlyName = '', $sPluginFolder = '', $sDescription = '', $sSetupPage = '', $iVersion = 0)
     {
         $this->sNamespace = $sNamespace;
         $this->sClassName = $sClassName;
@@ -67,11 +67,10 @@ class pluginDetail
         $this->sSetupPage = $sSetupPage;
         $this->iVersion = $iVersion;
         $this->sFilename = $sFilename;
-        if ($sPluginFolder == '') {
+        if ($sPluginFolder == '')
             $this->sPluginFolder = $sNamespace;
-        } else {
+        else
             $this->sPluginFolder = $sPluginFolder;
-        }
     }
 }
 
@@ -108,7 +107,7 @@ class PMPluginRegistry
      */
     private $_restServices = array ();
 
-    private static $instance = null;
+    private static $instance = NULL;
 
     /**
      * This function is the constructor of the PMPluginRegistry class
@@ -126,9 +125,9 @@ class PMPluginRegistry
      *
      * @return object
      */
-    public function &getSingleton ()
+    function &getSingleton ()
     {
-        if (self::$instance == null) {
+        if (self::$instance == NULL) {
             self::$instance = new PMPluginRegistry();
         }
         return self::$instance;
@@ -140,7 +139,7 @@ class PMPluginRegistry
      *
      * @return void
      */
-    public function serializeInstance ()
+    function serializeInstance ()
     {
         return serialize( self::$instance );
     }
@@ -151,9 +150,9 @@ class PMPluginRegistry
      * @param string $serialized
      * @return void
      */
-    public function unSerializeInstance ($serialized)
+    function unSerializeInstance ($serialized)
     {
-        if (self::$instance == null) {
+        if (self::$instance == NULL) {
             self::$instance = new PMPluginRegistry();
         }
 
@@ -164,7 +163,7 @@ class PMPluginRegistry
     /**
      * Save the current instance to the plugin singleton
      */
-    public function save ()
+    function save ()
     {
         file_put_contents( PATH_DATA_SITE . 'plugin.singleton', $this->serializeInstance() );
     }
@@ -176,34 +175,41 @@ class PMPluginRegistry
      * @param unknown_type $sNamespace
      * @param unknown_type $sFilename
      */
-    public function registerPlugin ($sNamespace, $sFilename = null)
+    public function registerPlugin($sNamespace, $sFilename=null)
     {
         //require_once ($sFilename);
 
-
         $sClassName = $sNamespace . "plugin";
-        $plugin = new $sClassName( $sNamespace, $sFilename );
+        $plugin = new $sClassName($sNamespace, $sFilename);
 
-        if (isset( $this->_aPluginDetails[$sNamespace] )) {
+        if (isset($this->_aPluginDetails[$sNamespace])) {
             $this->_aPluginDetails[$sNamespace]->iVersion = $plugin->iVersion;
 
             return;
         }
 
-        $detail = new pluginDetail( $sNamespace, $sClassName, $sFilename, $plugin->sFriendlyName, $plugin->sPluginFolder, $plugin->sDescription, $plugin->sSetupPage, $plugin->iVersion );
+        $detail = new pluginDetail(
+            $sNamespace,
+            $sClassName,
+            $sFilename,
+            $plugin->sFriendlyName,
+            $plugin->sPluginFolder,
+            $plugin->sDescription,
+            $plugin->sSetupPage,
+            $plugin->iVersion
+        );
 
-        if (isset( $plugin->aWorkspaces )) {
+        if (isset($plugin->aWorkspaces)) {
             $detail->aWorkspaces = $plugin->aWorkspaces;
         }
 
-        if (isset( $plugin->bPrivate )) {
+        if (isset($plugin->bPrivate)) {
             $detail->bPrivate = $plugin->bPrivate;
         }
 
         //if (isset($this->_aPluginDetails[$sNamespace])){
         //    $detail->enabled = $this->_aPluginDetails[$sNamespace]->enabled;
         //}
-
 
         $this->_aPluginDetails[$sNamespace] = $detail;
     }
@@ -213,14 +219,13 @@ class PMPluginRegistry
      *
      * @param unknown_type $sFilename
      */
-    public function getPluginDetails ($sFilename)
+    function getPluginDetails ($sFilename)
     {
         foreach ($this->_aPluginDetails as $key => $row) {
-            if ($sFilename == baseName( $row->sFilename )) {
+            if ($sFilename == baseName( $row->sFilename ))
                 return $row;
-            }
         }
-        return null;
+        return NULL;
     }
 
     /**
@@ -228,12 +233,11 @@ class PMPluginRegistry
      *
      * @param unknown_type $sNamespace
      */
-    public function enablePlugin ($sNamespace)
+    function enablePlugin ($sNamespace)
     {
         foreach ($this->_aPluginDetails as $namespace => $detail) {
             if ($sNamespace == $namespace) {
-                $this->registerFolder( $sNamespace, $sNamespace, $detail->sPluginFolder );
-                //register the default directory, later we can have more
+                $this->registerFolder( $sNamespace, $sNamespace, $detail->sPluginFolder ); //register the default directory, later we can have more
                 $this->_aPluginDetails[$sNamespace]->enabled = true;
                 $oPlugin = new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
                 $this->_aPlugins[$detail->sNamespace] = $oPlugin;
@@ -251,7 +255,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $sNamespace
      */
-    public function disablePlugin ($sNamespace, $eventPlugin = 1)
+    function disablePlugin ($sNamespace, $eventPlugin = 1)
     {
         $sw = false;
 
@@ -276,19 +280,16 @@ class PMPluginRegistry
         }
 
         foreach ($this->_aMenus as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aMenus[$key] );
-            }
         }
         foreach ($this->_aFolders as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aFolders[$key] );
-            }
         }
         foreach ($this->_aTriggers as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aTriggers[$key] );
-            }
         }
         foreach ($this->_aDashlets as $key => $detail) {
             if ($detail == $sNamespace) {
@@ -296,49 +297,40 @@ class PMPluginRegistry
             }
         }
         foreach ($this->_aReports as $key => $detail) {
-            if ($detail == $sNamespace) {
+            if ($detail == $sNamespace)
                 unset( $this->_aReports[$key] );
-            }
         }
         foreach ($this->_aPmFunctions as $key => $detail) {
-            if ($detail == $sNamespace) {
+            if ($detail == $sNamespace)
                 unset( $this->_aPmFunctions[$key] );
-            }
         }
         foreach ($this->_aRedirectLogin as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aRedirectLogin[$key] );
-            }
         }
         foreach ($this->_aSteps as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aSteps[$key] );
-            }
         }
         foreach ($this->_aToolbarFiles as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aToolbarFiles[$key] );
-            }
         }
         foreach ($this->_aCSSStyleSheets as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aCSSStyleSheets[$key] );
-            }
         }
         foreach ($this->_aCaseSchedulerPlugin as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aCaseSchedulerPlugin[$key] );
-            }
         }
         foreach ($this->_aTaskExtendedProperties as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aTaskExtendedProperties[$key] );
-            }
         }
         foreach ($this->_aDashboardPages as $key => $detail) {
-            if ($detail->sNamespace == $sNamespace) {
+            if ($detail->sNamespace == $sNamespace)
                 unset( $this->_aDashboardPages[$key] );
-            }
         }
 
         //unregistering javascripts from this plugin
@@ -352,16 +344,14 @@ class PMPluginRegistry
      *
      * @param unknown_type $sNamespace
      */
-    public function getStatusPlugin ($sNamespace)
+    function getStatusPlugin ($sNamespace)
     {
         foreach ($this->_aPluginDetails as $namespace => $detail) {
-            if ($sNamespace == $namespace) {
-                if ($this->_aPluginDetails[$sNamespace]->enabled) {
+            if ($sNamespace == $namespace)
+                if ($this->_aPluginDetails[$sNamespace]->enabled)
                     return 'enabled';
-                } else {
+                else
                     return 'disabled';
-                }
-            }
         }
         return 0;
     }
@@ -373,11 +363,13 @@ class PMPluginRegistry
      *
      * @return bool true if enabled, false otherwise
      */
-    public function installPluginArchive ($filename, $pluginName)
+    function installPluginArchive ($filename, $pluginName)
     {
         G::LoadThirdParty( "pear/Archive", "Tar" );
         $tar = new Archive_Tar( $filename );
+
         $files = $tar->listContent();
+
         $plugins = array ();
         $namePlugin = array ();
         foreach ($files as $f) {
@@ -403,38 +395,40 @@ class PMPluginRegistry
         $pluginFile = "$pluginName.php";
 
         /*
-        $oldPluginStatus = $this->getStatusPlugin($pluginFile);
+    $oldPluginStatus = $this->getStatusPlugin($pluginFile);
 
-        if ($pluginStatus != 0) {
-          $oldDetails = $this->getPluginDetails($pluginFile);
-          $oldVersion = $oldDetails->iVersion;
-        } else {
-          $oldDetails = NULL;
-          $oldVersion = NULL;
-        }
-        */
+    if ($pluginStatus != 0) {
+      $oldDetails = $this->getPluginDetails($pluginFile);
+      $oldVersion = $oldDetails->iVersion;
+    } else {
+      $oldDetails = NULL;
+      $oldVersion = NULL;
+    }
+    */
 
         //$pluginIni = $tar->extractInString("$pluginName.ini");
         //$pluginConfig = parse_ini_string($pluginIni);
+
+
         /*
-        if (!empty($oClass->aDependences)) {
-          foreach ($oClass->aDependences as $aDependence) {
-            if (file_exists(PATH_PLUGINS . $aDependence['sClassName'] . '.php')) {
-              require_once PATH_PLUGINS . $aDependence['sClassName'] . '.php';
-              if (!$oPluginRegistry->getPluginDetails($aDependence['sClassName'] . '.php')) {
-                throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
-              }
-            }
-            else {
-              throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
-            }
+    if (!empty($oClass->aDependences)) {
+      foreach ($oClass->aDependences as $aDependence) {
+        if (file_exists(PATH_PLUGINS . $aDependence['sClassName'] . '.php')) {
+          require_once PATH_PLUGINS . $aDependence['sClassName'] . '.php';
+          if (!$oPluginRegistry->getPluginDetails($aDependence['sClassName'] . '.php')) {
+            throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
           }
         }
-        unset($oClass);
-        if ($fVersionOld > $fVersionNew) {
-          throw new Exception('A recent version of this plugin was already installed.');
+        else {
+          throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
         }
-        */
+      }
+    }
+    unset($oClass);
+    if ($fVersionOld > $fVersionNew) {
+      throw new Exception('A recent version of this plugin was already installed.');
+    }
+    */
 
         $res = $tar->extract( PATH_PLUGINS );
 
@@ -452,7 +446,7 @@ class PMPluginRegistry
         $this->save();
     }
 
-    public function uninstallPlugin ($sNamespace)
+    function uninstallPlugin ($sNamespace)
     {
         $pluginFile = $sNamespace . ".php";
 
@@ -478,6 +472,7 @@ class PMPluginRegistry
 
                 ///////
                 $this->save();
+
                 ///////
                 $pluginDir = PATH_PLUGINS . $detail->sPluginFolder;
 
@@ -492,13 +487,14 @@ class PMPluginRegistry
                 ///////
                 $this->uninstallPluginWorkspaces( array ($sNamespace
                 ) );
+
                 ///////
                 break;
             }
         }
     }
 
-    public function uninstallPluginWorkspaces ($arrayPlugin)
+    function uninstallPluginWorkspaces ($arrayPlugin)
     {
         G::LoadClass( "system" );
         G::LoadClass( "wsTools" );
@@ -537,7 +533,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $sNamespace
      */
-    public function installPlugin ($sNamespace)
+    function installPlugin ($sNamespace)
     {
         try {
             foreach ($this->_aPluginDetails as $namespace => $detail) {
@@ -565,13 +561,12 @@ class PMPluginRegistry
      * @param unknown_type $sMenuId
      * @param unknown_type $sFilename
      */
-    public function registerMenu ($sNamespace, $sMenuId, $sFilename)
+    function registerMenu ($sNamespace, $sMenuId, $sFilename)
     {
         $found = false;
         foreach ($this->_aMenus as $row => $detail) {
-            if ($sMenuId == $detail->sMenuId && $sNamespace == $detail->sNamespace) {
+            if ($sMenuId == $detail->sMenuId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
         }
         if (! $found) {
             $menuDetail = new menuDetail( $sNamespace, $sMenuId, $sFilename );
@@ -584,7 +579,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $className
      */
-    public function registerDashlets ($namespace)
+    function registerDashlets ($namespace)
     {
         $found = false;
         foreach ($this->_aDashlets as $row => $detail) {
@@ -603,7 +598,7 @@ class PMPluginRegistry
      * @param unknown_type $sNamespace
      * @param unknown_type $sPage
      */
-    public function registerCss ($sNamespace, $sCssFile)
+    function registerCss ($sNamespace, $sCssFile)
     {
         $found = false;
         foreach ($this->_aCSSStyleSheets as $row => $detail) {
@@ -623,7 +618,7 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getRegisteredCss ()
+    function getRegisteredCss ()
     {
         return $this->_aCSSStyleSheets;
     }
@@ -635,7 +630,7 @@ class PMPluginRegistry
      * @param string $coreJsFile
      * @param array/string $pluginJsFile
      */
-    public function registerJavascript ($sNamespace, $sCoreJsFile, $pluginJsFile)
+    function registerJavascript ($sNamespace, $sCoreJsFile, $pluginJsFile)
     {
 
         foreach ($this->_aJavascripts as $i => $js) {
@@ -644,7 +639,7 @@ class PMPluginRegistry
                     if (! in_array( $pluginJsFile, $this->_aJavascripts[$i]->pluginJsFile )) {
                         $this->_aJavascripts[$i]->pluginJsFile[] = $pluginJsFile;
                     }
-                } elseif (is_array( $pluginJsFile )) {
+                } else if (is_array( $pluginJsFile )) {
                     $this->_aJavascripts[$i]->pluginJsFile = array_unique( array_merge( $pluginJsFile, $this->_aJavascripts[$i]->pluginJsFile ) );
                 } else {
                     throw new Exception( 'Invalid third param, $pluginJsFile should be a string or array - ' . gettype( $pluginJsFile ) . ' given.' );
@@ -660,7 +655,7 @@ class PMPluginRegistry
 
         if (is_string( $pluginJsFile )) {
             $js->pluginJsFile[] = $pluginJsFile;
-        } elseif (is_array( $pluginJsFile )) {
+        } else if (is_array( $pluginJsFile )) {
             $js->pluginJsFile = array_merge( $js->pluginJsFile, $pluginJsFile );
         } else {
             throw new Exception( 'Invalid third param, $pluginJsFile should be a string or array - ' . gettype( $pluginJsFile ) . ' given.' );
@@ -674,7 +669,7 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getRegisteredJavascript ()
+    function getRegisteredJavascript ()
     {
         return $this->_aJavascripts;
     }
@@ -686,7 +681,7 @@ class PMPluginRegistry
      * @param string $sNamespace
      * @return array
      */
-    public function getRegisteredJavascriptBy ($sCoreJsFile, $sNamespace = '')
+    function getRegisteredJavascriptBy ($sCoreJsFile, $sNamespace = '')
     {
         $scripts = array ();
 
@@ -713,10 +708,9 @@ class PMPluginRegistry
      * @param string $sCoreJsFile
      * @return array
      */
-    public function unregisterJavascripts ($sNamespace, $sCoreJsFile = '')
+    function unregisterJavascripts ($sNamespace, $sCoreJsFile = '')
     {
-        if ($sCoreJsFile == '') {
-            // if $sCoreJsFile=='' unregister all js from this namespace
+        if ($sCoreJsFile == '') { // if $sCoreJsFile=='' unregister all js from this namespace
             foreach ($this->_aJavascripts as $i => $js) {
                 if ($sNamespace == $js->sNamespace) {
                     unset( $this->_aJavascripts[$i] );
@@ -742,13 +736,12 @@ class PMPluginRegistry
      * @param unknown_type $sMenuId
      * @param unknown_type $sFilename
      */
-    public function registerReport ($sNamespace)
+    function registerReport ($sNamespace)
     {
         $found = false;
         foreach ($this->_aReports as $row => $detail) {
-            if ($sNamespace == $detail) {
+            if ($sNamespace == $detail)
                 $found = true;
-            }
         }
         if (! $found) {
             $this->_aReports[] = $sNamespace;
@@ -762,13 +755,12 @@ class PMPluginRegistry
      * @param unknown_type $sMenuId
      * @param unknown_type $sFilename
      */
-    public function registerPmFunction ($sNamespace)
+    function registerPmFunction ($sNamespace)
     {
         $found = false;
         foreach ($this->_aPmFunctions as $row => $detail) {
-            if ($sNamespace == $detail) {
+            if ($sNamespace == $detail)
                 $found = true;
-            }
         }
         if (! $found) {
             $this->_aPmFunctions[] = $sNamespace;
@@ -782,14 +774,12 @@ class PMPluginRegistry
      * @param unknown_type $sRole
      * @param unknown_type $sPath
      */
-    public function registerRedirectLogin ($sNamespace, $sRole, $sPathMethod)
+    function registerRedirectLogin ($sNamespace, $sRole, $sPathMethod)
     {
         $found = false;
         foreach ($this->_aRedirectLogin as $row => $detail) {
-            if (($sNamespace == $detail->sNamespace) && ($sRole == $detail->sRoleCode)) {
-                //Filters based on Workspace and Role Code
+            if (($sNamespace == $detail->sNamespace) && ($sRole == $detail->sRoleCode)) //Filters based on Workspace and Role Code
                 $found = true;
-            }
         }
         if (! $found) {
             $this->_aRedirectLogin[] = new redirectDetail( $sNamespace, $sRole, $sPathMethod );
@@ -801,14 +791,12 @@ class PMPluginRegistry
      *
      * @param unknown_type $sFolderName
      */
-    public function registerFolder ($sNamespace, $sFolderId, $sFolderName)
+    function registerFolder ($sNamespace, $sFolderId, $sFolderName)
     {
         $found = false;
-        foreach ($this->_aFolders as $row => $detail) {
-            if ($sFolderId == $detail->sFolderId && $sNamespace == $detail->sNamespace) {
+        foreach ($this->_aFolders as $row => $detail)
+            if ($sFolderId == $detail->sFolderId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
-        }
 
         if (! $found) {
             $this->_aFolders[] = new folderDetail( $sNamespace, $sFolderId, $sFolderName );
@@ -820,14 +808,12 @@ class PMPluginRegistry
      *
      * @param unknown_type $sFolderName
      */
-    public function registerStep ($sNamespace, $sStepId, $sStepName, $sStepTitle, $setupStepPage = '')
+    function registerStep ($sNamespace, $sStepId, $sStepName, $sStepTitle, $setupStepPage = '')
     {
         $found = false;
-        foreach ($this->_aSteps as $row => $detail) {
-            if ($sStepId == $detail->sStepId && $sNamespace == $detail->sNamespace) {
+        foreach ($this->_aSteps as $row => $detail)
+            if ($sStepId == $detail->sStepId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
-        }
 
         if (! $found) {
             $this->_aSteps[] = new stepDetail( $sNamespace, $sStepId, $sStepName, $sStepTitle, $setupStepPage );
@@ -839,7 +825,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $sFolderName
      */
-    public function isRegisteredFolder ($sFolderName)
+    function isRegisteredFolder ($sFolderName)
     {
         foreach ($this->_aFolders as $row => $folder) {
             if ($sFolderName == $folder->sFolderName && is_dir( PATH_PLUGINS . $folder->sFolderName )) {
@@ -856,7 +842,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $menuId
      */
-    public function getMenus ($menuId)
+    function getMenus ($menuId)
     {
         foreach ($this->_aMenus as $row => $detail) {
             if ($menuId == $detail->sMenuId && file_exists( $detail->sFilename )) {
@@ -870,7 +856,7 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getDashlets ()
+    function getDashlets ()
     {
         return $this->_aDashlets;
     }
@@ -880,7 +866,7 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getReports ()
+    function getReports ()
     {
         return $this->_aReports;
         $report = array ();
@@ -895,7 +881,7 @@ class PMPluginRegistry
      * This function returns all pmFunctions registered
      * @ array
      */
-    public function getPmFunctions ()
+    function getPmFunctions ()
     {
         return $this->_aPmFunctions;
         $pmf = array ();
@@ -911,7 +897,7 @@ class PMPluginRegistry
      *
      * @return string
      */
-    public function getSteps ()
+    function getSteps ()
     {
         return $this->_aSteps;
     }
@@ -921,7 +907,7 @@ class PMPluginRegistry
      *
      * @return string
      */
-    public function getRedirectLogins ()
+    function getRedirectLogins ()
     {
         return $this->_aRedirectLogin;
     }
@@ -932,10 +918,11 @@ class PMPluginRegistry
      * @param unknown_type $menuId
      * @return object
      */
-    public function executeTriggers ($triggerId, $oData)
+    function executeTriggers ($triggerId, $oData)
     {
         foreach ($this->_aTriggers as $row => $detail) {
             if ($triggerId == $detail->sTriggerId) {
+
                 //review all folders registered for this namespace
                 $found = false;
                 $classFile = '';
@@ -958,9 +945,8 @@ class PMPluginRegistry
                         return;
                     }
                     return $response;
-                } else {
+                } else
                     print "error in call method " . $detail->sTriggerName;
-                }
             }
         }
     }
@@ -970,11 +956,12 @@ class PMPluginRegistry
      *
      * @param unknown_type $triggerId
      */
-    public function existsTrigger ($triggerId)
+    function existsTrigger ($triggerId)
     {
         $found = false;
         foreach ($this->_aTriggers as $row => $detail) {
             if ($triggerId == $detail->sTriggerId) {
+
                 //review all folders registered for this namespace
                 foreach ($this->_aFolders as $row => $folder) {
                     $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName . '.php';
@@ -993,11 +980,12 @@ class PMPluginRegistry
      * @param unknown_type $triggerId
      * @return object
      */
-    public function getTriggerInfo ($triggerId)
+    function getTriggerInfo ($triggerId)
     {
         $found = null;
         foreach ($this->_aTriggers as $row => $detail) {
             if ($triggerId == $detail->sTriggerId) {
+
                 //review all folders registered for this namespace
                 foreach ($this->_aFolders as $row => $folder) {
                     $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName . '.php';
@@ -1017,13 +1005,12 @@ class PMPluginRegistry
      * @param unknown_type $sMethodFunction
      * @return void
      */
-    public function registerTrigger ($sNamespace, $sTriggerId, $sTriggerName)
+    function registerTrigger ($sNamespace, $sTriggerId, $sTriggerName)
     {
         $found = false;
         foreach ($this->_aTriggers as $row => $detail) {
-            if ($sTriggerId == $detail->sTriggerId && $sNamespace == $detail->sNamespace) {
+            if ($sTriggerId == $detail->sTriggerId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
         }
         if (! $found) {
             $triggerDetail = new triggerDetail( $sNamespace, $sTriggerId, $sTriggerName );
@@ -1037,25 +1024,25 @@ class PMPluginRegistry
      * @param unknown_type $sNamespace
      * @return void
      */
-    public function &getPlugin ($sNamespace)
+    function &getPlugin ($sNamespace)
     {
         if (array_key_exists( $sNamespace, $this->_aPlugins )) {
             return $this->_aPlugins[$sNamespace];
         }
         /*
-        $aDetails = KTUtil::arrayGet($this->_aPluginDetails, $sNamespace);
-        if (empty($aDetails)) {
-            return null;
-        }
-        $sFilename = $aDetails[2];
-        if (!empty($sFilename)) {
-            require_once($sFilename);
-        }
-        $sClassName = $aDetails[0];
-        $oPlugin =& new $sClassName($sFilename);
-        $this->_aPlugins[$sNamespace] =& $oPlugin;
-        return $oPlugin;
-        */
+     $aDetails = KTUtil::arrayGet($this->_aPluginDetails, $sNamespace);
+     if (empty($aDetails)) {
+     return null;
+     }
+     $sFilename = $aDetails[2];
+     if (!empty($sFilename)) {
+     require_once($sFilename);
+     }
+     $sClassName = $aDetails[0];
+     $oPlugin =& new $sClassName($sFilename);
+     $this->_aPlugins[$sNamespace] =& $oPlugin;
+     return $oPlugin;
+     */
     }
 
     /**
@@ -1065,13 +1052,12 @@ class PMPluginRegistry
      * @param unknown_type $filename
      * @return void
      */
-    public function setCompanyLogo ($sNamespace, $filename)
+    function setCompanyLogo ($sNamespace, $filename)
     {
         $found = false;
         foreach ($this->_aPluginDetails as $row => $detail) {
-            if ($sNamespace == $detail->sNamespace) {
+            if ($sNamespace == $detail->sNamespace)
                 $this->_aPluginDetails[$sNamespace]->sCompanyLogo = $filename;
-            }
         }
     }
 
@@ -1081,13 +1067,12 @@ class PMPluginRegistry
      * @param unknown_type $default
      * @return void
      */
-    public function getCompanyLogo ($default)
+    function getCompanyLogo ($default)
     {
         $sCompanyLogo = $default;
         foreach ($this->_aPluginDetails as $row => $detail) {
-            if (trim( $detail->sCompanyLogo ) != '') {
+            if (trim( $detail->sCompanyLogo ) != '')
                 $sCompanyLogo = $detail->sCompanyLogo;
-            }
         }
         return $sCompanyLogo;
     }
@@ -1098,7 +1083,7 @@ class PMPluginRegistry
      * @param unknown_type $default
      * @return void
      */
-    public function setupPlugins ()
+    function setupPlugins ()
     {
         try {
             $iPlugins = 0;
@@ -1114,9 +1099,8 @@ class PMPluginRegistry
                             $aux = explode( chr( 92 ), $detail->sFilename );
                         }
                         $sFilename = PATH_PLUGINS . $aux[count( $aux ) - 1];
-                        if (! file_exists( $sFilename )) {
+                        if (! file_exists( $sFilename ))
                             continue;
-                        }
                         require_once $sFilename;
                         if (class_exists( $detail->sClassName )) {
                             $oPlugin = new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
@@ -1148,7 +1132,7 @@ class PMPluginRegistry
      * @param object $oData
      * @return object
      */
-    public function executeMethod ($sNamespace, $methodName, $oData)
+    function executeMethod ($sNamespace, $methodName, $oData)
     {
         $response = null;
         try {
@@ -1186,9 +1170,9 @@ class PMPluginRegistry
      * @param string $sNamespace
      * @return object
      */
-    public function getFieldsForPageSetup ($sNamespace)
+    function getFieldsForPageSetup ($sNamespace)
     {
-        $oData = null;
+        $oData = NULL;
         return $this->executeMethod( $sNamespace, 'getFieldsForPageSetup', $oData );
     }
 
@@ -1198,21 +1182,20 @@ class PMPluginRegistry
      * @param string $sNamespace
      * @return void
      */
-    public function updateFieldsForPageSetup ($sNamespace, $oData)
+    function updateFieldsForPageSetup ($sNamespace, $oData)
     {
         if (! isset( $this->_aPluginDetails[$sNamespace] )) {
             throw (new Exception( "The namespace '$sNamespace' doesn't exist in plugins folder." ));
         }
-
+        ;
         return $this->executeMethod( $sNamespace, 'updateFieldsForPageSetup', $oData );
     }
 
-    public function eevalidate ()
+    function eevalidate ()
     {
         $fileL = PATH_DATA_SITE . 'license.dat';
         $fileS = PATH_DATA . 'license.dat';
-        if ((file_exists( $fileL )) || (file_exists( $fileS ))) {
-            //Found a License
+        if ((file_exists( $fileL )) || (file_exists( $fileS ))) { //Found a License
             if (class_exists( 'pmLicenseManager' )) {
                 $sSerializedFile = PATH_DATA_SITE . 'lmn.singleton';
                 $pmLicenseManagerO = & pmLicenseManager::getSingleton();
@@ -1230,13 +1213,12 @@ class PMPluginRegistry
      * @param unknown_type $sToolbarId
      * @param unknown_type $sFilename
      */
-    public function registerToolbarFile ($sNamespace, $sToolbarId, $sFilename)
+    function registerToolbarFile ($sNamespace, $sToolbarId, $sFilename)
     {
         $found = false;
         foreach ($this->_aToolbarFiles as $row => $detail) {
-            if ($sToolbarId == $detail->sToolbarId && $sNamespace == $detail->sNamespace) {
+            if ($sToolbarId == $detail->sToolbarId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
         }
         if (! $found) {
             $toolbarDetail = new toolbarDetail( $sNamespace, $sToolbarId, $sFilename );
@@ -1249,7 +1231,7 @@ class PMPluginRegistry
      *
      * @param unknown_type $sToolbarId (NORMAL, GRID)
      */
-    public function getToolbarOptions ($sToolbarId)
+    function getToolbarOptions ($sToolbarId)
     {
         foreach ($this->_aToolbarFiles as $row => $detail) {
             if ($sToolbarId == $detail->sToolbarId && file_exists( $detail->sFilename )) {
@@ -1261,14 +1243,12 @@ class PMPluginRegistry
     /**
      * Register a Case Scheduler Plugin
      */
-    public function registerCaseSchedulerPlugin ($sNamespace, $sActionId, $sActionForm, $sActionSave, $sActionExecute, $sActionGetFields)
+    function registerCaseSchedulerPlugin ($sNamespace, $sActionId, $sActionForm, $sActionSave, $sActionExecute, $sActionGetFields)
     {
         $found = false;
-        foreach ($this->_aCaseSchedulerPlugin as $row => $detail) {
-            if ($sActionId == $detail->sActionId && $sNamespace == $detail->sNamespace) {
+        foreach ($this->_aCaseSchedulerPlugin as $row => $detail)
+            if ($sActionId == $detail->sActionId && $sNamespace == $detail->sNamespace)
                 $found = true;
-            }
-        }
 
         if (! $found) {
             $this->_aCaseSchedulerPlugin[] = new caseSchedulerPlugin( $sNamespace, $sActionId, $sActionForm, $sActionSave, $sActionExecute, $sActionGetFields );
@@ -1280,7 +1260,7 @@ class PMPluginRegistry
      *
      * @return string
      */
-    public function getCaseSchedulerPlugins ()
+    function getCaseSchedulerPlugins ()
     {
         return $this->_aCaseSchedulerPlugin;
     }
@@ -1292,7 +1272,7 @@ class PMPluginRegistry
      * @param unknown_type $sPage
      */
 
-    public function registerTaskExtendedProperty ($sNamespace, $sPage, $sName, $sIcon)
+    function registerTaskExtendedProperty ($sNamespace, $sPage, $sName, $sIcon)
     {
         $found = false;
         foreach ($this->_aTaskExtendedProperties as $row => $detail) {
@@ -1316,7 +1296,7 @@ class PMPluginRegistry
      * @param unknown_type $sName
      * @param unknown_type $sIcon
      */
-    public function registerDashboardPage ($sNamespace, $sPage, $sName, $sIcon)
+    function registerDashboardPage ($sNamespace, $sPage, $sName, $sIcon)
     {
         foreach ($this->_aDashboardPages as $row => $detail) {
             if ($sPage == $detail->sPage && $sNamespace == $detail->sNamespace) {
@@ -1375,6 +1355,7 @@ class PMPluginRegistry
                 unset( $this->_restServices[$i] );
             }
         }
+
         // Re-index when all js were unregistered
         $this->_restServices = array_values( $this->_restServices );
     }
@@ -1400,7 +1381,7 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getDashboardPages ()
+    function getDashboardPages ()
     {
         return $this->_aDashboardPages;
     }
@@ -1410,19 +1391,18 @@ class PMPluginRegistry
      *
      * @return array
      */
-    public function getTaskExtendedProperties ()
+    function getTaskExtendedProperties ()
     {
         return $this->_aTaskExtendedProperties;
     }
 
-    public function registerDashboard ()
+    function registerDashboard ()
     {
         // Dummy function for backwards compatibility
     }
 
-    public function getAttributes ()
+    function getAttributes ()
     {
         return get_object_vars( $this );
     }
 }
-

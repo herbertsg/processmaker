@@ -40,4 +40,3 @@ $aRequiredPermissions = array('PM_LOGIN',
                               'PM_FOLDERS_ADD_FOLDER',
                               'PM_FOLDERS_ADD_FILE'
                               );
-

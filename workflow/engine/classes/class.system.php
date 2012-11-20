@@ -38,14 +38,15 @@
 
 class System
 {
-    public $sFilename;
-    public $sFilesList;
-    public $sUpgradeFileList;
-    public $aErrors;
-    public $aWorkspaces;
-    public $sRevision;
-    public $sPath;
-    public $newSystemClass;
+
+    var $sFilename;
+    var $sFilesList;
+    var $sUpgradeFileList;
+    var $aErrors;
+    var $aWorkspaces;
+    var $sRevision;
+    var $sPath;
+    var $newSystemClass;
 
     /**
      * List currently installed plugins
@@ -83,9 +84,8 @@ class System
         $oDirectory = dir( PATH_DB );
         $aWorkspaces = array ();
         foreach (glob( PATH_DB . "*" ) as $filename) {
-            if (is_dir( $filename ) && file_exists( $filename . "/db.php" )) {
+            if (is_dir( $filename ) && file_exists( $filename . "/db.php" ))
                 $aWorkspaces[] = new workspaceTools( basename( $filename ) );
-            }
         }
         return $aWorkspaces;
     }
@@ -105,9 +105,8 @@ class System
                 include (PATH_METHODS . 'login/version-pmos.php');
             } else {
                 $version = self::getVersionFromGit();
-                if ($version === false) {
+                if ($version === false)
                     $version = 'Development Version';
-                }
                 define( 'PM_VERSION', $version );
             }
         }
@@ -120,14 +119,12 @@ class System
      * @author Alexandre Rosenfeld <alexandre@colosa.com>
      * @return string branch and tag information
      */
-    public static function getVersionFromGit ($dir = null)
+    public static function getVersionFromGit ($dir = NULL)
     {
-        if ($dir == null) {
+        if ($dir == NULL)
             $dir = PATH_TRUNK;
-        }
-        if (! file_exists( "$dir/.git" )) {
+        if (! file_exists( "$dir/.git" ))
             return false;
-        }
         if (exec( "cd $dir && git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/^* \(.*\)$/(Branch \\1)/'", $target )) {
             exec( "cd $dir && git describe", $target );
             return implode( ' ', $target );
@@ -155,34 +152,32 @@ class System
         }
 
         /* For distros with the lsb_release, this returns a one-line description of
-        * the distro name, such as "CentOS release 5.3 (Final)" or "Ubuntu 10.10"
-        */
+     * the distro name, such as "CentOS release 5.3 (Final)" or "Ubuntu 10.10"
+     */
         $distro = exec( "lsb_release -d -s 2> /dev/null" );
 
         /* For distros without lsb_release, we look for *release (such as
-        * redhat-release, gentoo-release, SuSE-release, etc) or *version (such as
-        * debian_version, slackware-version, etc)
-        */
+     * redhat-release, gentoo-release, SuSE-release, etc) or *version (such as
+     * debian_version, slackware-version, etc)
+     */
         if (empty( $distro )) {
             foreach (glob( "/etc/*release" ) as $filename) {
                 $distro = trim( file_get_contents( $filename ) );
-                if (! empty( $distro )) {
+                if (! empty( $distro ))
                     break;
-                }
             }
             if (empty( $distro )) {
                 foreach (glob( "/etc/*version" ) as $filename) {
                     $distro = trim( file_get_contents( $filename ) );
-                    if (! empty( $distro )) {
+                    if (! empty( $distro ))
                         break;
-                    }
                 }
             }
         }
 
         /* CentOS returns a string with quotes, remove them and append
-        * the OS name (such as LINUX, WINNT, DARWIN, etc)
-        */
+     * the OS name (such as LINUX, WINNT, DARWIN, etc)
+     */
         $distro = trim( $distro, "\"" ) . " (" . PHP_OS . ")";
 
         $Fields = array ();
@@ -215,21 +210,18 @@ class System
 
     public static function verifyChecksum ()
     {
-        if (! file_exists( PATH_TRUNK . "checksum.txt" )) {
+        if (! file_exists( PATH_TRUNK . "checksum.txt" ))
             return false;
-        }
         $lines = explode( "\n", file_get_contents( PATH_TRUNK . "checksum.txt" ) );
         $result = array ("diff" => array (),"missing" => array ()
         );
         foreach ($lines as $line) {
-            if (empty( $line )) {
+            if (empty( $line ))
                 continue;
-            }
             list ($checksum, $empty, $filename) = explode( " ", $line );
             //Skip xmlform because these files always change.
-            if (strpos( $filename, "/xmlform/" ) !== false) {
+            if (strpos( $filename, "/xmlform/" ) !== false)
                 continue;
-            }
             if (file_exists( realpath( $filename ) )) {
                 if (strcmp( $checksum, md5_file( realpath( $filename ) ) ) != 0) {
                     $result['diff'][] = $filename;
@@ -250,7 +242,7 @@ class System
      * param
      * @return boolean
      */
-    public function verifyFileForUpgrade ()
+    function verifyFileForUpgrade ()
     {
         $upgradeFilename = isset( $_FILES['form']['name']['UPGRADE_FILENAME'] ) ? $_FILES['form']['name']['UPGRADE_FILENAME'] : '';
         $tempFilename = isset( $_FILES['form']['tmp_name']['UPGRADE_FILENAME'] ) ? $_FILES['form']['tmp_name']['UPGRADE_FILENAME'] : '';
@@ -274,7 +266,7 @@ class System
      * param
      * @return void
      */
-    public function getUpgradedFilesList ()
+    function getUpgradedFilesList ()
     {
         G::LoadClass( 'archive' );
         $this->sFilesList = new gzip_file( $this->sFilename );
@@ -302,7 +294,7 @@ class System
      * param
      * @return boolean
      */
-    public function verifyForBootstrapUpgrade ()
+    function verifyForBootstrapUpgrade ()
     {
         foreach ($this->sFilesList->files as $sFile) {
             if (basename( $sFile ) == 'schema.xml') {
@@ -322,7 +314,7 @@ class System
      * param
      * @return array
      */
-    public function upgrade ()
+    function upgrade ()
     {
         //get special files
         $sListFile = '';
@@ -425,9 +417,8 @@ class System
                     }
                 } else {
                     $dirName = PATH_TRUNK . $sFilePath;
-                    if ($dirName[strlen( $dirName ) - 1] == '/') {
+                    if ($dirName[strlen( $dirName ) - 1] == '/')
                         $dirName = substr( $dirName, 0, strlen( $dirName ) - 1 );
-                    }
                     $auxDir = explode( '/', $dirName );
                     array_pop( $auxDir );
                     $parentDir = implode( '/', $auxDir );
@@ -471,15 +462,13 @@ class System
                                 if (is_writable( $targetFileName )) {
                                     $this->pm_copy( $this->sPath . 'processmaker' . PATH_SEP . $sFilePath, $targetFileName );
                                     @chmod( $targetFileName, 0666 );
-                                } else {
+                                } else
                                     throw (new Exception( "Failed to open file: Permission denied in $targetFileName." ));
-                                }
                             } else {
                                 $this->pm_copy( $this->sPath . 'processmaker' . PATH_SEP . $sFilePath, $targetFileName );
                                 @chmod( $targetFileName, 0666 );
                             }
-                        } else {
-                            //delete unused files
+                        } else { //delete unused files
                             if (file_exists( $targetFileName )) {
                                 @unlink( $targetFileName );
                             }
@@ -489,7 +478,7 @@ class System
                             mkdir( PATH_TRUNK . $sFilePath, 0777 );
                         }
                     }
-                } elseif (file_exists( PATH_TRUNK . $sFilePath ) && $sFilePath != 'workflow/engine/gulliver') {
+                } else if (file_exists( PATH_TRUNK . $sFilePath ) && $sFilePath != 'workflow/engine/gulliver') {
                     @unlink( PATH_TRUNK . $sFilePath );
                 }
             }
@@ -523,9 +512,8 @@ class System
             fclose( $fp );
         }
 
-        if ($missed > 0) {
+        if ($missed > 0)
             $aErrors[] = "Warning: there are $missed missed files. ";
-        }
         $aErrors[] = $missedFiles;
 
         if ($distinct > 0) {
@@ -569,7 +557,9 @@ class System
         while (($sObject = $oDirectory->read())) {
             if (is_dir( PATH_DB . $sObject ) && substr( $sObject, 0, 1 ) != '.') {
                 if (file_exists( PATH_DB . $sObject . PATH_SEP . 'db.php' )) {
+
                     eval( $this->getDatabaseCredentials( PATH_DB . $sObject . PATH_SEP . 'db.php' ) );
+
                 }
                 $aEnvironmentsUpdated[] = $sObject;
                 $aEnvironmentsDiff[] = $sObject;
@@ -639,7 +629,7 @@ class System
      * @param string $target
      * @return void
      */
-    public function pm_copy ($source, $target)
+    function pm_copy ($source, $target)
     {
         if (! is_dir( dirname( $target ) )) {
             G::mk_dir( dirname( $target ) );
@@ -659,7 +649,7 @@ class System
      * @param string $dbFile
      * @return $sContent
      */
-    public function getDatabaseCredentials ($dbFile)
+    function getDatabaseCredentials ($dbFile)
     {
         $sContent = file_get_contents( $dbFile );
         $sContent = str_replace( '<?php', '', $sContent );
@@ -690,11 +680,10 @@ class System
      */
     public static function getPluginSchema ($pluginName)
     {
-        if (file_exists( PATH_PLUGINS . $pluginName . "/config/schema.xml" )) {
+        if (file_exists( PATH_PLUGINS . $pluginName . "/config/schema.xml" ))
             return System::getSchema( PATH_PLUGINS . $pluginName . "/config/schema.xml" );
-        } else {
+        else
             return false;
-        }
     }
 
     /**
@@ -707,8 +696,8 @@ class System
     {
         /* This is the MySQL mapping that Propel uses (from MysqlPlatform.php) */
         $mysqlTypes = array ('NUMERIC' => "DECIMAL",'LONGVARCHAR' => "MEDIUMTEXT",'TIMESTAMP' => "DATETIME",'BU_TIMESTAMP' => "DATETIME",'BINARY' => "BLOB",'VARBINARY' => "MEDIUMBLOB",'LONGVARBINARY' => "LONGBLOB",'BLOB' => "LONGBLOB",'CLOB' => "LONGTEXT",
-        /* This is not from Propel, but is required to get INT right */
-        'INTEGER' => "INT"
+      /* This is not from Propel, but is required to get INT right */
+      'INTEGER' => "INT"
         );
 
         $aSchema = array ();
@@ -727,37 +716,33 @@ class System
                 $type = $oColumn->hasAttribute( 'type' ) ? strtoupper( $oColumn->getAttribute( 'type' ) ) : "VARCHAR";
 
                 /* Convert type to MySQL type according to Propel */
-                if (array_key_exists( $type, $mysqlTypes )) {
+                if (array_key_exists( $type, $mysqlTypes ))
                     $type = $mysqlTypes[$type];
-                }
 
-                $size = $oColumn->hasAttribute( 'size' ) ? $oColumn->getAttribute( 'size' ) : null;
+                $size = $oColumn->hasAttribute( 'size' ) ? $oColumn->getAttribute( 'size' ) : NULL;
                 /* Add default sizes from MySQL */
-                if ($type == "TINYINT" && ! $size) {
+                if ($type == "TINYINT" && ! $size)
                     $size = "4";
-                }
-                if ($type == "INT" && ! $size) {
+                if ($type == "INT" && ! $size)
                     $size = "11";
-                }
 
-                if ($size) {
+                if ($size)
                     $type = "$type($size)";
-                }
 
-                $required = $oColumn->hasAttribute( 'required' ) ? $oColumn->getAttribute( 'required' ) : null;
+                $required = $oColumn->hasAttribute( 'required' ) ? $oColumn->getAttribute( 'required' ) : NULL;
                 /* Convert $required to a bool */
                 $required = (in_array( strtolower( $required ), array ('1','true'
                 ) ));
 
-                $default = $oColumn->hasAttribute( 'default' ) ? $oColumn->getAttribute( 'default' ) : null;
+                $default = $oColumn->hasAttribute( 'default' ) ? $oColumn->getAttribute( 'default' ) : NULL;
 
-                $primaryKey = $oColumn->hasAttribute( 'primaryKey' ) ? $oColumn->getAttribute( 'primaryKey' ) : null;
+                $primaryKey = $oColumn->hasAttribute( 'primaryKey' ) ? $oColumn->getAttribute( 'primaryKey' ) : NULL;
                 /* Convert $primaryKey to a bool */
                 $primaryKey = (in_array( strtolower( $primaryKey ), array ('1','true'
                 ) ));
-                if ($primaryKey) {
+                if ($primaryKey)
                     $aPrimaryKeys[] = $sColumName;
-                }
+
                 $aSchema[$sTableName][$sColumName] = array ('Field' => $sColumName,'Type' => $type,'Null' => $required ? "NO" : "YES",'Default' => $default
                 );
             }
@@ -821,70 +806,64 @@ class System
                 //foreach ($aNewSchema[$sTableName] as $sColumName => $aParameters) {
                 foreach ($aColumns as $sColumName => $aParameters) {
                     if ($sColumName != 'INDEXES') {
-                        if (! isset( $aOldSchema[$sTableName][$sColumName] )) {
-                            //this column doesnt exist in oldschema
+                        if (! isset( $aOldSchema[$sTableName][$sColumName] )) { //this column doesnt exist in oldschema
                             if (! isset( $aChanges['tablesToAlter'][$sTableName] )) {
                                 $aChanges['tablesToAlter'][$sTableName] = array ('DROP' => array (),'ADD' => array (),'CHANGE' => array ()
                                 );
                             }
                             $aChanges['tablesToAlter'][$sTableName]['ADD'][$sColumName] = $aParameters;
-                        } else {
-                            //the column exists
+                        } else { //the column exists
                             $newField = $aNewSchema[$sTableName][$sColumName];
                             $oldField = $aOldSchema[$sTableName][$sColumName];
                             //both are null, no change is required
-                            if (! isset( $newField['Default'] ) && ! isset( $oldField['Default'] )) {
+                            if (! isset( $newField['Default'] ) && ! isset( $oldField['Default'] ))
                                 $changeDefaultAttr = false;
                                 //one of them is null, change IS required
-                            }
-                            if (! isset( $newField['Default'] ) && isset( $oldField['Default'] ) && $oldField['Default'] != '') {
+                            if (! isset( $newField['Default'] ) && isset( $oldField['Default'] ) && $oldField['Default'] != '')
                                 $changeDefaultAttr = true;
-                            }
-                            if (isset( $newField['Default'] ) && ! isset( $oldField['Default'] )) {
+                            if (isset( $newField['Default'] ) && ! isset( $oldField['Default'] ))
                                 $changeDefaultAttr = true;
                                 //both are defined and they are different.
-                            }
                             if (isset( $newField['Default'] ) && isset( $oldField['Default'] )) {
-                                if ($newField['Default'] != $oldField['Default']) {
+                                if ($newField['Default'] != $oldField['Default'])
                                     $changeDefaultAttr = true;
-                                } else {
+                                else
                                     $changeDefaultAttr = false;
-                                }
                             }
                             //special cases
                             // BLOB and TEXT columns cannot have DEFAULT values.  http://dev.mysql.com/doc/refman/5.0/en/blob.html
-                            if (in_array( strtolower( $newField['Type'] ), array ('text','mediumtext') )) {
+                            if (in_array( strtolower( $newField['Type'] ), array ('text','mediumtext'
+                            ) ))
                                 $changeDefaultAttr = false;
-                            }
+
                                 //#1067 - Invalid default value for datetime field
-                            if (in_array( $newField['Type'], array ('datetime') ) && isset( $newField['Default'] ) && $newField['Default'] == '') {
+                            if (in_array( $newField['Type'], array ('datetime'
+                            ) ) && isset( $newField['Default'] ) && $newField['Default'] == '')
                                 $changeDefaultAttr = false;
-                            }
 
-                            //#1067 - Invalid default value for int field
-                            if (substr( $newField['Type'], 0, 3 ) == "int" && isset( $newField['Default'] ) && $newField['Default'] == '') {
+                                //#1067 - Invalid default value for int field
+                            if (substr( $newField['Type'], 0, 3 ) == "int" && isset( $newField['Default'] ) && $newField['Default'] == '')
                                 $changeDefaultAttr = false;
-                            }
 
-                            //if any difference exists, then insert the difference in aChanges
+                                //if any difference exists, then insert the difference in aChanges
                             if (strcasecmp( $newField['Field'], $oldField['Field'] ) !== 0 || strcasecmp( $newField['Type'], $oldField['Type'] ) !== 0 || strcasecmp( $newField['Null'], $oldField['Null'] ) !== 0 || $changeDefaultAttr) {
                                 if (! isset( $aChanges['tablesToAlter'][$sTableName] )) {
-                                    $aChanges['tablesToAlter'][$sTableName] = array ('DROP' => array (),'ADD' => array (),'CHANGE' => array ());
+                                    $aChanges['tablesToAlter'][$sTableName] = array ('DROP' => array (),'ADD' => array (),'CHANGE' => array ()
+                                    );
                                 }
                                 $aChanges['tablesToAlter'][$sTableName]['CHANGE'][$sColumName]['Field'] = $newField['Field'];
                                 $aChanges['tablesToAlter'][$sTableName]['CHANGE'][$sColumName]['Type'] = $newField['Type'];
                                 $aChanges['tablesToAlter'][$sTableName]['CHANGE'][$sColumName]['Null'] = $newField['Null'];
-                                if (isset( $newField['Default'] )) {
+                                if (isset( $newField['Default'] ))
                                     $aChanges['tablesToAlter'][$sTableName]['CHANGE'][$sColumName]['Default'] = $newField['Default'];
-                                } else {
+                                else
                                     $aChanges['tablesToAlter'][$sTableName]['CHANGE'][$sColumName]['Default'] = null;
-                                }
+
                             }
                         }
-                    }
-                    //only columns, no the indexes column
-                }
-                //foreach $aColumns
+                    } //only columns, no the indexes column
+                } //foreach $aColumns
+
 
                 //now check the indexes of table
                 if (isset( $aNewSchema[$sTableName]['INDEXES'] )) {
@@ -904,14 +883,12 @@ class System
                         }
                     }
                 }
-            }
-            //for-else table exists
-        }
-        //for new schema
+            } //for-else table exists
+        } //for new schema
         return $aChanges;
     }
 
-    public function getEmailConfiguration ()
+    function getEmailConfiguration ()
     {
         G::LoadClass( 'configuration' );
         $conf = new Configurations();
@@ -920,7 +897,7 @@ class System
         return $config;
     }
 
-    public function getSkingList ()
+    function getSkingList ()
     {
         //Create Skins custom folder if it doesn't exists
         if (! is_dir( PATH_CUSTOM_SKINS )) {
@@ -942,7 +919,6 @@ class System
         }
 
         $customSkins = array_merge( $baseSkins, $customSkins );
-        $global = G::LoadTranslation('ID_GLOBAL');
 
         //Read and parse each Configuration File
         foreach ($customSkins as $key => $configInformation) {
@@ -963,24 +939,8 @@ class System
                 foreach ($skinInformationArray as $keyInfo => $infoValue) {
                     $res['SKIN_' . strtoupper( $keyInfo )] = $infoValue['__VALUE__'];
                 }
-                $res['SKIN_CREATEDATE'] = (isset($res['SKIN_CREATEDATE'])) ? $res['SKIN_CREATEDATE']: '';
-                $res['SKIN_MODIFIEDDATE'] = (isset($res['SKIN_MODIFIEDDATE'])) ? $res['SKIN_MODIFIEDDATE']: '';
-                $res['SKIN_WORKSPACE'] = (isset($res['SKIN_WORKSPACE'])) ? ( ($res['SKIN_WORKSPACE'] != '')? $res['SKIN_WORKSPACE'] : $global): $global;
 
-                $swWS = true;
-                if ($res['SKIN_WORKSPACE'] != $global) {
-                    $workspace = explode("|", $res['SKIN_WORKSPACE']);
-                    $swWS = false;
-                    foreach ($workspace as $key => $value) {
-                        if ($value == SYS_SYS) {
-                            $swWS = true;
-                            break;
-                        }
-                    }
-                }
-                if ($swWS) {
-                    $skinListArray['skins'][] = $res;
-                }
+                $skinListArray['skins'][] = $res;
             }
         }
 
@@ -989,7 +949,7 @@ class System
         return $skinListArray;
     }
 
-    public function getAllTimeZones ()
+    function getAllTimeZones ()
     {
         $timezones = DateTimeZone::listAbbreviations();
 
@@ -1008,10 +968,10 @@ class System
         }
 
         // For each city, have a comma separated list of all possible timezones for that city.
-        foreach ($cities as $key => $value) {
+        foreach ($cities as $key => $value)
             $cities[$key] = join( ', ', $value );
-        }
-        // Only keep one city (the first and also most important) for each set of possibilities.
+
+            // Only keep one city (the first and also most important) for each set of possibilities.
         $cities = array_unique( $cities );
 
         // Sort by area/city name.
@@ -1030,10 +990,10 @@ class System
         }
 
         if (empty( $wsIniFile )) {
-            if (defined( 'PATH_DB' )) {
-                // if we're on a valid workspace env.
+            if (defined( 'PATH_DB' )) { // if we're on a valid workspace env.
                 if (empty( $wsName )) {
                     $uriParts = explode( '/', getenv( "REQUEST_URI" ) );
+
                     if (isset( $uriParts[1] )) {
                         if (substr( $uriParts[1], 0, 3 ) == 'sys') {
                             $wsName = substr( $uriParts[1], 3 );
@@ -1050,12 +1010,12 @@ class System
         if (isset( $_SESSION['PROCESSMAKER_ENV'] )) {
             $md5 = array ();
 
-            if ($readGlobalIniFile) {
+            if ($readGlobalIniFile)
                 $md5[] = md5_file( $globalIniFile );
-            }
-            if ($readWsIniFile) {
+
+            if ($readWsIniFile)
                 $md5[] = md5_file( $wsIniFile );
-            }
+
             $hash = implode( '-', $md5 );
 
             if ($_SESSION['PROCESSMAKER_ENV_HASH'] === $hash) {
@@ -1086,12 +1046,12 @@ class System
         }
 
         $md5 = array ();
-        if ($readGlobalIniFile) {
+        if ($readGlobalIniFile)
             $md5[] = md5_file( $globalIniFile );
-        }
-        if ($readWsIniFile) {
+
+        if ($readWsIniFile)
             $md5[] = md5_file( $wsIniFile );
-        }
+
         $hash = implode( '-', $md5 );
 
         $_SESSION['PROCESSMAKER_ENV'] = $config;
@@ -1100,7 +1060,7 @@ class System
         return $config;
     }
 
-    public function updateIndexFile ($conf)
+    function updateIndexFile ($conf)
     {
         if (! file_exists( PATH_HTML . 'index.html' )) {
             throw new Exception( 'The public index file "' . PATH_HTML . 'index.html" does not exist!' );
@@ -1129,7 +1089,7 @@ class System
         return $result;
     }
 
-    public function solrEnv ($sysName = '')
+    function solrEnv ($sysName = '')
     {
         if (empty( $sysName )) {
             $conf = System::getSystemConfiguration();
@@ -1148,6 +1108,5 @@ class System
 
         return false;
     }
-}
-// end System class
 
+}// end System class

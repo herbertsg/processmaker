@@ -250,20 +250,19 @@ function executeQuery ($SqlStatement, $DBConnectionUID = 'workflow', $aParameter
                     break;
                 case preg_match( "/^INSERT\s/i", $statement ):
                     $rs = $con->executeUpdate( $SqlStatement );
-                    $result = $con->getUpdateCount();
                     $con->commit();
                     //$result = $lastId->getId();
-                    // $result = 1;
+                    $result = 1;
                     break;
                 case preg_match( "/^UPDATE\s/i", $statement ):
                     $rs = $con->executeUpdate( $SqlStatement );
-                    $result = $con->getUpdateCount();
                     $con->commit();
+                    $result = $con->getUpdateCount();
                     break;
                 case preg_match( "/^DELETE\s/i", $statement ):
                     $rs = $con->executeUpdate( $SqlStatement );
-                    $result = $con->getUpdateCount();
                     $con->commit();
+                    $result = $con->getUpdateCount();
                     break;
             }
         } else {
@@ -796,7 +795,7 @@ function getEmailConfiguration ()
  *
  */
 //@param array | $aFields=array() | An associative array optional | Optional parameter. An associative array where the keys are the variable name and the values are the variable's value.
-function PMFSendMessage ($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields = array(), $aAttachment = array(), $showMessage = true)
+function PMFSendMessage ($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields = array(), $aAttachment = array())
 {
     global $oPMScript;
 
@@ -810,7 +809,7 @@ function PMFSendMessage ($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTempla
 
     G::LoadClass( 'wsBase' );
     $ws = new wsBase();
-    $result = $ws->sendMessage( $caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields, $aAttachment, $showMessage);
+    $result = $ws->sendMessage( $caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields, $aAttachment );
 
     if ($result->status_code == 0) {
         return 1;
@@ -1466,10 +1465,7 @@ function PMFGenerateOutputDocument ($outputID, $sApplication = null, $index = nu
     $aProperties['media'] = $aOD['OUT_DOC_MEDIA'];
     $aProperties['margins'] = array ('left' => $aOD['OUT_DOC_LEFT_MARGIN'],'right' => $aOD['OUT_DOC_RIGHT_MARGIN'],'top' => $aOD['OUT_DOC_TOP_MARGIN'],'bottom' => $aOD['OUT_DOC_BOTTOM_MARGIN']
     );
-    if (isset($aOD['OUT_DOC_REPORT_GENERATOR'])) {
-        $aProperties['report_generator'] = $aOD['OUT_DOC_REPORT_GENERATOR'];
-    }
-    $oOutputDocument->generate( $outputID, $Fields['APP_DATA'], $pathOutput, $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean) $aOD['OUT_DOC_LANDSCAPE'], $aOD['OUT_DOC_GENERATE'], $aProperties );
+    $oOutputDocument->generate( $outputID, $Fields['APP_DATA'], $pathOutput, $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean) $aOD['OUT_DOC_LANDSCAPE'], $aOD['OUT_DOC_GENERATE'] );
 
     //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
     //G::LoadClass('plugin');
@@ -2284,16 +2280,6 @@ function PMFCancelCase ($caseUid, $delIndex, $userUid)
     $result = $ws->cancelCase( $caseUid, $delIndex, $userUid );
 
     if ($result->status_code == 0) {
-        if (isset($_SESSION['APPLICATION']) && isset($_SESSION['INDEX'])) {
-            if ($_SESSION['APPLICATION'] == $caseUid && $_SESSION['INDEX'] == $delIndex) {
-                if (!defined('WEB_SERVICE_VERSION')) {
-                    G::header('Location: ../cases/casesListExtJsRedirector');
-                    die();
-                } else {
-                    die(__('ID_PM_FUNCTION_CHANGE_CASE', SYS_LANG, array('PMFCancelCase', G::LoadTranslation('ID_CANCELLED'))));
-                }
-            }
-        }
         return 1;
     } else {
         return 0;
@@ -2316,22 +2302,12 @@ function PMFCancelCase ($caseUid, $delIndex, $userUid)
  */
 function PMFPauseCase ($caseUid, $delIndex, $userUid, $unpauseDate = null)
 {
-    G::LoadClass('wsBase');
+    G::LoadClass( "wsBase" );
 
     $ws = new wsBase();
-    $result = $ws->pauseCase($caseUid, $delIndex, $userUid, $unpauseDate);
+    $result = $ws->pauseCase( $caseUid, $delIndex, $userUid, $unpauseDate );
 
     if ($result->status_code == 0) {
-        if (isset($_SESSION['APPLICATION']) && isset($_SESSION['INDEX'])) {
-            if ($_SESSION['APPLICATION'] == $caseUid && $_SESSION['INDEX'] == $delIndex) {
-                if (!defined('WEB_SERVICE_VERSION')) {
-                    G::header('Location: ../cases/casesListExtJsRedirector');
-                    die();
-                } else {
-                    die(__('ID_PM_FUNCTION_CHANGE_CASE', SYS_LANG, array('PMFPauseCase', G::LoadTranslation('ID_PAUSED'))));
-                }
-            }
-        }
         return 1;
     } else {
         return 0;

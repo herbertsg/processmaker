@@ -97,8 +97,6 @@ class AppMessageMapBuilder
 
         $tMap->addColumn('APP_MSG_SEND_DATE', 'AppMsgSendDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 
-        $tMap->addColumn('APP_MSG_SHOW_MESSAGE', 'AppMsgShowMessage', 'int', CreoleTypes::TINYINT, true, null);
-
     } // doBuild()
 
 } // AppMessageMapBuilder

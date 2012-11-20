@@ -66,16 +66,16 @@ class Processes
      * @return boolean
      * @package workflow.engine.ProcessMaker
      */
-    public function changeStatus ($sProUid = '')
+    function changeStatus ($sProUid = '')
     {
         $oProcess = new Process();
         $Fields = $oProcess->Load( $sProUid );
         $proFields['PRO_UID'] = $sProUid;
-        if ($Fields['PRO_STATUS'] == 'ACTIVE') {
+        if ($Fields['PRO_STATUS'] == 'ACTIVE')
             $proFields['PRO_STATUS'] = 'INACTIVE';
-        } else {
+        else
             $proFields['PRO_STATUS'] = 'ACTIVE';
-        }
+
         $oProcess->Update( $proFields );
     }
 
@@ -86,16 +86,16 @@ class Processes
      * @return boolean
      * @package workflow.engine.ProcessMaker
      */
-    public function changeDebugMode ($sProUid = '')
+    function changeDebugMode ($sProUid = '')
     {
         $oProcess = new Process();
         $Fields = $oProcess->Load( $sProUid );
         $proFields['PRO_UID'] = $sProUid;
-        if ($Fields['PRO_DEBUG'] == '1') {
+        if ($Fields['PRO_DEBUG'] == '1')
             $proFields['PRO_DEBUG'] = '0';
-        } else {
+        else
             $proFields['PRO_DEBUG'] = '1';
-        }
+
         $oProcess->Update( $proFields );
     }
 
@@ -106,7 +106,7 @@ class Processes
      * @param $sParentUid process parent uid
      * @return $sProUid
      */
-    public function changeProcessParent ($sProUid, $sParentUid)
+    function changeProcessParent ($sProUid, $sParentUid)
     {
         $oProcess = new Process();
         $Fields = $oProcess->Load( $sProUid );
@@ -121,7 +121,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function processExists ($sProUid = '')
+    function processExists ($sProUid = '')
     {
         $oProcess = new Process();
         return $oProcess->processExists( $sProUid );
@@ -132,7 +132,7 @@ class Processes
      *
      * @return $sProUid
      */
-    public function getUnusedProcessGUID ()
+    function getUnusedProcessGUID ()
     {
         do {
             $sNewProUid = G::generateUniqueID();
@@ -146,7 +146,7 @@ class Processes
      * @param string $sTasUid
      * @return boolean
      */
-    public function taskExists ($sTasUid = '')
+    function taskExists ($sTasUid = '')
     {
         $oTask = new Task();
         return $oTask->taskExists( $sTasUid );
@@ -157,7 +157,7 @@ class Processes
      *
      * @return $sTasUid
      */
-    public function getUnusedTaskGUID ()
+    function getUnusedTaskGUID ()
     {
         do {
             $sNewTasUid = G::generateUniqueID();
@@ -171,7 +171,7 @@ class Processes
      * @param string $sDynUid
      * @return boolean
      */
-    public function dynaformExists ($sDynUid = '')
+    function dynaformExists ($sDynUid = '')
     {
         $oDynaform = new Dynaform();
         return $oDynaform->dynaformExists( $sDynUid );
@@ -183,7 +183,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function inputExists ($sUid = '')
+    function inputExists ($sUid = '')
     {
         $oInput = new InputDocument();
         return $oInput->inputExists( $sUid );
@@ -195,7 +195,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function outputExists ($sUid = '')
+    function outputExists ($sUid = '')
     {
         $oOutput = new OutputDocument();
         return $oOutput->outputExists( $sUid );
@@ -207,7 +207,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function triggerExists ($sUid = '')
+    function triggerExists ($sUid = '')
     {
         $oTrigger = new Triggers();
         return $oTrigger->triggerExists( $sUid );
@@ -219,7 +219,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function SubProcessExists ($sUid = '')
+    function SubProcessExists ($sUid = '')
     {
         $oSubProcess = new SubProcess();
         return $oSubProcess->subProcessExists( $sUid );
@@ -231,7 +231,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function caseTrackerObjectExists ($sUid = '')
+    function caseTrackerObjectExists ($sUid = '')
     {
         $oCaseTrackerObject = new CaseTrackerObject();
         return $oCaseTrackerObject->caseTrackerObjectExists( $sUid );
@@ -243,7 +243,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function caseTrackerExists ($sUid = '')
+    function caseTrackerExists ($sUid = '')
     {
         $oCaseTracker = new CaseTracker();
         return $oCaseTracker->caseTrackerExists( $sUid );
@@ -255,7 +255,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function dbConnectionExists ($sUid = '')
+    function dbConnectionExists ($sUid = '')
     {
         $oDBSource = new DbSource();
         return $oDBSource->Exists( $sUid );
@@ -267,7 +267,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function objectPermissionExists ($sUid = '')
+    function objectPermissionExists ($sUid = '')
     {
         $oObjectPermission = new ObjectPermission();
         return $oObjectPermission->Exists( $sUid );
@@ -279,7 +279,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function routeExists ($sUid = '')
+    function routeExists ($sUid = '')
     {
         $oRoute = new Route();
         return $oRoute->routeExists( $sUid );
@@ -291,7 +291,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function stageExists ($sUid = '')
+    function stageExists ($sUid = '')
     {
         $oStage = new Stage();
         return $oStage->Exists( $sUid );
@@ -303,7 +303,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function slExists ($sUid = '')
+    function slExists ($sUid = '')
     {
         $oSL = new SwimlanesElements();
         return $oSL->swimlanesElementsExists( $sUid );
@@ -315,7 +315,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function reportTableExists ($sUid = '')
+    function reportTableExists ($sUid = '')
     {
         $oReportTable = new ReportTable();
         return $oReportTable->reportTableExists( $sUid );
@@ -327,7 +327,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function reportVarExists ($sUid = '')
+    function reportVarExists ($sUid = '')
     {
         $oReportVar = new ReportVar();
         return $oReportVar->reportVarExists( $sUid );
@@ -339,7 +339,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function fieldsConditionsExists ($sUid = '')
+    function fieldsConditionsExists ($sUid = '')
     {
         $oFieldCondition = new FieldCondition();
         return $oFieldCondition->Exists( $sUid );
@@ -351,7 +351,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function eventExists ($sUid = '')
+    function eventExists ($sUid = '')
     {
         $oEvent = new Event();
         return $oEvent->Exists( $sUid );
@@ -363,7 +363,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function caseSchedulerExists ($sUid = '')
+    function caseSchedulerExists ($sUid = '')
     {
         $oCaseScheduler = new CaseScheduler();
         return $oCaseScheduler->Exists( $sUid );
@@ -374,7 +374,7 @@ class Processes
      *
      * @return $sProUid
      */
-    public function getUnusedInputGUID ()
+    function getUnusedInputGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -387,7 +387,7 @@ class Processes
      *
      * @return $sProUid
      */
-    public function getUnusedOutputGUID ()
+    function getUnusedOutputGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -400,7 +400,7 @@ class Processes
      *
      * @return $sProUid
      */
-    public function getUnusedTriggerGUID ()
+    function getUnusedTriggerGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -413,7 +413,7 @@ class Processes
      *
      * @return $sProUid
      */
-    public function getUnusedSubProcessGUID ()
+    function getUnusedSubProcessGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -426,7 +426,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedCaseTrackerObjectGUID ()
+    function getUnusedCaseTrackerObjectGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -439,7 +439,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedDBSourceGUID ()
+    function getUnusedDBSourceGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -452,7 +452,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedObjectPermissionGUID ()
+    function getUnusedObjectPermissionGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -465,7 +465,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedRouteGUID ()
+    function getUnusedRouteGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -478,7 +478,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedStageGUID ()
+    function getUnusedStageGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -491,7 +491,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedSLGUID ()
+    function getUnusedSLGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -504,7 +504,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedRTGUID ()
+    function getUnusedRTGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -517,7 +517,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedRTVGUID ()
+    function getUnusedRTVGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -531,7 +531,7 @@ class Processes
      * @param string $sUid
      * @return boolean
      */
-    public function stepExists ($sUid = '')
+    function stepExists ($sUid = '')
     {
         $oStep = new Step();
         return $oStep->stepExists( $sUid );
@@ -542,7 +542,7 @@ class Processes
      *
      * @return $sUid
      */
-    public function getUnusedStepGUID ()
+    function getUnusedStepGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -551,10 +551,10 @@ class Processes
     }
 
     /*
-     * get an unused Dynaform GUID
-     * @return $sDynUid
-     */
-    public function getUnusedDynaformGUID ()
+  * get an unused Dynaform GUID
+  * @return $sDynUid
+  */
+    function getUnusedDynaformGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -567,7 +567,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedFieldConditionGUID ()
+    function getUnusedFieldConditionGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -580,7 +580,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedEventGUID ()
+    function getUnusedEventGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -593,7 +593,7 @@ class Processes
      *
      * @return $sNewUid a new generated Uid
      */
-    public function getUnusedCaseSchedulerGUID ()
+    function getUnusedCaseSchedulerGUID ()
     {
         do {
             $sNewUid = G::generateUniqueID();
@@ -607,7 +607,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function setProcessGUID (&$oData, $sNewProUid)
+    function setProcessGUID (&$oData, $sNewProUid)
     {
         $sProUid = $oData->process['PRO_UID'];
         $oData->process['PRO_UID'] = $sNewProUid;
@@ -734,7 +734,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function setProcessParent (&$oData, $sParentUid)
+    function setProcessParent (&$oData, $sParentUid)
     {
         $oData->process['PRO_PARENT'] = $sParentUid;
         $oData->process['PRO_CREATE_DATE'] = date( 'Y-m-d H:i:s' );
@@ -748,7 +748,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllTaskGuid (&$oData)
+    function renewAllTaskGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->tasks as $key => $val) {
@@ -835,7 +835,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllDynaformGuid (&$oData)
+    function renewAllDynaformGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->dynaforms as $key => $val) {
@@ -914,7 +914,7 @@ class Processes
      * @param $sProUid string process Uid
      * @return $oProcess Process object
      */
-    public function getProcessRow ($sProUid, $getAllLang = false)
+    function getProcessRow ($sProUid, $getAllLang = false)
     {
         $oProcess = new Process();
         return $oProcess->Load( $sProUid, $getAllLang );
@@ -928,12 +928,13 @@ class Processes
      * @param $row array parameter with the process data
      * @return $oProcess Process object
      */
-    public function createProcessRow ($row)
+    function createProcessRow ($row)
     {
         $oProcess = new Process();
         if ($oProcess->processExists( $row['PRO_UID'] )) {
             $oProcess->remove( $row['PRO_UID'] );
         }
+
         return $oProcess->createRow( $row );
     }
 
@@ -945,14 +946,13 @@ class Processes
      * @param $row array parameter with the process data
      * @return $oProcess Process object
      */
-    public function updateProcessRow ($row)
+    function updateProcessRow ($row)
     {
         $oProcess = new Process();
-        if ($oProcess->processExists( $row['PRO_UID'] )) {
+        if ($oProcess->processExists( $row['PRO_UID'] ))
             $oProcess->update( $row );
-        } else {
+        else
             $oProcess->create( $row );
-        }
     }
 
     /**
@@ -961,7 +961,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $aSubProcess array
      */
-    public function getSubProcessRow ($sProUid)
+    function getSubProcessRow ($sProUid)
     {
         try {
             $aSubProcess = array ();
@@ -987,7 +987,7 @@ class Processes
      * @return $aCaseTracker array
      */
 
-    public function getCaseTrackerRow ($sProUid)
+    function getCaseTrackerRow ($sProUid)
     {
         try {
             $aCaseTracker = array ();
@@ -1012,7 +1012,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $aCaseTracker array
      */
-    public function getCaseTrackerObjectRow ($sProUid)
+    function getCaseTrackerObjectRow ($sProUid)
     {
         try {
             $aCaseTrackerObject = array ();
@@ -1037,7 +1037,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $aStage array
      */
-    public function getStageRow ($sProUid)
+    function getStageRow ($sProUid)
     {
         try {
             $aStage = array ();
@@ -1064,13 +1064,14 @@ class Processes
      * @return $aFieldCondition array
      */
 
-    public function getFieldCondition ($sProUid)
+    function getFieldCondition ($sProUid)
     {
         try {
             $aFieldCondition = array ();
             $oCriteria = new Criteria( 'workflow' );
             $oCriteria->add( DynaformPeer::PRO_UID, $sProUid );
             $oCriteria->addJoin( DynaformPeer::DYN_UID, FieldConditionPeer::FCD_DYN_UID );
+
             $oDataset = FieldConditionPeer::doSelectRS( $oCriteria );
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
@@ -1090,7 +1091,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $aEvent array
      */
-    public function getEventRow ($sProUid)
+    function getEventRow ($sProUid)
     {
         try {
             $aEvent = array ();
@@ -1117,7 +1118,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $aCaseScheduler array
      */
-    public function getCaseSchedulerRow ($sProUid)
+    function getCaseSchedulerRow ($sProUid)
     {
         try {
             $aCaseScheduler = array ();
@@ -1193,7 +1194,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $oTask array
      */
-    public function getTaskRows ($sProUid)
+    function getTaskRows ($sProUid)
     {
         $oTask = new Tasks();
         return $oTask->getAllTasks( $sProUid );
@@ -1205,7 +1206,7 @@ class Processes
      * @param $aTasks array
      * @return $oTask array
      */
-    public function createTaskRows ($aTasks)
+    function createTaskRows ($aTasks)
     {
         $oTask = new Tasks();
         return $oTask->createTaskRows( $aTasks );
@@ -1217,7 +1218,7 @@ class Processes
      * @param $aTasks array
      * @return $oTask array
      */
-    public function updateTaskRows ($aTasks)
+    function updateTaskRows ($aTasks)
     {
         $oTask = new Tasks();
         return $oTask->updateTaskRows( $aTasks );
@@ -1229,7 +1230,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $oTask Tasks array
      */
-    public function getRouteRows ($sProUid)
+    function getRouteRows ($sProUid)
     {
         $oTask = new Tasks();
         return $oTask->getAllRoutes( $sProUid );
@@ -1241,7 +1242,7 @@ class Processes
      * @param $aRoutes array
      * @return $oTask Tasks array
      */
-    public function createRouteRows ($aRoutes)
+    function createRouteRows ($aRoutes)
     {
         $oTask = new Tasks();
         return $oTask->createRouteRows( $aRoutes );
@@ -1253,7 +1254,7 @@ class Processes
      * @param $aRoutes array
      * @return $oTask Tasks array
      */
-    public function updateRouteRows ($aRoutes)
+    function updateRouteRows ($aRoutes)
     {
         $oTask = new Tasks();
         return $oTask->updateRouteRows( $aRoutes );
@@ -1265,7 +1266,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return array
      */
-    public function getLaneRows ($sProUid)
+    function getLaneRows ($sProUid)
     {
         return $this->getAllLanes( $sProUid );
     }
@@ -1276,7 +1277,7 @@ class Processes
      * @param $sProUid string for the process Uid
      * @return $oTask array
      */
-    public function getGatewayRows ($sProUid)
+    function getGatewayRows ($sProUid)
     {
         $oTask = new Tasks();
         return $oTask->getAllGateways( $sProUid );
@@ -1288,7 +1289,7 @@ class Processes
      * @param $aGateways array
      * @return $oGateway array
      */
-    public function createGatewayRows ($aGateways)
+    function createGatewayRows ($aGateways)
     {
         $oTask = new Tasks();
         return $oTask->createGatewayRows( $aGateways );
@@ -1300,13 +1301,13 @@ class Processes
      * @param $aLanes array.
      * @return void
      */
-    public function createLaneRows ($aLanes)
+    function createLaneRows ($aLanes)
     {
         foreach ($aLanes as $key => $row) {
             $oLane = new SwimlanesElements();
-            if ($oLane->swimlanesElementsExists( $row['SWI_UID'] )) {
+            if ($oLane->swimlanesElementsExists( $row['SWI_UID'] ))
                 $oLane->remove( $row['SWI_UID'] );
-            }
+
             $res = $oLane->create( $row );
         }
         return;
@@ -1319,13 +1320,13 @@ class Processes
      * @param $SubProcess array
      * @return void.
      */
-    public function createSubProcessRows ($SubProcess)
+    function createSubProcessRows ($SubProcess)
     {
         foreach ($SubProcess as $key => $row) {
             $oSubProcess = new SubProcess();
-            if ($oSubProcess->subProcessExists( $row['SP_UID'] )) {
+            if ($oSubProcess->subProcessExists( $row['SP_UID'] ))
                 $oSubProcess->remove( $row['SP_UID'] );
-            }
+
             $res = $oSubProcess->create( $row );
         }
         return;
@@ -1338,17 +1339,15 @@ class Processes
      * @param $CaseTracker array.
      * @return void
      */
-    public function createCaseTrackerRows ($CaseTracker)
+    function createCaseTrackerRows ($CaseTracker)
     {
-        if (is_array( $CaseTracker )) {
+        if (is_array( $CaseTracker ))
             foreach ($CaseTracker as $key => $row) {
                 $oCaseTracker = new CaseTracker();
-                if ($oCaseTracker->caseTrackerExists( $row['PRO_UID'] )) {
+                if ($oCaseTracker->caseTrackerExists( $row['PRO_UID'] ))
                     $oCaseTracker->remove( $row['PRO_UID'] );
-                }
                 $res = $oCaseTracker->create( $row );
             }
-        }
         return;
     }
 
@@ -1359,13 +1358,12 @@ class Processes
      * @param $CaseTrackerObject array.
      * @return void
      */
-    public function createCaseTrackerObjectRows ($CaseTrackerObject)
+    function createCaseTrackerObjectRows ($CaseTrackerObject)
     {
         foreach ($CaseTrackerObject as $key => $row) {
             $oCaseTrackerObject = new CaseTrackerObject();
-            if ($oCaseTrackerObject->caseTrackerObjectExists( $row['CTO_UID'] )) {
+            if ($oCaseTrackerObject->caseTrackerObjectExists( $row['CTO_UID'] ))
                 $oCaseTrackerObject->remove( $row['CTO_UID'] );
-            }
             $res = $oCaseTrackerObject->create( $row );
         }
         return;
@@ -1378,13 +1376,12 @@ class Processes
      * @param $sProUid string for the process Uid.
      * @return void
      */
-    public function createObjectPermissionsRows ($ObjectPermissions)
+    function createObjectPermissionsRows ($ObjectPermissions)
     {
         foreach ($ObjectPermissions as $key => $row) {
             $oObjectPermissions = new ObjectPermission();
-            if ($oObjectPermissions->Exists( $row['OP_UID'] )) {
+            if ($oObjectPermissions->Exists( $row['OP_UID'] ))
                 $oObjectPermissions->remove( $row['OP_UID'] );
-            }
             $res = $oObjectPermissions->create( $row );
         }
         return;
@@ -1397,13 +1394,12 @@ class Processes
      * @param $Stage array.
      * @return void
      */
-    public function createStageRows ($Stage)
+    function createStageRows ($Stage)
     {
         foreach ($Stage as $key => $row) {
             $oStage = new Stage();
-            if ($oStage->Exists( $row['STG_UID'] )) {
+            if ($oStage->Exists( $row['STG_UID'] ))
                 $oStage->remove( $row['STG_UID'] );
-            }
             $res = $oStage->create( $row );
         }
         return;
@@ -1418,17 +1414,15 @@ class Processes
      * @param $aDynaform array.
      * @return void
      */
-    public function createFieldCondition ($aFieldCondition, $aDynaform)
+    function createFieldCondition ($aFieldCondition, $aDynaform)
     {
-        if (is_array( $aFieldCondition )) {
+        if (is_array( $aFieldCondition ))
             foreach ($aFieldCondition as $key => $row) {
                 $oFieldCondition = new FieldCondition();
-                if ($oFieldCondition->fieldConditionExists( $row['FCD_UID'], $aDynaform )) {
+                if ($oFieldCondition->fieldConditionExists( $row['FCD_UID'], $aDynaform ))
                     $oFieldCondition->remove( $row['FCD_UID'] );
-                }
                 $res = $oFieldCondition->create( $row );
             }
-        }
         return;
     }
 
@@ -1439,13 +1433,13 @@ class Processes
      * @param $Event array.
      * @return void
      */
-    public function createEventRows ($Event)
+    function createEventRows ($Event)
     {
         foreach ($Event as $key => $row) {
             $oEvent = new Event();
-            if ($oEvent->Exists( $row['EVN_UID'] )) {
+            if ($oEvent->Exists( $row['EVN_UID'] ))
                 $oEvent->remove( $row['EVN_UID'] );
-            }
+
             $res = $oEvent->create( $row );
         }
         return;
@@ -1458,13 +1452,13 @@ class Processes
      * @param $CaseScheduler array.
      * @return void
      */
-    public function createCaseSchedulerRows ($CaseScheduler)
+    function createCaseSchedulerRows ($CaseScheduler)
     {
         foreach ($CaseScheduler as $key => $row) {
             $oCaseScheduler = new CaseScheduler();
-            if ($oCaseScheduler->Exists( $row['SCH_UID'] )) {
+            if ($oCaseScheduler->Exists( $row['SCH_UID'] ))
                 $oCaseScheduler->remove( $row['SCH_UID'] );
-            }
+
             $res = $oCaseScheduler->create( $row );
         }
         return;
@@ -1476,7 +1470,7 @@ class Processes
      * @param $ProcessCategory array.
      * @return void
      */
-    public function createProcessCategoryRow ($row)
+    function createProcessCategoryRow ($row)
     {
         if ($row && is_array( $row ) && isset( $row['CATEGORY_UID'] )) {
             $record = ProcessCategoryPeer::retrieveByPK( $row['CATEGORY_UID'] );
@@ -1495,7 +1489,7 @@ class Processes
      * @param $sProUid string.
      * @return void
      */
-    public function getInputRows ($sProUid)
+    function getInputRows ($sProUid)
     {
         try {
             $aInput = array ();
@@ -1522,14 +1516,14 @@ class Processes
      * @param $aInput array.
      * @return void
      */
-    public function createInputRows ($aInput)
+    function createInputRows ($aInput)
     {
         foreach ($aInput as $key => $row) {
             $oInput = new Inputdocument();
             //unset ($row['TAS_UID']);
-            if ($oInput->InputExists( $row['INP_DOC_UID'] )) {
+            if ($oInput->InputExists( $row['INP_DOC_UID'] ))
                 $oInput->remove( $row['INP_DOC_UID'] );
-            }
+
             $res = $oInput->create( $row );
         }
         return;
@@ -1541,7 +1535,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllInputGuid (&$oData)
+    function renewAllInputGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->inputs as $key => $val) {
@@ -1591,7 +1585,7 @@ class Processes
      * @param $sProUid string.
      * @return $aOutput array
      */
-    public function getOutputRows ($sProUid)
+    function getOutputRows ($sProUid)
     {
         try {
             $aOutput = array ();
@@ -1618,14 +1612,14 @@ class Processes
      * @param $aOutput array.
      * @return void
      */
-    public function createOutputRows ($aOutput)
+    function createOutputRows ($aOutput)
     {
         foreach ($aOutput as $key => $row) {
             $oOutput = new Outputdocument();
             //unset ($row['TAS_UID']);
-            if ($oOutput->OutputExists( $row['OUT_DOC_UID'] )) {
+            if ($oOutput->OutputExists( $row['OUT_DOC_UID'] ))
                 $oOutput->remove( $row['OUT_DOC_UID'] );
-            }
+
             $res = $oOutput->create( $row );
         }
         return;
@@ -1637,7 +1631,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllOutputGuid (&$oData)
+    function renewAllOutputGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->outputs as $key => $val) {
@@ -1679,7 +1673,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllTriggerGuid (&$oData)
+    function renewAllTriggerGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->triggers as $key => $val) {
@@ -1703,7 +1697,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllSubProcessGuid (&$oData)
+    function renewAllSubProcessGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->subProcess as $key => $val) {
@@ -1719,7 +1713,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllCaseTrackerObjectGuid (&$oData)
+    function renewAllCaseTrackerObjectGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->caseTrackerObject as $key => $val) {
@@ -1735,7 +1729,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllDBSourceGuid (&$oData)
+    function renewAllDBSourceGuid (&$oData)
     {
         $map = array ();
         $aSqlConnections = array ();
@@ -1753,7 +1747,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllObjectPermissionGuid (&$oData)
+    function renewAllObjectPermissionGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->objectPermissions as $key => $val) {
@@ -1769,7 +1763,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllRouteGuid (&$oData)
+    function renewAllRouteGuid (&$oData)
     {
         $map = array ();
         if (isset( $oData->routes ) && is_array( $oData->routes )) {
@@ -1787,7 +1781,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllStageGuid (&$oData)
+    function renewAllStageGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->stage as $key => $val) {
@@ -1809,7 +1803,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllSwimlanesElementsGuid (&$oData)
+    function renewAllSwimlanesElementsGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->lanes as $key => $val) {
@@ -1825,7 +1819,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllReportTableGuid (&$oData)
+    function renewAllReportTableGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->reportTables as $key => $val) {
@@ -1836,8 +1830,8 @@ class Processes
         foreach ($oData->reportTablesVars as $key => $val) {
             if (isset( $map[$val['REP_TAB_UID']] )) {
                 /*TODO: Why this can be not defined?? The scenario was when
-                 * imported an existing process but as a new one
-                 */
+             * imported an existing process but as a new one
+             */
                 $newGuid = $map[$val['REP_TAB_UID']];
                 $oData->reportTablesVars[$key]['REP_TAB_UID'] = $newGuid;
             }
@@ -1850,7 +1844,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllReportVarGuid (&$oData)
+    function renewAllReportVarGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->reportTablesVars as $key => $val) {
@@ -1866,7 +1860,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllFieldCondition (&$oData)
+    function renewAllFieldCondition (&$oData)
     {
         $map = array ();
         foreach ($oData->fieldCondition as $key => $val) {
@@ -1882,7 +1876,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllEvent (&$oData)
+    function renewAllEvent (&$oData)
     {
         $map = array ();
         foreach ($oData->event as $key => $val) {
@@ -1898,7 +1892,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAllCaseScheduler (&$oData)
+    function renewAllCaseScheduler (&$oData)
     {
         $map = array ();
         foreach ($oData->caseScheduler as $key => $val) {
@@ -1914,7 +1908,7 @@ class Processes
      * @param $oData array.
      * @return void
      */
-    public function renewAll (&$oData)
+    function renewAll (&$oData)
     {
         $this->renewAllTaskGuid( $oData );
         $this->renewAllDynaformGuid( $oData );
@@ -1942,7 +1936,7 @@ class Processes
      * @param $sProUid array.
      * @return array $aStep.
      */
-    public function getStepRows ($sProUid)
+    function getStepRows ($sProUid)
     {
         try {
             $aStep = array ();
@@ -1968,14 +1962,14 @@ class Processes
      * @param $aStep array.
      * @return void.
      */
-    public function createStepRows ($aStep)
+    function createStepRows ($aStep)
     {
         foreach ($aStep as $key => $row) {
             $oStep = new Step();
             if (isset( $row['STEP_UID'] )) {
-                if ($oStep->StepExists( $row['STEP_UID'] )) {
+                if ($oStep->StepExists( $row['STEP_UID'] ))
                     $oStep->remove( $row['STEP_UID'] );
-                }
+
                 $res = $oStep->create( $row );
             }
         }
@@ -1988,7 +1982,7 @@ class Processes
      * @param $aStepSupervisor array.
      * @return void.
      */
-    public function createStepSupervisorRows ($aStepSupervisor)
+    function createStepSupervisorRows ($aStepSupervisor)
     {
         foreach ($aStepSupervisor as $key => $row) {
             $oStepSupervisor = new StepSupervisor();
@@ -2006,7 +2000,7 @@ class Processes
      * @param string $oData
      * @return boolean
      */
-    public function renewAllStepGuid (&$oData)
+    function renewAllStepGuid (&$oData)
     {
         $map = array ();
         foreach ($oData->steps as $key => $val) {
@@ -2044,7 +2038,7 @@ class Processes
      * @param string $sProUid
      * @return $aDynaform array
      */
-    public function getDynaformRows ($sProUid)
+    function getDynaformRows ($sProUid)
     {
         try {
             $aDynaform = array ();
@@ -2070,9 +2064,8 @@ class Processes
      * @param string $sProUid
      * @return $aDynaform array
      */
-    public function getObjectPermissionRows ($sProUid)
-    {
-        // by erik
+    function getObjectPermissionRows ($sProUid)
+    { // by erik
         try {
             $oPermissions = array ();
             $oCriteria = new Criteria( 'workflow' );
@@ -2090,8 +2083,7 @@ class Processes
         } catch (Exception $oError) {
             throw ($oError);
         }
-    }
-    #@!neyek
+    } #@!neyek
 
 
     /**
@@ -2100,14 +2092,14 @@ class Processes
      * @param array $aDynaform
      * @return void
      */
-    public function createDynaformRows ($aDynaform)
+    function createDynaformRows ($aDynaform)
     {
         foreach ($aDynaform as $key => $row) {
             $oDynaform = new Dynaform();
             //unset ($row['TAS_UID']);
-            if ($oDynaform->exists( $row['DYN_UID'] )) {
+            if ($oDynaform->exists( $row['DYN_UID'] ))
                 $oDynaform->remove( $row['DYN_UID'] );
-            }
+
             $res = $oDynaform->create( $row );
         }
         return;
@@ -2121,14 +2113,14 @@ class Processes
      * @param array $aStepTrigger
      * @return void
      */
-    public function createStepTriggerRows ($aStepTrigger)
+    function createStepTriggerRows ($aStepTrigger)
     {
         foreach ($aStepTrigger as $key => $row) {
             $oStepTrigger = new StepTrigger();
             //unset ($row['TAS_UID']);
-            if ($oStepTrigger->stepTriggerExists( $row['STEP_UID'], $row['TAS_UID'], $row['TRI_UID'], $row['ST_TYPE'] )) {
+            if ($oStepTrigger->stepTriggerExists( $row['STEP_UID'], $row['TAS_UID'], $row['TRI_UID'], $row['ST_TYPE'] ))
                 $oStepTrigger->remove( $row['STEP_UID'], $row['TAS_UID'], $row['TRI_UID'], $row['ST_TYPE'] );
-            }
+
             $res = $oStepTrigger->createRow( $row );
         }
         return;
@@ -2140,7 +2132,7 @@ class Processes
      * @param array $aTask
      * @return array $aStepTrigger
      */
-    public function getStepTriggerRows ($aTask)
+    function getStepTriggerRows ($aTask)
     {
         try {
             $aInTasks = array ();
@@ -2171,7 +2163,7 @@ class Processes
      * @param array $aTask
      * @return array $aStepTrigger
      */
-    public function getTriggerRows ($sProUid)
+    function getTriggerRows ($sProUid)
     {
         try {
             $aTrigger = array ();
@@ -2197,14 +2189,14 @@ class Processes
      * @param array $aTrigger
      * @return void
      */
-    public function createTriggerRows ($aTrigger)
+    function createTriggerRows ($aTrigger)
     {
         foreach ($aTrigger as $key => $row) {
             $oTrigger = new Triggers();
             //unset ($row['TAS_UID']);
-            if ($oTrigger->TriggerExists( $row['TRI_UID'] )) {
+            if ($oTrigger->TriggerExists( $row['TRI_UID'] ))
                 $oTrigger->remove( $row['TRI_UID'] );
-            }
+
             $res = $oTrigger->create( $row );
         }
         return;
@@ -2216,7 +2208,7 @@ class Processes
      * @param array $aGroups
      * @return array $aGroupwf
      */
-    public function getGroupwfRows ($aGroups)
+    function getGroupwfRows ($aGroups)
     {
         try {
             $aInGroups = array ();
@@ -2247,7 +2239,7 @@ class Processes
      * @param array $sProUid
      * @return array $aConnections
      */
-    public function getDBConnectionsRows ($sProUid)
+    function getDBConnectionsRows ($sProUid)
     {
         try {
             $aConnections = array ();
@@ -2273,7 +2265,7 @@ class Processes
      * @param array $sProUid
      * @return array $aStepSup
      */
-    public function getStepSupervisorRows ($sProUid)
+    function getStepSupervisorRows ($sProUid)
     {
         try {
             $aConnections = array ();
@@ -2299,7 +2291,7 @@ class Processes
      * @param array $aTask
      * @return array $aReps
      */
-    public function getReportTablesRows ($sProUid)
+    function getReportTablesRows ($sProUid)
     {
         try {
             $aReps = array ();
@@ -2325,7 +2317,7 @@ class Processes
      * @param string $sProUid
      * @return array $aRepVars
      */
-    public function getReportTablesVarsRows ($sProUid)
+    function getReportTablesVarsRows ($sProUid)
     {
         try {
             $aRepVars = array ();
@@ -2351,7 +2343,7 @@ class Processes
      * @param array $aTask
      * @return array $aStepTrigger
      */
-    public function getTaskUserRows ($aTask)
+    function getTaskUserRows ($aTask)
     {
         try {
             $aInTasks = array ();
@@ -2377,9 +2369,8 @@ class Processes
                 $oDataset2->next();
                 $aRow2 = $oDataset2->getRow();
                 $bActiveGroup = $aRow2[0];
-                if ($bActiveGroup == 1) {
+                if ($bActiveGroup == 1)
                     $aTaskUser[] = $aRow;
-                }
                 $oDataset->next();
             }
             return $aTaskUser;
@@ -2394,13 +2385,13 @@ class Processes
      * @param array $aTaskUser
      * @return array $aStepTrigger
      */
-    public function createTaskUserRows ($aTaskUser)
+    function createTaskUserRows ($aTaskUser)
     {
         foreach ($aTaskUser as $key => $row) {
             $oTaskUser = new TaskUser();
-            if ($oTaskUser->TaskUserExists( $row['TAS_UID'], $row['USR_UID'], $row['TU_TYPE'], $row['TU_RELATION'] )) {
+            if ($oTaskUser->TaskUserExists( $row['TAS_UID'], $row['USR_UID'], $row['TU_TYPE'], $row['TU_RELATION'] ))
                 $oTaskUser->remove( $row['TAS_UID'], $row['USR_UID'], $row['TU_TYPE'], $row['TU_RELATION'] );
-            }
+
             $res = $oTaskUser->create( $row );
         }
         return;
@@ -2412,7 +2403,7 @@ class Processes
      * @param array $aTaskUser
      * @return array $aStepTrigger
      */
-    public function createGroupRow ($aGroupwf)
+    function createGroupRow ($aGroupwf)
     {
         foreach ($aGroupwf as $key => $row) {
             $oGroupwf = new Groupwf();
@@ -2429,7 +2420,7 @@ class Processes
      * @param array $aConnections
      * @return void
      */
-    public function createDBConnectionsRows ($aConnections)
+    function createDBConnectionsRows ($aConnections)
     {
         foreach ($aConnections as $sKey => $aRow) {
             $oConnection = new DbSource();
@@ -2459,7 +2450,7 @@ class Processes
      * @param array $aReportTablesVars
      * @return void
      */
-    public function createReportTables ($aReportTables, $aReportTablesVars)
+    function createReportTables ($aReportTables, $aReportTablesVars)
     {
         $this->createReportTablesVars( $aReportTablesVars );
         $oReportTables = new ReportTables();
@@ -2486,13 +2477,11 @@ class Processes
             $oReportTables->populateTable( $aRow['REP_TAB_NAME'], $aRow['REP_TAB_CONNECTION'], $aRow['REP_TAB_TYPE'], $aFields, $aRow['PRO_UID'], $aRow['REP_TAB_GRID'] );
             $aReportTables[$sKey]['REP_TAB_NAME'] = $aRow['REP_TAB_NAME'];
             $oRep = new ReportTable();
-            if ($oRep->reportTableExists( $aRow['REP_TAB_UID'] )) {
+            if ($oRep->reportTableExists( $aRow['REP_TAB_UID'] ))
                 $oRep->remove( $aRow['REP_TAB_UID'] );
-            }
             $oRep->create( $aRow );
         }
-    }
-    #@!neyek
+    } #@!neyek
 
 
     /**
@@ -2502,7 +2491,7 @@ class Processes
      * @param array $aReportTablesVars
      * @return void
      */
-    public function updateReportTables ($aReportTables, $aReportTablesVars)
+    function updateReportTables ($aReportTables, $aReportTablesVars)
     {
         $this->cleanupReportTablesReferences( $aReportTables );
         $this->createReportTables( $aReportTables, $aReportTablesVars );
@@ -2515,13 +2504,13 @@ class Processes
      * @param array $aReportTablesVars
      * @return void
      */
-    public function createReportTablesVars ($aReportTablesVars)
+    function createReportTablesVars ($aReportTablesVars)
     {
         foreach ($aReportTablesVars as $sKey => $aRow) {
             $oRep = new ReportVar();
-            if ($oRep->reportVarExists( $aRow['REP_VAR_UID'] )) {
+            if ($oRep->reportVarExists( $aRow['REP_VAR_UID'] ))
                 $oRep->remove( $aRow['REP_VAR_UID'] );
-            }
+
             $oRep->create( $aRow );
         }
     } #@!neyek
@@ -2533,7 +2522,7 @@ class Processes
      * @param array $aReportTables
      * @return void
      */
-    public function cleanupReportTablesReferences ($aReportTables)
+    function cleanupReportTablesReferences ($aReportTables)
     {
         foreach ($aReportTables as $sKey => $aRow) {
             $oReportTables = new ReportTables();
@@ -2550,7 +2539,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function serializeProcess ($sProUid = '')
+    function serializeProcess ($sProUid = '')
     {
         $oProcess = new Process();
         $oData->process = $this->getProcessRow( $sProUid, false );
@@ -2593,7 +2582,7 @@ class Processes
      * @param array $oData
      * @return $result an array
      */
-    public function saveSerializedProcess ($oData)
+    function saveSerializedProcess ($oData)
     {
         //$oJSON = new Services_JSON();
         //$data = $oJSON->decode($oData);
@@ -2605,7 +2594,6 @@ class Processes
         if (! is_dir( $path )) {
             G::verifyPath( $path, true );
         }
-
         $proTitle = (substr( G::inflect( $data->process['PRO_TITLE'] ), 0, 245 ));
         $proTitle = preg_replace( "/[^A-Za-z0-9_]/", "", $proTitle );
         //Calculating the maximum length of file name
@@ -2622,11 +2610,10 @@ class Processes
             $filename = $path . $proTitle . $index . '.pm';
             $lastIndex = $index;
 
-            if ($index == '') {
+            if ($index == '')
                 $index = 1;
-            } else {
+            else
                 $index ++;
-            }
         } while (file_exists( $filename ));
 
         $proTitle .= $lastIndex;
@@ -2715,6 +2702,7 @@ class Processes
                             $bytesSaved += fwrite( $fp, $fsFileContent ); //writing the size of xml file
                             $bytesSaved += fwrite( $fp, $fileContent ); //writing the htmlfile
                         }
+
                     }
                 }
             }
@@ -2725,8 +2713,10 @@ class Processes
 
         //if this process have any mailfile
         if (is_dir( $PUBLIC_ROOT_PATH )) {
+
             //get mail files list from this directory
             $file_list = scandir( $PUBLIC_ROOT_PATH );
+
             foreach ($file_list as $filename) {
                 // verify if this filename is a valid file, because it could be . or .. on *nix systems
                 if ($filename != '.' && $filename != '..') {
@@ -2739,50 +2729,53 @@ class Processes
                             }
                             //$htmlGuid    = $val['DYN_UID'];
                             $fsFileName = sprintf( "%09d", strlen( $filename ) );
-                            $bytesSaved += fwrite( $fp, $fsFileName );
-                            //writing the fileName size
-                            $bytesSaved += fwrite( $fp, $filename );
-                            //writing the fileName size
+                            $bytesSaved += fwrite( $fp, $fsFileName ); //writing the fileName size
+                            $bytesSaved += fwrite( $fp, $filename ); //writing the fileName size
+
+
                             $fileContent = file_get_contents( $sFileName );
                             $fsFileContent = sprintf( "%09d", strlen( $fileContent ) );
-                            $bytesSaved += fwrite( $fp, $fsFileContent );
-                            //writing the size of xml file
-                            $bytesSaved += fwrite( $fp, $fileContent );
-                            //writing the htmlfile
+                            $bytesSaved += fwrite( $fp, $fsFileContent ); //writing the size of xml file
+                            $bytesSaved += fwrite( $fp, $fileContent ); //writing the htmlfile
                         }
+
                     }
                 }
             }
         }
 
         /*
-        // for public files
-        $PUBLIC_ROOT_PATH = PATH_DATA.'sites'.PATH_SEP.SYS_SYS.PATH_SEP.'public'.PATH_SEP.$data->process['PRO_UID'];
-        //if this process have any mailfile
-        if ( is_dir( $PUBLIC_ROOT_PATH ) ) {
-            //get mail files list from this directory
-            $files_list = scandir($PUBLIC_ROOT_PATH);
-            foreach ($file_list as $filename) {
-              // verify if this filename is a valid file, beacuse it could be . or .. on *nix systems
-                if($filename != '.' && $filename != '..'){
-                    if (@is_readable($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo)) {
-                        $tmp = explode('.', $filename);
-                        $ext = $tmp[1];
-                        $ext_fp = fopen($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo, 'r');
-                        $file_data = fread($ext_fp, filesize($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo));
-                        fclose($ext_fp);
-                        $file_objects->add($filename, $ext, $file_data,'public');
-                    }
-                }
-            }
-        }
+  // for public files
+  $PUBLIC_ROOT_PATH = PATH_DATA.'sites'.PATH_SEP.SYS_SYS.PATH_SEP.'public'.PATH_SEP.$data->process['PRO_UID'];
 
-        //So,. we write the store object into pm export file
-        $extended_data = serialize($file_objects);
-        $bytesSaved += fwrite( $fp, $extended_data );
-        */
-        /* under here, I've not modified those lines */
-        fclose( $fp );
+  //if this process have any mailfile
+  if ( is_dir( $PUBLIC_ROOT_PATH ) ) {
+
+    //get mail files list from this directory
+    $files_list = scandir($PUBLIC_ROOT_PATH);
+    foreach ($file_list as $filename) {
+      // verify if this filename is a valid file, beacuse it could be . or .. on *nix systems
+      if($filename != '.' && $filename != '..'){
+        if (@is_readable($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo)) {
+          $tmp = explode('.', $filename);
+          $ext = $tmp[1];
+          $ext_fp = fopen($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo, 'r');
+          $file_data = fread($ext_fp, filesize($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo));
+          fclose($ext_fp);
+          $file_objects->add($filename, $ext, $file_data,'public');
+        }
+      }
+    }
+  }
+
+  //So,. we write the store object into pm export file
+  $extended_data = serialize($file_objects);
+  $bytesSaved += fwrite( $fp, $extended_data );
+  */
+  /* under here, I've not modified those lines */
+
+    fclose( $fp );
+
         //$bytesSaved = file_put_contents  ( $filename  , $oData  );
         $filenameLink = 'processes_DownloadFile?p=' . $proTitle . '&r=' . rand( 100, 1000 );
         $result['PRO_UID'] = $data->process['PRO_UID'];
@@ -2800,15 +2793,14 @@ class Processes
      * @param array $pmFilename
      * @return void
      */
-    public function getProcessData ($pmFilename)
+    function getProcessData ($pmFilename)
     {
         $oProcess = new Process();
-        if (! file_exists( $pmFilename )) {
+        if (! file_exists( $pmFilename ))
             throw (new Exception( 'Unable to read uploaded file, please check permissions. ' ));
-        }
-        if (! filesize( $pmFilename ) >= 9) {
+
+        if (! filesize( $pmFilename ) >= 9)
             throw (new Exception( 'Uploaded file is corrupted, please check the file before continuing. ' ));
-        }
         clearstatcache();
         $fp = fopen( $pmFilename, "rb" );
         $fsData = intval( fread( $fp, 9 ) ); //reading the size of $oData
@@ -2818,9 +2810,9 @@ class Processes
 
         if ($contents != '') {
             $oData = unserialize( $contents );
-            if ($oData === false) {
+            if ($oData === false)
                 throw new Exception( "Process file is not valid" );
-            }
+
             foreach ($oData->dynaforms as $key => $value) {
                 if ($value['DYN_TYPE'] == 'grid') {
                     $oData->gridFiles[$value['DYN_UID']] = $value['DYN_UID'];
@@ -2833,9 +2825,9 @@ class Processes
                 $sIdentifier = fread( $fp, 9 ); //reading the block identifier
                 if (is_numeric( $sIdentifier )) {
                     $fsXmlGuid = intval( $sIdentifier ); //reading the size of $filename
-                    if ($fsXmlGuid > 0) {
+                    if ($fsXmlGuid > 0)
                         $XmlGuid = fread( $fp, $fsXmlGuid ); //reading string $XmlGuid
-                    }
+
 
                     $fsXmlContent = intval( fread( $fp, 9 ) ); //reading the size of $XmlContent
                     if ($fsXmlContent > 0) {
@@ -2864,7 +2856,7 @@ class Processes
      * @param $sGroupList array of a group list
      * @return $existingGroupList array of existing groups or null
      */
-    public function checkExistingGroups ($sGroupList)
+    function checkExistingGroups ($sGroupList)
     {
         $aGroupwf = array ();
         $oCriteria = new Criteria( 'workflow' );
@@ -2892,11 +2884,11 @@ class Processes
             }
         }
         //return $sGroupList;
-        if (isset( $existingGroupList )) {
+        if (isset( $existingGroupList ))
             return $existingGroupList;
-        } else {
+        else
             return null;
-        }
+
     }
 
     /**
@@ -2910,7 +2902,7 @@ class Processes
      * @return $renamedGroupList array of existing groups
      */
 
-    public function renameExistingGroups ($sGroupList)
+    function renameExistingGroups ($sGroupList)
     {
         $checkedGroup = $this->checkExistingGroups( $sGroupList );
         foreach ($sGroupList as $groupBase) {
@@ -2929,11 +2921,11 @@ class Processes
             $renamedGroupList[] = $groupBase;
         }
 
-        if (isset( $renamedGroupList )) {
+        if (isset( $renamedGroupList ))
             return $renamedGroupList;
-        } else {
+        else
             return null;
-        }
+
     }
 
     /**
@@ -2946,8 +2938,9 @@ class Processes
      * @param $sGroupList array of a group list
      * @return $mergedGroupList array of existing groups
      */
-    public function mergeExistingGroups ($sGroupList)
+    function mergeExistingGroups ($sGroupList)
     {
+
         $oCriteria = new Criteria( 'workflow' );
         $oCriteria->addSelectColumn( GroupwfPeer::GRP_UID );
         $oCriteria->addSelectColumn( ContentPeer::CON_ID );
@@ -2972,7 +2965,7 @@ class Processes
                     $merged = true;
                 }
             }
-
+            //
             if (! $merged) {
                 $mergedGroupList[] = $group;
             }
@@ -2998,7 +2991,7 @@ class Processes
      * the task and the group list
      * @return $mergedTaskUserList array of the merged task user list
      */
-    public function mergeExistingUsers ($sBaseGroupList, $sGroupList, $sTaskUserList)
+    function mergeExistingUsers ($sBaseGroupList, $sGroupList, $sTaskUserList)
     {
         foreach ($sTaskUserList as $taskuser) {
             $merged = false;
@@ -3034,7 +3027,7 @@ class Processes
      * @param $sProUid process uid
      * @return void
      */
-    public function disablePreviousProcesses ($sProUid)
+    function disablePreviousProcesses ($sProUid)
     {
         //change status of process
         $oCriteria = new Criteria( 'workflow' );
@@ -3049,26 +3042,25 @@ class Processes
             $oProcess->update( $aRow );
             $oDataset->next();
         }
+
     }
 
     /**
      * create the files from a .
-     *
-     *
      * pm file
      *
      * @param $oData process data
      * @param $pmFilename process file name
      * @return boolean true
      */
-    public function createFiles ($oData, $pmFilename)
+    function createFiles ($oData, $pmFilename)
     {
-        if (! file_exists( $pmFilename )) {
+        if (! file_exists( $pmFilename ))
             throw (new Exception( 'Unable to read uploaded .pm file, please check permissions. ' ));
-        }
-        if (! filesize( $pmFilename ) >= 9) {
+
+        if (! filesize( $pmFilename ) >= 9)
             throw (new Exception( 'Uploaded .pm file is corrupted, please check the file before continue. ' ));
-        }
+
         $fp = fopen( $pmFilename, "rb" );
         $fsData = intval( fread( $fp, 9 ) ); //reading the size of $oData
         $contents = fread( $fp, $fsData ); //reading string $oData
@@ -3084,14 +3076,15 @@ class Processes
             $sIdentifier = fread( $fp, 9 ); //reading the size of $filename
             if (is_numeric( $sIdentifier )) {
                 $fsXmlGuid = intval( $sIdentifier ); //reading the size of $filename
-                if ($fsXmlGuid > 0) {
+                if ($fsXmlGuid > 0)
                     $XmlGuid = fread( $fp, $fsXmlGuid ); //reading string $XmlGuid
-                }
                 $fsXmlContent = intval( fread( $fp, 9 ) ); //reading the size of $XmlContent
                 if ($fsXmlContent > 0) {
                     $newXmlGuid = $oData->dynaformFiles[$XmlGuid];
                     if (isset( $oData->process['PRO_UID_OLD'] )) {
                         $XmlContent = fread( $fp, $fsXmlContent ); //reading string $XmlContent
+
+
                         $XmlContent = str_replace( $oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent );
                         $XmlContent = str_replace( $XmlGuid, $newXmlGuid, $XmlContent );
 
@@ -3114,6 +3107,7 @@ class Processes
                         #here we verify if is adynaform or a html
                         $aAux = explode( ' ', $XmlContent );
                         $ext = (strpos( $aAux[0], '<?xml' ) !== false ? '.xml' : '.html');
+
                         $sFileName = $path . $newXmlGuid . $ext;
                         $bytesSaved = @file_put_contents( $sFileName, $XmlContent );
                         //if ( $bytesSaved != $fsXmlContent ) throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
@@ -3134,17 +3128,15 @@ class Processes
                 $sIdentifier = fread( $fp, 9 ); //reading the size of $filename
                 if (is_numeric( $sIdentifier )) {
                     $fsFileName = intval( $sIdentifier ); //reading the size of $filename
-                    if ($fsFileName > 0) {
+                    if ($fsFileName > 0)
                         $sFileName = fread( $fp, $fsFileName ); //reading filename string
-                    }
                     $fsContent = function_exists( 'mb_strlen' ) ? mb_strlen( fread( $fp, 9 ) ) : strlen( fread( $fp, 9 ) ); //reading the size of $Content
                     if ($fsContent > 0) {
                         $fileContent = fread( $fp, $fsContent ); //reading string $XmlContent
                         $newFileName = $pathMailTem . $sFileName;
                         $bytesSaved = @file_put_contents( $newFileName, $fileContent );
-                        if ($bytesSaved != $fsContent) {
+                        if ($bytesSaved != $fsContent)
                             throw (new Exception( 'Error writing MailTemplate file in directory : ' . $pathMailTem ));
-                        }
                     }
                 }
             }
@@ -3156,17 +3148,15 @@ class Processes
                 $sIdentifier = fread( $fp, 9 ); //reading the size of $filename
                 if (is_numeric( $sIdentifier )) {
                     $fsFileName = intval( $sIdentifier ); //reading the size of $filename
-                    if ($fsFileName > 0) {
+                    if ($fsFileName > 0)
                         $sFileName = fread( $fp, $fsFileName ); //reading filename string
-                    }
                     $fsContent = function_exists( 'mb_strlen' ) ? mb_strlen( fread( $fp, 9 ) ) : strlen( fread( $fp, 9 ) ); //reading the size of $Content
                     if ($fsContent > 0) {
                         $fileContent = fread( $fp, $fsContent ); //reading string $XmlContent
                         $newFileName = $pathPublic . $sFileName;
                         $bytesSaved = @file_put_contents( $newFileName, $fileContent );
-                        if ($bytesSaved != $fsContent) {
+                        if ($bytesSaved != $fsContent)
                             throw (new Exception( 'Error writing Public file in directory : ' . $pathPublic ));
-                        }
                     }
                 }
             }
@@ -3184,7 +3174,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function removeProcessRows ($sProUid)
+    function removeProcessRows ($sProUid)
     {
         try {
             //Instance all classes necesaries
@@ -3217,9 +3207,8 @@ class Processes
                 $oCriteria = new Criteria( 'workflow' );
                 $oCriteria->add( StepTriggerPeer::TAS_UID, $aRow['TAS_UID'] );
                 StepTriggerPeer::doDelete( $oCriteria );
-                if ($oTask->taskExists( $aRow['TAS_UID'] )) {
+                if ($oTask->taskExists( $aRow['TAS_UID'] ))
                     $oTask->remove( $aRow['TAS_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3238,9 +3227,8 @@ class Processes
                 foreach (glob( $sWildcard ) as $fn) {
                     @unlink( $fn );
                 }
-                if ($oDynaform->dynaformExists( $aRow['DYN_UID'] )) {
+                if ($oDynaform->dynaformExists( $aRow['DYN_UID'] ))
                     $oDynaform->remove( $aRow['DYN_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3251,9 +3239,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oInputDocument->InputExists( $aRow['INP_DOC_UID'] )) {
+                if ($oInputDocument->InputExists( $aRow['INP_DOC_UID'] ))
                     $oInputDocument->remove( $aRow['INP_DOC_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3264,9 +3251,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oOutputDocument->OutputExists( $aRow['OUT_DOC_UID'] )) {
+                if ($oOutputDocument->OutputExists( $aRow['OUT_DOC_UID'] ))
                     $oOutputDocument->remove( $aRow['OUT_DOC_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3279,15 +3265,15 @@ class Processes
             while ($aRow = $oDataset->getRow()) {
                 //Delete the steptrigger of process
                 /*$oCriteria = new Criteria('workflow');
-                  $oCriteria->add(StepTriggerPeer::STEP_UID, $aRow['STEP_UID']);
-                  $oDataseti = StepTriggerPeer::doSelectRS($oCriteria);
-                  $oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-                  $oDataseti->next();
-                  while ($aRowi = $oDataseti->getRow()) {
-                  if ($oStepTrigger->stepTriggerExists($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']))
-                  $oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
-                  $oDataseti->next();
-                  }*/
+      $oCriteria->add(StepTriggerPeer::STEP_UID, $aRow['STEP_UID']);
+      $oDataseti = StepTriggerPeer::doSelectRS($oCriteria);
+      $oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataseti->next();
+      while ($aRowi = $oDataseti->getRow()) {
+        if ($oStepTrigger->stepTriggerExists($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']))
+          $oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
+        $oDataseti->next();
+      }*/
                 $oStep->remove( $aRow['STEP_UID'] );
                 $oDataset->next();
             }
@@ -3299,9 +3285,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oStep->StepExists( $aRow['STEP_UID'] )) {
+                if ($oStep->StepExists( $aRow['STEP_UID'] ))
                     $oStep->remove( $aRow['STEP_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3312,11 +3297,11 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oTrigger->TriggerExists( $aRow['TRI_UID'] )) {
+                if ($oTrigger->TriggerExists( $aRow['TRI_UID'] ))
                     $oTrigger->remove( $aRow['TRI_UID'] );
-                }
                 $oDataset->next();
             }
+
             //Delete the routes of process
             $oCriteria = new Criteria( 'workflow' );
             $oCriteria->add( RoutePeer::PRO_UID, $sProUid );
@@ -3324,11 +3309,11 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oRoute->routeExists( $aRow['ROU_UID'] )) {
+                if ($oRoute->routeExists( $aRow['ROU_UID'] ))
                     $oRoute->remove( $aRow['ROU_UID'] );
-                }
                 $oDataset->next();
             }
+
             //Delete the swimlanes elements of process
             $oCriteria = new Criteria( 'workflow' );
             $oCriteria->add( SwimlanesElementsPeer::PRO_UID, $sProUid );
@@ -3336,9 +3321,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oSwimlaneElement->swimlanesElementsExists( $aRow['SWI_UID'] )) {
+                if ($oSwimlaneElement->swimlanesElementsExists( $aRow['SWI_UID'] ))
                     $oSwimlaneElement->remove( $aRow['SWI_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3349,9 +3333,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oConnection->Exists( $aRow['DBS_UID'], $aRow['PRO_UID'] )) {
+                if ($oConnection->Exists( $aRow['DBS_UID'], $aRow['PRO_UID'] ))
                     $oConnection->remove( $aRow['DBS_UID'], $aRow['PRO_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3362,9 +3345,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oSubProcess->subProcessExists( $aRow['SP_UID'] )) {
+                if ($oSubProcess->subProcessExists( $aRow['SP_UID'] ))
                     $oSubProcess->remove( $aRow['SP_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3375,9 +3357,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oCaseTracker->caseTrackerExists( $aRow['PRO_UID'] )) {
+                if ($oCaseTracker->caseTrackerExists( $aRow['PRO_UID'] ))
                     $oCaseTracker->remove( $aRow['PRO_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3414,9 +3395,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oStage->Exists( $aRow['STG_UID'] )) {
+                if ($oStage->Exists( $aRow['STG_UID'] ))
                     $oStage->remove( $aRow['STG_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3427,9 +3407,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oEvent->Exists( $aRow['EVN_UID'] )) {
+                if ($oEvent->Exists( $aRow['EVN_UID'] ))
                     $oEvent->remove( $aRow['EVN_UID'] );
-                }
                 $oDataset->next();
                 if ($oEvent->existsByTaskUidFrom( $aRow['TAS_UID'] )) {
                     $aRowEvent = $oEvent->getRowByTaskUidFrom( $aRow['TAS_UID'] );
@@ -3445,9 +3424,8 @@ class Processes
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
-                if ($oCaseScheduler->Exists( $aRow['SCH_UID'] )) {
+                if ($oCaseScheduler->Exists( $aRow['SCH_UID'] ))
                     $oCaseScheduler->remove( $aRow['SCH_UID'] );
-                }
                 $oDataset->next();
             }
 
@@ -3463,7 +3441,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function createProcessFromData ($oData, $pmFilename)
+    function createProcessFromData ($oData, $pmFilename)
     {
         $this->removeProcessRows( $oData->process['PRO_UID'] );
 
@@ -3473,6 +3451,7 @@ class Processes
 
         // create the process
         $this->createProcessRow( $oData->process );
+
         $this->createTaskRows( $oData->tasks );
         //it was commented becuase it seems to be working fine
         //$this->createEventRows(isset($oData->event) ? $oData->event : array());
@@ -3501,12 +3480,12 @@ class Processes
                   $oRoute->update($aData);
               }
          }
-        }
-        else*/
+    }
+    else*/
 
-        if (isset( $oData->gateways )) {
+        if (isset( $oData->gateways ))
             $this->createGatewayRows( $oData->gateways );
-        }
+
         $this->createDynaformRows( $oData->dynaforms );
         $this->createInputRows( $oData->inputs );
         $this->createOutputRows( $oData->outputs );
@@ -3541,7 +3520,7 @@ class Processes
      * @param string $sProUid
      * @return boolean
      */
-    public function updateProcessFromData ($oData, $pmFilename)
+    function updateProcessFromData ($oData, $pmFilename)
     {
         $this->updateProcessRow( $oData->process );
         $this->removeProcessRows( $oData->process['PRO_UID'] );
@@ -3569,6 +3548,7 @@ class Processes
         $this->createEventRows( $oData->event );
         $this->createCaseSchedulerRows( $oData->caseScheduler );
         $this->createProcessCategoryRow( isset( $oData->processCategory ) ? $oData->processCategory : null );
+
     }
 
     /**
@@ -3578,9 +3558,10 @@ class Processes
      * @param $sUserUid user uid
      * @return an array of tasks
      */
-    public function getStartingTaskForUser ($sProUid, $sUsrUid)
+    function getStartingTaskForUser ($sProUid, $sUsrUid)
     {
         $oTask = new Tasks();
+
         return $oTask->getStartingTaskForUser( $sProUid, $sUsrUid );
     }
 
@@ -3596,7 +3577,7 @@ class Processes
      * @param $pass password for the user
      * @return 1 integer.
      */
-    public function ws_open ($user, $pass)
+    function ws_open ($user, $pass)
     {
         global $sessionId;
         global $client;
@@ -3617,6 +3598,7 @@ class Processes
             }
         }
         $client = new SoapClient( $endpoint, $proxy );
+
         $params = array ('userid' => $user,'password' => $pass
         );
         $result = $client->__SoapCall( 'login', array ($params
@@ -3636,8 +3618,9 @@ class Processes
      * @param $pass password for the user
      * @return 1 integer.
      */
-    public function ws_open_public ()
+    function ws_open_public ()
     {
+
         global $sessionId;
         global $client;
         $endpoint = PML_WSDL_URL;
@@ -3662,6 +3645,7 @@ class Processes
         } catch (Exception $e) {
             throw (new Exception( $e->getMessage() ));
         }
+
         return 1;
     }
 
@@ -3670,7 +3654,7 @@ class Processes
      *
      * @return $result process list.
      */
-    public function ws_processList ()
+    function ws_processList ()
     {
         global $sessionId;
         global $client;
@@ -3678,7 +3662,6 @@ class Processes
         $endpoint = PML_WSDL_URL;
         $proxy = array ();
         $sysConf = System::getSystemConfiguration();
-
         if ($sysConf['proxy_host'] != '') {
             $proxy['proxy_host'] = $sysConf['proxy_host'];
             if ($sysConf['proxy_port'] != '') {
@@ -3691,8 +3674,8 @@ class Processes
                 $proxy['proxy_password'] = $sysConf['proxy_pass'];
             }
         }
-
         $client = new SoapClient( $endpoint, $proxy );
+
         $sessionId = '';
         $params = array ('sessionId' => $sessionId
         );
@@ -3712,11 +3695,11 @@ class Processes
      * @param $newfilename
      * @return $errorMsg process list.
      */
-    public function downloadFile ($file, $local_path, $newfilename)
+    function downloadFile ($file, $local_path, $newfilename)
     {
         $err_msg = '';
         $out = fopen( $local_path . $newfilename, 'wb' );
-        if ($out == false) {
+        if ($out == FALSE) {
             throw (new Exception( "File $newfilename not opened" ));
         }
 
@@ -3747,7 +3730,7 @@ class Processes
      * @param $proId process Uid
      * @return $result
      */
-    public function ws_processGetData ($proId)
+    function ws_processGetData ($proId)
     {
         global $sessionId;
         global $client;
@@ -3786,7 +3769,7 @@ class Processes
      * @param $proId process Uid
      * @return $result
      */
-    public function parseItemArray ($array)
+    function parseItemArray ($array)
     {
         if (! isset( $array->item ) && ! is_array( $array )) {
             return null;
@@ -3846,10 +3829,11 @@ class Processes
                 );
             }
         }
+
         return $filesList;
     }
-}
-//end class processes
+
+} //end class processes
 
 
 /**
@@ -3867,7 +3851,7 @@ class ObjectDocument
     /**
      * Constructor
      */
-    public function __construct ()
+    function __construct ()
     {
         $this->type = '';
         $this->name = '';
@@ -3890,7 +3874,7 @@ class ObjectCellection
     /**
      * Constructor
      */
-    public function __construct ()
+    function __construct ()
     {
         $this->objects = Array ();
         $this->num = 0;
@@ -3907,7 +3891,7 @@ class ObjectCellection
      * @param $origin origin object document
      * @return void
      */
-    public function add ($name, $type, $data, $origin)
+    function add ($name, $type, $data, $origin)
     {
         $o = new ObjectDocument();
         $o->name = $name;
@@ -3929,7 +3913,7 @@ class ObjectCellection
      * @param $origin origin object document
      * @return void
      */
-    public function get ()
+    function get ()
     {
         if ($this->swapc > 0) {
             $e = $this->objects[$this->swapc];
@@ -3941,4 +3925,3 @@ class ObjectCellection
         }
     }
 }
-

@@ -34,7 +34,7 @@
 class CLI
 {
     public static $tasks = array ();
-    public static $currentTask = null;
+    public static $currentTask = NULL;
 
     /**
      * Adds a new task defined by it's name.
@@ -46,7 +46,7 @@ class CLI
     public static function taskName ($name)
     {
         self::$currentTask = $name;
-        self::$tasks[$name] = array ('name' => $name,'description' => null,'args' => array (),'function' => null,'opt' => array ('short' => '','long' => array (),'descriptions' => array ()
+        self::$tasks[$name] = array ('name' => $name,'description' => NULL,'args' => array (),'function' => NULL,'opt' => array ('short' => '','long' => array (),'descriptions' => array ()
         )
         );
     }
@@ -61,7 +61,7 @@ class CLI
      */
     public static function taskDescription ($description)
     {
-        assert( self::$currentTask !== null );
+        assert( self::$currentTask !== NULL );
         self::$tasks[self::$currentTask]["description"] = $description;
     }
 
@@ -76,7 +76,7 @@ class CLI
      */
     public static function taskArg ($name, $optional = true, $multiple = false)
     {
-        assert( self::$currentTask !== null );
+        assert( self::$currentTask !== NULL );
         self::$tasks[self::$currentTask]["args"][$name] = array ('optional' => $optional,'multiple' => $multiple
         );
     }
@@ -87,16 +87,14 @@ class CLI
      * @param string $short short options
      * @param array $long long options
      */
-    public static function taskOpt ($name, $description, $short, $long = null)
+    public static function taskOpt ($name, $description, $short, $long = NULL)
     {
-        assert( self::$currentTask !== null );
+        assert( self::$currentTask !== NULL );
         $opts = self::$tasks[self::$currentTask]["opt"];
-        if ($short) {
+        if ($short)
             $opts['short'] .= $short;
-        }
-        if ($long) {
+        if ($long)
             $opts['long'][] = $long;
-        }
         $opts['descriptions'][$name] = array ('short' => $short,'long' => $long,'description' => $description
         );
         self::$tasks[self::$currentTask]["opt"] = $opts;
@@ -109,7 +107,7 @@ class CLI
      */
     public static function taskRun ($function)
     {
-        assert( self::$currentTask !== null );
+        assert( self::$currentTask !== NULL );
         self::$tasks[self::$currentTask]["function"] = $function;
     }
 
@@ -119,15 +117,14 @@ class CLI
      * @param array $args if defined, the task name should be argument 0
      * @param array $opts options as returned by getopt
      */
-    public static function help ($args, $opts = null)
+    public static function help ($args, $opts = NULL)
     {
         global $argv;
         $scriptName = $argv[0];
-        if (is_array( $args )) {
+        if (is_array( $args ))
             $taskName = $args[0];
-        } else {
+        else
             $taskName = $args;
-        }
 
         if (! $taskName) {
             echo "usage: $scriptName <task> [options] [args]\n";
@@ -145,12 +142,10 @@ class CLI
             $valid_args = array ();
             foreach (self::$tasks[$taskName]['args'] as $arg => $data) {
                 $arg = strtoupper( $arg );
-                if ($data['multiple']) {
+                if ($data['multiple'])
                     $arg = "$arg...";
-                }
-                if ($data['optional']) {
+                if ($data['optional'])
                     $arg = "[$arg]";
-                }
                 $valid_args[] = $arg;
             }
             $valid_args = join( " ", $valid_args );
@@ -167,12 +162,10 @@ EOT;
             $valid_options = array ();
             foreach (self::$tasks[$taskName]['opt']['descriptions'] as $opt => $data) {
                 $optString = array ();
-                if ($data['short']) {
+                if ($data['short'])
                     $optString[] = "-{$data['short']}";
-                }
-                if ($data['long']) {
+                if ($data['long'])
                     $optString[] = "--{$data['long']}";
-                }
                 $valid_options[] = "  " . join( ", ", $optString ) . "\n\t" . wordwrap( $data['description'], 70, "\n\t" );
             }
             $valid_options = join( "\n", $valid_options );
@@ -201,15 +194,14 @@ EOT;
         $args = $argv;
         $cliname = array_shift( $args );
         $taskName = array_shift( $args );
-        while ($taskName{0} == '-') {
+        while ($taskName{0} == '-')
             $taskName = array_shift( $args );
-        }
         if (! $taskName) {
             echo self::error( "Specify a task from the list below." ) . "\n\n";
-            self::help( null, null );
+            self::help( NULL, NULL );
             return;
         }
-        $taskData = null;
+        $taskData = NULL;
         foreach (self::$tasks as $name => $data) {
             if (strcasecmp( $name, $taskName ) === 0) {
                 $taskData = $data;
@@ -218,7 +210,7 @@ EOT;
         }
         if (! $taskData) {
             echo self::error( "Command not found: '$taskName'" ) . "\n\n";
-            self::help( null, null );
+            self::help( NULL, NULL );
             return;
         }
         G::LoadThirdParty( 'pear/Console', 'Getopt' );
@@ -246,15 +238,12 @@ EOT;
                     self::help( $taskName );
                     return;
                 }
-                if (strpos( $optName, '--' ) === 0) {
+                if (strpos( $optName, '--' ) === 0)
                     $optName = substr( $optName, 2 );
-                }
-                if (! array_key_exists( $optName, $validOpts )) {
+                if (! array_key_exists( $optName, $validOpts ))
                     throw new Exception( "option not found: $optName" );
-                }
-                if (array_key_exists( $validOpts[$optName], $taskOpts )) {
+                if (array_key_exists( $validOpts[$optName], $taskOpts ))
                     throw new Exception( "'$optName' specified more then once" );
-                }
                 $taskOpts[$validOpts[$optName]] = $optArg;
             }
         } catch (Exception $e) {
@@ -334,18 +323,18 @@ EOT;
      * @param string $message the message to display
      * @param string $filename the log file to write messages
      */
-    public static function logging ($message, $filename = null)
+    public static function logging ($message, $filename = NULL)
     {
-        static $log_file = null;
+        static $log_file = NULL;
         if (isset( $filename )) {
             $log_file = fopen( $filename, "a" );
             fwrite( $log_file, " -- " . date( "c" ) . " " . $message . " --\n" );
         } else {
-            if (isset( $log_file )) {
+            if (isset( $log_file ))
                 fwrite( $log_file, $message );
-            }
             echo $message;
         }
     }
 }
 
+?>

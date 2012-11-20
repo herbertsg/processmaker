@@ -260,26 +260,26 @@ function toMaskNumber(iNumber,dec)
 	iNumber = fix(iNumber.toString(),dec || 2);
 	var t=iNumber.split(".");
 	var arrayResult=iNumber.replace(/\D/g,'').replace(/^0*/,'').split("").reverse();
-	var result="";
+	var final="";
 	var aux=0;
 	var sep=0;
 	for(var i=0;i<arrayResult.length;i++)
 	{
 		if(i==1)
 		{
-			result="."+arrayResult[i]+result;
+			final="."+arrayResult[i]+final;
 		}
 		else
 		{
 			if(i>1 && aux>=3 && ((aux%3)==0))
 			{
-				result=arrayResult[i]+","+result;
+				final=arrayResult[i]+","+final;
 				aux+=1;
 				sep+=1;
 			}
 			else
 			{
-				result=arrayResult[i]+result;
+				final=arrayResult[i]+final;
 				if(i>1)
 				{
 					aux+=1;
@@ -287,7 +287,7 @@ function toMaskNumber(iNumber,dec)
 			}
 		}
 	}
-	return result;
+	return final;
 }
 
 function fix(val, dec)
@@ -2022,8 +2022,6 @@ function removeValue(id){
 
 function datePicker4(obj, id, mask, startDate, endDate, showTIme, idIsoDate)
 {
-  __lastMask__ = mask;
-
   if (showTIme=='false') {
     showTIme = false;
   }
@@ -2127,7 +2125,6 @@ function stringReplace(strSearch, stringReplace, str)
 }
 
 var mb_strlen = function(str) {
-    str = str || '';
     var len = 0;
     for (var i = 0; i < str.length; i++) {
         len += str.charCodeAt(i) < 0 || str.charCodeAt(i) > 255 ? 2 : 1;

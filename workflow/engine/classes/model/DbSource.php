@@ -84,7 +84,7 @@ class DbSource extends BaseDbSource
         return $oCriteria;
     }
 
-    public function load($Uid, $ProUID = '')
+    public function load($Uid, $ProUID='')
     {
         try {
             $oRow = DbSourcePeer::retrieveByPK($Uid, $ProUID);
@@ -203,4 +203,5 @@ class DbSource extends BaseDbSource
         }
     }
 }
-
+// DbSource
+ 

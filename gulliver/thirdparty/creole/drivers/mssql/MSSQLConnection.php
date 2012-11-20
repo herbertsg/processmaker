@@ -192,8 +192,7 @@ class MSSQLConnection extends ConnectionCommon implements Connection {
             throw new SQLException('Could not execute update', mssql_get_last_message(), $sql);
         }
         
-        return (int) mssql_rows_affected($this->dblink);
-        // return $this->getUpdateCount();
+        return $this->getUpdateCount();
     }
 
     /**
