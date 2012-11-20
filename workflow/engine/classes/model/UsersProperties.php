@@ -16,18 +16,18 @@ require_once 'classes/model/om/BaseUsersProperties.php';
 /**
  * @package    workflow.engine.classes.model
  */
-class UsersProperties extends BaseUsersProperties 
+class UsersProperties extends BaseUsersProperties
 {
   public $fields = null;
   public $usrID  = '';
   public $lang   = 'en';
 
-  function __construct() 
+  function __construct()
   {
     $this->lang = defined('SYS_LANG') ? SYS_LANG : 'en';
   }
-	
-  function UserPropertyExists($sUserUID) 
+
+  function UserPropertyExists($sUserUID)
   {
     $oUserProperty = UsersPropertiesPeer::retrieveByPk($sUserUID);
     if (!is_null($oUserProperty) && is_object($oUserProperty) && get_class($oUserProperty) == 'UsersProperties') {
@@ -40,8 +40,8 @@ class UsersProperties extends BaseUsersProperties
     }
   }
 
-  public function load($sUserUID) 
-  {  
+  public function load($sUserUID)
+  {
     $oUserProperty = UsersPropertiesPeer::retrieveByPK($sUserUID);
     if (!is_null($oUserProperty)) {
       $aFields = $oUserProperty->toArray(BasePeer::TYPE_FIELDNAME);
@@ -53,7 +53,7 @@ class UsersProperties extends BaseUsersProperties
     }
   }
 
-  public function create($aData) 
+  public function create($aData)
   {
     $oConnection = Propel::getConnection(UsersPropertiesPeer::DATABASE_NAME);
     try {
@@ -80,7 +80,7 @@ class UsersProperties extends BaseUsersProperties
     }
   }
 
-  public function update($aData) 
+  public function update($aData)
   {
     $oConnection = Propel::getConnection(UsersPropertiesPeer::DATABASE_NAME);
     try {
@@ -112,7 +112,7 @@ class UsersProperties extends BaseUsersProperties
     }
   }
 
-  public function loadOrCreateIfNotExists($sUserUID, $aUserProperty = array()) 
+  public function loadOrCreateIfNotExists($sUserUID, $aUserProperty = array())
   {
     if (!$this->UserPropertyExists($sUserUID)) {
       $aUserProperty['USR_UID'] = $sUserUID;
@@ -131,7 +131,7 @@ class UsersProperties extends BaseUsersProperties
     return $aUserProperty;
   }
 
-  public function validatePassword($sPassword, $sLastUpdate, $iChangePasswordNextTime) 
+  public function validatePassword($sPassword, $sLastUpdate, $iChangePasswordNextTime)
   {
     if (!defined('PPP_MINIMUM_LENGTH')) {
       define('PPP_MINIMUM_LENGTH', 5);
@@ -197,7 +197,7 @@ class UsersProperties extends BaseUsersProperties
     }
     return $aErrors;
   }
-  
+
 
   /**
    * get user location
@@ -217,13 +217,13 @@ class UsersProperties extends BaseUsersProperties
     $urlUx = $this->_getUXSkinVariant();
     if (empty($url) && !empty($urlUx)) {
       $_SESSION['_defaultUserLocation'] = $url;
-      $url = $urlUx;  
+      $url = $urlUx;
     }
 
     if (empty($url)) {
       $url = $this->_getDefaultLocation();
     }
-    
+
     return $url;
   }
 
@@ -246,7 +246,7 @@ class UsersProperties extends BaseUsersProperties
     $urlUx = $this->_getUXSkinVariant();
     if (!empty($urlUx)) {
       $_SESSION['_defaultUserLocation'] = $url;
-      $url = $urlUx;  
+      $url = $urlUx;
     }
 
     return $url;
@@ -261,9 +261,49 @@ class UsersProperties extends BaseUsersProperties
     $url = '';
 
     if (substr(SYS_SKIN, 0, 2) == 'ux' && SYS_SKIN != 'uxs') {
-      $url = '/sys' .  SYS_SYS . '/' . $this->lang . '/' . SYS_SKIN . '/main';
-    }
+        $url = '/sys' .  SYS_SYS . '/' . $this->lang . '/' . SYS_SKIN . '/main';
+        global $RBAC;
+        G::loadClass('configuration');
+        $oConf = new Configurations;
+        $oConf->loadConfig($x, 'USER_PREFERENCES','','',$_SESSION['USER_LOGGED'],'');
+        if ( sizeof($oConf->aConfig) > 0) {
+            if ($oConf->aConfig['DEFAULT_MENU'] == 'PM_USERS') {
+                $oConf->aConfig['DEFAULT_MENU'] = 'PM_SETUP';
+            }
 
+            $getUrl = null;
+
+            switch ($oConf->aConfig['DEFAULT_MENU']) {
+                case 'PM_SETUP':
+                    if ($RBAC->userCanAccess('PM_SETUP') == 1) {
+                        $getUrl = 'admin';
+                    }
+                    break;
+                case 'PM_FACTORY':
+                    if ($RBAC->userCanAccess('PM_FACTORY') == 1) {
+                        $getUrl = 'designer';
+                    }
+                    break;
+                case 'PM_CASES':
+                    if ($RBAC->userCanAccess('PM_CASES') == 1) {
+                        $getUrl = 'home';
+                    }
+                    break;
+                case 'PM_USERS':
+                    if ($RBAC->userCanAccess('PM_USERS') == 1) {
+                        $getUrl = 'admin';
+                    }
+                    break;
+                case 'PM_DASHBOARD':
+                    if ($RBAC->userCanAccess('PM_DASHBOARD') == 1) {
+                        $getUrl = 'dashboard';
+                    }
+                    break;
+            }
+
+            $url = $url . (($getUrl != null)? "?st=" . $getUrl : null);
+        }
+    }
     return $url;
   }
 
@@ -280,7 +320,7 @@ class UsersProperties extends BaseUsersProperties
       //to do: complete the validation
       if(isset($RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE']))
         $userRole = $RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE'];
-        
+
       $oPluginRegistry = &PMPluginRegistry::getSingleton();
       $aRedirectLogin = $oPluginRegistry->getRedirectLogins();
       if (isset($aRedirectLogin) && is_array($aRedirectLogin) ) {
@@ -313,7 +353,7 @@ class UsersProperties extends BaseUsersProperties
       require_once 'classes/model/GroupUser.php';
       $gu = new GroupUser();
       $ugList = $gu->getAllUserGroups($this->usrID);
-      
+
       foreach ($ugList as $row) {
         if ($row['GRP_UX'] != 'NORMAL' && $row['GRP_UX'] != '') {
           $uxType = $row['GRP_UX'];
@@ -321,7 +361,7 @@ class UsersProperties extends BaseUsersProperties
         }
       }
     }
-    
+
     switch ($uxType) {
       case 'SIMPLIFIED':
       case 'SWITCHABLE':
@@ -348,42 +388,40 @@ class UsersProperties extends BaseUsersProperties
 
     $baseUrl = '/sys' .  SYS_SYS . '/' . $this->lang . '/' . SYS_SKIN . '/';
     $url = '';
-    
+
     if( sizeof($oConf->aConfig) > 0) { // this user has a configuration record
       // backward compatibility, because now, we don't have user and dashboard menu.
-      if ($oConf->aConfig['DEFAULT_MENU'] == 'PM_USERS')     
-        $oConf->aConfig['DEFAULT_MENU'] = 'PM_SETUP';
-      
-      if ($oConf->aConfig['DEFAULT_MENU'] == 'PM_DASHBOARD') 
-        $oConf->aConfig['DEFAULT_MENU'] = 'PM_SETUP';
-      
-      switch($oConf->aConfig['DEFAULT_MENU']) {
-        case 'PM_SETUP':
-          if ($RBAC->userCanAccess('PM_SETUP') == 1) {
-            $url = 'setup/main';
-          }
-          break;
-        case 'PM_FACTORY':
-          if ($RBAC->userCanAccess('PM_FACTORY') == 1) {
-            $url = 'processes/main';
-          }
-          break;
-        case 'PM_CASES':
-          if ($RBAC->userCanAccess('PM_CASES') == 1) {
-            $url = 'cases/main';
-          }
-          break;
-        case 'PM_USERS':
-          if ($RBAC->userCanAccess('PM_USERS') == 1) {
-            $url = 'setup/main';
-          }
-          break;
-        case 'PM_DASHBOARD':
-          if ($RBAC->userCanAccess('PM_DASHBOARD') == 1) {
-            $url = 'dashboard/dashboard';
-          }
-          break;
-      }
+        if ($oConf->aConfig['DEFAULT_MENU'] == 'PM_USERS') {
+            $oConf->aConfig['DEFAULT_MENU'] = 'PM_SETUP';
+        }
+
+        switch ($oConf->aConfig['DEFAULT_MENU']) {
+            case 'PM_SETUP':
+                if ($RBAC->userCanAccess('PM_SETUP') == 1) {
+                    $url = 'setup/main';
+                }
+                break;
+            case 'PM_FACTORY':
+                if ($RBAC->userCanAccess('PM_FACTORY') == 1) {
+                    $url = 'processes/main';
+                }
+                break;
+            case 'PM_CASES':
+                if ($RBAC->userCanAccess('PM_CASES') == 1) {
+                    $url = 'cases/main';
+                }
+                break;
+            case 'PM_USERS':
+                if ($RBAC->userCanAccess('PM_USERS') == 1) {
+                    $url = 'setup/main';
+                }
+                break;
+            case 'PM_DASHBOARD':
+                if ($RBAC->userCanAccess('PM_DASHBOARD') == 1) {
+                    $url = 'dashboard/main';
+                }
+                break;
+        }
     }
 
     if (empty($url)) {

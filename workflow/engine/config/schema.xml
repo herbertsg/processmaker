@@ -33,7 +33,7 @@
     <column name="APP_CUR_USER" type="VARCHAR" size="32" required="true" default=""/>
     <column name="APP_CREATE_DATE" type="TIMESTAMP" required="true"/>
     <column name="APP_INIT_DATE" type="TIMESTAMP" required="true"/>
-    <column name="APP_FINISH_DATE" type="TIMESTAMP" required="true"/>
+    <column name="APP_FINISH_DATE" type="TIMESTAMP" required="false"/>
     <column name="APP_UPDATE_DATE" type="TIMESTAMP" required="true"/>
     <column name="APP_DATA" type="LONGVARCHAR" required="true"/>
     <column name="APP_PIN" type="VARCHAR" size="32" required="true" default=""/>
@@ -57,6 +57,24 @@
         <parameter name="Null" value=""/>
         <parameter name="Index_type" value="BTREE"/>
         <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+    <index name="indexAppNumber">
+      <index-column name="APP_NUMBER"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APPLICATION"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexAppNumber"/>
+        <parameter name="Seq_in_index" value="1"/>
+      </vendor>
+    </index>
+    <index name="indexAppStatus">
+      <index-column name="APP_STATUS"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APPLICATION"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexAppStatus"/>
+        <parameter name="Seq_in_index" value="1"/>
       </vendor>
     </index>
   </table>
@@ -148,6 +166,7 @@
     <column name="APP_DOC_TAGS" type="LONGVARCHAR" required="false"/>
     <column name="APP_DOC_STATUS" type="VARCHAR" size="32" required="true" default="ACTIVE"/>
     <column name="APP_DOC_STATUS_DATE" type="TIMESTAMP"/>
+    <column name="APP_DOC_FIELDNAME" type="VARCHAR" size="150" />
     <validator column="APP_DOC_UID">
       <rule name="maxLength" value="32" message="Application Document UID can be no larger than ${value} in size"/>
       <rule name="required" message="Application Document UID is required."/>
@@ -1143,6 +1162,7 @@
     <column name="TAS_PRIORITY_VARIABLE" type="VARCHAR" size="100" required="true" default=""/>
     <column name="TAS_ASSIGN_TYPE" type="VARCHAR" size="30" required="true" default="BALANCED"/>
     <column name="TAS_ASSIGN_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_NEXT_USER_TO_BE_ASSIGNED"/>
+    <column name="TAS_GROUP_VARIABLE" type="VARCHAR" size="100" required="false" default="@@SYS_GROUP_TO_BE_ASSIGNED"/>
     <column name="TAS_MI_INSTANCE_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_VAR_TOTAL_INSTANCE"/>
     <column name="TAS_MI_COMPLETE_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_VAR_TOTAL_INSTANCES_COMPLETE"/>
     <column name="TAS_ASSIGN_LOCATION" type="VARCHAR" size="20" required="true" default="FALSE"/>
@@ -1172,7 +1192,7 @@
     <column name="TAS_EVN_UID" type="VARCHAR" size="32" required="true" default=""/>
     <column name="TAS_BOUNDARY" type="VARCHAR" size="32" required="true" default=""/>
     <column name="TAS_DERIVATION_SCREEN_TPL" type="VARCHAR" size="128" default="" required="false"/>
-    
+
     <validator column="TAS_TYPE">
       <rule name="validValues" value="NORMAL|ADHOC|SUBPROCESS|HIDDEN" message="Please select a valid value for TAS_TYPE."/>
     </validator>
@@ -2174,6 +2194,7 @@
     <column name="EVN_TAS_UID_FROM" type="VARCHAR" size="32" required="false" default=""/>
     <column name="EVN_TAS_UID_TO" type="VARCHAR" size="32" required="false" default=""/>
     <column name="EVN_TAS_ESTIMATED_DURATION" type="DOUBLE" required="false" default="0"/>
+    <column name="EVN_TIME_UNIT" type="VARCHAR" size="10" required="true" default="DAYS"/>
     <column name="EVN_WHEN" type="DOUBLE" required="true" default="0"/>
     <column name="EVN_MAX_ATTEMPTS" type="TINYINT" required="true" default="3"/>
     <column name="EVN_ACTION" type="VARCHAR" size="50" required="true" default=""/>

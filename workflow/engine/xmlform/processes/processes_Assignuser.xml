@@ -3,7 +3,7 @@
 
 <PRO_UID type="private"/>
 
-<MNU_ASSIGN type="link" value="" link="#" onclick="availableProcessesUser(&#039;@#PRO_UID&#039;);return false;" colAlign="left" colWidth="50">
+<MNU_ASSIGN type="link" value="" link="#" onclick="availableProcessesUser(&#039;@#PRO_UID&#039;);return false;" colAlign="left" colWidth="100">
   <en>Assign</en>
 </MNU_ASSIGN>
 
@@ -41,11 +41,11 @@ var availableProcessesUser = function(PRO_UID) {
   oRPC.make();
 };
 
-var assignProcessUser = function(sProcessUID, sUserUID) {
+var assignProcessUser = function(sProcessUID, sUserUID, sTypeUID) {
   var oRPC = new leimnud.module.rpc.xmlhttp({
 		url  : '../processes/processes_Ajax',
 		async: false,
-		args : "action=assignProcessUser&data="+{PRO_UID:sProcessUID,USR_UID:sUserUID}.toJSONString() 		      
+		args : "action=assignProcessUser&data="+{PRO_UID:sProcessUID,USR_UID:sUserUID,TYPE_UID:sTypeUID}.toJSONString() 		      
   });
   oRPC.make();
   oPanel1.remove(); 

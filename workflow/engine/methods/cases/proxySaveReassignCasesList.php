@@ -60,9 +60,9 @@
           $rs = AppCacheViewPeer::doSelectRS($oTmpReassignCriteria);
           $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
           $rs->next();
-          $row = $rs->getRow();          
+          $row = $rs->getRow();
           $aCase = $oCases->loadCaseInCurrentDelegation($data->APP_UID);
-          $oCases->reassignCase($aCase['APP_UID'], $aCase['DEL_INDEX'], $aCase['USR_UID'], $data->APP_REASSIGN_USER_UID);
+          $oCases->reassignCase($aCase['APP_UID'], $aCase['DEL_INDEX'], ($aCase['USR_UID'] != '' ? $aCase['USR_UID'] : $_SESSION['USER_LOGGED']), $data->APP_REASSIGN_USER_UID);
           $currentCasesReassigned++;
           $casesReassignedCount++;
           $serverResponse[] = array ('APP_REASSIGN_USER' => $data->APP_REASSIGN_USER,
@@ -70,7 +70,7 @@
                                      'TAS_TITLE'         => $data->APP_TAS_TITLE,
                                      'REASSIGNED_CASES'  => $currentCasesReassigned);
         }
-      } 
+      }
       else {
         $oTmpReassignCriteria = $oCasesReassignList;
         $oTmpReassignCriteria->add(AppCacheViewPeer::TAS_UID,$aData->TAS_UID);
@@ -82,7 +82,7 @@
         while (is_array($row)) {
           $APP_UID = $row['APP_UID'];
           $aCase = $oCases->loadCaseInCurrentDelegation($APP_UID);
-          $oCases->reassignCase($aCase['APP_UID'], $aCase['DEL_INDEX'], $aCase['USR_UID'], $aData->APP_REASSIGN_USER_UID);
+          $oCases->reassignCase($aCase['APP_UID'], $aCase['DEL_INDEX'], ($aCase['USR_UID'] != '' ? $aCase['USR_UID'] : $_SESSION['USER_LOGGED']), $aData->APP_REASSIGN_USER_UID);
           $currentCasesReassigned++;
           $casesReassignedCount++;
 //              var_dump($aCase);
@@ -95,34 +95,3 @@
 
       $serverResponse['TOTAL'] = $casesReassignedCount;
       echo G::json_encode($serverResponse);
-//      $oTask  = new Task();
-//      $oCases = new Cases();
-//      $aCases = Array();
-//
-//      if( isset($_POST['items']) && trim($_POST['items']) != '' ){
-//        $sItems = $_POST['items'];
-//        $aItems = explode(',', $sItems);
-//        $FROM_USR_UID = $_POST['USR_UID'];
-//
-//        foreach($aItems as $item){
-//          list($APP_UID, $USR_UID) = explode('|', $item);
-//          $aCase = $oCases->loadCaseInCurrentDelegation($APP_UID);
-//          $oCase->reassignCase($aCase['APP_UID'], $aCase['DEL_INDEX'], $FROM_USR_UID, $USR_UID);
-//          array_push($aCases, $aCase);
-//        }
-//        require_once 'classes/model/Users.php';
-//		    $oUser = new Users();
-//		    $sText = '';
-//		    foreach ($aCases as $aCase) {
-//		      $aCaseUpdated  = $oCases->loadCaseInCurrentDelegation($aCase['APP_UID']);
-//		      $aUser  = $oUser->load($aCaseUpdated['USR_UID']);
-//		      $sText .= $aCaseUpdated['APP_PRO_TITLE'] .' - '. ' Case: ' . $aCaseUpdated['APP_NUMBER'] . '# (' . $aCaseUpdated['APP_TAS_TITLE'] . ') <b> => Reassigned to => </b> <font color="blue">' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' [' . $aUser['USR_USERNAME'] . ']' . '</font><br />';
-//		    }
-//
-//		    $G_PUBLISH = new Publisher;
-//		    $aMessage['MESSAGE'] = $sText;
-//		    $aMessage['URL']     = 'cases_ReassignByUser?REASSIGN_USER=' . $_POST['USR_UID'];
-//		    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ReassignShowInfo', '', $aMessage);
-//		    G::RenderPage('publish', 'raw');
-//      }
-?>

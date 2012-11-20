@@ -110,7 +110,10 @@ try {
   // Send notifications - Start
   $oUser     = new Users();
   $aUser     = $oUser->load($_SESSION['USER_LOGGED']);
-  $sFromName = '"' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . '"';
+  if (trim($aUser['USR_EMAIL'])=='') { 
+      $aUser['USR_EMAIL'] = 'info@'.$_SERVER['HTTP_HOST'];
+  }
+  $sFromName = '"' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . '" <'.$aUser['USR_EMAIL'].'>';
   try {
     $oCase->sendNotifications($_SESSION['TASK'], $_POST['form']['TASKS'], $appFields['APP_DATA'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $sFromName);
   } catch(Exception $e){
@@ -161,6 +164,23 @@ try {
   else {
     $loc = $aNextStep['PAGE'];
   }
+    //Triggers After
+    if (isset($_SESSION['TRIGGER_DEBUG']['ISSET'])) {
+        if ($_SESSION['TRIGGER_DEBUG']['ISSET'] == 1 ) {
+            $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_Step.html');
+            $oTemplatePower->prepare();
+            $G_PUBLISH = new Publisher;
+            $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
+            $_POST['NextStep'] = $loc;
+            $G_PUBLISH->AddContent('view', 'cases/showDebugFrameLoader');
+            $G_PUBLISH->AddContent('view', 'cases/showDebugFrameBreaker');
+            $_SESSION['TRIGGER_DEBUG']['ISSET'] == 0;
+            G::RenderPage('publish', 'blank');
+            exit();
+        } else {
+            unset($_SESSION['TRIGGER_DEBUG']);
+        }
+    }
 
   G::header("location: $loc");
 }

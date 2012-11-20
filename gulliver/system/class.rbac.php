@@ -68,7 +68,7 @@ class RBAC
 
   static private $instance = NULL;
 
-  private function __construct() {
+  public function __construct() {
   }
 
   /**
@@ -142,6 +142,37 @@ class RBAC
      }
    }
   }
+
+    /**
+    * gets the Role and their permissions for Administrator Processmaker
+    *
+    * @access public
+    * @return $this->permissionsAdmin[ $permissionsAdmin ]
+    */
+    function loadPermissionAdmin() {
+        $permissionsAdmin =array(
+            array("PER_UID"=>"00000000000000000000000000000001","PER_CODE"=>"PM_LOGIN"),
+            array("PER_UID"=>"00000000000000000000000000000002","PER_CODE"=>"PM_SETUP"),
+            array("PER_UID"=>"00000000000000000000000000000003","PER_CODE"=>"PM_USERS"),
+            array("PER_UID"=>"00000000000000000000000000000004","PER_CODE"=>"PM_FACTORY"),
+            array("PER_UID"=>"00000000000000000000000000000005","PER_CODE"=>"PM_CASES"),
+            array("PER_UID"=>"00000000000000000000000000000006","PER_CODE"=>"PM_ALLCASES"),
+            array("PER_UID"=>"00000000000000000000000000000007","PER_CODE"=>"PM_REASSIGNCASE"),
+            array("PER_UID"=>"00000000000000000000000000000008","PER_CODE"=>"PM_REPORTS"),
+            array("PER_UID"=>"00000000000000000000000000000009","PER_CODE"=>"PM_SUPERVISOR"),
+            array("PER_UID"=>"00000000000000000000000000000010","PER_CODE"=>"PM_SETUP_ADVANCE"),
+            array("PER_UID"=>"00000000000000000000000000000011","PER_CODE"=>"PM_DASHBOARD"),
+            array("PER_UID"=>"00000000000000000000000000000012","PER_CODE"=>"PM_WEBDAV"),
+            array("PER_UID"=>"00000000000000000000000000000013","PER_CODE"=>"PM_DELETECASE"),
+            array("PER_UID"=>"00000000000000000000000000000014","PER_CODE"=>"PM_EDITPERSONALINFO"),
+            array("PER_UID"=>"00000000000000000000000000000015","PER_CODE"=>"PM_FOLDERS_VIEW"),
+            array("PER_UID"=>"00000000000000000000000000000016","PER_CODE"=>"PM_FOLDERS_ADD_FOLDER"),
+            array("PER_UID"=>"00000000000000000000000000000017","PER_CODE"=>"PM_FOLDERS_ADD_FILE"),
+            array("PER_UID"=>"00000000000000000000000000000018","PER_CODE"=>"PM_CANCELCASE"),
+            array("PER_UID"=>"00000000000000000000000000000019","PER_CODE"=>"PM_FOLDER_DELETE")
+        );
+        return $permissionsAdmin;
+    }
 
   /**
   * Gets the roles and permission for one RBAC_user
@@ -226,7 +257,7 @@ class RBAC
   *  -4: due date
   *  -5: invalid authentication source
   */
-  function VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $aUserFields, $sAuthUserDn, $strPass)
+  public function VerifyWithOtherAuthenticationSource($sAuthType, $aUserFields, $strPass)
   {
     //check if the user is active
     if ( $aUserFields['USR_STATUS']  != 1 )
@@ -239,9 +270,9 @@ class RBAC
     foreach ( $this->aRbacPlugins as $sClassName) {
       if ( strtolower($sClassName) == strtolower($sAuthType) ) {
         $plugin =  new $sClassName();
-        $plugin->sAuthSource = $sAuthSource;
+        $plugin->sAuthSource = $aUserFields["UID_AUTH_SOURCE"];
         $plugin->sSystem     = $this->sSystem;
-        $bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
+        $bValidUser = $plugin->VerifyLogin($aUserFields["USR_AUTH_USER_DN"], $strPass);
 
         if ( $bValidUser === TRUE)
           return ( $aUserFields['USR_UID'] );
@@ -290,18 +321,16 @@ class RBAC
     $sAuthType = 'mysql';
     if ( isset($this->userObj->fields['USR_AUTH_TYPE']) ) $sAuthType = strtolower ( $this->userObj->fields['USR_AUTH_TYPE'] );
 
-    //hook for RBAC plugins
-    if ( $sAuthType != 'mysql' && $sAuthType != '' ) {
-      $sAuthSource = $this->userObj->fields['UID_AUTH_SOURCE'];
-      $sAuthUserDn = $this->userObj->fields['USR_AUTH_USER_DN'];
-      $res = $this->VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $this->userObj->fields, $sAuthUserDn, $strPass);
+    //Hook for RBAC plugins
+    if ($sAuthType != "mysql" && $sAuthType != "") {
+        $res = $this->VerifyWithOtherAuthenticationSource($sAuthType, $this->userObj->fields, $strPass);
 
-      return $res;
-    }
-    else {
-      $this->userObj->reuseUserFields = true;
-      $res = $this->userObj->VerifyLogin($strUser, $strPass);
-      return $res;
+        return $res;
+    } else {
+        $this->userObj->reuseUserFields = true;
+        $res = $this->userObj->VerifyLogin($strUser, $strPass);
+
+        return $res;
     }
   }
 
@@ -738,8 +767,8 @@ class RBAC
   * @param  string $ROL_UID
   * @return $this->rolesObj->getRolePermissions
   */
-  function getRolePermissions($ROL_UID, $filter=''){
-  return $this->rolesObj->getRolePermissions($ROL_UID,$filter);
+  function getRolePermissions($ROL_UID, $filter='', $status=null){
+  return $this->rolesObj->getRolePermissions($ROL_UID, $filter, $status);
   }
 
   /**
@@ -752,8 +781,8 @@ class RBAC
   * @param  string $PER_SYSTEM
   * @return $this->rolesObj->getAllPermissions
   */
-  function getAllPermissions($ROL_UID,$PER_SYSTEM="",$filter=''){
-      return $this->rolesObj->getAllPermissions($ROL_UID,$PER_SYSTEM,$filter);
+  function getAllPermissions($ROL_UID, $PER_SYSTEM="", $filter='', $status=null){
+      return $this->rolesObj->getAllPermissions($ROL_UID, $PER_SYSTEM, $filter, $status);
   }
 
   /**

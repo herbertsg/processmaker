@@ -53,11 +53,14 @@
   <option name="prompt">Show prompt</option>
   </en>
 </NEXTSTEPSAVE>
-
+ 
 <PRINTDYNAFORM type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
 <en>Show print dynaform button</en>
 </PRINTDYNAFORM>
 
+<ADJUSTGRIDSWIDTH type="checkbox" falseValue="0" value="0" defaultvalue="0" labelOnRight="0">
+  <en>Adjust the grid width to the width of the main form</en>
+</ADJUSTGRIDSWIDTH>
 <!--<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
   <en>Enable Template</en>
 </ENABLETEMPLATE>-->
@@ -70,6 +73,7 @@
 </PME_PROP_REVERT>
 <sdfsdf type="javascript">
 
+
 <![CDATA[
 // added by gustavo cruz gustavo-at-colosa.com
 // function getElementsByClassNameCrossBrowser
@@ -77,6 +81,13 @@
 // @param searchClass class wanted
 // @param node element or node
 // @param tag tag of the class
+
+if(document.getElementById("form[DYN_TYPE]").value=="grid"){
+    hideRowById('WIDTH');
+    hideRowById('NEXTSTEPSAVE');
+    hideRowById('PRINTDYNAFORM');
+    hideRowById('ADJUSTGRIDSWIDTH');
+}
 
 function getElementsByClassNameCrossBrowser(searchClass,node,tag) {
 
@@ -109,6 +120,10 @@ leimnud.event.add(getField('DYN_TYPE'), 'change', function() {
     validateGridConversion(proUid,dynUid);
   } else {
     changeToolbar("xmlform");
+    showRowById('WIDTH');
+    showRowById('NEXTSTEPSAVE');
+    showRowById('PRINTDYNAFORM');
+    showRowById('ADJUSTGRIDSWIDTH');
   }
 });
 
@@ -131,18 +146,20 @@ function validateGridConversion(proUid,dynUid){
     oRPC.callback = function(oRPC) {
       var response = oRPC.xmlhttp.responseText;
       if (response=="ok"){
-         changeToolbar("grid");
-    
+          changeToolbar("grid");
+          hideRowById('WIDTH');
+          hideRowById('NEXTSTEPSAVE');
+          hideRowById('PRINTDYNAFORM');
+          hideRowById('ADJUSTGRIDSWIDTH');
       } else {
          setDropdownSelection("form[DYN_TYPE]" , "xmlform");
          msgBox("Grid forms can not contain the following fields: <br>" + response,"alert");
          return false;
-    
       }
     
 
     }.extend(this);
-    isTrue = oRPC.make();  
+    isTrue = oRPC.make();
     return isTrue;
 };
 

@@ -49,6 +49,7 @@ try {
   switch($_REQUEST['action'])
   {
   	case 'load':
+  	  $_SESSION['PROCESS'] = $oData->uid;
   	  if ($oData->ct) {
   	    $sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], -1, $_SESSION['TASK'], $oData->ct);
   	  }
@@ -57,7 +58,21 @@ try {
   	      $sOutput = $oProcessMap->load($oData->uid);
   	    }
   	    else {
-  	    	$sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['TASK']);
+          if ($_SESSION['TASK'] != -1) {
+            $taskUid = $_SESSION['TASK'];
+          } else {
+            $c = new Criteria('workflow');
+            $c->clearSelectColumns();
+            $c->addSelectColumn(AppDelegationPeer::TAS_UID);
+            $c->add(AppDelegationPeer::APP_UID, $_SESSION['APPLICATION']);
+            $c->add(AppDelegationPeer::DEL_INDEX, $_SESSION['INDEX']);
+            $oDataset = AppDelegationPeer::doSelectRS($c);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aData = $oDataset->getRow();
+            $taskUid = isset($aData['TAS_UID']) ? $aData['TAS_UID'] : -1;
+          }
+  	    	$sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], $_SESSION['INDEX'], $taskUid);
   	    }
   	  }
   	break;
@@ -86,15 +101,24 @@ try {
   	  unlink(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP. $form['PRO_UID']. PATH_SEP .str_replace(".php","Post",$form['FILENAME']).".php");
   	  $oProcessMap->webEntry($_REQUEST['PRO_UID']);
   	break;
-  	
+
   	case 'webEntry_new':
   	  $oProcessMap->webEntry_new($oData->PRO_UID);
   	break;
   	case 'assignProcessUser':
-  	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
+  	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID, $oData->TYPE_UID);
+      G::LoadClass('processMap');
+      $oProcessMap = new ProcessMap();
+      $oProcessMap->listProcessesUser($oData->PRO_UID);
   	break;
   	case 'removeProcessUser':
   	  $oProcessMap->removeProcessUser($oData->PU_UID);
+      foreach ($_SESSION['_DBArray']['data'] as $key => $value) {
+        if ($value['LA_PU_UID'] == $oData->PU_UID) {
+          unset($_SESSION['_DBArray']['data'][$key]);
+          break;
+        }
+      }
   	break;
   	case 'supervisorDynaforms':
   	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
@@ -105,11 +129,11 @@ try {
   	case 'webEntry':
   	  $oProcessMap->webEntry($oData->pro_uid);
   	break;
-  	
+
   	case 'webEntry_Val_Assig':
   	  include(PATH_METHODS . 'processes/webEntry_Val_Assig.php');
   	break;
-  	
+
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);
   	break;
@@ -439,7 +463,7 @@ try {
       }
 	  	$fcontent = file_get_contents($sDirectory);
 			$extion=explode(".",$_REQUEST['filename']);
-      
+
 	  	//if($extion[count($extion)-1]=='html' || $extion[count($extion)-1]=='txt'){
 	  	$aData = Array(
 	  		'pro_uid'=>$_REQUEST['pro_uid'],
@@ -452,7 +476,7 @@ try {
 	  		$aMessage['MESSAGE'] = G::loadTranslation(	'HTML_FILES' );
         $G_PUBLISH->AddContent ( 'xmlform', 'xmlform', 'login/showMessage', '',$aMessage );
 	  		}*/
-	  		
+
     break;
     case 'saveFile':
     	global $G_PUBLISH;
@@ -460,7 +484,7 @@ try {
       $sDir = "";
       if(isset($_REQUEST['MAIN_DIRECTORY']))
         $sDir = $_REQUEST['MAIN_DIRECTORY'];
-        
+
       switch($sDir){
         case 'mailTemplates' : $sDirectory = PATH_DATA_MAILTEMPLATES . $_REQUEST['pro_uid'] . PATH_SEP . $_REQUEST['filename'];
         break;
@@ -469,11 +493,11 @@ try {
         default : $sDirectory = PATH_DATA_MAILTEMPLATES . $_REQUEST['pro_uid'] . PATH_SEP . $_REQUEST['filename'];
         break;
       }
-      
+
       $fp = fopen($sDirectory, 'w');
       $content = stripslashes($_REQUEST['fcontent']);
       $content = str_replace("@amp@", "&", $content);
-      $content = base64_decode($content);      
+      $content = base64_decode($content);
       fwrite($fp, $content);
       fclose($fp);
       echo 'saved: '. $sDirectory;
@@ -501,43 +525,48 @@ try {
 	  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_FileEditCreateEmpty', '');
 	    G::RenderPage('publish', 'raw');
     break;
-  
+
     case "taskCases":
-      require_once ("classes/model/Application.php");
-      require_once ("classes/model/AppDelegation.php");
-      require_once ("classes/model/AppDelay.php");
-      
-      $criteria = new Criteria("workflow");
-      $criteria->addSelectColumn("COUNT(DISTINCT APPLICATION.APP_UID)");
-      
-      $criteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
-      $criteria->addJoin(ApplicationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);
-      
+      require_once 'classes/model/AppDelegation.php';
+      $criteria = new Criteria('workflow');
+      $criteria->addSelectColumn(AppDelegationPeer::APP_UID);
+      $criteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+      $criteria->addSelectColumn(AppDelegationPeer::TAS_UID);
       $criteria->add(AppDelegationPeer::TAS_UID, $oData->task_uid);
-      
-      $criteria->add(
-        $criteria->getNewCriterion(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL)->addOr(
-          $criteria->getNewCriterion(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL)->addAnd(
-          $criteria->getNewCriterion(AppDelayPeer::APP_TYPE, array("REASSIGN", "ADHOC", "CANCEL"), Criteria::NOT_IN))->addAnd(
-            $criteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr(
-            $criteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0))
-          )
-        )
-      );
-      
-      $rs = ApplicationPeer::doSelectRS($criteria);
-      
-      $rs->next();
-      $row = $rs->getRow();
-        
-      $response->casesNumRec = intval($row[0]);
-      
+      $criteria->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+      $casesNumRec = AppDelegationPeer::doCount($criteria);
+      if ($casesNumRec == 0) {
+        require_once 'classes/model/AppDelay.php';
+        $criteria = new Criteria('workflow');
+        $criteria->addSelectColumn(AppDelayPeer::APP_UID);
+        $criteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);
+        $criteria->add(AppDelayPeer::PRO_UID, $oData->pro_uid);
+        $criteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
+        $criteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null, Criteria::ISNULL);
+        $dataset = AppDelayPeer::doSelectRS($criteria);
+        if ($dataset->getRecordCount() > 0) {
+          $dataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $dataset->next();
+          while ($row = $dataset->getRow()) {
+            $criteria = new Criteria('workflow');
+            $criteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+            $criteria->add(AppDelegationPeer::APP_UID, $row['APP_UID']);
+            $criteria->add(AppDelegationPeer::DEL_INDEX, $row['APP_DEL_INDEX']);
+            $criteria->add(AppDelegationPeer::TAS_UID, $oData->task_uid);
+            $casesNumRec += AppDelegationPeer::doCount($criteria);
+            $dataset->next();
+          }
+        }
+      }
+      $response = new stdclass();
+      $response->casesNumRec = $casesNumRec;
       $json = new Services_JSON();
       $sOutput = $json->encode($response);
       break;
   }
-  if( isset($sOutput) )
+  if (isset($sOutput)) {
   	die($sOutput);
+  }
 }
 catch (Exception $oException) {
 	die($oException->getMessage() . "\n" . $oException->getTraceAsString());

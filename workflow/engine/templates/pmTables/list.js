@@ -15,6 +15,7 @@ var smodel;
 var rowsSelected;
 var importOption;
 var externalOption;
+var externalPermissions;
 var currentSelectedRow = -1;
 
 Ext.onReady(function(){
@@ -115,15 +116,25 @@ Ext.onReady(function(){
     contextMenuItems.push(exportButton);
 
     if (_PLUGIN_SIMPLEREPORTS !== false) {
-      externalOption = new Ext.Action({
-        text:'',
-        handler: function() {
-          updateTag('plugin@simplereport');
-        },
-        disabled: false
-      });
-
-      contextMenuItems.push(externalOption);
+        externalOption = new Ext.Action({
+            text:'',
+            iconCls: 'x-btn-text button_menu_ext ss_sprite ss_report_picture',
+            handler: function() {
+                updateTag('plugin@simplereport');
+            },
+            disabled: false
+        });
+        externalPermissions = new Ext.Action({
+            text: _('ID_PERMISSIONS'),
+            iconCls: 'x-btn-text button_menu_ext ss_sprite  ss_key_add',
+            handler: function() {
+                updateTagPermissions('plugin@simplereport');
+            },
+            disabled: false
+        });
+        contextMenuItems.push('-');
+        contextMenuItems.push(externalOption);
+        contextMenuItems.push(externalPermissions);
     }
 
     contextMenu = new Ext.menu.Menu({
@@ -343,28 +354,30 @@ Ext.onReady(function(){
       })
     });
 
-    infoGrid.on('rowcontextmenu',
-      function (grid, rowIndex, evt) {
-          var sm = grid.getSelectionModel();
-          sm.selectRow(rowIndex, sm.isSelected(rowIndex));
+    infoGrid.on('rowcontextmenu', function (grid, rowIndex, evt) {
+        var sm = grid.getSelectionModel();
+        sm.selectRow(rowIndex, sm.isSelected(rowIndex));
 
-          var rowsSelected = Ext.getCmp('infoGrid').getSelectionModel().getSelections();
-          tag = rowsSelected[0].get('ADD_TAB_TAG');
-          text = (tag) ? _('ID_CONVERT_NATIVE_REP_TABLE') : _('ID_CONVERT_SIMPLE_REPORT');
+        var rowsSelected = Ext.getCmp('infoGrid').getSelectionModel().getSelections();
 
-          if (externalOption) {
+        if (externalOption) {
+            tag = rowsSelected[0].get('ADD_TAB_TAG');
+            if (tag) {
+                text = _('ID_CONVERT_NATIVE_REP_TABLE');
+                externalPermissions.setDisabled(false);
+            } else {
+                text = _('ID_CONVERT_SIMPLE_REPORT');
+                externalPermissions.setDisabled(true);
+            }
             externalOption.setText(text);
             if (rowsSelected[0].get('PRO_UID')) {
-              externalOption.setDisabled(false);
+                externalOption.setDisabled(false);
             } else {
-              externalOption.setDisabled(true);
+                externalOption.setDisabled(true);
             }
-
             externalOption.setHidden((rowsSelected[0].get("TYPE") != "CLASSIC" && rowsSelected[0].get("DBS_UID") == "workflow")? false : true);
-          }
-      },
-      this
-    );
+        }
+    },this);
 
     infoGrid.on('contextmenu', function(evt){evt.preventDefault();}, this);
     infoGrid.addListener('rowcontextmenu',onMessageContextMenu, this);
@@ -442,7 +455,7 @@ DeletePMTable = function() {
       if (btn == "yes") {
         Ext.Msg.show({
           title : '',
-          msg : _('ID_REMOVING_SELECTD_TABLES'),
+          msg : _('ID_REMOVING_SELECTED_TABLES'),
           wait:true,
           waitConfig: {interval:500}
         });
@@ -613,11 +626,7 @@ PMTableData = function()
 {
   var row = Ext.getCmp('infoGrid').getSelectionModel().getSelected();
   var type = row.get('PRO_UID');
-  if ((Ext.isIE8) ||(Ext.isIE7)){
-    var url = 'pmTables/data?id='+row.get('ADD_TAB_UID')+'&type='+row.get('TYPE');
-    PopupCenter(url, 's', 800, 410);
-    return false;
-  }
+
   //location.href = 'pmTables/data?id='+row.get('ADD_TAB_UID');
   if (row.get('TYPE') != '') {
     PMExt.info(_('ID_INFO'), _('ID_DATA_LIST_NOT_AVAILABLE_FOR_OLDVER'));
@@ -625,10 +634,10 @@ PMTableData = function()
   }
 
   win = new Ext.Window({
-    layout:'fit',
-    width:700,
+    layout: 'fit',
+    width: 700,
+    height: 400,
     title: ((type != '')? _('ID_REPORT_TABLE') : _('ID_PMTABLE')) +': '+ row.get('ADD_TAB_NAME'),
-    height:500,
     modal: true,
     maximizable: true,
     constrain: true,
@@ -645,6 +654,7 @@ PMTableData = function()
       }
     }
   });
+
   win.show();
 };
 
@@ -694,6 +704,13 @@ function updateTag(value)
     }
   });
 }
+
+function updateTagPermissions(){
+    var rowsSelected = Ext.getCmp('infoGrid').getSelectionModel().getSelections();
+    if (rowsSelected){
+        location.href = 'pmReports/reportsAjax?action=permissionList&ADD_TAB_NAME='+ rowsSelected[0].get('ADD_TAB_NAME') +'&ADD_TAB_UID='+ rowsSelected[0].get('ADD_TAB_UID')+'&pro_uid='+PRO_UID;
+    }
+};
 
  function PopupCenter(pageURL, title,w,h) {
     var left = (Ext.getBody().getViewSize().width/3);

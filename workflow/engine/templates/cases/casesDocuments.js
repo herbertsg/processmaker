@@ -58,7 +58,7 @@ streamFilefromPM=function(fileStream) {
           src: fileStream
         });
       }else{
-        	
+
         msgbox = Ext.Msg.alert('Error', results.message);
         msgbox.setIcon( Ext.MessageBox.ERROR );
       }
@@ -67,10 +67,42 @@ streamFilefromPM=function(fileStream) {
       if (results.message) {
         Ext.Msg.alert('Infomation',results.message);
       }
-            
+
     }
   });
 };
+
+var swHandleCallbackRootNodeLoad = 0;
+
+function rootNodeCreate()
+{
+    var node = new Ext.tree.AsyncTreeNode({
+        id: "root",
+        text: "/",
+        draggable: false,
+        expanded: true,
+        cls: "folder",
+
+        listeners: {
+            beforeload: function (nodeRoot) {
+                nodeRoot.setIcon("");
+            },
+            load: function (nodeRoot) {
+                nodeRoot.setIcon("/images/ext/default/tree/folder.gif");
+            },
+            expand: function (nodeRoot) {
+                if (nodeRoot.hasChildNodes()) {
+                    nodeRoot.setIcon("/images/ext/default/tree/folder-open.gif");
+                }
+            },
+            collapse: function (nodeRoot) {
+                nodeRoot.setIcon("/images/ext/default/tree/folder.gif");
+            }
+        }
+    });
+
+    return node;
+}
 
 
 function chDir( directory, loadGridOnly ) {
@@ -126,7 +158,7 @@ function chDir( directory, loadGridOnly ) {
   }
 
 }
-			
+
 function expandTreeToDir( node, dir ) {
   // console.info("Expanding Tree to Dir "+node+" - "+dir);
   dir = dir ? dir : new String('');
@@ -164,10 +196,10 @@ function expandNode( node, dir ) {
     if( node.id.substr( 0, 5 ) != '_RRR_' ) {
       fulldirpath = fulldirpath.substr( 5 );
     }
-	
+
     if( node.id != fulldirpath ) {
       dirpath = '';
-	
+
       var nodedirs = node.id.split('_RRR_');
       if( nodedirs[0] == '' ) nodedirs.shift();
       for( i=0; i < dirs.length; i++ ) {
@@ -196,16 +228,16 @@ function expandNode( node, dir ) {
     else {
       node.select();
     }
-		
+
   }
 }
-function handleNodeClick( sm, node ) {		    	
+function handleNodeClick( sm, node ) {
   if( node && node.id ) {
     // console.log("Node Clicked: "+node);
     chDir( node.id );
   }
-} 
-		   
+}
+
 function showLoadingIndicator( el, replaceContent ) {
   // console.info("showLoadingIndicator");
   if( !el ) return;
@@ -256,7 +288,7 @@ function openActionDialog( caller, action ) {
     uploadDocument:1,
     search:1
   };
-  if( dontNeedSelection[action] == null  && selectedRows.length < 1 ) {
+  if( dontNeedSelection[action] == null && selectedRows.length < 1 ) {
     Ext.Msg.alert( 'Error',TRANSLATIONS.ID_NO_ITEMS_SELECTED);
     return false;
   }
@@ -293,7 +325,7 @@ function openActionDialog( caller, action ) {
         // animateTarget: typeof caller.getEl == 'function'
         // ? caller.getEl() : caller,
         // title: 'dialog_title'
-                   
+
         });
       }
       Ext.Ajax.request( {
@@ -306,13 +338,13 @@ function openActionDialog( caller, action ) {
             msgbox.setIcon( Ext.MessageBox.ERROR );
           }
           if( oResponse && oResponse.responseText ) {
-												
+
             // Ext.Msg.alert("Debug",
             // oResponse.responseText
             // );
             try{
               json = Ext.decode( oResponse.responseText );
-													
+
               if( json.error && typeof json.error != 'xml' ) {
                 Ext.Msg.alert( "error", json.error );
                 dialog.destroy();
@@ -366,7 +398,7 @@ function openActionDialog( caller, action ) {
                 newWidth = firstComponent.getWidth() + dialog.getFrameWidth();
                 newHeight = firstComponent.getHeight() + dialog.getFrameHeight();
                 dialog.setSize( newWidth, newHeight );
-														
+
               } catch(e) {}
               // alert( "Before:
               // Dialog.width: " +
@@ -402,7 +434,7 @@ function openActionDialog( caller, action ) {
           }
         }
       });
-            
+
       if( action != "edit" ) {
         dialog.on( 'hide', function() {
           dialog.destroy(true);
@@ -415,24 +447,24 @@ function openActionDialog( caller, action ) {
       var num = selectedRows.length;
       Ext.Msg.confirm(TRANSLATIONS.ID_DELETE, String.format(TRANSLATIONS.ID_DELETE_SELECTED_ITEMS, num ), deleteFiles);
       break;
-    
+
     case 'download':
       fileName=ext_itemgrid.getSelectionModel().getSelected().get('name');
       // alert(ext_itemgrid.getSelectionModel().getSelected().get('downloadLink'));
       // alert(ext_itemgrid.getSelectionModel().getSelected().get('downloadLabel'));
-      
+
       var urlDownload = ext_itemgrid.getSelectionModel().getSelected().get("downloadLink");
-      
+
       if (ext_itemgrid.getSelectionModel().getSelected().get("appDocPlugin") != "") {
         messageText = TRANSLATIONS.ID_DOWNLOADING_FILE + " " + ext_itemgrid.getSelectionModel().getSelected().get("name");
         statusBarMessage(messageText, true, true);
-        
+
         try {
           Ext.destroy(Ext.get("downloadIframe"));
         }
         catch (e) {
         }
-        
+
         Ext.DomHelper.append(document.body, {
           tag: "iframe",
           id: "downloadIframe",
@@ -446,7 +478,7 @@ function openActionDialog( caller, action ) {
       else {
          streamFilefromPM(urlDownload);
       }
-      
+
       /*
 			 * if(document.location =
 			 * ext_itemgrid.getSelectionModel().getSelected().get('downloadLink')){
@@ -458,8 +490,6 @@ function openActionDialog( caller, action ) {
 }
 
 function handleCallback(requestParams, node) {
-  // console.log("handleCallback "+requestParams +" -- "+node);
-  // console.trace();
   var conn = new Ext.data.Connection();
 
   conn.request({
@@ -492,6 +522,11 @@ function handleCallback(requestParams, node) {
           }
         } else {
           Ext.Msg.alert( 'Failure', json.error );
+        }
+
+        if (swHandleCallbackRootNodeLoad == 1) {
+            Ext.getCmp("dirTreePanel").setRootNode(rootNodeCreate());
+            swHandleCallbackRootNodeLoad = 0;
         }
       }
       else {
@@ -540,33 +575,36 @@ function getRequestParams() {
     'selitems[]': selitems
   };
   return requestParams;
-  
+
   }
 /**
 * Function for actions, which don't require a form like download,
 * extraction, deletion etc.
 */
-function deleteFiles(btn) {
+function deleteFiles(btn)
+{
+    if (btn != "yes") {
+        return;
+    }
 
-  if( btn != 'yes') {
-    return;
-  }
-  requestParams = getRequestParams();
-  requestParams.action = 'delete';
-  handleCallback(requestParams);
-  if(requestParams.option=='documents'){
-    datastore.sendWhat = 'files';
-    loadDir();
-  } else {
-    var root1 = new Ext.tree.AsyncTreeNode({
-      text : '/',
-      draggable : false,
-      expanded : true,
-      id : 'root'
-    });
-    Ext.getCmp('dirTreePanel').setRootNode(root1); 
-  }
+    requestParams = getRequestParams();
+    requestParams.action = "delete";
+
+    if (!(requestParams.option == "documents")) {
+        swHandleCallbackRootNodeLoad = 1;
+    }
+
+    handleCallback(requestParams);
+
+    if (requestParams.option == "documents") {
+        datastore.sendWhat = "files";
+        loadDir();
+    }
+    //else {
+    //    Ext.getCmp("dirTreePanel").setRootNode(rootNodeCreate());
+    //}
 }
+
 function extractArchive(btn) {
   if( btn != 'yes') {
     return;
@@ -575,24 +613,23 @@ function extractArchive(btn) {
   requestParams.action = 'extract';
   handleCallback(requestParams);
 }
-function deleteDir( btn, node ) {
-  if( btn != 'yes') {
-    return;
-  }
-  requestParams          = getRequestParams();
-  requestParams.dir      = datastore.directory.substring( 0, datastore.directory.lastIndexOf('/'));
-  requestParams.selitems = Array( node.id.replace( /_RRR_/g, '/' ) );
-  requestParams.action   = 'delete';
-  handleCallback(requestParams, node);
-  
-  var root1 = new Ext.tree.AsyncTreeNode({
-    text : '/',
-    draggable : false,
-    expanded : true,
-    id : 'root'
-  });
-  Ext.getCmp('dirTreePanel').setRootNode(root1);
 
+function deleteDir(btn, node)
+{
+    if (btn != "yes") {
+        return;
+    }
+
+    requestParams          = getRequestParams();
+    requestParams.dir      = datastore.directory.substring(0, datastore.directory.lastIndexOf("/"));
+    requestParams.selitems = Array(node.id.replace(/_RRR_/g, "/"));
+    requestParams.action   = "delete";
+
+    swHandleCallbackRootNodeLoad = 1;
+
+    handleCallback(requestParams, node);
+
+    //Ext.getCmp("dirTreePanel").setRootNode(rootNodeCreate());
 }
 
 Ext.msgBoxSlider = function(){
@@ -658,9 +695,9 @@ function statusBarMessage( msg, isLoading, success ) {
       clear: true
     });
     Ext.msgBoxSlider.msg('Error', msg );
-				
+
   }
-			
+
 
 }
 
@@ -769,7 +806,7 @@ datastore = new Ext.data.Store({
   },{
     name : "downloadLabel"
   }
-	
+
   ])),
 
   // turn on remote sorting
@@ -793,7 +830,7 @@ function renderFileName(value, p, record) {
     '<img src="{0}" alt="* " align="absmiddle" />&nbsp;<b>{1}</b>',
     record.get('icon'), value);
 }
-function renderType(value, p, record) {	
+function renderType(value, p, record) {
   if(record.get('appDocType')!=""){
     return String.format('{1}, {0}', value,record.get('appDocType'));
   }else{
@@ -818,7 +855,7 @@ function renderVersion(value, p, record) {
       return String.format('{0}', value);
     }
   }else{
-	
+
     return String.format('<b>-</b>',value);
   }
 }
@@ -836,7 +873,7 @@ function renderVersionExpander(value, p, record) {
       return '';
     }
   }else{
-	
+
     return String.format('',value);
   }
 }
@@ -1066,7 +1103,7 @@ var gridbb = new Ext.PagingToolbar({
 var grid;
 var getGrid = function( data, element) {
   // var grid = Ext.getCmp('gridpanel');
-	
+
    grid = new Ext.grid.GridPanel({
     store: datastore,
     cm: cm,
@@ -1094,7 +1131,7 @@ var expander = new Ext.ux.grid.RowExpander({
  * tpl : new Ext.Template( '<p><b>Company:</b> {company}</p><br>', '<p><b>Summary:</b>
  * {desc}</p>' ),
  */
-    
+
 
   // width : 50,
   // align : 'center',
@@ -1114,124 +1151,124 @@ var expander = new Ext.ux.grid.RowExpander({
   renderer : renderVersionExpander
 });
 
-// the column model has information about grid columns
-// dataIndex maps the column to the specific data field in
-// the data store
+//The column model has information about grid columns
+//dataIndex maps the column to the specific data field in
+//the data store
 var cm = new Ext.grid.ColumnModel([{
-  id : 'gridcm', // id assigned so we can apply custom css (e.g.
-  // .x-grid-col-topic b { color:#333 })
-  header : TRANSLATIONS.ID_NAME,
-  dataIndex : 'name',
-  width : 200,
-  renderer : renderFileName,
-  sortable:true,
-  groupable:true,
-  editor : new Ext.form.TextField({
-    allowBlank : false
+  id: "gridcm", //id assigned so we can apply custom css (e.g. -> .x-grid-col-topic b { color:#333 })
+  header: _("ID_NAME"),
+  dataIndex: "name",
+  width: 200,
+  renderer: renderFileName,
+  sortable: true,
+  groupable: true,
+  editor: new Ext.form.TextField({
+    allowBlank: false
   }),
-  css : 'white-space:normal;'
+  css: "white-space:normal;"
 }, {
-  header : TRANSLATIONS.ID_VERSION,
-  dataIndex : 'docVersion',
-  width : 50,
-  align : 'center',
-  renderer : renderVersion
-},  /* expander, */{
-  header : TRANSLATIONS.ID_MODIFIED,
-  dataIndex : 'appDocCreateDate',
-  width : 65,
+  header: _("ID_VERSION"),
+  dataIndex: "docVersion",
+  width: 100,
+  align: "center",
+  renderer: renderVersion
+}, /* expander, */{
+  header: _("ID_MODIFIED"),
+  dataIndex: "appDocCreateDate",
+  width: 100,
   renderer: renderModifiedDate
 }, {
-  header : TRANSLATIONS.ID_OWNER,
-  dataIndex : 'owner',
-  width : 100,
-  sortable:true,
-  groupable:true,
+  header: _("ID_OWNER"),
+  dataIndex: "owner",
+  width: 100,
+  sortable: true,
+  groupable: true,
   renderer: renderFullName
-// sortable : false
+  //sortable: false
 }, {
-  header : "PM Type",
-  dataIndex : 'appDocType',
-  width : 70,
-  hidden:true
-// align : 'right'
-// renderer : renderType
+  header: _("ID_DOCUMENT_TYPE"),
+  dataIndex: "appDocType",
+  width: 100,
+  hidden: true
+  //align: "right"
+  //renderer: renderType
 }, {
   dataIndex: "appDocPlugin",
+  hidden: true,
+  hideable: false
+}, {
+  header: _("ID_TYPE"),
+  dataIndex: "type",
+  width: 100,
+  sortable: true,
+  groupable: true,
+  //align: "right",
+  renderer: renderType
+}, {
+  header: _("ID_PROCESS"),
+  dataIndex: "proTitle",
+  width: 150,
+  sortable: true,
+  groupable: true
+  //align: "right"
+  //renderer: renderType
+}, {
+  header: _("ID_CASE"),
+  dataIndex: "appLabel",
+  width: 150,
+  sortable: true,
+  groupable: true
+  //align: "right"
+  //renderer: renderType
+},{
+  header: _("ID_SIZE"),
+  dataIndex: "size",
+  width: 50,
   hidden: true
 }, {
-  header : TRANSLATIONS.ID_TYPE,
-  dataIndex : 'type',
-  width : 100,
-  sortable:true,
-  groupable:true,
-  // align : 'right',
-  renderer : renderType
+  header: _("ID_PERMISSIONS"),
+  dataIndex: "perms",
+  width: 100,
+  hidden: true
 }, {
-  header : TRANSLATIONS.ID_PROCESS,
-  dataIndex : 'proTitle',
-  width : 150,
-  sortable:true,
-  groupable:true
-// align : 'right'
-// renderer : renderType
+  dataIndex: "is_deletable",
+  hidden: true,
+  hideable: false
 }, {
-  header : TRANSLATIONS.ID_CASE,
-  dataIndex : 'appLabel',
-  width : 150,
-  sortable:true,
-  groupable:true
-// align : 'right'
-// renderer : renderType
-},{
-  header : TRANSLATIONS.ID_SIZE,
-  dataIndex : 'size',
-  width : 50,
-  hidden:true
+  dataIndex: "is_file",
+  hidden: true,
+  hideable: false
 }, {
-  header : TRANSLATIONS.ID_PERMISSIONS,
-  dataIndex : 'perms',
-  width : 100,
-  hidden:true
+  dataIndex: "is_archive",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_deletable',
-  hidden : true,
-  hideable : false
+  dataIndex: "is_writable",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_file',
-  hidden : true,
-  hideable : false
+  dataIndex: "is_chmodable",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_archive',
-  hidden : true,
-  hideable : false
+  dataIndex: "is_readable",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_writable',
-  hidden : true,
-  hideable : false
+  dataIndex: "is_deletable",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_chmodable',
-  hidden : true,
-  hideable : false
+  dataIndex: "is_editable",
+  hidden: true,
+  hideable: false
 }, {
-  dataIndex : 'is_readable',
-  hidden : true,
-  hideable : false
-}, {
-  dataIndex : 'is_deletable',
-  hidden : true,
-  hideable : false
-}, {
-  dataIndex : 'is_editable',
-  hidden : true,
-  hideable : false
-}, {
-  dataIndex : 'id',
-  hidden : true,
-  hideable : false
-} ]);
+  dataIndex: "id",
+  hidden: true,
+  hideable: false
+}]);
 
-// by default columns are sortable
+//By default columns are sortable
 cm.defaultSortable = true;
 
 function handleRowClick(sm, rowIndex) {//alert(rowIndex);
@@ -1267,7 +1304,7 @@ function loadDir() {
   datastore.load({
     params : {
       start : 0,
-      limit : 25, 
+      limit : 25,
       dir : datastore.directory,
       node : datastore.directory,
       option : 'gridDocuments',
@@ -1290,11 +1327,11 @@ function rowContextMenu(grid, rowIndex, e, f) {
 
   if (selections.length > 1) {
 //    gridCtxMenu.items.get('gc_delete').enable();
-    gridCtxMenu.items.get('gc_delete')[  permitodelete==1 ? 'enable': 'disable']();  
+    gridCtxMenu.items.get('gc_delete')[  permitodelete==1 ? 'enable': 'disable']();
     gridCtxMenu.items.get('gc_rename').disable();
     gridCtxMenu.items.get('gc_download').disable();
   } else if (selections.length == 1) {
-    gridCtxMenu.items.get('gc_delete')[  permitodelete==1 ? 'enable': 'disable']();  
+    gridCtxMenu.items.get('gc_delete')[  permitodelete==1 ? 'enable': 'disable']();
 //    gridCtxMenu.items.get('gc_delete')[selections[0].get('is_deletable') ? 'enable': 'disable']();
     gridCtxMenu.items.get('gc_rename')[selections[0].get('is_deletable') ? 'disable': 'disable']();
     gridCtxMenu.items.get('gc_download')[selections[0].get('is_readable')
@@ -1362,38 +1399,38 @@ gridCtxMenu = new Ext.menu.Menu({
   } ]
 });
 //function that used for measure the  permissions and so assign buttons.
-function revisePermission(){ 
-  
-  dirCtxMenu.items.get('dirCtxMenu_reload').hide(); 
-  gridCtxMenu.items.get('cancel').hide(); 
-  dirCtxMenu.items.get('dirCtxMenu_cancel').hide(); 
-  if(permitoaddfolder=='1'){    
+function revisePermission(){
+
+  dirCtxMenu.items.get('dirCtxMenu_reload').hide();
+  gridCtxMenu.items.get('cancel').hide();
+  dirCtxMenu.items.get('dirCtxMenu_cancel').hide();
+  if(permitoaddfolder=='1'){
     gridtb.items.get('tb_new').show();
    // tb.items.get('tb_new').enable();
     //dirCtxMenu.items.get('dirCtxMenu_new').enable();
-  }    
+  }
   else{
     gridtb.items.get('tb_new').hide();
 
    // tb.items.get('tb_new').disable();
-    //dirCtxMenu.items.get('dirCtxMenu_new').disable(); 
+    //dirCtxMenu.items.get('dirCtxMenu_new').disable();
   }
-    
-  
+
+
   if(permitodelete=='1') {
     gridtb.items.get('tb_delete').show();
    // tb.items.get('tb_delete').enable();
    // dirCtxMenu.items.get('dirCtxMenu_remove').enable();
-  }    
+  }
   else {
     gridtb.items.get('tb_delete').hide();
 
    // tb.items.get('tb_delete').disable();
    // dirCtxMenu.items.get('dirCtxMenu_remove').disable();
   }
-    
 
-  if(permitoaddfile=='1') 
+
+  if(permitoaddfile=='1')
     gridtb.items.get('tb_upload').show();
   else
     gridtb.items.get('tb_upload').hide();
@@ -1418,7 +1455,7 @@ function dirContext(node, e) {
   dirCtxMenu.items.get('dirCtxMenu_move')[node.attributes.id!='NA' ? 'enable'
   : 'disable']();
 //  dirCtxMenu.items.get('dirCtxMenu_remove')[node.attributes.id!='NA' ? 'enable': 'disable']();
-	
+
   dirCtxMenu.node = node;
   dirCtxMenu.show(e.getTarget(), 't-b?');
 
@@ -1450,7 +1487,7 @@ function copymove(action) {
     handleCallback(requestParams);
   }
 }
-// context menus   
+// context menus
 var dirCtxMenu = new Ext.menu.Menu(
 {
   id : 'dirCtxMenu',
@@ -1504,7 +1541,7 @@ var dirCtxMenu = new Ext.menu.Menu(
     iconCls: 'button_menu_ext ss_sprite ss_folder_delete',// icon
     // :
     // '/images/documents/_editdelete.png',
-						
+
     text : TRANSLATIONS.ID_DELETE,
     handler : function() {
       dirCtxMenu.hide();
@@ -1605,10 +1642,11 @@ var documentsTab = {
     animate : true,
     tools:[
     {
-      id:'refresh',
-      handler:function() {
-        Ext.getCmp('dirTreePanel').getRootNode().reload();
-      }
+        id: "refresh",
+        handler: function () {
+            //Ext.getCmp("dirTreePanel").getRootNode().reload();
+            Ext.getCmp("dirTreePanel").setRootNode(rootNodeCreate());
+        }
     }
     ],
     // rootVisible: false,
@@ -1617,7 +1655,8 @@ var documentsTab = {
       dataUrl : '../appFolder/appFolderAjax.php',
       baseParams : {
         action : 'expandNode',
-        sendWhat : 'dirs'
+        sendWhat : 'dirs',
+        renderTree : 1
       }
     }),
     containerScroll : true,
@@ -1662,13 +1701,7 @@ var documentsTab = {
       }
     },
 
-    root : new Ext.tree.AsyncTreeNode({
-      text : '/',
-      draggable : false,
-      expanded : true,
-      cls: 'folder',
-      id : 'root'
-    })
+    root: rootNodeCreate()
   },
   {
     layout : "border",
@@ -1819,16 +1852,16 @@ var documentsTab = {
         }
 
       } ]// another level
-							
+
     // } /* jj */]
     }
     ]
   } ],
-			
+
   listeners : {
     "afterlayout" : {
       fn : function() {
-        revisePermission();      
+        revisePermission();
         // alert(Ext.getCmp("locationbarcmp"));
         // Ext.getCmp("documents").
         /*
@@ -1838,20 +1871,20 @@ var documentsTab = {
 						 * Ext.getCmp("dirTreePanel");
 						 * Ext.getCmp("locationbarcmp").initComponent();
 						 * //console.log("location abr started"); return; }
-						 */	
+						 */
         // console.log(typeof(sw_afterlayout));
         sw_afterlayout=true;
-						
+
         ext_itemgrid = Ext.getCmp("gridpanel");
-						
+
         // console.log("variable ext_itemgrid created");
         // console.trace();
         ext_itemgrid.un('celldblclick', ext_itemgrid.onCellDblClick);
         // console.log("celldoublde click removed");
-						
+
         dirTree = Ext.getCmp("dirTreePanel");
         // console.log("dirtree created");
-						
+
         /*
 						 * dirTree.loader.on('load', function(loader, o,
 						 * response ) { if( response && response.responseText ) {
@@ -1864,6 +1897,8 @@ var documentsTab = {
         // console.log("tried to gtet selection model");
         tsm.on('selectionchange',
           handleNodeClick);
+
+
 
         // create the editor for the directory
         // tree
@@ -1881,10 +1916,13 @@ var documentsTab = {
         // console.log("starting locatiobar first time");
         Ext.getCmp("locationbarcmp").tree = Ext.getCmp("dirTreePanel");
         Ext.getCmp("locationbarcmp").initComponent();
+        var node = dirTree.getNodeById("root");
+        node.select();
+        datastore.directory = 'root';
       // console.log("location abr started first time");
-						
+
       }
-	
+
     }
   }
 

@@ -81,7 +81,7 @@ class Process extends BaseProcess {
     if ($this->pro_title !== $v || $v === '') {
       $this->pro_title = $v;
       $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
- 
+
       $res = Content::addContent( 'PRO_TITLE', '', $this->getProUid(), $lang, $this->pro_title );
     }
 
@@ -191,6 +191,9 @@ class Process extends BaseProcess {
           $this->setProDescription (  'Default Process Description' );
 
         $con->commit();
+
+        $this->memcachedDelete();
+
         return $this->getProUid();
       }
       else {
@@ -393,7 +396,7 @@ class Process extends BaseProcess {
     if (isset($aData['PRO_DYNAFORMS']) && is_array($aData['PRO_DYNAFORMS'])) {
       $aData['PRO_DYNAFORMS'] = @serialize($aData['PRO_DYNAFORMS']);
     }
-    
+
     $con = Propel::getConnection( ProcessPeer::DATABASE_NAME );
     try {
       $con->begin();
@@ -408,6 +411,9 @@ class Process extends BaseProcess {
             $oPro->setProDescription( $aData['PRO_DESCRIPTION'] );
           $res = $oPro->save();
           $con->commit();
+
+          $this->memcachedDelete();
+
           return $res;
         }
         else {
@@ -487,6 +493,9 @@ class Process extends BaseProcess {
         $this->setProDescription (  'Default Process Description' );
 
       $con->commit();
+
+      $this->memcachedDelete();
+
       return $this->getProUid();
     }
     else {
@@ -513,8 +522,11 @@ class Process extends BaseProcess {
       $oPro = ProcessPeer::retrieveByPK( $ProUid );
       if (!is_null($oPro))
       {
-        Content::removeContent('PRO_TITLE', '',       $oPro->getProUid());
+        Content::removeContent('PRO_TITLE', '', $oPro->getProUid());
         Content::removeContent('PRO_DESCRIPTION', '', $oPro->getProUid());
+
+        $this->memcachedDelete();
+
         return $oPro->delete();
       }
       else {
@@ -562,7 +574,7 @@ class Process extends BaseProcess {
       return 0;
   }
 
-  function getAllProcesses($start, $limit, $category=NULL, $processName=NULL) {
+  function getAllProcesses($start, $limit, $category=NULL, $processName=NULL, $counters = true) {
     require_once PATH_RBAC . "model/RbacUsers.php";
     require_once "classes/model/ProcessCategory.php";
     require_once "classes/model/Users.php";
@@ -605,7 +617,9 @@ class Process extends BaseProcess {
       $oCriteria->setLimit($limit);
 
     //execute a query to obtain numbers, how many cases there are by process
-    $casesCnt = $this->getCasesCountInAllProcesses();
+    if ($counters) {
+      $casesCnt = $this->getCasesCountInAllProcesses();
+    }
 
     //execute the query
     $oDataset = ProcessPeer::doSelectRS ( $oCriteria );
@@ -655,10 +669,12 @@ class Process extends BaseProcess {
         continue;
       }
 
-      $casesCountTotal = 0;
-      if( isset($casesCnt[$process['PRO_UID']]) ) {
-        foreach($casesCnt[$process['PRO_UID']] as $item) {
-          $casesCountTotal += $item;
+      if ($counters) {
+        $casesCountTotal = 0;
+        if( isset($casesCnt[$process['PRO_UID']]) ) {
+          foreach($casesCnt[$process['PRO_UID']] as $item) {
+            $casesCountTotal += $item;
+          }
         }
       }
 
@@ -691,11 +707,13 @@ class Process extends BaseProcess {
       $process['PRO_DEBUG_LABEL']       = ($process['PRO_DEBUG']=="1")? G::LoadTranslation('ID_ON'): G::LoadTranslation('ID_OFF');
       $process['PRO_STATUS_LABEL']      = $process ['PRO_STATUS'] == 'ACTIVE'? G::LoadTranslation ('ID_ACTIVE'): G::LoadTranslation('ID_INACTIVE');
       $process['PRO_CREATE_USER_LABEL'] = $userOwner;
-      $process['CASES_COUNT_TO_DO']     = (isset($casesCnt[$process['PRO_UID']]['TO_DO'])?     $casesCnt[$process['PRO_UID']]['TO_DO']:     0);
-      $process['CASES_COUNT_COMPLETED'] = (isset($casesCnt[$process['PRO_UID']]['COMPLETED'])? $casesCnt[$process['PRO_UID']]['COMPLETED']: 0);
-      $process['CASES_COUNT_DRAFT']     = (isset($casesCnt[$process['PRO_UID']]['DRAFT'])?     $casesCnt[$process['PRO_UID']]['DRAFT']:     0);
-      $process['CASES_COUNT_CANCELLED'] = (isset($casesCnt[$process['PRO_UID']]['CANCELLED'])? $casesCnt[$process['PRO_UID']]['CANCELLED']: 0);
-      $process['CASES_COUNT']           = $casesCountTotal;
+      if ($counters) {
+        $process['CASES_COUNT_TO_DO']     = (isset($casesCnt[$process['PRO_UID']]['TO_DO'])?     $casesCnt[$process['PRO_UID']]['TO_DO']:     0);
+        $process['CASES_COUNT_COMPLETED'] = (isset($casesCnt[$process['PRO_UID']]['COMPLETED'])? $casesCnt[$process['PRO_UID']]['COMPLETED']: 0);
+        $process['CASES_COUNT_DRAFT']     = (isset($casesCnt[$process['PRO_UID']]['DRAFT'])?     $casesCnt[$process['PRO_UID']]['DRAFT']:     0);
+        $process['CASES_COUNT_CANCELLED'] = (isset($casesCnt[$process['PRO_UID']]['CANCELLED'])? $casesCnt[$process['PRO_UID']]['CANCELLED']: 0);
+        $process['CASES_COUNT']           = $casesCountTotal;
+      }
 
       unset( $process['PRO_CREATE_USER']);
 
@@ -732,7 +750,7 @@ class Process extends BaseProcess {
         $aProcesses[$row['PRO_UID']][$row['APP_STATUS']] = $row['CNT'];
       }
       $memcache->set( $memkey , $aProcesses, PMmemcached::ONE_HOUR );
-    }  
+    }
     return $aProcesses;
   }
 
@@ -751,7 +769,23 @@ class Process extends BaseProcess {
   	return $aProc;
   }
 
-} // Process
+    public function memcachedDelete()
+    {
+        //Limit defined in processmaker/workflow/engine/templates/processes/main.js
+        $limit = 25;
+        $start = 0;
+
+        $memcache = &PMmemcached::getSingleton(SYS_SYS);
+
+        for ($start = 0; $start <= 50 - 1; $start++) {
+            $memkey = "processList-allProcesses-" . ($start * $limit) . "-" . $limit;
+            $memkeyTotal = $memkey . "-total";
+
+            $r = $memcache->delete($memkey);
+            $r = $memcache->delete($memkeyTotal);
+        }
+    }
+} //Process
 
 function ordProcessByProTitle($a, $b){
 
@@ -766,4 +800,3 @@ function ordProcessByProTitle($a, $b){
 
 
 }
-

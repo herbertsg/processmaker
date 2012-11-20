@@ -47,7 +47,7 @@
     background-color: #eaeaea;
 }
 
-.x-color-palette em:hover, .x-color-palette span:hover{   
+.x-color-palette em:hover, .x-color-palette span:hover{
     background-color: #eaeaea;
 }
 
@@ -419,8 +419,8 @@ ul.x-tab-strip-bottom{
     background-image:url(/images/ext/default/button/s-arrow-noline.gif);
 }
 
-.x-toolbar .x-btn-over .x-btn-mc em.x-btn-split, .x-toolbar .x-btn-click .x-btn-mc em.x-btn-split, 
-.x-toolbar .x-btn-menu-active .x-btn-mc em.x-btn-split, .x-toolbar .x-btn-pressed .x-btn-mc em.x-btn-split 
+.x-toolbar .x-btn-over .x-btn-mc em.x-btn-split, .x-toolbar .x-btn-click .x-btn-mc em.x-btn-split,
+.x-toolbar .x-btn-menu-active .x-btn-mc em.x-btn-split, .x-toolbar .x-btn-pressed .x-btn-mc em.x-btn-split
 {
     background-image:url(/images/ext/gray/button/s-arrow-o.gif);
 }
@@ -429,8 +429,8 @@ ul.x-tab-strip-bottom{
     background-image:url(/images/ext/default/button/s-arrow-b-noline.gif);
 }
 
-.x-toolbar .x-btn-over .x-btn-mc em.x-btn-split-bottom, .x-toolbar .x-btn-click .x-btn-mc em.x-btn-split-bottom, 
-.x-toolbar .x-btn-menu-active .x-btn-mc em.x-btn-split-bottom, .x-toolbar .x-btn-pressed .x-btn-mc em.x-btn-split-bottom 
+.x-toolbar .x-btn-over .x-btn-mc em.x-btn-split-bottom, .x-toolbar .x-btn-click .x-btn-mc em.x-btn-split-bottom,
+.x-toolbar .x-btn-menu-active .x-btn-mc em.x-btn-split-bottom, .x-toolbar .x-btn-pressed .x-btn-mc em.x-btn-split-bottom
 {
     background-image:url(/images/ext/gray/button/s-arrow-bo.gif);
 }
@@ -1320,7 +1320,7 @@ a.x-menu-item {
 
 .x-panel-header {
     color:#333;
-	font-weight:bold; 
+	font-weight:bold;
     font-size: 11px;
     font-family: tahoma,arial,verdana,sans-serif;
     border-color:#d0d0d0;
@@ -1474,6 +1474,22 @@ a.x-menu-item {
 
 body.x-body-masked .x-window-plain .x-window-mc {
     background-color: #E4E4E4;
+}
+body.x-pm-login-body{
+    width: 100%;
+}
+body.x-pm-login-body div.x-window-login{
+    /*!important needed to change position, not appearance. Not allows JavaScrpit change Position.*/
+    left: 50% !important;
+    margin-left: -185px !important; /*Left Location for Login Box. Must be a half from the width of login Box.*/
+    margin-top: -120px !important;  /*Top Location for Login Box. Must be a half from height of login Box.*/
+    overflow: auto !important;
+    position: absolute  !important;
+    top: 50% !important;
+}
+body.x-pm-login-body div.x-ie-shadow, body.x-pm-login-body div.x-shadow{
+    /*Disappears the shadow Login Box.*/
+    display: none !important;
 }
 .x-html-editor-wrap {
     border-color:#BCBCBC;

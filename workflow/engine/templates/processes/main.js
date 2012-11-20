@@ -1,6 +1,6 @@
 /*
  * @author: Erik A. Ortiz
- * Aug 20th, 2010 
+ * Aug 20th, 2010
  */
 var processesGrid;
 var store;
@@ -62,17 +62,17 @@ Ext.onReady(function(){
         {name : 'CASES_COUNT_CANCELLED', type:'float'}
       ]
     }),
-    
+
     //sortInfo:{field: 'PRO_TITLE', direction: "ASC"}
     //groupField:'PRO_CATEGORY_LABEL'
-    
+
     listeners: {
       load: function (store) {
         Ext.ComponentMgr.get("export").setDisabled(true);
       }
     }
   });
-  
+
   var expander = new Ext.ux.grid.RowExpander({
     tpl : new Ext.Template(
         '<p><b>' + _('ID_PRO_DESCRIPTION') + ':</b> {PRO_DESCRIPTION}</p><br>'
@@ -112,11 +112,12 @@ Ext.onReady(function(){
         filter = comboCategory.value;
         store.setBaseParam( 'category', filter);
         var searchTxt = Ext.util.Format.trim(Ext.getCmp('searchTxt').getValue());
-        
+
         if( searchTxt == '' ){
           store.setBaseParam( 'processName', '');
         }
-        store.load({params:{category: filter, start : 0 , limit : 25 }});
+
+        store.load({params: {category: filter, start: 0, limit: 25}});
       }}
     })
 /*  storePageSize = new Ext.data.SimpleStore({
@@ -124,7 +125,7 @@ Ext.onReady(function(){
     data: [['20'],['30'],['40'],['50'],['100']],
     autoLoad: true
   });
-    
+
   var comboPageSize = new Ext.form.ComboBox({
     typeAhead     : false,
     mode          : 'local',
@@ -139,7 +140,7 @@ Ext.onReady(function(){
         //UpdatePageConfig(d.data['size']);
         bbar.pageSize = parseInt(d.data['size']);
         bbar.moveFirst();
-        
+
         //Ext.getCmp('bbar').setPageSize(comboPageSize.getValue());
       }
     }
@@ -156,7 +157,7 @@ Ext.onReady(function(){
     displayMsg: 'Displaying Processes {0} - {1} of {2}',
     emptyMsg: "",
     items:[_('ID_PAGE_SIZE')+':',comboPageSize]
-  })  */  
+  })  */
   processesGrid = new Ext.grid.GridPanel( {
     region: 'center',
     layout: 'fit',
@@ -174,7 +175,7 @@ Ext.onReady(function(){
     cls : 'grid_with_checkbox',
     columnLines: true,
 
-    
+
     /*view: new Ext.grid.GroupingView({
         //forceFit:true,
         //groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
@@ -189,7 +190,7 @@ Ext.onReady(function(){
       defaults: {
           width: 200,
           sortable: true
-      },    
+      },
       columns: [
         expander,
         {id:'PRO_UID', dataIndex: 'PRO_UID', hidden:true, hideable:false},
@@ -202,7 +203,7 @@ Ext.onReady(function(){
           return String.format("<font color='{0}'>{1}</font>", color, v);
         }},
         {header: _('ID_PRO_USER'), dataIndex: 'PRO_CREATE_USER_LABEL', width: 150},
-        {header: _('ID_PRO_CREATE_DATE'), dataIndex: 'PRO_CREATE_DATE', width: 90}, 
+        {header: _('ID_PRO_CREATE_DATE'), dataIndex: 'PRO_CREATE_DATE', width: 90},
         {header: _('ID_INBOX'), dataIndex: 'CASES_COUNT_TO_DO', width: 50, align:'right'},
         {header: _('ID_DRAFT'), dataIndex: 'CASES_COUNT_DRAFT', width: 50, align:'right'},
         {header: _('ID_COMPLETED'), dataIndex: 'CASES_COUNT_COMPLETED', width: 70, align:'right'},
@@ -210,7 +211,7 @@ Ext.onReady(function(){
         {header: _('ID_TOTAL_CASES'), dataIndex: 'CASES_COUNT', width: 80,renderer:function(v){return "<b>"+v+"</b>";}, align:'right'},
         {header: _('ID_PRO_DEBUG'), dataIndex: 'PRO_DEBUG_LABEL', width: 50, align:'center'}
       ]
-    }),                  
+    }),
     store: store,
     tbar:[
       {
@@ -219,7 +220,7 @@ Ext.onReady(function(){
         //icon: '/images/addc.png',
         handler: newProcess
       },
-    	'-'  
+    	'-'
       ,{
         text: _('ID_EDIT'),
         iconCls: 'button_menu_ext ss_sprite  ss_pencil',
@@ -294,8 +295,8 @@ Ext.onReady(function(){
         ctCls:'pm_search_x_button',
         handler: function(){
           //store.setBaseParam( 'category', '<reset>');
-          store.setBaseParam( 'processName', '');
-          store.load({params:{start : 0 , limit : '' }});
+          store.setBaseParam('processName', '');
+          store.load({params: {start: 0, limit: 25}});
           Ext.getCmp('searchTxt').setValue('');
           //comboCategory.setValue('');
           //store.reload();
@@ -307,7 +308,7 @@ Ext.onReady(function(){
     ],
     // paging bar on the bottom
     bbar: new Ext.PagingToolbar({
-        pageSize: 15,
+        pageSize: 25,
         store: store,
         displayInfo: true,
         displayMsg: 'Displaying Processes {0} - {1} of {2}',
@@ -321,10 +322,10 @@ Ext.onReady(function(){
         processesGrid.getSelectionModel().on('rowselect', function(){
           var rowSelected = processesGrid.getSelectionModel().getSelected();
           var activator = Ext.getCmp('activator');
-          
+
           activator.setDisabled(false);
           Ext.ComponentMgr.get("export").setDisabled(false);
-          
+
           if( rowSelected.data.PRO_STATUS == 'ACTIVE' ){
             activator.setIcon('/images/deactivate.png');
             activator.setText( _('ID_DEACTIVATE') );
@@ -337,16 +338,16 @@ Ext.onReady(function(){
     }
   });
 
-  processesGrid.store.load({params: {"function":"languagesList"}});
+  processesGrid.store.load({params: {"function": "languagesList", "start": 0, "limit": 25}});
   processesGrid.addListener('rowcontextmenu', onMessageContextMenu,this);
   processesGrid.on('rowcontextmenu', function (grid, rowIndex, evt) {
     var sm = grid.getSelectionModel();
     sm.selectRow(rowIndex, sm.isSelected(rowIndex));
-    
+
     var rowSelected = Ext.getCmp('processesGrid').getSelectionModel().getSelected();
     var activator = Ext.getCmp('activator2');
     var debug = Ext.getCmp('debug');
-    
+
     if( rowSelected.data.PRO_STATUS == 'ACTIVE' ){
       activator.setIconClass('icon-deactivate');
       activator.setText( _('ID_DEACTIVATE') );
@@ -372,7 +373,7 @@ Ext.onReady(function(){
     var coords = e.getXY();
     messageContextMenu.showAt([coords[0], coords[1]]);
   }
-      
+
   var messageContextMenu = new Ext.menu.Menu({
     id: 'messageContextMenu',
     items: [{
@@ -419,7 +420,7 @@ Ext.onReady(function(){
 function newProcess(){
   //  window.location = 'processes_New';
   var ProcessCategories = new Ext.form.ComboBox({
-    fieldLabel : 'Category',
+    fieldLabel : _('ID_CATEGORY'),
     hiddenName : 'PRO_CATEGORY',
     valueField : 'CATEGORY_UID',
     displayField : 'CATEGORY_NAME',
@@ -435,7 +436,7 @@ function newProcess(){
         url : '../processProxy/getCategoriesList',
         method : 'POST'
       }),
-      
+
       reader : new Ext.data.JsonReader( {
         fields : [ {
           name : 'CATEGORY_UID'
@@ -457,7 +458,7 @@ function newProcess(){
     width : 400,
     items : [ {
         id: 'PRO_TITLE',
-        fieldLabel: _('ID_TITLE'), 
+        fieldLabel: _('ID_TITLE'),
         xtype:'textfield',
         width: 260,
         maskRe: /^(?!^(PRN|AUX|CLOCK\$|NUL|CON|COM\d|LPT\d|\..*)(\..+)?$)[^\x00-\x1f\\?*:\";|/]+$/i,
@@ -466,14 +467,14 @@ function newProcess(){
         id: 'PRO_DESCRIPTION',
         fieldLabel: _('ID_DESCRIPTION'),
         xtype:'textarea',
-        width: 260 
+        width: 260
       },
       ProcessCategories/*,
       {
         id: 'editor',
         xtype: 'radiogroup',
         fieldLabel: _('ID_OPEN_WITH'),
-        items: [  
+        items: [
           {boxLabel: _('ID_CLASSIC_EDITOR'), name: 'editor', inputValue: 'classic', checked: true},
           {boxLabel: _('ID_BPMN_EDITOR'), name: 'editor', inputValue: 'bpmn'}
         ]
@@ -487,7 +488,7 @@ function newProcess(){
       handler : function() {
         win.close();
       }
-    }]   
+    }]
   });
 
   var win = new Ext.Window({
@@ -522,9 +523,9 @@ function doSearch(){
   if(comboCategory.getValue() == '')
     store.setBaseParam( 'category', '<reset>');
   filter = Ext.getCmp('searchTxt').getValue();
-  
   store.setBaseParam('processName', filter);
-  store.load({params:{processName: filter, start : 0 , limit : 25 }});
+
+  store.load({params:{processName: filter, start: 0 , limit: 25}});
 }
 
 editProcess = function(){
@@ -566,7 +567,7 @@ deleteProcess = function(){
   if( rows.length > 0 ) {
     isValid = true;
     errLog = Array();
-    
+
     //verify if the selected rows have not any started or delegated cases
     for(i=0; i<rows.length; i++){
       if( rows[i].get('CASES_COUNT') != 0 ){
@@ -574,7 +575,7 @@ deleteProcess = function(){
         isValid = false;
       }
     }
-    
+
     if( isValid ){
       ids = Array();
       for(i=0; i<rows.length; i++)
@@ -594,7 +595,7 @@ deleteProcess = function(){
                 Ext.MessageBox.hide();
                 processesGrid.store.reload();
                 result = Ext.util.JSON.decode(response.responseText);
-                
+
                 if(result){
                   if(result.status != 0){
                     Ext.MessageBox.show({
@@ -647,18 +648,18 @@ deleteProcess = function(){
 
 function exportProcess() {
   var record = processesGrid.getSelectionModel().getSelections();
-  
+
   if(record.length == 1) {
     var myMask = new Ext.LoadMask(Ext.getBody(), {msg: _("ID_LOADING")});
     myMask.show();
-  
+
     ///////
     var proUid   = record[0].get("PRO_UID");
     var proTitle = record[0].get("PRO_TITLE");
     var titleLength = 60;
-  
+
     title = (titleLength - proTitle.length >= 0)? proTitle : proTitle.substring(0, (titleLength - 1) + 1) + "...";
-  
+
     ///////
     Ext.Ajax.request({
       url: "../processes/processes_Ajax",
@@ -671,12 +672,11 @@ function exportProcess() {
 
       success: function (response, opts) {
         myMask.hide();
-      
-        ///////
+
         var dataResponse = eval("(" + response.responseText + ")"); //json
         var url = window.location.href;
-        
-        window.open(url.substring(0, url.lastIndexOf("/") + 1) + dataResponse.FILENAME_LINK, "_blank");
+
+        window.location = url.substring(0, url.lastIndexOf("/") + 1) + dataResponse.FILENAME_LINK;
       },
 
       failure: function (response, opts) {
@@ -1097,7 +1097,7 @@ browseLibrary = function(){
 
 function activeDeactive(){
   var rows = processesGrid.getSelectionModel().getSelections();
-  
+
   if( rows.length > 0 ) {
     var ids = '';
     for(i=0; i<rows.length; i++) {
@@ -1135,7 +1135,7 @@ function activeDeactive(){
 function enableDisableDebug()
 {
   var rows = processesGrid.getSelectionModel().getSelections();
-  
+
   if( rows.length > 0 ) {
     var ids = '';
     for(i=0; i<rows.length; i++)

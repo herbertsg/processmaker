@@ -6,12 +6,14 @@
 <LANG type="private"/>
 <PRO_UID type="hidden"/>
 
+
 <OP_CASE_STATUS type="dropdown" mode="edit">
-  <en>Status Case<option name="ALL">All</option>
-    <option name="DRAFT">DRAFT</option>
-    <option name="TO_DO">TO DO</option>
-    <option name="PAUSED">PAUSED</option>
-    <option name="COMPLETED">COMPLETED</option>
+  <en>Status Case
+  <option name="ALL">All</option>
+  <option name="DRAFT">DRAFT</option>
+  <option name="TO_DO">TO DO</option>
+  <option name="PAUSED">PAUSED</option>
+  <option name="COMPLETED">COMPLETED</option>
   </en>
 </OP_CASE_STATUS>
 
@@ -21,10 +23,12 @@
     <option name="">All Tasks</option>
   </en>
 </TAS_UID>
-<GROUP_USER type="dropdown" mode="edit" sqlConnection="dbarray">
-  SELECT * FROM usersGroups
+
+<GROUP_USER type="text" mode="view">
   <en>Group or User</en>
 </GROUP_USER>
+
+<GROUP_USER_DROPDOWN type="title" mode="view" enableHtml="1" label="@#GROUP_USER" />
 
 <OP_TASK_SOURCE type="dropdown" mode="edit">
   <![CDATA[SELECT TAS_UID, CON_VALUE AS TAS_TITLE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND CON_CATEGORY = 'TAS_TITLE' AND CON_LANG = @@LANG) WHERE PRO_UID = @@PRO_UID AND TAS_TYPE = 'NORMAL' ORDER BY TAS_TITLE]]><en>Origin Task<option name="">All Tasks</option></en>
@@ -39,6 +43,7 @@
     <option name="DYNAFORM">Dynaform</option>
     <option name="INPUT">Input Document</option>
     <option name="OUTPUT">Output Document</option>
+    <option name="CASES_NOTES">Cases Notes</option>
   </en>
 </OP_OBJ_TYPE>
 <ALL type="dropdown" mode="edit" sqlConnection="dbarray">
@@ -69,7 +74,7 @@
 
 <CREATE type="button" onclick="saveObjectPermission(this.form);">
   <en>Create</en>
-<es>Create</es><pt>Criar</pt></CREATE>
+</CREATE>
 <ID_DELETE type="private"/>
 <JS type="javascript"><![CDATA[
 var aOptions = [];
@@ -127,6 +132,7 @@ leimnud.event.add(getField('OP_OBJ_TYPE'), 'change', function() {
       hideRowById('DYNAFORMS');
       hideRowById('INPUTS');
       hideRowById('OUTPUTS');
+      showRowById('OP_ACTION');
     break;
     case 'DYNAFORM':
       getField('ALL').value = '';
@@ -137,6 +143,7 @@ leimnud.event.add(getField('OP_OBJ_TYPE'), 'change', function() {
       showRowById('DYNAFORMS');
       hideRowById('INPUTS');
       hideRowById('OUTPUTS');
+      showRowById('OP_ACTION');
     break;
     case 'INPUT':
       getField('ALL').value = '';
@@ -147,6 +154,7 @@ leimnud.event.add(getField('OP_OBJ_TYPE'), 'change', function() {
       hideRowById('DYNAFORMS');
       showRowById('INPUTS');
       hideRowById('OUTPUTS');
+      showRowById('OP_ACTION');
     break;
     case 'OUTPUT':
       getField('ALL').value = '';
@@ -157,6 +165,19 @@ leimnud.event.add(getField('OP_OBJ_TYPE'), 'change', function() {
       hideRowById('DYNAFORMS');
       hideRowById('INPUTS');
       showRowById('OUTPUTS');
+      showRowById('OP_ACTION');
+    break;
+    case 'CASES_NOTES':
+      getField('ALL').value = '';
+      getField('DYNAFORMS').value = '';
+      getField('INPUTS').value = '';
+      getField('OUTPUTS').value = '';
+      getField('OP_ACTION').value = 'VIEW';
+      hideRowById('ALL');
+      hideRowById('DYNAFORMS');
+      hideRowById('INPUTS');
+      hideRowById('OUTPUTS');
+      hideRowById('OP_ACTION');
     break;
   }
   rebuildOptions(vValue);
@@ -175,6 +196,7 @@ switch (vValue) {
     hideRowById('DYNAFORMS');
     hideRowById('INPUTS');
     hideRowById('OUTPUTS');
+    showRowById('OP_ACTION');
   break;
   case 'DYNAFORM':
     getField('ALL').value = '';
@@ -185,6 +207,7 @@ switch (vValue) {
     showRowById('DYNAFORMS');
     hideRowById('INPUTS');
     hideRowById('OUTPUTS');
+    showRowById('OP_ACTION');
   break;
   case 'INPUT':
     getField('ALL').value = '';
@@ -195,6 +218,7 @@ switch (vValue) {
     hideRowById('DYNAFORMS');
     hideRowById('INPUTS');
     showRowById('OUTPUTS');
+    showRowById('OP_ACTION');
   break;
   case 'OUTPUT':
     getField('ALL').value = '';
@@ -205,7 +229,20 @@ switch (vValue) {
     hideRowById('DYNAFORMS');
     hideRowById('INPUTS');
     showRowById('OUTPUTS');
+    showRowById('OP_ACTION');
   break;
+  case 'CASES_NOTES':
+      getField('ALL').value = '';
+      getField('DYNAFORMS').value = '';
+      getField('INPUTS').value = '';
+      getField('OUTPUTS').value = '';
+      getField('OP_ACTION').value = 'VIEW';
+      hideRowById('ALL');
+      hideRowById('DYNAFORMS');
+      hideRowById('INPUTS');
+      hideRowById('OUTPUTS');
+      hideRowById('OP_ACTION');
+    break;
 }
 getOptions();
 rebuildOptions(vValue);
@@ -213,10 +250,10 @@ rebuildOptions(vValue);
 /*
 var dynaformOnload = function()
 { var oAux = document.getElementById('form[TASKS]');
-	if(document.getElementById('form[PROCESS]').value=='')		
+	if(document.getElementById('form[PROCESS]').value=='')
   	hideRowById(oAux);
   else
-  	showRowById(oAux);	
+  	showRowById(oAux);
 };
 */
 leimnud.event.add(document.getElementById('form[OP_CASE_STATUS]'), 'change', function() {
@@ -224,15 +261,15 @@ leimnud.event.add(document.getElementById('form[OP_CASE_STATUS]'), 'change', fun
   var origin = document.getElementById('form[OP_TASK_SOURCE]');
   var participate = document.getElementById('form[OP_PARTICIPATE]');
   if (document.getElementById('form[OP_CASE_STATUS]').value=='COMPLETED')
-  {    
-     hideRowById(target); 
-		 hideRowById(origin); 
+  {
+     hideRowById(target);
+		 hideRowById(origin);
 		 hideRowById(participate);
-  }  
+  }
   else
-  {     
-     showRowById(target); 
-		 showRowById(origin); 
+  {
+     showRowById(target);
+		 showRowById(origin);
 		 showRowById(participate);
   }
 });
@@ -242,4 +279,4 @@ function cancel(){
 }
 
 ]]></JS>
-</dynaForm> 
+</dynaForm>

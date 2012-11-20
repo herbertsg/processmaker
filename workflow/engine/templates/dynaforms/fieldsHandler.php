@@ -69,11 +69,17 @@
 	
 	foreach($elements as $node_name=>$node){
 		if( $node_name == "___pm_boot_strap___"){
-			$boot_strap = $elements[$node_name];
+      $boot_strap = $elements[$node_name];
 			$hidden_fields = G::decrypt($boot_strap['__ATTRIBUTES__']['meta'], 'dynafieldsHandler');
 			//echo $hidden_fields;
 			$hidden_fields_list = explode(',', $hidden_fields);
 			unset($elements[$node_name]);
+
+      ?>
+      <script>
+        parent.jsMeta = "<?php echo $boot_strap['__ATTRIBUTES__']['meta'] ?>";
+      </script>
+      <?php
 		}
 	} 
 ?>
@@ -112,7 +118,7 @@
 				<tr>
 					<td width="7%">
 						<?php if($node['__ATTRIBUTES__']['type'] != 'javascript' && $dynaformType != 'grid') {?>
-						<input id="chk@<?php echo $node_name?>" type="checkbox" onclick="fieldsHandlerSaveHidden()" <?php echo $checked?> />
+						<input id="chk@<?php echo $node_name?>" type="checkbox" onclick="parent.jsMeta = fieldsHandlerSaveHidden();" <?php echo $checked?> />
 						<?php } else {?>
 						&nbsp;
 						<?php }?>
@@ -189,7 +195,7 @@
 		var client_window = parent.getClientWindowSize(); 
 		h = client_window.height;
 		h1 = (h / 100) * 92;
-		window.parent.popupWindow('', "fields_Edit?A=<?=$_SESSION['Current_Dynafom']['Parameters']['URL']?>&XMLNODE_NAME="+ uid , 600, h1);
+		window.parent.popupWindow('', "fields_Edit?A=<?php echo $_SESSION['Current_Dynafom']['Parameters']['URL']?>&XMLNODE_NAME="+ uid , 600, h1);
 		
 	}
 	
@@ -200,7 +206,7 @@
 				$.ajax({
 				   type: "POST",
 				   url: "fields_Delete",
-				   data: 'A=<?=$_SESSION['Current_Dynafom']['Parameters']['URL']?>&XMLNODE_NAME='+uid,
+				   data: 'A=<?php echo $_SESSION['Current_Dynafom']['Parameters']['URL']?>&XMLNODE_NAME='+uid,
 				   success: function(httpResponse){
 						window.parent.dynaformEditor.refreshFieldsList();
 				   }

@@ -186,12 +186,17 @@
   $array['CASE'] = G::LoadTranslation('ID_CASE');
   $array['TITLE'] = G::LoadTranslation('ID_TITLE');
 
+  $noShowTitle = 0;
+  if(isset($oProcessFieds['PRO_SHOW_MESSAGE'])) {
+      $noShowTitle = $oProcessFieds['PRO_SHOW_MESSAGE'];
+  }
 
   switch ($_GET['TYPE'])
   {
     case 'DYNAFORM':
-      $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
-
+      if($noShowTitle == 0) {
+        $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
+      }
       if (!$aPreviousStep) {
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
       }
@@ -202,6 +207,7 @@
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = G::loadTranslation('ID_NEXT_STEP');
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PHPSESSID'] = @session_id();
+      $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['DYNUIDPRINT'] = $_GET['UID'];
 
       $oHeadPublisher =& headPublisher::getSingleton();
       $oHeadPublisher->addScriptCode("
@@ -225,8 +231,9 @@
       break;
 
     case 'INPUT_DOCUMENT':
-      $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
-
+      if($noShowTitle == 0) {
+        $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
+      }
       $oInputDocument = new InputDocument();
       $Fields = $oInputDocument->load($_GET['UID']);
       if (!$aPreviousStep) {
@@ -267,7 +274,6 @@
           $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT_BEFORE , array('USR_UID'=>$_SESSION['USER_LOGGED']) );
         }
         //END: If there is a Break Step registered from Plugin
-
           $G_PUBLISH->AddContent('propeltable', 'cases/paged-table-inputDocuments', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), array_merge(array('DOC_UID'=>$_GET['UID']),$Fields));//$aFields
 
           //call plugin
@@ -617,8 +623,9 @@
           die;
           break;
        case 'VIEW':
-          $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
-
+          if($noShowTitle == 0) {
+            $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
+          }
           require_once 'classes/model/AppDocument.php';
           $oAppDocument = new AppDocument();
           $lastVersion=$oAppDocument->getLastAppDocVersion($_GET['DOC'],$_SESSION['APPLICATION']);
@@ -698,11 +705,11 @@
       $aFields['FINISH']               = G::LoadTranslation('ID_FINISH');
       $aFields['CONTINUE_WITH_OPTION'] = G::LoadTranslation('ID_CONTINUE_WITH_OPTION');
       $aFields['FINISH_WITH_OPTION']   = G::LoadTranslation('ID_FINISH_WITH_OPTION');
-      $aFields['TAS_TIMING_TITLE']     = 'Timing Control';
-      $aFields['TAS_DURATION']         = 'Task Duration';
-      $aFields['TAS_TIMEUNIT']         = 'Task Unit';
-      $aFields['TAS_TYPE_DAY']         = 'Count Days By';
-      $aFields['TAS_CALENDAR']         = 'Calendar';
+      $aFields['TAS_TIMING_TITLE']     = G::LoadTranslation('ID_TIMING_CONTROL');
+      $aFields['TAS_DURATION']         = G::LoadTranslation('ID_TASK_DURATION');
+      $aFields['TAS_TIMEUNIT']         = G::LoadTranslation('ID_TIME_UNIT');
+      $aFields['TAS_TYPE_DAY']         = G::LoadTranslation('ID_COUNT_DAYS');
+      $aFields['TAS_CALENDAR']         = G::LoadTranslation('ID_CALENDAR');
 
       $aFields['TASK'] = $oDerivation->prepareInformation(array(
         'USER_UID'  => $_SESSION['USER_LOGGED'],
@@ -975,8 +982,9 @@
 */
       break;
     case 'EXTERNAL':
-      $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
-
+      if($noShowTitle == 0) {
+        $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
+      }
       $oPluginRegistry = &PMPluginRegistry::getSingleton();
       $externalSteps   = $oPluginRegistry->getSteps();
 

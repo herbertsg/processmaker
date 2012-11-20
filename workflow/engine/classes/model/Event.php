@@ -34,7 +34,7 @@ class Event extends BaseEvent {
    * @var        string
    */
   protected $evn_description = '';
-
+  
   /**
    * Get the evn_description column value.
    * @return     string
@@ -73,7 +73,11 @@ class Event extends BaseEvent {
     try {
       $oEvent = EventPeer::retrieveByPK($sUID);
       if (!is_null($oEvent)) {
+        $aFields = '';
         $aFields = $oEvent->toArray(BasePeer::TYPE_FIELDNAME);
+        if ($aFields ['EVN_TIME_UNIT'] == 'HOURS') {
+          $aFields ['EVN_TAS_ESTIMATED_DURATION'] = round($aFields ['EVN_TAS_ESTIMATED_DURATION'] * 24,2);
+        }
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
         $this->setNew(false);
         $this->setEvnDescription($aFields['EVN_DESCRIPTION'] = $this->getEvnDescription());
@@ -101,73 +105,83 @@ class Event extends BaseEvent {
       $oEvent = new Event();
       $oEvent->setEvnUid( $aData['EVN_UID'] );
       $oEvent->setProUid( $aData['PRO_UID'] );
-      if(isset($aData['EVN_RELATED_TO'])){
+      if (isset($aData['EVN_RELATED_TO'])) {
           $oEvent->setEvnRelatedTo( $aData['EVN_RELATED_TO'] );
           if ( $aData['EVN_RELATED_TO'] == 'SINGLE' ) {
-            if(isset($aData['TAS_UID']))
-              $oEvent->setTasUid( $aData['TAS_UID'] );
-            $oEvent->setEvnTasUidTo( '');
-            $oEvent->setEvnTasUidFrom( '' );
-          }
-          else {
-            $oEvent->setTasUid('');
-            if(isset($aData['EVN_TAS_UID_TO']))
-              $oEvent->setEvnTasUidTo( $aData['EVN_TAS_UID_TO'] );
-            if(isset($aData['EVN_TAS_UID_FROM']))
-              $oEvent->setEvnTasUidFrom( $aData['EVN_TAS_UID_FROM'] );
+              if (isset($aData['TAS_UID'])) {
+                  $oEvent->setTasUid( $aData['TAS_UID'] );
+              }
+              $oEvent->setEvnTasUidTo( '');
+              $oEvent->setEvnTasUidFrom( '' );
+          } else {
+              $oEvent->setTasUid('');
+              if (isset($aData['EVN_TAS_UID_TO'])) {
+                  $oEvent->setEvnTasUidTo( $aData['EVN_TAS_UID_TO'] );
+              }
+              if (isset($aData['EVN_TAS_UID_FROM'])) {
+                  $oEvent->setEvnTasUidFrom( $aData['EVN_TAS_UID_FROM'] );
+              }
           }
       }
 
-      if(isset($aData['EVN_POSX']))
-        $oEvent->setEvnPosx($aData['EVN_POSX']);
-      if(isset($aData['EVN_POSY']))
-        $oEvent->setEvnPosy($aData['EVN_POSY']);
+      if (isset($aData['EVN_POSX'])) {
+          $oEvent->setEvnPosx($aData['EVN_POSX']);
+      }
+      if (isset($aData['EVN_POSY'])) {
+          $oEvent->setEvnPosy($aData['EVN_POSY']);
+      }
+      if (isset($aData['EVN_TYPE'])) {
+         $oEvent->setEvnType( $aData['EVN_TYPE'] );
+      }
+      if (isset($aData['EVN_TIME_UNIT'])) {
+          $oEvent->setEvnTimeUnit($aData['EVN_TIME_UNIT']);
+          if (trim($aData['EVN_TIME_UNIT']) == 'HOURS') {
+              $aData['EVN_TAS_ESTIMATED_DURATION'] = $aData['EVN_TAS_ESTIMATED_DURATION'] / 24;
+          }
+      }
+      if (isset($aData['EVN_TAS_ESTIMATED_DURATION'])) {
+          $oEvent->setEvnTasEstimatedDuration($aData['EVN_TAS_ESTIMATED_DURATION']);
+      }
 
-      if(isset($aData['EVN_TYPE']))
-        $oEvent->setEvnType( $aData['EVN_TYPE'] );
-
-      if(isset($aData['EVN_TAS_ESTIMATED_DURATION']))
-          $oEvent->setEvnTasEstimatedDuration( $aData['EVN_TAS_ESTIMATED_DURATION'] );
-
-      if(isset($aData['EVN_WHEN_OCCURS']))
+      if (isset($aData['EVN_WHEN_OCCURS'])) {
           $oEvent->setEvnWhenOccurs( $aData['EVN_WHEN_OCCURS'] );
+      }
 
-      if(isset($aData['EVN_ACTION']))
+      if (isset($aData['EVN_ACTION'])) {
           $oEvent->setEvnAction( $aData['EVN_ACTION'] );
+      }
 
-      if(isset($aData['EVN_CONDITIONS']))
+      if (isset($aData['EVN_CONDITIONS'])) {
           $oEvent->setEvnConditions( $aData['EVN_CONDITIONS'] );
-          
-      if(isset($aData['EVN_STATUS']))
-        $oEvent->setEvnStatus( $aData['EVN_STATUS'] );
-        
-      if(isset($aData['EVN_WHEN']))
-        $oEvent->setEvnWhen( $aData['EVN_WHEN'] );
+      }
+      if (isset($aData['EVN_STATUS'])) {
+          $oEvent->setEvnStatus( $aData['EVN_STATUS'] );
+      }
+      if (isset($aData['EVN_WHEN'])) {
+          $oEvent->setEvnWhen( $aData['EVN_WHEN'] );
+      }
 
       $oEvent->setEvnMaxAttempts( 3 );
 
-
       //start the transaction
       $oConnection->begin();
-      if (isset($aData['EVN_TYPE'])){
-        if($aData['EVN_TYPE']==='bpmnEventEmptyEnd')
-          unset($aData['TRI_UID']);
+      if (isset($aData['EVN_TYPE'])) {
+          if($aData['EVN_TYPE']==='bpmnEventEmptyEnd') {
+              unset($aData['TRI_UID']);
+          }
       }
-      if(isset($aData['TRI_UID']))
-      {
+      if (isset($aData['TRI_UID'])) {
           $oTrigger = new Triggers();
-          if( trim($aData['TRI_UID']) === "" || ( ! $oTrigger->TriggerExists ( $aData['TRI_UID'] ))){
-            //create an empty trigger
-
-            $aTrigger = array();
-            $aTrigger['PRO_UID']         = $aData['PRO_UID'];
-            $aTrigger['TRI_TITLE']       = 'For event: ' . $aData['EVN_DESCRIPTION'];
-            $aTrigger['TRI_DESCRIPTION'] = 'Autogenerated ' . $aTrigger['TRI_TITLE'];
-            $aTrigger['TRI_WEBBOT']      = '// ' . $aTrigger['TRI_DESCRIPTION'];;
-            $oTrigger->create($aTrigger);
-
+          if ( trim($aData['TRI_UID']) === "" || ( ! $oTrigger->TriggerExists ( $aData['TRI_UID'] ))) {
+              //create an empty trigger
+              $aTrigger = array();
+              $aTrigger['PRO_UID']         = $aData['PRO_UID'];
+              $aTrigger['TRI_TITLE']       = 'For event: ' . $aData['EVN_DESCRIPTION'];
+              $aTrigger['TRI_DESCRIPTION'] = 'Autogenerated ' . $aTrigger['TRI_TITLE'];
+              $aTrigger['TRI_WEBBOT']      = '// ' . $aTrigger['TRI_DESCRIPTION'];;
+              $oTrigger->create($aTrigger);
           } else {
-            $oTrigger = TriggersPeer::retrieveByPk($aData['TRI_UID']);
+              $oTrigger = TriggersPeer::retrieveByPk($aData['TRI_UID']);
           }
 
           $oEvent->setTriUid( $oTrigger->getTriUid() );
@@ -176,7 +190,7 @@ class Event extends BaseEvent {
           $parameters->hash = md5 ($oTrigger->getTriWebbot());
 
 
-          if( isset( $aData['EVN_ACTION_PARAMETERS']->SUBJECT ) ) {
+          if ( isset( $aData['EVN_ACTION_PARAMETERS']->SUBJECT ) ) {
               $parameters->SUBJECT  = $aData['EVN_ACTION_PARAMETERS']->SUBJECT;
               $parameters->TO       = $aData['EVN_ACTION_PARAMETERS']->TO;
               $parameters->CC       = $aData['EVN_ACTION_PARAMETERS']->CC;
@@ -188,24 +202,24 @@ class Event extends BaseEvent {
       }
 
       if ($oEvent->validate()) {
-        $iResult = $oEvent->save();
-        if(isset($aData['EVN_DESCRIPTION']))
-            $oEvent->setEvnDescription($aData['EVN_DESCRIPTION']);
-        $oConnection->commit();
-        return $aData['EVN_UID'];
-      }
-      else {
-        $sMessage = '';
-        $aValidationFailures = $oEvent->getValidationFailures();
-        foreach($aValidationFailures as $oValidationFailure) {
-          $sMessage .= $oValidationFailure->getMessage() . '<br />';
-        }
-        throw(new Exception('The row Event cannot be created!<br />' . $sMessage));
+          $iResult = $oEvent->save();
+          if (isset($aData['EVN_DESCRIPTION'])) {
+              $oEvent->setEvnDescription($aData['EVN_DESCRIPTION']);
+          }
+          $oConnection->commit();
+          return $aData['EVN_UID'];
+      } else {
+          $sMessage = '';
+          $aValidationFailures = $oEvent->getValidationFailures();
+          foreach($aValidationFailures as $oValidationFailure) {
+              $sMessage .= $oValidationFailure->getMessage() . '<br />';
+          }
+          throw(new Exception('The row Event cannot be created!<br />' . $sMessage));
       }
     }
     catch (Exception $oError) {
-      $oConnection->rollback();
-      throw($oError);
+        $oConnection->rollback();
+        throw($oError);
     }
   }
 
@@ -214,6 +228,7 @@ class Event extends BaseEvent {
     try {
       $oEvent = EventPeer::retrieveByPK($aData['EVN_UID']);
       if (!is_null($oEvent)) {
+        
         //$oEvent->setProUid( $aData['PRO_UID'] );
           if(isset($aData['EVN_RELATED_TO']))
           {
@@ -238,8 +253,16 @@ class Event extends BaseEvent {
         if(isset($aData['EVN_POSY']))
             $oEvent->setEvnPosy($aData['EVN_POSY']);
 
+
+        if(isset($aData['EVN_TIME_UNIT'])) {
+            $oEvent->setEvnTimeUnit( $aData['EVN_TIME_UNIT']);
+            if ($aData['EVN_TIME_UNIT'] == 'HOURS') {
+              $aData['EVN_TAS_ESTIMATED_DURATION'] = $aData['EVN_TAS_ESTIMATED_DURATION'] / 24;
+            }
+        }
         if(isset($aData['EVN_TAS_ESTIMATED_DURATION']))
             $oEvent->setEvnTasEstimatedDuration( $aData['EVN_TAS_ESTIMATED_DURATION'] );
+            
         if(isset($aData['EVN_WHEN_OCCURS']))
             $oEvent->setEvnWhenOccurs( $aData['EVN_WHEN_OCCURS'] );
 
@@ -623,18 +646,11 @@ class Event extends BaseEvent {
 
   function createAppEvents($PRO_UID, $APP_UID, $DEL_INDEX, $TAS_UID){
     $aRows = Array();
-    $aEventsRows = $this->getBy($PRO_UID, Array('TAS_UID'=>$TAS_UID));
+    $aEventsRows = $this->getBy($PRO_UID, $TAS_UID);
     if( $aEventsRows !== false ){
       $aRows = array_merge($aRows, $aEventsRows);
     }
-
-    $aEventsRows = $this->getBy($PRO_UID, Array('EVN_TAS_UID_FROM'=>$TAS_UID));
-    if( $aEventsRows !== false ){
-      $aRows = array_merge($aRows, $aEventsRows);
-    }
-
     foreach($aRows as $aData){
-
       // if the events has a condition
       if( trim($aData['EVN_CONDITIONS']) != '' ) {
           G::LoadClass('case');
@@ -691,7 +707,64 @@ class Event extends BaseEvent {
     }
   }
 
-  function getBy($PRO_UID, $aFilers){
+  function verifyTaskbetween($PRO_UID, $taskFrom, $taskTo, $taskVerify) {
+    $criteria = new Criteria('workflow');
+    $criteria->addSelectColumn(RoutePeer::ROU_NEXT_TASK);
+  
+    $criteria->add(RoutePeer::PRO_UID, $PRO_UID);
+    $criteria->add(RoutePeer::TAS_UID, $taskFrom);
+
+    $dataset = RoutePeer::doSelectRs($criteria);
+    $dataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+    if ($dataset->next()) {
+      $routeData = $dataset->getRow();
+      switch ($routeData['ROU_NEXT_TASK']) {
+        case $taskVerify:
+          return true;
+          break;
+        case $taskTo:
+        case '-1':
+          return false;
+          break;          
+        default:
+          return $this->verifyTaskbetween($PRO_UID, $routeData['ROU_NEXT_TASK'], $taskTo, $taskVerify);
+          break;
+      }
+    }
+  }
+
+  function getBy($PRO_UID, $taskUid){
+
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addSelectColumn(EventPeer::EVN_UID);
+    $oCriteria->addSelectColumn(EventPeer::TAS_UID  );
+    $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_FROM );
+    $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_TO );
+    
+    $oCriteria->add(EventPeer::EVN_STATUS, 'ACTIVE');
+    $oCriteria->add(EventPeer::EVN_ACTION, '', Criteria::NOT_EQUAL);
+    $oCriteria->add(EventPeer::PRO_UID, $PRO_UID, Criteria::EQUAL);
+
+    $oDataset = EventPeer::doSelectRs($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+    $eventsTask = array();
+    while ($oDataset->next()) {
+      $aDataEvent = $oDataset->getRow();
+
+      if ($taskUid == $aDataEvent['TAS_UID'] || $taskUid == $aDataEvent['EVN_TAS_UID_FROM'] || $taskUid == $aDataEvent['EVN_TAS_UID_TO']) {
+        $eventsTask[] = $aDataEvent['EVN_UID'];
+      } else {
+        $flag = $this->verifyTaskbetween($PRO_UID, $aDataEvent['EVN_TAS_UID_FROM'], $aDataEvent['EVN_TAS_UID_TO'], $taskUid);
+        if ($flag) {
+          $eventsTask[] = $aDataEvent['EVN_UID'];
+        }
+      }
+    }
+
+    $aRows = Array();
+    if (count($eventsTask) > 0) {
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(EventPeer::EVN_UID);
       $oCriteria->addSelectColumn(EventPeer::PRO_UID);
@@ -709,29 +782,16 @@ class Event extends BaseEvent {
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION_PARAMETERS);
       $oCriteria->addSelectColumn(EventPeer::TRI_UID);
 
-      $oCriteria->add(EventPeer::EVN_STATUS, 'ACTIVE');
-      $oCriteria->add(EventPeer::EVN_ACTION, '', Criteria::NOT_EQUAL);
-      foreach($aFilers as $sFilter=>$sValue){
-        switch($sFilter){
-          case 'TAS_UID':
-            $oCriteria->add(EventPeer::TAS_UID, $sValue, Criteria::EQUAL);
-            break;
-          case 'EVN_TAS_UID_FROM':
-            $oCriteria->add(EventPeer::EVN_TAS_UID_FROM, $sValue, Criteria::EQUAL);
-            break;
-          case 'EVN_TAS_UID_TO':
-            $oCriteria->add(EventPeer::EVN_TAS_UID_TO, $sValue, Criteria::EQUAL);
-            break;
-        }
-      }
+      $oCriteria->add(EventPeer::EVN_UID, (array)$eventsTask, Criteria::IN);
 
       $oDataset = EventPeer::doSelectRs($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-
-      $aRows = Array();
+      
       while($oDataset->next()) $aRows[]= $oDataset->getRow();
+    }
+    
 
-      return (count($aRows) > 0)? $aRows: false;
+    return (count($aRows) > 0)? $aRows: false;
   }
 
   function getAppEvents($APP_UID, $DEL_INDEX){

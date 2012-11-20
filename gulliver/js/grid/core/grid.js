@@ -7,96 +7,132 @@ var G_Grid = function(oForm, sGridName){
   this.oGrid = document.getElementById(this.sGridName);
   this.onaddrow = function(iRow){};
   this.ondeleterow = function(){};
-  
+  this.executeEvent = function (element,event) {
+    if ( document.createEventObject ) {
+      // IE
+      var evt = document.createEventObject();
+      return element.fireEvent('on'+event,evt)
+    } else {
+      // firefox + others
+      var evt = document.createEvent("HTMLEvents");
+      evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+      return !element.dispatchEvent(evt);
+    }
+  };
+
   this.aFields = [];
   this.aElements = [];
   this.aFunctions = [];
   this.aFormulas = [];
-  
+
   this.allDependentFields = ''; //Stores all dependent fields
-  
+
   this.countRows = function(){
     return this.aElements.length / this.aFields.length;
   };
-  
+
   this.getObjectName = function(Name){
     var arr = Name.split('][');
     var aux = arr.pop();
     aux = aux.replace(']','');
     return aux;
   };
-  
+
   //Begin SetFields ---------------------------------------------------------------------
-  this.setFields = function(aFields, iRow) {
+  this.setFields = function (aFields, iRow)
+  {
+    var tableGrid = document.getElementById(this.sGridName);
+    var elem;
+    var elemName = "";
+    var i = 0;
+    var j = 0;
+
     this.aFields = aFields;
-    var i, j, k, aAux, oAux, sDependentFields;
-    for (i = 0; i < this.aFields.length; i++) {
-      j = iRow || 1;
-      switch (this.aFields[i].sType) {
-        case 'text':
-          while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')){
-            this.aElements.push(
-                new G_Text(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + ']['
-                    + this.aFields[i].sFieldName));
-            this.aElements[this.aElements.length - 1].validate = this.aFields[i].oProperties.validate;
-            if(this.aFields[i].oProperties.strTo) {
-              this.aElements[this.aElements.length - 1].strTo = this.aFields[i].oProperties.strTo;
+
+    for (i = iRow || 1; i <= tableGrid.rows.length - 2; i++) {
+        for (j = 0; j <= this.aFields.length - 1; j++) {
+            elemName = this.sGridName + "][" + i + "][" + this.aFields[j].sFieldName;
+
+            if ((elem = document.getElementById("form[" + elemName + "]"))) {
+                switch (this.aFields[j].sType) {
+                    case "text":
+                        this.aElements.push(new G_Text(oForm, elem, elemName));
+                        this.aElements[this.aElements.length - 1].validate = this.aFields[j].oProperties.validate;
+
+                        if (this.aFields[j].oProperties.strTo) {
+                            this.aElements[this.aElements.length - 1].strTo = this.aFields[j].oProperties.strTo;
+                        }
+
+                        if (this.aFields[j].oProperties) {
+                            this.aElements[this.aElements.length - 1].mask = this.aFields[j].oProperties.mask;
+                        }
+                        break;
+                    case "currency":
+                        this.aElements.push(new G_Currency(oForm, elem, elemName));
+
+                        if (this.aFields[j].oProperties) {
+                            if (this.aFields[j].oProperties.comma_separator) {
+                                this.aElements[this.aElements.length - 1].comma_separator = this.aFields[j].oProperties.comma_separator;
+                            }
+
+                            this.aElements[this.aElements.length - 1].validate = this.aFields[j].oProperties.validate;
+                            this.aElements[this.aElements.length - 1].mask     = this.aFields[j].oProperties.mask;
+                        }
+                        break;
+                    case "percentage":
+                        this.aElements.push(new G_Percentage(oForm, elem, elemName));
+
+                        if (this.aFields[j].oProperties) {
+                            if (this.aFields[j].oProperties.comma_separator) {
+                                this.aElements[this.aElements.length - 1].comma_separator = this.aFields[j].oProperties.comma_separator;
+                            }
+
+                            this.aElements[this.aElements.length - 1].validate = this.aFields[j].oProperties.validate;
+                            this.aElements[this.aElements.length - 1].mask     = this.aFields[j].oProperties.mask;
+                        }
+                        break;
+                    case "dropdown":
+                        this.aElements.push(new G_DropDown(oForm, elem, elemName));
+
+                        if (this.aFields[j].oProperties) {
+                            this.aElements[this.aElements.length - 1].mask = this.aFields[j].oProperties.sMask;
+                        }
+                        break;
+                    default:
+                        this.aElements.push(new G_Field(oForm, elem, elemName));
+
+                        if (this.aFields[j].oProperties) {
+                            this.aElements[this.aElements.length - 1].mask = this.aFields[j].oProperties.sMask;
+                        }
+                        break;
+                }
             }
-            if (aFields[i].oProperties) {
-              this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
-            }
-            j++;
-          }
-          break;
-        case 'currency':
-          while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')) {
-            this.aElements.push(new G_Currency(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + ']['
-                + this.aFields[i].sFieldName));
-            if (aFields[i].oProperties) {
-              this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
-            }
-            j++;
-          }
-          break;
-        case 'percentage':
-          while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')) {
-            this.aElements.push(new G_Percentage(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j
-                + '][' + this.aFields[i].sFieldName));
-            if (aFields[i].oProperties) {
-              this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
-            }
-            j++;
-          }
-          break;
-        case 'dropdown':
-          while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')) {
-            this.aElements.push(new G_DropDown(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + ']['
-                + this.aFields[i].sFieldName));
-            if (aFields[i].oProperties) {
-              this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.sMask;
-            }
-            j++;
-          }
-          break;
-      }
-    }
-    // Set dependent fields
-    sw1 = false;
-    if (this.allDependentFields == '') sw1 = true; //Check if dependent fields are setted.
-    for (i = 0; i < this.aFields.length; i++) {
-      j = iRow || 1;
-      while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')) {
-        if (aFields[i].oProperties.dependentFields != '') {
-          this.setDependents(j, this.getElementByName(j, this.aFields[i].sFieldName), aFields[i].oProperties.dependentFields, sw1);
         }
-        j++;
-      }
+    }
+
+    //Set dependent fields
+    var sw = false;
+
+    if (this.allDependentFields == "") {
+        sw = true; //Check if dependent fields are setted.
+    }
+
+    for (j = 0; j <= this.aFields.length - 1; j++) {
+        i = iRow || 1;
+
+        while ((elem = document.getElementById("form[" + this.sGridName + "][" + i + "][" + this.aFields[j].sFieldName + "]"))) {
+            if (this.aFields[j].oProperties.dependentFields != "") {
+                this.setDependents(i, this.getElementByName(i, this.aFields[j].sFieldName), aFields[j].oProperties.dependentFields, sw);
+            }
+
+            i = i + 1;
+        }
     }
   };
   //End Set Fields --------------------------------------------------------
-  
+
   ///////////////////////////////////////////////////////////////////////
-  
+
   this.setDependents = function(iRow, me, theDependentFields, sw) {
     //alert('Row:' + iRow + ' me: ' + me.name + ' DP: ' + theDependentFields);
     var i;
@@ -114,20 +150,20 @@ var G_Grid = function(oForm, sGridName){
       }
     }
   };
-  
+
   //////////////////////////////////////////////////////////////////////
-  
+
   this.unsetFields = function() {
     var i, j = 0, k, l = 0;
     k = this.aElements.length / this.aFields.length;
     for (i = 0; i < this.aFields.length; i++) {
-      
+
       j += k;
       l++;
       this.aElements.splice(j - l, 1);
     }
   };
-  
+
   ////////////////////////////////////////////////////////////////////
   this.getElementByName = function(iRow, sName) {
     var i;
@@ -138,9 +174,9 @@ var G_Grid = function(oForm, sGridName){
     }
     return null;
   };
-  
+
   /////////////////////////////////////////////////////////////////////
-  
+
   this.getElementValueByName = function(iRow, sName) {
     var oAux = document.getElementById('form[' + this.sGridName + '][' + iRow + '][' + sName + ']');
     if (oAux) {
@@ -149,9 +185,9 @@ var G_Grid = function(oForm, sGridName){
       return 'Object not found!';
     }
   };
-  
+
   ////////////////////////////////////////////////////////////////////////
-  
+
   this.getFunctionResult = function(sName) {
     var oAux = document.getElementById('form[SYS_GRID_AGGREGATE_' + this.sGridName + '_' + sName + ']');
     if (oAux) {
@@ -160,57 +196,153 @@ var G_Grid = function(oForm, sGridName){
       return 'Object not found!';
     }
   };
-  
-  ////////////////////////////////////////////////////////////////////////
-  
-  this.cloneInput = function(oNewObject){
-    var newField;
-    var txt = oNewObject.parentNode.innerHTML;
-    var xClass = 'module_app_input___gray';
-    txt = txt.replace('INPUT','');
-    txt = txt.replace('<','');
-    txt = txt.replace('/>','');
-    txt = txt.replace('>','');
-    
-    aux4 = txt.toLowerCase();
-    aux4 = aux4.replace(' ','');
-    sw_display = false;
-    if ((aux4.indexOf ('display:none') > 0) || (aux4.indexOf('display: none')>0)){
-      sw_display = true;
-    }
-    pTxt = txt.split('="');
-    for (v=1; v < pTxt.length; v++){
-      aux = pTxt[v];
-      if (pos = aux.indexOf('"')){
-        aux2 = aux.substr(0,pos);
-        aux3 = aux2.replace(' ','[%space$]');
-        pTxt[v] = aux.replace(aux2, aux3);
-      }
-    }
-    txt = pTxt.join('="');
-    
-    aTxt = txt.split(' ');
-    
-    if (sw_display)
-      xElement = '<INPUT id="' + oNewObject.id + '" name="' + oNewObject.id + '" class=' + xClass + ' style="display: none" >';
-    else
-      xElement = '<INPUT id="' + oNewObject.id + '" name="' + oNewObject.id + '" class=' + xClass + ' >';
 
-    newField = document.createElement(xElement);
-    
-    for (var a=0; a < aTxt.length; a++){
-      if (aTxt[a].indexOf('=')>0){
-        aVals = aTxt[a].split('=');
-        if (aVals[0] != 'id' && aVals[0] != 'name' && aVals[0] != 'class' && aVals[0] != 'style'){
-          newField.setAttribute(aVals[0], aVals[1].replace('"','').replace('"','').replace('[%space$]',' '));
-        }
-      }
+  this.cloneElement = function (elem)
+  {
+    //input, textarea, select
+
+    var strHtml = elem.parentNode.innerHTML;
+    var tag = new String(elem.nodeName);
+    var arrayMatch = [];
+    var arrayAux1  = [];
+    var arrayAux2  = [];
+    var strHtmlAux = "";
+    var strAux     = "";
+    var i = 0;
+
+    strHtml = stringReplace("\\x0A", "", strHtml); //\n 10
+    strHtml = stringReplace("\\x0D", "", strHtml); //\r 13
+    strHtml = stringReplace("\\x09", "", strHtml); //\t  9
+
+    if ((arrayMatch = eval("/^.*(<" + tag + ".*id=\"" + elem.id + "\".*>).*$/i").exec(strHtml))) {
+        strHtml = arrayMatch[1];
     }
-    
-    return newField;
+
+    strHtml = stringReplace("<" + tag, "", strHtml);
+    strHtml = stringReplace("<" + tag.toLowerCase(), "", strHtml);
+    strHtml = stringReplace("\\/>.*", "", strHtml);
+    strHtml = stringReplace(">.*", "", strHtml);
+
+    ///////
+    strHtmlAux = strHtml;
+    strAux = "";
+
+    while ((arrayMatch = /^(.*)(".*")(.*)$/g.exec(strHtmlAux))) {
+        strHtmlAux = arrayMatch[1];
+        strAux = stringReplace(" ", "__SPACE__", arrayMatch[2]) + arrayMatch[3] + strAux;
+    }
+
+    strAux = strHtmlAux + strAux;
+
+    strHtml = strAux;
+
+    ///////
+    if (/^.*read[oO]nly.*$/.test(strHtml)) {
+        if (!(/^.*read[oO]nly\=.*$/.test(strHtml))) {
+            strHtml = stringReplace("read[oO]nly", "readonly=\"\"", strHtml);
+        }
+    }
+
+    if (/^.*disabled.*$/.test(strHtml)) {
+        if (!(/^.*disabled\=.*$/.test(strHtml))) {
+            strHtml = stringReplace("disabled", "disabled=\"\"", strHtml);
+        }
+    }
+
+    if (/^.*checked.*$/i.test(strHtml)) {
+        strHtml = stringReplace("CHECKED", "checked", strHtml);
+
+        if (!(/^.*checked\=.*$/.test(strHtml))) {
+            strHtml = stringReplace("checked", "checked=\"\"", strHtml);
+        }
+    }
+
+    ///////
+    var arrayAttribute = [];
+    var a = "";
+    var v = "";
+    arrayAux1 = strHtml.split(" ");
+
+    for (i = 0; i <= arrayAux1.length - 1; i++) {
+        arrayAux2 = arrayAux1[i].split("=");
+
+        if (typeof arrayAux2[1] != "undefined") {
+            a = arrayAux2[0].trim();
+            v = stringReplace("\\\"", "", arrayAux2[1]);
+
+            v = stringReplace("__SPACE__", " ", v);
+
+            arrayAttribute.push([a, v]);
+        }
+    }
+
+    ///////
+    var newElem = document.createElement(tag.toLowerCase());
+
+    for (i = 0; i <= arrayAttribute.length - 1; i++) {
+        a = arrayAttribute[i][0];
+        v = arrayAttribute[i][1];
+
+        switch (a.toLowerCase()) {
+            case "id":
+            case "name":
+                newElem.setAttribute("id", elem.id);
+                newElem.setAttribute("name", elem.id);
+                break;
+            case "class":
+                newElem.className = v;
+                break;
+            case "style":
+                newElem.style.cssText = ((/^.*display\s*:\s*none.*$/i.test(strHtml))? "display: none;" : "") + v;
+                break;
+            case "disabled":
+                if (elem.disabled) {
+                    newElem.disabled = true;
+                }
+                break;
+            case "readonly":
+                if (elem.readOnly) {
+                    newElem.readOnly = true;
+                }
+                break;
+            case "checked":
+                if (elem.checked) {
+                    newElem.checked = true;
+                }
+                break;
+            default:
+                newElem.setAttribute(a, v);
+                break;
+        }
+    }
+
+    switch (tag.toLowerCase()) {
+        case "input":
+        case "textarea":
+            newElem.value = elem.value;
+            break;
+        case "select":
+            if (elem.options.length > 0) {
+                var pos = 0;
+
+                for (i = 0; i <= elem.options.length - 1; i++) {
+                    if (elem.options[i].selected) {
+                        pos = i;
+                    }
+
+                    newElem.options[i] = new Option(elem.options[i].text, elem.options[i].value, elem.options[i].defaultSelected);
+                }
+
+                newElem.options[pos].selected = true;
+            }
+            break;
+    }
+
+    return newElem;
   };
-  
+
   this.addGridRow = function() {
+    this.oGrid = document.getElementById(this.sGridName);
     var i, aObjects;
     var defaultValue = '';
     var n,a,x;
@@ -219,17 +351,17 @@ var G_Grid = function(oForm, sGridName){
     var oNewRow = this.oGrid.insertRow(this.oGrid.rows.length - 1);
     var currentRow = this.oGrid.rows.length - 2;
     var newID, attributes, img2, gridType;
-    
+
     oNewRow.onmouseover=function(){
       highlightRow(this, '#D9E8FF');
     };
     oNewRow.onmouseout=function(){
       highlightRow(this, '#fff');
     };
-    
+
     // Clone Cells Loop
     for (i = 0; i < aCells.length; i++) {
-      oNewRow.appendChild(aCells[i].cloneNode(true)); //Clone First Cell exactly. 
+      oNewRow.appendChild(aCells[i].cloneNode(true)); //Clone First Cell exactly.
       switch (i){
         case 0:
           oNewRow.getElementsByTagName('td')[i].innerHTML = currentRow;
@@ -248,14 +380,18 @@ var G_Grid = function(oForm, sGridName){
               aObjects[0].id = newID;
               aObjects[0].name = newID;
               attributes = elementAttributesNS(aObjects[0], 'pm');
-              if (attributes.defaultvalue != '' && typeof attributes.defaultvalue != 'undefined'){
-                defaultValue = attributes.defaultvalue;
-              }else{
-                defaultValue = '';
+
+              if (typeof attributes.defaultvalue != "undefined" && attributes.defaultvalue != "") {
+                  defaultValue = attributes.defaultvalue;
+              } else {
+                  defaultValue = "";
               }
+
               for(n=0; n < aObjects.length; n++){
                 switch(aObjects[n].type){
                   case 'text': //TEXTBOX, CURRENCY, PERCENTAGE, DATEPICKER
+                    aObjects[n].className = "module_app_input___gray";
+
                     tags = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('a');
                     if (tags.length == 2){ //DATEPICKER
                       //Copy Images
@@ -263,7 +399,7 @@ var G_Grid = function(oForm, sGridName){
                       img2 = tags[1].innerHTML;
                       //Create new trigger name
                       var datePickerTriggerId = tags[1].id.replace(/\[1\]/g, '\[' + currentRow + '\]');
-                      //Remove 'a' tag for date picker trigger 
+                      //Remove 'a' tag for date picker trigger
                       oNewRow.getElementsByTagName('td')[i].removeChild(tags[1]);
                       //Capture Script and remove
                       var scriptTags = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('script');
@@ -275,7 +411,7 @@ var G_Grid = function(oForm, sGridName){
                       }
                       //Create new 'a' to trigger DatePicker
                       var a2 = document.createElement('a');
-                      
+
                         if( a2.style.setAttribute ) {
                           var styleText = "position:relative;top:0px;left:-19px;";
                           a2.style.setAttribute("cssText", styleText );
@@ -284,43 +420,41 @@ var G_Grid = function(oForm, sGridName){
                           var styleText = "position:relative;top:0px;left:-22px;";
                           a2.setAttribute("style", styleText );
                         }
-                        
+
                       a2.id = datePickerTriggerId;
                       a2.innerHTML = img2;
                       oNewRow.getElementsByTagName('td')[i].appendChild(a2);
+
                       //Load DatePicker Trigger
-                      datePicker4("", newID, attributes.mask, attributes.start, attributes.end, attributes.time);                     
-                      if(defaultValue=='today'){ 
-                    	  attributesValue = elementAttributesNS(aObjects[0], '');
-                    	  aObjects[n].value=attributesValue.value;
-                      }else                    
-                         aObjects[n].value = defaultValue;
+                      datePicker4("", newID, attributes.mask, attributes.start, attributes.end, attributes.time);
+
+                      aObjects[n].value = defaultValue;
                     }else{
                       if (_BROWSER.name == 'msie' && aObjects.length==1){ //Clone new input element if browser is IE
-                        var oNewOBJ = this.cloneInput(aObjects[n]);
+                        var oNewOBJ = this.cloneElement(aObjects[n]);
                         oNewOBJ.value = defaultValue;
                         var parentGG = aObjects[n].parentNode;
                         parentGG.removeChild(aObjects[n]);
                         parentGG.appendChild(oNewOBJ);
                       }else{
-                        if ((attributes.gridtype) && (attributes.gridtype=='currency')) {
-                          var attributesCurrency = elementAttributesNS(aObjects[0], '');
-                          aObjects[n].value = attributesCurrency.value.replace(/[.,0-9\s]/g,'');;
+                        if ((attributes.gridtype) && attributes.gridtype == "currency") {
+                            var attributesCurrency = elementAttributesNS(aObjects[n], "");
+                            aObjects[n].value = attributesCurrency.value.replace(/[.,0-9\s]/g, "");
+                        } else {
+                            aObjects[n].value = defaultValue;
                         }
-                        else
-                          aObjects[n].value = defaultValue;
                       }
                     }
                     break;
-                  case 'checkbox': //CHECKBOX 
-                    if (_BROWSER.name != 'msie'){ 
-                      attributesFalse = elementAttributesNS(aObjects[0], '');                       
-                      if((defaultValue === attributesFalse.falsevalue) || (defaultValue==='')) 
-                        aObjects[n].checked = false;  
-                      else
-                        aObjects[n].checked = true;
-                    } 
-                    break;
+                  case 'checkbox': //CHECKBOX
+                      var attributeCheckBox = elementAttributesNS(aObjects[n], "");
+
+                      if (defaultValue == "" || (typeof attributeCheckBox.falseValue != "undefined" && defaultValue == attributeCheckBox.falseValue) || (typeof attributeCheckBox.falsevalue != "undefined" && defaultValue == attributeCheckBox.falsevalue)) {
+                          aObjects[n].checked = false;
+                      } else {
+                          aObjects[n].checked = true;
+                      }
+                      break;
                   case 'hidden': //HIDDEN
                     if ((attributes.gridtype != 'yesno' && attributes.gridtype != 'dropdown') || typeof attributes.gridtype == 'undefined')
                       aObjects[n].value = defaultValue;
@@ -331,14 +465,19 @@ var G_Grid = function(oForm, sGridName){
                         eval('aObjects[n].onclick = ' + onclickevn.replace(/\[1\]/g, '\[' + currentRow + '\]') + ';');
                     }
                     break;
+                   case "file":
+                        aObjects[n].value = "";
+                    break;
                 }
               }
             }
             aObjects = null;
-            break;  
+            break;
           case 'textarea': //TEXTAREA
             aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('textarea');
             if (aObjects){
+              aObjects[0].className = "module_app_input___gray";
+
               newID = aObjects[0].id.replace(/\[1\]/g, '\[' + currentRow + '\]');
               aObjects[0].id = newID;
               aObjects[0].name = newID;
@@ -352,19 +491,19 @@ var G_Grid = function(oForm, sGridName){
             }
             aObjects = null;
             break;
-          case 'select': //DROPDOWN 
+          case 'select': //DROPDOWN
             var oNewSelect;
             aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('select');
             if (aObjects){
               newID = aObjects[0].id.replace(/\[1\]/g, '\[' + currentRow + '\]');
               aObjects[0].id = newID;
               aObjects[0].name = newID;
-              
+
               oNewSelect = document.createElement(aObjects[0].tagName);
               oNewSelect.id = newID;
               oNewSelect.name = newID;
               oNewSelect.setAttribute('class','module_app_input___gray');
-              
+
               aAttributes = aObjects[0].attributes;
               for (a=0; a < aAttributes.length; a++){
                 if (aAttributes[a].name.indexOf('pm:') != -1){
@@ -381,7 +520,7 @@ var G_Grid = function(oForm, sGridName){
                   }
                 }
               }
-              
+
               attributes = elementAttributesNS(aObjects[0], 'pm');
               //var MyAtt = attributes;
               if (attributes.defaultvalue != '' && typeof attributes.defaultvalue != 'undefined'){
@@ -446,7 +585,7 @@ var G_Grid = function(oForm, sGridName){
                     if (_BROWSER.name == 'msie'){
                       if (oAux.options[r].getAttribute('selected') != ''){
                         xOption.setAttribute('selected','selected');
-                      } 
+                      }
                     }else{
                       if (oAux.options[r].getAttribute('selected') == 'selected'){
                         xOption.setAttribute('selected','selected');
@@ -489,10 +628,10 @@ var G_Grid = function(oForm, sGridName){
             aObjects = null;
             break;
         }
-        break;  
+        break;
       }
     }
-    
+
     if (this.aFields.length > 0) {
       this.setFields(this.aFields, currentRow);
     }
@@ -547,58 +686,88 @@ var G_Grid = function(oForm, sGridName){
       this.onaddrow(currentRow);
     }
   };
-  
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  this.deleteGridRow = function(sRow, bWithoutConfirm){
-    if (typeof bWithoutConfirm == 'undefined') bWithoutConfirm = false;
-    //var i, iRow, iRowAux, oAux, ooAux;
-    if (this.oGrid.rows.length == 3) {
-      new leimnud.module.app.alert().make( {
-        label : G_STRINGS.ID_MSG_NODELETE_GRID_ITEM
-      });
-      return false;
-    }
-    if (bWithoutConfirm){
-      this.deleteRowWC(this,sRow);
-    }else{
-      new leimnud.module.app.confirm().make( {
-        label : G_STRINGS.ID_MSG_DELETE_GRID_ITEM,
-        action : function() {
-          this.deleteRowWC(this,sRow);
-        }.extend(this)
-      });
-    }
+
+  this.deleteGridRow = function (sRow, bWithoutConfirm)
+  {
+      if (typeof bWithoutConfirm == "undefined") {
+          bWithoutConfirm = false;
+      }
+
+      if (this.oGrid.rows.length == 3) {
+          new leimnud.module.app.alert().make({
+              label: G_STRINGS.ID_MSG_NODELETE_GRID_ITEM
+          });
+
+          return false;
+      }
+
+      if (bWithoutConfirm) {
+          this.deleteRowWC(this, sRow);
+      } else {
+          new leimnud.module.app.confirm().make({
+              label: G_STRINGS.ID_MSG_DELETE_GRID_ITEM,
+              action: function ()
+                {
+                    this.deleteRowWC(this, sRow);
+                }.extend(this)
+          });
+      }
   };
-  
-  this.deleteRowWC = function(oObj, aRow){
-    sRow = new String(aRow);
-    sRow = sRow.replace('[', '');
-    sRow = sRow.replace(']', '');
-    iRow = Number(sRow);
-    
-    deleteRowOnDynaform(oObj, iRow);
+
+  this.deleteRowWC = function (oObj, aRow)
+  {
+    var sRow = new String(aRow);
+    sRow = sRow.replace("[", "");
+    sRow = sRow.replace("]", "");
+    var iRow = Number(sRow);
+    var iRowAux = iRow + 1;
     var lastItem = oObj.oGrid.rows.length - 2;
-    
-    iRowAux = iRow + 1;
+    var elem2ParentNode;
+    var elem2Id   = "";
+    var elem2Name = "";
+    var elemAux;
+
+    deleteRowOnDynaform(oObj, iRow);
+
     while (iRowAux <= (lastItem)) {
       for (i = 1; i < oObj.oGrid.rows[iRowAux - 1].cells.length; i++) {
         var oCell1 = oObj.oGrid.rows[iRowAux - 1].cells[i];
         var oCell2 = oObj.oGrid.rows[iRowAux].cells[i];
+        
         switch (oCell1.innerHTML.replace(/^\s+|\s+$/g, '').substr(0, 6).toLowerCase()){
           case '<input':
             aObjects1 = oCell1.getElementsByTagName('input');
             aObjects2 = oCell2.getElementsByTagName('input');
+            
             if (aObjects1 && aObjects2) {
-              if(aObjects1[0].type=='checkbox'){
-                aObjects1[0].checked = aObjects2[0].checked;
-              }
-              aObjects1[0].value = aObjects2[0].value;
+                switch (aObjects2[0].type) {
+                    case "file":
+                        elem2ParentNode = aObjects2[0].parentNode;
+                        elem2Id   = aObjects2[0].id;
+                        elem2Name = aObjects2[0].name;
+                        aObjects2[0].id = aObjects1[0].id;
+                        aObjects2[0].name = aObjects1[0].name;
+                        aObjects1[0].parentNode.replaceChild(aObjects2[0], aObjects1[0]);
+                        elemAux = document.createElement("input");
+                        elemAux.type = "file";
+                        elemAux.setAttribute("id", elem2Id);
+                        elemAux.setAttribute("name", elem2Name);
+                        elem2ParentNode.insertBefore(elemAux, elem2ParentNode.firstChild);
+                        break;
+                    default:
+                        if (aObjects2[0].type == "checkbox") {
+                            aObjects1[0].checked = aObjects2[0].checked;
+                        }
+                        aObjects1[0].value = aObjects2[0].value;
+                        aObjects1[0].className = aObjects2[0].className;
+                        break;
+                }
             }
-            
+
             aObjects = oCell1.getElementsByTagName('div');
-            
+
             if (aObjects.length > 0) {
-              
+
               if (aObjects[0]) {
                 aObjects[0].id = aObjects[0].id.replace('/\['+ (iRowAux -1 ) + '\]/g', '\[' + iRowAux + '\]');
                 aObjects[0].name = aObjects[0].id.replace('/\['+ (iRowAux -1 ) + '\]/g', '\[' + iRowAux + '\]');
@@ -617,7 +786,7 @@ var G_Grid = function(oForm, sGridName){
                 }
               }
             }
-            
+
             break;
           case '<selec':
             aObjects1 = oCell1.getElementsByTagName('select');
@@ -637,6 +806,7 @@ var G_Grid = function(oForm, sGridName){
                 aObjects1[0].options[j] = optn;
               }
               aObjects1[0].value = vValue;
+              aObjects1[0].className = aObjects2[0].className;
             }
             break;
           case '<texta':
@@ -644,91 +814,106 @@ var G_Grid = function(oForm, sGridName){
             aObjects2 = oCell2.getElementsByTagName('textarea');
             if (aObjects1 && aObjects2) {
               aObjects1[0].value = aObjects2[0].value;
+              aObjects1[0].className = aObjects2[0].className;
             }
             break;
           default:
-            if (( oCell2.innerHTML.indexOf('changeValues')==111 || oCell2.innerHTML.indexOf('changeValues')==115 ) ) {
+            if (( oCell2.innerHTML.indexOf('changeValues') == 111 || oCell2.innerHTML.indexOf('changeValues') == 115 ) ) {
               break;
             }
-          if (oCell2.innerHTML.toLowerCase().indexOf('deletegridrow') == -1) {
-            oCell1.innerHTML = oCell2.innerHTML;
-          }
+            
+            if (oCell2.innerHTML.toLowerCase().indexOf('deletegridrow') == -1) {
+              oCell1.innerHTML = oCell2.innerHTML;
+            }
           break;
         }
       }
       iRowAux++;
     }
+
+    //Delete row
     this.oGrid.deleteRow(lastItem);
 
-    for (i=0; i < this.aFields.length; i++){
-      this.aElements.pop();
+    var i = 0;
+
+    for (i = 0; i <= this.aFields.length - 1; i++) {
+        this.aElements.pop();
     }
 
+    //Recalculate functions if are declared
+    var elem;
+
     if (oObj.aFunctions.length > 0) {
-      for (i = 0; i < oObj.aFunctions.length; i++) {
-        oAux = document.getElementById('form[' + oObj.sGridName + '][1][' + oObj.aFunctions[i].sFieldName + ']');
-        if (oAux) {
-          switch (oObj.aFunctions[i].sFunction) {
-            case 'sum':
-              oObj.sum(false, oAux);
-              break;
-            case 'avg':
-              oObj.avg(false, oAux);
-              break;
-          }
+        for (i = 0; i <= oObj.aFunctions.length - 1; i++) {
+            elem = document.getElementById("form[" + oObj.sGridName + "][1][" + oObj.aFunctions[i].sFieldName + "]");
+
+            if (elem) {
+                switch (oObj.aFunctions[i].sFunction) {
+                    case "sum":
+                        oObj.sum(false, elem);
+                        break;
+                    case "avg":
+                        oObj.avg(false, elem);
+                        break;
+                }
+            }
         }
-      }
     }
-    
-  //Fires OnAddRow Event
+
+    //Fires OnAddRow Event
     if (oObj.ondeleterow) {
-      oObj.ondeleterow(iRow);
+        oObj.ondeleterow(iRow);
     }
   };
-  
+
   ///////////////////////////////////////////////////////////////////////////////////
-  
-  this.assignFunctions = function(aFields, sEvent, iRow) {
-    iRow = iRow || 1;
-    var i, j, oAux;
-    for (i = 0; i < aFields.length; i++) {
-      j = iRow;
-      while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + aFields[i].sFieldName + ']')) {
-        switch (aFields[i].sFunction) {
-          case 'sum':
-            leimnud.event.add(oAux, sEvent, {
-              method : this.sum,
-              instance : this,
-              event : true
-            });
-            break;
-          case 'avg':
-            leimnud.event.add(oAux, sEvent, {
-              method : this.avg,
-              instance : this,
-              event : true
-            });
-            break;
-          default:
-            leimnud.event.add(oAux, sEvent, {
-              method : aFields[i].sFunction,
-              instance : this,
-              event : true
-            });
-          break;
-        }
-        j++;
+
+  this.assignFunctions = function (aFields, sEvent, iRow)
+  {
+      var elem;
+      var i = 0;
+      var j = 0;
+
+      for (j = 0; j <= aFields.length - 1; j++) {
+          i = iRow || 1;
+
+          while ((elem = document.getElementById("form[" + this.sGridName + "][" + i + "][" + aFields[j].sFieldName + "]"))) {
+              switch (aFields[j].sFunction) {
+                  case "sum":
+                      leimnud.event.add(elem, sEvent, {
+                          method: this.sum,
+                          instance: this,
+                          event: true
+                      });
+                      break;
+                  case "avg":
+                      leimnud.event.add(elem, sEvent, {
+                          method: this.avg,
+                          instance: this,
+                          event: true
+                      });
+                      break;
+                  default:
+                      leimnud.event.add(elem, sEvent, {
+                          method: aFields[j].sFunction,
+                          instance: this,
+                          event: true
+                      });
+                      break;
+              }
+
+              i = i + 1;
+          }
       }
-    }
   };
-  
+
   ////////////////////////////////////////////////////////////////////////////////
-  
+
   this.setFunctions = function(aFunctions) {
     this.aFunctions = aFunctions;
     this.assignFunctions(this.aFunctions, 'change');
   };
-  
+
   this.determineBrowser = function()
   {
     var nAgt = navigator.userAgent;
@@ -760,7 +945,7 @@ var G_Grid = function(oForm, sGridName){
     return browserName;
   };
   /////////////////////////////////////////////////////////////////////////////////
-  
+
   this.sum = function(oEvent, oDOM) {
     oDOM = (oDOM ? oDOM : oEvent.target || window.event.srcElement);
     var i, aAux, oAux, fTotal, sMask, nnName;
@@ -768,17 +953,19 @@ var G_Grid = function(oForm, sGridName){
     i = 1;
     fTotal = 0;
     aAux[2] = aAux[2].replace(']', '');
-    
+
     var j=1;
     for ( var k = 0; k < this.aElements.length; k++) {
       nnName= this.aElements[k].name.split('][');
       if (aAux[2] == nnName[2] && j <= (this.oGrid.rows.length-2)){
         oAux=this.getElementByName(j, nnName[2]);
         var oAux2 = oAux.value().replace(/[$|a-zA-Z\s]/g,'');
-        if ( (oAux != null) && (oAux.value().trim() != '') && (oAux2)) {
-          fTotal += parseFloat(G.getValue(oAux.value()));
+
+        if ((oAux != null) && (oAux.value().trim() != "") && (oAux2)) {
+            fTotal = fTotal + parseFloat(G.getValue(oAux));
         }
-        j++;
+
+        j = j + 1;
       }
     }
     /*
@@ -798,7 +985,7 @@ var G_Grid = function(oForm, sGridName){
       oAux.innerHTML = fTotal;
     }
   };
-  
+
   ////////////////////////////////////////////////////////////////////////////////////
   this.avg = function(oEvent, oDOM) {
     oDOM = (oDOM ? oDOM : oEvent.target || window.event.srcElement);
@@ -807,13 +994,16 @@ var G_Grid = function(oForm, sGridName){
     i = 1;
     fTotal = 0;
     aAux[2] = aAux[2].replace(']', '');
-    while (oAux = this.getElementByName(i, aAux[2])) {
-      if ( oAux.value() != "" ) {
-        fTotal += parseFloat(G.getValue(oAux.value().trim() ));
+
+    while ((oAux = this.getElementByName(i, aAux[2]))) {
+      if (oAux.value().trim() != "") {
+          fTotal = fTotal + parseFloat(G.getValue(oAux));
       }
+
       sMask = oAux.mask;
-      i++;
+      i = i + 1;
     }
+
     i--;
     if (fTotal > 0) {
       fTotal = (fTotal / i).toFixed(2);
@@ -838,36 +1028,42 @@ var G_Grid = function(oForm, sGridName){
       }
     }
   };
-  
+
   /////////////////////////////////////////////////////////////////////////////////////////
-  
-  this.assignFormulas = function(aFields, sEvent, iRow) {
-    iRow = iRow || 1;
-    var i, j, oAux;
-    for (i = 0; i < aFields.length; i++) {
-      j = iRow;
-      while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + aFields[i].sDependentOf + ']')) {
-        leimnud.event.add(oAux, sEvent, {
-          method : this.evaluateFormula,
-          instance : this,
-          args : [ oAux, aFields[i] ],
-          event : true
-        });
-        j++;
+
+  this.assignFormulas = function (aFields, sEvent, iRow)
+  {
+      var elem;
+      var i = 0
+      var j = 0;
+
+      for (j = 0; j <= aFields.length - 1; j++) {
+          i = iRow || 1;
+
+          while ((elem = document.getElementById("form[" + this.sGridName + "][" + i + "][" + aFields[j].sDependentOf + "]"))) {
+              leimnud.event.add(elem, sEvent, {
+                  method: this.evaluateFormula,
+                  instance: this,
+                  args: [elem, aFields[j]],
+                  event: true
+              });
+
+              i = i + 1;
+          }
       }
-    }
   };
-  
+
   ////////////////////////////////////////////////////////////////////////////////////////////
   this.setFormulas = function(aFormulas) {
     this.aFormulas = aFormulas;
     this.assignFormulas(this.aFormulas, 'change');
   };
-  
+
   /////////////////////////////////////////////////////////////////////////////////////////////
   this.evaluateFormula = function(oEvent, oDOM, oField) {
     oDOM = (oDOM ? oDOM : oEvent.target || window.event.srcElement);
     var aAux, sAux, i, oAux;
+    var domId = oDOM.id;
     var oContinue = true;
     aAux = oDOM.name.split('][');
     sAux = oField.sFormula.replace(/\+|\-|\*|\/|\(|\)|\[|\]|\{|\}|\%|\$/g, ' ');
@@ -889,6 +1085,7 @@ var G_Grid = function(oForm, sGridName){
       }
     }
     eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]')) { oContinue = false; }");
+
     if (oContinue) {
       //we're selecting the mask to put in the field with the formula
       for (i = 0; i < this.aFields.length; i++) {
@@ -898,24 +1095,52 @@ var G_Grid = function(oForm, sGridName){
       }
       if(maskformula!=''){
         maskDecimal=maskformula.split(";");
+
         if(maskDecimal.length > 1) {
           maskDecimal=maskDecimal[1].split(".");
         } else {
           maskDecimal=maskformula.split(".");
         }
-        maskToPut=maskDecimal[1].length;
-      }else{
-        maskToPut=0;        
+
+        if(typeof maskDecimal[1] != 'undefined') {
+          maskToPut=maskDecimal[1].length;
+        } else {
+          maskToPut=0;
+        }
+
+      } else {
+        maskToPut=0;
       }
-      var symbol = document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value.replace(/[0-9.\s]/g,'');
-      var bkp = document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value;
+
+      // clean the field and load mask execute event keypress
+      document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value = '';
+      this.executeEvent(document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']'), 'keypress');
+
+      // execute formula and set decimal
       eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = (" + sAux + ').toFixed('+maskToPut+');');
-      
+
+      // trim value
+      document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value = document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value.replace(/^\s*|\s*$/g,"");
+
+      // set '' to field if response is NaN
       if (document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value =='NaN')
-        document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value = '';      
-      
-      document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value = symbol+' '+document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value;      
-      
+        document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value = '';
+
+      // save var symbol the response
+      var symbol = document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value.replace(/[0-9.\s]/g,'');
+      this.executeEvent(document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']'), 'keypress');
+
+      // replace symbol - for ''
+      document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value = document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value.replace('-','');
+
+      // set var symbol
+      document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value = symbol+''+document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value;
+
+      // return focus the field typed
+      if (typeof document.getElementById(domId) != 'undefined') {
+        document.getElementById(domId).focus();
+      }
+
       if (this.aFunctions.length > 0) {
         for (i = 0; i < this.aFunctions.length; i++) {
           oAux = document.getElementById('form[' + this.sGridName + '][' + aAux[1] + '][' + this.aFunctions[i].sFieldName + ']');
@@ -946,25 +1171,25 @@ var G_Grid = function(oForm, sGridName){
       });
     }
   };
-  
+
   /*add*/
   this.deleteGridRownomsg = function(sRow) {
     var i, iRow, iRowAux, oAux, ooAux;
-    
-    
+
+
     //action : function() {
     //this.aElements = [];
     sRow = sRow.replace('[', '');
     sRow = sRow.replace(']', '');
     iRow = Number(sRow);
-    
+
     /*
      * delete the respective session row grid variables from
      * Dynaform - by Nyeke <erik@colosa.com
      */
-    
-    deleteRowOnDybaform(this, iRow);
-    
+
+    deleteRowOnDynaform(this, iRow);
+
     iRowAux = iRow + 1;
     while (iRowAux <= (this.oGrid.rows.length - 2)) {
       for (i = 1; i < this.oGrid.rows[iRowAux - 1].cells.length; i++) {
@@ -982,11 +1207,11 @@ var G_Grid = function(oForm, sGridName){
               //  if(oCell1.innerHTML.indexOf('<div id=')!=-1)
               //  oCell1.innerHTML = oCell2.innerHTML;
             }
-            
+
             aObjects = oCell1.getElementsByTagName('div');
-            
+
             if (aObjects.length > 0) {
-              
+
               if (aObjects[0]) {
                 aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
                 aObjects[0].name = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
@@ -1081,9 +1306,9 @@ var G_Grid = function(oForm, sGridName){
         j++;
       }
     }
-    
+
     if (this.aFunctions.length > 0) {
-      
+
       for (i = 0; i < this.aFunctions.length; i++) {
         oAux = document.getElementById('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
         if (oAux) {
@@ -1125,23 +1350,22 @@ var G_Grid = function(oForm, sGridName){
     if (this.ondeleterow) {
       this.ondeleterow();
     }
-    
+
     //}.extend(this)
-    
+
   };
   /*add end*/
 };
 
 /**
  * Delete the respective session row grid variables from Dynaform
- * 
+ *
  * @Param grid
  *            [object: grid]
  * @Param sRow
  *            [integer: row index]
  * @author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@mail.com>
  */
-
 
 function deleteRowOnDynaform(grid, sRow) {
   var oRPC = new leimnud.module.rpc.xmlhttp( {
@@ -1153,7 +1377,7 @@ function deleteRowOnDynaform(grid, sRow) {
       oPanel.loader.hide();
     scs = rpc.xmlhttp.responseText.extractScript();
     scs.evalScript();
-    
+
     /**
      * We verify if the debug panel is open, if it is-> update its content
      */
@@ -1175,3 +1399,4 @@ function deleteRowOnDynaform(grid, sRow) {
   }.extend(this);
   oRPC.make();
 }
+

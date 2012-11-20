@@ -84,7 +84,7 @@ class headPublisher {
    * @return string
    */
 
-  private function __construct() {
+  public function __construct() {
     $this->addScriptFile ( "/js/maborak/core/maborak.js" );
   }
 
@@ -203,7 +203,6 @@ class headPublisher {
 
     $this->addScriptFile ( "/js/widgets/js-calendar/unicode-letter.js" );
     $this->addScriptFile ( "/js/widgets/js-calendar/lang/".$sysLang.".js" );
-    $this->addScriptFile ( "/js/widgets/js-calendar/lang/en.js" );
 
     $head = '';
     $head .= '<TITLE>' . $this->title . "</TITLE>\n";
@@ -283,6 +282,10 @@ class headPublisher {
     $head = '';
     $head .= "  <script type='text/javascript' src='/js/ext/ext-base.js'></script>\n";
     $head .= "  <script type='text/javascript' src='/js/ext/ext-all.js'></script>\n";
+    $aux = explode('-', strtolower(SYS_LANG));
+    if (($aux[0] != 'en') && file_exists(PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'ext' . PATH_SEP . 'locale' . PATH_SEP . 'ext-lang-' . $aux[0] . '.js')) {
+      $head .= "  <script type='text/javascript' src='/js/ext/locale/ext-lang-" . $aux[0] . ".js'></script>\n";
+    }
 
     // enabled for particular use
     $head .= $this->getExtJsLibraries();
@@ -299,12 +302,17 @@ class headPublisher {
     $head .= $this->getExtJsScripts();
     $head .= $this->getExtJsVariablesScript();
 
+    $oServerConf =& serverConf::getSingleton();
+    if ($oServerConf->isRtl(SYS_LANG)) {
+    	$head .= "  <script type='text/javascript' src='/js/ext/extjs_rtl.js'></script>\n";
+    }
+
     return $head;
   }
 
   function getExtJsStylesheets($skinName){
     $script = "  <link rel='stylesheet' type='text/css' href='/css/$skinName.css' />\n";
-    $script .= "  <script type='text/javascript' src='/js/ext/translation.en.js'></script>\n";
+    $script .= "  <script type='text/javascript' src='/js/ext/translation.".SYS_LANG.".js'></script>\n";
 /*
     $script .= "  <link rel='stylesheet' type='text/css' href='/skins/ext/ext-all-notheme.css' />\n";
     $script .= "  <link rel='stylesheet' type='text/css' href='/skins/ext/" . $this->extJsSkin.".css' />\n";

@@ -49,19 +49,41 @@ class workspaceTools {
     return (file_exists($this->path) && file_exists($this->dbPath));
   }
 
-  /**
-   * Upgrade this workspace to the latest system version
-   *
-   * @param   bool $first true if this is the first workspace to be upgrade
-   */
-  public function upgrade($first = false) {
-    CLI::logging("> Updating database...\n");
-    $this->upgradeDatabase();
-    CLI::logging("> Updating translations...\n");
-    $this->upgradeTranslation($first);
-    CLI::logging("> Updating cache view...\n");
-    $this->upgradeCacheView();
-  }
+    /**
+     * Upgrade this workspace to the latest system version
+     *
+     * @param   bool $first true if this is the first workspace to be upgrade
+     */
+    public function upgrade($first=false, $buildCacheView=false, $workSpace=SYS_SYS) 
+    {
+        $start = microtime(true);
+        CLI::logging("> Updating database...\n");
+        $this->upgradeDatabase();
+        $stop = microtime(true);
+        $final = $stop - $start;
+        CLI::logging("<*>   Process Updating database carried out in $final seconds.\n");
+
+        $start = microtime(true);
+        CLI::logging("> Updating translations...\n");
+        $this->upgradeTranslation($first);
+        $stop = microtime(true);
+        $final = $stop - $start;
+        CLI::logging("<*>   Process Updating translations carried out in $final seconds.\n");
+
+        $start = microtime(true);
+        CLI::logging("> Updating Content...\n");
+        $this->upgradeContent($workSpace);
+        $stop = microtime(true);
+        $final = $stop - $start;
+        CLI::logging("<*>   Process Updating Content carried out in $final seconds.\n");
+
+        $start = microtime(true);
+        CLI::logging("> Updating cache view...\n");
+        $this->upgradeCacheView($buildCacheView);
+        $stop = microtime(true);
+        $final = $stop - $start;
+        CLI::logging("<*>   Process Updating cache view carried out in $final seconds.\n");
+    }
 
   /**
    * Scan the db.php file for database information and return it as an array
@@ -264,6 +286,24 @@ class workspaceTools {
     $this->initPropelRoot = false;
   }
 
+    /**
+     * Upgrade this workspace Content.
+     *
+     */
+    public function upgradeContent($workSpace=SYS_SYS) {
+        $this->initPropel(true);
+        require_once 'classes/model/Translation.php';
+        $translation = new Translation();
+        $information = $translation->getTranslationEnvironments();
+        $arrayLang = array();
+        foreach ($information as $key => $value) {
+            $arrayLang[] = trim($value['LOCALE']);
+        }
+        require_once('classes/model/Content.php');
+        $regenerateContent = new Content();
+        $regenerateContent->regenerateContent($arrayLang, $workSpace);
+    }
+
   /**
    * Upgrade this workspace translations from all avaliable languages.
    *
@@ -387,7 +427,7 @@ class workspaceTools {
    * @param   bool $checkOnly only check if the upgrade is needed if true
    * @param  string $lang not currently used
    */
-  public function upgradeCacheView($fill = true) {
+  public function upgradeCacheView($fill=true) {
     $this->initPropel(true);
 
     $lang = "en";
@@ -430,7 +470,7 @@ class workspaceTools {
     $triggers[] = $appCache->triggerContentUpdate($lang, $checkOnly);
 
     if ($fill) {
-      CLI::logging("-> Filling cache view\n");
+      CLI::logging("-> Rebuild Cache View\n");
       //build using the method in AppCacheView Class
       $res = $appCache->fillAppCacheView($lang);
       //set status in config table
@@ -936,6 +976,8 @@ class workspaceTools {
       workspaceTools::printInfo((array)$workspaceData);
 
     }
+
+    G::rm_dir($tempDirectory);
   }
 
   static public function dirPerms($filename, $owner, $group, $perms) {
@@ -968,10 +1010,16 @@ class workspaceTools {
     $backup = new Archive_Tar($filename);
     //Get a temporary directory in the upgrade directory
     $tempDirectory = PATH_DATA . "upgrade/" . basename(tempnam(__FILE__, ''));
-    mkdir($tempDirectory);
+    $parentDirectory = PATH_DATA . "upgrade";
+    if (is_writable($parentDirectory)) {
+        mkdir($tempDirectory);
+    } else {
+        throw new Exception("Could not create directory:" . $parentDirectory);
+    }
     //Extract all backup files, including database scripts and workspace files
-    if (!$backup->extract($tempDirectory))
-       throw new Exception("Could not extract backup");
+    if (!$backup->extract($tempDirectory)) {
+        throw new Exception("Could not extract backup");
+    }
     //Search for metafiles in the new standard (the old standard would contain
     //txt files).
     $metaFiles = glob($tempDirectory . "/*.meta");
@@ -1011,13 +1059,13 @@ class workspaceTools {
       $workspace = new workspaceTools($workspaceName);
       if ($workspace->workspaceExists())
         if ($overwrite)
-          CLI::logging(CLI::warning("> Workspace $workspaceName already exists, overwriting!") . "\n");
+          CLI::logging(CLI::warning("> Workspace $workspaceName already exist, overwriting!") . "\n");
         else
-          throw new Exception("Destination workspace already exists (use -o to overwrite)");
+          throw new Exception("Destination workspace already exist (use -o to overwrite)");
 
-      if (file_exists($workspace->path))
+      if (file_exists($workspace->path)) {
         G::rm_dir($workspace->path);
-
+      }
       foreach ($metadata->directories as $dir) {
         CLI::logging("+> Restoring directory '$dir'\n");
 
@@ -1038,6 +1086,7 @@ class workspaceTools {
 
       CLI::logging("> Connecting to system database in '$dbHost'\n");
       $link = mysql_connect($dbHost, $dbUser, $dbPass);
+      @mysql_query("SET NAMES 'utf8';");
       if (!$link)
         throw new Exception('Could not connect to system database: ' . mysql_error());
 

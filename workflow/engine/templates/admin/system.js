@@ -1,5 +1,5 @@
 Ext.onReady(function(){
-  
+
   var cmbSkins = new Ext.form.ComboBox({
     fieldLabel : _('ID_DEFAULT_SKIN'),
     id         : 'default_skin',
@@ -11,7 +11,7 @@ Ext.onReady(function(){
     mode        : 'local',
     emptyText   : _('ID_SELECT'),
     valueField     : 'ID',
-    displayField   : 'NAME', 
+    displayField   : 'NAME',
     selectOnFocus  : true,
     editable       : true,
     triggerAction: 'all',
@@ -41,7 +41,7 @@ Ext.onReady(function(){
     mode        : 'local',
     emptyText   : _('ID_SELECT'),
     valueField     : 'ID',
-    displayField   : 'NAME', 
+    displayField   : 'NAME',
     selectOnFocus  : true,
     editable       : true,
     triggerAction: 'all',
@@ -70,7 +70,7 @@ Ext.onReady(function(){
     mode        : 'local',
     emptyText   : _('ID_SELECT'),
     valueField     : 'ID',
-    displayField   : 'NAME', 
+    displayField   : 'NAME',
     selectOnFocus  : true,
     editable       : true,
     triggerAction: 'all',
@@ -82,7 +82,7 @@ Ext.onReady(function(){
       }
     }
   });
-  
+
   cmbTimeZone.setValue(sysConf.time_zone);
 
   saveButton = new Ext.Action({
@@ -90,12 +90,10 @@ Ext.onReady(function(){
     disabled : true,
     handler : saveSettings
   });
-  
-  xfields = new Ext.form.FieldSet({
+
+  xfieldsUp = new Ext.form.FieldSet({
     title: _('ID_SYSTEM_SETTINGS'),
     items : [
-      cmbSkins,
-      cmbLang,
       cmbTimeZone,
       {
         xtype: 'numberfield',
@@ -109,23 +107,85 @@ Ext.onReady(function(){
             changeSettings();
           }
         }
-      }/*,
+      }
+    ]
+  });
+
+  xfieldsBelow = new Ext.form.FieldSet({
+    title: _('ID_PREFERENCES'),
+    items : [
+      cmbSkins,
+      cmbLang,
       {
-        name: 'forgotPasswd',
-        xtype: 'checkbox',
-        checked: false, //forgotPasswd,
-        fieldLabel: _('ID_ENABLE_FOTGOT_PASSWORD'),
+        xtype: 'panel',
+        anchor: '100%',
+        bodyStyle:'padding:5px',
+        frame: true,
+        height: 'auto',
+        html: _('ID_MESSAGE_SYSTEM')+" "+_('ID_MESSAGE_SYSTEM2')
+      }
+    ]
+  });
+
+  var proxyConfigurationFields = new Ext.form.FieldSet({
+    title: _('ID_PROXY_SETTINGS'),
+    items: [
+      {
+        xtype: 'textfield',
+        id: 'proxy_host',
+        name: 'proxy_host',
+        fieldLabel: _('ID_PROXY_HOST'),
+        width: 200,
+        value: sysConf.proxy_host,
         listeners:{
-          check:function(){
+          change: function(){
             changeSettings();
           }
         }
-      }*/
-    ],
-    buttons : [saveButton]
+      },
+      {
+        xtype: 'numberfield',
+        id: 'proxy_port',
+        name: 'proxy_port',
+        fieldLabel: _('ID_PROXY_PORT'),
+        width: 100,
+        value: sysConf.proxy_port,
+        listeners:{
+          change: function(){
+            changeSettings();
+          }
+        }
+      },
+      {
+        xtype: 'textfield',
+        id: 'proxy_user',
+        name: 'proxy_user',
+        fieldLabel: _('ID_PROXY_USER'),
+        width: 200,
+        value: sysConf.proxy_user,
+        listeners:{
+          change: function(){
+            changeSettings();
+          }
+        }
+      },
+      {
+        xtype: 'textfield',
+        inputType: 'password',
+        id: 'proxy_pass',
+        name: 'proxy_pass',
+        fieldLabel: _('ID_PROXY_PASSWORD'),
+        width: 200,
+        value: sysConf.proxy_pass,
+        listeners:{
+          change: function(){
+            changeSettings();
+          }
+        }
+      }
+    ]
   });
 
-  
   var frm = new Ext.FormPanel({
     title: '&nbsp',
     id:'frm',
@@ -133,26 +193,27 @@ Ext.onReady(function(){
     width:460,
     labelAlign:'right',
     autoScroll: true,
-    bodyStyle:'padding:2px',
+    bodyStyle:'padding:5px',
     waitMsgTarget : true,
     frame: true,
-    
+
     defaults: {
       allowBlank: false,
       msgTarget: 'side',
       align:'center'
     },
-    items:[ xfields ]
-   
+    items:[ xfieldsUp, xfieldsBelow, proxyConfigurationFields ],
+    buttons : [saveButton]
+
   });
   //render to process-panel
   frm.render(document.body);
 
 }); //end onready()
 
-function saveSettings() 
+function saveSettings()
 {
-  Ext.getCmp('frm').getForm().submit( {  
+  Ext.getCmp('frm').getForm().submit( {
     url : '../adminProxy/saveSystemConf',
     waitMsg : _('ID_SAVING_PROCESS'),
     timeout : 36000,
@@ -176,7 +237,7 @@ function saveSettings()
     },
     failure: function(obj, resp) {
       PMExt.error( _('ID_ERROR'), resp.result.message);
-    }    
+    }
   });
 }
 

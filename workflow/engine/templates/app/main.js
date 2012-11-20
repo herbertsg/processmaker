@@ -5,22 +5,36 @@ var appUid;
 var title;
 var summaryWindowOpened = false;
 
+var toolTipChkSendMail;
+
 function closeCaseNotesWindow(){
   if(Ext.get("caseNotesWindowPanel")){
     Ext.get("caseNotesWindowPanel").destroy();
   }
 }
 
-function openCaseNotesWindow(appUid1, modalSw, appTitle)
+function openCaseNotesWindow(appUid1, modalSw, appTitle, proUid, taskUid)
 {
+  Ext.MessageBox.show({
+    msg: _('ID_CASE_NOTES_LOADING'),
+    progressText: 'Saving...',
+    width:300,
+    wait:true,
+    waitConfig: {interval:200},
+    animEl: 'mb7'
+  });
+
   Ext.QuickTips.init();
-  appUid = !appUid1 ? "": appUid1;
-  title  = appTitle;
+  appUid  = !appUid1 ? "": appUid1;
+  proUid  = !proUid  ? "": proUid;
+  taskUid = !taskUid ? "": taskUid;
+
+  title   = appTitle;
   var startRecord=0;
   var loadSize=10;
 
   storeNotes = new Ext.data.JsonStore({
-    url : '../appProxy/getNotesList?appUid='+appUid,
+    url : '../appProxy/getNotesList?appUid='+appUid+'&pro='+proUid+'&tas='+taskUid,
     root: 'notes',
     totalProperty: 'totalCount',
     fields: ['USR_USERNAME','USR_FIRSTNAME','USR_LASTNAME','USR_FULL_NAME','NOTE_DATE','NOTE_CONTENT', 'USR_UID', 'user'],
@@ -30,7 +44,22 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle)
     },
     listeners:{
       load:function(){
+        Ext.MessageBox.hide();
+        if ( typeof(storeNotes.reader.jsonData.noPerms != 'undefined') &&
+           (storeNotes.reader.jsonData.noPerms == '1') ) {
+          Ext.MessageBox.show({
+            title: _('ID_WARNING'),
+            msg: _('ID_CASES_NOTES_NO_PERMISSIONS'),
+            buttons: Ext.MessageBox.OK,
+            animEl: 'mb9',
+            icon: Ext.MessageBox.WARNING
+          });
+          return false;
+        }
 
+        caseNotesWindow.show();
+        newNoteAreaActive = false;
+        newNoteHandler();
         caseNotesWindow.setTitle(_('ID_CASES_NOTES') + ' (' + storeNotes.data.items.length + ')');
 
         if(storeNotes.getCount()<storeNotes.getTotalCount()){
@@ -119,7 +148,7 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle)
   caseNotesWindow = new Ext.Window({
     title: _('ID_CASES_NOTES'), //Title of the Window
     id: 'caseNotesWindowPanel', //ID of the Window Panel
-    width:300, //Width of the Window
+    width: 350, //Width of the Window
     resizable: true, //Resize of the Window, if false - it cannot be resized
     closable: true, //Hide close button of the Window
     modal: modalSw, //When modal:true it make the window modal and mask everything behind it when displayed
@@ -133,7 +162,7 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle)
     constrain: true,
     keys: {
       key: 27,
-      fn  : function(){
+      fn : function(){
         caseNotesWindow.hide();
       }
     },
@@ -149,30 +178,37 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle)
     ],
     tbar:[
         new Ext.form.TextArea({
-          text   : _('ID_NEW_NOTE'),
-          xtype  : 'textarea',
-          id     : 'caseNoteText',
-          name   : 'caseNoteText',
-          width  : 280,
-          grow   : true,
+          text : _('ID_NEW_NOTE'),
+          xtype : 'textarea',
+          id : 'caseNoteText',
+          name : 'caseNoteText',
+          width : 330,
+          grow : true,
           height : 40,
           growMin: 40,
           growMax: 80,
-          maxLengthText  : 150,
-          allowBlank     :true,
-          selectOnFocus  :true,
+          maxLengthText : 500,
+          allowBlank :true,
+          selectOnFocus :true,
           enableKeyEvents: true,
           listeners : {
-            scope  : this,
-            keyup  : updateTextCtr,
+            scope : this,
+            keyup : updateTextCtr,
             keydown: updateTextCtr
           }
         })
       ],
     rowtbar: [
       [
+        {
+            xtype: "checkbox",
+            id: "chkSendMail",
+            name: "chkSendMail",
+            checked: true,
+            boxLabel: _("ID_CASE_NOTES_LABEL_SEND")
+        },
         '->',
-        '<span id="countChar">150</span>',
+        '<span id="countChar">500</span>',
         ' ',
         {
           id: 'sendBtn',
@@ -220,9 +256,13 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle)
     }
   });
 
-  newNoteAreaActive = false;
-  caseNotesWindow.show();
-  newNoteHandler();
+  toolTipChkSendMail = new Ext.ToolTip({
+      dismissDelay: 3000, //auto hide after 3 seconds
+      title: _("ID_CASE_NOTES_HINT_SEND"),
+      //html "",
+      //text: "",
+      width: 200
+  });
 }
 
 function updateTextCtr(body, event) {
@@ -230,10 +270,10 @@ function updateTextCtr(body, event) {
   ctr = document.getElementById('countChar').innerHTML;
 
   text = Ext.getCmp('caseNoteText').getValue();
-  maxLength = 150;
+  maxLength = 500;
 
   if (text.length > maxLength) {
-    Ext.getCmp('caseNoteText').setValue(Ext.getCmp('caseNoteText').getValue().substr(0,150));
+    Ext.getCmp('caseNoteText').setValue(Ext.getCmp('caseNoteText').getValue().substr(0,500));
   }
   else {
     document.getElementById('countChar').innerHTML = maxLength - text.length;
@@ -253,21 +293,25 @@ function newNoteHandler()
     Ext.getCmp('addCancelBtn').setIcon('/images/comment_add.gif');
 
     caseNotesWindow.getTopToolbar().hide();
-    Ext.getCmp('sendBtn').hide();
+    Ext.getCmp("chkSendMail").hide();
+    Ext.getCmp("sendBtn").hide();
     document.getElementById('countChar').style.display = 'none';
     caseNotesWindow.doLayout();
   }
   else {
+    toolTipChkSendMail.initTarget("chkSendMail");
+
     Ext.getCmp('addCancelBtn').setText('');
     Ext.getCmp('addCancelBtn').setTooltip({title: _('ID_CASES_NOTES_CANCEL')});
     Ext.getCmp('addCancelBtn').setIcon('/images/cancel.png');
 
     caseNotesWindow.getTopToolbar().show();
-    Ext.getCmp('sendBtn').show();
+    Ext.getCmp("chkSendMail").show();
+    Ext.getCmp("sendBtn").show();
     document.getElementById('countChar').style.display = 'block';
     Ext.getCmp('caseNoteText').focus();
     Ext.getCmp('caseNoteText').reset();
-    document.getElementById('countChar').innerHTML = '150';
+    document.getElementById('countChar').innerHTML = '500';
     caseNotesWindow.doLayout();
   }
 
@@ -290,8 +334,9 @@ function sendNote()
   Ext.Ajax.request({
     url : '../appProxy/postNote' ,
     params : {
-      appUid  : appUid,
-      noteText: noteText
+      appUid: appUid,
+      noteText: noteText,
+      swSendMail: (Ext.getCmp("chkSendMail").checked == true)? 1 : 0
     },
     success: function ( result, request ) {
       var data = Ext.util.JSON.decode(result.responseText);
@@ -427,7 +472,7 @@ var openSummaryWindow = function(appUid, delIndex)
       summaryWindowOpened = false;
     },
     failure: function (result, request) {
-      summaryWindowOpened = false;      
+      summaryWindowOpened = false;
     }
   });
 }
@@ -463,3 +508,4 @@ Ext.Panel.prototype.onRender = function(ct, position) {
         }
     }
 }
+

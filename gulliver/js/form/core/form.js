@@ -62,7 +62,7 @@ function G_Field ( form, element, name )
   this.name=name;
   this.dependentFields=[];
   this.dependentOf=[];
-  
+
   this.hide = function( parentLevel ){
     if (typeof(parentLevel)==='undefined') parentLevel = 1;
     var parent = me.element;
@@ -70,7 +70,7 @@ function G_Field ( form, element, name )
       parent = parent.parentNode;
     parent.style.display = 'none';
   };
-  
+
   this.show = function( parentLevel ){
     if (typeof(parentLevel)==='undefined') parentLevel = 1;
     var parent = me.element;
@@ -99,9 +99,9 @@ function G_Field ( form, element, name )
       if (me.dependentOf[i]===field) exists = true;
     if (!exists) me.dependentOf[i] = field;
   };
-  
+
   this.updateDepententFields=function(event) {
-    
+
   var tempValue;
   if (me.dependentFields.length===0) return true;
   var fields=[],Fields = [],i,grid='',row=0;
@@ -119,12 +119,12 @@ function G_Field ( form, element, name )
             aux.push('?');
             if (aux.join('*').indexOf(fieldName + '*') == -1){
               Fields.push(fieldName);
-              eval("var oAux2 = {" + fieldName + ":'" + oAux.value() + "'}");  
+              eval("var oAux2 = {" + fieldName + ":'" + oAux.value() + "'}");
               fields = fields.concat(oAux2);
             }
           }else{
               Fields.push(fieldName);
-              eval("var oAux2 = {" + fieldName + ":'" + oAux.value() + "'}");  
+              eval("var oAux2 = {" + fieldName + ":'" + oAux.value() + "'}");
               fields = fields.concat(oAux2);
             }
           }
@@ -139,7 +139,7 @@ function G_Field ( form, element, name )
               }
             }else{
               Fields.push(oAux.name);
-              fields = fields.concat(me.dependentFields[i].dependentOf);  
+              fields = fields.concat(me.dependentFields[i].dependentOf);
             }
           }
         }
@@ -204,7 +204,7 @@ function G_Field ( form, element, name )
     // this checks the dependent fields that doesn't have assigned a value
     // but their master yes and their dependence must be fulfilled within one
     // onchange event
-    
+
     /*
     if (grid!='')
     {
@@ -219,15 +219,15 @@ function G_Field ( form, element, name )
         args    : 'function=showDependentFields&fields='+response+'&fieldName='+fieldName+'&DYN_UID='+me.form.id+'&form='+encodeURIComponent(fields.toJSONString()) +(grid!=''?'&grid='+grid:'')+(row>0?'&row='+row:'')
       });
       checkCallServer.make();
-      
+
       var dependentList = eval(checkCallServer.xmlhttp.responseText);
       var field ;
       var oAuxJs;
       for ( index in dependentList ){
         field = 'form[grid]['+ row +']['+dependentList[index]+']';
-                  
+
         oAuxJs = document.getElementById(field);
-        
+
         if ( oAuxJs!=null ){
           if (oAuxJs.value!="") {
             if ( oAuxJs.fireEvent ) {
@@ -247,16 +247,16 @@ function G_Field ( form, element, name )
     me.element.value = newValue;
   };
   this.setContent = function(newContent) {
-    
+
   };
-  
+
   this.setAttributes = function (attributes) {
     for(var a in attributes) {
       if(a=='formula' && attributes[a]){
         //here we called a this function if it has a formula
         sumaformu(this.element,attributes[a],attributes['mask']);
       }//end formula
-      
+
       switch (typeof(attributes[a])) {
         case 'string':
         case 'int':
@@ -277,7 +277,7 @@ function G_Field ( form, element, name )
             me[a] = attributes[a];
           }
       }
-      
+
     }
   };
   this.value=function() {
@@ -328,19 +328,20 @@ function G_DropDown( form, element, name )
 }
 G_DropDown.prototype=new G_Field();
 
-function G_Text( form, element, name)
+function G_Text(form, element, name)
 {
-  var me      = this;
-  this.mType   = 'text';
+  var me = this;
+  this.mType = "text";
   this.parent = G_Field;
   this.browser = {};
-  
+  this.comma_separator = ".";
+
   this.checkBrowser = function(){
     var nVer = navigator.appVersion;
     var nAgt = navigator.userAgent;
     //alert(navigator.userAgent);
     var browserName  = navigator.appName;
-    var fullVersion  = ''+parseFloat(navigator.appVersion); 
+    var fullVersion  = ''+parseFloat(navigator.appVersion);
     var majorVersion = parseInt(navigator.appVersion,10);
     var nameOffset,verOffset,ix;
 
@@ -348,7 +349,7 @@ function G_Text( form, element, name)
     if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
      browserName = "Opera";
      fullVersion = nAgt.substring(verOffset+6);
-     if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+     if ((verOffset=nAgt.indexOf("Version"))!=-1)
        fullVersion = nAgt.substring(verOffset+8);
     }
     // In MSIE, the true version is after "MSIE" in userAgent
@@ -356,26 +357,26 @@ function G_Text( form, element, name)
      browserName = "Microsoft Internet Explorer";
      fullVersion = nAgt.substring(verOffset+5);
     }
-    // In Chrome, the true version is after "Chrome" 
+    // In Chrome, the true version is after "Chrome"
     else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
      browserName = "Chrome";
      fullVersion = nAgt.substring(verOffset+7);
     }
-    // In Safari, the true version is after "Safari" or after "Version" 
+    // In Safari, the true version is after "Safari" or after "Version"
     else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
      browserName = "Safari";
      fullVersion = nAgt.substring(verOffset+7);
-     if ((verOffset=nAgt.indexOf("Version"))!=-1) 
+     if ((verOffset=nAgt.indexOf("Version"))!=-1)
        fullVersion = nAgt.substring(verOffset+8);
     }
-    // In Firefox, the true version is after "Firefox" 
+    // In Firefox, the true version is after "Firefox"
     else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
      browserName = "Firefox";
      fullVersion = nAgt.substring(verOffset+8);
     }
-    // In most other browsers, "name/version" is at the end of userAgent 
-    else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) < 
-              (verOffset=nAgt.lastIndexOf('/')) ) 
+    // In most other browsers, "name/version" is at the end of userAgent
+    else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
+              (verOffset=nAgt.lastIndexOf('/')) )
     {
      browserName = nAgt.substring(nameOffset,verOffset);
      fullVersion = nAgt.substring(verOffset+1);
@@ -391,7 +392,7 @@ function G_Text( form, element, name)
 
     majorVersion = parseInt(''+fullVersion,10);
     if (isNaN(majorVersion)) {
-     fullVersion  = ''+parseFloat(navigator.appVersion); 
+     fullVersion  = ''+parseFloat(navigator.appVersion);
      majorVersion = parseInt(navigator.appVersion,10);
     }
     this.browser = {
@@ -401,33 +402,33 @@ function G_Text( form, element, name)
         userAgent: navigator.userAgent
     };
   };
-  
+
   this.parent( form, element, name );
   if (element) {
     this.prev = element.value;
   }
-  
+
   this.validate    = 'Any';
   this.mask        = '';
   this.required    = false;
   this.formula     =  '';
   this.key_Change  = false;
   var doubleChange = false;
-  
+
   //FUNCTIONS
-  
+
   function IsUnsignedInteger(YourNumber){
     var Template = /^d+$/; //Formato de numero entero sin signo
     return (Template.test(YourNumber)) ? 1 : 0; //Compara "YourNumber" con el formato "Template" y si coincidevuelve verdadero si no devuelve falso
   }
-  
-  function replaceAll( text, busca, reemplaza ){ 
-    while (text.toString().indexOf(busca) != -1){     
+
+  function replaceAll( text, busca, reemplaza ){
+    while (text.toString().indexOf(busca) != -1){
       text = text.toString().replace(busca,reemplaza);
     }
     return text;
   }
-  
+
   function isNumberMask (mask){
     for ( var key in mask){
       if (mask[key]!='#'&&mask[key]!=','&&mask[key]!='.'&&typeof(mask[key])=='string'){
@@ -436,7 +437,7 @@ function G_Text( form, element, name)
     }
     return true;
   }
-  
+
   //function renderNewValue(element, keyCode){
     /*var myField = element;
     var myValue = myField.value;
@@ -473,7 +474,7 @@ function G_Text( form, element, name)
     }
     return {result: newValue, cursor: startPos};*/
   //}
-  
+
   //MEMBERS
   this.setContent = function(content) {
     me.element.value = '';
@@ -483,7 +484,7 @@ function G_Text( form, element, name)
       }
     }
   };
-    
+
   //this.validateKey = function(event){
     /*
     attributes = elementAttributesNS(element, 'pm');
@@ -491,16 +492,16 @@ function G_Text( form, element, name)
     me.prev = me.element.value;
     if (window.event) event=window.event;
     var keyCode= window.event ? event.keyCode : event.which ;
-    me.mask = typeof(me.mask)==='undefined'?'':me.mask;       
-    if(me.mask=='yyyy-mm-dd'){            
-      attributes.mask=attributes.mask.replace('%d','dd');  
+    me.mask = typeof(me.mask)==='undefined'?'':me.mask;
+    if(me.mask=='yyyy-mm-dd'){
+      attributes.mask=attributes.mask.replace('%d','dd');
       attributes.mask=attributes.mask.replace('%m','mm');
       attributes.mask=attributes.mask.replace('%y','yy');
-      attributes.mask=attributes.mask.replace('%Y','yyyy');  
+      attributes.mask=attributes.mask.replace('%Y','yyyy');
       attributes.mask=attributes.mask.replace('%H','mm');
       attributes.mask=attributes.mask.replace('%M','mm');
-      attributes.mask=attributes.mask.replace('%S','mm');                       
-      me.mask=attributes.mask;   
+      attributes.mask=attributes.mask.replace('%S','mm');
+      me.mask=attributes.mask;
     }
     //alert(me.mask);
     if (me.mask !=='' ) {
@@ -509,7 +510,7 @@ function G_Text( form, element, name)
       if (event.ctrlKey) return true;
       if (event.altKey) return true;
       if (event.shiftKey) return true;
-    } 
+    }
     if ((keyCode===0) ) if (event.keyCode===46) return true; else return true;
     if ( (keyCode===8)) return true;
     if (me.mask ==='') {
@@ -536,7 +537,7 @@ function G_Text( form, element, name)
             break;
           case "Alpha":
             if (keyCode==8) return true;
-            patron =/[A-Za-z\sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;  
+            patron =/[A-Za-z\sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;
             te = String.fromCharCode(keyCode);
             return patron.test(te);
             break;
@@ -564,28 +565,28 @@ function G_Text( form, element, name)
       var myField = me.element;
       var oldValue = myField.value;
       var newValue = '';
-      
+
       newValue = oldValue.substring(0, startPos);
       newValue = newValue + myValue;
       newValue = newValue + oldValue.substring(endPos, oldValue.length);
-      
-      
-      
+
+
+
       startPos++;
-      
+
       var newValue2;
       if (mType !== 'text'){
         newValue2 = G.toMask(newValue, me.mask, startPos);
       }else{
         newValue2 = G.toMask(newValue, me.mask, startPos, 'normal');
       }
-      
+
       //alert(newValue + ' -> ' + mType + ' -> ' + newValue2.result);
       //alert(newValue2.result);
       me.element.value = newValue2.result;
       //alert(me.element.value);
       me.setSelectionRange(newValue2.cursor, newValue2.cursor);
-      
+
       if (me.element.fireEvent){
         me.element.fireEvent("onchange");
       }else{
@@ -596,17 +597,17 @@ function G_Text( form, element, name)
       return true;
     }*/
   //};
-  
+
   this.putFormatNumber =function (evt) {
     /*
-    if((typeof(evt)==="undefined" || evt===0) && me.mask!='' ){*/ 
+    if((typeof(evt)==="undefined" || evt===0) && me.mask!='' ){*/
 //      var numberSet=me.element.value.split('.');
 //      maskD = me.mask.split(';');
-//      maskL = (maskD.length >1)?maskD[1]:maskD[0];  
+//      maskL = (maskD.length >1)?maskD[1]:maskD[0];
 //      if (maskL.search(",")==-1){
 //        return false;
 //      }
-//      maskWithoutC =replaceAll(maskL,",",""); 
+//      maskWithoutC =replaceAll(maskL,",","");
 //      maskWithoutC  =replaceAll(maskWithoutC," ","");
 //      maskWithoutPto=replaceAll(maskWithoutC,".","");
 //      if(numberSet.length >=2){
@@ -614,24 +615,24 @@ function G_Text( form, element, name)
 //          me.element.value  = me.element.value+' '+maskWithoutPto.substr( (maskWithoutPto.length -1) ,maskWithoutPto.length);
 //        return;
 //      }
-//      
+//
 //      maskElemnts = maskWithoutC.split('.');
 //      maskpartInt = maskElemnts[0].split('');
-//      numberwc = replaceAll(me.element.value,",", ""); 
+//      numberwc = replaceAll(me.element.value,",", "");
 //      numberwc = replaceAll(numberwc,".", "");
 //      onlynumber = replaceAll(numberwc,".", "");
 //      onlynumber = replaceAll(numberwc," ", "");
 //      onlynumber = replaceAll(numberwc,"%", "");
 //      if(onlynumber=='') return false;
-//      cd = parseInt(Math.log(onlynumber)/Math.LN10+1); 
+//      cd = parseInt(Math.log(onlynumber)/Math.LN10+1);
 //      var auxnumber = onlynumber;
 //      var cdaux=0;
 //      while(auxnumber > 0){
 //        cdaux++;
 //        auxnumber =parseInt(auxnumber / 10);
-//      } 
+//      }
 //      cd=cdaux;
-//      
+//
 //      if (isNumberMask(maskpartInt)){
 //        if(cd < maskpartInt.length && cd >= 4 && cd !=3){
 //          var newNumber='';
@@ -664,10 +665,10 @@ function G_Text( form, element, name)
 //      }
     //}
   };
-  
+
   //this.preValidateChange=function(event) {
     /*var oNewValue;
-    var newValueR; 
+    var newValueR;
     me.putFormatNumber(event);
     if(me.element.readOnly)  return true;
     if (me.mask ==='') return true;
@@ -703,7 +704,7 @@ function G_Text( form, element, name)
     me.prev=me.element.value;
     return true;*/
   //};
-  
+
   this.execFormula=function(event) {
     if(  me.formula != ''){
       leimnud.event.add(getField('faa'),'keypress',function(){
@@ -712,7 +713,7 @@ function G_Text( form, element, name)
     }
     return false;
   };
-  
+
   /*this.validateChange=function(event) {
     /*if (me.mask ==='') return true;
     var sel=me.getSelectionRange();
@@ -722,12 +723,12 @@ function G_Text( form, element, name)
     me.setSelectionRange(newValue2.cursor, newValue2.cursor);
     return true;*/
   //};*/
-    
+
   this.value = function()
   {
     return me.element.value;
   };
-  
+
   //Get Cursor Position
   this.getCursorPos = function () {
     var textElement=me.element;
@@ -756,7 +757,7 @@ function G_Text( form, element, name)
       }
     }
   };
-  
+
   this.setSelectionRange = function(selectionStart, selectionEnd) {
     var input=me.element;
     if (input.createTextRange) {
@@ -773,7 +774,7 @@ function G_Text( form, element, name)
       input.setSelectionRange(selectionStart, selectionEnd);
     }
   };
-  
+
   //FUNCTION MAYBE IT'S DEPRECATED
   /*this.getSelectionRange = function() {
     if (document.selection) {
@@ -806,32 +807,32 @@ function G_Text( form, element, name)
       return sel;
     }
   };
-*/  
+*/
   //FUNCTION MAYBE IT'S DEPRECATED
-  /*this.getCursorP =function (field) { 
-    if (document.selection) {                               
-      field.focus();                                      
-      var oSel = document.selection.createRange();        
-      oSel.moveStart('character', -field.value.length);   
-      field.selectionEnd = oSel.text.length;              
-      oSel.setEndPoint('EndToStart', document.selection.createRange() ); 
-      field.selectionStart = oSel.text.length; 
-    } 
-    return {selectionStart: field.selectionStart, selectionEnd: field.selectionEnd}; 
-  };*/  
-  
+  /*this.getCursorP =function (field) {
+    if (document.selection) {
+      field.focus();
+      var oSel = document.selection.createRange();
+      oSel.moveStart('character', -field.value.length);
+      field.selectionEnd = oSel.text.length;
+      oSel.setEndPoint('EndToStart', document.selection.createRange() );
+      field.selectionStart = oSel.text.length;
+    }
+    return {selectionStart: field.selectionStart, selectionEnd: field.selectionEnd};
+  };*/
+
   //Gets cursor position
   this.getCursorPosition = function(){
     if(navigator.appName == 'Microsoft Internet Explorer'){
       var field = me.element;
-      if (document.selection) {                               
-        field.focus();                                      
-        var oSel = document.selection.createRange();        
-        oSel.moveStart('character', -field.value.length);   
-        field.selectionEnd = oSel.text.length;              
-        oSel.setEndPoint('EndToStart', document.selection.createRange() ); 
-        field.selectionStart = oSel.text.length; 
-      } 
+      if (document.selection) {
+        field.focus();
+        var oSel = document.selection.createRange();
+        oSel.moveStart('character', -field.value.length);
+        field.selectionEnd = oSel.text.length;
+        oSel.setEndPoint('EndToStart', document.selection.createRange() );
+        field.selectionStart = oSel.text.length;
+      }
       return {selectionStart: field.selectionStart, selectionEnd: field.selectionEnd};
     }else{
       if (document.selection) {
@@ -863,9 +864,9 @@ function G_Text( form, element, name)
         sel.selectionEnd = me.element.selectionEnd;
         return sel;
       }
-    } 
+    }
   };
-  
+
   this.removeMask = function(){
     value     = me.element.value;
     cursor    = me.getCursorPosition();
@@ -885,7 +886,7 @@ function G_Text( form, element, name)
           }
           break;
         case '-':
-          if (me.validate == 'Real'){
+          if (me.validate == 'Real' || me.validate == 'Int'){
             newValue += chars[c];
             newCont++;
             if (c + 1 == cursor.selectionStart){
@@ -899,22 +900,28 @@ function G_Text( form, element, name)
       return {result: newValue, cursor: cursor};
     }
     else{
-      return {result: newValue, cursor: {selectionStart: newCursor, selectionEnd: newCursor}}; 
+      return {result: newValue, cursor: {selectionStart: newCursor, selectionEnd: newCursor}};
     }
   };
 
   this.replaceMask = function(value, cursor, mask, type, comma){
     switch(type){
-      case 'currency': case 'percentage':
+      case 'currency':
+      case 'percentage':
         dir = 'reverse';
         break;
       default:
-        dir = 'forward';
+        if (me.mType == 'text' && me.validate == 'Real') {
+          dir = 'reverse';
+        } else {
+          dir = 'forward';
+        }
+
         break;
     }
     return G.ApplyMask(value, mask, cursor, dir, comma);
   };
-  
+
   this.replaceMasks= function(newValue, newCursor){
     masks = me.mask;
     aMasks = masks.split(';');
@@ -923,7 +930,9 @@ function G_Text( form, element, name)
       mask = aMasks[m];
       type = me.mType;
       comma_sep = me.comma_separator;
+      comma_sep = (comma_sep == '') ? '.' : comma_sep;
       aResults.push(me.replaceMask(newValue, newCursor, mask, type, comma_sep));
+      break;
     }
     minIndex = 0;
     minValue = aResults[0].result;
@@ -937,12 +946,12 @@ function G_Text( form, element, name)
     }
     return aResults[minIndex];
   };
-  
+
   this.getCleanMask = function(){
     aMask = me.mask.split('');
     maskOut = '';
     for(i=0; i < aMask.length; i++){
-      if (me.mType == 'currency' || me.mType == 'percentage'){
+      if (me.mType == 'currency' || me.mType == 'percentage' || (me.mType == 'text' && me.validate == 'Real')){
         switch(aMask[i]){
           case '0': case '#':
             maskOut += aMask[i];
@@ -962,7 +971,7 @@ function G_Text( form, element, name)
     }
     return maskOut;
   }
-  
+
   this.applyMask = function(keyCode){
     if (me.mask != ''){
       dataWOMask = me.removeMask();
@@ -978,11 +987,9 @@ function G_Text( form, element, name)
           action = 'none';
           break;
         case 8:
-          
           newValue  = currentValue.substring(0, cursorStart - 1);
           newValue += currentValue.substring(cursorEnd, currentValue.length);
           newCursor = cursorStart - 1;
-          //alert('aaa' + newValue + ' , ' + newCursor );
           break;
         case 46:
           newValue  = currentValue.substring(0, cursorStart);
@@ -1010,6 +1017,30 @@ function G_Text( form, element, name)
           }
           action = 'move';
           break;
+        case 45:
+          if (me.mType == 'currency') {
+            newValue = currentValue.substring(0, currentValue.length).split('');
+            for (var numI = 0; newValue.length > numI; numI++) {
+              var campVal = newValue[numI];
+              if ((typeof(campVal) === 'number' || typeof(campVal) === 'string') && (campVal !== '') && (!isNaN(campVal))) {
+                newValue = currentValue.substring(0, numI-1);
+                newValue += '-' + currentValue.substring(numI);
+                numI = newValue.length + 1;
+                newCursor = cursorStart+1;
+              } else {
+                if (campVal == '-') {
+                  newValue = currentValue.substring(0, numI-1);
+                  newValue += currentValue.substring(numI+1);
+                  newCursor = cursorStart-1;
+                  numI = newValue.length + 1;
+                }
+              }
+            }
+            if (newValue.join) {
+              newValue = newValue.join('');
+            }
+          }
+          break;
         default:
           newKey = String.fromCharCode(keyCode);
           newValue  = currentValue.substring(0, cursorStart);
@@ -1028,14 +1059,28 @@ function G_Text( form, element, name)
         if (testData.indexOf(me.comma_separator) == -1){
           aux = cleanMask.split('_');
           tamMask = aux[0].length;
-          sw = true; 
+          sw = true;
         }
         if (tamData >= tamMask){
-          if (sw && !swPeriod && testData.indexOf(me.comma_separator) == -1){
-            action = 'none';  
+          var minusExi;
+          for (var numI = 0; newValue.length > numI; numI++) {
+            var campVal = newValue[numI];
+            if ((typeof(campVal) === 'number' || typeof(campVal) === 'string') && (campVal !== '') && (!isNaN(campVal))) {
+              minusExi = false;
+            } else {
+              if (campVal == '-') {
+                minusExi = true;
+                numI = newValue.length + 1;
+              }
+            }
           }
-          if (!sw) action = 'none';
-          
+
+          if (!(keyCode == 45 || (minusExi && tamMask >= tamData))) {
+            if (sw && !swPeriod && testData.indexOf(me.comma_separator) == -1){
+              action = 'none';
+            }
+            if (!sw) action = 'none';
+          }
         }
       }
       switch(action){
@@ -1062,6 +1107,7 @@ function G_Text( form, element, name)
           newCursor = cursorStart - 1;
           break;
         case 46:
+        case 45:
           newValue  = currentValue.substring(0, cursorStart);
           newValue += currentValue.substring(cursorEnd + 1, currentValue.length);
           newCursor = cursorStart;
@@ -1090,7 +1136,7 @@ function G_Text( form, element, name)
           break;
       }
       if (newCursor < 0)  newCursor = 0;
-      
+
       me.element.value = newValue;
       me.setSelectionRange(newCursor,newCursor);
     }
@@ -1103,7 +1149,7 @@ function G_Text( form, element, name)
       me.element.dispatchEvent(evObj);
     }*/
   };
-  
+
   this.sendOnChange = function(){
     if (me.element.fireEvent){
       me.element.fireEvent("onchange");
@@ -1113,19 +1159,23 @@ function G_Text( form, element, name)
       me.element.dispatchEvent(evObj);
     }
   };
-                          
+
   this.handleKeyDown = function(event){
     if (me.element.readOnly) {
       return true;
     }
     //THIS FUNCTION HANDLE BACKSPACE AND DELETE KEYS
     if (me.validate == 'Any' && me.mask == '') return true;
-    //pressKey = event.keyCode;
-    pressKey = window.event ? window.event.keyCode : event.which;
+
+    var pressKey = (window.event)? window.event.keyCode : event.which;
+
     switch(pressKey){
       case 8: case 46:  //BACKSPACE OR DELETE
       case 35: case 36: //HOME OR END
       case 37: case 38: case 39: case 40: // ARROW KEYS
+        if (me.validate == 'NodeName' && ((pressKey == 8) || (pressKey == 46))) {
+          return true;
+        }
         me.applyMask(pressKey);
         if ((pressKey == 8 || pressKey == 46) && (me.validate != 'Login' && me.validate != 'NodeName')) me.sendOnChange();
         me.checkBrowser();
@@ -1133,15 +1183,15 @@ function G_Text( form, element, name)
           event.returnValue = false;
         }
         else{
-          return false; 
+          return false;
         }
         break;
       case 9:
         return true;
         break;
       default:
-        if ( (me.mType == 'currency') || (me.mType == 'percentage') || (me.validate == 'Real') || (me.validate == 'Int') ) {
-          if ( (pressKey >= 48 && pressKey <= 57) || (pressKey == 109 || pressKey == 190 || pressKey == 188) ) {
+        if (me.mType == 'date' || me.mType == 'currency' || me.mType == 'percentage' || me.validate == 'Real' || me.validate == 'Int') {
+          if ((48 <= pressKey && pressKey <= 57) || (pressKey == 109 || pressKey == 190 || pressKey == 188 || pressKey == 189) || (96 <= pressKey && pressKey <= 111)) {
             return true;
           }
           else {
@@ -1152,63 +1202,91 @@ function G_Text( form, element, name)
     }
     return true;
   };
-  
+
   this.handleKeyPress = function(event){
     if (me.element.readOnly) {
       return true;
     }
-    if (( me.mType != 'currency' && me.mType != 'percentage') && (me.element.value.length > me.element.maxLength - 1)) {
+
+    if ((me.mType != 'currency' && me.mType != 'percentage' && me.mType != 'date') && (me.element.value.length > me.element.maxLength - 1)) {
       return true;
     }
+
     if (me.validate == 'Any' && me.mask == '') return true;
+
     //THIS FUNCTION HANDLE ALL KEYS EXCEPT BACKSPACE AND DELETE
     //keyCode = event.keyCode;
-    keyCode = window.event ? window.event.keyCode : event.which;
+    var keyCode = (window.event)? window.event.keyCode : event.which;
+
     if (navigator.userAgent.indexOf('MSIE') != -1) { // Microsoft Internet Explorer
       if (keyCode == 0) return true;
     }
-    switch(keyCode){
-      case 9: case 13:
-        return true;
-        break;
+
+    switch (keyCode) {
+        case 9:
+        case 13:
+            return true;
+            break;
     }
-    validShiftKey = ( (me.mType == 'currency') || (me.mType == 'percentage')
-                    || (me.validate == 'Real') || (me.validate == 'Int') )
-                    ? false
-                    : true;
+
+    var swShiftKey = (
+        (me.mType == 'currency') || (me.mType == 'percentage') || (me.validate == 'Real') || (me.validate == 'Int')
+    )? false : true;
+
     if (window.event) {
-      if (window.event.altKey) return true;
-      if (window.event.ctrlKey) return true;
-      if (window.event.shiftKey) return validShiftKey;
+        if (window.event.altKey) {
+            return true;
+        }
+
+        if (window.event.ctrlKey) {
+            return true;
+        }
+
+        //Commented for accept characters with AZERTY keyboard
+        //if (window.event.shiftKey) {
+        //    return swShiftKey;
+        //}
+    } else {
+        if (event.altKey) {
+            return true;
+        }
+
+        if (event.ctrlKey) {
+            return true;
+        }
+
+        //Commented for accept characters with AZERTY keyboard
+        //if (event.shiftKey) {
+        //    return swShiftKey;
+        //}
     }
-    else {
-      if (event.altKey) return true;
-      if (event.ctrlKey) return true;
-      if (event.shiftKey) return validShiftKey;
-    }
-    
+
     me.checkBrowser();
-//    if ((me.browser.name == 'Firefox') && (keyCode == 8 || keyCode == 46)){
-    if ((me.browser.name == 'Firefox') && (keyCode == 8 )){
+
+    //if ((me.browser.name == 'Firefox') && (keyCode == 8 || keyCode == 46)) {
+    if ((me.browser.name == 'Firefox') && (keyCode == 8) && (me.validate != 'NodeName')) {
       if (me.browser.name == 'Chrome' || me.browser.name == 'Safari'){
         event.returnValue = false;
       }
       else{
-        return false; 
+        return false;
       }
     }
     else{
       //pressKey = window.event ? event.keyCode : event.which;
-      pressKey = window.event ? window.event.keyCode : event.which;
+      var pressKey = (window.event)? window.event.keyCode : event.which;
+
       if (me.mType == 'date') me.validate = 'Int';
+
       keyValid = true;
       updateOnChange = true;
-      switch(me.validate){
+
+      switch (me.validate) {
         case 'Any':
           keyValid = true;
           break;
         case 'Int':
-          patron = /[0-9]/;
+          patron = /[0-9\-]/;
           key = String.fromCharCode(pressKey);
           keyValid = patron.test(key);
           break;
@@ -1219,16 +1297,16 @@ function G_Text( form, element, name)
           else {
             patron = /[0-9,\.]/;
           }
-          
+
           key = String.fromCharCode(pressKey);
           keyValid = patron.test(key);
           keyValid = keyValid || (pressKey == 45);
 
-          if (typeof me.comma_separator != 'undefined') { 
+          if (typeof me.comma_separator != 'undefined') {
             if (me.comma_separator == '.'){
               if (me.element.value.indexOf('.')==-1){
-                keyValid = keyValid || (pressKey == 46);  
-              } 
+                keyValid = keyValid || (pressKey == 46);
+              }
             }
             else{
               if (me.element.value.indexOf(',')==-1){
@@ -1238,12 +1316,12 @@ function G_Text( form, element, name)
           }
           break;
         case 'Alpha':
-          patron =/[a-zA-Z]/; // \sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;  
+          patron =/[a-zA-Z]/; // \sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;
           key = String.fromCharCode(pressKey);
           keyValid = patron.test(key);
           break;
         case 'AlphaNum':
-          patron =/[a-zA-Z0-9\sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;  
+          patron =/[a-zA-Z0-9\sÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â©ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚ÂºÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¤ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¯ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¶ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¼ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¹Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â°ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¾ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¹ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¯Ãƒâ€šÃ‚Â¿Ãƒâ€šÃ‚Â½ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ]/;
           key = String.fromCharCode(pressKey);
           keyValid = patron.test(key);
           break;
@@ -1255,12 +1333,16 @@ function G_Text( form, element, name)
               break;
             }
           }
-          var k=new leimnud.module.validator({
-            valid :['Login'],
-            key   : (window.event)? window.event : event,
-            lang  :(typeof(me.language)!=='undefined')? me.language:"en"
-          });
-          keyValid = k.result();
+          if ((keyCode == 8) && (me.validate == 'NodeName')) {
+            keyValid = true;
+          } else {
+            var k=new leimnud.module.validator({
+              valid :['Login'],
+              key   : (window.event)? window.event : event,
+              lang  :(typeof(me.language)!=='undefined')? me.language:"en"
+            });
+            keyValid = k.result();
+          }
           break;
         default:
           var k = new leimnud.module.validator({
@@ -1269,29 +1351,32 @@ function G_Text( form, element, name)
             lang  :(typeof(me.language)!=='undefined')? me.language:"en"
           });
           keyValid = k.result();
-          
+
           break;
       }
+
       if (keyValid){
         //APPLY MASK
+        if ((me.validate == "Login" || me.validate == "NodeName") && me.mask == "") return true;
         if (pressKey == 46){
           me.applyMask(256); //This code send [.] period to the mask
         }
         else{
           me.applyMask(pressKey);
         }
+
         if (updateOnChange) me.sendOnChange();
       }
-      
+
       if (me.browser.name == 'Firefox') {
         if (keyCode == 0) return true;
       }
-      
+
       if (me.browser.name == 'Chrome' || me.browser.name == 'Safari'){
         event.returnValue = false;
       }
       else{
-        return false; 
+        return false;
       }
     }
   };
@@ -1301,10 +1386,95 @@ function G_Text( form, element, name)
     {
       var evt = event || window.event;
       var keyPressed = evt.which || evt.keyCode;
-      me.putFormatNumber(keyPressed);
-        
+      //me.putFormatNumber(keyPressed);
+
+      if ( (me.mask != '') &&  (  (me.mType == 'currency') || (me.mType == 'percentage') ||
+                                  ((me.validate == "Real") && (me.mType == 'text')) ) &&
+          (me.mask.indexOf('-')==-1) && (me.element.value != '') ) {
+
+        masks = me.mask;
+        aMasks = masks.split(';');
+        for(m=0; m < aMasks.length; m++) {
+          var separatorField = ",";
+          if (typeof(me.comma_separator) != 'undefined') {
+            separatorField = me.comma_separator;
+          } else {
+            txtRealMask = aMasks[m].split('');
+            p = txtRealMask.length - 1;
+            for ( ; p >= 0; p--) {
+              if (txtRealMask[p] != '#' && txtRealMask[p] != '%' && txtRealMask[p] != ' ') {
+                separatorField = txtRealMask[p];
+                break;
+              }
+            }
+          }
+
+          var partsMaskSep = aMasks[m].split(separatorField);
+          if (partsMaskSep.length == 2) {
+            var countDecimal = 0;
+            txtRealMask = aMasks[m].split('');
+            p = txtRealMask.length - 1;
+            for ( ; p >= 0; p--) {
+              if (txtRealMask[p] == '#') {
+                countDecimal++;
+              }
+              if (txtRealMask[p] == separatorField) {
+                break;
+              }
+            }
+
+            var decimalString = '';
+            var pluginAfter = '';
+            var pluginDecimal = '';
+            var numberSet = me.element.value.split(separatorField);
+
+            if (typeof(numberSet[1]) == 'undefined') {
+              var decimalSet = '';
+              var newInt = '';
+              var flagAfter = true;
+              var newPluginDecimal = '';
+              var decimalCade = numberSet[0].split('');
+              for (p = 0; p < decimalCade.length; p++) {
+                if ((!isNaN(parseFloat(decimalCade[p])) && isFinite(decimalCade[p])) || (decimalCade[p] == ',') || (decimalCade[p] == '.') ) {
+                  newInt += decimalCade[p];
+                  flagAfter = false;
+                } else {
+                  if (flagAfter) {
+                    pluginAfter += decimalCade[p];
+                  } else {
+                    newPluginDecimal += decimalCade[p];
+                  }
+                }
+              }
+              numberSet[0] = newInt;
+              numberSet[1] = newPluginDecimal;
+            }
+
+            var decimalSet = numberSet[1];
+            var decimalCade = decimalSet.split('');
+            var countDecimalNow = 0;
+            for (p = 0; p < decimalCade.length; p++) {
+              if (!isNaN(parseFloat(decimalCade[p])) && isFinite(decimalCade[p])) {
+                countDecimalNow++;
+                decimalString += decimalCade[p];
+              } else {
+                pluginDecimal += decimalCade[p];
+              }
+            }
+
+            if(countDecimalNow < countDecimal) {
+              for(; countDecimalNow < countDecimal; countDecimalNow++) {
+                decimalString += '0';
+              }
+              me.element.value = pluginAfter + numberSet[0] + separatorField + decimalString + pluginDecimal;
+            }
+          }
+          break;
+        }
+      }
+
       if(this.validate=="Email")
-      {      
+      {
         //var pat=/^[\w\_\-\.ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
         var pat=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$/;
         if(!pat.test(this.element.value))
@@ -1314,8 +1484,8 @@ function G_Text( form, element, name)
             this.element.className="module_app_input___gray";
             return;
           }
-          else {        
-            this.element.className=this.element.className.split(" ")[0]+" FormFieldInvalid";        
+          else {
+            this.element.className=this.element.className.split(" ")[0]+" FormFieldInvalid";
           }
         }
         else
@@ -1323,7 +1493,7 @@ function G_Text( form, element, name)
           this.element.className=this.element.className.split(" ")[0]+" FormFieldValid";
         }
       }
-    
+
       if (this.strTo) {
         switch (this.strTo){
           case 'UPPER':
@@ -1334,28 +1504,24 @@ function G_Text( form, element, name)
             break;
         }
       }
-      if (this.validate == 'NodeName') {
-        var pat = /^[a-z\_](.)[a-z\d\_]{1,255}$/i;
-        if(!pat.test(this.element.value)) {
-          this.element.value = '_' + this.element.value;
-        }
-      }
     }.extend(this);
   }
 
   if (!element) return;
+
   if (!window.event){
-    //THIS ASSIGN FUNCTIONS FOR FIREFOX/MOZILLA
-      this.element.onkeydown = this.handleKeyDown;
-      this.element.onkeypress  = this.handleKeyPress;
-      this.element.onchange = this.updateDepententFields;
+      //THIS ASSIGN FUNCTIONS FOR FIREFOX/MOZILLA
+      this.element.onkeydown  = this.handleKeyDown;
+      this.element.onkeypress = this.handleKeyPress;
+      this.element.onchange   = this.updateDepententFields;
       //this.element.onblur = this.handleOnChange;
-    }else{ 
-    //THIS ASSIGN FUNCTIONS FOR IE/CHROME
-    leimnud.event.add(this.element,'keydown',this.handleKeyDown);
-    leimnud.event.add(this.element,'keypress',this.handleKeyPress);
-    leimnud.event.add(this.element,'change',this.updateDepententFields);
+  } else {
+      //THIS ASSIGN FUNCTIONS FOR IE/CHROME
+      leimnud.event.add(this.element, 'keydown', this.handleKeyDown);
+      leimnud.event.add(this.element, 'keypress', this.handleKeyPress);
+      leimnud.event.add(this.element, 'change', this.updateDepententFields);
   }
+
   //leimnud.event.add(this.element,'change',this.updateDepententFields);
 };
 G_Text.prototype=new G_Field();
@@ -1365,7 +1531,7 @@ function G_Percentage( form, element, name )
   var me=this;
   this.parent = G_Text;
   this.parent( form, element, name);
-  this.validate = 'Int';
+  //this.validate = 'Int'; //Commented for allow enter the character '.'
   this.mType = 'percentage';
   this.mask= '###.##';
   this.comma_separator = ".";
@@ -1377,7 +1543,7 @@ function G_Currency( form, element, name )
   var me=this;
   this.parent = G_Text;
   this.parent( form, element, name);
-  //this.validate = 'Int';   //commented for allow enter the character '.'
+  //this.validate = 'Int'; //Commented for allow enter the character '.'
   this.mType = 'currency';
   this.mask= '_###,###,###,###,###;###,###,###,###,###.00';
   this.comma_separator = ".";
@@ -1417,7 +1583,7 @@ function G()
     for(r=num0.length-1;r>=0;r--) num+= num0.substr(r,1);
     return num;
   }
-   
+
   function __toMask(num, mask, cursor)
   {
     var inv=false;
@@ -1435,11 +1601,11 @@ function G()
     var newCursorPosition=cursor;
     var betterOut="";
     for(var r0=0;r0< mask.length; r0++){
-      var out="";var j=0; 
-      var loss=0;  
+      var out="";var j=0;
+      var loss=0;
       var add=0;
       var cursorPosition=cursor;var i=-1;var dayPosition=0;var mounthPosition=0;
-      var dayAnalized ='';var mounthAnalized =''; 
+      var dayAnalized ='';var mounthAnalized ='';
       var blocks={}; //Declares empty object
       for(var r=0;r< r0 ;r++) {
         var e=false;
@@ -1553,7 +1719,7 @@ function G()
           if (ok) {
             out+=e;
             i++;
-            
+
           } else {
             //loss
             loss++;
@@ -1579,7 +1745,7 @@ function G()
             r--;
           }
           break;
-          
+
         default:
           if (e===false) {
             out+='';
@@ -1589,7 +1755,7 @@ function G()
           out+=e;
           i++;
         }else {
-          
+
           //if (m==='.') alert(i.toString() +'.'+ cursor.toString());
           out+=m;
           /////here was krlos
@@ -1601,7 +1767,7 @@ function G()
                           //alert(m)
                           //out+=m;
                           //alert(m)
-                          
+
                           break
                           }*/
           //alert(m+'\n'+mask+'\n'+out+'\n'+num) }
@@ -1612,14 +1778,14 @@ function G()
       }
     }
   }
-  
+
   //Get only numbers including decimal separator
   function _getOnlyNumbers(num, _DEC){
     var _num = '';
     _aNum = num.split('');
     for (var d=0; d < _aNum.length; d++){
       switch(_aNum[d]){
-        case '0': case '1': case '2': case '3': case '4':
+        case '-': case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9': case _DEC:
           _num = _num + _aNum[d];
           break;
@@ -1627,7 +1793,7 @@ function G()
     }
     return _num;
   }
-  
+
   //Get only mask characters can be replaced by digits.
   function _getOnlyMask(mask, _DEC){
     var _mask='';
@@ -1663,7 +1829,7 @@ function G()
             _outM = iNum[0] + __DECIMAL_SEP + iNum[1].substr(0,iMask[1].length);
           }else{
             if (iNum[0].length > iMask[0].length){
-              _outM = iNum[0].substr(0, iMask[0].length) + __DECIMAL_SEP + iNum[1]; 
+              _outM = iNum[0].substr(0, iMask[0].length) + __DECIMAL_SEP + iNum[1];
             }
           }
         }else{ //Number has not decimal separator
@@ -1687,7 +1853,7 @@ function G()
     //alert(_outM);
     return _outM;
   }
-  
+
   //Apply a mask to a number
    this.ApplyMask = function(num, mask, cursor, dir, comma_sep){
      myOut = '';
@@ -1770,7 +1936,7 @@ function G()
             cNum = aNum[1];
           }
           _dout = '';
-        
+
           pMask = dMask.split('');
           pNum = dNum.split('');
           for (p=0; p < pMask.length; p++){
@@ -1787,7 +1953,7 @@ function G()
                     _dout += pMask[p];
                   }
                 }else{
-                
+
                 }
                 break;
               default:
@@ -1810,14 +1976,22 @@ function G()
                 break;
               case ',': case '.':
                 if (pMask[p] != __DECIMAL_SEP){
-                  if (pNum.length > 0){
+                  if (pNum.length > 0 && pNum[0] != '-'){
                     _cout += pMask[p];
                   }
                 }
                 break;
               default:
-                 _cout += pMask[p];
+                if (pNum.length > 0 && pNum[0] == '-') {
+                  key = pNum.shift();
+                  _cout += key;
+                }
+                _cout += pMask[p];
             }
+          }
+          if (pNum.length > 0 && pNum[0] == '-') {
+            key = pNum.shift();
+            _cout += key;
           }
           if (sw_c && sw_d){
             myOut = _dout + __DECIMAL_SEP + _cout;
@@ -1831,7 +2005,7 @@ function G()
         if (cursor == 0){
           for(l=0; l < aOut.length; l++){
             switch(aOut[l]){
-              case '0': case '1': case '2': case '3': case '4': 
+              case '0': case '1': case '2': case '3': case '4':
               case '5': case '6': case '7': case '8': case '9':
               case __DECIMAL_SEP:
                 myCursor = l;
@@ -1843,7 +2017,7 @@ function G()
         else if(cursor == num.length){
           for(l=0; l < aOut.length; l++){
             switch(aOut[l]){
-              case '0': case '1': case '2': case '3': case '4': 
+              case '0': case '1': case '2': case '3': case '4':
               case '5': case '6': case '7': case '8': case '9':
               case __DECIMAL_SEP:
                 last = l;
@@ -1868,7 +2042,7 @@ function G()
           }
           myCursor = cursor + offset;
         }
-        
+
         break;
      }
      //myCursor += 1;
@@ -1953,7 +2127,7 @@ function G()
           cNum = aNum[1];
         }
         _dout = '';
-        
+
         pMask = dMask.split('');
         pNum = dNum.split('');
         for (p=0; p < pMask.length; p++){
@@ -1970,7 +2144,7 @@ function G()
                   _dout += pMask[p];
                 }
               }else{
-                
+
               }
               break;
             default:
@@ -2018,7 +2192,7 @@ function G()
       'cursor': myCursor
     };
   };
-  
+
   //Manage Multiple Mask and Integer/Real Number restrictions
   this.toMask = function(num, mask, cursor, direction){
     if (mask==='') return {
@@ -2029,36 +2203,24 @@ function G()
     var result = [];
     var subMasks=mask.split(';');
     for(var r=0; r<subMasks.length; r++) {
-      typedate = mask.indexOf("#");  //if typedate=='0' is current, else typedate=='-1' is date      
+      typedate = mask.indexOf("#");  //if typedate=='0' is current, else typedate=='-1' is date
       if ((direction == 'normal')&&(typedate=='0'))
         result[r]=__toMask(num, subMasks[r], cursor);
-      else 
+      else
         result[r]=_ApplyMask(num, subMasks[r], cursor, direction);
     }
     var betterResult=0;
     for(r=1; r<subMasks.length; r++) {
       if (result[r].value<result[betterResult].value) betterResult=r;
     }
-    return result[betterResult]; 
+    return result[betterResult];
  };
-  
+
   //Gets number without mask
-  this.getValue = function(masked_num){
-    var __DECIMAL_SEP = '.';
-    var xNum = masked_num.split('');
-    _num = '';
-    for (u=0; u < xNum.length; u++){
-      switch(xNum[u]){
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9': case __DECIMAL_SEP:
-          _num += xNum[u];
-          break;
-      }
-    }
-    return _num;
+  this.getValue = function (elem) {
+      return getNumericValue(elem.value(), ((typeof elem.comma_separator != "undefined")? elem.comma_separator : ""));
   };
-  
-  
+
   //DEPRECATED
   this.toMask2 = function (num, mask, cursor)
   {
@@ -2078,7 +2240,7 @@ function G()
     }
     return result[betterResult];
   };
-  
+
   //DEPRECATED
   this.cleanMask = function (num, mask, cursor)
   {
@@ -2123,7 +2285,7 @@ function G()
         }
     }
   };
-  
+
   /*BLINK EFECT*/
   this.blinked=[];
   this.blinkedt0=[];
@@ -2293,7 +2455,7 @@ function showDatePicker(ev, formId, idName, value, min, max  ) {
         modal:true
       }
   };
-  
+
   datePickerPanel.setStyle={
       containerWindow:{
         borderWidth:0
@@ -2302,7 +2464,7 @@ function showDatePicker(ev, formId, idName, value, min, max  ) {
   datePickerPanel.make();
   datePickerPanel.idName = idName;
   datePickerPanel.formId = formId;
-  
+
   var sUrl = "/controls/calendar.php?v="+value+"&d="+value+"&min="+min+"&max="+max;
   var r = new leimnud.module.rpc.xmlhttp({
     url: sUrl
@@ -2314,13 +2476,13 @@ function showDatePicker(ev, formId, idName, value, min, max  ) {
     args:r
   });
   r.make();
-  
+
 }
 
 function moveDatePicker( n_datetime ) {
   var dtmin_value = document.getElementById ( 'dtmin_value' );
   var dtmax_value = document.getElementById ( 'dtmax_value' );
-  
+
   var sUrl = "/controls/calendar.php?d="+n_datetime + '&min='+dtmin_value.value + '&max='+dtmax_value.value;
   var r = new leimnud.module.rpc.xmlhttp({
     url:sUrl
@@ -2355,7 +2517,7 @@ function getRow( name ){
     if (typeof(name)==='string'){
       element = getField(name);
       /** Set to hide/show of objects "checkgroup" and "radiogroup"
-                @author: Hector Cortez 
+                @author: Hector Cortez
        */
       if(element == null){
         aElements = document.getElementsByName('form['+ name +'][]');
@@ -2363,10 +2525,10 @@ function getRow( name ){
           aElements = document.getElementsByName('form['+ name +']');
         if( aElements.length ){
           element = aElements[aElements.length-1];
-        } else 
+        } else
           element = null;
       }
-    } 
+    }
     if( element != null){
       while ( element.tagName !== 'TR' ) {
         element=element.parentNode;
@@ -2378,7 +2540,7 @@ function getRow( name ){
   } catch(e){
     alert(e);
   }
-  
+
 }
 var getRowById=getRow;
 
@@ -2394,19 +2556,19 @@ function showRow( element ){
   var row=getRow(element);
   requiredFields = [];
   sRequiredFields = document.getElementById('DynaformRequiredFields').value.replace(/%27/gi, '"');
-  
+
   fields = new String(sRequiredFields);
   fields = stripslashes(fields);
   requiredFieldsList = eval(fields);
-  
+
   for(i=0; i<requiredFieldsList.length; i++){
     requiredFields[i] = requiredFieldsList[i].name;
   }
-  
+
   if ( requiredFields.inArray(element) ) {
     enableRequiredById(element);
   }
-  
+
   if (row) row.style.display='';
   delete row;
 }
@@ -2436,12 +2598,14 @@ function contractSubtitle( subTitle ){
   }
 }
 function expandSubtitle( subTitle ){
-  subTitle=getRow(subTitle);
-  var c=subTitle.cells[0].className;
-  var a=subTitle.rowIndex;
-  var t=subTitle.parentNode;
-  for(var i=a+1,m=t.rows.length;i<m;i++){
-    if (t.rows[i].cells.length==1) break;
+  subTitle = getRow(subTitle);
+  var c = subTitle.cells[0].className;
+  var a = subTitle.rowIndex;
+  var t = subTitle.parentNode;
+  for (var i=a+1,m=t.rows.length; i<m; i++) {
+    if (t.rows[i].cells.length==1) {
+      break;
+    }
     t.rows[i].style.display='';
     var aAux = getControlsInTheRow(t.rows[i]);
     for (var j = 0; j < aAux.length; j++) {
@@ -2449,8 +2613,8 @@ function expandSubtitle( subTitle ){
     }
   }
 }
-function contractExpandSubtitle(subTitle){
-  subTitle=getRow(subTitle);
+function contractExpandSubtitle(subTitleName){
+  subTitle=getRow(subTitleName);
   var c=subTitle.cells[0].className;
   var a=subTitle.rowIndex;
   var t=subTitle.parentNode;
@@ -2461,8 +2625,8 @@ function contractExpandSubtitle(subTitle){
       contracted=true;
     }
   }
-  if (contracted) expandSubtitle(subTitle);
-  else contractSubtitle(subTitle);
+  if (contracted) expandSubtitle(subTitleName);
+  else contractSubtitle(subTitleName);
 }
 
 var getControlsInTheRow = function(oRow) {
@@ -2501,7 +2665,7 @@ var notValidateThisFields = [];
  */
 
 function getElementsByClassNameCrossBrowser(searchClass,node,tag) {
-  
+
   var classElements = new Array();
   if ( node == null )
     node = document;
@@ -2531,7 +2695,7 @@ function getElementsByClassNameCrossBrowser(searchClass,node,tag) {
  *
  **/
 var validateGridForms = function(invalidFields){
-  
+
   grids   = getElementsByClassNameCrossBrowser("grid",document,"div");
   Tlabels = getElementsByClassNameCrossBrowser("tableGrid",document,"table");
   // grids = getElementsByClass("grid",document,"div");
@@ -2547,11 +2711,10 @@ var validateGridForms = function(invalidFields){
   }
 
   for(j=0; j<grids.length; j++){
-    
-    // check all the input fields in the grid
+
     fields = grids[j].getElementsByTagName('input');
-    // labels = ;
     for(i=0; i<fields.length; i++){
+      var vtext = new input(fields[i]);
       if (fields[i].getAttribute("pm:required")=="1"&&fields[i].value==''){
         $label = fields[i].name.split("[");
         $labelPM = fields[i].getAttribute("pm:label");
@@ -2561,54 +2724,83 @@ var validateGridForms = function(invalidFields){
           $fieldName = $labelPM + " " + $label[2].split("]")[0];
         }
         fieldGridName = $label[1] + "[" + $label[2] + "[" + $label[3].split("]")[0];
-        //$fieldName = labels[i].innerHTML.replace('*','') + " " + $label[2].split("]")[0];
-        
-        if (!notValidateThisFields.inArray(fieldGridName))
+
+        if (!notValidateThisFields.inArray(fieldGridName)) {
           invalidFields.push($fieldName);
+        }
+
+        vtext.failed();
+      } else {
+        vtext.passed();
       }
     }
-    
+
     textAreas = grids[j].getElementsByTagName('textarea');
     for(i=0; i<textAreas.length; i++){
+      var vtext = new input(textAreas[i]);
       if (textAreas[i].getAttribute("pm:required")=="1"&&textAreas[i].value==''){
         $label = textAreas[i].name.split("[");
-        $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
+        $labelPM = textAreas[i].getAttribute("pm:label");
+        if ($labelPM == '' || $labelPM == null){
+          $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
+        }else{
+          $fieldName = $labelPM + " " + $label[2].split("]")[0];
+        }
         fieldGridName = $label[1] + "[" + $label[2] + "[" + $label[3].split("]")[0];
-        if (!notValidateThisFields.inArray(fieldGridName))
+
+        if (!notValidateThisFields.inArray(fieldGridName)) {
           invalidFields.push($fieldName);
+        }
+
+        vtext.failed();
+      } else {
+        vtext.passed();
       }
     }
-    
+
     dropdowns = grids[j].getElementsByTagName('select');
     for(i=0; i<dropdowns.length; i++){
+      var vtext = new input(dropdowns[i]);
+
       if (dropdowns[i].getAttribute("pm:required")=="1"&&dropdowns[i].value==''){
         $label = dropdowns[i].name.split("[");
-        $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
+        $labelPM = dropdowns[i].getAttribute("pm:label");
+        if ($labelPM == '' || $labelPM == null){
+          $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
+        }else{
+          $fieldName = $labelPM + " " + $label[2].split("]")[0];
+        }
         fieldGridName = $label[1] + "[" + $label[2] + "[" + $label[3].split("]")[0];
-        if (!notValidateThisFields.inArray(fieldGridName))
+
+        if (!notValidateThisFields.inArray(fieldGridName)) {
           invalidFields.push($fieldName);
+        }
+
+        vtext.failed();
+      } else {
+        vtext.passed();
       }
     }
   }
-  
+
   return (invalidFields);
 };
 
 /**
- * 
+ *
  * This function validates via javascript
  * the required fields in the Json array in the form tag of a dynaform
  * now the required fields in a grid have a "required" atribute set in 1
  * @param String sRequiredFields
- * 
+ *
  **/
 
 var validateForm = function(sRequiredFields) {
   /**
-   *  replacing the %27 code by " character (if exists), this solve the problem that " broke the properties definition into a html 
+   *  replacing the %27 code by " character (if exists), this solve the problem that " broke the properties definition into a html
    *  i.ei <form onsubmit="myaction(MyjsString)" ...   with var MyjsString = "some string that is into a variable, so this broke the html";
    */
-  
+
   if( typeof(sRequiredFields) != 'object' || sRequiredFields.indexOf("%27") > 0 ){
     sRequiredFields = sRequiredFields.replace(/%27/gi, '"');
   }
@@ -2616,36 +2808,35 @@ var validateForm = function(sRequiredFields) {
     sRequiredFields = sRequiredFields.replace(/%39/gi, "'");
   }
   aRequiredFields = eval(sRequiredFields);
-  
+
   var sMessage = '';
-  var invalid_fields = Array();
-  
+  var invalid_fields   = Array();
   var fielEmailInvalid = Array();
-  
+
       for (var i = 0; i < aRequiredFields.length; i++) {
         aRequiredFields[i].label=(aRequiredFields[i].label=='')?aRequiredFields[i].name:aRequiredFields[i].label;
-        
+
         if (!notValidateThisFields.inArray(aRequiredFields[i].name)) {
-          
+
           if (typeof aRequiredFields[i].required != 'undefined'){
             required = aRequiredFields[i].required;
           }
           else {
             required = 1;
           }
-            
+
           if (typeof aRequiredFields[i].validate != 'undefined') {
             validate = aRequiredFields[i].validate;
           }
           else {
             validate = '';
           }
-    
+
           if(required == 1)
           {
             switch(aRequiredFields[i].type) {
               case 'suggest':
-                var vtext1 = new input(getField(aRequiredFields[i].name+'_suggest'));
+                var vtext1 = new input(getField(aRequiredFields[i].name+'_label'));
                 if(getField(aRequiredFields[i].name).value==''){
                   invalid_fields.push(aRequiredFields[i].label);
                   vtext1.failed();
@@ -2663,7 +2854,7 @@ var validateForm = function(sRequiredFields) {
                     vtext.passed();
                   }
                 break;
-                
+
               case 'dropdown':
                 var vtext = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2673,9 +2864,9 @@ var validateForm = function(sRequiredFields) {
                   vtext.passed();
                 }
                 break;
-                
+
               case 'textarea':
-                
+
                 var vtext = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
                   invalid_fields.push(aRequiredFields[i].label);
@@ -2683,9 +2874,9 @@ var validateForm = function(sRequiredFields) {
                 } else {
                   vtext.passed();
                 }
-               
+
               break;
-                
+
               case 'password':
                 var vpass = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2695,7 +2886,7 @@ var validateForm = function(sRequiredFields) {
                   vpass.passed();
                 }
                 break;
-                
+
               case 'currency':
                 var vcurr = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2705,7 +2896,7 @@ var validateForm = function(sRequiredFields) {
                   vcurr.passed();
                 }
               break;
-                
+
               case 'percentage':
                 var vper = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2715,7 +2906,7 @@ var validateForm = function(sRequiredFields) {
                   vper.passed();
                 }
               break;
-                
+
               case 'yesno':
                 var vtext = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2725,7 +2916,7 @@ var validateForm = function(sRequiredFields) {
                   vtext.passed();
                 }
               break;
-                
+
               case 'date':
                 var vtext = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2735,7 +2926,7 @@ var validateForm = function(sRequiredFields) {
                   vtext.passed();
                 }
               break;
-                
+
               case 'file':
                 var vtext = new input(getField(aRequiredFields[i].name));
                 if(getField(aRequiredFields[i].name).value==''){
@@ -2745,7 +2936,7 @@ var validateForm = function(sRequiredFields) {
                   vtext.passed();
                 }
               break;
-                
+
               case 'listbox':
                 var oAux = getField(aRequiredFields[i].name);
                 var bOneSelected = false;
@@ -2758,7 +2949,7 @@ var validateForm = function(sRequiredFields) {
                 if(bOneSelected == false)
                   invalid_fields.push(aRequiredFields[i].label);
               break;
-                
+
               case 'radiogroup':
                 var x=aRequiredFields[i].name;
                 var oAux = document.getElementsByName('form['+ x +']');
@@ -2770,12 +2961,12 @@ var validateForm = function(sRequiredFields) {
                     k = oAux.length;
                   }
                 }
-                
+
                 if(bOneChecked == false)
                   invalid_fields.push(aRequiredFields[i].label);
-                
+
               break;
-                
+
               case 'checkgroup':
                 var bOneChecked = false;
                 var aAux = document.getElementsByName('form[' + aRequiredFields[i].name + '][]');
@@ -2788,85 +2979,109 @@ var validateForm = function(sRequiredFields) {
                 if(!bOneChecked) {
                   invalid_fields.push(aRequiredFields[i].label);
                 }
-                
+
               break;
             }
-          }          
-          
+          }
+
           if(validate != '') {
             //validate_fields
-              switch(aRequiredFields[i].type) {               
+              switch(aRequiredFields[i].type) {
                 case 'suggest':
                 break;
-                
+
                 case 'text':
-                
-                  if(validate=="Email") { 
-                    var vtext = new input(getField(aRequiredFields[i].name)); 
+
+                  if(validate=="Email") {
+                    var vtext = new input(getField(aRequiredFields[i].name));
                       if(getField(aRequiredFields[i].name).value!='') {
-                        var email = getField(aRequiredFields[i].name);              
+                        var email = getField(aRequiredFields[i].name);
                         //var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                         //var filter = /^[\w\_\-\.ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
                         var filter =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                          if (!filter.test(email.value)&&email.value!="") {                  
-                            fielEmailInvalid.push(aRequiredFields[i].label);                                        
+                          if (!filter.test(email.value)&&email.value!="") {
+                            fielEmailInvalid.push(aRequiredFields[i].label);
                             vtext.failed();
-                            email.focus();                                        
+                            email.focus();
                           }
                           else {
-                            vtext.passed();                  
-                          }        
-                      } 
+                            vtext.passed();
+                          }
+                      }
                   }
                   break;
-              }              
+              }
           }
         }
       }
+
   // call added by gustavo - cruz, gustavo-at-colosa.com validate grid forms
   invalid_fields = validateGridForms(invalid_fields);
-  
+
   if (invalid_fields.length > 0 ||fielEmailInvalid.length> 0) {
     //alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
-   
-   
-   
-    // loop for invalid_fields    
+
+
+
+    // loop for invalid_fields
     for(j=0; j<invalid_fields.length; j++){
       sMessage += (j > 0)? ', ': '';
       sMessage += invalid_fields[j];
     }
-    
+
     // Loop for invalid_emails
     var emailInvalidMessage = "";
     for(j=0; j<fielEmailInvalid.length; j++){
       emailInvalidMessage += (j > 0)? ', ': '';
       emailInvalidMessage += fielEmailInvalid[j];
     }
-    
-    
+
+
     /* new leimnud.module.app.alert().make({
             label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br/><br/>[ " + sMessage + " ]",
             width:450,
             height:140 + (parseInt(invalid_fields.length/10)*10)
         });*/
-        
+
     //!create systemMessaggeInvalid of field invalids
     var systemMessaggeInvalid = "";
-    
+
       if(invalid_fields.length > 0) {
-        systemMessaggeInvalid += "\n \n"+G_STRINGS.ID_REQUIRED_FIELDS + ": \n \n [ " + sMessage + " ]";      
+        systemMessaggeInvalid += "\n \n"+G_STRINGS.ID_REQUIRED_FIELDS + ": \n \n [ " + sMessage + " ]";
       }
 
       if(fielEmailInvalid.length > 0) {
         systemMessaggeInvalid += "\n \n" +  G_STRINGS.ID_VALIDATED_FIELDS + ": \n \n [ " + emailInvalidMessage + " ]";
-      }      
-    
-    
+      }
+
+
     alert(systemMessaggeInvalid);
     return false;
   }
   else {
+    var arrayForm = document.getElementsByTagName("form");
+
+    for (var i = 0; i <= arrayForm.length - 1; i++) {
+      var frm = arrayForm[i];
+
+      for (var i = 0; i <= frm.elements.length - 1; i++)  {
+        var elem = frm.elements[i];
+
+        if (elem.type == "checkbox" && elem.disabled && elem.checked) {
+          var id = elem.id + "_";
+
+          if (!document.getElementById(id)) {
+              var inputAux   = document.createElement("input");
+              inputAux.type  = "hidden";
+              inputAux.id    = id;
+              inputAux.name  = elem.name;
+              inputAux.value = elem.value;
+
+              frm.appendChild(inputAux);
+          }
+        }
+      }
+    }
     return true;
   }
 };
@@ -2933,12 +3148,10 @@ var saveForm = function(oObject) {
  **/
 
 var validateURL = function (url){
-  //var regexp = /https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?/;
-  if (regexp.test('https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?')){
+  var regexp = /http?s?:\/\/([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?/;
+  if (regexp.test(url)) {
     return true;
-  }
-  else
-  {
+  } else {
     return false;
   }
 };
@@ -2960,8 +3173,12 @@ var validateURL = function (url){
 
 var saveAndRedirectForm = function(oObject, oLocation) {
   saveForm(oObject);
-  if (validateURL(oLocation)){
-    document.location.href = oLocation;
+  if (validateURL(oLocation)) {
+    if (typeof(parent) != "undefined") {
+      parent.location.href = oLocation;
+    } else {
+      document.location.href = oLocation;
+    }
   }
 };
 
@@ -3002,10 +3219,21 @@ function dynaformVerifyFieldName(){
 
 function verifyFieldName1(){
   var newFieldName=fieldName.value;
+  var msj = _('DYNAFIELD_ALREADY_EXIST');
   var validatedFieldName=getField("PME_VALIDATE_NAME",fieldForm).value;
   var dField = new input(getField('PME_XMLNODE_NAME'));
-  
+
   var valid=(newFieldName!=='')&&(((newFieldName!==savedFieldName)&&(validatedFieldName===''))||((newFieldName===savedFieldName)));
+  if (newFieldName.length == 0) {
+    valid = false;
+    msj   = _('DYNAFIELD_EMPTY');
+  }
+
+  if (!(isNaN(parseInt(newFieldName.substr(0,1))))) {
+    valid = false;
+    msj   = _('DYNAFIELD_NODENAME_NUMBER');
+  }
+
   if (valid){
     dField.passed();
     getField("PME_ACCEPT",fieldForm).disabled=false;
@@ -3013,7 +3241,7 @@ function verifyFieldName1(){
     getField("PME_ACCEPT",fieldForm).disabled=true;
     dField.failed();
     new leimnud.module.app.alert().make({
-      label: G_STRINGS.DYNAFIELD_ALREADY_EXIST
+      label: msj
     });
     dField.focus();
   }
@@ -3038,19 +3266,19 @@ function sumaformu(ee,fma,mask){
       fma=nfma;
       j++;
     }
-    
+
   }
   //without spaces in the inicio of the formula
   wos=nfma.replace(/^\s+/g,'');
   nfma=wos.replace(/\s+$/g,'');
   theelemts=nfma.split(" ");
-  
+
   objectsWithFormula[objectsWithFormula.length]= {ee:ee,fma:afma,mask:mask,theElements:theelemts};
 
   for (var i = 0; i < theelemts.length; i++) {
     leimnud.event.add(getField(theelemts[i]), 'keyup', function(key) {
       //leimnud.event.add(getField(objectsWithFormula[objectsWithFormula.length-1].theElements[i]),'keyup',function(){
-      
+
       var eventElement = key.srcElement ? key.srcElement : key.target;
       if ( typeof(this.id) == 'undefined' ) {
         myId = eventElement.id.replace("form[", "").replace("]", "");
@@ -3060,144 +3288,45 @@ function sumaformu(ee,fma,mask){
       }
 
       for(i_elements=0;i_elements < objectsWithFormula.length; i_elements++){
-        
-        
         for(i_elements2=0;i_elements2 < objectsWithFormula[i_elements].theElements.length;i_elements2++){
           if(objectsWithFormula[i_elements].theElements[i_elements2]==myId)
           {
-            
-            //calValue(afma,nfma,ee,mask);
-            
-            formula = objectsWithFormula[i_elements].fma;
-            ans = objectsWithFormula[i_elements].ee;
-            theelemts=objectsWithFormula[i_elements].theElements;
-            
-            nfk = '';
-             //to replace the field for the value and to evaluate the formula
-            var symbol = mask.replace(/[0-9.#,-_\s]/g,'');
-            for (var i=0; i < theelemts.length; i++){
-              if(!isnumberk(theelemts[i])){//alert(getField(theelemts[i]).name);
-                val = (getField(theelemts[i]).value == '')? 0 : getField(theelemts[i]).value.replace(/[$a-zA-Z\s]/g,'');
-                formula=formula.replace(theelemts[i],val);                
-              }
-            }
-            if (isnumberk(getField(theelemts['0']).value))
-              getField(theelemts['0']).value =  symbol+ ' '+getField(theelemts['0']).value;
+              var formula = objectsWithFormula[i_elements].fma;
+              var ans = objectsWithFormula[i_elements].ee;
+              var theelemts = objectsWithFormula[i_elements].theElements;
 
-            var rstop=eval(formula);
-            if(mask!=''){
-              putmask(rstop,mask,ans);
-            }else{
-              ans.value=rstop;
-            }
-            
+              //Evaluate the formula and replace the value in field
+              for (var i = 0; i <= theelemts.length - 1; i++) {
+                  var elem = getField(theelemts[i]);
+                  var elemAttribute = elementAttributesNS(elem, "pm");
+                  var elemValue = getNumericValue(elem.value, ((typeof elemAttribute.decimal_separator != "undefined")? elemAttribute.decimal_separator : ""));
+
+                  formula = formula.replace(theelemts[i], ((elemValue == "")? 0 : parseFloat(elemValue)));
+              }
+
+              var result = eval(formula);
+
+              if (mask != "") {
+                  var elemAttribute = elementAttributesNS(ans, "pm");
+
+                  putFieldNumericValue(ans, result, mask, ((typeof elemAttribute.decimal_separator != "undefined")? elemAttribute.decimal_separator : ""));
+              } else {
+                  ans.value = result;
+              }
           }
         }
-      }       
-    }); 
-  } 
-}
-
-function calValue(afma,nfma,ans,mask){
-  theelemts=nfma.split(" ");
-  //to replace the field for the value and to evaluate the formula
-  for (var i=0; i < theelemts.length; i++){
-    if(!isnumberk(theelemts[i])){//alert(getField(theelemts[i]).name);
-      if(getField(theelemts[i]).value){
-        nfk=afma.replace(theelemts[i],getField(theelemts[i]).value);
-        afma=nfk;
       }
-    }
+    });
   }
-  
-  //ans.value=eval(nfk);
-  var rstop=eval(nfk);
-  if(mask!=''){
-    putmask(rstop,mask,ans);
-  }else{
-    //alert('without mask');
-    ans.value=rstop;
-  }
-  
-}
-
-function isnumberk(texto){
-  var numberk="0123456789.";
-  var letters="abcdefghijklmnopqrstuvwxyz";
-  var i=0;
-  var sw=1;
-  
-  //for(var i=0; i<texto.length; i++){
-  while(i++ < texto.length && sw==1){
-    if (numberk.indexOf(texto.charAt(i),0)==-1){
-      sw=0;
-    }
-  }
-  return sw;
-} 
-
-
-function putmask(numb,mask,ans){
-  var nnum='';
-  var i=0;
-  var j=0;
-  
-  maskDecimal=mask.split(";");
-  if(maskDecimal.length > 1) {
-    maskDecimal=maskDecimal[1].split(".");
-  } else {
-    maskDecimal=mask.split(".");
-  }
-  numDecimal=maskDecimal[1].length;
-  
-  ans.value=numb.toFixed(numDecimal);
-  var symbol = mask.replace(/[0-9.#,-_\s]/g,'');
-  if (isnumberk(ans.value)) ans.value = symbol+' '+ans.value;
-  return;
-  var nnum='',i=0,j=0;
-  //we get the number of digits
-  cnumb=numb.toString();
-  cd = parseInt(Math.log(numb)/Math.LN10+1);
-  //now we're runing the mask and cd
-  fnb=cnumb.split(".");
-  maskp=mask.split(";");
-  mask = (maskp.length > 1)? maskp[1]:mask;
-  while(i < numb.toString().length && j < mask.length){
-    //alert(cnumb.charAt(i)+' ** '+mask.charAt(i));
-    switch(mask.charAt(j)){
-      case '#':
-        if(cnumb.charAt(i)!='.') {
-          nnum+=cnumb.charAt(i).toString();
-          i++;
-        }
-        break;
-        
-      case '.':
-        nnum+=mask.charAt(j).toString();
-        i=cd+1;
-        cd=i +4;
-        break;
-        
-      default:
-        //alert(mask.charAt(i));
-        nnum+=mask.charAt(j).toString();
-        break;
-    }
-    
-    j++;
-  }
-  
-  ans.value=nnum;
-  
 }
 
 function showRowsById(aFields){
-  
+
   for(i=0; i<aFields.length; i++){
     row = getRow(aFields[i]);
     if( row ){
       row.style.display='';
-    } 
+    }
   }
 }
 
@@ -3206,9 +3335,170 @@ function hideRowsById(aFields){
     row = getRow(aFields[i]);
     if( row ){
       row.style.display='none';
-    } 
+    }
   }
 }
 
-/* end file */
+function dateSetMask(mask) {
+  if (mask != '') {
+    mask = stringReplace("%y", "yy", mask);
+    mask = stringReplace("%Y", "yyyy", mask);
+
+    mask = stringReplace("%m", "mm", mask);
+    mask = stringReplace("%o", "mm", mask);
+
+    mask = stringReplace("%d", "dd", mask);
+    mask = stringReplace("%e", "dd", mask);
+
+    //In the function getCleanMask valid characters for an mask that does not
+    //is currency/percentage are: '0 ',' # ',' d ',' m ',' y ',' Y '.
+    //For hours, minutes and seconds replace this mask with '#'
+    mask = stringReplace("%H", "##", mask);
+    mask = stringReplace("%I", "##", mask);
+    mask = stringReplace("%k", "##", mask);
+    mask = stringReplace("%l", "##", mask);
+
+    mask = stringReplace("%M", "##", mask);
+    mask = stringReplace("%S", "##", mask);
+
+    mask = stringReplace("%j", "###", mask);
+  }
+
+  return mask;
+}
+
+function putFieldNumericValue(elem, num, mask, decimalSeparator)
+{
+    var strNum = num.toString();
+    var arrayAux = [];
+
+    var maskNumber  = "";
+    var maskDecimal = "";
+
+    if (decimalSeparator != "" && mask.indexOf(decimalSeparator) != -1) {
+        arrayAux = mask.split(decimalSeparator);
+
+        maskNumber  = arrayAux[0];
+        maskDecimal = arrayAux[1];
+    } else {
+        maskNumber  = mask;
+        maskDecimal = "";
+    }
+
+    var n = "";
+    var d = "";
+
+    if (strNum.indexOf(".") != -1) {
+        arrayAux = strNum.split(".");
+
+        n = arrayAux[0];
+        d = arrayAux[1];
+    } else {
+        n = strNum;
+        d = "";
+    }
+
+    var i = 0;
+    var cont = 0;
+    var pos = maskNumber.indexOf("#");
+
+    if (pos != -1) {
+        var mask1 = maskNumber.substring(0, pos);
+
+        var strAux = maskNumber.split("").reverse().join("");
+        cont = 0;
+        pos = -1;
+
+        for (i = 0; i <= strAux.length - 1; i++) {
+            if (strAux.charAt(i) == "#") {
+                cont = cont + 1;
+
+                if (cont == n.length) {
+                    pos = i;
+                    break;
+                }
+            }
+        }
+
+        var mask2 = "";
+
+        if (pos != -1) {
+            mask2 = strAux.substring(0, pos + 1);
+            mask2 = mask2.split("").reverse().join("");
+        } else {
+            mask1 = maskNumber;
+        }
+
+        maskNumber = mask1 + mask2;
+    }
+
+    var newNumber  = putStringMask(n, maskNumber, "reverse");
+    var newDecimal = putStringMask(d, maskDecimal, "forward");
+
+    elem.value = newNumber + decimalSeparator + newDecimal;
+}
+
+function putStringMask(str, mask, dir)
+{
+    var newStr = "";
+    var i1 = 0;
+    var i2 = 0;
+
+    if (dir == "reverse") {
+        str = str.split("").reverse().join("");
+        mask = mask.split("").reverse().join("");
+    }
+
+    for (i1 = 0; i1 <= mask.length - 1; i1++) {
+        switch (mask.charAt(i1)) {
+            case "#":
+                if (i2 <= str.length - 1) {
+                    newStr = newStr + str.charAt(i2);
+
+                    i2 = i2 + 1;
+                } else {
+                    newStr = newStr + "0";
+                }
+                break;
+
+            default:
+                newStr = newStr + mask.charAt(i1);
+                break;
+        }
+    }
+
+    if (dir == "reverse") {
+        newStr = newStr.split("").reverse().join("");
+    }
+
+    return newStr;
+}
+
+function getNumericValue(val, decimalSeparator)
+{
+    var arrayNum = val.split("");
+    var num = "";
+
+    for (var i = 0; i <= arrayNum.length - 1; i++) {
+        switch (arrayNum[i]) {
+            case "0":
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+                num = num + arrayNum[i];
+                break;
+            case decimalSeparator:
+                num = num + ".";
+                break;
+        }
+    }
+
+    return num;
+}
 

@@ -254,7 +254,7 @@ class CaseScheduler extends BaseCaseScheduler {
       $aProcessRow = $oProcess->load ( $aRow ['PRO_UID'] );
 
       $aRows [$k] = array_merge ( $aRow, array (
-          'PRO_TITLE' => $aProcessRow ['PRO_TITLE'] 
+          'PRO_TITLE' => $aProcessRow ['PRO_TITLE']
       ) );
     }
     return $aRows;
@@ -280,9 +280,9 @@ class CaseScheduler extends BaseCaseScheduler {
       $aTaskRow = $oTask->load ( $aRow ['TAS_UID'] );
 
       $aRows [$k] = array_merge ( $aRow, array (
-          'TAS_TITLE' => $aTaskRow ['TAS_TITLE'] 
+          'TAS_TITLE' => $aTaskRow ['TAS_TITLE']
       ), array (
-          'PRO_UID' => $aTaskRow ['PRO_UID'] 
+          'PRO_UID' => $aTaskRow ['PRO_UID']
       ) );
     }
 
@@ -293,7 +293,7 @@ class CaseScheduler extends BaseCaseScheduler {
 
   }
 
-  function caseSchedulerCron($date) {
+  public function caseSchedulerCron($date, &$log=array(), $cron=0) {
 
     G::LoadClass ( 'dates' );
     require_once ('classes/model/LogCasesScheduler.php');
@@ -323,6 +323,12 @@ class CaseScheduler extends BaseCaseScheduler {
     $sStartDay = '';
     $sMonths = '';
     while ( $aRow = $oDataset->getRow () ) {
+      if ($cron == 1) {
+          $arrayCron = unserialize(trim(@file_get_contents(PATH_DATA . "cron")));
+          $arrayCron["processcTimeStart"] = time();
+          @file_put_contents(PATH_DATA . "cron", serialize($arrayCron));
+      }
+
       $sSchedulerUid = $aRow ['SCH_UID'];
       $sOption = $aRow ['SCH_OPTION'];
       switch ($sOption) {
@@ -346,6 +352,8 @@ class CaseScheduler extends BaseCaseScheduler {
         case '4' :
           $aRow ['SCH_STATE'] = 'PROCESSED';
           break;
+        case '5' :
+          break;
 
       }
 
@@ -363,7 +371,7 @@ class CaseScheduler extends BaseCaseScheduler {
       if ($sActualDataHour < $dActualSysHour) {
         $_PORT = (SERVER_PORT != '80') ? ':' . SERVER_PORT : '';
 
-        $defaultEndpoint = 'http://' . SERVER_NAME . $_PORT . '/sys' . SYS_SYS . '/en/green/services/wsdl2';
+        $defaultEndpoint = 'http://' . SERVER_NAME . $_PORT . '/sys' . SYS_SYS . '/'.SYS_LANG.'/classic/services/wsdl2';
         println(" - Connecting webservice: $defaultEndpoint");
 
         $user = $aRow ["SCH_DEL_USER_NAME"];
@@ -373,8 +381,8 @@ class CaseScheduler extends BaseCaseScheduler {
 
         $client = new SoapClient ( $defaultEndpoint );
         $params = array (
-            'userid' => $user, 
-            'password' => 'md5:' . $pass 
+            'userid' => $user,
+            'password' => 'md5:' . $pass
         );
         $result = $client->__SoapCall ( 'login', array (
         $params
@@ -388,22 +396,22 @@ class CaseScheduler extends BaseCaseScheduler {
           $newRouteLog = new LogCasesScheduler ();
           $variables = Array ();
           $params = array (
-              'sessionId' => $sessionId, 
-              'processId' => $processId, 
-              'taskId' => $taskId, 
-              'variables' => $variables 
+              'sessionId' => $sessionId,
+              'processId' => $processId,
+              'taskId' => $taskId,
+              'variables' => $variables
           );
 
           $paramsLog = array (
-              'PRO_UID' => $processId, 
-              'TAS_UID' => $taskId, 
-              'SCH_UID' => $sSchedulerUid, 
-              'USR_NAME' => $user, 
-              'RESULT' => '', 
-              'EXEC_DATE' => date ( 'Y-m-d' ), 
-              'EXEC_HOUR' => date ( 'H:i:s' ), 
-              'WS_CREATE_CASE_STATUS' => '', 
-              'WS_ROUTE_CASE_STATUS' => '' 
+              'PRO_UID' => $processId,
+              'TAS_UID' => $taskId,
+              'SCH_UID' => $sSchedulerUid,
+              'USR_NAME' => $user,
+              'RESULT' => '',
+              'EXEC_DATE' => date ( 'Y-m-d' ),
+              'EXEC_HOUR' => date ( 'H:i:s' ),
+              'WS_CREATE_CASE_STATUS' => '',
+              'WS_ROUTE_CASE_STATUS' => ''
               );
 
               $sw_transfer_control_plugin=false;//This SW will be true only if a plugin is allowed to continue the action
@@ -462,13 +470,14 @@ class CaseScheduler extends BaseCaseScheduler {
 
                   $caseId = $result->caseId;
                   $caseNumber = $result->caseNumber;
+                  $log[] = $caseNumber. ' was created!, ProcessID: '.$aRow['PRO_UID'];
                   $paramsLog ['WS_CREATE_CASE_STATUS'] = "Case " . $caseNumber . " " . strip_tags ( $result->message );
                   $paramsLogResult = 'SUCCESS';
 
                   $params = array (
-                'sessionId' => $sessionId, 
-                'caseId' => $caseId, 
-                'delIndex' => "1" 
+                'sessionId' => $sessionId,
+                'caseId' => $caseId,
+                'delIndex' => "1"
                 );
                 eprint(" - Routing the case #$caseNumber..............");
                 $result = $client->__SoapCall ( 'RouteCase', array (
@@ -504,7 +513,7 @@ class CaseScheduler extends BaseCaseScheduler {
         $newCaseLog->saveLogParameters ( $paramsLog );
         $newCaseLog->save ();
 
-        if ($sOption != '4') {
+        if ($sOption != '4' && $sOption != '5') {
           $nSchLastRunTime = $sActualTime;
 
           $dEstimatedDate = $this->updateNextRun ( $sOption, $sValue, $sActualTime, $sDaysPerformTask, $sWeeks, $sStartDay, $sMonths );
@@ -520,19 +529,21 @@ class CaseScheduler extends BaseCaseScheduler {
 
           $nSchTimeNextRun = $dEstimatedDate;
           $this->updateDate ( $sSchedulerUid, $nSchTimeNextRun, $nSchLastRunTime );
-        } else {
+        } elseif($sOption != '5'){
           $Fields = $this->Load ( $sSchedulerUid );
           $Fields ['SCH_LAST_STATE'] = $aRow ['SCH_STATE'];
           $Fields ['SCH_LAST_RUN_TIME'] = $Fields ['SCH_TIME_NEXT_RUN'];
           $Fields ['SCH_STATE'] = 'PROCESSED';
           $this->Update ( $Fields );
+        } else {
+
         }
       } else if ($sActualDataHour == $dActualSysHour && $sActualDataMinutes <= $dActualSysMinutes) {
 
         $_PORT = (isset($_SERVER ['SERVER_PORT']) && $_SERVER ['SERVER_PORT'] != '80') ? ':' . $_SERVER ['SERVER_PORT'] : '';
 
-        //$defaultEndpoint = 'http://' . $_SERVER ['SERVER_NAME'] . ':' . $_PORT . '/sys' . SYS_SYS . '/en/green/services/wsdl2';
-        $defaultEndpoint = 'http://' . SERVER_NAME . $_PORT . '/sys' . SYS_SYS . '/en/green/services/wsdl2';
+        //$defaultEndpoint = 'http://' . $_SERVER ['SERVER_NAME'] . ':' . $_PORT . '/sys' . SYS_SYS .'/'.SYS_LANG.'/classic/green/services/wsdl2';
+        $defaultEndpoint = 'http://' . SERVER_NAME . $_PORT . '/sys' . SYS_SYS . '/'.SYS_LANG.'/classic/services/wsdl2';
         println(" - Connecting webservice: $defaultEndpoint");
         $user = $aRow ["SCH_DEL_USER_NAME"];
         $pass = $aRow ["SCH_DEL_USER_PASS"];
@@ -541,8 +552,8 @@ class CaseScheduler extends BaseCaseScheduler {
 
         $client = new SoapClient ( $defaultEndpoint );
         $params = array (
-            'userid' => $user, 
-            'password' => 'md5:' . $pass 
+            'userid' => $user,
+            'password' => 'md5:' . $pass
         );
         $result = $client->__SoapCall ( 'login', array (
         $params
@@ -557,22 +568,22 @@ class CaseScheduler extends BaseCaseScheduler {
           $newRouteLog = new LogCasesScheduler ();
           $variables = Array ();
           $params = array (
-              'sessionId' => $sessionId, 
-              'processId' => $processId, 
-              'taskId' => $taskId, 
-              'variables' => $variables 
+              'sessionId' => $sessionId,
+              'processId' => $processId,
+              'taskId' => $taskId,
+              'variables' => $variables
           );
 
           $paramsLog = array (
-              'PRO_UID' => $processId, 
-              'TAS_UID' => $taskId, 
-              'SCH_UID' => $sSchedulerUid, 
-              'USR_NAME' => $user, 
-              'RESULT' => '', 
-              'EXEC_DATE' => date ( 'Y-m-d' ), 
-              'EXEC_HOUR' => date ( 'H:i:s' ), 
-              'WS_CREATE_CASE_STATUS' => '', 
-              'WS_ROUTE_CASE_STATUS' => '' 
+              'PRO_UID' => $processId,
+              'TAS_UID' => $taskId,
+              'SCH_UID' => $sSchedulerUid,
+              'USR_NAME' => $user,
+              'RESULT' => '',
+              'EXEC_DATE' => date ( 'Y-m-d' ),
+              'EXEC_HOUR' => date ( 'H:i:s' ),
+              'WS_CREATE_CASE_STATUS' => '',
+              'WS_ROUTE_CASE_STATUS' => ''
               );
 
               $result = $client->__SoapCall ( 'NewCase', array (
@@ -584,13 +595,14 @@ class CaseScheduler extends BaseCaseScheduler {
                 eprintln("OK+ CASE #{$result->caseNumber} was created!", 'green');
                 $caseId = $result->caseId;
                 $caseNumber = $result->caseNumber;
+                $log[]  = $caseNumber. ' was created!, ProcessID: '.$aRow['PRO_UID'];
                 $paramsLog ['WS_CREATE_CASE_STATUS'] = "Case " . $caseNumber . " " . strip_tags ( $result->message );
                 $paramsLogResult = 'SUCCESS';
 
                 $params = array (
-                'sessionId' => $sessionId, 
-                'caseId' => $caseId, 
-                'delIndex' => "1" 
+                'sessionId' => $sessionId,
+                'caseId' => $caseId,
+                'delIndex' => "1"
                 );
                 $result = $client->__SoapCall ( 'RouteCase', array (
                 $params
@@ -627,7 +639,7 @@ class CaseScheduler extends BaseCaseScheduler {
         $newCaseLog->saveLogParameters ( $paramsLog );
         $newCaseLog->save ();
 
-        if ($sOption != '4') {
+        if ($sOption != '4' && $sOption != '5') {
           $nSchLastRunTime = $sActualTime;
 
           $dEstimatedDate = $this->updateNextRun ( $sOption, $sValue, $sActualTime, $sDaysPerformTask, $sWeeks, $sStartDay, $sMonths );
@@ -642,14 +654,26 @@ class CaseScheduler extends BaseCaseScheduler {
             }
           }
           $nSchTimeNextRun = $dEstimatedDate;
-           
+
           $this->updateDate ( $sSchedulerUid, $nSchTimeNextRun, $nSchLastRunTime );
-        } else {
+        } elseif ($sOption != '5'){
           $Fields = $this->Load ( $sSchedulerUid );
           $Fields ['SCH_LAST_STATE'] = $aRow ['SCH_STATE'];
           $Fields ['SCH_LAST_RUN_TIME'] = $Fields ['SCH_TIME_NEXT_RUN'];
           $Fields ['SCH_STATE'] = 'PROCESSED';
           $this->Update ( $Fields );
+        } else {
+          $nSchLastRunTime = $sActualTime;
+          $Fields = $this->Load ( $sSchedulerUid );
+          $Fields ['SCH_LAST_RUN_TIME'] = $Fields ['SCH_TIME_NEXT_RUN'];
+
+          $nSchTimeNextRun = strtotime($Fields ['SCH_TIME_NEXT_RUN']);
+          $nextRun = $Fields ['SCH_REPEAT_EVERY']*60*60;
+          $nSchTimeNextRun += $nextRun;
+          $nSchTimeNextRun = date("Y-m-d H:i", $nSchTimeNextRun );
+
+
+          $this->updateDate ( $sSchedulerUid, $nSchTimeNextRun, $nSchLastRunTime );
         }
       }
 
@@ -700,13 +724,13 @@ class CaseScheduler extends BaseCaseScheduler {
           $nFirstDay = $aWeeks [0];
 
           $aDaysWeek = array (
-              'Monday', 
-              'Tuesday', 
-              'Wednesday', 
-              'Thursday', 
-              'Friday', 
-              'Saturday', 
-              'Sunday' 
+              'Monday',
+              'Tuesday',
+              'Wednesday',
+              'Thursday',
+              'Friday',
+              'Saturday',
+              'Sunday'
               );
               $nFirstDay = $nFirstDay - 1;
               //                                                        echo "¨¨".$nFirstDay."¨¨";
@@ -803,27 +827,27 @@ class CaseScheduler extends BaseCaseScheduler {
               break;
             case '2' :
               $aMontsShort = array (
-                  'Jan', 
-                  'Feb', 
-                  'Mar', 
-                  'Apr', 
-                  'May', 
-                  'Jun', 
-                  'Jul', 
-                  'Aug', 
-                  'Sep', 
-                  'Oct', 
-                  'Nov', 
-                  'Dec' 
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                  'Oct',
+                  'Nov',
+                  'Dec'
                   );
                   $aWeeksShort = array (
-                  'Monday', 
-                  'Tuesday', 
-                  'Wednesday', 
-                  'Thursday', 
-                  'Friday', 
-                  'Saturday', 
-                  'Sunday' 
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday',
+                  'Sunday'
                   );
                   $sNumDayWeek = $aStartDay [1];
                   $sDayWeek = ($aStartDay [2] == 7 ? 0 : $aStartDay [2]);

@@ -3,7 +3,8 @@ SELECT '00000000000000000000000000000001','admin','21232f297a57a5a743894a0e4a801
 
 INSERT INTO [CONTENT] ([CON_CATEGORY],[CON_PARENT],[CON_ID],[CON_LANG],[CON_VALUE])
 SELECT 'ROL_NAME','','00000000000000000000000000000002','en','System Administrator' UNION ALL
-SELECT 'ROL_NAME','','00000000000000000000000000000003','en','Operator';
+SELECT 'ROL_NAME','','00000000000000000000000000000003','en','Operator' UNION ALL
+SELECT 'ROL_NAME','','00000000000000000000000000000004','en','Manager';
 
 INSERT INTO [LANGUAGE] ([LAN_ID],[LAN_NAME],[LAN_NATIVE_NAME],[LAN_DIRECTION],[LAN_WEIGHT],[LAN_ENABLED],[LAN_CALENDAR]) 
 SELECT 'aa','Afar','','L','0','0','GREGORIAN'  UNION ALL
@@ -981,10 +982,10 @@ SELECT 'GW', 'QU', 'Quinara'  UNION ALL
 SELECT 'GW', 'TO', 'Tombali'  UNION ALL
 SELECT 'IN', 'AN', 'Andaman and Nicobar Islands'  UNION ALL
 SELECT 'IN', 'AP', 'Andhra Pradesh'  UNION ALL
-SELECT 'IN', 'AR', 'Arun?chal Pradesh'  UNION ALL
+SELECT 'IN', 'AR', 'Arunachal Pradesh'  UNION ALL
 SELECT 'IN', 'AS', 'Assam'  UNION ALL
-SELECT 'IN', 'BR', 'Bih?r'  UNION ALL
-SELECT 'IN', 'CH', 'Chand?garh'  UNION ALL
+SELECT 'IN', 'BR', 'Bihar'  UNION ALL
+SELECT 'IN', 'CH', 'Chandigarh'  UNION ALL
 SELECT 'IN', 'CT', 'Chhattisgarh'  UNION ALL
 SELECT 'IN', 'DD', 'Damán y Diu'  UNION ALL
 SELECT 'IN', 'DL', 'Delhi'  UNION ALL
@@ -1081,48 +1082,43 @@ SELECT 'KR', '46', 'Jeonranamdo [Ch llanam-do]'  UNION ALL
 SELECT 'KR', '47', 'Gyeongsangbugdo [Gyeongsangbuk-do]'  UNION ALL
 SELECT 'KR', '48', 'Gyeongsangnamdo [Ky ngsangnam-do]'  UNION ALL
 SELECT 'KR', '49', 'Jejudo [Cheju-do]'  UNION ALL
-SELECT 'LV', 'AI', 'Aizkraukles Apri'  UNION ALL
-SELECT 'LV', 'AL', 'Al?kones Apri??is'  UNION ALL
-SELECT 'LV', 'BL', 'Balvu Apri??is'  UNION ALL
-SELECT 'LV', 'BU', 'Bauskas Apri??is'  UNION ALL
-SELECT 'LV', 'CE', 'C?su Apri??is'  UNION ALL
-SELECT 'LV', 'DA', 'Daugavpils Apri??is'  UNION ALL
-SELECT 'LV', 'DO', 'Dobeles Apri??is'  UNION ALL
-SELECT 'LV', 'DW', 'Daugavpils'  UNION ALL
-SELECT 'LV', 'GU', 'Gulbenes Apri??is'  UNION ALL
-SELECT 'LV', 'JEL', 'Jelgava'  UNION ALL
-SELECT 'LV', 'JK', 'J?kabpils Apri??is'  UNION ALL
-SELECT 'LV', 'JL', 'Jelgavas Apri??is'  UNION ALL
-SELECT 'LV', 'JUR', 'J?rmala'  UNION ALL
-SELECT 'LV', 'KR', 'Kr?slavas Apri??is'  UNION ALL
-SELECT 'LV', 'KU', 'Kuld?gas Apri??is'  UNION ALL
-SELECT 'LV', 'LE', 'Liepdj?s Apri??is'  UNION ALL
-SELECT 'LV', 'LM', 'LimbaÃ…Â¾u Apri??is'  UNION ALL
+SELECT 'LV', 'AI', 'Aizkraukle'  UNION ALL
+SELECT 'LV', 'AL', 'Alūksne'  UNION ALL
+SELECT 'LV', 'BL', 'Balvi'  UNION ALL
+SELECT 'LV', 'BU', 'Bauska'  UNION ALL
+SELECT 'LV', 'CE', 'Cēsis'  UNION ALL
+SELECT 'LV', 'DA', 'Daugavpils'  UNION ALL
+SELECT 'LV', 'DO', 'Dobele'  UNION ALL
+SELECT 'LV', 'GU', 'Gulbene'  UNION ALL
+SELECT 'LV', 'JK', 'Jēkabpils'  UNION ALL
+SELECT 'LV', 'JL', 'Jelgava'  UNION ALL
+SELECT 'LV', 'JUR', 'Jūrmala'  UNION ALL
+SELECT 'LV', 'KR', 'Krāslava'  UNION ALL
+SELECT 'LV', 'KU', 'Kuldīga'  UNION ALL
+SELECT 'LV', 'LE', 'Liepāja'  UNION ALL
+SELECT 'LV', 'LM', 'Limbaži'  UNION ALL
 SELECT 'LV', 'LPX', 'Liepdja'  UNION ALL
-SELECT 'LV', 'LU', 'Ludzas Apri??is'  UNION ALL
-SELECT 'LV', 'MA', 'Madonas Apri??is'  UNION ALL
-SELECT 'LV', 'OG', 'Ogres Apri??is'  UNION ALL
-SELECT 'LV', 'PR', 'Preilu Apri??is'  UNION ALL
-SELECT 'LV', 'RE', 'R?zeknes Apri??is'  UNION ALL
-SELECT 'LV', 'REZ', 'R?zekne'  UNION ALL
-SELECT 'LV', 'RI', 'R?gas Apri??is'  UNION ALL
-SELECT 'LV', 'RIX', 'R?ga'  UNION ALL
-SELECT 'LV', 'SA', 'Saldus Apri??is'  UNION ALL
-SELECT 'LV', 'TA', 'Talsu Apri??is'  UNION ALL
-SELECT 'LV', 'TU', 'Tukuma Apri??is'  UNION ALL
-SELECT 'LV', 'VE', 'Ventspils Apri??is'  UNION ALL
-SELECT 'LV', 'VEN', 'Ventspils'  UNION ALL
-SELECT 'LV', 'VK', 'Valkas Apri??is'  UNION ALL
-SELECT 'LV', 'VM', 'Valmieras Apri??is'  UNION ALL
+SELECT 'LV', 'LU', 'Ludza'  UNION ALL
+SELECT 'LV', 'MA', 'Madona'  UNION ALL
+SELECT 'LV', 'OG', 'Ogre'  UNION ALL
+SELECT 'LV', 'PR', 'Preiļi'  UNION ALL
+SELECT 'LV', 'RE', 'Rēzekne'  UNION ALL
+SELECT 'LV', 'RI', 'Riga'  UNION ALL
+SELECT 'LV', 'SA', 'Saldus'  UNION ALL
+SELECT 'LV', 'TA', 'Talsi'  UNION ALL
+SELECT 'LV', 'TU', 'Tukums'  UNION ALL
+SELECT 'LV', 'VE', 'Ventspils'  UNION ALL
+SELECT 'LV', 'VK', 'Valka'  UNION ALL
+SELECT 'LV', 'VM', 'Valmiera'  UNION ALL
 SELECT 'MX', 'AGU', 'Aguascalientes'  UNION ALL
 SELECT 'MX', 'BCN', 'Baja California'  UNION ALL
-SELECT 'MX', 'BCS', 'Baja California Sur' ;
-INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
+SELECT 'MX', 'BCS', 'Baja California Sur'  UNION ALL
 SELECT 'MX', 'CAM', 'Campeche'  UNION ALL
 SELECT 'MX', 'CHH', 'Chihuahua'  UNION ALL
 SELECT 'MX', 'CHP', 'Chiapas'  UNION ALL
 SELECT 'MX', 'COA', 'Coahuila'  UNION ALL
-SELECT 'MX', 'COL', 'Colima'  UNION ALL
+SELECT 'MX', 'COL', 'Colima' ;
+INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
 SELECT 'MX', 'DF', 'Distrito Federal'  UNION ALL
 SELECT 'MX', 'DUR', 'Durango'  UNION ALL
 SELECT 'MX', 'GRO', 'Guerrero'  UNION ALL
@@ -1147,7 +1143,7 @@ SELECT 'MX', 'TLA', 'Tlaxcala'  UNION ALL
 SELECT 'MX', 'VER', 'Veracruz'  UNION ALL
 SELECT 'MX', 'YUC', 'Yucatán'  UNION ALL
 SELECT 'MX', 'ZAC', 'Zacatecas'  UNION ALL
-SELECT 'NO', '01', 'ÃƒËœstfold'  UNION ALL
+SELECT 'NO', '01', 'Østfold'  UNION ALL
 SELECT 'NO', '02', 'Akershus'  UNION ALL
 SELECT 'NO', '03', 'Oslo'  UNION ALL
 SELECT 'NO', '04', 'Hedmark'  UNION ALL
@@ -1197,33 +1193,33 @@ SELECT 'PT', '12', 'Portalegre'  UNION ALL
 SELECT 'PT', '13', 'Porto'  UNION ALL
 SELECT 'PT', '14', 'Santarém'  UNION ALL
 SELECT 'PT', '15', 'Setúbal'  UNION ALL
-SELECT 'PT', '16', 'Viana do Castelo' ;
-INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
+SELECT 'PT', '16', 'Viana do Castelo'  UNION ALL
 SELECT 'PT', '17', 'Vila Real'  UNION ALL
 SELECT 'PT', '18', 'Viseu'  UNION ALL
 SELECT 'PT', '20', 'Região Autónoma dos Açores'  UNION ALL
 SELECT 'PT', '30', 'Região Autónoma da Madeira'  UNION ALL
-SELECT 'SE', 'AB', 'Stockholms LÃ¤n'  UNION ALL
-SELECT 'SE', 'AC', 'VÃ¤sterbottens LÃ¤n'  UNION ALL
+SELECT 'SE', 'AB', 'Stockholms' ;
+INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
+SELECT 'SE', 'AC', 'Vesterbottens'  UNION ALL
 SELECT 'SE', 'BD', 'Norrbottens län'  UNION ALL
 SELECT 'SE', 'C', 'Uppsala län'  UNION ALL
 SELECT 'SE', 'D', 'Södermanlands län'  UNION ALL
-SELECT 'SE', 'E', 'Ãƒâ€“stergÃƒÂ¶tlands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'F', 'JÃƒÂ¶nkÃƒÂ¶pings lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'G', 'Kronoborgs lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'H', 'Kalmar lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'I', 'Gotlands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'K', 'Blekinge lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'M', 'SkÃƒÂ¥ne lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'N', 'Hallands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'O', 'VÃƒÂ¤stra GÃƒÂ¶talands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'S', 'VÃƒÂ¤rmlands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'T', 'Ãƒâ€“rebro lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'U', 'VÃƒÂ¤stmanlands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'W', 'Dalarnes lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'X', 'GÃƒÂ¤vleborgs lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'Y', 'VÃƒÂ¤sternorrlands lÃƒÂ¤n'  UNION ALL
-SELECT 'SE', 'Z', 'JÃƒÂ¤mtlands lÃƒÂ¤n'  UNION ALL
+SELECT 'SE', 'E', 'Östergötland'  UNION ALL
+SELECT 'SE', 'F', 'Jönköping'  UNION ALL
+SELECT 'SE', 'G', 'Kronoberg'  UNION ALL
+SELECT 'SE', 'H', 'Kalmar'  UNION ALL
+SELECT 'SE', 'I', 'Gotlands'  UNION ALL
+SELECT 'SE', 'K', 'Blekinge'  UNION ALL
+SELECT 'SE', 'M', 'Skåne'  UNION ALL
+SELECT 'SE', 'N', 'Halland'  UNION ALL
+SELECT 'SE', 'O', 'Västra Götaland'  UNION ALL
+SELECT 'SE', 'S', 'Värmland'  UNION ALL
+SELECT 'SE', 'T', 'Örebro'  UNION ALL
+SELECT 'SE', 'U', 'Västmanland'  UNION ALL
+SELECT 'SE', 'W', 'Dalarna'  UNION ALL
+SELECT 'SE', 'X', 'Gävleborg'  UNION ALL
+SELECT 'SE', 'Y', 'Västernorrland'  UNION ALL
+SELECT 'SE', 'Z', 'Jämtland'  UNION ALL
 SELECT 'TR', '01', 'Adana'  UNION ALL
 SELECT 'TR', '02', 'Adiyaman'  UNION ALL
 SELECT 'TR', '03', 'Afyon'  UNION ALL
@@ -1278,13 +1274,13 @@ SELECT 'TR', '51', 'Nigde'  UNION ALL
 SELECT 'TR', '52', 'Ordu'  UNION ALL
 SELECT 'TR', '53', 'Rize'  UNION ALL
 SELECT 'TR', '54', 'Sakarya'  UNION ALL
-SELECT 'TR', '55', 'Samsun' ;
-INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
+SELECT 'TR', '55', 'Samsun'  UNION ALL
 SELECT 'TR', '56', 'Siirt'  UNION ALL
 SELECT 'TR', '57', 'Sinop'  UNION ALL
 SELECT 'TR', '58', 'Sivas'  UNION ALL
 SELECT 'TR', '59', 'Tekirdag'  UNION ALL
-SELECT 'TR', '60', 'Tokat'  UNION ALL
+SELECT 'TR', '60', 'Tokat' ;
+INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
 SELECT 'TR', '61', 'Trabzon'  UNION ALL
 SELECT 'TR', '62', 'Tunceli'  UNION ALL
 SELECT 'TR', '63', 'Sanliurfa'  UNION ALL
@@ -1359,4229 +1355,4411 @@ SELECT 'US', 'PA', 'Pennsylvania'  UNION ALL
 SELECT 'US', 'PR', 'Puerto Rico (see also separate entry under PR)'  UNION ALL
 SELECT 'US', 'RI', 'Rhode Island'  UNION ALL
 SELECT 'US', 'SC', 'South Carolina'  UNION ALL
-SELECT 'US', 'SD', 'South Dakota' ;
-INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
+SELECT 'US', 'SD', 'South Dakota'  UNION ALL
 SELECT 'US', 'TN', 'Tennessee'  UNION ALL
 SELECT 'US', 'TX', 'Texas'  UNION ALL
 SELECT 'US', 'UM', 'U.S. Minor Outlying Islands (cf. separate entry UM)'  UNION ALL
 SELECT 'US', 'UT', 'Utah'  UNION ALL
-SELECT 'US', 'VA', 'Virginia'  UNION ALL
+SELECT 'US', 'VA', 'Virginia' ;
+INSERT INTO ISO_SUBDIVISION ([IC_UID],[IS_UID],[IS_NAME]) 
 SELECT 'US', 'VI', 'Virgin Islands of the U.S. (see also separate entry VI)'  UNION ALL
 SELECT 'US', 'VT', 'Vermont'  UNION ALL
 SELECT 'US', 'WA', 'Washington'  UNION ALL
 SELECT 'US', 'WI', 'Wisconsin'  UNION ALL
 SELECT 'US', 'WV', 'West Virginia'  UNION ALL
-SELECT 'US', 'WY', 'Wyoming'  UNION ALL
-SELECT 'NL', 'DR', 'Drenthe'  UNION ALL
-SELECT 'NL', 'FL', 'Flevoland'  UNION ALL
-SELECT 'NL', 'FR', 'Friesland'  UNION ALL
-SELECT 'NL', 'GE', 'Gelderland'  UNION ALL
-SELECT 'NL', 'GR', 'Groningen'  UNION ALL
-SELECT 'NL', 'LI', 'Limburg'  UNION ALL
-SELECT 'NL', 'NB', 'Noord-Brabant'  UNION ALL
-SELECT 'NL', 'NH', 'Noord-Holland'  UNION ALL
-SELECT 'NL', 'OV', 'Overijssel'  UNION ALL
-SELECT 'NL', 'UT', 'Utrecht'  UNION ALL
-SELECT 'NL', 'ZE', 'Zeeland'  UNION ALL
-SELECT 'NL', 'ZH', 'Zuid-Holland' ;
+SELECT 'US', 'WY', 'Wyoming' ;
 
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','LOGIN','en','Login','2012-02-02' 
+SELECT 'LABEL','LOGIN','en','Login','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','CASES','en','Cases','2012-02-02' 
+SELECT 'LABEL','CASES','en','Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_HAVENT_RIGHTS_PAGE','en','User does not have rights on this page.','2012-02-02' 
+SELECT 'LABEL','ID_USER_HAVENT_RIGHTS_PAGE','en','User does not have rights on this page.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WRONG_PASS','en','Wrong password','2012-02-02' 
+SELECT 'LABEL','ID_WRONG_PASS','en','Wrong password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ABOUT','en','About','2012-02-02' 
+SELECT 'LABEL','ABOUT','en','About','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAP_MESSAGES','en','Messages','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAP_MESSAGES','en','Messages','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','demo','en','test javaScript','2012-02-02' 
+SELECT 'JAVASCRIPT','demo','en','test javaScript','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_TRIGGERS','en','Available Triggers','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_TRIGGERS','en','Available Triggers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOGOUT','en','Logout','2012-02-02' 
+SELECT 'LABEL','ID_LOGOUT','en','Logout','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MY_ACCOUNT','en','My account','2012-02-02' 
+SELECT 'LABEL','ID_MY_ACCOUNT','en','My account','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS','en','Users','2012-02-02' 
+SELECT 'LABEL','ID_USERS','en','Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES','en','HOME','2012-02-02' 
+SELECT 'LABEL','ID_CASES','en','HOME','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_APPLICATIONS','en','DESIGNER','2012-02-02' 
+SELECT 'LABEL','ID_APPLICATIONS','en','DESIGNER','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RULES_AND_USER_GROUPS','en','Rules and user groups','2012-02-02' 
+SELECT 'LABEL','ID_RULES_AND_USER_GROUPS','en','Rules and user groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD_USER_OF_TASK','en','Last executor of the task','2012-02-02' 
+SELECT 'LABEL','ID_ADD_USER_OF_TASK','en','Last executor of the task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_END_OF_PROCESS','en','End of process','2012-02-02' 
+SELECT 'LABEL','ID_END_OF_PROCESS','en','End of process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TAREA_COLGANTE','en','Leaf task','2012-02-02' 
+SELECT 'LABEL','ID_TAREA_COLGANTE','en','Leaf task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_DOCUMENTS','en','Output Documents','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_DOCUMENTS','en','Output Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_OUTDOC','en','Do you want to delete this output document ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_OUTDOC','en','Do you want to delete this output document ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_RECORDS_FOUND','en','No records found','2012-02-02' 
+SELECT 'LABEL','ID_NO_RECORDS_FOUND','en','No records found','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORMS','en','DynaForms','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORMS','en','DynaForms','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_EDITOR','en','DynaForm Editor','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_EDITOR','en','DynaForm Editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_RESET_TEMPLATE','en','Are you sure you want to restore the default template ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_RESET_TEMPLATE','en','Are you sure you want to restore the default template ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD_FIELD','en','Add field','2012-02-02' 
+SELECT 'LABEL','ID_ADD_FIELD','en','Add field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_FIELD','en','Edit Field','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_FIELD','en','Edit Field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_FIELD_SURE','en','Are you sure you want to delete this field?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_FIELD_SURE','en','Are you sure you want to delete this field?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT','en','Edit','2012-02-02' 
+SELECT 'LABEL','ID_EDIT','en','Edit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE','en','Delete','2012-02-02' 
+SELECT 'LABEL','ID_DELETE','en','Delete','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UP','en','Up','2012-02-02' 
+SELECT 'LABEL','ID_UP','en','Up','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DOWN','en','Down','2012-02-02' 
+SELECT 'LABEL','ID_DOWN','en','Down','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAGE','en','Page','2012-02-02' 
+SELECT 'LABEL','ID_PAGE','en','Page','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_DYNAFORM','en','New dynaform','2012-02-02' 
+SELECT 'LABEL','ID_NEW_DYNAFORM','en','New dynaform','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_DYNAFORM','en','Edit DynaForm','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_DYNAFORM','en','Edit DynaForm','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DYNAFORM','en','Do you want to delete this DynaForm ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DYNAFORM','en','Do you want to delete this DynaForm ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD_MESSAGE','en','Add message','2012-02-02' 
+SELECT 'LABEL','ID_ADD_MESSAGE','en','Add message','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGES','en','Messages','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGES','en','Messages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_MESSAGE','en','Do you want to delete this message?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_MESSAGE','en','Do you want to delete this message?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTIVE','en','Active','2012-02-02' 
+SELECT 'LABEL','ID_ACTIVE','en','Active','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INACTIVE','en','Inactive','2012-02-02' 
+SELECT 'LABEL','ID_INACTIVE','en','Inactive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_PROCESS','en','Do you want to delete this process ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_PROCESS','en','Do you want to delete this process ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VIEW','en','View','2012-02-02' 
+SELECT 'LABEL','ID_VIEW','en','View','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_USER','en','Do you want to delete this user ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_USER','en','Do you want to delete this user ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_LIST','en','Users','2012-02-02' 
+SELECT 'LABEL','ID_USERS_LIST','en','Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_REGISTERED','en','User name already exists','2012-02-02' 
+SELECT 'LABEL','ID_USER_REGISTERED','en','User name already exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ERROR_USR_USERNAME','en','User name required!','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ERROR_USR_USERNAME','en','User name required!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ERROR_DUE_DATE','en','Due date required!','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ERROR_DUE_DATE','en','Due date required!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_PASS_SAME_OLD_PASS','en','The  confirm Password fields must be the same!','2012-02-02' 
+SELECT 'LABEL','ID_NEW_PASS_SAME_OLD_PASS','en','The  confirm Password fields must be the same!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_INPUTDOCS','en','New Input Document','2012-02-02' 
+SELECT 'LABEL','ID_NEW_INPUTDOCS','en','New Input Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_INPUTDOCS','en','Edit Input Document','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_INPUTDOCS','en','Edit Input Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DOCUMENT','en','Do you want to delete this document ?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DOCUMENT','en','Do you want to delete this document ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_TRIGGERS','en','New Trigger','2012-02-02' 
+SELECT 'LABEL','ID_NEW_TRIGGERS','en','New Trigger','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_TRIGGERS','en','Edit Trigger','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_TRIGGERS','en','Edit Trigger','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_TRIGGER','en','Do you want to delete this trigger?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_TRIGGER','en','Do you want to delete this trigger?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP','en','Group','2012-02-02' 
+SELECT 'LABEL','ID_GROUP','en','Group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DE_ASSIGN','en','Remove','2012-02-02' 
+SELECT 'LABEL','ID_DE_ASSIGN','en','Remove','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE','en','Are you sure you want to remove this user?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE','en','Are you sure you want to remove this user?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ERROR_PRO_TITLE','en','Process title required!','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ERROR_PRO_TITLE','en','Process title required!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK','en','Task','2012-02-02' 
+SELECT 'LABEL','ID_TASK','en','Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONDITION','en','Condition','2012-02-02' 
+SELECT 'LABEL','ID_CONDITION','en','Condition','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_WEBBOT','en','Are you sure you want to delete this webbot?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_WEBBOT','en','Are you sure you want to delete this webbot?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_EDITOR_SAVE_CHANGES','en','Do you want to save changes?','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_EDITOR_SAVE_CHANGES','en','Do you want to save changes?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REQUEST_DOCUMENTS','en','Input Documents','2012-02-02' 
+SELECT 'LABEL','ID_REQUEST_DOCUMENTS','en','Input Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEBBOT','en','Webbots','2012-02-02' 
+SELECT 'LABEL','ID_WEBBOT','en','Webbots','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD','en','Add','2012-02-02' 
+SELECT 'LABEL','ID_ADD','en','Add','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_HAVENT_RIGHTS_SYSTEM','en','User does not have access to the system','2012-02-02' 
+SELECT 'LABEL','ID_USER_HAVENT_RIGHTS_SYSTEM','en','User does not have access to the system','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_CASE','en','New','2012-02-02' 
+SELECT 'LABEL','ID_START_CASE','en','New','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_GROUP','en','New','2012-02-02' 
+SELECT 'LABEL','ID_NEW_GROUP','en','New','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MEMBERS','en','Members','2012-02-02' 
+SELECT 'LABEL','ID_MEMBERS','en','Members','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_GROUP','en','Draft','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_GROUP','en','Are you sure to delete this group?','2012-06-11' 
   UNION ALL
-SELECT 'LABEL','ID_INCORRECT_EMAIL','en','Your E-mail address is not valid.','2012-02-02' 
+SELECT 'LABEL','ID_INCORRECT_EMAIL','en','Your E-mail address is not valid.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NOT_REGISTERED','en','User not registered!','2012-02-02' 
+SELECT 'LABEL','ID_USER_NOT_REGISTERED','en','User not registered!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_INACTIVE','en','User inactive!','2012-02-02' 
+SELECT 'LABEL','ID_USER_INACTIVE','en','User inactive!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANNOT_CHANGE_STATUS_ADMIN_USER','en','Can''t change the status of administrator!','2012-02-02' 
+SELECT 'LABEL','ID_CANNOT_CHANGE_STATUS_ADMIN_USER','en','Can''t change the status of administrator!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANNOT_DELETE_ADMIN_USER','en','Can''t delete the administrator!','2012-02-02' 
+SELECT 'LABEL','ID_CANNOT_DELETE_ADMIN_USER','en','Can''t delete the administrator!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN','en','Assign','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN','en','Assign','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_SCREEN','en','Assign Screen','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_SCREEN','en','Assign Screen','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_TASK','en','Assign Task','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_TASK','en','Assign Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD','en','Upload','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD','en','Upload','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERATE','en','Generate','2012-02-02' 
+SELECT 'LABEL','ID_GENERATE','en','Generate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_ELEMENT','en','Approval of consolidated tasks','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_ELEMENT','en','Approval of consolidated tasks','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TRIGGERS','en','Triggers','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TRIGGERS','en','Triggers','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_OUTPUT_DOCUMENTS','en','Output Documents','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_OUTPUT_DOCUMENTS','en','Output Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DRAFT','en','High','2012-02-02' 
+SELECT 'LABEL','DRAFT','en','High','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAP_DYNAFORMS','en','DynaForms','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAP_DYNAFORMS','en','DynaForms','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ATTACH','en','Attach','2012-02-02' 
+SELECT 'LABEL','ID_ATTACH','en','Attach','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASES','en','Are you sure  you want to delete all     selected cases?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASES','en','Are you sure  you want to delete all     selected cases?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL','en','All','2012-02-02' 
+SELECT 'LABEL','ID_ALL','en','All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANCELLED','en','Canceled','2012-02-02' 
+SELECT 'LABEL','ID_CANCELLED','en','Canceled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FINISHED','en','Finished','2012-02-02' 
+SELECT 'LABEL','ID_FINISHED','en','Finished','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAUSED','en','Paused','2012-02-02' 
+SELECT 'LABEL','ID_PAUSED','en','Paused','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DERIVED','en','Sent','2012-02-02' 
+SELECT 'LABEL','ID_DERIVED','en','Sent','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_SENT','en','Not sent','2012-02-02' 
+SELECT 'LABEL','ID_NOT_SENT','en','Not sent','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DRAFT','en','Draft','2012-02-02' 
+SELECT 'LABEL','ID_DRAFT','en','Draft','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMPLETED','en','Completed','2012-02-02' 
+SELECT 'LABEL','ID_COMPLETED','en','Completed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_DO','en','To do','2012-02-02' 
+SELECT 'LABEL','ID_TO_DO','en','To do','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_ENTER_COMMENTS','en','Please enter comments!','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_ENTER_COMMENTS','en','Please enter comments!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_FILE','en','Please select the file to attach!','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_FILE','en','Please select the file to attach!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROPERTIES','en','Properties','2012-02-02' 
+SELECT 'LABEL','ID_PROPERTIES','en','Properties','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMPTY','en','empty','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY','en','empty','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT','en','Select','2012-02-02' 
+SELECT 'LABEL','ID_SELECT','en','Select','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEARCH','en','Search','2012-02-02' 
+SELECT 'LABEL','ID_SEARCH','en','Search','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REQUIRED_FIELD','en','Required Field','2012-02-02' 
+SELECT 'LABEL','ID_REQUIRED_FIELD','en','Required Field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS','en','Triggers','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS','en','Triggers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN','en','Open','2012-02-02' 
+SELECT 'LABEL','ID_OPEN','en','Open','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEPS','en','Steps','2012-02-02' 
+SELECT 'LABEL','ID_STEPS','en','Steps','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INFORMATION','en','Information','2012-02-02' 
+SELECT 'LABEL','ID_INFORMATION','en','Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTIONS','en','Actions','2012-02-02' 
+SELECT 'LABEL','ID_ACTIONS','en','Actions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_INFORMATION','en','Process Information','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_INFORMATION','en','Process Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_INFORMATION','en','Task Information','2012-02-02' 
+SELECT 'LABEL','ID_TASK_INFORMATION','en','Task Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANCEL_CASE','en','Cancel Case','2012-02-02' 
+SELECT 'LABEL','ID_CANCEL_CASE','en','Cancel Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOU_ARE_FIRST_STEP','en','You are in the first step!','2012-02-02' 
+SELECT 'LABEL','ID_YOU_ARE_FIRST_STEP','en','You are in the first step!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','EDIT_PROCESS','en','Edit process','2012-02-02' 
+SELECT 'JAVASCRIPT','EDIT_PROCESS','en','Edit process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','curriculum','en','Resume','2012-02-02' 
+SELECT 'JAVASCRIPT','curriculum','en','Resume','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_OPEN_SEARCH','en','Advanced Search','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_OPEN_SEARCH','en','Advanced Search','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CLOSE_SEARCH','en','Close Search','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CLOSE_SEARCH','en','Close Search','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_URL_OF_LINK','en','Enter the URL for the link','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_URL_OF_LINK','en','Enter the URL for the link','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FONT_COLOR','en','Change text color','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FONT_COLOR','en','Change text color','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_HILITE_COLOR','en','Highlight Color','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_HILITE_COLOR','en','Highlight Color','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INSERT_HTML','en','Insert HTML code','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INSERT_HTML','en','Insert HTML code','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_IMAGE_URI','en','Image URI','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_IMAGE_URI','en','Image URI','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FONT_NAME','en','Font Name','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FONT_NAME','en','Font Name','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FONT_SIZE','en','Font Size','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FONT_SIZE','en','Font Size','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_BACKGROUND_COLOR','en','Background color','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_BACKGROUND_COLOR','en','Background color','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_WHICH_BLOCK','en','Block','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_WHICH_BLOCK','en','Block','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_SEQUENTIAL','en','Sequential','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_SEQUENTIAL','en','Sequential','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_SELECTION','en','Selection','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_SELECTION','en','Selection','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EVALUATION','en','Evaluation','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EVALUATION','en','Evaluation','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_FORK','en','Parallel (fork)','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_FORK','en','Parallel (fork)','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_EVALUATION_FORK','en','Parallel by Evaluation (fork)','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_EVALUATION_FORK','en','Parallel by Evaluation (fork)','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_JOIN','en','Parallel (join)','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PARALLEL_JOIN','en','Parallel (join)','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_INPUT_DOCUMENTS','en','Input Documents','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_INPUT_DOCUMENTS','en','Input Documents','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_LOADING','en','Loading......','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_LOADING','en','Loading......','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_PROCESS','en','Edit process','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_PROCESS','en','Edit process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_TASK','en','Add task','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_TASK','en','Add task','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_TEXT','en','Add text','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_TEXT','en','Add text','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_HORIZONTAL_LINE','en','Horizontal line','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_HORIZONTAL_LINE','en','Horizontal line','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_VERTICAL_LINE','en','Vertical line','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_VERTICAL_LINE','en','Vertical line','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_ALL_LINES','en','Delete all lines','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_ALL_LINES','en','Delete all lines','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_ALL_LINES','en','Do you want to delete the guide lines?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_ALL_LINES','en','Do you want to delete the guide lines?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROMPT_RENAME_TEXT','en','Rename to:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROMPT_RENAME_TEXT','en','Rename to:','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_STEPS','en','Steps','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_STEPS','en','Steps','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_STEPS','en','Steps of:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_STEPS','en','Steps of:','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONDITIONS','en','Conditions','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONDITIONS','en','Conditions','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_USERS_AND_GROUPS','en','Users & User Groups','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_USERS_AND_GROUPS','en','Users & User Groups','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_PATTERNS','en','Routing rule','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_PATTERNS','en','Routing rule','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_TASK','en','Delete task','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_TASK','en','Delete task','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_TASK','en','Do you want to delete the task:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_TASK','en','Do you want to delete the task:','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROPERTIES','en','Properties','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROPERTIES','en','Properties','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK','en','Task','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK','en','Task','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUBMIT','en','Save','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUBMIT','en','Save','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CANCEL','en','Cancel','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CANCEL','en','Cancel','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_DEFINITION','en','Definition','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_DEFINITION','en','Definition','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_ASSIGNMENTS','en','Assignment rules','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_ASSIGNMENTS','en','Assignment rules','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_TIMING','en','Timing control','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_TIMING','en','Timing control','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_PERMISSIONS','en','Permissions','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_PERMISSIONS','en','Permissions','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_LABELS','en','Case Labels','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_LABELS','en','Case Labels','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_GUIDE','en','Delete line','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_GUIDE','en','Delete line','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_TEXT','en','Edit text','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_TEXT','en','Edit text','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_TEXT','en','Delete text','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_TEXT','en','Delete text','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_TEXT_CHANGE_TO','en','Change to:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT_TEXT_CHANGE_TO','en','Change to:','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE','en','Are you sure you want to change the routing rule?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE','en','Are you sure you want to change the routing rule?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_NEW_TASK','en','New task','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_NEW_TASK','en','New task','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TEXT','en','Text:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TEXT','en','Text:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_STEP','en','New Step','2012-02-02' 
+SELECT 'LABEL','ID_NEW_STEP','en','New Step','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SAVED','en','DynaForm is now saved','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SAVED','en','DynaForm is now saved','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIT_WITHOUT_SAVING','en','Exit without saving?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIT_WITHOUT_SAVING','en','Exit without saving?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_CHART','en','Group Chart','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_CHART','en','Group Chart','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WITHOUT_RESUME','en','Without resume!','2012-02-02' 
+SELECT 'LABEL','ID_WITHOUT_RESUME','en','Without resume!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_RESUME','en','The user doesn''t have a resume.','2012-02-02' 
+SELECT 'LABEL','ID_NO_RESUME','en','The user doesn''t have a resume.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_DERIVATION_RULE','en','Process definition error: All conditions in  parallel evaluation routing rule evaluated  to false, so workflow has stopped. Please  change the definition of the parallel  evaluation routing rule.','2012-02-02' 
+SELECT 'LABEL','ID_NO_DERIVATION_RULE','en','Process definition error: All conditions in  parallel evaluation routing rule evaluated  to false, so workflow has stopped. Please  change the definition of the parallel  evaluation routing rule.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_USERS','en','The task doesn''t have any users.','2012-02-02' 
+SELECT 'LABEL','ID_NO_USERS','en','The task doesn''t have any users.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANCEL','en','Cancel','2012-02-02' 
+SELECT 'LABEL','ID_CANCEL','en','Cancel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_MAP','en','Process Map','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_MAP','en','Process Map','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BEFORE_ASSIGNMENT','en','Before Assignment','2012-02-02' 
+SELECT 'LABEL','ID_BEFORE_ASSIGNMENT','en','Before Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BEFORE_DERIVATION','en','Before Derivation','2012-02-02' 
+SELECT 'LABEL','ID_BEFORE_DERIVATION','en','Before Routing','2012-06-18' 
   UNION ALL
-SELECT 'LABEL','ID_AFTER_DERIVATION','en','After Derivation','2012-02-02' 
+SELECT 'LABEL','ID_AFTER_DERIVATION','en','After Routing','2012-06-18' 
   UNION ALL
-SELECT 'LABEL','ID_BEFORE','en','Before','2012-02-02' 
+SELECT 'LABEL','ID_BEFORE','en','Before','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AFTER','en','After','2012-02-02' 
+SELECT 'LABEL','ID_AFTER','en','After','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TRANSFER_HISTORY','en','Transfer History','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TRANSFER_HISTORY','en','Transfer History','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRANSFER_HISTORY','en','Transfer History','2012-02-02' 
+SELECT 'LABEL','ID_TRANSFER_HISTORY','en','Transfer History','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLED','en','Enabled','2012-02-02' 
+SELECT 'LABEL','ID_ENABLED','en','Enabled','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_NO_DERIVATIONS_DEFINED','en','No derivations were defined.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_NO_DERIVATIONS_DEFINED','en','No routings were defined.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROWS','en','Rows','2012-02-02' 
+SELECT 'LABEL','ID_ROWS','en','Rows','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MEMBER','en','Member','2012-02-02' 
+SELECT 'LABEL','ID_MEMBER','en','Member','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER','en','User','2012-02-02' 
+SELECT 'LABEL','ID_USER','en','User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE_TOO_BIG','en','The file is too big to upload!','2012-02-02' 
+SELECT 'LABEL','ID_FILE_TOO_BIG','en','The file is too big to upload!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_CONDITIONS_OF_STEP','en','Edit step conditions','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_CONDITIONS_OF_STEP','en','Edit step conditions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING','en','Save changes to the routing rules before closing?','2012-02-02' 
+SELECT 'LABEL','ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING','en','Save changes to the routing rules before closing?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING','en','Save changes to the routing rules before closing?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING','en','Save changes to the routing rules before closing?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS','en','Delete Routing rule','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS','en','Delete Routing rule','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_CONFIRM_DELETE_PATTERNS','en','Are you sure you want to delete the routing rules?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_WORKFLOW_CONFIRM_DELETE_PATTERNS','en','Are you sure you want to delete the routing rules?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_END_OF_PROCESS','en','End of process','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_END_OF_PROCESS','en','End of process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ACCEPT','en','Accept','2012-02-02' 
+SELECT 'JAVASCRIPT','ACCEPT','en','Accept','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CANCEL','en','Cancel','2012-02-02' 
+SELECT 'JAVASCRIPT','CANCEL','en','Cancel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_INACTIVE','en','Group inactive','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_INACTIVE','en','Group inactive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_JUMP','en','Jump','2012-02-02' 
+SELECT 'LABEL','ID_JUMP','en','Jump','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_HISTORY','en','Case History','2012-02-02' 
+SELECT 'LABEL','ID_CASE_HISTORY','en','Case History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASE_HISTORY','en','Case History','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASE_HISTORY','en','Case History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_COLOR_LEYENDS','en','Key','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_COLOR_LEYENDS','en','Key','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREVIEW','en','Preview','2012-02-02' 
+SELECT 'LABEL','ID_PREVIEW','en','Preview','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_XML','en','XML','2012-02-02' 
+SELECT 'LABEL','ID_XML','en','XML','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HTML','en','HTML','2012-02-02' 
+SELECT 'LABEL','ID_HTML','en','HTML','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELDS_LIST','en','Fields handler','2012-02-02' 
+SELECT 'LABEL','ID_FIELDS_LIST','en','Fields handler','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_JAVASCRIPTS','en','JavaScripts','2012-02-02' 
+SELECT 'LABEL','ID_JAVASCRIPTS','en','JavaScripts','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_IN_PROGRESS','en','Task in Progress','2012-02-02' 
+SELECT 'LABEL','ID_TASK_IN_PROGRESS','en','Task in Progress','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMPLETED_TASK','en','Completed Task','2012-02-02' 
+SELECT 'LABEL','ID_COMPLETED_TASK','en','Completed Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PENDING_TASK','en','Pending Task / Not Executed','2012-02-02' 
+SELECT 'LABEL','ID_PENDING_TASK','en','Pending Task / Not Executed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PARALLEL_TASK','en','Parallel Task','2012-02-02' 
+SELECT 'LABEL','ID_PARALLEL_TASK','en','Parallel Task','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CLICK_VIEW_MORE_INFO','en','Click here to view more info','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CLICK_VIEW_MORE_INFO','en','Click here to view more info','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','TO_DO','en','To Do','2012-02-02' 
+SELECT 'LABEL','TO_DO','en','To Do','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PAUSED','en','Pause','2012-02-02' 
+SELECT 'LABEL','PAUSED','en','Pause','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','COMPLETED','en','Completed','2012-02-02' 
+SELECT 'LABEL','COMPLETED','en','Completed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','CANCELLED','en','Canceled','2012-02-02' 
+SELECT 'LABEL','CANCELLED','en','Canceled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_FINISHED','en','Not finished','2012-02-02' 
+SELECT 'LABEL','ID_NOT_FINISHED','en','Not finished','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOUR','en','Hour','2012-02-02' 
+SELECT 'LABEL','ID_HOUR','en','Hour','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOURS','en','Hours','2012-02-02' 
+SELECT 'LABEL','ID_HOURS','en','Hours','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MINUTE','en','Minute','2012-02-02' 
+SELECT 'LABEL','ID_MINUTE','en','Minute','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MINUTES','en','Minutes','2012-02-02' 
+SELECT 'LABEL','ID_MINUTES','en','Minutes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SECOND','en','Second','2012-02-02' 
+SELECT 'LABEL','ID_SECOND','en','Second','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SECONDS','en','Seconds','2012-02-02' 
+SELECT 'LABEL','ID_SECONDS','en','Seconds','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NONE','en','None','2012-02-02' 
+SELECT 'LABEL','ID_NONE','en','None','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOT_YET_STARTED','en','Case not yet started','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOT_YET_STARTED','en','Case not yet started','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SETUP','en','ADMIN','2012-02-02' 
+SELECT 'LABEL','ID_SETUP','en','ADMIN','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREVIOUS_STEP','en','Previous Step','2012-02-02' 
+SELECT 'LABEL','ID_PREVIOUS_STEP','en','Previous Step','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_USER','en','Are you sure you want to remove this user?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_USER','en','Are you sure you want to remove this user?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DEASIGN_USER_GROUP_MESSAGE','en','Are you sure you want to remove this user or group?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DEASIGN_USER_GROUP_MESSAGE','en','Are you sure you want to remove this user or group?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHBOARD','en','Dashboards','2012-02-02' 
+SELECT 'LABEL','ID_DASHBOARD','en','Dashboards','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW','en','New','2012-02-02' 
+SELECT 'LABEL','ID_NEW','en','New','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_REMOVE_TRIGGER','en','Are you sure you want to remove this trigger?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EXPORT_PROCESS','en','Export Process','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EXPORT_PROCESS','en','Export Process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INVALID_EMAIL','en','The E-mail address is not valid.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INVALID_EMAIL','en','The E-mail address is not valid.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_WORKSPACE','en','You have specified an unavailable workspace.','2012-02-02' 
+SELECT 'LABEL','ID_NOT_WORKSPACE','en','You have specified an unavailable workspace.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_TABLES','en','Report Tables','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_TABLES','en','Report Tables','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_REPORT_TABLES','en','Report Tables','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_REPORT_TABLES','en','Report Tables','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_REPORT_TABLE','en','New Report Table','2012-02-02' 
+SELECT 'LABEL','ID_NEW_REPORT_TABLE','en','New Report Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_REPORT_TABLE','en','Edit Report Table','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_REPORT_TABLE','en','Edit Report Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_REPORT_TABLE','en','Do you want to delete this report table?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_REPORT_TABLE','en','Do you want to delete this report table?','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_PLEASE_ENTER_REQUIRED_FIELDS','en','Please enter the required fields','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_ENTER_REQUIRED_FIELDS','en','Please enter the required fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_ALREADY_EXISTS','en','Table already exists','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_ALREADY_EXISTS','en','Table already exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_LANGUAGES','en','Language','2012-02-02' 
+SELECT 'LABEL','ID_LANGUAGES','en','Language','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPORT','en','Export','2012-02-02' 
+SELECT 'LABEL','ID_EXPORT','en','Export','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_LANGUAGE','en','Are you sure you want to remove this language?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_LANGUAGE','en','Are you sure you want to remove this language?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_REMOVE_LANGUAGE','en','You cannot delete the default language','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_REMOVE_LANGUAGE','en','You cannot delete the default language','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_PO_FILE','en','Please select a .po file','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_PO_FILE','en','Please select a .po file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMAIL','en','Email','2012-02-02' 
+SELECT 'LABEL','ID_EMAIL','en','Email','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT3','en','Number of cases per month','2012-02-02' 
+SELECT 'LABEL','ID_REPORT3','en','Number of cases per month','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES_SUCCESS_UPDATE','en','Role has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_ROLES_SUCCESS_UPDATE','en','Role has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERMISSIONS','en','Permissions','2012-02-02' 
+SELECT 'LABEL','ID_PERMISSIONS','en','Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_SUBJECT_DERIVATION','en','Notification for task assignment','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_SUBJECT_DERIVATION','en','Notification for task assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERMITIONS','en','Permissions','2012-02-02' 
+SELECT 'LABEL','ID_PERMITIONS','en','Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_ROLE','en','Assign user','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_ROLE','en','Assign user','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_SUPERVISOR_PROCESSUSER','en','Do you want to delete this supervisor?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_SUPERVISOR_PROCESSUSER','en','Do you want to delete this supervisor?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE','en','Remove','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE','en','Remove','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM','en','Are you sure?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM','en','Are you sure?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ROLES_MSG2','en','Role already exists! Please choose another.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ROLES_MSG2','en','Role already exists! Please choose another.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FOLDERS','en','Documents','2012-02-02' 
+SELECT 'LABEL','ID_FOLDERS','en','Documents','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ROLES_MSG1','en','You must specify a role code!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ROLES_MSG1','en','You must specify a role code!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES_CAN_NOT_DELETE','en','This role cannot be deleted while it still   has some assigned users.','2012-02-02' 
+SELECT 'LABEL','ID_ROLES_CAN_NOT_DELETE','en','This role cannot be deleted while it still   has some assigned users.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_SUPERVISOR_DYNAFORM','en','Do you want to remove this DynaForm?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_SUPERVISOR_DYNAFORM','en','Do you want to remove this DynaForm?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','VIEW_ROLE_USERS','en','Users','2012-02-02' 
+SELECT 'LABEL','VIEW_ROLE_USERS','en','Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES','en','Roles','2012-02-02' 
+SELECT 'LABEL','ID_ROLES','en','Roles','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS','en','Notifications','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS','en','Notifications','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUPERVISORS_DYNAFORMS','en','DynaForms','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUPERVISORS_DYNAFORMS','en','DynaForms','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ASSIGN_DYNAFORM','en','Assign DynaForm','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ASSIGN_DYNAFORM','en','Assign DynaForm','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_REVISE','en','Review','2012-02-02' 
+SELECT 'LABEL','ID_TO_REVISE','en','Review','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_ENGINE_TYPE_3','en','SMTP (OpenMail)','2012-02-02' 
+SELECT 'LABEL','ID_MESS_ENGINE_TYPE_3','en','SMTP (OpenMail)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL','en','Test message send failed, error:','2012-02-02' 
+SELECT 'LABEL','ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL','en','Test message send failed, error:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_LANGUAGE_ERR_NO_WRITABLE2','en','Some files within XMLFORM directory are not  writable, to install or update the  translations the system requires that all  files are writable.  Contact your system administrator please.','2012-02-02' 
+SELECT 'LABEL','IMPORT_LANGUAGE_ERR_NO_WRITABLE2','en','Some files within XMLFORM directory are not  writable, to install or update the  translations the system requires that all  files are writable.  Contact your system administrator please.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_ENGINE_TYPE_2','en','SMTP (PHPMailer)','2012-02-02' 
+SELECT 'LABEL','ID_MESS_ENGINE_TYPE_2','en','SMTP (PHPMailer)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_ENGINE_TYPE_1','en','Mail (PHP)','2012-02-02' 
+SELECT 'LABEL','ID_MESS_ENGINE_TYPE_1','en','Mail (PHP)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_TEST_BODY','en','ProcessMaker Test Email','2012-02-02' 
+SELECT 'LABEL','ID_MESS_TEST_BODY','en','ProcessMaker Test Email','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_TEST_SUBJECT','en','Test Email','2012-02-02' 
+SELECT 'LABEL','ID_MESS_TEST_SUBJECT','en','Test Email','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESS_TEST_FROM_EMAIL','en','The ''From Email'' field is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESS_TEST_FROM_EMAIL','en','The ''From Email'' field is required','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESS_TEST_TO','en','The ''To'' field is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESS_TEST_TO','en','The ''To'' field is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_SEND_MAX_REQUIRED','en','The maximum number of attempts to send mail  is a required field.','2012-02-02' 
+SELECT 'LABEL','ID_MESS_SEND_MAX_REQUIRED','en','The maximum number of attempts to send mail  is a required field.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESS_EXECUTE_EVERY_REQUIRED','en','The ''Execute Every'' field is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESS_EXECUTE_EVERY_REQUIRED','en','The ''Execute Every'' field is required','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESS_ACCOUNT_REQUIRED','en','The email account is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESS_ACCOUNT_REQUIRED','en','The email account is required','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DBS_EDIT','en','Edit the current Database Source','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DBS_EDIT','en','Edit the current Database Source','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROCESS_SUPERVISORS','en','Supervisors','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PROCESS_SUPERVISORS','en','Supervisors','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESS_SERVER_REQUIRED','en','The email server is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESS_SERVER_REQUIRED','en','The email server is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_EDIT','en','Edit the current Database Source','2012-02-02' 
+SELECT 'LABEL','ID_DBS_EDIT','en','Edit the current Database Source','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DBS_NEW','en','Add new Database Source','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DBS_NEW','en','Add new Database Source','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DBS_LIST','en','Databases Source List','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DBS_LIST','en','Databases Source List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHANGES_SAVED','en','Changes saved','2012-02-02' 
+SELECT 'LABEL','ID_CHANGES_SAVED','en','Changes saved','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMAILS','en','EMAILS','2012-02-02' 
+SELECT 'LABEL','ID_EMAILS','en','EMAILS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT2','en','Number of cases per process','2012-02-02' 
+SELECT 'LABEL','ID_REPORT2','en','Number of cases per process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT1','en','Case duration by process and task','2012-02-02' 
+SELECT 'LABEL','ID_REPORT1','en','Case duration by process and task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IUD','en','#','2012-02-02' 
+SELECT 'LABEL','ID_IUD','en','#','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORTS','en','Reports','2012-02-02' 
+SELECT 'LABEL','ID_REPORTS','en','Reports','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_DBS','en','Are you sure you want to remove this DB Connection?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_DBS','en','Are you sure you want to remove this DB Connection?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG6','en','You must specify a user!','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG6','en','You must specify a user!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG7','en','Loading test, please wait!...','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG7','en','Loading test, please wait!...','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG5','en','You must specify a data base name!','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG5','en','You must specify a data base name!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG4','en','Please specify a database server!','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG4','en','Please specify a database server!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG3','en','Testing','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG3','en','Testing','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG2','en','Failed','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG2','en','Failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DBCONNECTIOS_MSG2','en','FAILED','2012-02-02' 
+SELECT 'LABEL','DBCONNECTIOS_MSG2','en','FAILED','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG1','en','DONE','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSG1','en','DONE','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIOS_MSG1','en','DONE','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIOS_MSG1','en','DONE','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_NEW_DBC','en','New Database Connection','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_NEW_DBC','en','New Database Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_DBC','en','Edit Database Connection','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_DBC','en','Edit Database Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DB_CONNECTIONS','en','Database Connections','2012-02-02' 
+SELECT 'LABEL','ID_DB_CONNECTIONS','en','Database Connections','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY_N','en','NORMAL','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY_N','en','NORMAL','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY_L','en','LOW','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY_L','en','LOW','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY_VL','en','VERY LOW','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY_VL','en','VERY LOW','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY_H','en','HIGH','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY_H','en','HIGH','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERAL','en','General','2012-02-02' 
+SELECT 'LABEL','ID_GENERAL','en','General','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGN','en','Reassign','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN','en','Reassign','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY_VH','en','VERY HIGH','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY_VH','en','VERY HIGH','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUPS','en','Groups','2012-02-02' 
+SELECT 'LABEL','ID_GROUPS','en','Groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTIVATE','en','Activate','2012-02-02' 
+SELECT 'LABEL','ID_ACTIVATE','en','Activate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEACTIVATE','en','Deactivate','2012-02-02' 
+SELECT 'LABEL','ID_DEACTIVATE','en','Deactivate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASECANCEL','en','No actions available for this case.','2012-02-02' 
+SELECT 'LABEL','ID_CASECANCEL','en','No actions available for this case.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UNPAUSE','en','Unpause','2012-02-02' 
+SELECT 'LABEL','ID_UNPAUSE','en','Unpause','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_PAUSE_CASE','en','Are you sure you want to pause this case?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_PAUSE_CASE','en','Are you sure you want to pause this case?','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_USERGROUP','en','Are you sure you want to remove this user group?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_USERGROUP','en','Are you sure you want to remove this user group?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_USERGROUP','en','Are you sure you want to remove this user group?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_REMOVE_USERGROUP','en','Are you sure you want to remove this user group?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ASSIGN_DONE','en','User successfully assigned to group','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ASSIGN_DONE','en','User successfully assigned to group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_GROUP','en','Assign group','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_GROUP','en','Assign group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BACK_TO_GROUP_LIST','en','Back to user groups','2012-02-02' 
+SELECT 'LABEL','ID_BACK_TO_GROUP_LIST','en','Back to user groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_GROUP_TO','en','Assign group to','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_GROUP_TO','en','Assign group to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAUSED_CASE','en','Pause','2012-02-02' 
+SELECT 'LABEL','ID_PAUSED_CASE','en','Pause','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VIEW_USER_GROUP','en','Groups','2012-02-02' 
+SELECT 'LABEL','ID_VIEW_USER_GROUP','en','Groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_VIEW_USER_GROUP','en','View user groups','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_VIEW_USER_GROUP','en','View user groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUPS_SUCCESS_NEW','en','Group has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_GROUPS_SUCCESS_NEW','en','Group has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REACTIVATE','en','Reactivate','2012-02-02' 
+SELECT 'LABEL','ID_REACTIVATE','en','Reactivate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_GROUPS','en','Groups for','2012-02-02' 
+SELECT 'LABEL','ID_USER_GROUPS','en','Groups for','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FUNCTION','en','@function() It evaluates the value, then  executes a PHP function','2012-02-02' 
+SELECT 'LABEL','ID_FUNCTION','en','@function() It evaluates the value, then  executes a PHP function','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REACTIVATE_CASES','en','Are you sure you want to reactivate this case?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REACTIVATE_CASES','en','Are you sure you want to reactivate this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_REACTIVATE_CASE','en','Are you sure you want to reactivate this case?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_REACTIVATE_CASE','en','Are you sure you want to reactivate this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ESCSJS','en','@@ It replaces the value in single  quotation marks to use it in JavaScript  sentences.','2012-02-02' 
+SELECT 'LABEL','ID_ESCSJS','en','@@ It replaces the value in single  quotation marks to use it in JavaScript  sentences.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ESCJS','en','@@ It replaces the value in quotation marks  to use it in JavaScript sentences','2012-02-02' 
+SELECT 'LABEL','ID_ESCJS','en','@@ It replaces the value in quotation marks  to use it in JavaScript sentences','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ESC','en','@@ Replace the value in quotes','2012-02-02' 
+SELECT 'LABEL','ID_ESC','en','@@ Replace the value in quotes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NONEC','en','@# Replace the value with no change','2012-02-02' 
+SELECT 'LABEL','ID_NONEC','en','@# Replace the value with no change','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EURL','en','@% It replaces the value for the assignment with a GET variable in the URL','2012-02-02' 
+SELECT 'LABEL','ID_EURL','en','@% It replaces the value for the assignment with a GET variable in the URL','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EVAL','en','@! It evaluates the value, then replaces it','2012-02-02' 
+SELECT 'LABEL','ID_EVAL','en','@! It evaluates the value, then replaces it','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NCAMBIO','en','@#, Replaces the value without any change.','2012-02-02' 
+SELECT 'LABEL','ID_NCAMBIO','en','@#, Replaces the value without any change.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DOCLICK','en','Double click to insert','2012-02-02' 
+SELECT 'LABEL','ID_DOCLICK','en','Double click to insert','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_IS_CURRENTLY_WITH_ANOTHER_USER','en','The case is currently opened by another user','2012-02-02' 
+SELECT 'LABEL','ID_CASE_IS_CURRENTLY_WITH_ANOTHER_USER','en','The case is currently opened by another user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IN','en','in','2012-02-02' 
+SELECT 'LABEL','ID_IN','en','in','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_DOES_NOT_EXISTS','en','This case does not exist','2012-02-02' 
+SELECT 'LABEL','ID_CASE_DOES_NOT_EXISTS','en','This case does not exist','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_UPGRADE_FILE','en','Please select the upgrade file','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_UPGRADE_FILE','en','Please select the upgrade file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_MAX_X_FIELDS','en','Please select 80 fields at most','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_MAX_X_FIELDS','en','Please select 80 fields at most','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPGRADE_READY','en','System upgraded from revision','2012-02-02' 
+SELECT 'LABEL','ID_UPGRADE_READY','en','System upgraded from revision','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPGRADE','en','Upgrade System','2012-02-02' 
+SELECT 'LABEL','ID_UPGRADE','en','Upgrade System','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOADED_DOCUMENTS','en','Uploaded Documents','2012-02-02' 
+SELECT 'LABEL','ID_UPLOADED_DOCUMENTS','en','Uploaded Documents','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TASK_INFORMATION','en','Task Information','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TASK_INFORMATION','en','Task Information','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_UPLOADED_DOCUMENTS','en','Uploaded Documents','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_UPLOADED_DOCUMENTS','en','Uploaded Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERATED_DOCUMENTS','en','Generated Documents','2012-02-02' 
+SELECT 'LABEL','ID_GENERATED_DOCUMENTS','en','Generated Documents','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_GENERATED_DOCUMENTS','en','Generated Documents','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_GENERATED_DOCUMENTS','en','Generated Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT4','en','Number of cases per starting user','2012-02-02' 
+SELECT 'LABEL','ID_REPORT4','en','Number of cases per starting user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT5','en','Number of cases per executing user','2012-02-02' 
+SELECT 'LABEL','ID_REPORT5','en','Number of cases per executing user','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC','en','Users & User Groups (Ad hoc)','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC','en','Users & User Groups (Ad hoc)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SETUP_WEBSERVICES','en','Setup','2012-02-02' 
+SELECT 'LABEL','ID_SETUP_WEBSERVICES','en','Setup','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_SERVICES','en','Web Services Test','2012-02-02' 
+SELECT 'LABEL','ID_WEB_SERVICES','en','Web Services Test','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESS_INFORMATION','en','Process Information','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESS_INFORMATION','en','Process Information','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INFORMATION','en','Information','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INFORMATION','en','Information','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ACTIONS','en','Actions','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ACTIONS','en','Actions','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESS_MAP','en','Process Map','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESS_MAP','en','Process Map','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ADHOC_ASSIGNMENT','en','Ad Hoc Assignment','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ADHOC_ASSIGNMENT','en','Ad Hoc Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADHOC_ASSIGNMENT','en','Adhoc Assignment','2012-02-02' 
+SELECT 'LABEL','ID_ADHOC_ASSIGNMENT','en','Adhoc Assignment','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DYNAFORMS','en','DynaForms','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DYNAFORMS','en','DynaForms','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEST','en','Test','2012-02-02' 
+SELECT 'LABEL','ID_TEST','en','Test','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_1','en','January','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_1','en','January','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_2','en','February','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_2','en','February','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_3','en','March','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_3','en','March','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_4','en','April','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_4','en','April','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_5','en','May','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_5','en','May','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_6','en','June','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_6','en','June','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_7','en','July','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_7','en','July','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_8','en','August','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_8','en','August','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_9','en','September','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_9','en','September','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_10','en','October','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_10','en','October','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_11','en','November','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_11','en','November','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_12','en','December','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_12','en','December','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_STRING','en','Replace the value in quotes','2012-02-02' 
+SELECT 'LABEL','ID_TO_STRING','en','Replace the value in quotes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_FLOAT','en','Replace the value converted to float','2012-02-02' 
+SELECT 'LABEL','ID_TO_FLOAT','en','Replace the value converted to float','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_INTEGER','en','Replace the value converted to integer','2012-02-02' 
+SELECT 'LABEL','ID_TO_INTEGER','en','Replace the value converted to integer','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_URL','en','Replace the value with URL encoding','2012-02-02' 
+SELECT 'LABEL','ID_TO_URL','en','Replace the value with URL encoding','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SQL_ESCAPE','en','Replace the value for use in SQL sentences','2012-02-02' 
+SELECT 'LABEL','ID_SQL_ESCAPE','en','Replace the value for use in SQL sentences','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPLACE_WITHOUT_CHANGES','en','Replace the value without changes','2012-02-02' 
+SELECT 'LABEL','ID_REPLACE_WITHOUT_CHANGES','en','Replace the value without changes','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REMOVE','en','Remove','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REMOVE','en','Remove','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_REMOVE_DASHBOARD','en','Are you sure you want to remove this dashboard?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_REMOVE_DASHBOARD','en','Are you sure you want to remove this dashboard?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_NORESULTS_USERGROUP','en','This user is not assigned to a group','2012-02-02' 
+SELECT 'LABEL','ID_MSG_NORESULTS_USERGROUP','en','This user is not assigned to a group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WSDL','en','The Server Host or Workspace is blank','2012-02-02' 
+SELECT 'LABEL','ID_WSDL','en','The Server Host or Workspace is blank','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_OBJECT_PERMISSIONS','en','Process Permissions','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_OBJECT_PERMISSIONS','en','Process Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YES','en','Yes','2012-02-02' 
+SELECT 'LABEL','ID_YES','en','Yes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO','en','No','2012-02-02' 
+SELECT 'LABEL','ID_NO','en','No','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ANY_TASK','en','All Tasks','2012-02-02' 
+SELECT 'LABEL','ID_ANY_TASK','en','All Tasks','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REGENERATE','en','Regenerate','2012-02-02' 
+SELECT 'LABEL','ID_REGENERATE','en','Regenerate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BLOCK','en','Block','2012-02-02' 
+SELECT 'LABEL','ID_BLOCK','en','Block','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ANY','en','Any','2012-02-02' 
+SELECT 'LABEL','ID_ANY','en','Any','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLED','en','Disabled','2012-02-02' 
+SELECT 'LABEL','ID_DISABLED','en','Disabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM','en','DynaForm','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM','en','DynaForm','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOCUMENT','en','Input Document','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOCUMENT','en','Input Document','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_OUTPUT_DOCUMENT','en','Output Document','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_DOCUMENT','en','Output Document','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PLEASE_SELECT_OTHER_OBJECT_TYPE','en','Please select other object type','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PLEASE_SELECT_OTHER_OBJECT_TYPE','en','Please select other object type','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REQUIRED_FIELDS','en','The following fields are required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REQUIRED_FIELDS','en','The following fields are required','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_OBJECT_PERMISSION','en','Do you want to delete this permission ?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_OBJECT_PERMISSION','en','Do you want to delete this permission ?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_WEB_ENTRY','en','Web Entry','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_WEB_ENTRY','en','Web Entry','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASE_TRACKER','en','Case Tracker','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASE_TRACKER','en','Case Tracker','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASE_TRACKER_OBJECTS','en','Objects','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASE_TRACKER_OBJECTS','en','Objects','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE_TRACKER_OBJECT','en','Do you want to delete this object?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE_TRACKER_OBJECT','en','Do you want to delete this object?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOT_EXISTS','en','The case does not exist','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOT_EXISTS','en','The case does not exist','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PIN_INVALID','en','The PIN is invalid','2012-02-02' 
+SELECT 'LABEL','ID_PIN_INVALID','en','The PIN is invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAP','en','Where is my Case?','2012-02-02' 
+SELECT 'LABEL','ID_MAP','en','Where is my Case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNADOC','en','My Case Forms and Documents','2012-02-02' 
+SELECT 'LABEL','ID_DYNADOC','en','My Case Forms and Documents','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HISTORY','en','My Case History','2012-02-02' 
+SELECT 'LABEL','ID_HISTORY','en','My Case History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FILEGENERATED','en','Filename generated, is required!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FILEGENERATED','en','Filename generated, is required!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_WEBENTRY','en','In order to use the Web Entry Feature, you must first create a S','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_WEBENTRY','en','In order to use the Web Entry Feature, you must first create a S','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DOWNLOAD','en','Download','2012-02-02' 
+SELECT 'LABEL','ID_DOWNLOAD','en','Download','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_DIRECTORY','en','Do you want to delete this directory and delete all its contents?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_DIRECTORY','en','Do you want to delete this directory and delete all its contents?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_FILE','en','Do you want to delete this file?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_DELETE_FILE','en','Do you want to delete this file?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_FILES_TO_UPLOAD','en','Please select the files to upload','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_FILES_TO_UPLOAD','en','Please select the files to upload','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESS_FILES_MANAGER','en','Process Files Manager','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESS_FILES_MANAGER','en','Process Files Manager','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORKSPACE','en','Workspace','2012-02-02' 
+SELECT 'LABEL','ID_WORKSPACE','en','Workspace','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SITE','en','Site','2012-02-02' 
+SELECT 'LABEL','ID_SITE','en','Site','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE','en','Case','2012-02-02' 
+SELECT 'LABEL','ID_CASE','en','Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE','en','Title','2012-02-02' 
+SELECT 'LABEL','ID_TITLE','en','Title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FINISH_WITH_OPTION','en','Finish with option','2012-02-02' 
+SELECT 'LABEL','ID_FINISH_WITH_OPTION','en','Finish with option','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONTINUE_WITH_OPTION','en','Continue with option','2012-02-02' 
+SELECT 'LABEL','ID_CONTINUE_WITH_OPTION','en','Continue with option','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONTINUE','en','Continue','2012-02-02' 
+SELECT 'LABEL','ID_CONTINUE','en','Continue','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPTION','en','Option','2012-02-02' 
+SELECT 'LABEL','ID_OPTION','en','Option','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST_EMPLOYEE','en','Last Employee','2012-02-02' 
+SELECT 'LABEL','ID_LAST_EMPLOYEE','en','Last Employee','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMPLOYEE','en','Employee','2012-02-02' 
+SELECT 'LABEL','ID_EMPLOYEE','en','Employee','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SESSION','en','Session','2012-02-02' 
+SELECT 'LABEL','ID_SESSION','en','Session','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEXT_TASK','en','Next Task','2012-02-02' 
+SELECT 'LABEL','ID_NEXT_TASK','en','Next Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERMISSIONS_FOR_THE_ROL','en','Permissions for the role','2012-02-02' 
+SELECT 'LABEL','ID_PERMISSIONS_FOR_THE_ROL','en','Permissions for the role','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BACK_TO_USERS_LIST','en','Back to Users List','2012-02-02' 
+SELECT 'LABEL','ID_BACK_TO_USERS_LIST','en','Back to Users List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_THE_ROLE','en','Assign the role','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_THE_ROLE','en','Assign the role','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_WITH_ROLE','en','Users with role','2012-02-02' 
+SELECT 'LABEL','ID_USER_WITH_ROLE','en','Users with role','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EDIT_STAGES_MAP','en','Edit Stages Map','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EDIT_STAGES_MAP','en','Edit Stages Map','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_STAGE','en','Add Stage','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_STAGE','en','Add Stage','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_STAGE','en','Delete Stage','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_STAGE','en','Delete Stage','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HISTORY_MESSAGES','en','My History Messages','2012-02-02' 
+SELECT 'LABEL','ID_HISTORY_MESSAGES','en','My History Messages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STAGE','en','Stage','2012-02-02' 
+SELECT 'LABEL','ID_STAGE','en','Stage','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_STAGE','en','Do you want to delete the stage:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_STAGE','en','Do you want to delete the stage:','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT','en','Edit','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_EDIT','en','Edit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HISTORY_MESSAGE_CASE','en','Messages History','2012-02-02' 
+SELECT 'LABEL','ID_HISTORY_MESSAGE_CASE','en','Messages History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_HISTORY_MESSAGE_CASE','en','Messages History','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_HISTORY_MESSAGE_CASE','en','Messages History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASKS_ASSIGNED','en','Tasks Assigned','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASKS_ASSIGNED','en','Tasks Assigned','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASKS_ASSIGNED_FOR','en','Tasks Assigned For','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_TASKS_ASSIGNED_FOR','en','Tasks Assigned For','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_TASK','en','Do you want to remove this task?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_REMOVE_TASK','en','Do you want to remove this task?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_SUBPROCESS','en','Add Sub-Process','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_ADD_SUBPROCESS','en','Add Sub-Process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_SUBPROCESS','en','Delete Sub-Process','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_SUBPROCESS','en','Delete Sub-Process','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS','en','Do you want to delete the Sub-Process:','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS','en','Do you want to delete the Sub-Process:','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASE_TRACKER_PROPERTIES','en','Properties','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASE_TRACKER_PROPERTIES','en','Properties','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_PSUPERVISORS','en','Process Supervisors','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_PSUPERVISORS','en','Process Supervisors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','INVALID_FILE','en','Invalid file!','2012-02-02' 
+SELECT 'LABEL','INVALID_FILE','en','Invalid file!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GET_EXTERNAL_FILE','en','Get','2012-02-02' 
+SELECT 'LABEL','ID_GET_EXTERNAL_FILE','en','Get','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_NAME','en','Field Name','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_NAME','en','Field Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREV_VALUES','en','Previous Values','2012-02-02' 
+SELECT 'LABEL','ID_PREV_VALUES','en','Previous Values','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CURRENT_VALUES','en','Current Values','2012-02-02' 
+SELECT 'LABEL','ID_CURRENT_VALUES','en','Current Values','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELDS_CHANGED_NUMBER','en','Fields changed','2012-02-02' 
+SELECT 'LABEL','ID_FIELDS_CHANGED_NUMBER','en','Fields changed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATA','en','Data','2012-02-02' 
+SELECT 'LABEL','ID_DATA','en','Data','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVE_CHANGES','en','Save Changes','2012-02-02' 
+SELECT 'LABEL','ID_SAVE_CHANGES','en','Save Changes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLASS_ALREADY_EXISTS','en','Class already exists','2012-02-02' 
+SELECT 'LABEL','ID_CLASS_ALREADY_EXISTS','en','Class already exists','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_KEY_TABLE','en','Please select one or more fields to be primary keys.','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_KEY_TABLE','en','Please select one or more fields to be primary keys.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_FOREIGN_TABLE','en','Field "table" is required','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_FOREIGN_TABLE','en','Field "table" is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_NAME_REQUIRED','en','Field name is required','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_NAME_REQUIRED','en','Field name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_SIZE_REQUIRED','en','Field size is required','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_SIZE_REQUIRED','en','Field size is required','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DYNAFIELD_ALREADY_EXIST','en','The field name already exists!','2012-02-02' 
+SELECT 'JAVASCRIPT','DYNAFIELD_ALREADY_EXIST','en','The field name already exists!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_HISTORY','en','Change Log','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_HISTORY','en','Change Log','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASEDEMO','en','Case Demo','2012-02-02' 
+SELECT 'LABEL','ID_CASEDEMO','en','Case Demo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEED_REGISTER','en','You need to be registered to download this  process. Register NOW!','2012-02-02' 
+SELECT 'LABEL','ID_NEED_REGISTER','en','You need to be registered to download this  process. Register NOW!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INCORRECT_USER_OR_PASS','en','Incorrect username or password','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INCORRECT_USER_OR_PASS','en','Incorrect username or password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESREASSIGN','en','You still have cases to reassign.','2012-02-02' 
+SELECT 'LABEL','ID_CASESREASSIGN','en','You still have cases to reassign.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO_REASSIGN','en','Reassign','2012-02-02' 
+SELECT 'LABEL','ID_TO_REASSIGN','en','Reassign','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELF_SERVICE','en','Self Service','2012-02-02' 
+SELECT 'LABEL','ID_SELF_SERVICE','en','Self Service','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TAKE','en','Take','2012-02-02' 
+SELECT 'LABEL','ID_TAKE','en','Take','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STAGES','en','Stages','2012-02-02' 
+SELECT 'LABEL','ID_STAGES','en','Stages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STATUS','en','Status','2012-02-02' 
+SELECT 'LABEL','ID_STATUS','en','Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGN_TO','en','Reassign','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN_TO','en','Reassign','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_REASSIGN','en','Do not reassign','2012-02-02' 
+SELECT 'LABEL','ID_NO_REASSIGN','en','Do not reassign','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS','en','Process','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS','en','Process','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_REASSIGN_CASES','en','Reassign Cases','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN_CASES','en','Reassign Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALERT_MESSAGE','en','Alert Message','2012-02-02' 
+SELECT 'LABEL','ID_ALERT_MESSAGE','en','Alert Message','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ERROR_USR_LASTNAME','en','Last name is required','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ERROR_USR_LASTNAME','en','Last name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_ERROR_USR_FIRSTNAME','en','First name is required','2012-02-02' 
+SELECT 'LABEL','ID_MSG_ERROR_USR_FIRSTNAME','en','First name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STARTED_CASES','en','My Started Cases','2012-02-02' 
+SELECT 'LABEL','ID_STARTED_CASES','en','My Started Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOGGED','en','Logged on','2012-02-02' 
+SELECT 'LABEL','ID_LOGGED','en','Logged on','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPTIONS','en','Options','2012-02-02' 
+SELECT 'LABEL','ID_OPTIONS','en','Options','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKINS','en','Skins','2012-02-02' 
+SELECT 'LABEL','ID_SKINS','en','Skins','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_INSERT_LINE','en','Error trying to insert the line','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_INSERT_LINE','en','Error trying to insert the line','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_PAUSE_CASE_ALERT','en','You should specify an unpause date.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_PAUSE_CASE_ALERT','en','You should specify an unpause date.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_ALERT1','en','Some fields have not been filled.','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_ALERT1','en','Some fields have not been filled.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_NOFIELDS_IN_CONDITION','en','No records found for conditions setup','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_NOFIELDS_IN_CONDITION','en','No records found for conditions setup','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_LANGUAGE_ERR_NO_WRITABLE','en','The XML forms directory is not writable','2012-02-02' 
+SELECT 'LABEL','IMPORT_LANGUAGE_ERR_NO_WRITABLE','en','The XML forms directory is not writable','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_ALERT2','en','You should select at least one event  (OnChange or OnLoad )','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_ALERT2','en','You should select at least one event  (OnChange or OnLoad )','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_TITLE','en','CONDITIONAL SHOW/HIDE EDITOR','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_TITLE','en','CONDITIONAL SHOW/HIDE EDITOR','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISB_WORKSPACE','en','This site is disabled','2012-02-02' 
+SELECT 'LABEL','ID_DISB_WORKSPACE','en','This site is disabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORKSPACES','en','WORKSPACES','2012-02-02' 
+SELECT 'LABEL','ID_WORKSPACES','en','WORKSPACES','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MORE_INFO','en','More Info','2012-02-02' 
+SELECT 'LABEL','ID_MORE_INFO','en','More Info','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_ALREADY_DERIVATED','en','Case already routed','2012-02-02' 
+SELECT 'LABEL','ID_CASE_ALREADY_DERIVATED','en','Case already routed','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','EVENT_EMAILEXISTS','en','The user or group is already in the list!','2012-02-02' 
+SELECT 'JAVASCRIPT','EVENT_EMAILEXISTS','en','The user or group is already in the list!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PENDING','en','Pending','2012-02-02' 
+SELECT 'LABEL','ID_PENDING','en','Pending','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FULL_NAME','en','Full Name','2012-02-02' 
+SELECT 'LABEL','ID_FULL_NAME','en','Full Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLE','en','Role','2012-02-02' 
+SELECT 'LABEL','ID_ROLE','en','Role','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_USER','en','User cannot be deleted while has assigned  cases.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_USER','en','User cannot be deleted while has assigned  cases.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_REMOVE_PLUGIN','en','Are you sure that you want to remove this  plugin?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_REMOVE_PLUGIN','en','Are you sure that you want to remove this  plugin?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','USERS_REASSIGN','en','This user cannot be deleted because he/she  still has some pending tasks. <br/><br/>Do  you want to reassign these tasks to another  user now?','2012-02-02' 
+SELECT 'JAVASCRIPT','USERS_REASSIGN','en','This user cannot be deleted because he/she  still has some pending tasks. <br/><br/>Do  you want to reassign these tasks to another  user now?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','LOGIN_VERIFY_MSG','en','Verifying...','2012-02-02' 
+SELECT 'LABEL','LOGIN_VERIFY_MSG','en','Verifying...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTION','en','Action','2012-02-02' 
+SELECT 'LABEL','ID_ACTION','en','Action','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_ACTION','en','Edit Action','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_ACTION','en','Edit Action','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSING','en','Processing ...','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSING','en','Processing ...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_CANNOT_BE_PRIMARY_KEY','en','The type of field ''TEXT'' can''t be a primary key','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_CANNOT_BE_PRIMARY_KEY','en','The type of field ''TEXT'' can''t be a primary key','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_HASNOSUBMITBTN','en','Warning: This DynaForm does not include a [Submit] or [Button] field to save any entered data.','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_HASNOSUBMITBTN','en','Warning: This DynaForm does not include a [Submit] or [Button] field to save any entered data.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_VALID_CSV_FILE','en','Please upload a valid CSV file','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_VALID_CSV_FILE','en','Please upload a valid CSV file','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_DELETE_GRID_ITEM','en','Are you sure you want to delete this row?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_DELETE_GRID_ITEM','en','Are you sure you want to delete this row?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_NODELETE_GRID_ITEM','en','Can''t delete the first row!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_NODELETE_GRID_ITEM','en','Can''t delete the first row!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_GROUPS_ADDCONFIRM','en','At least one user must be selected.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_GROUPS_ADDCONFIRM','en','At least one user must be selected.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEBUG','en','Debugger','2012-02-02' 
+SELECT 'LABEL','ID_DEBUG','en','Debugger','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_EVENT','en','Do you want to delete this event?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_EVENT','en','Do you want to delete this event?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_RESENDMSG','en','Are you sure that you want to resend this  message?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_CONFIRM_RESENDMSG','en','Are you sure that you want to resend this  message?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESEND','en','Resend','2012-02-02' 
+SELECT 'LABEL','ID_RESEND','en','Resend','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_EVENT','en','Edit Event','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_EVENT','en','Edit Event','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_EVENT','en','New Event','2012-02-02' 
+SELECT 'LABEL','ID_NEW_EVENT','en','New Event','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EVENTS','en','Events','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EVENTS','en','Events','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TO','en','To','2012-02-02' 
+SELECT 'LABEL','ID_TO','en','To','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LINE','en','Line','2012-02-02' 
+SELECT 'LABEL','ID_LINE','en','Line','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REQUIRED','en','The condition is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REQUIRED','en','The condition is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DUPLICATE_ENTRY_PRIMARY_KEY','en','Duplicate entry for primary key','2012-02-02' 
+SELECT 'LABEL','ID_DUPLICATE_ENTRY_PRIMARY_KEY','en','Duplicate entry for primary key','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADDITIONAL_TABLES','en','PM Tables','2012-02-02' 
+SELECT 'LABEL','ID_ADDITIONAL_TABLES','en','PM Tables','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REQUEST_SENT','en','Request sent.','2012-02-02' 
+SELECT 'LABEL','ID_REQUEST_SENT','en','Request sent.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_SAVE_CHANGES','en','Do you want to save changes?','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_SAVE_CHANGES','en','Do you want to save changes?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_USERS','en','Import Users','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_USERS','en','Import Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_STEP','en','Are you sure you want to eliminate this step from the task?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_STEP','en','Are you sure you want to eliminate this step from the task?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION','en','Authentication','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION','en','Authentication','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INVALID','en','Authentication Source for this user is invalid','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INVALID','en','Authentication Source for this user is invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_INACTIVE_BY_DATE','en','User not allowed access past due date','2012-02-02' 
+SELECT 'LABEL','ID_USER_INACTIVE_BY_DATE','en','User not allowed access past due date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_AUTH_SOURCE','en','Do you want to delete this authentication  source?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_AUTH_SOURCE','en','Do you want to delete this authentication  source?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_OBJECT_NOT_EXISTS','en','Error: Object does not exist.','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_OBJECT_NOT_EXISTS','en','Error: Object does not exist.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTH_SOURCES','en','Authentication Sources','2012-02-02' 
+SELECT 'LABEL','ID_AUTH_SOURCES','en','Authentication Sources','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES_SUCCESS_NEW','en','Role has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_ROLES_SUCCESS_NEW','en','Role has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUPERVISORS_INPUTS','en','Input Documents','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_SUPERVISORS_INPUTS','en','Input Documents','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ASSIGN_INPUT_DOCUMENT','en','Assign Input Document','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ASSIGN_INPUT_DOCUMENT','en','Assign Input Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_DERIVATED','en','The case couldn''t be routed. Consult the  system administrator','2012-02-02' 
+SELECT 'LABEL','ID_NOT_DERIVATED','en','The case couldn''t be routed. Consult the  system administrator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_SUPERVISOR_INPUT','en','Do you want to remove this Input Document?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_SUPERVISOR_INPUT','en','Do you want to remove this Input Document?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADVANCEDSEARCH','en','Advanced Search','2012-02-02' 
+SELECT 'LABEL','ID_ADVANCEDSEARCH','en','Advanced Search','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_POLICY_ALERT','en','Your password does not meet the following password policies','2012-02-02' 
+SELECT 'LABEL','ID_POLICY_ALERT','en','Your password does not meet the following password policies','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_CHANGE_PASSWORD_POLICY','en','Please change your password to one that complies with these policies.','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_CHANGE_PASSWORD_POLICY','en','Please change your password to one that complies with these policies.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_MINIMUN_LENGTH','en','Minimum length','2012-02-02' 
+SELECT 'LABEL','ID_PPP_MINIMUN_LENGTH','en','Minimum length','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_MAXIMUN_LENGTH','en','Maximum length','2012-02-02' 
+SELECT 'LABEL','ID_PPP_MAXIMUN_LENGTH','en','Maximum length','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_NUMERICAL_CHARACTER_REQUIRED','en','Numerical Character is required','2012-02-02' 
+SELECT 'LABEL','ID_PPP_NUMERICAL_CHARACTER_REQUIRED','en','Numerical Character is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_UPPERCASE_CHARACTER_REQUIRED','en','Uppercase Character is required','2012-02-02' 
+SELECT 'LABEL','ID_PPP_UPPERCASE_CHARACTER_REQUIRED','en','Uppercase Character is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_SPECIAL_CHARACTER_REQUIRED','en','Special Character is required','2012-02-02' 
+SELECT 'LABEL','ID_PPP_SPECIAL_CHARACTER_REQUIRED','en','Special Character is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_CHANGE_PASSWORD_AFTER_NEXT_LOGIN','en','User must change his password after next login','2012-02-02' 
+SELECT 'LABEL','ID_PPP_CHANGE_PASSWORD_AFTER_NEXT_LOGIN','en','User must change his password after next login','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PPP_EXPIRATION_IN','en','Password Expiration in','2012-02-02' 
+SELECT 'LABEL','ID_PPP_EXPIRATION_IN','en','Password Expiration in','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DAYS','en','Days','2012-02-02' 
+SELECT 'LABEL','ID_DAYS','en','Days','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACCOUNT','en','Account','2012-02-02' 
+SELECT 'LABEL','ID_ACCOUNT','en','Account','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACCOUNT_DISABLED_CONTACT_ADMIN','en','disabled, please contact with the system administrator','2012-02-02' 
+SELECT 'LABEL','ID_ACCOUNT_DISABLED_CONTACT_ADMIN','en','disabled, please contact with the system administrator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORKSPACE_USING','en','Using workspace','2012-02-02' 
+SELECT 'LABEL','ID_WORKSPACE_USING','en','Using workspace','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REASSIGN_BYUSER_CONFIRM','en','Are you sure that you want to reassign the  cases?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REASSIGN_BYUSER_CONFIRM','en','Are you sure that you want to reassign the  cases?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REASSIGN_BYUSER','en','At least one item from the list must be  selected.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REASSIGN_BYUSER','en','At least one item from the list must be  selected.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_RESSIGN_BYUSER_PANEL','en','Users selection interface','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_RESSIGN_BYUSER_PANEL','en','Users selection interface','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'JAVASCRIPT','ID_MSG_RESSIGN_B','en','At least one item from the list must be  selected.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_RESSIGN_B','en','At least one item from the list must be  selected.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DETAILS_WEBSERVICES','en','Details','2012-02-02' 
+SELECT 'LABEL','ID_DETAILS_WEBSERVICES','en','Details','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_STREAMING_FILE','en','doesn''t exist. It should be saved by a  plugin to a different place. Please review  the configuration','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_STREAMING_FILE','en','doesn''t exist. It should be saved by a  plugin to a different place. Please review  the configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_UNKNOWN','en','Unknown upload error','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_UNKNOWN','en','Unknown upload error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_EXTENSION','en','File upload stopped by extension','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_EXTENSION','en','File upload stopped by extension','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_CANT_WRITE','en','Failed to write file to disk','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_CANT_WRITE','en','Failed to write file to disk','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_NO_TMP_DIR','en','Missing a temporary folder','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_NO_TMP_DIR','en','Missing a temporary folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_NO_FILE','en','No file was uploaded','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_NO_FILE','en','No file was uploaded','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_PARTIAL','en','The uploaded file was only partially uploaded','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_PARTIAL','en','The uploaded file was only partially uploaded','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_FORM_SIZE','en','The uploaded file exceeds the MAX_FILE_SIZE   directive that was specified in the HTML form','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_FORM_SIZE','en','The uploaded file exceeds the MAX_FILE_SIZE   directive that was specified in the HTML form','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_ERR_INI_SIZE','en','The uploaded file exceeds the  upload_max_filesize directive in php.ini','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_ERR_INI_SIZE','en','The uploaded file exceeds the  upload_max_filesize directive in php.ini','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_PROCESS_RELATED','en','Not from a Process','2012-02-02' 
+SELECT 'LABEL','ID_NOT_PROCESS_RELATED','en','Not from a Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXTERNAL_FILE','en','External','2012-02-02' 
+SELECT 'LABEL','ID_EXTERNAL_FILE','en','External','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INFO','en','Info','2012-02-02' 
+SELECT 'LABEL','ID_INFO','en','Info','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_INPUT_AND_HISTORY','en','This action will delete the current  document and all its versions','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_INPUT_AND_HISTORY','en','This action will delete the current  document and all its versions','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_DELETE_INPUT_AND_HISTORY','en','This will delete the current document and  its past versions.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_DELETE_INPUT_AND_HISTORY','en','This will delete the current document and  its past versions.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SETUP_MAILCONF_TITLE','en','Test SMTP Connection','2012-02-02' 
+SELECT 'LABEL','ID_SETUP_MAILCONF_TITLE','en','Test SMTP Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DBCONNECTIONS_TITLE','en','Testing database server configuration','2012-02-02' 
+SELECT 'LABEL','DBCONNECTIONS_TITLE','en','Testing database server configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBCNN_TITLE','en','Checking server configuration','2012-02-02' 
+SELECT 'LABEL','ID_DBCNN_TITLE','en','Checking server configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_IN_FOLDER','en','Not in folder','2012-02-02' 
+SELECT 'LABEL','ID_NOT_IN_FOLDER','en','Not in folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_FOLDER','en','New Folder','2012-02-02' 
+SELECT 'LABEL','ID_NEW_FOLDER','en','New Folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEXT_STEP','en','Next Step','2012-02-02' 
+SELECT 'LABEL','ID_NEXT_STEP','en','Next Step','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_FOLDER','en','ProcessMaker Folder','2012-02-02' 
+SELECT 'LABEL','ID_PM_FOLDER','en','ProcessMaker Folder','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INPUT_DOCUMENT_HISTORY','en','Input Document History','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INPUT_DOCUMENT_HISTORY','en','Input Document History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_UPLOAD_REPLACE_INPUT','en','Replace Input Document','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_UPLOAD_REPLACE_INPUT','en','Replace Input Document','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_UPLOAD_NEW_INPUT_VERSION','en','Upload New Input Document Version','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_UPLOAD_NEW_INPUT_VERSION','en','Upload New Input Document Version','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VERSION_HISTORY','en','Version History','2012-02-02' 
+SELECT 'LABEL','ID_VERSION_HISTORY','en','Version History','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_UPLOAD_NEW_INPUT','en','Upload New Input Document','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_UPLOAD_NEW_INPUT','en','Upload New Input Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_VERSION','en','New Version','2012-02-02' 
+SELECT 'LABEL','ID_NEW_VERSION','en','New Version','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ROLES_MSG3','en','You must specify a role name!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ROLES_MSG3','en','You must specify a role name!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_LINE','en','Delete line','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_DELETE_LINE','en','Delete line','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_HANDLER_HELP1','en','About the feature','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_HANDLER_HELP1','en','About the feature','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_HANDLER_HELP2','en','Drag & Drop to move and reorder the fields.','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_HANDLER_HELP2','en','Drag & Drop to move and reorder the fields.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_HANDLER_HELP3','en','Bring the mouse pointer near tool icon and  the corresponding options (Edit, Delete)  will be shown.','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_HANDLER_HELP3','en','Bring the mouse pointer near tool icon and  the corresponding options (Edit, Delete)  will be shown.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_WEBENTRY_DELETE','en','Are you sure you want to delete this web entry?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_WEBENTRY_DELETE','en','Are you sure you want to delete this web entry?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHANGE_VIEW','en','Change view','2012-02-02' 
+SELECT 'LABEL','ID_CHANGE_VIEW','en','Change view','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_FIELD','en','Remove field','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_FIELD','en','Remove field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VISIBLE','en','Visible','2012-02-02' 
+SELECT 'LABEL','ID_VISIBLE','en','Visible','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TYPE','en','Type','2012-02-02' 
+SELECT 'LABEL','ID_TYPE','en','Type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LABEL','en','Label','2012-02-02' 
+SELECT 'LABEL','ID_LABEL','en','Label','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NAME','en','Name','2012-02-02' 
+SELECT 'LABEL','ID_NAME','en','Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','WEBEN_ONLY_BALANCED','en','Web Entry only works with tasks which  have  Cyclical Assignment.<br/> Please  change  the Assignment Rules','2012-02-02' 
+SELECT 'LABEL','WEBEN_ONLY_BALANCED','en','Web Entry only works with tasks which  have  Cyclical Assignment.<br/> Please  change  the Assignment Rules','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DETAIL','en','Detail','2012-02-02' 
+SELECT 'LABEL','ID_DETAIL','en','Detail','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','HTML_FILES','en','You can open only files with the .html  extension','2012-02-02' 
+SELECT 'LABEL','HTML_FILES','en','You can open only files with the .html  extension','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','WEBEN_ONLY_BALANCEDJS','en','Web Entry only works with tasks which have   Cyclical Assignment.  Please change  the  Assignment Rules','2012-02-02' 
+SELECT 'JAVASCRIPT','WEBEN_ONLY_BALANCEDJS','en','Web Entry only works with tasks which have   Cyclical Assignment.  Please change  the  Assignment Rules','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','HTML_FILES','en','Make sure your uploaded file has extension  html or txt','2012-02-02' 
+SELECT 'JAVASCRIPT','HTML_FILES','en','Make sure your uploaded file has extension  html or txt','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEARCH_RESULT','en','Search results','2012-02-02' 
+SELECT 'LABEL','ID_SEARCH_RESULT','en','Search results','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSG_REMOVE_PLUGIN','en','Are you sure that you want to remove this  plugin?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSG_REMOVE_PLUGIN','en','Are you sure that you want to remove this  plugin?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_REMOVE_PLUGIN_SUCCESS','en','Plugin successfully removed!','2012-02-02' 
+SELECT 'LABEL','ID_MSG_REMOVE_PLUGIN_SUCCESS','en','Plugin successfully removed!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','CANT_DEL_LANGUAGE','en','This language cannot be deleted  because it  is currently being  used.','2012-02-02' 
+SELECT 'LABEL','CANT_DEL_LANGUAGE','en','This language cannot be deleted  because it  is currently being  used.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ADD','en','Add','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ADD','en','Add','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_ALERT3','en','You have not tested the condition, do you  want save anyway?','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_ALERT3','en','You have not tested the condition, do you  want save anyway?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','CONDITIONAL_ALERT4','en','You have an error in the condition, do you  want save anyway?','2012-02-02' 
+SELECT 'JAVASCRIPT','CONDITIONAL_ALERT4','en','You have an error in the condition, do you  want save anyway?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR','en','ERROR','2012-02-02' 
+SELECT 'LABEL','ID_ERROR','en','ERROR','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REQUIRED_FIELDS_ERROR','en','Some required fields were not filled','2012-02-02' 
+SELECT 'LABEL','ID_REQUIRED_FIELDS_ERROR','en','Some required fields were not filled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_LANGUAGE_SUCCESS','en','The translation file was successfully imported.','2012-02-02' 
+SELECT 'LABEL','IMPORT_LANGUAGE_SUCCESS','en','The translation file was successfully imported.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_REPORT_TO','en','Report to','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_REPORT_TO','en','Report to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','UID_UNDEFINED_USER','en','Undefined user','2012-02-02' 
+SELECT 'LABEL','UID_UNDEFINED_USER','en','Undefined user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTAMENT_USERS','en','Departments','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTAMENT_USERS','en','Departments','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENTS_USERS','en','Departments','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENTS_USERS','en','Departments','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_DEPARTMENT','en','New','2012-02-02' 
+SELECT 'LABEL','ID_NEW_DEPARTMENT','en','New','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DEPARTMENT','en','Do you want to delete this department?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_DEPARTMENT','en','Do you want to delete this department?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSJ_DEPTO','en','Department name already exists!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSJ_DEPTO','en','Department name already exists!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSJ_REPORSTO','en','The current user does not have a valid   Reports To user.  Please contact  the  administrator.','2012-02-02' 
+SELECT 'LABEL','ID_MSJ_REPORSTO','en','The current user does not have a valid   Reports To user.  Please contact  the  administrator.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_LOGO','en','Are you sure you want to delete this Logo?','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_LOGO','en','Are you sure you want to delete this Logo?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPLACED_LOGO','en','The logo was replaced','2012-02-02' 
+SELECT 'LABEL','ID_REPLACED_LOGO','en','The logo was replaced','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REMOVE_LOGO','en','Are you sure you want to delete this Logo?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REMOVE_LOGO','en','Are you sure you want to delete this Logo?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOGO','en','Logo','2012-02-02' 
+SELECT 'LABEL','ID_LOGO','en','Logo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INBOX','en','Inbox','2012-02-02' 
+SELECT 'LABEL','ID_INBOX','en','Inbox','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTBOX','en','Outbox','2012-02-02' 
+SELECT 'LABEL','ID_OUTBOX','en','Outbox','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_MENU_FOLDERS','en','Cases','2012-02-02' 
+SELECT 'LABEL','ID_CASES_MENU_FOLDERS','en','Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_MENU_SEARCH','en','Search','2012-02-02' 
+SELECT 'LABEL','ID_CASES_MENU_SEARCH','en','Search','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_MENU_ADMIN','en','Process Supervisor','2012-02-02' 
+SELECT 'LABEL','ID_CASES_MENU_ADMIN','en','Process Supervisor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SENT','en','Participated','2012-02-02' 
+SELECT 'LABEL','ID_SENT','en','Participated','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR','en','Calendar','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR','en','Calendar','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE_SCHEDULER','en','Are you sure you want to delete this  scheduled case?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE_SCHEDULER','en','Are you sure you want to delete this  scheduled case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_LIST','en','New cases scheduler','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_LIST','en','New cases scheduler','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_LOG','en','Cases Scheduler Logs','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_LOG','en','Cases Scheduler Logs','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_IDOCUMENT','en','This object is being used in some steps.  Are you sure you want to delete it?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_IDOCUMENT','en','This object is being used in some steps.  Are you sure you want to delete it?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FIELD_FOREIGN_TABLE','en','Field "table" is required','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FIELD_FOREIGN_TABLE','en','Field "table" is required','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'JAVASCRIPT','ID_ASSIGN_RULES','en','Error: There is a problem with next tasks   of this process, one of them have manual   assignment.  Manual assignment shouldn''t be   used with subprocesses','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ASSIGN_RULES','en','Error: There is a problem with the next tasks of this process. One of them has manual assignment. Manual assignment shouldn''t be used with subprocesses','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_INVALID','en','Field Invalid','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_INVALID','en','Field Invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WARNING','en','WARNING','2012-02-02' 
+SELECT 'LABEL','ID_WARNING','en','WARNING','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVED','en','Saved','2012-02-02' 
+SELECT 'LABEL','ID_SAVED','en','Saved','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_RULES','en','Error: There is a problem with next tasks  of this process, one of them have manual  assignment.  Manual assignment shouldn''t be  used with subprocesses','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_RULES','en','Error: There is a problem with the next tasks of this process. One of them has manual assignment. Manual assignment shouldn''t be used with subprocesses','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_OPTION_TABLE','en','Select a option to export schema or data  from the selected table(s).','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_OPTION_TABLE','en','Select a option to export schema or data  from the selected table(s).','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_TABLE','en','Please select a table to export.','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_TABLE','en','Please select a table to export.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_WAS_ASSIGNED_TO_USER','en','Manual assignment shouldn''t be used with  subprocesses.<br>The task "{0}" from case  {1} was assigned to user <b>{2}</b> ( {3}   {4} )','2012-02-02' 
+SELECT 'LABEL','ID_TASK_WAS_ASSIGNED_TO_USER','en','Manual assignment shouldn''t be used with  subprocesses.<br>The task "{0}" from case  {1} was assigned to user <b>{2}</b> ( {3}   {4} )','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_ONVACATION','en','User on vacation! Contact to your System  Administrator if you want to login. please','2012-02-02' 
+SELECT 'LABEL','ID_USER_ONVACATION','en','User on vacation! Contact to your System  Administrator if you want to login. please','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PASSWORD_HISTORY','en','Password history','2012-02-02' 
+SELECT 'LABEL','PASSWORD_HISTORY','en','Password history','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EMAIL_REQUIRED','en','The mail to is required, or uncheck the  send a test mail','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EMAIL_REQUIRED','en','The mail to is required, or uncheck the  send a test mail','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PASSWORD_REQUIRED','en','The password is required, or uncheck the  option Require Authentication','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PASSWORD_REQUIRED','en','The password is required, or uncheck the  option Require Authentication','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SERVER_REQUIRED','en','You must specify a server!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SERVER_REQUIRED','en','You must specify a server!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FILL_SERVER','en','You must specify a server!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FILL_SERVER','en','You must specify a server!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONDITIONS_EDITOR','en','Conditions editor','2012-02-02' 
+SELECT 'LABEL','ID_CONDITIONS_EDITOR','en','Conditions editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_FILE_PMT_IMPORT','en','Please select a .pmt file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_FILE_PMT_IMPORT','en','Please select a .pmt file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_FILE_PM_IMPORT','en','Please select a .pm file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_FILE_PM_IMPORT','en','Please select a .pm file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_PLUGIN','en','Please select the plugin','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_PLUGIN','en','Please select the plugin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_FIELD_FOUND','en','No fields found!','2012-02-02' 
+SELECT 'LABEL','ID_NO_FIELD_FOUND','en','No fields found!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UNASSIGNED','en','Unassigned','2012-02-02' 
+SELECT 'LABEL','ID_UNASSIGNED','en','Unassigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLAIM','en','Claim','2012-02-02' 
+SELECT 'LABEL','ID_CLAIM','en','Claim','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_INVALID_SYNTAX','en','Invalid syntax','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_INVALID_SYNTAX','en','Invalid syntax','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_PERMISSION_NO_PARTICIPATED','en','You do not have permission to see this case  or you have not participated in it.','2012-02-02' 
+SELECT 'LABEL','ID_NO_PERMISSION_NO_PARTICIPATED','en','You do not have permission to see this case  or you have not participated in it.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EMPTY_NODENAME','en','The field name contains spaces or it''s empty!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EMPTY_NODENAME','en','The field name contains spaces or it''s empty!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SUGGEST_NEW_ENTRIES_ALERT','en','You should set all options for new entries.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SUGGEST_NEW_ENTRIES_ALERT','en','You should set all options for new entries.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ISNT_LICENSE','en','This isn''t the correct license.','2012-02-02' 
+SELECT 'LABEL','ID_ISNT_LICENSE','en','This isn''t the correct license.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TABLE_RESERVED_WORDS','en','This table name is reserved. Please set  another for','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TABLE_RESERVED_WORDS','en','This table name is reserved. Please set  another for','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_NEW_CASE','en','Start a new case','2012-02-02' 
+SELECT 'LABEL','ID_START_NEW_CASE','en','Start a new case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_NOCATEGORY','en','No Category','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_NOCATEGORY','en','No Category','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_LOGO','en','Please Select Logo','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_LOGO','en','Please Select Logo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_NO_STEPS','en','The task doesn''t have any steps','2012-02-02' 
+SELECT 'LABEL','ID_TASK_NO_STEPS','en','The task doesn''t have any steps','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FIELDS_RESERVED_WORDS','en','The following fields cannot have these  names because they are reserved words','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FIELDS_RESERVED_WORDS','en','The following fields cannot have these  names because they are reserved words','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_CATEGORY','en','Process Categories','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_CATEGORY','en','Process Categories','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOCATION','en','Location','2012-02-02' 
+SELECT 'LABEL','ID_LOCATION','en','Location','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_GROUP','en','Group','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_GROUP','en','Group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COUNTRY','en','Country','2012-02-02' 
+SELECT 'LABEL','ID_COUNTRY','en','Country','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BACK_PERMISSIONS_LIST','en','Back to permissions list','2012-02-02' 
+SELECT 'LABEL','ID_BACK_PERMISSIONS_LIST','en','Back to permissions list','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGNMENT','en','REASSIGNMENT','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGNMENT','en','REASSIGNMENT','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILL_PRIMARY_KEYS','en','Please fill all the primary key fields','2012-02-02' 
+SELECT 'LABEL','ID_FILL_PRIMARY_KEYS','en','Please fill all the primary key fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGER_SOURCE_LINK','en','Edit Source Code','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGER_SOURCE_LINK','en','Edit Source Code','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ASSIGN_SUPERVISOR','en','Assign Process Supervisor','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ASSIGN_SUPERVISOR','en','Assign Process Supervisor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ADD_USERS_TO_DEPARTMENT','en','Add users to department','2012-02-02' 
+SELECT 'LABEL','ADD_USERS_TO_DEPARTMENT','en','Add users to department','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_RESET','en','Reset','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_RESET','en','Reset','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CREATE','en','Create','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CREATE','en','Create','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DISABLE_WORKSPACE_CONFIRM','en','Do you want to disable the selected workspace?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DISABLE_WORKSPACE_CONFIRM','en','Do you want to disable the selected workspace?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ENABLE_WORKSPACE_CONFIRM','en','Do you want enable the selected workspace?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ENABLE_WORKSPACE_CONFIRM','en','Do you want enable the selected workspace?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_WORKSPACE','en','Enable Workspace','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_WORKSPACE','en','Enable Workspace','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_ALERT','en','You forgot to fill a required field!','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_ALERT','en','You forgot to fill a required field!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLE_WORKSPACE','en','Disable Workspace','2012-02-02' 
+SELECT 'LABEL','ID_DISABLE_WORKSPACE','en','Disable Workspace','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS_CONFIRMNOTE','en','Note.- If you open the new site your  current session will be closed.','2012-02-02' 
+SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS_CONFIRMNOTE','en','Note.- If you open the new site your  current session will be closed.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS_CONFIRM','en','Do you want open the new site?','2012-02-02' 
+SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS_CONFIRM','en','Do you want open the new site?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS','en','Your new site was successfully created with  name:','2012-02-02' 
+SELECT 'JAVASCRIPT','NEW_SITE_SUCCESS','en','Your new site was successfully created with  name:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DBCONNECTIONS_MSGR','en','Server Response','2012-02-02' 
+SELECT 'LABEL','DBCONNECTIONS_MSGR','en','Server Response','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGR','en','Server Response','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGR','en','Server Response','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CUSTOM_TRIGGER_DESCRIPTION','en','Custom Trigger','2012-02-02' 
+SELECT 'LABEL','ID_CUSTOM_TRIGGER_DESCRIPTION','en','Custom Trigger','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGA','en','Database Connections Test was aborted','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGA','en','Database Connections Test was aborted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CUSTOM_TRIGGER','en','Custom Trigger','2012-02-02' 
+SELECT 'LABEL','ID_CUSTOM_TRIGGER','en','Custom Trigger','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_VALIDATION_ERR3','en','* The {Object} {Description} depends.','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_VALIDATION_ERR3','en','* The {Object} {Description} depends.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_VALIDATION_ERR2','en','({N}) Dependencies were found for this  trigger in {Object} objects','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_VALIDATION_ERR2','en','({N}) Dependencies were found for this  trigger in {Object} objects','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_VALIDATION','en','No Dependencies were found for this trigger  in {Object} definitions','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_VALIDATION','en','No Dependencies were found for this trigger  in {Object} definitions','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TRIGGERS_VALIDATE_EERR1','en','This trigger can''t be deleted due to  dependencies.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TRIGGERS_VALIDATE_EERR1','en','This trigger can''t be deleted due to  dependencies.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONTACT_ADMIN','en','Please contact your system administrator','2012-02-02' 
+SELECT 'LABEL','ID_CONTACT_ADMIN','en','Please contact your system administrator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_ON_VACATIONS','en','User on vacation was replaced','2012-02-02' 
+SELECT 'LABEL','ID_USER_ON_VACATIONS','en','User on vacation was replaced','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_DEF_PROBLEM','en','There is a problem in the process definition and/or an exception error occurred.','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_DEF_PROBLEM','en','There is a problem in the process definition and/or an exception error occurred.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COPY_OF','en','Copy of','2012-02-02' 
+SELECT 'LABEL','ID_COPY_OF','en','Copy of','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COPY','en','Copy','2012-02-02' 
+SELECT 'LABEL','ID_COPY','en','Copy','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOADING','en','Loading, please wait...','2012-02-02' 
+SELECT 'LABEL','ID_LOADING','en','Loading, please wait...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLEAR_CACHE','en','Clear Cache','2012-02-02' 
+SELECT 'LABEL','ID_CLEAR_CACHE','en','Clear Cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESTORE_LOGO','en','Restore the default logo','2012-02-02' 
+SELECT 'LABEL','ID_RESTORE_LOGO','en','Restore the default logo','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_APPLY_LOGO','en','Do you want to apply the selected Logo?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_APPLY_LOGO','en','Do you want to apply the selected Logo?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLEAR_CACHE_CONFIRM1','en','Clear all cache files now?','2012-02-02' 
+SELECT 'LABEL','ID_CLEAR_CACHE_CONFIRM1','en','Clear all cache files now?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELFSERVICE','en','Self Service','2012-02-02' 
+SELECT 'LABEL','ID_SELFSERVICE','en','Self Service','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSES','en','Processes','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSES','en','Processes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENTER_SEARCH_TERM','en','enter search term','2012-02-02' 
+SELECT 'LABEL','ID_ENTER_SEARCH_TERM','en','enter search term','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DETAILS','en','Details','2012-02-02' 
+SELECT 'LABEL','ID_DETAILS','en','Details','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_METHOD','en','Method','2012-02-02' 
+SELECT 'LABEL','ID_METHOD','en','Method','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_FIELD_DUPLICATE','en','Duplicate Field','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_FIELD_DUPLICATE','en','Duplicate Field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DESCRIPTION','en','Description','2012-02-02' 
+SELECT 'LABEL','ID_DESCRIPTION','en','Description','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PARAMETERS','en','Parameters','2012-02-02' 
+SELECT 'LABEL','ID_PARAMETERS','en','Parameters','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGER_RETURN_TITLE','en','Return value','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGER_RETURN_TITLE','en','Return value','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_TRIGGER_RETURN_LABEL','en','Variable to hold return value','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGER_RETURN_LABEL','en','Variable to hold return value','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVE','en','Save','2012-02-02' 
+SELECT 'LABEL','ID_SAVE','en','Save','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOG_CASE_SCHEDULER','en','Case Scheduler Log','2012-02-02' 
+SELECT 'LABEL','ID_LOG_CASE_SCHEDULER','en','Case Scheduler Log','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_SCHEDULER','en','Case Scheduler','2012-02-02' 
+SELECT 'LABEL','ID_CASE_SCHEDULER','en','Case Scheduler','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_CASE','en','New case','2012-02-02' 
+SELECT 'LABEL','ID_NEW_CASE','en','New case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','OPEN_NEW_WS','en','Open new site','2012-02-02' 
+SELECT 'LABEL','OPEN_NEW_WS','en','Open new site','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ERROR_NEW_WS','en','You have some mistakes, please try again','2012-02-02' 
+SELECT 'JAVASCRIPT','ERROR_NEW_WS','en','You have some mistakes, please try again','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ASSIGN_CASE_TO_USER','en','You have to select one employee. Select one  from the dropdown list please.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ASSIGN_CASE_TO_USER','en','You have to select one employee. Select one  from the dropdown list please.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGT','en','The test has','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGT','en','The test has','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGS','en','Successful','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_MSGS','en','Successful','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','DBCONNECTIONS_TEST','en','TESTING SERVER CONNECTION','2012-02-02' 
+SELECT 'JAVASCRIPT','DBCONNECTIONS_TEST','en','TESTING SERVER CONNECTION','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBC_CHECK','en','Checking server parameters','2012-02-02' 
+SELECT 'LABEL','ID_DBC_CHECK','en','Checking server parameters','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOST_NAME','en','Resolving Host Name','2012-02-02' 
+SELECT 'LABEL','ID_HOST_NAME','en','Resolving Host Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHECK_PORT','en','Checking port','2012-02-02' 
+SELECT 'LABEL','ID_CHECK_PORT','en','Checking port','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONNECT_HOST','en','Trying to connect to host','2012-02-02' 
+SELECT 'LABEL','ID_CONNECT_HOST','en','Trying to connect to host','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_DB','en','Trying to open database','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_DB','en','Trying to open database','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVICE','en','Service','2012-02-02' 
+SELECT 'LABEL','ID_SERVICE','en','Service','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ABORT','en','Abort','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ABORT','en','Abort','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UNASSIGNED_USERS','en','Unassigned Users','2012-02-02' 
+SELECT 'LABEL','ID_UNASSIGNED_USERS','en','Unassigned Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','CHECK_ALL','en','Check All','2012-02-02' 
+SELECT 'LABEL','CHECK_ALL','en','Check All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','UNCHECK_ALL','en','Uncheck All','2012-02-02' 
+SELECT 'LABEL','UNCHECK_ALL','en','Uncheck All','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EVENT_MULTIPLE','en','Multiple Event','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EVENT_MULTIPLE','en','Multiple Event','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EVENT_MESSAGE','en','Message Event','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EVENT_MESSAGE','en','Message Event','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EVENT_CONDITIONAL','en','Conditional Event','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EVENT_CONDITIONAL','en','Conditional Event','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_START_PAGE','en','Start Pages','2012-02-02' 
+SELECT 'LABEL','ID_CASES_START_PAGE','en','Start Pages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_NO_CATEGORY','en','No Category','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_NO_CATEGORY','en','No Category','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_TO_REASSIGN','en','Reassign to:','2012-02-02' 
+SELECT 'LABEL','ID_USER_TO_REASSIGN','en','Reassign to:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGN_USERS','en','User Reassignment','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN_USERS','en','User Reassignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_LIST_SETUP','en','Cases Lists','2012-02-02' 
+SELECT 'LABEL','ID_CASES_LIST_SETUP','en','Cases Lists','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_APPCACHE_SETUP','en','Cases List Cache Builder','2012-02-02' 
+SELECT 'LABEL','ID_APPCACHE_SETUP','en','Cases List Cache Builder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLEAR_CACHE_MSG1','en','All cache data was deleted','2012-02-02' 
+SELECT 'LABEL','ID_CLEAR_CACHE_MSG1','en','All cache data was deleted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLEAR_CACHE_MSG2','en','The cache directory is empty','2012-02-02' 
+SELECT 'LABEL','ID_CLEAR_CACHE_MSG2','en','The cache directory is empty','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_UID','en','Case Id','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_UID','en','Case Id','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_DEL_INDEX','en','Case Index','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_DEL_INDEX','en','Case Index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_NUMBER','en','#','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_NUMBER','en','#','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_STATUS','en','Status','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_STATUS','en','Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_TITLE','en','Case','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_TITLE','en','Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_PRO_TITLE','en','Process','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_PRO_TITLE','en','Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_TAS_TITLE','en','Task','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_TAS_TITLE','en','Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_DEL_PREVIOUS_USER','en','Sent by','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_DEL_PREVIOUS_USER','en','Sent by','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_CURRENT_USER','en','Current User','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_CURRENT_USER','en','Current User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_DEL_TASK_DUE_DATE','en','Due Date','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_DEL_TASK_DUE_DATE','en','Due Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_UPDATE_DATE','en','Last Modify','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_UPDATE_DATE','en','Last Modify','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_DEL_PRIORITY','en','Priority','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_DEL_PRIORITY','en','Priority','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_FINISH_DATE','en','Finish Date','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_FINISH_DATE','en','Finish Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAINTENANCE','en','Maintenance','2012-02-02' 
+SELECT 'LABEL','ID_MAINTENANCE','en','Maintenance','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SETTINGS','en','Settings','2012-02-02' 
+SELECT 'LABEL','ID_SETTINGS','en','Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TOOLS','en','Tools','2012-02-02' 
+SELECT 'LABEL','ID_TOOLS','en','Tools','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_LIST_GRID_LOADING','en','Loading Cases List, please wait...','2012-02-02' 
+SELECT 'LABEL','ID_CASES_LIST_GRID_LOADING','en','Loading Cases List, please wait...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_THREAD_INDEX','en','Thread Index','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_THREAD_INDEX','en','Thread Index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASESLIST_APP_DEL_INDEX','en','Del Index','2012-02-02' 
+SELECT 'LABEL','ID_CASESLIST_APP_DEL_INDEX','en','Del Index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_VALIDATE_EERR1','en','* The {Object} {Description} depends.','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_VALIDATE_EERR1','en','* The {Object} {Description} depends.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STATUS_TO_DO','en','To Do','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STATUS_TO_DO','en','To Do','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DONT_SAVE_XMLFORM','en','This form has not a submit action. Do you  want to continue anyway?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DONT_SAVE_XMLFORM','en','This form has not a submit action. Do you  want to continue anyway?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STATUS_COMPLETED','en','Completed','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STATUS_COMPLETED','en','Completed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STATUS_DRAFT','en','Draft','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STATUS_DRAFT','en','Draft','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_ENV_SETTINGS_TITLE','en','Processmaker Environment Settings','2012-02-02' 
+SELECT 'LABEL','ID_PM_ENV_SETTINGS_TITLE','en','Processmaker Environment Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_ENV_SETTINGS_USERFIELDSET_TITLE','en','Display Information Settings','2012-02-02' 
+SELECT 'LABEL','ID_PM_ENV_SETTINGS_USERFIELDSET_TITLE','en','Display Information Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IS_USER_NAME_DISPLAY_FORMAT','en','User Name Display Format','2012-02-02' 
+SELECT 'LABEL','IS_USER_NAME_DISPLAY_FORMAT','en','User Name Display Format','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVE_SETTINGS','en','Save Settings','2012-02-02' 
+SELECT 'LABEL','ID_SAVE_SETTINGS','en','Save Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVING_ENVIRONMENT_SETTINGS','en','Saving Environment Settings','2012-02-02' 
+SELECT 'LABEL','ID_SAVING_ENVIRONMENT_SETTINGS','en','Saving Environment Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENVIRONMENT_SETTINGS_MSG_1','en','You should select a format from the list.','2012-02-02' 
+SELECT 'LABEL','ID_ENVIRONMENT_SETTINGS_MSG_1','en','You should select a format from the list.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENVIRONMENT_SETTINGS','en','Environment','2012-02-02' 
+SELECT 'LABEL','ID_ENVIRONMENT_SETTINGS','en','Environment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LANG_INSTALL_UPDATE','en','Install / Update','2012-02-02' 
+SELECT 'LABEL','ID_LANG_INSTALL_UPDATE','en','Install / Update','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_LANGUAGE','en','Language','2012-02-02' 
+SELECT 'LABEL','ID_LAN_LANGUAGE','en','Language','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_COUNTRY','en','Country','2012-02-02' 
+SELECT 'LABEL','ID_LAN_COUNTRY','en','Country','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_UPDATE_DATE','en','Update Date','2012-02-02' 
+SELECT 'LABEL','ID_LAN_UPDATE_DATE','en','Update Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_REV_DATE','en','Revision Date','2012-02-02' 
+SELECT 'LABEL','ID_LAN_REV_DATE','en','Revision Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_VERSION','en','Version','2012-02-02' 
+SELECT 'LABEL','ID_LAN_VERSION','en','Version','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_UPLOAD_TITLE','en','Upload translation file','2012-02-02' 
+SELECT 'LABEL','ID_LAN_UPLOAD_TITLE','en','Upload translation file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_FILE','en','File','2012-02-02' 
+SELECT 'LABEL','ID_LAN_FILE','en','File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_FILE_WATER_LABEL','en','Select a translation file','2012-02-02' 
+SELECT 'LABEL','ID_LAN_FILE_WATER_LABEL','en','Select a translation file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REFRESH_LABEL','en','Refresh','2012-02-02' 
+SELECT 'LABEL','ID_REFRESH_LABEL','en','Refresh','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REFRESH_MESSAGE','en','You clicked Ctrl + F5','2012-02-02' 
+SELECT 'LABEL','ID_REFRESH_MESSAGE','en','You clicked Ctrl + F5','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_READ','en','Read','2012-02-02' 
+SELECT 'LABEL','ID_OPT_READ','en','Read','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_UNREAD','en','Unread','2012-02-02' 
+SELECT 'LABEL','ID_OPT_UNREAD','en','Unread','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_ALL','en','All','2012-02-02' 
+SELECT 'LABEL','ID_OPT_ALL','en','All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_STARTED','en','Started by Me','2012-02-02' 
+SELECT 'LABEL','ID_OPT_STARTED','en','Started by Me','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_COMPLETED','en','Completed by Me','2012-02-02' 
+SELECT 'LABEL','ID_OPT_COMPLETED','en','Completed by Me','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMPTY_PROCESSES','en','Select a Process...','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY_PROCESSES','en','Select a Process...','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_EMPTY_SEARCH','en','Search ...','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY_SEARCH','en','Search ...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMPTY_CASE','en','Search Case...','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY_CASE','en','Search Case...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPT_JUMP','en','Jump To','2012-02-02' 
+SELECT 'LABEL','ID_OPT_JUMP','en','Jump To','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISPLAY_ITEMS','en','Display Items  {0} - {1}  of {2}','2012-02-02' 
+SELECT 'LABEL','ID_DISPLAY_ITEMS','en','Display Items  {0} - {1}  of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISPLAY_EMPTY','en','Displaying Empty','2012-02-02' 
+SELECT 'LABEL','ID_DISPLAY_EMPTY','en','Displaying Empty','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMPTY_PMTABLE','en','Select a PM Table...','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY_PMTABLE','en','Select a PM Table...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_NUMBER','en','#','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_NUMBER','en','#','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_FIELD_NAME','en','Field Name','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_FIELD_NAME','en','Field Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_FIELD_TYPE','en','Field Type','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_FIELD_TYPE','en','Field Type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_LABEL','en','Label','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_LABEL','en','Label','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_WIDTH','en','Width','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_WIDTH','en','Width','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEADER_ALIGN','en','Align','2012-02-02' 
+SELECT 'LABEL','ID_HEADER_ALIGN','en','Align','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECTED_FIELD','en','selected field','2012-02-02' 
+SELECT 'LABEL','ID_SELECTED_FIELD','en','selected field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_FIELDS','en','Available Fields','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_FIELDS','en','Available Fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_LIST_FIELDS','en','Cases List Fields','2012-02-02' 
+SELECT 'LABEL','ID_CASES_LIST_FIELDS','en','Cases List Fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_INBOX','en','Inbox','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_INBOX','en','Inbox','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_DRAFT','en','Draft','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_DRAFT','en','Draft','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_PARTICIPATED','en','Participated','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_PARTICIPATED','en','Participated','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_UNASSIGNED','en','Unassigned','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_UNASSIGNED','en','Unassigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_PAUSED','en','Paused','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_PAUSED','en','Paused','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_COMPLETED','en','Completed','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_COMPLETED','en','Completed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_CANCELLED','en','Cancelled','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_CANCELLED','en','Cancelled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_TABLE','en','PM Table','2012-02-02' 
+SELECT 'LABEL','ID_PM_TABLE','en','PM Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROWS_PER_PAGE','en','Rows per Page','2012-02-02' 
+SELECT 'LABEL','ID_ROWS_PER_PAGE','en','Rows per Page','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT','en','Date Format','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT','en','Date Format','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESET','en','Reset','2012-02-02' 
+SELECT 'LABEL','ID_RESET','en','Reset','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_APPLY_CHANGES','en','Apply changes','2012-02-02' 
+SELECT 'LABEL','ID_APPLY_CHANGES','en','Apply changes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INTERNATIONAL','en','International','2012-02-02' 
+SELECT 'LABEL','ID_INTERNATIONAL','en','International','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BREAK_DW_PROCESS','en','were lost by a connection problem.','2012-02-02' 
+SELECT 'LABEL','ID_BREAK_DW_PROCESS','en','were lost by a connection problem.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY','en','Category','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY','en','Category','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PHOTO','en','Photo','2012-02-02' 
+SELECT 'LABEL','ID_PHOTO','en','Photo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BROWSE_LIBRARY','en','Browse Library','2012-02-02' 
+SELECT 'LABEL','ID_BROWSE_LIBRARY','en','Browse Library','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT','en','Import','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT','en','Import','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRO_TITLE','en','Process Title','2012-02-02' 
+SELECT 'LABEL','ID_PRO_TITLE','en','Process Title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISPLAY_OF','en','of','2012-02-02' 
+SELECT 'LABEL','ID_DISPLAY_OF','en','of','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_LANGUAGE_WARNING','en','To delete a language you should select a  item from the list first.','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_LANGUAGE_WARNING','en','To delete a language you should select a  item from the list first.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_LANGUAGE_CONFIRM','en','Do you want remove the language "{0}" ?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_LANGUAGE_CONFIRM','en','Do you want remove the language "{0}" ?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_LANGUAGE','en','Remove','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_LANGUAGE','en','Remove','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LANGUAGE_DELETED_SUCCESSFULLY','en','Language deleted successfully!','2012-02-02' 
+SELECT 'LABEL','ID_LANGUAGE_DELETED_SUCCESSFULLY','en','Language deleted successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LANGUAGE_CANT_DELETE','en','There is {0} cases started with this  language, delete action canceled!','2012-02-02' 
+SELECT 'LABEL','ID_LANGUAGE_CANT_DELETE','en','There is {0} cases started with this  language, delete action canceled!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TOTAL_CASES','en','Total Cases','2012-02-02' 
+SELECT 'LABEL','ID_TOTAL_CASES','en','Total Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEARTBEAT_CONFIG','en','Heart Beat','2012-02-02' 
+SELECT 'LABEL','ID_HEARTBEAT_CONFIG','en','Heart Beat','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_HEARTBEAT_SETTINGS_TITLE','en','Heart Beat Configuration','2012-02-02' 
+SELECT 'LABEL','ID_PM_HEARTBEAT_SETTINGS_TITLE','en','Heart Beat Configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SETTINGS_HEARTBEAT_TITLE','en','Display Setting','2012-02-02' 
+SELECT 'LABEL','ID_SETTINGS_HEARTBEAT_TITLE','en','Display Setting','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEARTBEAT_DISPLAY','en','Heart Beat','2012-02-02' 
+SELECT 'LABEL','ID_HEARTBEAT_DISPLAY','en','Heart Beat','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MAIL_SUCESSFULLY','en','Test message sent successfully','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MAIL_SUCESSFULLY','en','Test message sent successfully','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MAIL_FAILED','en','The test failure, you must configure yourrnserver to send messages','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MAIL_FAILED','en','The test failure, you must configure yourrnserver to send messages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_DIR_ISNOT_WRITABLE','en','The cache directory is not writable, change  permissions please!','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_DIR_ISNOT_WRITABLE','en','The cache directory is not writable, change  permissions please!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_DELETED_SUCCESS','en','All cache data was deleted successfully','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_DELETED_SUCCESS','en','All cache data was deleted successfully','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EMAIL_INVALID','en','The mail is invalid','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EMAIL_INVALID','en','The mail is invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MSG_CONDITION_NOT_DEFINED','en','Condition variable not defined','2012-02-02' 
+SELECT 'LABEL','MSG_CONDITION_NOT_DEFINED','en','Condition variable not defined','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_RSTDATAFIELD','en','Reset Data Field','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_RSTDATAFIELD','en','Reset Data Field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_IN_:POPUP','en','Open in a popup','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_IN_:POPUP','en','Open in a popup','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEATACH','en','Detach','2012-02-02' 
+SELECT 'LABEL','ID_DEATACH','en','Detach','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRO_USER','en','User Owner','2012-02-02' 
+SELECT 'LABEL','ID_PRO_USER','en','User Owner','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SYSTEM','en','System','2012-02-02' 
+SELECT 'LABEL','ID_SYSTEM','en','System','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES','en','Variables','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES','en','Variables','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_CASE','en','Open Case','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_CASE','en','Open Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STATUS_CANCELLED','en','Cancelled','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STATUS_CANCELLED','en','Cancelled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STATUS_PAUSED','en','Paused','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STATUS_PAUSED','en','Paused','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL_PROCESS','en','All Processes','2012-02-02' 
+SELECT 'LABEL','ID_ALL_PROCESS','en','All Processes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL_USERS','en','All Users','2012-02-02' 
+SELECT 'LABEL','ID_ALL_USERS','en','All Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL_STATUS','en','All Status','2012-02-02' 
+SELECT 'LABEL','ID_ALL_STATUS','en','All Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM','en','Confirm','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM','en','Confirm','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_UNPAUSE_CASE','en','Are you sure you want to unpause this case?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_UNPAUSE_CASE','en','Are you sure you want to unpause this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRO_DESCRIPTION','en','Process Description','2012-02-02' 
+SELECT 'LABEL','ID_PRO_DESCRIPTION','en','Process Description','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRO_DEBUG','en','Debug','2012-02-02' 
+SELECT 'LABEL','ID_PRO_DEBUG','en','Debug','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRO_CREATE_DATE','en','Create Date','2012-02-02' 
+SELECT 'LABEL','ID_PRO_CREATE_DATE','en','Create Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ON','en','On','2012-02-02' 
+SELECT 'LABEL','ID_ON','en','On','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OFF','en','Off','2012-02-02' 
+SELECT 'LABEL','ID_OFF','en','Off','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_SELECTION_WARNING','en','Select a item from the list please.','2012-02-02' 
+SELECT 'LABEL','ID_NO_SELECTION_WARNING','en','Select a item from the list please.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REQUIRED_NAME_TRIGGERS','en','You forgot the title of the trigger','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REQUIRED_NAME_TRIGGERS','en','You forgot the title of the trigger','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIST_PROCESS','en','There is a process with the same name. this  process will not save','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIST_PROCESS','en','There is a process with the same name. this  process will not save','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIST_DYNAFORM','en','There is a Dynaform with the same name in  this process. It is not saving','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIST_DYNAFORM','en','There is a Dynaform with the same name in  this process. It is not saving','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLASS_TABLE_DOESNT_EXIST','en','This Class Table doesn''t exists!','2012-02-02' 
+SELECT 'LABEL','ID_CLASS_TABLE_DOESNT_EXIST','en','This Class Table doesn''t exist!','2012-07-25' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIST_INPUTDOCUMENT','en','There is an Input Document with the same  name in  this process. It is not saving','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIST_INPUTDOCUMENT','en','There is an Input Document with the same  name in  this process. It is not saving','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIST_OUTPUTDOCUMENT','en','There is an Output Document with the same  name in  this process. It is not saving','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIST_OUTPUTDOCUMENT','en','There is an Output Document with the same  name in  this process. It is not saving','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_SCHEDULER_VALIDATE_ALERT','en','User or password are empty.','2012-02-02' 
+SELECT 'LABEL','ID_CASE_SCHEDULER_VALIDATE_ALERT','en','User or password are empty.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELEGATE_DATE_FROM','en','Delegated date from','2012-02-02' 
+SELECT 'LABEL','ID_DELEGATE_DATE_FROM','en','Delegated date from','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DUPLICATE_CATEGORY_NAME','en','Duplicate category name.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DUPLICATE_CATEGORY_NAME','en','Duplicate category name.','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_DELEGATE_DATE_TO','en','to','2012-02-02' 
+SELECT 'LABEL','ID_DELEGATE_DATE_TO','en','to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILTER_BY_DELEGATED_DATE','en','Filter','2012-02-02' 
+SELECT 'LABEL','ID_FILTER_BY_DELEGATED_DATE','en','Filter','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_ENV_SETTINGS_REGIONFIELDSET_TITLE','en','Regional Settings','2012-02-02' 
+SELECT 'LABEL','ID_PM_ENV_SETTINGS_REGIONFIELDSET_TITLE','en','Regional Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GLOBAL_DATE_MASK','en','Global date mask','2012-02-02' 
+SELECT 'LABEL','ID_GLOBAL_DATE_MASK','en','Global date mask','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVED_SUCCESSFULLY','en','Saved Successfully','2012-02-02' 
+SELECT 'LABEL','ID_SAVED_SUCCESSFULLY','en','Saved Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_CONFIGURATION','en','Configuration','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_CONFIGURATION','en','Configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_DATASOURCE','en','Datasource Name','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_DATASOURCE','en','Datasource Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_DB_EXISTS','en','Datasource already exists','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_DB_EXISTS','en','Datasource already exist','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_DB_SUCCESS','en','Datasource created successfully','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_DB_SUCCESS','en','Datasource created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_DRIVER_CLASS','en','Driver Class','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_DRIVER_CLASS','en','Driver Class','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_JNDI_CONNECTION','en','JNDI Connection','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_JNDI_CONNECTION','en','JNDI Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_JNDI_INFORMATION','en','JNDI Information','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_JNDI_INFORMATION','en','JNDI Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_PASSWORD','en','Password','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_PASSWORD','en','Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_REBUILD','en','Rebuild','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_REBUILD','en','Rebuild','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_ROLES_MANAGER','en','Roles Manager','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_ROLES_MANAGER','en','Roles Manager','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_SERVER','en','Pentaho Server (URL)','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_SERVER','en','Pentaho Server (URL)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_SHOW_JNDI_INFORMATION','en','Show JNDI Info','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_SHOW_JNDI_INFORMATION','en','Show JNDI Info','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_SYNC','en','Sync to Pentaho Solution','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_SYNC','en','Sync to Pentaho Solution','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_TABLE_ALREADY_SYNCH','en','Workspace already synchronized with Pentaho  Solution','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_TABLE_ALREADY_SYNCH','en','Workspace already synchronized with Pentaho  Solution','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_TABLE_SUCCESS','en','Table APP_CACHE_VIEW and triggers are  installed successfully','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_TABLE_SUCCESS','en','Table APP_CACHE_VIEW and triggers are  installed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_TABLE_SYNCHED','en','Workspace synchronized with Pentaho Solution','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_TABLE_SYNCHED','en','Workspace synchronized with Pentaho Solution','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_TABLE_TRIGGERS','en','Database tables and triggers','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_TABLE_TRIGGERS','en','Database tables and triggers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_URL','en','URL','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_URL','en','URL','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_USER_CONSOLE','en','Pentaho User Console','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_USER_CONSOLE','en','Pentaho User Console','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_USER_CREATE','en','Create user in Pentaho','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_USER_CREATE','en','Create user in Pentaho','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_USER_CREATED','en','User created successfully','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_USER_CREATED','en','User created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_USER_EXIST','en','User already exists','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_USER_EXIST','en','User already exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_USER_NAME','en','User Name','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_USER_NAME','en','User Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_WS_SYNCHED','en','Workspace synchronized with Pentaho Solution','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_WS_SYNCHED','en','Workspace synchronized with Pentaho Solution','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_LABEL_WS_USER_PASSWORD','en','Pentaho Workspace User and Password','2012-02-02' 
+SELECT 'LABEL','PENTAHO_LABEL_WS_USER_PASSWORD','en','Pentaho Workspace User and Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PENTAHO_TABLES_TRIGGERS','en','Database tables and triggers','2012-02-02' 
+SELECT 'LABEL','PENTAHO_TABLES_TRIGGERS','en','Database tables and triggers','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_EXIST_TRIGGERS','en','There is a triggers with the same name in  this process.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_EXIST_TRIGGERS','en','There is a triggers with the same name in  this process.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_ONE_AT_LEAST','en','Select at least one item from the list','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_ONE_AT_LEAST','en','Select at least one item from the list','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAUSE_CASE_TO_DATE','en','Do you want to pause the case until','2012-02-02' 
+SELECT 'LABEL','ID_PAUSE_CASE_TO_DATE','en','Do you want to pause the case until','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETING_ELEMENTS','en','Deleting elements, please wait...','2012-02-02' 
+SELECT 'LABEL','ID_DELETING_ELEMENTS','en','Deleting elements, please wait...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_CASE','en','Are you sure you want to delete this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_CANCEL_CASES','en','Are you sure you want to cancel all   selected cases?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_CANCEL_CASES','en','Are you sure you want to cancel all   selected cases?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAUSE_CASE','en','Pause Case','2012-02-02' 
+SELECT 'LABEL','ID_PAUSE_CASE','en','Pause Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAUSE','en','Pause','2012-02-02' 
+SELECT 'LABEL','ID_PAUSE','en','Pause','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UNPAUSE_CASE','en','Unpause','2012-02-02' 
+SELECT 'LABEL','ID_UNPAUSE_CASE','en','Unpause','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_IN_POPUP','en','Open in a popup','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_IN_POPUP','en','Open in a popup','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DYNAFORM_ASSIGN','en','You cannot delete this Dynaform while it is assigned to a step.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DYNAFORM_ASSIGN','en','You cannot delete this Dynaform while it is assigned to a step.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REQ_TITLE','en','You forgot to fill the Title field!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REQ_TITLE','en','You forgot to fill the Title field!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_DELETE_LABEL','en','Do you want to delete the selected process?','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_DELETE_LABEL','en','Do you want to delete the selected process?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_DELETE_ALL_LABEL','en','Do you want to delete all selected processes?','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_DELETE_ALL_LABEL','en','Do you want to delete all selected processes?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_CANT_DELETE','en','You can''t delete the process "{0}" because  has {1} cases.','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_CANT_DELETE','en','You can''t delete the process "{0}" because it has {1} cases.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE','en','File','2012-02-02' 
+SELECT 'LABEL','ID_FILE','en','File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUT_PUT_DOC_UPLOAD_TITLE','en','Upload Output Document Template File','2012-02-02' 
+SELECT 'LABEL','ID_OUT_PUT_DOC_UPLOAD_TITLE','en','Upload Output Document Template File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOADING_FILE','en','Uploading file...','2012-02-02' 
+SELECT 'LABEL','ID_UPLOADING_FILE','en','Uploading file...','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CLASS_TABLE_DOESNT_EXIST','en','This table class does not exist','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CLASS_TABLE_DOESNT_EXIST','en','This table class does not exist','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOAD_FROM_FILE','en','Load from file','2012-02-02' 
+SELECT 'LABEL','ID_LOAD_FROM_FILE','en','Load from file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_TEMPLATE_FILE','en','Select a template file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_TEMPLATE_FILE','en','Select a template file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_DATE_MASK','en','Date Format','2012-02-02' 
+SELECT 'LABEL','ID_CASES_DATE_MASK','en','Date Format','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_ROW_NUMBER','en','Number of Rows per Page','2012-02-02' 
+SELECT 'LABEL','ID_CASES_ROW_NUMBER','en','Number of Rows per Page','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GLOBAL_DATE_FORMAT','en','Global Date Format','2012-02-02' 
+SELECT 'LABEL','ID_GLOBAL_DATE_FORMAT','en','Global Date Format','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_ENV_SETTINGS_CASESLIST_TITLE','en','Cases Lists Settings','2012-02-02' 
+SELECT 'LABEL','ID_PM_ENV_SETTINGS_CASESLIST_TITLE','en','Cases Lists Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_1','en','Y-m-d H:i:s','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_1','en','Y-m-d H:i:s','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_2','en','d/m/Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_2','en','d/m/Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_3','en','m/d/Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_3','en','m/d/Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_4','en','Y/d/m','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_4','en','Y/d/m','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_5','en','Y/m/d','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_5','en','Y/m/d','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_6','en','F j, Y, g:i a','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_6','en','F j, Y, g:i a','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_7','en','m.d.y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_7','en','m.d.y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_8','en','j, n, Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_8','en','j, n, Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_9','en','D M j G:i:s T Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_9','en','D M j G:i:s T Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_10','en','D d M, Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_10','en','D d M, Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_11','en','D M, Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_11','en','D M, Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_12','en','d M, Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_12','en','d M, Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_FORMAT_13','en','d m, Y','2012-02-02' 
+SELECT 'LABEL','ID_DATE_FORMAT_13','en','d m, Y','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEP_LIST','en','Step List','2012-02-02' 
+SELECT 'LABEL','ID_STEP_LIST','en','Step List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_1','en','@firstName @lastName','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_1','en','@firstName @lastName','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_2','en','@firstName @lastName (@userName)','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_2','en','@firstName @lastName (@userName)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_3','en','@userName','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_3','en','@userName','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_4','en','@userName (@firstName @lastName)','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_4','en','@userName (@firstName @lastName)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_5','en','@lastName @firstName','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_5','en','@lastName @firstName','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_6','en','@lastName, @firstName','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_6','en','@lastName, @firstName','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_FORMAT_7','en','@lastName, @firstName (@userName)','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_FORMAT_7','en','@lastName, @firstName (@userName)','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','USERS_DELETE_WITH_HISTORY','en','The user has some completed or canceled   tasks (which may be useful for  historical  records). Do you want to  delete this user  anyway?','2012-02-02' 
+SELECT 'JAVASCRIPT','USERS_DELETE_WITH_HISTORY','en','The user has some completed or canceled   tasks (which may be useful for  historical  records). Do you want to  delete this user  anyway?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISCARD_CHANGES','en','Discard Changes','2012-02-02' 
+SELECT 'LABEL','ID_DISCARD_CHANGES','en','Discard Changes','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_EMPTY_USERS','en','Select a User...','2012-02-02' 
+SELECT 'LABEL','ID_EMPTY_USERS','en','Select a User...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DUPLICATE_CATEGORY_NAME','en','Duplicate category name.','2012-02-02' 
+SELECT 'LABEL','ID_DUPLICATE_CATEGORY_NAME','en','Duplicate category name.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_FILE','en','Invalid FIle','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_FILE','en','Invalid FIle','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIGURE','en','Configure','2012-02-02' 
+SELECT 'LABEL','ID_CONFIGURE','en','Configure','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VERSION','en','Version','2012-02-02' 
+SELECT 'LABEL','ID_VERSION','en','Version','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_ROOT_CHANGE_SUCESS','en','The root password has been updated  successfully!','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_ROOT_CHANGE_SUCESS','en','The root password has been updated  successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_ROOT_CHANGE_FAILURE','en','The root password has can''t be updated !','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_ROOT_CHANGE_FAILURE','en','The root password can''t be updated!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_TRANSLATOR','en','Translator','2012-02-02' 
+SELECT 'LABEL','ID_LAN_TRANSLATOR','en','Translator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOCALE','en','Locale','2012-02-02' 
+SELECT 'LABEL','ID_LOCALE','en','Locale','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DATE_LABEL','en','Date','2012-02-02' 
+SELECT 'LABEL','DATE_LABEL','en','Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_NUM_RECORDS','en','# Records','2012-02-02' 
+SELECT 'LABEL','ID_LAN_NUM_RECORDS','en','# Records','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAN_LOCALE','en','Locale','2012-02-02' 
+SELECT 'LABEL','ID_LAN_LOCALE','en','Locale','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBMIT','en','submit','2012-02-02' 
+SELECT 'LABEL','ID_SUBMIT','en','submit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLUGIN_CANT_DELETE','en','The plugin is activated, please deactivate  first to remove it.','2012-02-02' 
+SELECT 'LABEL','ID_PLUGIN_CANT_DELETE','en','The plugin is activated, please deactivate  first to remove it.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_LANGUAGE','en','Language','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_LANGUAGE','en','Language','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_HOST','en','Host','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_HOST','en','Host','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_USER','en','User','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_USER','en','User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_PASSWORD','en','Password','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_PASSWORD','en','Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_TITLE_INFO','en','Workflow Applications Cache Info','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_TITLE_INFO','en','Workflow Applications Cache Info','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_SUBTITLE_REBUILD','en','Rebuild Workflow Application Cache','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_SUBTITLE_REBUILD','en','Rebuild Workflow Application Cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_BTN_BUILD','en','Build Cache','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_BTN_BUILD','en','Build Cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_BUILDING','en','Building Workflow Application Cache...','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_BUILDING','en','Building Workflow Application Cache...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_SUBTITLE_SETUP_DB','en','Setup MySql Root Password','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_SUBTITLE_SETUP_DB','en','Setup MySql Root Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_BTN_SETUP_PASSWRD','en','Setup Password','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_BTN_SETUP_PASSWRD','en','Setup Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_INVALID_NAME','en','The calendar name already exists!','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_INVALID_NAME','en','The calendar name already exists!','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_TABLE_COLLECTION','en','Do you want to delete this collection?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_TABLE_COLLECTION','en','Do you want to delete this collection?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE','en','Table','2012-02-02' 
+SELECT 'LABEL','ID_TABLE','en','Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXTENDED_FEATURES','en','Extended Features','2012-02-02' 
+SELECT 'LABEL','ID_EXTENDED_FEATURES','en','Extended Features','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DESIGNER','en','Designer','2012-02-02' 
+SELECT 'LABEL','ID_DESIGNER','en','Designer','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOME','en','Home','2012-02-02' 
+SELECT 'LABEL','ID_HOME','en','Home','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_BPMN','en','Edit BPMN','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_BPMN','en','Edit BPMN','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_START_HOURS','en','The following start hours rows are invalid:','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_START_HOURS','en','The following start hours rows are invalid:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_END_HOURS','en','The following end hours rows are invalid:','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_END_HOURS','en','The following end hours rows are invalid:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_NAME','en','Invalid name!','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_NAME','en','Invalid name!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASE_SCHEDULER_VALIDATE_ALERT','en','User or password are empty.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASE_SCHEDULER_VALIDATE_ALERT','en','User or password are empty.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CASE_SCHEDULER_TITLE','en','Case Scheduler List','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CASE_SCHEDULER_TITLE','en','Case Scheduler List','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_START_DATE','en','Start Date','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_START_DATE','en','Start Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_FIELD','en','Title','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_FIELD','en','Title','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TITLE_FIELD','en','Title','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TITLE_FIELD','en','Title','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SCHEDULER_CANT_PUT_TIME','en','The time can not be increased to 23:59','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SCHEDULER_CANT_PUT_TIME','en','The time can not be increased to 23:59','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SCHEDULER_CANT_PUT_MINUTES','en','The mininutos can not be greater than about 59','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SCHEDULER_CANT_PUT_MINUTES','en','The mininutos can not be greater than about 59','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_PROCESSMAP_CALENDAR_CONFIRM_DELETE','en','Are you sure you want to delete this calendar?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_PROCESSMAP_CALENDAR_CONFIRM_DELETE','en','Are you sure you want to delete this calendar?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAP_CALENDAR_CONFIRM_DELETE','en','Are you sure you want to delete this calendar?','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAP_CALENDAR_CONFIRM_DELETE','en','Are you sure you want to delete this calendar?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_ADD_TABLE','en','New PM Table','2012-02-02' 
+SELECT 'LABEL','ID_NEW_ADD_TABLE','en','New PM Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_TEXT','en','text','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_TEXT','en','text','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_FIRST_PM_TABLE_ROW','en','First select a PM Table from the list please.','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_FIRST_PM_TABLE_ROW','en','First select a PM Table from the list please.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_PM_TABLE','en','Do you want to delete selected tables?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_PM_TABLE','en','Do you want to delete selected tables?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_START_CASE','en','Start Case','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_START_CASE','en','Start Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STARTING_NEW_CASE','en','Starting new case','2012-02-02' 
+SELECT 'LABEL','ID_STARTING_NEW_CASE','en','Starting new case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_CREATING_NEW_CASE','en','Error creating a new Case','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_CREATING_NEW_CASE','en','Error creating a new Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_FIELD_DYNAFORM','en','title','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_FIELD_DYNAFORM','en','title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERAL_PROCESS_NUMBERS','en','General Process Numbers','2012-02-02' 
+SELECT 'LABEL','ID_GENERAL_PROCESS_NUMBERS','en','General Process Numbers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_DESCRIPTION','en','Calendar Description','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_DESCRIPTION','en','Calendar Description','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORKING_DAYS','en','Working days','2012-02-02' 
+SELECT 'LABEL','ID_WORKING_DAYS','en','Working days','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEBUG_MODE','en','Debug Mode','2012-02-02' 
+SELECT 'LABEL','ID_DEBUG_MODE','en','Debug Mode','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUN','en','Sun','2012-02-02' 
+SELECT 'LABEL','ID_SUN','en','Sun','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MON','en','Mon','2012-02-02' 
+SELECT 'LABEL','ID_MON','en','Mon','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TUE','en','Tue','2012-02-02' 
+SELECT 'LABEL','ID_TUE','en','Tue','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEN','en','Wen','2012-02-02' 
+SELECT 'LABEL','ID_WEN','en','Wen','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_THU','en','Thu','2012-02-02' 
+SELECT 'LABEL','ID_THU','en','Thu','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FRI','en','Fri','2012-02-02' 
+SELECT 'LABEL','ID_FRI','en','Fri','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAT','en','Sat','2012-02-02' 
+SELECT 'LABEL','ID_SAT','en','Sat','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIND_A_PROCESS','en','Find a Process','2012-02-02' 
+SELECT 'LABEL','ID_FIND_A_PROCESS','en','Find a Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UNABLE_START_CASE','en','Unable to start a case','2012-02-02' 
+SELECT 'LABEL','ID_UNABLE_START_CASE','en','Unable to start a case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_TITLE','en','title','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_TITLE','en','title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_CURRENCY','en','currency','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_CURRENCY','en','currency','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_PERCENTAGE','en','percentage','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_PERCENTAGE','en','percentage','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_PASSWORD','en','password','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_PASSWORD','en','password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_SUGGEST','en','suggest','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_SUGGEST','en','suggest','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_TEXTAREA','en','textarea','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_TEXTAREA','en','textarea','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_SUBTITLE','en','subtitle','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_SUBTITLE','en','subtitle','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_BUTTON','en','button','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_BUTTON','en','button','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_SUBMIT','en','submit','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_SUBMIT','en','submit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_RESET','en','reset','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_RESET','en','reset','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_DROPDOWN','en','dropdown','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_DROPDOWN','en','dropdown','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_YESNO','en','yesno','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_YESNO','en','yesno','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_LISTBOX','en','listbox','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_LISTBOX','en','listbox','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_CHECKBOX','en','checkbox','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_CHECKBOX','en','checkbox','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_CHECKGROUP','en','checkgroup','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_CHECKGROUP','en','checkgroup','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_RADIOGROUP','en','radiogroup','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_RADIOGROUP','en','radiogroup','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_FIELD_DYNAFORM_HIDDEN','en','hidden','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_HIDDEN','en','hidden','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_LINK','en','link','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_LINK','en','link','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_FILE','en','file','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_FILE','en','file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_JAVASCRIPT','en','javascript','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_JAVASCRIPT','en','javascript','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_DYNAFORM_GRID','en','grid','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_DYNAFORM_GRID','en','grid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD_ROW','en','Add Row','2012-02-02' 
+SELECT 'LABEL','ID_ADD_ROW','en','Add Row','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BACK','en','Back','2012-02-02' 
+SELECT 'LABEL','ID_BACK','en','Back','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHECK_ALL','en','Check All','2012-02-02' 
+SELECT 'LABEL','ID_CHECK_ALL','en','Check All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UN_CHECK_ALL','en','Un-Check All','2012-02-02' 
+SELECT 'LABEL','ID_UN_CHECK_ALL','en','Un-Check All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_FIRST_ROW','en','First select a ROW from the list','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_FIRST_ROW','en','First select a ROW from the list','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_ROW','en','Do you want to delete selected row?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_DELETE_ROW','en','Do you want to delete selected row?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SENT_BY','en','Sent By','2012-02-02' 
+SELECT 'LABEL','ID_SENT_BY','en','Sent By','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CURRENT_USER','en','Current User','2012-02-02' 
+SELECT 'LABEL','ID_CURRENT_USER','en','Current User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST_MODIFY','en','Last Modify','2012-02-02' 
+SELECT 'LABEL','ID_LAST_MODIFY','en','Last Modify','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELEGATION_DATE','en','Delegation Date','2012-02-02' 
+SELECT 'LABEL','ID_DELEGATION_DATE','en','Delegation Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DUE_DATE','en','Due Date','2012-02-02' 
+SELECT 'LABEL','ID_DUE_DATE','en','Due Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIORITY','en','Priority','2012-02-02' 
+SELECT 'LABEL','ID_PRIORITY','en','Priority','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMPLETED_BY_USER','en','Completed By User','2012-02-02' 
+SELECT 'LABEL','ID_COMPLETED_BY_USER','en','Completed By User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FINISH_DATE','en','Finish Date','2012-02-02' 
+SELECT 'LABEL','ID_FINISH_DATE','en','Finish Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAIL_TEST_SUCCESS','en','Test message sent successfully','2012-02-02' 
+SELECT 'LABEL','ID_MAIL_TEST_SUCCESS','en','Test message sent successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLOSE','en','Close','2012-02-02' 
+SELECT 'LABEL','ID_CLOSE','en','Close','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTION_EXPORT','en','Export','2012-02-02' 
+SELECT 'LABEL','ID_ACTION_EXPORT','en','Export','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTION_IGNORE','en','Ignore','2012-02-02' 
+SELECT 'LABEL','ID_ACTION_IGNORE','en','Ignore','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEL_INDEX','en','Del Index','2012-02-02' 
+SELECT 'LABEL','ID_DEL_INDEX','en','Del Index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_THREAD_INDEX','en','Thread Index','2012-02-02' 
+SELECT 'LABEL','ID_THREAD_INDEX','en','Thread Index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESS_TEST_MESSAGE_SENDED','en','Test message sent successfully','2012-02-02' 
+SELECT 'LABEL','ID_MESS_TEST_MESSAGE_SENDED','en','Test message sent successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_EXPORT_RESULT','en','Export Summary','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_EXPORT_RESULT','en','Export Summary','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_EXPORT_TOOL','en','Exporting Tool','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_EXPORT_TOOL','en','Exporting Tool','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_LABEL','en','Time','2012-02-02' 
+SELECT 'LABEL','ID_TIME_LABEL','en','Time','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE_LABEL','en','Date','2012-02-02' 
+SELECT 'LABEL','ID_DATE_LABEL','en','Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESULT','en','Result','2012-02-02' 
+SELECT 'LABEL','ID_RESULT','en','Result','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATED_CASE_STATUS','en','Created Case Status','2012-02-02' 
+SELECT 'LABEL','ID_CREATED_CASE_STATUS','en','Created Case Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROUTED_CASE_STATUS','en','Routed Case Status','2012-02-02' 
+SELECT 'LABEL','ID_ROUTED_CASE_STATUS','en','Routed Case Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_LOG_DETAIL','en','Log Detail','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_LOG_DETAIL','en','Log Detail','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CODE','en','Code','2012-02-02' 
+SELECT 'LABEL','ID_CODE','en','Code','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ROLE','en','Are you sure you want to delete this role?','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ROLE','en','Are you sure you want to delete this role?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES_MSG','en','You cannot modify this role.','2012-02-02' 
+SELECT 'LABEL','ID_ROLES_MSG','en','You cannot modify this role.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLES_SUCCESS_DELETE','en','Your role has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_ROLES_SUCCESS_DELETE','en','Your role has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MSG_PO_FILE_INVALID_LANGUAJE','en','The .po file has an invalid language!','2012-02-02' 
+SELECT 'LABEL','MSG_PO_FILE_INVALID_LANGUAJE','en','The .po file has an invalid language!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MSG_PO_FILE_BAD_FORMAT','en','The .po file has a bad format!','2012-02-02' 
+SELECT 'LABEL','MSG_PO_FILE_BAD_FORMAT','en','The .po file has a bad format!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_STATUS','en','Select status...','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_STATUS','en','Select status...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_ALL_PERMISSIONS','en','Assign All Permissions','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_ALL_PERMISSIONS','en','Assign All Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ALL_PERMISSIONS','en','Remove All Permissions','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ALL_PERMISSIONS','en','Remove All Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_ALL_USERS','en','Assign All Users','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_ALL_USERS','en','Assign All Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ALL_USERS','en','Remove All Users','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ALL_USERS','en','Remove All Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NAME','en','User Name','2012-02-02' 
+SELECT 'LABEL','ID_USER_NAME','en','User Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERMISSION_CODE','en','Permission Code','2012-02-02' 
+SELECT 'LABEL','ID_PERMISSION_CODE','en','Permission Code','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_PERMISSIONS','en','AVAILABLE PERMISSIONS','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_PERMISSIONS','en','AVAILABLE PERMISSIONS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNED_PERMISSIONS','en','ASSIGNED PERMISSIONS','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_PERMISSIONS','en','ASSIGNED PERMISSIONS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIRST_NAME','en','First Name','2012-02-02' 
+SELECT 'LABEL','ID_FIRST_NAME','en','First Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST_NAME','en','Last Name','2012-02-02' 
+SELECT 'LABEL','ID_LAST_NAME','en','Last Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_USERS','en','AVAILABLE USERS','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_USERS','en','AVAILABLE USERS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNED_USERS','en','ASSIGNED USERS','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_USERS','en','ASSIGNED USERS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CONFIRM_ASSIGN_ALL_USERS','en','Do you want to assign all available users  to this role?','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CONFIRM_ASSIGN_ALL_USERS','en','Do you want to assign all available users  to this role?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_AJAX_FAILURE','en','Some error has happened. Please retry later.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_AJAX_FAILURE','en','Some error has happened. Please retry later.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FINISH','en','Finish','2012-02-02' 
+SELECT 'LABEL','ID_FINISH','en','Finish','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_SUCCESS_DELETE','en','User has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_USERS_SUCCESS_DELETE','en','User has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_ALL_GROUPS','en','Assign All Groups','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_ALL_GROUPS','en','Assign All Groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_DELETE_WITH_HISTORY','en','The user has some completed or canceled     tasks (which may be useful for  historical    records). Do you want to  delete this  user   anyway?','2012-02-02' 
+SELECT 'LABEL','ID_USERS_DELETE_WITH_HISTORY','en','The user has some completed or canceled     tasks (which may be useful for  historical    records). Do you want to  delete this  user   anyway?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ALL_GROUPS','en','Remove All Groups','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ALL_GROUPS','en','Remove All Groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNED_GROUPS','en','ASSIGNED GROUPS','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_GROUPS','en','ASSIGNED GROUPS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_GROUPS','en','AVAILABLE GROUPS','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_GROUPS','en','AVAILABLE GROUPS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_NAME','en','Group Name','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_NAME','en','Group Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_SOURCE','en','Authentication Source','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_SOURCE','en','Authentication Source','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_DN','en','DN','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_DN','en','DN','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_FORM_TITLE','en','Authentication Source Assignment','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_FORM_TITLE','en','Authentication Source Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_AUTH_SOURCE','en','Select Authentication Source...','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_AUTH_SOURCE','en','Select Authentication Source...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_TASK','en','Scheduled Task ID','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_TASK','en','Scheduled Task ID','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_ID','en','Task ID','2012-02-02' 
+SELECT 'LABEL','ID_TASK_ID','en','Task ID','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_ID','en','Process ID','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_ID','en','Process ID','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_DATE','en','Execution Date','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_DATE','en','Execution Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_HOUR','en','Execution Hour','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_HOUR','en','Execution Hour','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_STATUS','en','Execution Status','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_STATUS','en','Execution Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_GROUP_NAME_EXISTS','en','Group name already exists!','2012-02-02' 
+SELECT 'LABEL','ID_MSG_GROUP_NAME_EXISTS','en','Group name already exists!','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_GROUPS_SUCCESS_DELETE','en','Your group has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_GROUPS_SUCCESS_DELETE','en','Your group has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUPS_SUCCESS_UPDATE','en','Group has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_GROUPS_SUCCESS_UPDATE','en','Group has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_GROUP_TITLE','en','Create New Group','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_GROUP_TITLE','en','Create New Group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_GROUP_TITLE','en','Edit Group','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_GROUP_TITLE','en','Edit Group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_ALL_MEMBERS','en','Assign All Members','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_ALL_MEMBERS','en','Assign All Members','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ALL_MEMBERS','en','Remove All Members','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ALL_MEMBERS','en','Remove All Members','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_ASSIGNED_MEMBERS','en','MEMBERS','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_MEMBERS','en','MEMBERS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_MEMBERS','en','AVAILABLE MEMBERS','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_MEMBERS','en','AVAILABLE MEMBERS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_ROLE_TITLE','en','Create New  Role','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_ROLE_TITLE','en','Create New  Role','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_ROLE_TITLE','en','Edit Role','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_ROLE_TITLE','en','Edit Role','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENTS','en','Departments','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENTS','en','Departments','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_NAME','en','Department Name','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_NAME','en','Department Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_CANCEL_CASE','en','Are you sure you want to cancel this case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIRSTNAME','en','First Name','2012-02-02' 
+SELECT 'LABEL','ID_FIRSTNAME','en','First Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LASTNAME','en','Last Name','2012-02-02' 
+SELECT 'LABEL','ID_LASTNAME','en','Last Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGNMENT_SUCCESS','en','The case #{APP_NUMBER} was reassigned to  user   {USER} successfully!','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGNMENT_SUCCESS','en','The case #{APP_NUMBER} was reassigned to  user   {USER} successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGN_CONFIRM','en','Are you sure to reassign the current case?','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN_CONFIRM','en','Are you sure to reassign the current case?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_PAUSED_SUCCESSFULLY','en','The Case {APP_NUMBER} was paused successfully and   ir will be unpused on date {UNPAUSE_DATE}','2012-02-02' 
+SELECT 'LABEL','ID_CASE_PAUSED_SUCCESSFULLY','en','The Case {APP_NUMBER} was paused successfully and it will be unpaused on date {UNPAUSE_DATE}','2012-07-26' 
   UNION ALL
-SELECT 'LABEL','ID_VACATION','en','Vacation','2012-02-02' 
+SELECT 'LABEL','ID_VACATION','en','Vacation','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DB_CONNECTION_ASSIGN','en','You can not delete this data base  connection. This is assigned in some step.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DB_CONNECTION_ASSIGN','en','You can not delete this data base  connection. This is assigned in some step.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST_LOGIN','en','Last Login','2012-02-02' 
+SELECT 'LABEL','ID_LAST_LOGIN','en','Last Login','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PAGE_SIZE','en','Page Size','2012-02-02' 
+SELECT 'LABEL','ID_PAGE_SIZE','en','Page Size','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_USERS_MESSAGE','en','Displaying users {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_USERS_MESSAGE','en','Displaying users {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_USERS_MESSAGE','en','No users to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_USERS_MESSAGE','en','No users to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUMMARY','en','Summary','2012-02-02' 
+SELECT 'LABEL','ID_SUMMARY','en','Summary','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FINISH_EDITION','en','Finish Edition','2012-02-02' 
+SELECT 'LABEL','ID_FINISH_EDITION','en','Finish Edition','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_MEMBEROF','en','Edit Member Of','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_MEMBEROF','en','Edit Member Of','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MEMBER_OF','en','MEMBER OF','2012-02-02' 
+SELECT 'LABEL','ID_MEMBER_OF','en','MEMBER OF','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DISCARD_CHANGES','en','Do you want discard changes?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DISCARD_CHANGES','en','Do you want discard changes?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PHONE_NUMBER','en','Phone Number','2012-02-02' 
+SELECT 'LABEL','ID_PHONE_NUMBER','en','Phone Number','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STATE_REGION','en','State or Region','2012-02-02' 
+SELECT 'LABEL','ID_STATE_REGION','en','State or Region','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPLACED_BY','en','Replaced by','2012-02-02' 
+SELECT 'LABEL','ID_REPLACED_BY','en','Replaced by','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_POSITION','en','Position','2012-02-02' 
+SELECT 'LABEL','ID_POSITION','en','Position','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT','en','Department','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT','en','Department','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ZIP_CODE','en','Zip Code','2012-02-02' 
+SELECT 'LABEL','ID_ZIP_CODE','en','Zip Code','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADDRESS','en','Address','2012-02-02' 
+SELECT 'LABEL','ID_ADDRESS','en','Address','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPIRATION_DATE','en','Expiration Date','2012-02-02' 
+SELECT 'LABEL','ID_EXPIRATION_DATE','en','Expiration Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_INFORMATION','en','User Information','2012-02-02' 
+SELECT 'LABEL','ID_USER_INFORMATION','en','User Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_SUMMARY','en','Cases Summary','2012-02-02' 
+SELECT 'LABEL','ID_CASES_SUMMARY','en','Cases Summary','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_GROUPS_MESSAGE','en','Displaying groups {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_GROUPS_MESSAGE','en','Displaying groups {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_GROUPS_MESSAGE','en','No groups to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_GROUPS_MESSAGE','en','No groups to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASKS','en','Tasks','2012-02-02' 
+SELECT 'LABEL','ID_TASKS','en','Tasks','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_MEMBERS','en','Edit Members','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_MEMBERS','en','Edit Members','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_1','en','Jan','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_1','en','Jan','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_2','en','Feb','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_2','en','Feb','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_3','en','Mar','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_3','en','Mar','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_4','en','Apr','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_4','en','Apr','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_5','en','May','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_5','en','May','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_6','en','Jun','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_6','en','Jun','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_7','en','Jul','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_7','en','Jul','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_8','en','Aug','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_8','en','Aug','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_9','en','Sep','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_9','en','Sep','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_10','en','Oct','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_10','en','Oct','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_11','en','Nov','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_11','en','Nov','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONTH_ABB_12','en','Dec','2012-02-02' 
+SELECT 'LABEL','ID_MONTH_ABB_12','en','Dec','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_0','en','Sunday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_0','en','Sunday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_1','en','Monday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_1','en','Monday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_2','en','Tuesday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_2','en','Tuesday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_3','en','Wednesday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_3','en','Wednesday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_4','en','Thursday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_4','en','Thursday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_5','en','Friday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_5','en','Friday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_6','en','Saturday','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_6','en','Saturday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_0','en','Sun','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_0','en','Sun','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_1','en','Mon','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_1','en','Mon','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_2','en','Tue','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_2','en','Tue','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_3','en','Wed','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_3','en','Wed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_4','en','Thu','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_4','en','Thu','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_5','en','Fri','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_5','en','Fri','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEEKDAY_ABB_6','en','Sat','2012-02-02' 
+SELECT 'LABEL','ID_WEEKDAY_ABB_6','en','Sat','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_SAVE','en','Process Save','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_SAVE','en','Process Save','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_SAVE_SUCCESS','en','The process was saved successfully!','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_SAVE_SUCCESS','en','The process was saved successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_UNPAUSED_SUCCESSFULLY','en','The Case {APP_NUMBER} was unpaused successfully!','2012-02-02' 
+SELECT 'LABEL','ID_CASE_UNPAUSED_SUCCESSFULLY','en','The Case {APP_NUMBER} was unpaused successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_ROLES_MESSAGE','en','Displaying roles {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_ROLES_MESSAGE','en','Displaying roles {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_ROLES_MESSAGE','en','No roles to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_ROLES_MESSAGE','en','No roles to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_DELETED_SUCCESSFULLY','en','The Case {APP_NUMBER} was deleted successfully!','2012-02-02' 
+SELECT 'LABEL','ID_CASE_DELETED_SUCCESSFULLY','en','The Case {APP_NUMBER} was deleted successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_PERMISSIONS','en','Edit Permissions','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_PERMISSIONS','en','Edit Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_REACTIVATED_SUCCESSFULLY','en','The case {APP_NUMBER} was reactivated successfully!','2012-02-02' 
+SELECT 'LABEL','ID_CASE_REACTIVATED_SUCCESSFULLY','en','The case {APP_NUMBER} was reactivated successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_USERS','en','Edit Users','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_USERS','en','Edit Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_WITH','en','Open With','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_WITH','en','Open With','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_STEPS','en','Cases Steps','2012-02-02' 
+SELECT 'LABEL','ID_CASES_STEPS','en','Cases Steps','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SHOW_HIDE_CASES_STEPS','en','Show or hide the Cases Steps','2012-02-02' 
+SELECT 'LABEL','ID_SHOW_HIDE_CASES_STEPS','en','Show or hide the Cases Steps','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSTITLE_ALREADY_EXISTS','en','The Process Title "{PRO_TITLE}" already exists!','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSTITLE_ALREADY_EXISTS','en','The Process Title "{PRO_TITLE}" already exists!','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE','en','Create','2012-02-02' 
+SELECT 'LABEL','ID_CREATE','en','Create','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BPMN_EDITOR','en','BPMN Editor (Beta)','2012-02-02' 
+SELECT 'LABEL','ID_BPMN_EDITOR','en','BPMN Editor (Beta)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLASSIC_EDITOR','en','Classic Editor','2012-02-02' 
+SELECT 'LABEL','ID_CLASSIC_EDITOR','en','Classic Editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLE_DEBUG','en','Disable Debug Mode','2012-02-02' 
+SELECT 'LABEL','ID_DISABLE_DEBUG','en','Disable Debug Mode','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_ENABLE_DEBUG','en','Enable Debug Mode','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_DEBUG','en','Enable Debug Mode','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MSJ','en','Group name already exists!','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MSJ','en','Group name already exists!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DEPARTMENT','en','Department','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DEPARTMENT','en','Department','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY_SUCCESS_NEW','en','Process category has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY_SUCCESS_NEW','en','Process category has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_SUB_DEPARTMENT','en','New Sub-Department','2012-02-02' 
+SELECT 'LABEL','ID_NEW_SUB_DEPARTMENT','en','New Sub-Department','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_NEW','en','Department has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_NEW','en','Department has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_EXISTS','en','Department name already exists.','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_EXISTS','en','Department name already exists.','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_UPDATE','en','Department has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_UPDATE','en','Department has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_DEPARTMENT','en','Edit Department','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_DEPARTMENT','en','Edit Department','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_DEPARTMENT','en','Do you want to delete selected department?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_DEPARTMENT','en','Do you want to delete selected department?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_DELETE','en','Department has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_SUCCESS_DELETE','en','Department has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_DEPARTMENT','en','Department cannot be deleted while has  assigned users.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_DEPARTMENT','en','Department cannot be deleted while has  assigned users.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MANAGER','en','Manager','2012-02-02' 
+SELECT 'LABEL','ID_MANAGER','en','Manager','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY_NAME','en','Category Name','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY_NAME','en','Category Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_CATEGORY_MESSAGE','en','No categories to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_CATEGORY_MESSAGE','en','No categories to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_CATEGORY_MESSAGE','en','Displaying categories {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_CATEGORY_MESSAGE','en','Displaying categories {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NaN','en','a','2012-02-02' 
+SELECT 'LABEL','NaN','en','a','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_CATEGORY','en','Edit Process Category','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_CATEGORY','en','Edit Process Category','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOADING_GRID','en','Loading...','2012-02-02' 
+SELECT 'LABEL','ID_LOADING_GRID','en','Loading...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_CATEGORY','en','Create New Category','2012-02-02' 
+SELECT 'LABEL','ID_NEW_CATEGORY','en','Create New Category','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY_EXISTS','en','Category name already exists.','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY_EXISTS','en','Category name already exists.','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY_SUCCESS_UPDATE','en','Process category has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY_SUCCESS_UPDATE','en','Process category has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CATEGORY_SUCCESS_DELETE','en','Process category has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_CATEGORY_SUCCESS_DELETE','en','Process category has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_CATEGORY','en','Category cannot be deleted while has   assigned processes.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_CATEGORY','en','Category cannot be deleted while has   assigned processes.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_CATEGORY','en','Do you want to delete selected category?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_CATEGORY','en','Do you want to delete selected category?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_USERS','en','Group or Users','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_USERS','en','Group or Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DOWNLOADING_FILE','en','Downloading file','2012-02-02' 
+SELECT 'LABEL','ID_DOWNLOADING_FILE','en','Downloading file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_PROCESS_OVERWRITING','en','Update the current process, overwriting all tasks and steps','2012-02-02' 
+SELECT 'LABEL','IMPORT_PROCESS_OVERWRITING','en','Update the current process, overwriting all tasks and steps','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OPEN_IN_A_NEW_WINDOW','en','Open in a new window','2012-02-02' 
+SELECT 'LABEL','ID_OPEN_IN_A_NEW_WINDOW','en','Open in a new window','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_LIST','en','Case List','2012-02-02' 
+SELECT 'LABEL','ID_CASE_LIST','en','Case List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAMPLES','en','Samples','2012-02-02' 
+SELECT 'LABEL','ID_SAMPLES','en','Samples','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSNAME_ALREADY_EXISTS','en','The Process Name already exists!','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSNAME_ALREADY_EXISTS','en','The Process Name already exists!','2012-09-18' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ROLES_CAN_NOT_DELETE','en','This role cannot be deleted while it still  has some assigned users.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ROLES_CAN_NOT_DELETE','en','This role cannot be deleted while it still  has some assigned users.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_REMOVE_ROLE','en','Are you sure you want to delete this role?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_REMOVE_ROLE','en','Are you sure you want to delete this role?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_ROLES_MSG','en','You cannot modify this role.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_ROLES_MSG','en','You cannot modify this role.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_AUTHENTICATION_MESSAGE','en','Displaying authentication sources {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_AUTHENTICATION_MESSAGE','en','Displaying authentication sources {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_DYNAFORM','en','Please select the Dynaform Type','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_DYNAFORM','en','Please select the Dynaform Type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PORT','en','Port','2012-02-02' 
+SELECT 'LABEL','ID_PORT','en','Port','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BLANK_DYNAFORM','en','Blank Dynaform','2012-02-02' 
+SELECT 'LABEL','ID_BLANK_DYNAFORM','en','Blank Dynaform','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROVIDER','en','Provider','2012-02-02' 
+SELECT 'LABEL','ID_PROVIDER','en','Provider','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_DYNAFORM','en','PM Table Dynaform','2012-02-02' 
+SELECT 'LABEL','ID_PM_DYNAFORM','en','PM Table Dynaform','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_INFORMATION','en','Dynaform Information','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_INFORMATION','en','Dynaform Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVER_NAME','en','Server Address','2012-02-02' 
+SELECT 'LABEL','ID_SERVER_NAME','en','Server Address','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_PM_TABLE','en','Create from a PM Table','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_PM_TABLE','en','Create from a PM Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_REMOVED','en','Dynaform has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_REMOVED','en','Dynaform has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIMARY_KEY','en','Primary Key','2012-02-02' 
+SELECT 'LABEL','ID_PRIMARY_KEY','en','Primary Key','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_TITLE_REQUIRED','en','Dynaform Title Required','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_TITLE_REQUIRED','en','Dynaform Title Required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CURRENT_USERS','en','Current Users','2012-02-02' 
+SELECT 'LABEL','ID_CURRENT_USERS','en','Current Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLED_TLS','en','Enabled TLS','2012-02-02' 
+SELECT 'LABEL','ID_ENABLED_TLS','en','Enabled TLS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYANFORM_CREATED','en','Dynaform has been created successfully','2012-02-02' 
+SELECT 'LABEL','ID_DYANFORM_CREATED','en','Dynaform has been created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVER','en','Server','2012-02-02' 
+SELECT 'LABEL','ID_SERVER','en','Server','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATABASE_NAME','en','Database Name','2012-02-02' 
+SELECT 'LABEL','ID_DATABASE_NAME','en','Database Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENGINE','en','Engine','2012-02-02' 
+SELECT 'LABEL','ID_ENGINE','en','Engine','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENCODE','en','Encode','2012-02-02' 
+SELECT 'LABEL','ID_ENCODE','en','Encode','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME','en','Username','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME','en','Username','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEST_CONNECTION','en','Test Connection','2012-02-02' 
+SELECT 'LABEL','ID_TEST_CONNECTION','en','Test Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_SOURCE','en','Add New Database Source','2012-02-02' 
+SELECT 'LABEL','ID_DBS_SOURCE','en','Add New Database Source','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_LIST','en','Database Source List','2012-02-02' 
+SELECT 'LABEL','ID_DBS_LIST','en','Database Source List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOAD_FAILED','en','Load Failed','2012-02-02' 
+SELECT 'LABEL','ID_LOAD_FAILED','en','Load Failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DBS_REMOVE','en','Database Connection has been removed successfully','2012-02-02' 
+SELECT 'LABEL','DBS_REMOVE','en','Database Connection has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_CONNECTION_TEST','en','Connection Tested Successfully','2012-02-02' 
+SELECT 'LABEL','ID_DBS_CONNECTION_TEST','en','Connection Tested Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_CONNECTION_SAVE','en','Connection Saved Successfully','2012-02-02' 
+SELECT 'LABEL','ID_DBS_CONNECTION_SAVE','en','Connection Saved Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DBS_CONNECTION_EDIT','en','Connection Edited Successfully','2012-02-02' 
+SELECT 'LABEL','ID_DBS_CONNECTION_EDIT','en','Connection Edited Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_AUTHENTICATION_MESSAGE','en','No authentication sources to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_AUTHENTICATION_MESSAGE','en','No authentication sources to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_REMOVE','en','Input Document  has been removed successfully from Process','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_REMOVE','en','Input Document  has been removed successfully from Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_WARNING','en','Input document assigned to a process supervisors cannot be deleted','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_WARNING','en','Input document assigned to a process supervisors cannot be deleted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_INFO','en','Input Document Information','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_INFO','en','Input Document Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FORMAT','en','Format','2012-02-02' 
+SELECT 'LABEL','ID_FORMAT','en','Format','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_VERSIONING','en','Enable Versioning','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_VERSIONING','en','Enable Versioning','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DESTINATION_PATH','en','Destination Path','2012-02-02' 
+SELECT 'LABEL','ID_DESTINATION_PATH','en','Destination Path','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TAGS','en','Tags','2012-02-02' 
+SELECT 'LABEL','ID_TAGS','en','Tags','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_CREATE','en','Input document has been created successfully','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_CREATE','en','Input document has been created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_NOT_SAVE','en','There is an Input Document with the same  name in  this process. It is not saving','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_NOT_SAVE','en','There is an Input Document with the same  name in  this process. It is not saving','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_UPDATE','en','Input document has been updated successfully','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_UPDATE','en','Input document has been updated successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VERSIONING','en','Versioning','2012-02-02' 
+SELECT 'LABEL','ID_VERSIONING','en','Versioning','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_INFO','en','Output Document Information','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_INFO','en','Output Document Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ORIENTATION','en','Orientation','2012-02-02' 
+SELECT 'LABEL','ID_ORIENTATION','en','Orientation','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MEDIA','en','Media','2012-02-02' 
+SELECT 'LABEL','ID_MEDIA','en','Media','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LEFT_MARGIN','en','Left Margin','2012-02-02' 
+SELECT 'LABEL','ID_LEFT_MARGIN','en','Left Margin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RIGHT_MARGIN','en','Right Margin','2012-02-02' 
+SELECT 'LABEL','ID_RIGHT_MARGIN','en','Right Margin','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_TOP_MARGIN','en','Top Margin','2012-02-02' 
+SELECT 'LABEL','ID_TOP_MARGIN','en','Top Margin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BOTTOM_MARGIN','en','Bottom Margin','2012-02-02' 
+SELECT 'LABEL','ID_BOTTOM_MARGIN','en','Bottom Margin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_GENERATE','en','Output Document to Generate','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_GENERATE','en','Output Document to Generate','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','OUTPUT_CREATE','en','Output document has been created successfully','2012-02-02' 
+SELECT 'LABEL','OUTPUT_CREATE','en','Output document has been created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_NOT_SAVE','en','There is an Output Document with the same  name in  this process. It is not saving.','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_NOT_SAVE','en','There is an Output Document with the same  name in  this process. It is not saving.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_UPDATE','en','Output document has been updated successfully.','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_UPDATE','en','Output document has been updated successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_NAME','en','Table Name','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_NAME','en','Table Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELDS','en','Fields','2012-02-02' 
+SELECT 'LABEL','ID_FIELDS','en','Fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_FIELDS','en','Grid Fields','2012-02-02' 
+SELECT 'LABEL','ID_GRID_FIELDS','en','Grid Fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_REMOVED','en','Report Table has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_REMOVED','en','Report Table has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_SAVE','en','Report Table Saved Successfully','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_SAVE','en','Report Table Saved Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_EDITED','en','Report Table Edited Successfully','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_EDITED','en','Report Table Edited Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_REMOVE','en','Output document has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_REMOVE','en','Output document has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SIZE_IN_BYTES','en','Size in bytes','2012-02-02' 
+SELECT 'LABEL','ID_SIZE_IN_BYTES','en','Size in bytes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPORT_PROCESS','en','Export Process','2012-02-02' 
+SELECT 'LABEL','ID_EXPORT_PROCESS','en','Export Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HORIZONTAL_LINE','en','Horizontal Line','2012-02-02' 
+SELECT 'LABEL','ID_HORIZONTAL_LINE','en','Horizontal Line','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VERTICAL_LINE','en','Vertical Line','2012-02-02' 
+SELECT 'LABEL','ID_VERTICAL_LINE','en','Vertical Line','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_LINES','en','Delete All Lines','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_LINES','en','Delete All Lines','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TARGET_TASK','en','Target Task','2012-02-02' 
+SELECT 'LABEL','ID_TARGET_TASK','en','Target Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ORIGIN_TASK','en','Origin Task','2012-02-02' 
+SELECT 'LABEL','ID_ORIGIN_TASK','en','Origin Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PARTICIPATION','en','Participation','2012-02-02' 
+SELECT 'LABEL','ID_PARTICIPATION','en','Participation','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT','en','Object','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT','en','Object','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_PERMISSIONS','en','Process Permissions','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_PERMISSIONS','en','Process Permissions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STATUS_CASE','en','Status Case','2012-02-02' 
+SELECT 'LABEL','ID_STATUS_CASE','en','Status Case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SNAP_GEOMETRY','en','Snap Geometry','2012-02-02' 
+SELECT 'LABEL','ID_SNAP_GEOMETRY','en','Snap Geometry','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PARTICIPATION_REQUIRED','en','Participation Required?','2012-02-02' 
+SELECT 'LABEL','ID_PARTICIPATION_REQUIRED','en','Participation Required?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_PERMISSIONS_CREATE','en','Process Permission created successfully','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_PERMISSIONS_CREATE','en','Process Permission created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_PERMISSIONS_EDIT','en','Process Permission edited successfully','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_PERMISSIONS_EDIT','en','Process Permission edited successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERMISSION_NEW','en','New specific Permission','2012-02-02' 
+SELECT 'LABEL','ID_PERMISSION_NEW','en','New specific Permission','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUPERVISOR_UNAVAILABLE','en','No supervisors are available. All supervisors have been already assigned.','2012-02-02' 
+SELECT 'LABEL','ID_SUPERVISOR_UNAVAILABLE','en','No supervisors are available. All supervisors have been already assigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUPERVISOR_REMOVED','en','Supervisor  has been removed successfully from Process','2012-02-02' 
+SELECT 'LABEL','ID_SUPERVISOR_REMOVED','en','Supervisor  has been removed successfully from Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUPERVISOR_ASSIGNED','en','Supervisor has been successfully assigned to a Process','2012-02-02' 
+SELECT 'LABEL','ID_SUPERVISOR_ASSIGNED','en','Supervisor has been successfully assigned to a Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUPERVISOR_FAILED','en','Failed saving Supervisor Assigned to process','2012-02-02' 
+SELECT 'LABEL','ID_SUPERVISOR_FAILED','en','Failed saving Supervisor Assigned to process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUPERVISOR','en','Supervisor','2012-02-02' 
+SELECT 'LABEL','ID_SUPERVISOR','en','Supervisor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYANFORM_REMOVE','en','Dynaform  has been removed successfully from Process','2012-02-02' 
+SELECT 'LABEL','ID_DYANFORM_REMOVE','en','Dynaform  has been removed successfully from Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_ASSIGN','en','Dynaform has been successfully assigned to a Process','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_ASSIGN','en','Dynaform has been successfully assigned to a Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_ASSIGN_FAILED','en','Failed saving Dynaform Assigned to process','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_ASSIGN_FAILED','en','Failed saving Dynaform Assigned to process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_UNAVAILABLE','en','No Input Document are available. All Input Document have been already assigned.','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_UNAVAILABLE','en','No Input Document are available. All Input Document have been already assigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_ASSIGN','en','Input Document has been successfully assigned to a Process','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_ASSIGN','en','Input Document has been successfully assigned to a Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_FAILED','en','Failed saving Input Document Assigned to process','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_FAILED','en','Failed saving Input Document Assigned to process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_FILE_MANAGER','en','Process File Manager','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_FILE_MANAGER','en','Process File Manager','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FAILURE','en','Failure','2012-02-02' 
+SELECT 'LABEL','ID_FAILURE','en','Failure','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAP_TYPE','en','Map Type','2012-02-02' 
+SELECT 'LABEL','ID_MAP_TYPE','en','Map Type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DERIVATION_HISTORY','en','Derivation History','2012-02-02' 
+SELECT 'LABEL','ID_DERIVATION_HISTORY','en','Routing History','2012-06-18' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGES_HISTORY','en','Messages History','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGES_HISTORY','en','Messages History','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_PROPERTIES_SAVE','en','Case Tracker Properties Saved Successfully','2012-02-02' 
+SELECT 'LABEL','ID_CASE_PROPERTIES_SAVE','en','Case Tracker Properties Saved Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_TRACKERS','en','Case trackers','2012-02-02' 
+SELECT 'LABEL','ID_CASE_TRACKERS','en','Case trackers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_UNAVAILABLE','en','No users are available. All users have been already assigned','2012-02-02' 
+SELECT 'LABEL','ID_USERS_UNAVAILABLE','en','No users are available. All users have been already assigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT_REMOVE','en','Object has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT_REMOVE','en','Object has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT_ASSIGNED','en','Objects has been successfully assigned','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT_ASSIGNED','en','Objects has been successfully assigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT_FAILED','en','Failed to assign Objects','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT_FAILED','en','Failed to assign Objects','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT_UPDATE','en','User has been updated successfully','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT_UPDATE','en','User has been updated successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL_VARIABLES','en','All Variables','2012-02-02' 
+SELECT 'LABEL','ID_ALL_VARIABLES','en','All Variables','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEPS_UNAVAILABLE','en','No steps are available. All Steps have been already assigned.','2012-02-02' 
+SELECT 'LABEL','ID_STEPS_UNAVAILABLE','en','No steps are available. All Steps have been already assigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEP_REMOVED','en','Step has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_STEP_REMOVED','en','Step has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','STEP_MODE','en','Mode','2012-02-02' 
+SELECT 'LABEL','STEP_MODE','en','Mode','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEP_ASSIGNED','en','Step has been assigned successfully','2012-02-02' 
+SELECT 'LABEL','ID_STEP_ASSIGNED','en','Step has been assigned successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STEPS_OF','en','Steps Of','2012-02-02' 
+SELECT 'LABEL','ID_STEPS_OF','en','Steps Of','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECTS_UNAVAILABLE','en','No objects are available. All objects have been already assigned.','2012-02-02' 
+SELECT 'LABEL','ID_OBJECTS_UNAVAILABLE','en','No objects are available. All objects have been already assigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_REMOVED','en','User has been removed successfully','2012-02-02' 
+SELECT 'LABEL','ID_USERS_REMOVED','en','User has been removed successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_ASSIGNED','en','User has been successfully assigned','2012-02-02' 
+SELECT 'LABEL','ID_USER_ASSIGNED','en','User has been successfully assigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_SAVE_FAIL','en','Failed saving User Assigned to Task','2012-02-02' 
+SELECT 'LABEL','ID_USER_SAVE_FAIL','en','Failed saving User Assigned to Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_GROUPS','en','Users and User Groups','2012-02-02' 
+SELECT 'LABEL','ID_USERS_GROUPS','en','Users and User Groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_AUTHENTICATION','en','Authentication source cannot be deleted while has assigned users.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_AUTHENTICATION','en','Authentication source cannot be deleted while has assigned users.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEFINITION','en','Definition','2012-02-02' 
+SELECT 'LABEL','ID_DEFINITION','en','Definition','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_SUCCESS_DELETE','en','Authentication source has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_SUCCESS_DELETE','en','Authentication source has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_CASE_PRIORITY','en','Variable for Case priority','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_CASE_PRIORITY','en','Variable for Case priority','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_TASK','en','Starting Task','2012-02-02' 
+SELECT 'LABEL','ID_START_TASK','en','Starting Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_AUTHENTICATION','en','Do you want to delete selected authentication source?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_AUTHENTICATION','en','Do you want to delete selected authentication source?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNMENT_RULES','en','Assignment Rules','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNMENT_RULES','en','Assignment Rules','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_ASSIGNED_BY','en','Cases to be Assigned by','2012-02-02' 
+SELECT 'LABEL','ID_CASES_ASSIGNED_BY','en','Cases to be Assigned by','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CYCLIC_ASSIGNMENT','en','Cyclic Assignment','2012-02-02' 
+SELECT 'LABEL','ID_CYCLIC_ASSIGNMENT','en','Cyclic Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MANUAL_ASSIGNMENT','en','Manual Assignment','2012-02-02' 
+SELECT 'LABEL','ID_MANUAL_ASSIGNMENT','en','Manual Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VALUE_BASED','en','Value Based','2012-02-02' 
+SELECT 'LABEL','ID_VALUE_BASED','en','Value Based','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORTS_TO','en','Reports to','2012-02-02' 
+SELECT 'LABEL','ID_REPORTS_TO','en','Reports to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STATIC_PARTIAL_JOIN_MULTIPLE_INSTANCES','en','Static Partial Join for Multiple Instance','2012-02-02' 
+SELECT 'LABEL','ID_STATIC_PARTIAL_JOIN_MULTIPLE_INSTANCES','en','Static Partial Join for Multiple Instance','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANCEL_PARTIAL_JOIN_MULTIPLE_INSTANCE','en','Cancelling Partial Join for Multiple Instance','2012-02-02' 
+SELECT 'LABEL','ID_CANCEL_PARTIAL_JOIN_MULTIPLE_INSTANCE','en','Cancelling Partial Join for Multiple Instance','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_VALUE_ASSIGNMENT','en','Variable for Value Based Assignment','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_VALUE_ASSIGNMENT','en','Variable for Value Based Assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_NO_INSTANCES','en','Variable for No of Instances','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_NO_INSTANCES','en','Variable for No of Instances','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_INSTANCES_TO _COMPLETE','en','Variable for No of Instances to complete','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_INSTANCES_TO _COMPLETE','en','Variable for No of Instances to complete','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_USER_DEFINED_TIMING_CONTROL','en','Allow user defined timing control','2012-02-02' 
+SELECT 'LABEL','ID_USER_DEFINED_TIMING_CONTROL','en','Allow user defined timing control','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_DURATION','en','Task Duration','2012-02-02' 
+SELECT 'LABEL','ID_TASK_DURATION','en','Task Duration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_UNIT','en','Time Unit','2012-02-02' 
+SELECT 'LABEL','ID_TIME_UNIT','en','Time Unit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COUNT_DAYS','en','Count Days by','2012-02-02' 
+SELECT 'LABEL','ID_COUNT_DAYS','en','Count Days by','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALLOW_ARBITARY_TRANSFER','en','Allow arbitary transfer (Ad hoc)','2012-02-02' 
+SELECT 'LABEL','ID_ALLOW_ARBITARY_TRANSFER','en','Allow arbitary transfer (Ad hoc)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_LABELS','en','Case Labels','2012-02-02' 
+SELECT 'LABEL','ID_CASE_LABELS','en','Case Labels','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_TITLE','en','Case Title','2012-02-02' 
+SELECT 'LABEL','ID_CASE_TITLE','en','Case Title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_DESCRIPTION','en','Case Description','2012-02-02' 
+SELECT 'LABEL','ID_CASE_DESCRIPTION','en','Case Description','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOTIFICATION','en','Notification','2012-02-02' 
+SELECT 'LABEL','ID_NOTIFICATION','en','Notification','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOTIFY_USERS_AFTER_ASSIGN','en','After routing notify the next assigned user(s)','2012-02-02' 
+SELECT 'LABEL','ID_NOTIFY_USERS_AFTER_ASSIGN','en','After routing notify the next assigned user(s)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_PROPERTIES_SAVE','en','Task properties has been saved successfully','2012-02-02' 
+SELECT 'LABEL','ID_TASK_PROPERTIES_SAVE','en','Task properties has been saved successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_TASK_SAVE','en','Error in saving Task Properties','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_TASK_SAVE','en','Error in saving Task Properties','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_UNAVAILABLE','en','No triggers are available. All triggers have been already assigned.','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_UNAVAILABLE','en','No triggers are available. All triggers have been already assigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGER_REMOVE','en','Trigger has been removed successfully.','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGER_REMOVE','en','Trigger has been removed successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGER_ASSIGN','en','Triggers has been assigned successfully.','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGER_ASSIGN','en','Triggers has been assigned successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_TRIGGERS','en','Assign Triggers','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_TRIGGERS','en','Assign Triggers','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_GROUPS_ADHOC','en','Users and User Groups(Ad Hoc)','2012-02-02' 
+SELECT 'LABEL','ID_USER_GROUPS_ADHOC','en','Users and User Groups(Ad Hoc)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_VARIABLES_OUT','en','Assign Variables Out','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_VARIABLES_OUT','en','Assign Variables Out','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_VARIABLES_OUT','en','Remove Variables Out','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_VARIABLES_OUT','en','Remove Variables Out','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_VARIABLES_IN','en','Assign Variables In','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_VARIABLES_IN','en','Assign Variables In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_VARIABLES_IN','en','Remove Variables In','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_VARIABLES_IN','en','Remove Variables In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ORIGIN','en','Origin','2012-02-02' 
+SELECT 'LABEL','ID_ORIGIN','en','Origin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TARGET','en','Target','2012-02-02' 
+SELECT 'LABEL','ID_TARGET','en','Target','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBPROCESS','en','Sub-Process','2012-02-02' 
+SELECT 'LABEL','ID_SUBPROCESS','en','Sub-Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBPROCESS_NAME','en','SubProcess name','2012-02-02' 
+SELECT 'LABEL','ID_SUBPROCESS_NAME','en','SubProcess name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_OUT','en','Variables Out','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_OUT','en','Variables Out','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_IN','en','Variables In','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_IN','en','Variables In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBPROCESS_SAVE','en','Sub Process Properties has been saved successfully.','2012-02-02' 
+SELECT 'LABEL','ID_SUBPROCESS_SAVE','en','Sub Process Properties has been saved successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_FAILED','en','Authentication Failed','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_FAILED','en','Authentication Failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEBENTRY_LINK','en','WebEntry Link','2012-02-02' 
+SELECT 'LABEL','ID_WEBENTRY_LINK','en','WebEntry Link','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INITIAL_TASK','en','Initial Task','2012-02-02' 
+SELECT 'LABEL','ID_INITIAL_TASK','en','Initial Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INITIAL_DYNAFORM','en','Initial Dynaform','2012-02-02' 
+SELECT 'LABEL','ID_INITIAL_DYNAFORM','en','Initial Dynaform','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_METHODS','en','Methods','2012-02-02' 
+SELECT 'LABEL','ID_METHODS','en','Methods','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_ACCESS','en','Input Document Access','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_ACCESS','en','Input Document Access','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PHP_WEB_SERVICE','en','PHP & Web Service options','2012-02-02' 
+SELECT 'LABEL','ID_PHP_WEB_SERVICE','en','PHP & Web Service options','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_SERVICE_USER','en','Web Service User','2012-02-02' 
+SELECT 'LABEL','ID_WEB_SERVICE_USER','en','Web Service User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_SERVICE_PASSWORD','en','Web Service Password','2012-02-02' 
+SELECT 'LABEL','ID_WEB_SERVICE_PASSWORD','en','Web Service Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_MESSAGE_EVENT_WEB_ENTRY','en','Start Message Event(Web Entry)','2012-02-02' 
+SELECT 'LABEL','ID_START_MESSAGE_EVENT_WEB_ENTRY','en','Start Message Event(Web Entry)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEST_CONFIGURATION','en','Test Configuration','2012-02-02' 
+SELECT 'LABEL','ID_TEST_CONFIGURATION','en','Test Configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERATE_WEB_ENTRY_PAGE','en','Generate Web Entry Page','2012-02-02' 
+SELECT 'LABEL','ID_GENERATE_WEB_ENTRY_PAGE','en','Generate Web Entry Page','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GENERATE_INFO','en','General Information','2012-02-02' 
+SELECT 'LABEL','ID_GENERATE_INFO','en','General Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEST_USER','en','Test User','2012-02-02' 
+SELECT 'LABEL','ID_TEST_USER','en','Test User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAKER_VALIDATION','en','Please insert a valid processmaker user name and password, in order to assign the case to their respective owner.','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAKER_VALIDATION','en','Please insert a valid processmaker user name and password, in order to assign the case to their respective owner.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VALID_CREDENTIALS','en','Please enter valid credentials','2012-02-02' 
+SELECT 'LABEL','ID_VALID_CREDENTIALS','en','Please enter valid credentials','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERFORM_TASK','en','Perform this Task','2012-02-02' 
+SELECT 'LABEL','ID_PERFORM_TASK','en','Perform this Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_DATE_TIME','en','Select the time and day you want this task to start','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_DATE_TIME','en','Select the time and day you want this task to start','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_DATE','en','Start Date','2012-02-02' 
+SELECT 'LABEL','ID_START_DATE','en','Start Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_END_DATE','en','End Date','2012-02-02' 
+SELECT 'LABEL','ID_END_DATE','en','End Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_TIME','en','Execution Time','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_TIME','en','Execution Time','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_DAY_OF_WEEK','en','Select the day(s) of the week below','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_DAY_OF_WEEK','en','Select the day(s) of the week below','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OF_THE_MONTH','en','of the month(s)','2012-02-02' 
+SELECT 'LABEL','ID_OF_THE_MONTH','en','of the month(s)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_TIME_EVENT','en','Start Timer Event (Case Scheduler)','2012-02-02' 
+SELECT 'LABEL','ID_START_TIME_EVENT','en','Start Timer Event (Case Scheduler)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_SCHEDULER_SAVED','en','Case Scheduler Saved Sucessfully','2012-02-02' 
+SELECT 'LABEL','ID_CASE_SCHEDULER_SAVED','en','Case Scheduler Saved Sucessfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AFTER_ROUTING_NOTIFY','en','After routing notify the next assigned user(s).','2012-02-02' 
+SELECT 'LABEL','ID_AFTER_ROUTING_NOTIFY','en','After routing notify the next assigned user(s).','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INTERMEDIATE_MESSAGE_EVENT','en','Intermediate message','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INTERMEDIATE_MESSAGE_EVENT','en','Intermediate message','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EVENT_MESSAGE','en','Event Message','2012-02-02' 
+SELECT 'LABEL','ID_EVENT_MESSAGE','en','Event Message','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BEHAVIOUR','en','Behaviour','2012-02-02' 
+SELECT 'LABEL','ID_BEHAVIOUR','en','Behaviour','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_START_WITH_TASK','en','The time starts with task','2012-02-02' 
+SELECT 'LABEL','ID_TIME_START_WITH_TASK','en','The time starts with task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ESTIMATED_TASK_DURATION','en','Estimated Task duration','2012-02-02' 
+SELECT 'LABEL','ID_ESTIMATED_TASK_DURATION','en','Estimated Task duration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_TIME_INTERVAL','en','Execution time Interval','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_TIME_INTERVAL','en','Execution time Interval','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_END_MESSAGE_EVENT','en','End Message Event (Message Event)','2012-02-02' 
+SELECT 'LABEL','ID_END_MESSAGE_EVENT','en','End Message Event (Message Event)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EVENT_MULTIPLE','en','Event Multiple','2012-02-02' 
+SELECT 'LABEL','ID_EVENT_MULTIPLE','en','Event Multiple','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ESTIMATED_TASK_DURATION_DAYS','en','Estimated Task duration in Days','2012-02-02' 
+SELECT 'LABEL','ID_ESTIMATED_TASK_DURATION_DAYS','en','Estimated Task duration in Days','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTION_TIME_DAYS','en','Execution time in days','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTION_TIME_DAYS','en','Execution time in days','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTE_TRIGGER','en','Execute Trigger','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTE_TRIGGER','en','Execute Trigger','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INTERMEDIATE_CONDITIONAL_EVENT','en','Intermediate Conditional','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INTERMEDIATE_CONDITIONAL_EVENT','en','Intermediate Conditional','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_PMTABLES_MESSAGE','en','Displaying PM Tables {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_PMTABLES_MESSAGE','en','Displaying PM Tables {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_PMTABLES_MESSAGE','en','No PM Tables to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_PMTABLES_MESSAGE','en','No PM Tables to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_ROWS_MESSAGE','en','Displaying rows {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_ROWS_MESSAGE','en','Displaying rows {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_ROWS_MESSAGE','en','No rows to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_ROWS_MESSAGE','en','No rows to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEMA','en','Schema','2012-02-02' 
+SELECT 'LABEL','ID_SCHEMA','en','Schema','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_DELETE_TABLE_COLLECTION','en','Do you want to delete this table?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_DELETE_TABLE_COLLECTION','en','Do you want to delete this table?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDARS','en','Calendars','2012-02-02' 
+SELECT 'LABEL','ID_CALENDARS','en','Calendars','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_CALENDAR_MESSAGE','en','Displaying calendars {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_CALENDAR_MESSAGE','en','Displaying calendars {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_CALENDAR_MESSAGE','en','No calendars to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_CALENDAR_MESSAGE','en','No calendars to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_EXE','en','Executable File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_EXE','en','Executable File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_DIR','en','Directory','2012-02-02' 
+SELECT 'LABEL','MIME_DES_DIR','en','Directory','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_FILE','en','File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_FILE','en','File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_SYMLINK','en','Symbolic Link','2012-02-02' 
+SELECT 'LABEL','MIME_DES_SYMLINK','en','Symbolic Link','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_TEXT','en','Text File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_TEXT','en','Text File','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','MIME_DES_TXT','en','Text File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_TXT','en','Text File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_PHP','en','PHP Script','2012-02-02' 
+SELECT 'LABEL','MIME_DES_PHP','en','PHP Script','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_SQL','en','SQL File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_SQL','en','SQL File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_PERL','en','PERL Script','2012-02-02' 
+SELECT 'LABEL','MIME_DES_PERL','en','PERL Script','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_HTML','en','HTML Page','2012-02-02' 
+SELECT 'LABEL','MIME_DES_HTML','en','HTML Page','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_JS','en','Javascript File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_JS','en','Javascript File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_CSS','en','CSS File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_CSS','en','CSS File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_CGI','en','CGI Script','2012-02-02' 
+SELECT 'LABEL','MIME_DES_CGI','en','CGI Script','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_CPPS','en','C++ Source File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_CPPS','en','C++ Source File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_CPPH','en','C++ Header File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_CPPH','en','C++ Header File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_JAVAS','en','Java Source File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_JAVAS','en','Java Source File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_JAVAC','en','Java Class File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_JAVAC','en','Java Class File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_PAS','en','Pascal File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_PAS','en','Pascal File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_GIF','en','GIF Picture','2012-02-02' 
+SELECT 'LABEL','MIME_DES_GIF','en','GIF Picture','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_JPG','en','JPG Picture','2012-02-02' 
+SELECT 'LABEL','MIME_DES_JPG','en','JPG Picture','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_BMP','en','BMP Picture','2012-02-02' 
+SELECT 'LABEL','MIME_DES_BMP','en','BMP Picture','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_PNG','en','PNG Picture','2012-02-02' 
+SELECT 'LABEL','MIME_DES_PNG','en','PNG Picture','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_ZIP','en','ZIP Archive','2012-02-02' 
+SELECT 'LABEL','MIME_DES_ZIP','en','ZIP Archive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_TAR','en','TAR Archive','2012-02-02' 
+SELECT 'LABEL','MIME_DES_TAR','en','TAR Archive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_GZIP','en','GZIP Archive','2012-02-02' 
+SELECT 'LABEL','MIME_DES_GZIP','en','GZIP Archive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_BZIP2','en','BZIP2 Archive','2012-02-02' 
+SELECT 'LABEL','MIME_DES_BZIP2','en','BZIP2 Archive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_RAR','en','RAR Archive','2012-02-02' 
+SELECT 'LABEL','MIME_DES_RAR','en','RAR Archive','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_MP3','en','MP3 Audio File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_MP3','en','MP3 Audio File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_WAV','en','WAV Audio File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_WAV','en','WAV Audio File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_MIDI','en','MIDI Audio File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_MIDI','en','MIDI Audio File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_REAL','en','RealAudio File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_REAL','en','RealAudio File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_MPG','en','MPG Video File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_MPG','en','MPG Video File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_MOV','en','Movie File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_MOV','en','Movie File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_AVI','en','AVI Video File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_AVI','en','AVI Video File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_FLASH','en','Flash Movie File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_FLASH','en','Flash Movie File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_WORD','en','Word Document','2012-02-02' 
+SELECT 'LABEL','MIME_DES_WORD','en','Word Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_EXCEL','en','Excel Document','2012-02-02' 
+SELECT 'LABEL','MIME_DES_EXCEL','en','Excel Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_PDF','en','PDF File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_PDF','en','PDF File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_DOC','en','Word Document','2012-02-02' 
+SELECT 'LABEL','MIME_DES_DOC','en','Word Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_XLS','en','Excel Document','2012-02-02' 
+SELECT 'LABEL','MIME_DES_XLS','en','Excel Document','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MIME_DES_RTF','en','Rich Text File','2012-02-02' 
+SELECT 'LABEL','MIME_DES_RTF','en','Rich Text File','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_CALENDAR','en','Do you want to delete selected calendar?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_CALENDAR','en','Do you want to delete selected calendar?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_SUCCESS_DELETE','en','Calendar has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_SUCCESS_DELETE','en','Calendar has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_CALENDAR','en','Calendar cannot be deleted while has assignations.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_CALENDAR','en','Calendar cannot be deleted while has assignations.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVED_SESSION_FILES','en','Older session files has been removed','2012-02-02' 
+SELECT 'LABEL','ID_REMOVED_SESSION_FILES','en','Older session files has been removed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_OLDER_SESSION_FILES','en','There are no older session files','2012-02-02' 
+SELECT 'LABEL','ID_NO_OLDER_SESSION_FILES','en','There are no older session files','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_BTN_SETUP_SESSION','en','Delete older session files','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_BTN_SETUP_SESSION','en','Delete older session files','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CACHE_SUBTITLE_SETUP_SESSION','en','Session Maintenance','2012-02-02' 
+SELECT 'LABEL','ID_CACHE_SUBTITLE_SETUP_SESSION','en','Session Maintenance','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_USERS','en','Assign Users','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_USERS','en','Assign Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SET_SUPERVISOR','en','Set Supervisor','2012-02-02' 
+SELECT 'LABEL','ID_SET_SUPERVISOR','en','Set Supervisor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SET_SUPERVISOR_SUCCESS','en','Supervisor assigned correctly','2012-02-02' 
+SELECT 'LABEL','ID_SET_SUPERVISOR_SUCCESS','en','Supervisor assigned correctly','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROLE_EXISTS','en','Role Code already exists.','2012-02-02' 
+SELECT 'LABEL','ID_ROLE_EXISTS','en','Role Code already exists.','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_DEBUG_PANEL_TITLE','en','ProcessMaker Debugger','2012-02-02' 
+SELECT 'LABEL','ID_DEBUG_PANEL_TITLE','en','ProcessMaker Debugger','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SWITCH_EDITOR','en','Switch Editor','2012-02-02' 
+SELECT 'LABEL','ID_SWITCH_EDITOR','en','Switch Editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NORMAL','en','Normal','2012-02-02' 
+SELECT 'LABEL','ID_NORMAL','en','Normal','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID','en','Grid','2012-02-02' 
+SELECT 'LABEL','ID_GRID','en','Grid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TAS_EDIT','en','Tasks (Edit mode)','2012-02-02' 
+SELECT 'LABEL','ID_TAS_EDIT','en','Tasks (Edit mode)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TAS_VIEW','en','Tasks (View mode)','2012-02-02' 
+SELECT 'LABEL','ID_TAS_VIEW','en','Tasks (View mode)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PM_FILENAME','en','Download PM File:','2012-02-02' 
+SELECT 'LABEL','ID_PM_FILENAME','en','Download PM File:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_XPDL_FILENAME','en','Download XPDL File:','2012-02-02' 
+SELECT 'LABEL','ID_XPDL_FILENAME','en','Download XPDL File:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_ITEMS_SELECTED','en','No items Selected','2012-02-02' 
+SELECT 'LABEL','ID_NO_ITEMS_SELECTED','en','No items Selected','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVER_COMMUNICATION_ERROR','en','Failed to connect to the server','2012-02-02' 
+SELECT 'LABEL','ID_SERVER_COMMUNICATION_ERROR','en','Failed to connect to the server','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_SELECTED_ITEMS','en','Do you want to deleted selected({0}) items?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_SELECTED_ITEMS','en','Do you want to deleted selected({0}) items?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ROOT_FOLDER','en','Root Folder','2012-02-02' 
+SELECT 'LABEL','ID_ROOT_FOLDER','en','Root Folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RELOAD','en','Reload','2012-02-02' 
+SELECT 'LABEL','ID_RELOAD','en','Reload','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MOVE','en','Move','2012-02-02' 
+SELECT 'LABEL','ID_MOVE','en','Move','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RENAME','en','Rename','2012-02-02' 
+SELECT 'LABEL','ID_RENAME','en','Rename','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SHOW_DIRS','en','Show Dirs','2012-02-02' 
+SELECT 'LABEL','ID_SHOW_DIRS','en','Show Dirs','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILTER_CURRENT_VIEW','en','Filter current view','2012-02-02' 
+SELECT 'LABEL','ID_FILTER_CURRENT_VIEW','en','Filter current view','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIRST','en','First','2012-02-02' 
+SELECT 'LABEL','ID_FIRST','en','First','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST','en','Last','2012-02-02' 
+SELECT 'LABEL','ID_LAST','en','Last','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEXT','en','Next','2012-02-02' 
+SELECT 'LABEL','ID_NEXT','en','Next','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREVIOUS','en','Previous','2012-02-02' 
+SELECT 'LABEL','ID_PREVIOUS','en','Previous','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DONE','en','Done','2012-02-02' 
+SELECT 'LABEL','ID_DONE','en','Done','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MODIFIED','en','Modified','2012-02-02' 
+SELECT 'LABEL','ID_MODIFIED','en','Modified','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OWNER','en','Owner','2012-02-02' 
+SELECT 'LABEL','ID_OWNER','en','Owner','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SIZE','en','Size','2012-02-02' 
+SELECT 'LABEL','ID_SIZE','en','Size','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DIRECTORY','en','Directory','2012-02-02' 
+SELECT 'LABEL','ID_DIRECTORY','en','Directory','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_MANAGER_SELECTED','en','No Manager Selected','2012-02-02' 
+SELECT 'LABEL','ID_NO_MANAGER_SELECTED','en','No Manager Selected','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPAND_ALL','en','Expand All','2012-02-02' 
+SELECT 'LABEL','ID_EXPAND_ALL','en','Expand All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COLLAPSE_ALL','en','Collapse All','2012-02-02' 
+SELECT 'LABEL','ID_COLLAPSE_ALL','en','Collapse All','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILENAME_GENERATED','en','Filename generated','2012-02-02' 
+SELECT 'LABEL','ID_FILENAME_GENERATED','en','Filename generated','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTORS_ASSIGNED_SUCESSFULLY','en','{0} Actors assign to task <b>"{1}"</b> successfully!','2012-02-02' 
+SELECT 'LABEL','ID_ACTORS_ASSIGNED_SUCESSFULLY','en','{0} Actors assign to task <b>"{1}"</b> successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTOR_ASSIGNED_SUCESSFULLY','en','The actor was assigned to task <b>"{tas_title}"</b> successfully!','2012-02-02' 
+SELECT 'LABEL','ID_ACTOR_ASSIGNED_SUCESSFULLY','en','The actor was assigned to task <b>"{tas_title}"</b> successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESPONSABILITIES_ASSIGNMENT','en','Assignment of responsibilities','2012-02-02' 
+SELECT 'LABEL','ID_RESPONSABILITIES_ASSIGNMENT','en','Assignment of responsibilities','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_ACTORS','en','Actors','2012-02-02' 
+SELECT 'LABEL','ID_ACTORS','en','Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAP_TITLE','en','BPMN Designer','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAP_TITLE','en','BPMN Designer','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AD_HOC_ACTORS','en','Ad Hoc Actors','2012-02-02' 
+SELECT 'LABEL','ID_AD_HOC_ACTORS','en','Ad Hoc Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTOR_ALREADY_ASSIGNED','en','The actor is already assigned to task <b>{0}</b>','2012-02-02' 
+SELECT 'LABEL','ID_ACTOR_ALREADY_ASSIGNED','en','The actor is already assigned to task <b>{0}</b>','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SOME_ACTORS_ALREADY_ASSIGNED','en','Some actor(s) is/are already assigned to task <b>{0}</b>','2012-02-02' 
+SELECT 'LABEL','ID_SOME_ACTORS_ALREADY_ASSIGNED','en','Some actor(s) is/are already assigned to task <b>{0}</b>','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TRIGGERS_SAVED','en','Trigger saved','2012-02-02' 
+SELECT 'LABEL','ID_TRIGGERS_SAVED','en','Trigger saved','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLUGINS','en','Plugins','2012-02-02' 
+SELECT 'LABEL','ID_PLUGINS','en','Plugins','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UID','en','UID','2012-02-02' 
+SELECT 'LABEL','ID_UID','en','UID','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_PROCESS','en','Create Process','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_PROCESS','en','Create Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_ENTRY_LINK','en','Web Entry Link','2012-02-02' 
+SELECT 'LABEL','ID_WEB_ENTRY_LINK','en','Web Entry Link','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_ENTRY_SUMMARY','en','Web Entry Summary','2012-02-02' 
+SELECT 'LABEL','ID_WEB_ENTRY_SUMMARY','en','Web Entry Summary','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREDENTIAL_ERROR','en','Credentials Error','2012-02-02' 
+SELECT 'LABEL','ID_CREDENTIAL_ERROR','en','Credentials Error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_ENTRY','en','Web Entry','2012-02-02' 
+SELECT 'LABEL','ID_WEB_ENTRY','en','Web Entry','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEST_WEB_ENTRY','en','Test Web Entry','2012-02-02' 
+SELECT 'LABEL','ID_TEST_WEB_ENTRY','en','Test Web Entry','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_WEB_ENTRY','en','New Web Entry','2012-02-02' 
+SELECT 'LABEL','ID_NEW_WEB_ENTRY','en','New Web Entry','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EDIT_WEB_ENTRY','en','Edit Web Entry','2012-02-02' 
+SELECT 'LABEL','ID_EDIT_WEB_ENTRY','en','Edit Web Entry','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_WEB_ENTRY','en','Do you want to delete current web entry?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_WEB_ENTRY','en','Do you want to delete current web entry?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_ENTRY_SUCCESS_DELETE','en','Web Entry deleted correctly','2012-02-02' 
+SELECT 'LABEL','ID_WEB_ENTRY_SUCCESS_DELETE','en','Web Entry deleted correctly','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORD','en','Password','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORD','en','Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_DEFINED','en','Not defined','2012-02-02' 
+SELECT 'LABEL','ID_NOT_DEFINED','en','Not defined','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WEB_ENTRY_SUCCESS_NEW','en','Web Entry has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_WEB_ENTRY_SUCCESS_NEW','en','Web Entry has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVE_ALL_BUTTON_FACE','en','<<','2012-02-02' 
+SELECT 'LABEL','ID_REMOVE_ALL_BUTTON_FACE','en','<<','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPDATE_DATE','en','Update','2012-02-02' 
+SELECT 'LABEL','ID_UPDATE_DATE','en','Update','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_CASE_SCHEDULER','en','New Case Scheduler','2012-02-02' 
+SELECT 'LABEL','ID_NEW_CASE_SCHEDULER','en','New Case Scheduler','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHANGE_STATUS','en','Change Status','2012-02-02' 
+SELECT 'LABEL','ID_CHANGE_STATUS','en','Change Status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_CASE_SCHEDULER','en','Do you want to delete current Case Scheduler?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_CASE_SCHEDULER','en','Do you want to delete current Case Scheduler?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_CREDENTIALS_REQUIRED','en','User credentials are required.','2012-02-02' 
+SELECT 'LABEL','ID_USER_CREDENTIALS_REQUIRED','en','User credentials are required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LAST_RUN_TIME','en','Last Run Time','2012-02-02' 
+SELECT 'LABEL','ID_LAST_RUN_TIME','en','Last Run Time','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_NEXT_RUN','en','Time Next Run','2012-02-02' 
+SELECT 'LABEL','ID_TIME_NEXT_RUN','en','Time Next Run','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_SUCCESS_DELETE','en','Case Scheduler has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_SUCCESS_DELETE','en','Case Scheduler has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_SUCCESS_CHANGE_STATUS','en','Case Scheduler status has been changed correctly.','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_SUCCESS_CHANGE_STATUS','en','Case Scheduler status has been changed correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_SUCCESS_NEW','en','Case Scheduler has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_SUCCESS_NEW','en','Case Scheduler has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SCHEDULER_SUCCESS_UPDATE','en','Case Scheduler has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_SCHEDULER_SUCCESS_UPDATE','en','Case Scheduler has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_SCHEDULER_SUMMARY','en','Case Scheduler Summary','2012-02-02' 
+SELECT 'LABEL','ID_CASE_SCHEDULER_SUMMARY','en','Case Scheduler Summary','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERS_ACTORS','en','Users Actors','2012-02-02' 
+SELECT 'LABEL','ID_USERS_ACTORS','en','Users Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADHOC_USERS_ACTORS','en','Ad hoc Users Actors','2012-02-02' 
+SELECT 'LABEL','ID_ADHOC_USERS_ACTORS','en','Ad hoc Users Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUPS_ACTORS','en','Groups Actors','2012-02-02' 
+SELECT 'LABEL','ID_GROUPS_ACTORS','en','Groups Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADHOC_GROUPS_ACTORS','en','Ad Hoc Groups Actors','2012-02-02' 
+SELECT 'LABEL','ID_ADHOC_GROUPS_ACTORS','en','Ad Hoc Groups Actors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXIST_DYNAFORM','en','There is a Dynaform with the same name in   this process. It is not saving','2012-02-02' 
+SELECT 'LABEL','ID_EXIST_DYNAFORM','en','There is a Dynaform with the same name in   this process. It is not saving','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_NEW','en','Input Document has been created correctly.','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_NEW','en','Input Document has been created correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_UPDATE','en','Input Document has been updated correctly.','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_UPDATE','en','Input Document has been updated correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_DELETE','en','Input Document has been deleted correctly.','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_SUCCESS_DELETE','en','Input Document has been deleted correctly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_INPUT_DOC','en','Do you want to delete selected Input Document?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_INPUT_DOC','en','Do you want to delete selected Input Document?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_DELETE_INPUT_DOC','en','Input Document cannot be deleted while has assigned tasks.','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_DELETE_INPUT_DOC','en','Input Document cannot be deleted while has assigned tasks.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SOME_FIELDS_REQUIRED','en','Some Fields are required.','2012-02-02' 
+SELECT 'LABEL','ID_SOME_FIELDS_REQUIRED','en','Some Fields are required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_TITLE_REQUIRED','en','Input Document Title is required.','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_TITLE_REQUIRED','en','Input Document Title is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_TITLE_REQUIRED','en','Process Title is required.','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_TITLE_REQUIRED','en','Process Title is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVING_PROCESS','en','Saving process','2012-02-02' 
+SELECT 'LABEL','ID_SAVING_PROCESS','en','Saving process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_SKIN_MESSAGE','en','Displaying skins {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_SKIN_MESSAGE','en','Displaying skins {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_SKIN_MESSAGE','en','No skins to display','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_SKIN_MESSAGE','en','No skins to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGN_ALL_CASES_BY_TASK','en','Reassign All Cases by Task','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGN_ALL_CASES_BY_TASK','en','Reassign All Cases by Task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_TO_REASSIGN_TASK_LIST','en','Cases to reassign - Task List','2012-02-02' 
+SELECT 'LABEL','ID_CASES_TO_REASSIGN_TASK_LIST','en','Cases to reassign - Task List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_LIST','en','User List','2012-02-02' 
+SELECT 'LABEL','ID_USER_LIST','en','User List','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE','en','Enable','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE','en','Enable','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLE','en','Disable','2012-02-02' 
+SELECT 'LABEL','ID_DISABLE','en','Disable','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YES_VALUE','en','YES','2012-02-02' 
+SELECT 'LABEL','ID_YES_VALUE','en','Yes','2012-07-11' 
   UNION ALL
-SELECT 'LABEL','ID_NO_VALUE','en','NO','2012-02-02' 
+SELECT 'LABEL','ID_NO_VALUE','en','No','2012-07-11' 
   UNION ALL
-SELECT 'LABEL','ID_ACTIVE_USERS','en','Active Users','2012-02-02' 
+SELECT 'LABEL','ID_ACTIVE_USERS','en','Active Users','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_PROCESS_DISABLE','en','Disable the current process and create a new version of the process','2012-02-02' 
+SELECT 'LABEL','IMPORT_PROCESS_DISABLE','en','Disable the current process and create a new version of the process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMPORT_PROCESS_NEW','en','Create a completely new process without changing the current process','2012-02-02' 
+SELECT 'LABEL','IMPORT_PROCESS_NEW','en','Create a completely new process without changing the current process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_PROCESS_FILE','en','Select a process file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_PROCESS_FILE','en','Select a process file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_PROCESS','en','Import Process','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_PROCESS','en','Import Process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOADING_PROCESS_FILE','en','Uploading the process file...','2012-02-02' 
+SELECT 'LABEL','ID_UPLOADING_PROCESS_FILE','en','Uploading the process file...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_ALREADY_EXISTS','en','The process you are trying to import already exists. Please select one of the following options to continue:','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_ALREADY_EXISTS','en','The process you are trying to import already exist. Please select one of the following options to continue:','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_DEBUG_MESSAGE','en','Debug Messages','2012-02-02' 
+SELECT 'LABEL','ID_DEBUG_MESSAGE','en','Debug Messages','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_HANDLER_ACTION_DELETE','en','Are you sure that you want to remove this','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_HANDLER_ACTION_DELETE','en','Are you sure that you want to remove this','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_EXIST_SOME_GROUP','en','Some of the groups that are you trying to import, already exists. Please select one of the following options to continue','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_EXIST_SOME_GROUP','en','Some of the groups that are you trying to import, already exists. Please select one of the following options to continue','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_GROUP_RENAME','en','Rename the imported groups','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_GROUP_RENAME','en','Rename the imported groups','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_GROUP_MERGE_PREEXISTENT','en','Merge the imported groups, with the preexistent local groups (no changes will be made to the local groups)','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_GROUP_MERGE_PREEXISTENT','en','Merge the imported groups, with the preexistent local groups (no changes will be made to the local groups)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE_UPLOAD_INCORRECT_EXTENSION','en','The file has an incorrect extension. Please check the file and upload again.','2012-02-02' 
+SELECT 'LABEL','ID_FILE_UPLOAD_INCORRECT_EXTENSION','en','The file has an incorrect extension. Please check the file and upload again.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_UPLOAD_FILE_CONTACT_ADMINISTRATOR','en','Error message when you upload the file, please contact your administrator.','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_UPLOAD_FILE_CONTACT_ADMINISTRATOR','en','Error message when you upload the file, please contact your administrator.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELEGATE_USER','en','Delegated User','2012-02-02' 
+SELECT 'LABEL','ID_DELEGATE_USER','en','Delegated User','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_TRANSFER','en','Task Transfer Date','2012-02-02' 
+SELECT 'LABEL','ID_TASK_TRANSFER','en','Task Transfer Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_ACTION','en','Enable Action','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_ACTION','en','Enable Action','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLE_ACTION','en','Disable Action','2012-02-02' 
+SELECT 'LABEL','ID_DISABLE_ACTION','en','Disable Action','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DERIVATED','en','Routed','2012-02-02' 
+SELECT 'LABEL','ID_DERIVATED','en','Routed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IN_PROGRESS','en','In Progress','2012-02-02' 
+SELECT 'LABEL','ID_IN_PROGRESS','en','In Progress','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGNED','en','Reassigned','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGNED','en','Reassigned','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CONFIRM_ADHOCUSER_CASE','en','Are you sure you want to do it?','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CONFIRM_ADHOCUSER_CASE','en','Are you sure you want to do it?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_ADHOCUSER_CASE','en','Are you sure you want to do it?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_ADHOCUSER_CASE','en','Are you sure you want to do it?','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_PM_ENV_HOME_SETTINGS_TITLE','en','Home Settings','2012-02-02' 
+SELECT 'LABEL','ID_PM_ENV_HOME_SETTINGS_TITLE','en','Home Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOME_LISTS_DATE_FORMAT','en','Date format on Lists','2012-02-02' 
+SELECT 'LABEL','ID_HOME_LISTS_DATE_FORMAT','en','Date format on Lists','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOME_LISTS_ROWS_PER_PAGE','en','Rows per page on Lists','2012-02-02' 
+SELECT 'LABEL','ID_HOME_LISTS_ROWS_PER_PAGE','en','Rows per page on Lists','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOME_COLLAPSE_RIGHT_PANEL','en','Collapse right panel when a Case is open','2012-02-02' 
+SELECT 'LABEL','ID_HOME_COLLAPSE_RIGHT_PANEL','en','Collapse right panel when a Case is open','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOME_SETTINGS','en','Home Settings','2012-02-02' 
+SELECT 'LABEL','ID_HOME_SETTINGS','en','Home Settings','2012-07-19' 
   UNION ALL
-SELECT 'LABEL','ID_ENVIRONMENT','en','Environment','2012-02-02' 
+SELECT 'LABEL','ID_ENVIRONMENT','en','Environment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CURLFUN_ISUNDEFINED','en','The process was not downloaded, because the curl     extension for php is not installed','2012-02-02' 
+SELECT 'LABEL','ID_CURLFUN_ISUNDEFINED','en','The process was not downloaded, because the curl     extension for php is not installed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RATING','en','Rating','2012-02-02' 
+SELECT 'LABEL','ID_RATING','en','Rating','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBSCRIPTIONS','en','Subscriptions','2012-02-02' 
+SELECT 'LABEL','ID_SUBSCRIPTIONS','en','Subscriptions','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHOR','en','Author','2012-02-02' 
+SELECT 'LABEL','ID_AUTHOR','en','Author','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PRIVACY','en','Privacy','2012-02-02' 
+SELECT 'LABEL','ID_PRIVACY','en','Privacy','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_DATE','en','Create Date','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_DATE','en','Create Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INSTALL_STEPS','en','Install Steps','2012-02-02' 
+SELECT 'LABEL','ID_INSTALL_STEPS','en','Install Steps','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_DETAILS','en','Process Details','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_DETAILS','en','Process Details','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOGIN_LIBRARY','en','Login into ProcessMaker Library','2012-02-02' 
+SELECT 'LABEL','ID_LOGIN_LIBRARY','en','Login into ProcessMaker Library','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATE_NEW_ACCOUNT','en','Create a New Account','2012-02-02' 
+SELECT 'LABEL','ID_CREATE_NEW_ACCOUNT','en','Create a New Account','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INCORRECT_USERNAME_PASSWORD','en','Incorrect username or password','2012-02-02' 
+SELECT 'LABEL','ID_INCORRECT_USERNAME_PASSWORD','en','Incorrect username or password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_OR_WORKSPACE','en','Username (or Live Workspace)','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_OR_WORKSPACE','en','Username (or Live Workspace)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_UID','en','Process Uid','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_UID','en','Process Uid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INSTALL_MESSAGE','en','Please follow these instructions to complete installation','2012-02-02' 
+SELECT 'LABEL','ID_INSTALL_MESSAGE','en','Please follow these instructions to complete installation','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_SUCESSFULLY_IMPORTED','en','Process sucessfully imported','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_SUCESSFULLY_IMPORTED','en','Process sucessfully imported','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_HEART_BEAT','en','Contribute to the ProcessMaker project enabling heart beat anonymous usage data','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_HEART_BEAT','en','Contribute to the ProcessMaker project enabling heart beat anonymous usage data','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_READ_ONLINE_DOCUMENTATION','en','Read Online Documentation','2012-02-02' 
+SELECT 'LABEL','ID_READ_ONLINE_DOCUMENTATION','en','Read Online Documentation','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ARE_YOU_SURE_RESEND','en','Are you sure that you want to resend this message','2012-02-02' 
+SELECT 'LABEL','ID_ARE_YOU_SURE_RESEND','en','Are you sure that you want to resend this message','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAKER','en','ProcessMaker','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAKER','en','ProcessMaker','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAIL_SENT_SUCCESSFULLY','en','Your message has been sent successfully','2012-02-02' 
+SELECT 'LABEL','ID_MAIL_SENT_SUCCESSFULLY','en','Your message has been sent successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEART_BEAT_DETAILS_1','en','The usage statistics will help the development team to better understand user requirements and prioritize improvements in future releases.','2012-02-02' 
+SELECT 'LABEL','ID_HEART_BEAT_DETAILS_1','en','The usage statistics will help the development team to better understand user requirements and prioritize improvements in future releases.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEART_BEAT_DETAILS_2','en','We cannot and will not reverse-engineer that collected data to find specific details concerning your projects.','2012-02-02' 
+SELECT 'LABEL','ID_HEART_BEAT_DETAILS_2','en','We cannot and will not reverse-engineer that collected data to find specific details concerning your projects.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEE','en','See','2012-02-02' 
+SELECT 'LABEL','ID_SEE','en','See','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MORE_INFORMATION','en','more information','2012-02-02' 
+SELECT 'LABEL','ID_MORE_INFORMATION','en','more information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLEAR','en','Clear','2012-02-02' 
+SELECT 'LABEL','ID_CLEAR','en','Clear','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_JAVASCRIPT_CACHE','en','Javascript cache','2012-02-02' 
+SELECT 'LABEL','ID_JAVASCRIPT_CACHE','en','Javascript cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FORMS_METADATA_CACHE','en','Forms metadata cache','2012-02-02' 
+SELECT 'LABEL','ID_FORMS_METADATA_CACHE','en','Forms metadata cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FORMS_HTML_CACHE','en','Forms Html templates cache','2012-02-02' 
+SELECT 'LABEL','ID_FORMS_HTML_CACHE','en','Forms Html templates cache','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBJECT','en','Subject','2012-02-02' 
+SELECT 'LABEL','ID_SUBJECT','en','Subject','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FROM','en','From','2012-02-02' 
+SELECT 'LABEL','ID_FROM','en','From','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEART_BEAT_ENABLED','en','Heart beat has been enabled','2012-02-02' 
+SELECT 'LABEL','ID_HEART_BEAT_ENABLED','en','Heart beat has been enabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HEART_BEAT_DISABLED','en','Heart beat has been disabled','2012-02-02' 
+SELECT 'LABEL','ID_HEART_BEAT_DISABLED','en','Heart beat has been disabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HAS_BEEN_DELETED','en','Has been deleted','2012-02-02' 
+SELECT 'LABEL','ID_HAS_BEEN_DELETED','en','Has been deleted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_XPDL_IMPORT','en','Import XPDL','2012-02-02' 
+SELECT 'LABEL','ID_XPDL_IMPORT','en','Import XPDL','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILENAME','en','Filename','2012-02-02' 
+SELECT 'LABEL','ID_FILENAME','en','Filename','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMMENTS','en','Comments','2012-02-02' 
+SELECT 'LABEL','ID_COMMENTS','en','Comments','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CREATED_BY','en','Created By','2012-02-02' 
+SELECT 'LABEL','ID_CREATED_BY','en','Created By','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_TABLE_TITLE','en','Title','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_TABLE_TITLE','en','Title','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_TABLE','en','Report Table','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_TABLE','en','Report Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNED_FIEDS','en','ASSIGNED FIELDS','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_FIEDS','en','ASSIGNED FIELDS','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVE_AND_CONTINUE','en','Save and Continue','2012-02-02' 
+SELECT 'LABEL','ID_SAVE_AND_CONTINUE','en','Save and Continue','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_SELECTED_FIELDS','en','No selected fields','2012-02-02' 
+SELECT 'LABEL','ID_NO_SELECTED_FIELDS','en','No selected fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_FIELD','en','Dynaform Field','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_FIELD','en','Dynaform Field','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMPLETE_VARCHAR','en','Complete the Varchar field size','2012-02-02' 
+SELECT 'LABEL','ID_COMPLETE_VARCHAR','en','Complete the Varchar field size','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_REPORT_TABLE','en','Do you want to delete the selected report tables?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_REPORT_TABLE','en','Do you want to delete the selected report tables?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_ALL_REPORT_TABLE','en','Do you want to delete all report tables?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_ALL_REPORT_TABLE','en','Do you want to delete all report tables?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_FIELDS','en','Do you want to delete the selected fields?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_FIELDS','en','Do you want to delete the selected fields?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_ALL_FIELDS','en','Do you want to delete all fields?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_ALL_FIELDS','en','Do you want to delete all fields?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_LOGIN_SETTINGS','en','Login Settings','2012-02-02' 
+SELECT 'LABEL','ID_LOGIN_SETTINGS','en','Login Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOUR_USERMANE_IS','en','Your username is','2012-02-02' 
+SELECT 'LABEL','ID_YOUR_USERMANE_IS','en','Your username is','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_FORGOT_PASSWORD','en','Forgot password was enabled','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_FORGOT_PASSWORD','en','Forgot password was enabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DISABLE_FORGOT_PASSWORD','en','Forgot password was disabled','2012-02-02' 
+SELECT 'LABEL','ID_DISABLE_FORGOT_PASSWORD','en','Forgot password was disabled','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NOT_REGISTER','en','the user is not register','2012-02-02' 
+SELECT 'LABEL','ID_USER_NOT_REGISTER','en','the user is not register','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_THANKS_USE_SERVICES','en','Thanks for using the ProcessMaker services','2012-02-02' 
+SELECT 'LABEL','ID_THANKS_USE_SERVICES','en','Thanks for using the ProcessMaker services','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESET_PASSWORD','en','Reset password','2012-02-02' 
+SELECT 'LABEL','ID_RESET_PASSWORD','en','Reset password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOUR_PASSWORD_IS','en','Your password is','2012-02-02' 
+SELECT 'LABEL','ID_YOUR_PASSWORD_IS','en','Your password is','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_FOTGOT_PASSWORD','en','Enable Forgot password','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_FOTGOT_PASSWORD','en','Enable Forgot password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_PASSWORD_SENT','en','Your new password was sent to your email account!','2012-02-02' 
+SELECT 'LABEL','ID_NEW_PASSWORD_SENT','en','Your new password was sent to your email account!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IS_NOT_REGISTERED','en','is not registered!','2012-02-02' 
+SELECT 'LABEL','ID_IS_NOT_REGISTERED','en','is not registered!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMAIL_ENGINE_IS_NOT_ENABLED','en','The "Email Notifications" is not enabled, please contact to your System Administrator.','2012-02-02' 
+SELECT 'LABEL','ID_EMAIL_ENGINE_IS_NOT_ENABLED','en','The "Email Notifications" is not enabled, please contact to your System Administrator.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EMAIL_ENTER_VALID','en','Please enter a valid email address.','2012-02-02' 
+SELECT 'LABEL','ID_EMAIL_ENTER_VALID','en','Please enter a valid email address.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROFILE','en','Profile','2012-02-02' 
+SELECT 'LABEL','ID_PROFILE','en','Profile','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLEASE_SELECT_PHOTO','en','Please select a photo','2012-02-02' 
+SELECT 'LABEL','ID_PLEASE_SELECT_PHOTO','en','Please select a photo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESUME','en','Résumé','2012-02-02' 
+SELECT 'LABEL','ID_RESUME','en','Résumé','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_ID','en','User ID (*)','2012-02-02' 
+SELECT 'LABEL','ID_USER_ID','en','User ID (*)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PHONE','en','Phone','2012-02-02' 
+SELECT 'LABEL','ID_PHONE','en','Phone','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_PASSWORD','en','New Password','2012-02-02' 
+SELECT 'LABEL','ID_NEW_PASSWORD','en','New Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_PASSWORD','en','Confirm Password','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_PASSWORD','en','Confirm Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORDS_DONT_MATCH','en','The password fields don''t match.','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORDS_DONT_MATCH','en','The password fields don''t match.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_VALIDATED_FIELDS','en','The following fields have invalid values','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_VALIDATED_FIELDS','en','The following fields have invalid values','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VALIDATED_FIELDS','en','The following fields have invalid values','2012-02-02' 
+SELECT 'LABEL','ID_VALIDATED_FIELDS','en','The following fields have invalid values','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHANGE_PASSWORD','en','Change Password','2012-02-02' 
+SELECT 'LABEL','ID_CHANGE_PASSWORD','en','Change Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEFAULT_MAIN_MENU_OPTION','en','Default Main Menu Option','2012-02-02' 
+SELECT 'LABEL','ID_DEFAULT_MAIN_MENU_OPTION','en','Default Main Menu Option','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEFAULT_CASES_MENU_OPTION','en','Default Cases Menu option','2012-02-02' 
+SELECT 'LABEL','ID_DEFAULT_CASES_MENU_OPTION','en','Default Cases Menu option','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_INFORMATION_WAS_STORED_SUCCESSFULLY','en','information was stored successfully','2012-02-02' 
+SELECT 'LABEL','ID_INFORMATION_WAS_STORED_SUCCESSFULLY','en','information was stored successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREFERENCES','en','Preferences','2012-02-02' 
+SELECT 'LABEL','ID_PREFERENCES','en','Preferences','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERSONAL_INFORMATION','en','Personal information','2012-02-02' 
+SELECT 'LABEL','ID_PERSONAL_INFORMATION','en','Personal information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NEW_SITE_SUCCESS','en','Your new site was successfully created with  name:','2012-02-02' 
+SELECT 'LABEL','NEW_SITE_SUCCESS','en','Your new site was successfully created with  name:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NEW_SITE_SUCCESS_CONFIRMNOTE','en','Note.- If you open the new site your  current session will be closed.','2012-02-02' 
+SELECT 'LABEL','NEW_SITE_SUCCESS_CONFIRMNOTE','en','Note.- If you open the new site your  current session will be closed.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NEW_SITE_SUCCESS_CONFIRM','en','Do you want open the new site?','2012-02-02' 
+SELECT 'LABEL','NEW_SITE_SUCCESS_CONFIRM','en','Do you want open the new site?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NEW_SITE_NOT_AVAILABLE','en','This site is not available','2012-02-02' 
+SELECT 'LABEL','NEW_SITE_NOT_AVAILABLE','en','This site is not available','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','NEW_SITE_CONFIRM_TO_CREATE','en','Are you sure to create this site?','2012-02-02' 
+SELECT 'LABEL','NEW_SITE_CONFIRM_TO_CREATE','en','Are you sure to create this site?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SAVING','en','Saving...','2012-02-02' 
+SELECT 'LABEL','ID_SAVING','en','Saving...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SET_A_TABLE_NAME','en','Set a Table Name','2012-02-02' 
+SELECT 'LABEL','ID_SET_A_TABLE_NAME','en','Set a Table Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SET_TABLE_DESCRIPTION','en','Set a Table Description','2012-02-02' 
+SELECT 'LABEL','ID_SET_TABLE_DESCRIPTION','en','Set a Table Description','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_GRID','en','Select a grid','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_GRID','en','Select a grid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GLOBAL','en','Global','2012-02-02' 
+SELECT 'LABEL','ID_GLOBAL','en','Global','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DB_CONNECTION','en','DB Connection','2012-02-02' 
+SELECT 'LABEL','ID_DB_CONNECTION','en','DB Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DYNAFORM_FIELDS','en','Dynaform Fields','2012-02-02' 
+SELECT 'LABEL','ID_DYNAFORM_FIELDS','en','Dynaform Fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FIELD_LABEL','en','Field Label','2012-02-02' 
+SELECT 'LABEL','ID_FIELD_LABEL','en','Field Label','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADD_CUSTOM_COLUMN','en','Add Custom Column','2012-02-02' 
+SELECT 'LABEL','ID_ADD_CUSTOM_COLUMN','en','Add Custom Column','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARCHAR','en','VARCHAR','2012-02-02' 
+SELECT 'LABEL','ID_VARCHAR','en','VARCHAR','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEXT','en','TEXT','2012-02-02' 
+SELECT 'LABEL','ID_TEXT','en','TEXT','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATE','en','DATE','2012-02-02' 
+SELECT 'LABEL','ID_DATE','en','DATE','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INT','en','INT','2012-02-02' 
+SELECT 'LABEL','ID_INT','en','INT','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FLOAT','en','FLOAT','2012-02-02' 
+SELECT 'LABEL','ID_FLOAT','en','FLOAT','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPDATE','en','Update','2012-02-02' 
+SELECT 'LABEL','ID_UPDATE','en','Update','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALL_RECORDS_DELETED_SUCESSFULLY','en','All records was deleted successfully!','2012-02-02' 
+SELECT 'LABEL','ID_ALL_RECORDS_DELETED_SUCESSFULLY','en','All records was deleted successfully!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETION_SUCCESSFULLY','en','DELETION SUCCESSFULLY','2012-02-02' 
+SELECT 'LABEL','ID_DELETION_SUCCESSFULLY','en','DELETION SUCCESSFULLY','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTES','en','Case Notes','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTES','en','Case Notes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTES_POST','en','Post a Note','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTES_POST','en','Post a Note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTE_POSTING','en','Posting a Note','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTE_POSTING','en','Posting a Note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTE_POST_ERROR','en','Post Error','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTE_POST_ERROR','en','Post Error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTE_POST_FAILED','en','There is a server error','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTE_POST_FAILED','en','There is a server error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTE_POST_SUCCESS','en','Note successfully posted','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTE_POST_SUCCESS','en','Note successfully posted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOTES_EMPTY','en','No notes to Display','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOTES_EMPTY','en','No notes to Display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOTES_LOADING','en','Loading Notes...','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOTES_LOADING','en','Loading Notes...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOTES_MORE','en','Show more notes','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOTES_MORE','en','Show more notes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOTES_READY','en','Ready','2012-02-02' 
+SELECT 'LABEL','ID_NOTES_READY','en','Ready','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUBMIT_NOTE','en','Post Note','2012-02-02' 
+SELECT 'LABEL','ID_SUBMIT_NOTE','en','Post Note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BUTTON','en','Button','2012-02-02' 
+SELECT 'LABEL','ID_BUTTON','en','Button','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SPLIT_BUTTON','en','Split Button','2012-02-02' 
+SELECT 'LABEL','ID_SPLIT_BUTTON','en','Split Button','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WESTPANEL','en','westPanel','2012-02-02' 
+SELECT 'LABEL','ID_WESTPANEL','en','westPanel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SOUTHPANEL','en','southPanel','2012-02-02' 
+SELECT 'LABEL','ID_SOUTHPANEL','en','southPanel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EASTPANEL','en','eastPanel','2012-02-02' 
+SELECT 'LABEL','ID_EASTPANEL','en','eastPanel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VIEW_EDIT_PROFILE','en','View/Edit Profile','2012-02-02' 
+SELECT 'LABEL','ID_VIEW_EDIT_PROFILE','en','View/Edit Profile','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FULL_TEXT_SEARCH','en','Full Text Search','2012-02-02' 
+SELECT 'LABEL','ID_FULL_TEXT_SEARCH','en','Full Text Search','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VALIDATION_ERRORS','en','validation Errors','2012-02-02' 
+SELECT 'LABEL','ID_VALIDATION_ERRORS','en','validation Errors','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVER_PROBLEM','en','Server Problem :','2012-02-02' 
+SELECT 'LABEL','ID_SERVER_PROBLEM','en','Server Problem :','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_WORKSPACE','en','Select a workspace','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_WORKSPACE','en','Select a workspace','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXIT_EDITOR','en','Exit Editor','2012-02-02' 
+SELECT 'LABEL','ID_EXIT_EDITOR','en','Exit Editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES','en','PM Tables','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES','en','PM Tables','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLOSE_EDITOR','en','Close Editor','2012-02-02' 
+SELECT 'LABEL','ID_CLOSE_EDITOR','en','Close Editor','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_REPORT_TABLE_OLD','en','New Report Table (Old Version)','2012-02-02' 
+SELECT 'LABEL','ID_NEW_REPORT_TABLE_OLD','en','New Report Table (Old Version)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE','en','PM Table','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE','en','PM Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NULL','en','Null','2012-02-02' 
+SELECT 'LABEL','ID_NULL','en','Null','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLES_TO_EXPORT','en','Tables To Export','2012-02-02' 
+SELECT 'LABEL','ID_TABLES_TO_EXPORT','en','Tables To Export','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_NOTICE_EXPORT','en','From each table you should select Schema/Data to export at least one.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_NOTICE_EXPORT','en','From each table you should select Schema/Data to export at least one.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_SKIN','en','Do you want to delete selected skin?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_SKIN','en','Do you want to delete selected skin?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_SUBJECT_NOTE_NOTIFICATION','en','A note has added to a case','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_SUBJECT_NOTE_NOTIFICATION','en','A note has added to a case','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_EXPORT_DEFAULT_SKIN','en','Default skin can''t be exported. Instead create new one based on default','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_EXPORT_DEFAULT_SKIN','en','Default skin can''t be exported. Instead create new one based on default','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MSG_CANNOT_EXPORT_SKIN','en','Can''t export skin. Server Error','2012-02-02' 
+SELECT 'LABEL','ID_MSG_CANNOT_EXPORT_SKIN','en','Can''t export skin. Server Error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_SKIN','en','New Skin','2012-02-02' 
+SELECT 'LABEL','ID_NEW_SKIN','en','New Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_ALREADY_EXISTS','en','Skin already exists','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_ALREADY_EXISTS','en','Skin already exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_BASE','en','Base skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_BASE','en','Base skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_CONFIGURATION_MISSING','en','Missing skin configuration file','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_CONFIGURATION_MISSING','en','Missing skin configuration file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_CREATING','en','Generating Skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_CREATING','en','Generating Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_DOESNT_EXIST','en','Skin doesn''t exists','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_DOESNT_EXIST','en','Skin does not exist','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_ERROR_EXTRACTING','en','Error extracting skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_ERROR_EXTRACTING','en','Error extracting skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_EXPORTING','en','Exporting Skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_EXPORTING','en','Exporting Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_FILE_REQUIRED','en','Skin file required','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_FILE_REQUIRED','en','Skin file required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_FOLDER','en','Folder name','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_FOLDER','en','Folder name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_FOLDER_NOT_DELETEABLE','en','Can''t delete default skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_FOLDER_NOT_DELETEABLE','en','Can''t delete default skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_FOLDER_PERMISSIONS','en','Not enough permissions in Skin Folder','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_FOLDER_PERMISSIONS','en','Not enough permissions in Skin Folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_FOLDER_REQUIRED','en','Skin folder name is required','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_FOLDER_REQUIRED','en','Skin folder name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_IMPORTING','en','Importing Skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_IMPORTING','en','Importing Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_NAME_REQUIRED','en','Skin Name is required','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_NAME_REQUIRED','en','Skin Name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_SUCCESS_CREATE','en','Skin successfully created','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_SUCCESS_CREATE','en','Skin successfully created','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_SUCCESS_DELETE','en','Skin successfully deleted','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_SUCCESS_DELETE','en','Skin successfully deleted','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_SUCCESS_IMPORTED','en','Skin successfully imported','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_SUCCESS_IMPORTED','en','Skin successfully imported','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SKIN_SWITCHING','en','Switching Skin','2012-02-02' 
+SELECT 'LABEL','ID_SKIN_SWITCHING','en','Switching Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_REMOVE_FIELD','en','Do you really want remove this field?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_REMOVE_FIELD','en','Do you really want remove this field?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_EXTENSION','en','Invalid file extension!','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_EXTENSION','en','Invalid file extension!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_PMTABLE','en','New PM Table','2012-02-02' 
+SELECT 'LABEL','ID_NEW_PMTABLE','en','New PM Table','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_APPLY_AS_MAIN_LOGO','en','Apply as main logo','2012-02-02' 
+SELECT 'LABEL','ID_APPLY_AS_MAIN_LOGO','en','Apply as main logo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOU_ARE_NOT_CAN_SELECT_PHOTO','en','You are not can select more than one photo','2012-05-03' 
+SELECT 'LABEL','ID_YOU_ARE_NOT_CAN_SELECT_PHOTO','en','You are not can select more than one photo','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_AN_IMAGE','en','Please select an image','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_AN_IMAGE','en','Please select an image','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PHOTO_GALLERY','en','Photo gallery','2012-02-02' 
+SELECT 'LABEL','PHOTO_GALLERY','en','Photo gallery','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMAGES_SELECTED','en','images selected','2012-02-02' 
+SELECT 'LABEL','ID_IMAGES_SELECTED','en','images selected','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOAD_IMAGE','en','Upload image','2012-02-02' 
+SELECT 'LABEL','ID_UPLOAD_IMAGE','en','Upload image','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_FILE','en','Select a file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_FILE','en','Select a file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMAGE','en','Image','2012-02-02' 
+SELECT 'LABEL','ID_IMAGE','en','Image','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOUR_IMAGE_HAS_BEEN_SUCCESSFULLY','en','Your image has been successfully uploaded','2012-02-02' 
+SELECT 'LABEL','ID_YOUR_IMAGE_HAS_BEEN_SUCCESSFULLY','en','Your image has been successfully uploaded','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_UPLOADING_IMAGE_TYPE','en','Error uploading image, wrong file type','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_UPLOADING_IMAGE_TYPE','en','Error uploading image, wrong file type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOADING_IMAGE_WRONG_SIZE','en','Error uploading image, wrong file size','2012-02-02' 
+SELECT 'LABEL','ID_UPLOADING_IMAGE_WRONG_SIZE','en','Error uploading image, wrong file size','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUCCESS','en','Success','2012-02-02' 
+SELECT 'LABEL','ID_SUCCESS','en','Success','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','IMAGE_DETAIL','en','Image detail','2012-02-02' 
+SELECT 'LABEL','IMAGE_DETAIL','en','Image detail','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECTED','en','selected','2012-02-02' 
+SELECT 'LABEL','ID_SELECTED','en','selected','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_TABLES_DATA_EXPORT_NOT_ALLOWED','en','Data export for Report Tables is not allowed!','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_TABLES_DATA_EXPORT_NOT_ALLOWED','en','Data export for Report Tables is not allowed!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FORGOT_PASSWORD','en','Forgot Password','2012-02-02' 
+SELECT 'LABEL','ID_FORGOT_PASSWORD','en','Forgot Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FORGOT_PASSWORD_Q','en','Forgot Password?','2012-02-02' 
+SELECT 'LABEL','ID_FORGOT_PASSWORD_Q','en','Forgot Password?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEND','en','Send','2012-02-02' 
+SELECT 'LABEL','ID_SEND','en','Post','2012-08-16' 
   UNION ALL
-SELECT 'LABEL','ID_EMAIL_DOES_NOT_MATCH_FOR_USER','en','The email doesn''t match for user:','2012-02-02' 
+SELECT 'LABEL','ID_EMAIL_DOES_NOT_MATCH_FOR_USER','en','The email doesn''t match for user:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORD_CHANGED_SUCCESSFULLY','en','Your password has been successfully changed to','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORD_CHANGED_SUCCESSFULLY','en','Your password has been successfully changed to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAKER_FORGOT_PASSWORD_SERVICE','en','ProcessMaker Forgot Password Service','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAKER_FORGOT_PASSWORD_SERVICE','en','ProcessMaker Forgot Password Service','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESSMAKER_SLOGAN1','en','This Business Process is Powered By ProcessMaker','2012-02-02' 
+SELECT 'LABEL','ID_PROCESSMAKER_SLOGAN1','en','This Business Process is Powered By ProcessMaker','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VISIT','en','Visit','2012-02-02' 
+SELECT 'LABEL','ID_VISIT','en','Visit','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_APPLY','en','Apply','2012-02-02' 
+SELECT 'LABEL','ID_APPLY','en','Apply','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RESTORE_DEFAULT','en','Restore default','2012-02-02' 
+SELECT 'LABEL','ID_RESTORE_DEFAULT','en','Restore default','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_IMAGES_TO_DISPLAY','en','No images to display','2012-02-02' 
+SELECT 'LABEL','ID_NO_IMAGES_TO_DISPLAY','en','No images to display','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT1','en','You can''t repeat a column name, please rename:','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT1','en','You can''t repeat a column name, please rename:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT2','en','Field Name for all columns is required.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT2','en','Field Name for all columns is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT3','en','Field Label for all columns is required.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT3','en','Field Label for all columns is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT4','en','Please set a field type for','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT4','en','Please set a field type for','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT5','en','Please set a field size for:','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT5','en','Please set a field size for:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT6','en','You need set one column at least as Primary Key.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT6','en','You need set one column at least as Primary Key.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_ALERT7','en','Set columns for this Report Table please.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_ALERT7','en','Set columns for this Report Table please.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTO_INCREMENT','en','Auto Increment','2012-02-02' 
+SELECT 'LABEL','ID_AUTO_INCREMENT','en','Auto Increment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CAPS_LOCK_IS_ON','en','Caps Lock is On','2012-02-02' 
+SELECT 'LABEL','ID_CAPS_LOCK_IS_ON','en','Caps Lock is On','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_VIRTUAL_KEYBOARD','en','Enable Virtual Keyboard','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_VIRTUAL_KEYBOARD','en','Enable Virtual Keyboard (Only uxmodern skin)','2012-07-09' 
   UNION ALL
-SELECT 'LABEL','ID_DEFAULT_LANGUAGE','en','Default Language','2012-02-02' 
+SELECT 'LABEL','ID_DEFAULT_LANGUAGE','en','Default Language','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CAPS_LOCK_ALERT2','en','You should press Caps Lock to turn it off before entering your password.','2012-02-02' 
+SELECT 'LABEL','ID_CAPS_LOCK_ALERT2','en','You should press Caps Lock to turn it off before entering your password.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CAPS_LOCK_ALERT1','en','Having Caps Lock on may cause you to enter your password incorrectly.','2012-02-02' 
+SELECT 'LABEL','ID_CAPS_LOCK_ALERT1','en','Having Caps Lock on may cause you to enter your password incorrectly.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SYSTEM_INFO','en','System information','2012-02-02' 
+SELECT 'LABEL','ID_SYSTEM_INFO','en','System information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SHOW_CASES_NOTES','en','Show Case Notes','2012-02-02' 
+SELECT 'LABEL','ID_SHOW_CASES_NOTES','en','Show Case Notes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NUM','en','# Cases','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NUM','en','# Cases','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_CASES_NUM','en','# Cases','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_CASES_NUM','en','# Cases','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','EMAIL_ENGINE','en','Email Engine','2012-02-02' 
+SELECT 'LABEL','EMAIL_ENGINE','en','Email Engine','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIGURATION','en','Configuration','2012-02-02' 
+SELECT 'LABEL','ID_CONFIGURATION','en','Configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','PORT_DEFAULT','en','Port (default 25)','2012-02-02' 
+SELECT 'LABEL','PORT_DEFAULT','en','Port (default 25)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','REQUIRE_AUTHENTICATION','en','Require authentication','2012-02-02' 
+SELECT 'LABEL','REQUIRE_AUTHENTICATION','en','Require authentication','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ACCOUNT_FROM','en','Account From','2012-02-02' 
+SELECT 'LABEL','ACCOUNT_FROM','en','Account From','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','SEND_TEST_MAIL','en','Send a test mail','2012-02-02' 
+SELECT 'LABEL','SEND_TEST_MAIL','en','Send a test mail','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MAIL_TO','en','Mail to','2012-02-02' 
+SELECT 'LABEL','MAIL_TO','en','Mail to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','USE_SECURE_CONNECTION','en','Use Secure Connection','2012-02-02' 
+SELECT 'LABEL','USE_SECURE_CONNECTION','en','Use Secure Connection','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','TESTING_EMAIL_CONF','en','Testing email configuration','2012-02-02' 
+SELECT 'LABEL','TESTING_EMAIL_CONF','en','Testing email configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MSG_REQ_AUTH','en','First you have to check the Require Authentication box','2012-02-02' 
+SELECT 'LABEL','MSG_REQ_AUTH','en','First you have to check the Require Authentication box','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','RESOLVING_NAME','en','Resolving Host Name','2012-02-02' 
+SELECT 'LABEL','RESOLVING_NAME','en','Resolving Host Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','TEST_HAS','en','The test has','2012-02-02' 
+SELECT 'LABEL','TEST_HAS','en','The test has','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','SERVER_RESPONSE','en','Server Response','2012-02-02' 
+SELECT 'LABEL','SERVER_RESPONSE','en','Server Response','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ESTABLISHING_CON_HOST','en','Establishing connection to host','2012-02-02' 
+SELECT 'LABEL','ESTABLISHING_CON_HOST','en','Establishing connection to host','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','LOGIN_AS','en','Login as','2012-02-02' 
+SELECT 'LABEL','LOGIN_AS','en','Login as','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','SMTP_SERVER','en','SMTP Server','2012-02-02' 
+SELECT 'LABEL','SMTP_SERVER','en','SMTP Server','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','SENDING_TEST_EMAIL','en','Sending a test mail to','2012-02-02' 
+SELECT 'LABEL','SENDING_TEST_EMAIL','en','Sending a test mail to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','STEP1','en','Step 1','2012-02-02' 
+SELECT 'LABEL','STEP1','en','Step 1','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','STEP2','en','Step 2','2012-02-02' 
+SELECT 'LABEL','STEP2','en','Step 2','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','STEP3','en','Step 3','2012-02-02' 
+SELECT 'LABEL','STEP3','en','Step 3','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','STEP4','en','Step 4','2012-02-02' 
+SELECT 'LABEL','STEP4','en','Step 4','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ENABLE_EMAIL_NOTIFICATION','en','Enable Email Notifications','2012-02-02' 
+SELECT 'LABEL','ID_ENABLE_EMAIL_NOTIFICATION','en','Enable Email Notifications','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_LOST_SESSION_XMLFORM','en','You have lost your session and you have to login to continue.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_LOST_SESSION_XMLFORM','en','You have lost your session and you have to login to continue.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_DATA_EXISTS_WARNINIG','en','record(s) was/were found on this table, if you edit its structure all data will lost.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_DATA_EXISTS_WARNINIG','en','record(s) was/were found on this table, if you edit its structure all data will lost.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HIDE','en','Hide','2012-02-02' 
+SELECT 'LABEL','ID_HIDE','en','Hide','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_SAVE_AND_DATA_LOST','en','Save the changes accepting the data lost?','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_SAVE_AND_DATA_LOST','en','Save the changes accepting the data lost?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXCEPTION','en','Exception','2012-02-02' 
+SELECT 'LABEL','ID_EXCEPTION','en','Exception','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_CONNECTION','en','Delete the connection?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_CONNECTION','en','Delete the connection?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPORT_DATA_CSV','en','Export Data from CSV file','2012-02-02' 
+SELECT 'LABEL','ID_EXPORT_DATA_CSV','en','Export Data from CSV file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_DATA_CSV','en','Import Data from CSV file','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_DATA_CSV','en','Import Data from CSV file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXPORT_CSV','en','CSV Export','2012-02-02' 
+SELECT 'LABEL','ID_EXPORT_CSV','en','CSV Export','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_CSV','en','CSV Import','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_CSV','en','CSV Import','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOT_PM_FILE','en','This is not a .pm file','2012-02-02' 
+SELECT 'LABEL','ID_NOT_PM_FILE','en','This is not a .pm file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLES_RESERVED_FIELDNAME_WARNING','en','The word {0} is reserved by the database engine please set another one.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLES_RESERVED_FIELDNAME_WARNING','en','The word {0} is reserved by the database engine please set another one.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_NAME_IS_REQUIRED','en','Table Name is required.','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_NAME_IS_REQUIRED','en','Table Name is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_NAME_TOO_SHORT','en','The table name is too short, it should have at least 4 characters.','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_NAME_TOO_SHORT','en','The table name is too short, it should have at least 4 characters.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_CLASS_DOESNT_EXIST','en','ERROR: The class fie "{0}" doesn''t exist!','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_CLASS_DOESNT_EXIST','en','ERROR: The class fie "{0}" doesn''t exist!','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_PMTABLE_ALREADY_EXISTS','en','The table "{0}" already exits!','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_ALREADY_EXISTS','en','The table "{0}" already exits!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_INVALID_NAME','en','Could not create the table with the name "{0}" because it is a reserved word.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_INVALID_NAME','en','Could not create the table with the name "{0}" because it is a reserved word.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_UPLOADING_FILE_PROBLEM','en','A problem occurred while uploading file.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_UPLOADING_FILE_PROBLEM','en','A problem occurred while uploading file.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_INVALID_FILE','en','Invalid PM table(s) file, import aborted!','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_INVALID_FILE','en','Invalid PM table(s) file, import aborted!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_IMPORT_SUCCESS','en','File "{0}" imported successfully.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_IMPORT_SUCCESS','en','File "{0}" imported successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PMTABLE_IMPORT_WITH_ERRORS','en','File "{0}" imported but with errors.','2012-02-02' 
+SELECT 'LABEL','ID_PMTABLE_IMPORT_WITH_ERRORS','en','File "{0}" imported but with errors.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','DBS_NAME','en','Connection Name','2012-02-02' 
+SELECT 'LABEL','DBS_NAME','en','Connection Name','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPDATED_SUCCESSFULLY','en','Updated Successfully','2012-02-02' 
+SELECT 'LABEL','ID_UPDATED_SUCCESSFULLY','en','Updated Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPDATE_FAILED','en','Updated Failed','2012-02-02' 
+SELECT 'LABEL','ID_UPDATE_FAILED','en','Updated Failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DONT_MODIFY_PK_VALUE','en','You can not modify the primary key value  for "{0}" field.','2012-02-02' 
+SELECT 'LABEL','ID_DONT_MODIFY_PK_VALUE','en','You can not modify the primary key value  for "{0}" field.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETED_SUCCESSFULLY','en','Deleted Successfully','2012-02-02' 
+SELECT 'LABEL','ID_DELETED_SUCCESSFULLY','en','Deleted Successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE_IMPORTED_SUCCESSFULLY','en','File "{0}" imported successfully.','2012-02-02' 
+SELECT 'LABEL','ID_FILE_IMPORTED_SUCCESSFULLY','en','File "{0}" imported successfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_DEFINITION','en','Calendar Definition','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_DEFINITION','en','Calendar Definition','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORK_DAYS','en','Work days','2012-02-02' 
+SELECT 'LABEL','ID_WORK_DAYS','en','Work days','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORK_HOURS','en','Work hours','2012-02-02' 
+SELECT 'LABEL','ID_WORK_HOURS','en','Work hours','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DAY','en','Day','2012-02-02' 
+SELECT 'LABEL','ID_DAY','en','Day','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_HH_MM','en','Start(hh:mm)','2012-02-02' 
+SELECT 'LABEL','ID_START_HH_MM','en','Start(hh:mm)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_END_HH_MM','en','End(hh:mm)','2012-02-02' 
+SELECT 'LABEL','ID_END_HH_MM','en','End(hh:mm)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOLIDAYS','en','Holidays','2012-02-02' 
+SELECT 'LABEL','ID_HOLIDAYS','en','Holidays','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_START_DATE_MDY','en','* Start Date ("m/d/Y")','2012-02-02' 
+SELECT 'LABEL','ID_START_DATE_MDY','en','* Start Date ("m/d/Y")','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_END_DATE_MDY','en','End Date ("m/d/Y")','2012-02-02' 
+SELECT 'LABEL','ID_END_DATE_MDY','en','End Date ("m/d/Y")','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_STARTING_EXCEED_END','en','The starting time must not exceed the end time','2012-02-02' 
+SELECT 'LABEL','ID_TIME_STARTING_EXCEED_END','en','The starting time must not exceed the end time','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TIME_EXIST_IN_LIST','en','The day and time exist in the list','2012-02-02' 
+SELECT 'LABEL','ID_TIME_EXIST_IN_LIST','en','The day and time exist in the list','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_CREATED_SUCCESSFULLY','en','Your calendar has been created successfully','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_CREATED_SUCCESSFULLY','en','Your calendar has been created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CALENDAR_UPDATED_SUCCESSFULLY','en','Your calendar has been updated successfully','2012-02-02' 
+SELECT 'LABEL','ID_CALENDAR_UPDATED_SUCCESSFULLY','en','Your calendar has been updated successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_POSTED_AT','en','Posted at','2012-02-02' 
+SELECT 'LABEL','ID_POSTED_AT','en','Posted at','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_NOTE','en','New Note','2012-02-02' 
+SELECT 'LABEL','ID_NEW_NOTE','en','New Note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CANCEL_NEW_NOTE','en','Cancel New Note','2012-02-02' 
+SELECT 'LABEL','ID_CANCEL_NEW_NOTE','en','Cancel New Note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_THERE_MUST__LEAST_HOLIDAY','en','There must be at least a holiday','2012-02-02' 
+SELECT 'LABEL','ID_THERE_MUST__LEAST_HOLIDAY','en','There must be at least a holiday','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATA_LIST_NOT_AVAILABLE_FOR_OLDVER','en','Data List is not available for old version.','2012-02-02' 
+SELECT 'LABEL','ID_DATA_LIST_NOT_AVAILABLE_FOR_OLDVER','en','Data List is not available for old version.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTES_CANCEL','en','Cancel this note','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTES_CANCEL','en','Cancel this note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASES_NOTES_ADD','en','Add new note','2012-02-02' 
+SELECT 'LABEL','ID_CASES_NOTES_ADD','en','Add new note','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_PROCESS_NAME','en','Invalid process name, please just use alphanumeric characters.','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_PROCESS_NAME','en','Invalid process name, please just use alphanumeric characters.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_PROCESS_NAME2','en','Invalid process name, please just use alphanumeric characters.','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_PROCESS_NAME2','en','Invalid process name, please just use alphanumeric characters.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HIDE_PROCESS_INF','en','Hide Process Information','2012-02-02' 
+SELECT 'LABEL','ID_HIDE_PROCESS_INF','en','Hide Process Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_CASE_PANEL','en','New Case Panel','2012-02-02' 
+SELECT 'LABEL','ID_NEW_CASE_PANEL','en','New Case Panel','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BASE_DN','en','Base DN','2012-02-02' 
+SELECT 'LABEL','ID_BASE_DN','en','Base DN','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ANONYMOUS','en','Anonymous','2012-02-02' 
+SELECT 'LABEL','ID_ANONYMOUS','en','Anonymous','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IDENTIFIER_IMPORT_USER','en','Identifier for an imported user','2012-02-02' 
+SELECT 'LABEL','ID_IDENTIFIER_IMPORT_USER','en','Identifier for an imported user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEARCH_USER','en','Username','2012-02-02' 
+SELECT 'LABEL','ID_SEARCH_USER','en','Username','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OBJECT_CLASS','en','Object Classes','2012-02-02' 
+SELECT 'LABEL','ID_OBJECT_CLASS','en','Object Classes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADDITIONAL_FILTER','en','Additional Filter','2012-02-02' 
+SELECT 'LABEL','ID_ADDITIONAL_FILTER','en','Additional Filter','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ATTRIBUTES','en','Attributes','2012-02-02' 
+SELECT 'LABEL','ID_ATTRIBUTES','en','Attributes','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_NOT_FOUND','en','Table Not found','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_NOT_FOUND','en','Table Not found','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FAILED_IMPORT_PLUGINS','en','Failed to import the file {filename} by doesn''t a plugin or invalid file.','2012-02-02' 
+SELECT 'LABEL','ID_FAILED_IMPORT_PLUGINS','en','Failed to import the file {filename} by doesn''t a plugin or invalid file.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_UPLOADING_PLUGIN_FILENAME','en','There was an error uploading the file, probably the file size if greater than upload_max_filesize parameter in php.ini, please check this parameter and try again.','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_UPLOADING_PLUGIN_FILENAME','en','There was an error uploading the file, probably the file size if greater than upload_max_filesize parameter in php.ini, please check this parameter and try again.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILES_INVALID_PLUGIN_FILENAME','en','the uploaded files are invalid, expected ''application/octect-stream mime type file ({pluginFilename})','2012-02-02' 
+SELECT 'LABEL','ID_FILES_INVALID_PLUGIN_FILENAME','en','the uploaded files are invalid, expected ''application/octect-stream mime type file ({pluginFilename})','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PLUGIN_DEPENDENCE_PLUGIN','en','This plugin needs "{Dependence}" plugin','2012-02-02' 
+SELECT 'LABEL','ID_PLUGIN_DEPENDENCE_PLUGIN','en','This plugin needs "{Dependence}" plugin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE_CONTAIN_CLASS_PLUGIN','en','The file {filename} doesn''t contain class: {className}','2012-02-02' 
+SELECT 'LABEL','ID_FILE_CONTAIN_CLASS_PLUGIN','en','The file {filename} doesn''t contain class: {className}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RECENT_VERSION_PLUGIN','en','A recent version of this plugin was already installed.','2012-02-02' 
+SELECT 'LABEL','ID_RECENT_VERSION_PLUGIN','en','A recent version of this plugin was already installed.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FILE_PLUGIN_NOT_EXISTS','en','File ''{pluginFile}'' doesn''t exists','2012-02-02' 
+SELECT 'LABEL','ID_FILE_PLUGIN_NOT_EXISTS','en','File ''{pluginFile}'' does not exist','2012-07-25' 
   UNION ALL
-SELECT 'LABEL','ID_CREATING_TABLE','en','Creating table, please wait...','2012-02-02' 
+SELECT 'LABEL','ID_CREATING_TABLE','en','Creating table, please wait...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPDATING_TABLE','en','Updating table, please wait...','2012-02-02' 
+SELECT 'LABEL','ID_UPDATING_TABLE','en','Updating table, please wait...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PREFIX','en','Prefix','2012-02-02' 
+SELECT 'LABEL','ID_PREFIX','en','Prefix','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTO_PREFIX','en','Auto Prefix','2012-02-02' 
+SELECT 'LABEL','ID_AUTO_PREFIX','en','Auto Prefix','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOTIFICATION_ERROR','en','Some problem happens while trying to send the Task notification.','2012-02-02' 
+SELECT 'LABEL','ID_NOTIFICATION_ERROR','en','Some problem happens while trying to send the Task notification.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_APPLICATION_ID_MSG','en','Invalid application id stored on session,<br/>This can happens when you have opened another case on a new tab or window.<br/>Please {0} the case.','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_APPLICATION_ID_MSG','en','Invalid application id stored on session,<br/>This can happens when you have opened another case on a new tab or window.<br/>Please {0} the case.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REOPEN','en','re-open','2012-02-02' 
+SELECT 'LABEL','ID_REOPEN','en','re-open','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_HOST','en','Host','2012-02-02' 
+SELECT 'LABEL','ID_HOST','en','Host','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MONITORED_FOLDER','en','Monitored Folder','2012-02-02' 
+SELECT 'LABEL','ID_MONITORED_FOLDER','en','Monitored Folder','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEARCH_PATTERN','en','Search Pattern','2012-02-02' 
+SELECT 'LABEL','ID_SEARCH_PATTERN','en','Search Pattern','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEARCH_XML_METADATA','en','Search XML metadata','2012-02-02' 
+SELECT 'LABEL','ID_SEARCH_XML_METADATA','en','Search XML metadata','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FTP_MONITOR_SETTINGS','en','FTP Monitor Settings','2012-02-02' 
+SELECT 'LABEL','ID_FTP_MONITOR_SETTINGS','en','FTP Monitor Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_UPLOADING_FILENAME','en','There was an error uploading the file, probably the file size if greater than upload_max_filesize parameter in php.ini, please check this parameter and try again.','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_UPLOADING_FILENAME','en','There was an error uploading the file, probably the file size if greater than upload_max_filesize parameter in php.ini, please check this parameter and try again.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_POSTED_DATA_EMPTY','en','Posted data is empty!','2012-02-02' 
+SELECT 'LABEL','ID_POSTED_DATA_EMPTY','en','Posted data is empty!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MOST_AT_LEAST_3_DAY','en','You must define at least 3 Working Days!','2012-02-02' 
+SELECT 'LABEL','ID_MOST_AT_LEAST_3_DAY','en','You must define at least 3 Working Days!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_ALL','en','You must define at least one ''ALL'' for other days you have not defined','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_ALL','en','You must define at least one ''ALL'' for other days you have not defined','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_USERGROUPS','en','Assign users group or user','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_USERGROUPS','en','Assign users group or user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEL_END_DATE','en','Please select end date','2012-02-02' 
+SELECT 'LABEL','ID_SEL_END_DATE','en','Please select end date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEL_START_DATE','en','Please select start date','2012-02-02' 
+SELECT 'LABEL','ID_SEL_START_DATE','en','Please select start date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEL_AFTER_DATE','en','Please select after date','2012-02-02' 
+SELECT 'LABEL','ID_SEL_AFTER_DATE','en','Please select after date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SEL_BEFORE_DATE','en','Please select before date','2012-02-02' 
+SELECT 'LABEL','ID_SEL_BEFORE_DATE','en','Please select before date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGNED_TO','en','Assigned To','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGNED_TO','en','Assigned To','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHLETS_INSTANCES','en','Dashlets Instances','2012-02-02' 
+SELECT 'LABEL','ID_DASHLETS_INSTANCES','en','Dashlets Instances','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_DOC_DOESNT_EXIST','en','Input Document does not exist!','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_DOC_DOESNT_EXIST','en','Input Document does not exist!','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_INTERMEDIATE_TIMER_EVENT','en','Intermediate timer','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_INTERMEDIATE_TIMER_EVENT','en','Intermediate timer','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEMPLATE_FILE_NOT_EXIST','en','Template file ''{FILE_TEMPLATE}'' does not exist.','2012-02-02' 
+SELECT 'LABEL','ID_TEMPLATE_FILE_NOT_EXIST','en','Template file ''{FILE_TEMPLATE}'' does not exist.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_SENT','en','message sent','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_SENT','en','message sent','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_DOES_NOT_EXIST','en','Case {CASE_NUMBER} does not exist','2012-02-02' 
+SELECT 'LABEL','ID_CASE_DOES_NOT_EXIST','en','Case {CASE_NUMBER} does not exist','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_COMMAND_EXECUTED_SUCCESSFULLY','en','Command executed successfully','2012-02-02' 
+SELECT 'LABEL','ID_COMMAND_EXECUTED_SUCCESSFULLY','en','Command executed successfully','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_USERNAME_REQUIRED','en','Username is required','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_REQUIRED','en','Username is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWD_REQUIRED','en','Password is required','2012-02-02' 
+SELECT 'LABEL','ID_PASSWD_REQUIRED','en','Password is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORD_SURPRASES','en','Password surprases the maximun length allowed','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORD_SURPRASES','en','Password surprases the maximun length allowed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USERNAME_ALREADY_EXISTS','en','Username ''{USER_ID}'' already exists','2012-02-02' 
+SELECT 'LABEL','ID_USERNAME_ALREADY_EXISTS','en','Username ''{USER_ID}'' already exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_ROLE','en','Invalid role ''{ROLE}''','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_ROLE','en','Invalid role ''{ROLE}''','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_CREATED_SUCCESSFULLY','en','User {FIRSTNAME} {LASTNAME} [{USER_ID}] created successfully','2012-02-02' 
+SELECT 'LABEL','ID_USER_CREATED_SUCCESSFULLY','en','User {FIRSTNAME} {LASTNAME} [{USER_ID}] created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_NAME_REQUIRED','en','Group name is required','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_NAME_REQUIRED','en','Group name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_CREATED_SUCCESSFULLY','en','Group {GROUP_NAME} created successfully','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_CREATED_SUCCESSFULLY','en','Group {GROUP_NAME} created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_NAME_REQUIRED','en','Department name is required','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_NAME_REQUIRED','en','Department name is required','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_CREATED_SUCCESSFULLY','en','{DEPARTMENT_NAME}, {PARENT_UID} Department {DEPARTMENT_NAME} created successfully','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_CREATED_SUCCESSFULLY','en','{DEPARTMENT_NAME}, {PARENT_UID} Department {DEPARTMENT_NAME} created successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NOT_REGISTERED_SYSTEM','en','User not registered in the system','2012-02-02' 
+SELECT 'LABEL','ID_USER_NOT_REGISTERED_SYSTEM','en','User not registered in the system','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GROUP_NOT_REGISTERED_SYSTEM','en','Group not registered in the system','2012-02-02' 
+SELECT 'LABEL','ID_GROUP_NOT_REGISTERED_SYSTEM','en','Group not registered in the system','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COMMAND_EXECUTED_SUCCESSFULY','en','command executed successfuly','2012-02-02' 
+SELECT 'LABEL','ID_COMMAND_EXECUTED_SUCCESSFULY','en','command executed successfuly','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NOT_REGISTERED_GROUP','en','User not registered in the group','2012-02-02' 
+SELECT 'LABEL','ID_USER_NOT_REGISTERED_GROUP','en','User not registered in the group','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_ALREADY_EXISTS_GROUP','en','User already exists in the group','2012-02-02' 
+SELECT 'LABEL','ID_USER_ALREADY_EXISTS_GROUP','en','User already exists in the group','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_DEPARTMENT_NOT_REGISTERED_SYSTEM','en','Department {DEP_ID} is not registered in the system','2012-02-02' 
+SELECT 'LABEL','ID_DEPARTMENT_NOT_REGISTERED_SYSTEM','en','Department {DEP_ID} is not registered in the system','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_DELEGATION_ALREADY_CLOSED','en','This case delegation is already closed or does not exist','2012-02-02' 
+SELECT 'LABEL','ID_CASE_DELEGATION_ALREADY_CLOSED','en','This case delegation is already closed or does not exist','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_RECEIVED','en','variables received','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_RECEIVED','en','variables received','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_PARAM_ZERO','en','The variables param length is zero','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_PARAM_ZERO','en','The variables param length is zero','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_PARAM_NOT_ARRAY','en','The variables param is not an array','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_PARAM_NOT_ARRAY','en','The variables param is not an array','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_VARIABLES_SENT','en','variables sent','2012-02-02' 
+SELECT 'LABEL','ID_VARIABLES_SENT','en','variables sent','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_PROCESS','en','Invalid process','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_PROCESS','en','Invalid process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MULTIPLE_STARTING_TASKS','en','Multiple starting tasks in the process','2012-02-02' 
+SELECT 'LABEL','ID_MULTIPLE_STARTING_TASKS','en','Multiple starting tasks in the process','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_INVALID_USER_NOT_ASSIGNED_TASK','en','Task invalid or the user is not assigned to the task','2012-02-02' 
+SELECT 'LABEL','ID_TASK_INVALID_USER_NOT_ASSIGNED_TASK','en','Task invalid or the user is not assigned to the task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STARTED_SUCCESSFULLY','en','Started successfully','2012-02-02' 
+SELECT 'LABEL','ID_STARTED_SUCCESSFULLY','en','Started successfully','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ARRAY_VARIABLES_EMPTY','en','Array of variables is empty','2012-02-02' 
+SELECT 'LABEL','ID_ARRAY_VARIABLES_EMPTY','en','Array of variables is empty','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_NOT_ASSIGNED_TASK','en','The user is not assigned to the task','2012-02-02' 
+SELECT 'LABEL','ID_USER_NOT_ASSIGNED_TASK','en','The user is not assigned to the task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NO_STARTING_TASK','en','No starting task defined','2012-02-02' 
+SELECT 'LABEL','ID_NO_STARTING_TASK','en','No starting task defined','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SPECIFY_DELEGATION_INDEX','en','Please specify the delegation index','2012-02-02' 
+SELECT 'LABEL','ID_SPECIFY_DELEGATION_INDEX','en','Please specify the delegation index','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_ASSIGNED_ANOTHER_USER','en','This case is assigned to another user','2012-02-02' 
+SELECT 'LABEL','ID_CASE_ASSIGNED_ANOTHER_USER','en','This case is assigned to another user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_IN_STATUS','en','This case is in status','2012-02-02' 
+SELECT 'LABEL','ID_CASE_IN_STATUS','en','This case is in status','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CAN_NOT_ROUTE_CASE_USING_WEBSERVICES','en','Can not route a case with Manual Assignment using webservices','2012-02-02' 
+SELECT 'LABEL','ID_CAN_NOT_ROUTE_CASE_USING_WEBSERVICES','en','Can not route a case with Manual Assignment using webservices','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_DOES_NOT_HAVE_ROUTING_RULE','en','Task does not have a routing rule; check process definition','2012-02-02' 
+SELECT 'LABEL','ID_TASK_DOES_NOT_HAVE_ROUTING_RULE','en','Task does not have a routing rule; check process definition','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_DEFINED_MANUAL_ASSIGNMENT','en','The task is defined for Manual assignment','2012-02-02' 
+SELECT 'LABEL','ID_TASK_DEFINED_MANUAL_ASSIGNMENT','en','The task is defined for Manual assignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_TRIGGER','en','Invalid trigger ''{TRIGGER_INDEX}''','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_TRIGGER','en','Invalid trigger ''{TRIGGER_INDEX}''','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXECUTED','en','executed','2012-02-02' 
+SELECT 'LABEL','ID_EXECUTED','en','executed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TARGET_ORIGIN_USER_SAME','en','Target and Origin user are the same','2012-02-02' 
+SELECT 'LABEL','ID_TARGET_ORIGIN_USER_SAME','en','Target and Origin user are the same','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_ORIGIN_USER','en','Invalid origin user','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_ORIGIN_USER','en','Invalid origin user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_NOT_OPEN','en','This case is not open','2012-02-02' 
+SELECT 'LABEL','ID_CASE_NOT_OPEN','en','This case is not open','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_CASE_DELEGATION_INDEX','en','Invalid Case Delegation index for this user','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_CASE_DELEGATION_INDEX','en','Invalid Case Delegation index for this user','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TARGET_USER_DOES_NOT_HAVE_RIGHTS','en','The target user does not have rights to execute the task','2012-02-02' 
+SELECT 'LABEL','ID_TARGET_USER_DOES_NOT_HAVE_RIGHTS','en','The target user does not have rights to execute the task','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TARGET_USER_DESTINATION_INVALID','en','The target user destination is invalid','2012-02-02' 
+SELECT 'LABEL','ID_TARGET_USER_DESTINATION_INVALID','en','The target user destination is invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CASE_COULD_NOT_REASSIGNED','en','The case could not be reassigned.','2012-02-02' 
+SELECT 'LABEL','ID_CASE_COULD_NOT_REASSIGNED','en','The case could not be reassigned.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SUCESSFUL','en','Sucessful','2012-02-02' 
+SELECT 'LABEL','ID_SUCESSFUL','en','Sucessful','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ERROR_URL_PROCESS_INVALID','en','Error the url {DOWNLOAD_URL} is invalid or the process in {LOCAL_PATH}{NEW_FILENAME} is invalid','2012-02-02' 
+SELECT 'LABEL','ID_ERROR_URL_PROCESS_INVALID','en','Error the url {DOWNLOAD_URL} is invalid or the process in {LOCAL_PATH}{NEW_FILENAME} is invalid','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_ALREADY_IN_SYSTEM','en','The process is already in the System and the value for importOption is not specified.','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_ALREADY_IN_SYSTEM','en','The process is already in the System and the value for importOption is not specified.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_REMOVE_FIELDS','en','Do you really want remove this fields','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_REMOVE_FIELDS','en','Do you really want remove this fields','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INTERMEDIATE_MESSAGE_EVENTS','en','Intermediate Message Events (Task Notifications)','2012-02-02' 
+SELECT 'LABEL','ID_INTERMEDIATE_MESSAGE_EVENTS','en','Intermediate Message Events (Task Notifications)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INTERMEDIATE_TIMER_EVENTS','en','Intermediate Timer Event (Multiple Event)','2012-02-02' 
+SELECT 'LABEL','ID_INTERMEDIATE_TIMER_EVENTS','en','Intermediate Timer Event (Multiple Event)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PARENT_DEPARTMENT_NOT_EXIST','en','Parent department doesn''t exist','2012-02-02' 
+SELECT 'LABEL','ID_PARENT_DEPARTMENT_NOT_EXIST','en','Parent department doesn''t exist','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SWITCH_INTERFACE','en','Switch Interface','2012-02-02' 
+SELECT 'LABEL','ID_SWITCH_INTERFACE','en','Switch Interface','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_USER_EXPERIENCE','en','User Experience','2012-02-02' 
+SELECT 'LABEL','ID_USER_EXPERIENCE','en','User Experience','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INTERMEDIATE_MESSAGE_EVENT','en','Intermediate Message Events (Task Notifications)','2012-02-02' 
+SELECT 'LABEL','ID_INTERMEDIATE_MESSAGE_EVENT','en','Intermediate Message Events (Task Notifications)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TEMPLATES','en','Templates','2012-02-02' 
+SELECT 'LABEL','ID_TEMPLATES','en','Templates','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PUBLIC','en','Public','2012-02-02' 
+SELECT 'LABEL','ID_PUBLIC','en','Public','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_INPUTDOCUMENT_CONFIRM','en','To the deselecting the item will be deleted the Day of the Work hours list. Do you want continue?','2012-02-02' 
+SELECT 'LABEL','ID_DELETE_INPUTDOCUMENT_CONFIRM','en','To the deselecting the item will be deleted the Day of the Work hours list. Do you want continue?','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_SUBJECT_FIELD_REQUIRED','en','Subject Field is required.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_SUBJECT_FIELD_REQUIRED','en','Subject Field is required.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_MESSAGE_FIELD_REQUIRED','en','Message Field is required.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_MESSAGE_FIELD_REQUIRED','en','Message Field is required.','2012-06-01' 
   UNION ALL
-SELECT 'JAVASCRIPT','ID_TEMPLATE_FIELD_REQUIRED','en','Template Field is required.','2012-02-02' 
+SELECT 'JAVASCRIPT','ID_TEMPLATE_FIELD_REQUIRED','en','Template Field is required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ADMINS_CANT_USE_UXS','en','Administrators users cannot use this User Experience.','2012-02-02' 
+SELECT 'LABEL','ID_ADMINS_CANT_USE_UXS','en','Administrators users cannot use this User Experience.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_PMT','en','Import PM Table','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_PMT','en','Import PM Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OVERWRITE_EXIST','en','Overwrite if exists?','2012-02-02' 
+SELECT 'LABEL','ID_OVERWRITE_EXIST','en','Overwrite if exists?','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_PM_FILE','en','Select a .pmt file','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_PM_FILE','en','Select a .pmt file','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SIMPLE_REPORT','en','Simple Report','2012-02-02' 
+SELECT 'LABEL','ID_SIMPLE_REPORT','en','Simple Report','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TABLE_TYPE','en','Table Type','2012-02-02' 
+SELECT 'LABEL','ID_TABLE_TYPE','en','Table Type','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONVERT_NATIVE_REP_TABLE','en','Convert to native Report Table','2012-02-02' 
+SELECT 'LABEL','ID_CONVERT_NATIVE_REP_TABLE','en','Convert to native Report Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONVERT_SIMPLE_REPORT','en','Convert to Simple Report','2012-02-02' 
+SELECT 'LABEL','ID_CONVERT_SIMPLE_REPORT','en','Convert to Simple Report','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REMOVING_SELECTED_TABLES','en','Removing selected table(s), please wait!','2012-02-02' 
+SELECT 'LABEL','ID_REMOVING_SELECTED_TABLES','en','Removing selected table(s), please wait!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_RESULT','en','IMPORT RESULT','2012-02-02' 
+SELECT 'LABEL','ID_IMPORT_RESULT','en','IMPORT RESULT','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORTING_ERROR','en','Importing Error','2012-02-02' 
+SELECT 'LABEL','ID_IMPORTING_ERROR','en','Importing Error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECTED_IMAGE_DELETED','en','The selected image has been deleted.','2012-02-02' 
+SELECT 'LABEL','ID_SELECTED_IMAGE_DELETED','en','The selected image has been deleted.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECTED_IMAGE_IS_LOGO','en','The selected image is established as logo.','2012-02-02' 
+SELECT 'LABEL','ID_SELECTED_IMAGE_IS_LOGO','en','The selected image is established as logo.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DELETE_SELECTED_LOGO','en','Do you want to delete the selected logo?','2012-05-03' 
+SELECT 'LABEL','ID_DELETE_SELECTED_LOGO','en','Do you want to delete the selected logo?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','MISSING_OR_NOT_CONFIGURED_SMTP','en','Missing or it''s not configured SMTP mail. Check the configuration.','2012-02-02' 
+SELECT 'LABEL','MISSING_OR_NOT_CONFIGURED_SMTP','en','Missing or it''s not configured SMTP mail. Check the configuration.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_ONE_OPTION','en','select one option','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_ONE_OPTION','en','select one option','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLICK_LOCK','en','Click the lock to make changes.','2012-02-02' 
+SELECT 'LABEL','ID_CLICK_LOCK','en','Click the lock to make changes.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CLICK_UNLOCK','en','Click the lock to prevent further changes.','2012-02-02' 
+SELECT 'LABEL','ID_CLICK_UNLOCK','en','Click the lock to prevent further changes.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAX_FILE_SIZE','en','Max upload file size','2012-02-02' 
+SELECT 'LABEL','ID_MAX_FILE_SIZE','en','Max upload file size','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DEFAULT_SKIN','en','Default Skin','2012-02-02' 
+SELECT 'LABEL','ID_DEFAULT_SKIN','en','Default Skin','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INTERMEDIATE_TIMER_EVENT','en','Intermediate Timer Event (Multiple Event)','2012-02-02' 
+SELECT 'LABEL','ID_INTERMEDIATE_TIMER_EVENT','en','Intermediate Timer Event (Multiple Event)','2012-06-01' 
  ;
 INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
 
-SELECT 'LABEL','ID_TIME_ZONE','en','Time Zone','2012-02-02' 
+SELECT 'LABEL','ID_TIME_ZONE','en','Time Zone','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MEMORY_LIMIT','en','Memory Limit  (Mb)','2012-02-02' 
+SELECT 'LABEL','ID_MEMORY_LIMIT','en','Memory Limit  (Mb)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SYSTEM_SETTINGS','en','System Settings','2012-02-02' 
+SELECT 'LABEL','ID_SYSTEM_SETTINGS','en','System Settings','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SYSTEM_REDIRECT_CONFIRM','en','You must login again to view the changes, do you want do it now?','2012-02-02' 
+SELECT 'LABEL','ID_SYSTEM_REDIRECT_CONFIRM','en','You must login again to view the changes, do you want do it now?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TASK_CANT_DELETE','en','You can''t delete the task "{0}" because it has {1} cases.','2012-02-02' 
+SELECT 'LABEL','ID_TASK_CANT_DELETE','en','You can''t delete the task "{0}" because it has {1} cases.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INDEX_NOT_WRITEABLE','en','The index file is not writable. <br/>Please give write permission to file:','2012-02-02' 
+SELECT 'LABEL','ID_INDEX_NOT_WRITEABLE','en','The index file is not writable. <br/>Please give write permission to file:','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TITLE_AUTHENTICATION_SOURCE_INF','en','Authentication Source Information','2012-02-02' 
+SELECT 'LABEL','ID_TITLE_AUTHENTICATION_SOURCE_INF','en','Authentication Source Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INF_TITLE','en','Authentication Source Information','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INF_TITLE','en','Authentication Source Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AVAILABLE_AUTHENTICATION_SOURCES','en','Available Authentication Sources','2012-02-02' 
+SELECT 'LABEL','ID_AVAILABLE_AUTHENTICATION_SOURCES','en','Available Authentication Sources','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EXTERNAL_STEP_MISSING','en','The plugin that is related to the step <b> {plugin} </b> was removed or disabled, please consult to your system administrator','2012-02-02' 
+SELECT 'LABEL','ID_EXTERNAL_STEP_MISSING','en','The plugin that is related to the step <b> {plugin} </b> was removed or disabled, please consult to your system administrator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INIT_DATE','en','Init Date','2012-02-02' 
+SELECT 'LABEL','ID_INIT_DATE','en','Init Date','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OVERWRITE','en','Overwrite','2012-02-02' 
+SELECT 'LABEL','ID_OVERWRITE','en','Overwrite','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_BROWSE','en','Browse','2012-02-02' 
+SELECT 'LABEL','ID_BROWSE','en','Browse','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_UPLOADING_TRANSLATION_FILE','en','Uploading the translation file...','2012-02-02' 
+SELECT 'LABEL','ID_UPLOADING_TRANSLATION_FILE','en','Uploading the translation file...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_EVALUATION_RESULT','en','[Success] Evaluation result','2012-02-02' 
+SELECT 'LABEL','ID_EVALUATION_RESULT','en','[Success] Evaluation result','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REQUIRED_NAME_DYNAFORM','en','Dynaform name required.','2012-02-02' 
+SELECT 'LABEL','ID_REQUIRED_NAME_DYNAFORM','en','Dynaform name required.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SELECT_LANGUAGE_FROM_LIST','en','First select a language from the list please.','2012-02-02' 
+SELECT 'LABEL','ID_SELECT_LANGUAGE_FROM_LIST','en','First select a language from the list please.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_WORKSPACE','en','New Workspace','2012-02-02' 
+SELECT 'LABEL','ID_NEW_WORKSPACE','en','New Workspace','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DATABASE_OPTIONS','en','Database Options','2012-02-02' 
+SELECT 'LABEL','ID_DATABASE_OPTIONS','en','Database Options','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_WORKFLOW_DATABASE','en','Workflow Database','2012-02-02' 
+SELECT 'LABEL','ID_WORKFLOW_DATABASE','en','Workflow Database','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RBAC_DATABASE','en','Rbac Database','2012-02-02' 
+SELECT 'LABEL','ID_RBAC_DATABASE','en','Rbac Database','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REPORT_DATABASE','en','Report Database','2012-02-02' 
+SELECT 'LABEL','ID_REPORT_DATABASE','en','Report Database','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DROP_DATABASE_EXISTS','en','Drop database if exists','2012-02-02' 
+SELECT 'LABEL','ID_DROP_DATABASE_EXISTS','en','Drop database if exists','2012-09-18' 
   UNION ALL
-SELECT 'LABEL','ID_WORKSPACE_ADMINISTRATOR','en','Workspace Administrator','2012-02-02' 
+SELECT 'LABEL','ID_WORKSPACE_ADMINISTRATOR','en','Workspace Administrator','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORD_ADMIN','en','Password (admin)(Max. length 20)','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORD_ADMIN','en','Password (admin)(Max. length 20)','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PASSWORD_ADMIN_RETYPE','en','Re-type Password','2012-02-02' 
+SELECT 'LABEL','ID_PASSWORD_ADMIN_RETYPE','en','Re-type Password','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NEW_SITE_TESTING','en','New site testing...','2012-02-02' 
+SELECT 'LABEL','ID_NEW_SITE_TESTING','en','New site testing...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SERVER_REPORTED','en','Server reported','2012-02-02' 
+SELECT 'LABEL','ID_SERVER_REPORTED','en','Server reported','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SITE_CREATING','en','site creating...','2012-02-02' 
+SELECT 'LABEL','ID_SITE_CREATING','en','site creating...','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FAILED','en','Failed','2012-02-02' 
+SELECT 'LABEL','ID_FAILED','en','Failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DB_CONNECTION_NO_EXIST','en','DB Connection doesn''t exist!','2012-02-02' 
+SELECT 'LABEL','ID_DB_CONNECTION_NO_EXIST','en','DB Connection doesn''t exist!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_NO_EXIST','en','Grid doesn''t exist!','2012-02-02' 
+SELECT 'LABEL','ID_GRID_NO_EXIST','en','Grid doesn''t exist!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PROCESS_NO_EXIST','en','Process doesn''t exist!','2012-02-02' 
+SELECT 'LABEL','ID_PROCESS_NO_EXIST','en','Process doesn''t exist!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_SHOULD_SELECT_LANGUAGE_FROM_LIST','en','You should to select a language from the list.','2012-02-02' 
+SELECT 'LABEL','ID_SHOULD_SELECT_LANGUAGE_FROM_LIST','en','You should to select a language from the list.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_COLUMNS','en','columns','2012-02-02' 
+SELECT 'LABEL','ID_COLUMNS','en','columns','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NOTICE','en','Notice','2012-02-02' 
+SELECT 'LABEL','ID_NOTICE','en','Notice','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTION_DISABLED_TO_LOW_PERFORMANCE_1','en','This action was disabled to prevent low performance on your browser. This is because there is more than 100 records on the columns definition grid.','2012-02-02' 
+SELECT 'LABEL','ID_ACTION_DISABLED_TO_LOW_PERFORMANCE_1','en','This action was disabled to prevent low performance on your browser. This is because there is more than 100 records on the columns definition grid.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ACTION_DISABLED_TO_LOW_PERFORMANCE_2','en','<br/><br/>Please perform this action with manual selection only.','2012-02-02' 
+SELECT 'LABEL','ID_ACTION_DISABLED_TO_LOW_PERFORMANCE_2','en','<br/><br/>Please perform this action with manual selection only.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MAX_LIMIT_COLUMNS_FOR_DATABASE','en','The maximun limit of columns for a database table is 255, you already have them defined!','2012-02-02' 
+SELECT 'LABEL','ID_MAX_LIMIT_COLUMNS_FOR_DATABASE','en','The maximun limit of columns for a database table is 255, you already have them defined!','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OUTPUT_DOCUMENT_TEMPLATE','en','Output Document Template','2012-02-02' 
+SELECT 'LABEL','ID_OUTPUT_DOCUMENT_TEMPLATE','en','Output Document Template','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_REASSIGNED_TO','en','Reassigned to','2012-02-02' 
+SELECT 'LABEL','ID_REASSIGNED_TO','en','Reassigned to','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_TOTAL_CASES_REASSIGNED','en','Total Cases Reassigned','2012-02-02' 
+SELECT 'LABEL','ID_TOTAL_CASES_REASSIGNED','en','Total Cases Reassigned','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_STATUS_REASSIGNMENT','en','Status Reassignment','2012-02-02' 
+SELECT 'LABEL','ID_STATUS_REASSIGNMENT','en','Status Reassignment','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INFORMATION','en','Authentication Source Information','2012-02-02' 
+SELECT 'LABEL','ID_AUTHENTICATION_SOURCE_INFORMATION','en','Authentication Source Information','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YOU_HAVE_ERROR','en','you have an error','2012-02-02' 
+SELECT 'LABEL','ID_YOU_HAVE_ERROR','en','you have an error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_MESSAGE_EMPTY_DATE_FIELD','en','There is at least one empty date field in the holiday grid, please check and try again.','2012-02-02' 
+SELECT 'LABEL','ID_MESSAGE_EMPTY_DATE_FIELD','en','There is at least one empty date field in the holiday grid, please check and try again.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_NO_DASHLET_MESSAGE','en','No dashlets instances to display.','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_NO_DASHLET_MESSAGE','en','No dashlets instances to display.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CONFIRM_DELETE_DASHLET_INSTANCE','en','Do you want to delete this Dashlet Instance?','2012-02-02' 
+SELECT 'LABEL','ID_CONFIRM_DELETE_DASHLET_INSTANCE','en','Do you want to delete this Dashlet Instance?','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHLET_INSTANCE','en','Dashlet Instance','2012-02-02' 
+SELECT 'LABEL','ID_DASHLET_INSTANCE','en','Dashlet Instance','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHLET_SUCCESS_DELETE','en','Dashlet instance deleted sucessfully.','2012-02-02' 
+SELECT 'LABEL','ID_DASHLET_SUCCESS_DELETE','en','Dashlet instance deleted sucessfully.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_DASHLET_MESSAGE','en','Displaying dashlets instances {0} - {1} of {2}','2012-02-02' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_DASHLET_MESSAGE','en','Displaying dashlets instances {0} - {1} of {2}','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHLET_INSTANCE_CONFIGURATION','en','Dashlet Instance Configuration','2012-02-02' 
+SELECT 'LABEL','ID_DASHLET_INSTANCE_CONFIGURATION','en','Dashlet Instance Configuration','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_OTHER','en','Other','2012-02-02' 
+SELECT 'LABEL','ID_OTHER','en','Other','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ASSIGN_TO','en','Assign To','2012-02-02' 
+SELECT 'LABEL','ID_ASSIGN_TO','en','Assign To','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_DASHLET','en','Dashlet','2012-02-02' 
+SELECT 'LABEL','ID_DASHLET','en','Dashlet','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_PERIOD','en','Period','2012-02-02' 
+SELECT 'LABEL','ID_PERIOD','en','Period','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RED_STARTS_IN','en','Red Starts In','2012-02-02' 
+SELECT 'LABEL','ID_RED_STARTS_IN','en','Red Starts In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_RED_ENDS_IN','en','Red Ends In','2012-02-02' 
+SELECT 'LABEL','ID_RED_ENDS_IN','en','Red Ends In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YELLOW_STARTS_IN','en','Yellow Starts In','2012-02-02' 
+SELECT 'LABEL','ID_YELLOW_STARTS_IN','en','Yellow Starts In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_YELLOW_ENDS_IN','en','Yellow Ends In','2012-02-02' 
+SELECT 'LABEL','ID_YELLOW_ENDS_IN','en','Yellow Ends In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GREEN_STARTS_IN','en','Green Starts In','2012-02-02' 
+SELECT 'LABEL','ID_GREEN_STARTS_IN','en','Green Starts In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GREEN_ENDS_IN','en','Green Ends In','2012-02-02' 
+SELECT 'LABEL','ID_GREEN_ENDS_IN','en','Green Ends In','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_ALERT','en','Alert','2012-02-02' 
+SELECT 'LABEL','ID_ALERT','en','Alert','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_DATA','en','Invalid data','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_DATA','en','Invalid data','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_FAILED_DASHBOARD INSTANCE','en','Dashboard Instance registered failed','2012-02-02' 
+SELECT 'LABEL','ID_FAILED_DASHBOARD INSTANCE','en','Dashboard Instance registered failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_AJAX_COMMUNICATION_FAILED','en','Ajax communication failed','2012-02-02' 
+SELECT 'LABEL','ID_AJAX_COMMUNICATION_FAILED','en','Ajax communication failed','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_CHECK_FIELDS_MARK_RED','en','Please check the fields mark in red.','2012-02-02' 
+SELECT 'LABEL','ID_CHECK_FIELDS_MARK_RED','en','Please check the fields mark in red.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INPUT_ERROR','en','Input Error','2012-02-02' 
+SELECT 'LABEL','ID_INPUT_ERROR','en','Input Error','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_INVALID_APPLICATION_NUMBER','en','You have set a invalid Application Number','2012-02-02' 
+SELECT 'LABEL','ID_INVALID_APPLICATION_NUMBER','en','You have set a invalid Application Number','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_3DAYSMINIMUM','en','3 days at least','2012-02-02' 
+SELECT 'LABEL','ID_3DAYSMINIMUM','en','3 days at least','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_NODELETEOPTIONALL','en','You must add all the days that you have selected in work days, otherwise you should leave at least an "-- ALL --" option.','2012-02-02' 
+SELECT 'LABEL','ID_NODELETEOPTIONALL','en','You must add all the days that you have selected in work days, otherwise you should leave at least an "-- ALL --" option.','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_IMPORT_RT','en','Import Report Table','2012-05-04' 
+SELECT 'LABEL','ID_IMPORT_RT','en','Import Report Table','2012-06-01' 
   UNION ALL
-SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_REPORTABLES_MESSAGE','en','Displaying Report Tables {0} - {1} of {2}','2012-05-04' 
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_REPORTABLES_MESSAGE','en','Displaying Report Tables {0} - {1} of {2}','2012-06-01' 
+  UNION ALL
+SELECT 'LABEL','ID_SKIN_EXCEPTION','en','Skin Engine Exception','2012-06-04' 
+  UNION ALL
+SELECT 'LABEL','ID_SKIN_LAYOUT_NOT_FOUND','en','Layout not Found','2012-06-04' 
+  UNION ALL
+SELECT 'LABEL','ID_SKIN_INCORRECT_VERIFY_URL','en','You''re trying to get a resource from an incorrect skin, please verify your url.','2012-06-04' 
+  UNION ALL
+SELECT 'LABEL','ID_REDIRECT_URL','en','The System can try to redirect to the correct url. Try Now.','2012-06-04' 
+  UNION ALL
+SELECT 'LABEL','ID_PASSWORD_TESTING','en','Testing password','2012-06-05' 
+  UNION ALL
+SELECT 'LABEL','ID_TRUE','en','TRUE','2012-06-06' 
+  UNION ALL
+SELECT 'LABEL','ID_FALSE','en','FALSE','2012-06-06' 
+ ;
+INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
+
+SELECT 'LABEL','ID_INSTRUCTIONS_TEXT','en','To assign a case it should be selected from the grid and then on the Search enter a name to do the user search to whom the case will be reasigned and then select one from the list.','2012-06-21' 
+  UNION ALL
+SELECT 'LABEL','ID_CONFIRM_TO_REASSIGN','en','There are cases which are not reassigned to a user. Do you like to continue?','2012-06-21' 
+  UNION ALL
+SELECT 'LABEL','ID_USERNAME_TESTING','en','Verifying username availability','2012-06-25' 
+  UNION ALL
+SELECT 'LABEL','ID_USERNAME_CORRECT','en','Available Username','2012-06-25' 
+  UNION ALL
+SELECT 'LABEL','ID_SENDMAIL_NOT_INSTALLED','en','An error has occured, please verify on which server "SendMail" has been installed or any other mail service, and if it has been configured correctly.','2012-06-26' 
+  UNION ALL
+SELECT 'LABEL','ID_PPP_MINIMUM_LENGTH','en','Minimum length','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','ID_PPP_MAXIMUM_LENGTH','en','Maximum length','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','ID_PASSWORD_COMPLIES_POLICIES','en','The password complies with the security policies.','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','ID_INSTRUCTIONS','en','Instructions','2012-06-21' 
+  UNION ALL
+SELECT 'LABEL','ID_NOT_REQUIRED','en','Not Required','2012-06-20' 
+  UNION ALL
+SELECT 'LABEL','DYNAFIELD_ALREADY_EXIST','en','The field name already exists!','2012-07-25' 
+  UNION ALL
+SELECT 'LABEL','DYNAFIELD_EMPTY','en','The name field is empty','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','DYNAFIELD_NODENAME_NUMBER','en','The field name should not start with a number','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','ID_EMPTY_NODENAME','en','The name field is empty','2012-06-28' 
+  UNION ALL
+SELECT 'LABEL','ID_TAS_DURATION_REQUIRE','en','Duration task required','2012-06-29' 
+  UNION ALL
+SELECT 'LABEL','ID_NAME_TAS_TITLE_REQUIRE','en','Task title required','2012-06-29' 
+  UNION ALL
+SELECT 'LABEL','APP_TITLE_CASE_LABEL_UPDATE','en','The System has detected that the changes on case labels will affect more than 1000 records, so the work will be scheduled by the cron to perform the update the next time the cron will run.','2012-07-03' 
+  UNION ALL
+SELECT 'LABEL','ID_MESSAGE_LOGIN','en','The default language that is configured in this place is for the "dropdown" of the languages that are displaying on the login screen, this configuration is set for each workspace.','2012-07-10' 
+  UNION ALL
+SELECT 'LABEL','ID_MESSAGE_SYSTEM','en','The language that is set by default applies directly when the domain is entered (eg.- http://127.0.0.1:8081), the system reads the configuration and redirects the link to the selected language','2012-07-10' 
+  UNION ALL
+SELECT 'LABEL','ID_MESSAGE_SYSTEM2','en','(eg.- http://127.0.0.1:8081/sys/en/classic/login/login), it should be emphasized that this configuration is for all environments.','2012-07-10' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_SEQUENTIAL','en','Sequential','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_SELECTION','en','Selection','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_EVALUATION','en','Evaluation','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_PARALLEL_FORK','en','Parallel (fork)','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_PARALLEL_JOIN','en','Parallel (join)','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSMAP_PARALLEL_EVALUATION_FORK','en','Parallel by Evaluation (fork)','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_MASKS_LIST','en','Masks List','2012-07-11' 
+  UNION ALL
+SELECT 'LABEL','ID_DASHBOARD_BTNCOLUMNS2','en','Two columns','2012-07-12' 
+  UNION ALL
+SELECT 'LABEL','ID_DASHBOARD_BTNCOLUMNS3','en','Three columns','2012-07-12' 
+  UNION ALL
+SELECT 'LABEL','ID_FILTER','en','Filter','2012-07-12' 
+  UNION ALL
+SELECT 'LABEL','ID_DOCUMENT_TYPE','en','PM Type','2012-07-12' 
+  UNION ALL
+SELECT 'LABEL','ID_TIMING_CONTROL','en','Timing Control','2012-07-17' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_DOES_NOT_EXIST_JS','en','Case {0} does not exist','2012-07-19' 
+  UNION ALL
+SELECT 'LABEL','MIME_DES_PM','en','PM Process File','2012-09-18' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_PAUSE_REASON','en','Reason of the pause of case','2012-08-01' 
+  UNION ALL
+SELECT 'LABEL','ID_NOTIFY_USERS_CASE','en','Notify users of case','2012-08-01' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_PAUSE_LABEL_NOTE','en','The Case paused. By the reason:','2012-08-01' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_CANCEL_REASON','en','Reason of the cancel of case','2012-08-01' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_CANCEL_LABEL_NOTE','en','The Case canceled. By the reason:','2012-08-01' 
+  UNION ALL
+SELECT 'LABEL','MIME_DES_DOCX','en','Word Document','2012-08-07' 
+  UNION ALL
+SELECT 'LABEL','MIME_DES_XLSX','en','Excel Document','2012-08-07' 
+  UNION ALL
+SELECT 'LABEL','ID_PROCESSED','en','Processed','2012-08-10' 
+  UNION ALL
+SELECT 'LABEL','ID_CASES_NOT_START','en','You can''t start a case because you don''t have a starting task assigned','2012-09-18' 
+  UNION ALL
+SELECT 'LABEL','ID_FIELD_DYNAFORM_SUGGEST_MESSAGE_TEMPORAL','en','New value inserted in the table','2012-08-15' 
+  UNION ALL
+SELECT 'LABEL','ID_FIELD_DYNAFORM_SUGGEST_INPUT_TITLE','en','If the value entered doesn''t exist, a new registry will be inserted when press Enter Key','2012-08-15' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_NOTES_LABEL_SEND','en','Send email (Case Participants)','2012-08-16' 
+  UNION ALL
+SELECT 'LABEL','ID_CASE_NOTES_HINT_SEND','en','A copy of this note will be sent to all Case Participants','2012-08-16' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_ACTION_DATE','en','Action Date','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_LAST_EXECUTION_DATE','en','Last Execution','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_DESCRIPTION','en','Event Description','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_ACTION','en','Event Type','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENTS','en','Events','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_LIST','en','Log of events','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EMPTY_TYPE','en','Select a Type','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_GRID_PAGE_NO_EVENT_MESSAGE','en','No Events to display','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_EVENT_MESSAGE','en','Displaying events {0} - {1} of {2}','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_TIMER','en','Event Timer','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_EVENT_CONDITIONAL','en','Event Conditional','2012-08-17' 
+  UNION ALL
+SELECT 'LABEL','ID_PMTABLE_INVALID_FIELD_NAME','en','The following fields cannot have these names because the are reserved words "{0}"','2012-09-03' 
+  UNION ALL
+SELECT 'LABEL','ID_USER_CASES_NOT_START','en','User can''t start a case because doesn''t have a starting task assigned','2012-09-05' 
+  UNION ALL
+SELECT 'LABEL','ID_USERS_HAS_ASSIGNED_CASES','en','The user has assigned cases, Do you like to continue anyway?','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_GRID_PAGE_DISPLAYING_REPORT_PERMISSIONS_MESSAGE','en','Displaying Permissions Simple Reports  {0} - {1} of {2}','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_GRID_PAGE_NO_PERMISSIONS_MESSAGE','en','No Permissions to display','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_ASSIGNED_PERMISSIONS_FOR','en','ASSIGNED PERMISSIONS FOR','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_DELETE_PERMISSION','en','Do you want to deleted the permission of {0}?','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_FAILED_SAVE_PERMISSIONS','en','Failed saving Permission of Simple Report','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','ID_PERMISSION_ALREADY_EXIST','en','The Permission already exists!','2012-09-07' 
+  UNION ALL
+SELECT 'LABEL','MIME_DES_PPT','en','PowerPoint File','2012-09-18' 
+  UNION ALL
+SELECT 'LABEL','MIME_DES_PPTX','en','PowerPoint File','2012-09-18' 
+  UNION ALL
+SELECT 'LABEL','ID_PROXY_SETTINGS','en','Proxy Settings','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_PROXY_HOST','en','Host','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_PROXY_PORT','en','Port','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_PROXY_USER','en','User','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_PROXY_PASSWORD','en','Password','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_APP_MSG_BODY','en','Body','2012-09-19' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_STATUS_INACTIVE','en','Inactive','2012-09-20' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_STATUS_ACTIVE','en','Active','2012-09-20' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_STATUS','en','Cron status','2012-09-20' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_ACTIONS_LOG','en','Cron Actions Log','2012-09-20' 
+  UNION ALL
+SELECT 'LABEL','ID_RESET_DATES','en','Reset Dates','2012-09-24' 
+ ;
+INSERT INTO [TRANSLATION] ([TRN_CATEGORY],[TRN_ID],[TRN_LANG],[TRN_VALUE],[TRN_UPDATE_DATE]) 
+
+SELECT 'LABEL','ID_ALL_WORKSPACES','en','All Workspaces','2012-09-21' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_LOG_CLEAR','en','Are you sure to clear the cron log?','2012-09-21' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_GRID_PAGE_DISPLAYING_MESSAGE','en','Displaying actions {0} - {1} of {2}','2012-09-21' 
+  UNION ALL
+SELECT 'LABEL','ID_CLEAR_LOG','en','Clear Log','2012-09-21' 
+  UNION ALL
+SELECT 'LABEL','ID_VIEW_INFO','en','View Information','2012-09-24' 
+  UNION ALL
+SELECT 'LABEL','ID_CRON_INFO','en','Cron Information','2012-09-24' 
+  UNION ALL
+SELECT 'LABEL','ID_PATH','en','Path','2012-09-24' 
+  UNION ALL
+SELECT 'LABEL','ID_LOG_INFO','en','Log Information','2012-09-24' 
  ;
 
 INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
@@ -13168,7 +13346,7 @@ SELECT 'CA','WAR','Fort Ware','','BC'  UNION ALL
 SELECT 'CA','WAS','Waskatenau','','AB'  UNION ALL
 SELECT 'CA','WAT','Watson Lake','','YT'  UNION ALL
 SELECT 'CA','WAW','Wawanesa','','MB'  UNION ALL
-SELECT 'CA','WBG','WarburgÃƒâ€šÃ‚Â ','','AB'  UNION ALL
+SELECT 'CA','WBG','Warburg','','AB'  UNION ALL
 SELECT 'CA','WBK','Westbank','','BC'  UNION ALL
 SELECT 'CA','WBN','Winterburn','','AB'  UNION ALL
 SELECT 'CA','WBO','Wimborne','','AB'  UNION ALL
@@ -15918,7 +16096,7 @@ SELECT 'CZ','JRA','Jirikov','',''  UNION ALL
 SELECT 'CZ','JRN','Jirny','',''  UNION ALL
 SELECT 'CZ','JSN','Jesenik','',''  UNION ALL
 SELECT 'CZ','JTV','JetYichov','',''  UNION ALL
-SELECT 'CZ','KAD','Kada?','',''  UNION ALL
+SELECT 'CZ','KAD','Kadaň','',''  UNION ALL
 SELECT 'CZ','KAP','Kaplice','',''  UNION ALL
 SELECT 'CZ','KAR','Karlin','',''  UNION ALL
 SELECT 'CZ','KCC','Klasterec nad Orlici','',''  UNION ALL
@@ -15948,7 +16126,7 @@ SELECT 'CZ','KSA','Krasna','',''  UNION ALL
 SELECT 'CZ','KSL','Kostelec nad Labem','',''  UNION ALL
 SELECT 'CZ','KST','Kostomlatky','',''  UNION ALL
 SELECT 'CZ','KSV','Kamenicky Senov','',''  UNION ALL
-SELECT 'CZ','KTA','Kos?alov','',''  UNION ALL
+SELECT 'CZ','KTA','Košťálov','',''  UNION ALL
 SELECT 'CZ','KTV','Klatovy','',''  UNION ALL
 SELECT 'CZ','KUH','Kutna Hora','',''  UNION ALL
 SELECT 'CZ','KUN','Kunovice','','' ;
@@ -16156,7 +16334,7 @@ SELECT 'CZ','SUM','Sumperk','',''  UNION ALL
 SELECT 'CZ','SUS','Susice','',''  UNION ALL
 SELECT 'CZ','SVK','Svaty Kriz','',''  UNION ALL
 SELECT 'CZ','SVO','Straskov','',''  UNION ALL
-SELECT 'CZ','SVR','Svrkyn?','',''  UNION ALL
+SELECT 'CZ','SVR','Svrkyně','',''  UNION ALL
 SELECT 'CZ','SZA','Strazny','',''  UNION ALL
 SELECT 'CZ','TAC','Tachov','',''  UNION ALL
 SELECT 'CZ','TAS','Tynec nad Sazavou','',''  UNION ALL
@@ -16191,7 +16369,7 @@ SELECT 'CZ','VCE','Velke Opatovice','',''  UNION ALL
 SELECT 'CZ','VCH','Vysoky Chlumec','',''  UNION ALL
 SELECT 'CZ','VCR','Volduchy','',''  UNION ALL
 SELECT 'CZ','VEA','Ceske Velenice','',''  UNION ALL
-SELECT 'CZ','VEB','Velka BiteÃƒâ€¦Ã‚Â¡','',''  UNION ALL
+SELECT 'CZ','VEB','Velká Bíteš','',''  UNION ALL
 SELECT 'CZ','VEL','Veletov','',''  UNION ALL
 SELECT 'CZ','VFA','Varnsdorf','',''  UNION ALL
 SELECT 'CZ','VIM','Vimperk','','' ;
@@ -18652,7 +18830,7 @@ SELECT 'DE','PEZ','Penzberg','','BY'  UNION ALL
 SELECT 'DE','PFA','Pfaffenhofen an der Ilm','','BY'  UNION ALL
 SELECT 'DE','PFD','Pleinfeld','','BY'  UNION ALL
 SELECT 'DE','PFE','Pfatter','','BY'  UNION ALL
-SELECT 'DE','PFF','PfaffenhausenÃƒâ€šÃ‚Â ','','BY'  UNION ALL
+SELECT 'DE','PFF','Pfaffenhausen','','BY'  UNION ALL
 SELECT 'DE','PFJ','Pfaffenhofen an der Glonn','','BY'  UNION ALL
 SELECT 'DE','PFK','Pfarrkirchen','','BY'  UNION ALL
 SELECT 'DE','PFN','Pfullingen','','BW'  UNION ALL
@@ -24208,7 +24386,7 @@ SELECT 'FR','FDN','Fleville-devant-Nancy','','54'  UNION ALL
 SELECT 'FR','FDO','Fours','','33'  UNION ALL
 SELECT 'FR','FDS','Fondettes','','37'  UNION ALL
 SELECT 'FR','FDU','Ferdrupt','','88'  UNION ALL
-SELECT 'FR','FEA','Ferrieres-en-GatinaisÃƒâ€šÃ‚Â ','','45'  UNION ALL
+SELECT 'FR','FEA','Ferrières-en-Gâtinais','','45'  UNION ALL
 SELECT 'FR','FEC','Fecamp','','76'  UNION ALL
 SELECT 'FR','FEE','Fresse','','70'  UNION ALL
 SELECT 'FR','FEG','Fegersheim','','67'  UNION ALL
@@ -25768,7 +25946,7 @@ SELECT 'FR','MZM','Metz','','57'  UNION ALL
 SELECT 'FR','MZN','Mouzon','','08'  UNION ALL
 SELECT 'FR','MZO','Mazion','','33'  UNION ALL
 SELECT 'FR','MZQ','Montpezat-de-Quercy','','82'  UNION ALL
-SELECT 'FR','MZR','MazeresÃƒâ€šÃ‚Â ','','33'  UNION ALL
+SELECT 'FR','MZR','Mazeres','','33'  UNION ALL
 SELECT 'FR','MZS','Mezieres-sur-Seine','','78'  UNION ALL
 SELECT 'FR','MZT','Metz-Tessy','','74'  UNION ALL
 SELECT 'FR','MZV','Mazet-St-Voy','','43'  UNION ALL
@@ -26414,7 +26592,7 @@ SELECT 'FR','PYI','Peyrilhac','','87'  UNION ALL
 SELECT 'FR','PYL','Pouilly-sous-Charlieu','','42'  UNION ALL
 SELECT 'FR','PYM','Puligny-Montrachet','','21'  UNION ALL
 SELECT 'FR','PYN','Peynier','','13'  UNION ALL
-SELECT 'FR','PYP','PeypinÃƒâ€šÃ‚Â ','','13'  UNION ALL
+SELECT 'FR','PYP','Peypin','','13'  UNION ALL
 SELECT 'FR','PYR','Peyrins','','26'  UNION ALL
 SELECT 'FR','PYS','Peyruis','','04'  UNION ALL
 SELECT 'FR','PYV','Le Perray-en-Yvelines','','78'  UNION ALL
@@ -27277,7 +27455,7 @@ SELECT 'FR','TCY','Saint-Cyr-de-Favieres','','42'  UNION ALL
 SELECT 'FR','TDA','St-Tugdual','','56'  UNION ALL
 SELECT 'FR','TDB','La Teste-de-Buch','','33'  UNION ALL
 SELECT 'FR','TDC','Thedirac','','46'  UNION ALL
-SELECT 'FR','TDD','St  DidierÃƒâ€šÃ‚Â ','','84'  UNION ALL
+SELECT 'FR','TDD','St  Didier','','84'  UNION ALL
 SELECT 'FR','TDE','Tallende','','63'  UNION ALL
 SELECT 'FR','TDI','Theding','','57'  UNION ALL
 SELECT 'FR','TDS','Taillades','','84'  UNION ALL
@@ -27678,7 +27856,7 @@ SELECT 'FR','VGU','Valergues','','34'  UNION ALL
 SELECT 'FR','VGX','Vigneux','',''  UNION ALL
 SELECT 'FR','VGY','Vigy','','57'  UNION ALL
 SELECT 'FR','VHA','Vitrolles','','05'  UNION ALL
-SELECT 'FR','VHC','Villefranche-sur-CherÃƒâ€šÃ‚Â ','','41'  UNION ALL
+SELECT 'FR','VHC','Villefranche-sur-Cher','','41'  UNION ALL
 SELECT 'FR','VHI','Vauchretien','','49'  UNION ALL
 SELECT 'FR','VHN','Le Valdahon','','25'  UNION ALL
 SELECT 'FR','VHO','Venthon','','73'  UNION ALL
@@ -32036,7 +32214,7 @@ SELECT 'HR','BUZ','Buzet','',''  UNION ALL
 SELECT 'HR','BVA','Brezovica','',''  UNION ALL
 SELECT 'HR','BVO','Baska Voda','',''  UNION ALL
 SELECT 'HR','BZA','Bozava','',''  UNION ALL
-SELECT 'HR','CAK','?akovec','',''  UNION ALL
+SELECT 'HR','CAK','Čakovec','',''  UNION ALL
 SELECT 'HR','CRA','Crikvenica','',''  UNION ALL
 SELECT 'HR','CRS','Cres','',''  UNION ALL
 SELECT 'HR','CVT','Cavtat','',''  UNION ALL
@@ -32058,8 +32236,8 @@ SELECT 'HR','FNA','Fazana','',''  UNION ALL
 SELECT 'HR','GCN','Gorican','',''  UNION ALL
 SELECT 'HR','GNA','Gazenica','',''  UNION ALL
 SELECT 'HR','GOM','Gomirje','',''  UNION ALL
-SELECT 'HR','GRA','Gra?ac','',''  UNION ALL
-SELECT 'HR','GSP','Gospi?','',''  UNION ALL
+SELECT 'HR','GRA','Gračac','',''  UNION ALL
+SELECT 'HR','GSP','Gospić','',''  UNION ALL
 SELECT 'HR','HLE','Hrvatski Leskovac','',''  UNION ALL
 SELECT 'HR','HVA','Hvar','',''  UNION ALL
 SELECT 'HR','ILO','Ilok','',''  UNION ALL
@@ -32100,7 +32278,7 @@ SELECT 'HR','MAL','Malinska','',''  UNION ALL
 SELECT 'HR','MAS','Maslenica','',''  UNION ALL
 SELECT 'HR','MAV','Martinska Ves Desna','',''  UNION ALL
 SELECT 'HR','MCC','Macinec','',''  UNION ALL
-SELECT 'HR','MET','Metkovi?','',''  UNION ALL
+SELECT 'HR','MET','Metković','',''  UNION ALL
 SELECT 'HR','MHV','Mohovo','',''  UNION ALL
 SELECT 'HR','MIL','Milna','',''  UNION ALL
 SELECT 'HR','MNK','Misnjak','',''  UNION ALL
@@ -32129,7 +32307,7 @@ SELECT 'HR','OPA','Opatija','',''  UNION ALL
 SELECT 'HR','OPT','Opatovac','',''  UNION ALL
 SELECT 'HR','ORB','Orebic','',''  UNION ALL
 SELECT 'HR','OSI','Osijek','',''  UNION ALL
-SELECT 'HR','OTO','Oto?ac','',''  UNION ALL
+SELECT 'HR','OTO','Otočac','',''  UNION ALL
 SELECT 'HR','OVA','Orahovica','',''  UNION ALL
 SELECT 'HR','OVC','Oriovac','',''  UNION ALL
 SELECT 'HR','PAG','Pag','',''  UNION ALL
@@ -32168,7 +32346,7 @@ SELECT 'HR','SAL','Sali','',''  UNION ALL
 SELECT 'HR','SBC','Stobrec','',''  UNION ALL
 SELECT 'HR','SBD','Slavonski Brod','',''  UNION ALL
 SELECT 'HR','SBR','Sobra','',''  UNION ALL
-SELECT 'HR','SDA','Satnica Dakovac?ka','',''  UNION ALL
+SELECT 'HR','SDA','Satnica Đakovačka','',''  UNION ALL
 SELECT 'HR','SDR','Sudurad','',''  UNION ALL
 SELECT 'HR','SEN','Senj','',''  UNION ALL
 SELECT 'HR','SGA','Strigova','',''  UNION ALL
@@ -32355,7 +32533,7 @@ SELECT 'HU','HEG','Hegyeshalom','',''  UNION ALL
 SELECT 'HU','HER','Hercegszanto','',''  UNION ALL
 SELECT 'HU','HEV','Heves','',''  UNION ALL
 SELECT 'HU','HIS','Hidasnemeti','',''  UNION ALL
-SELECT 'HU','HMV','Hodmez?vasarhely','',''  UNION ALL
+SELECT 'HU','HMV','Hódmezővásárhely','',''  UNION ALL
 SELECT 'HU','HRY','Hater','',''  UNION ALL
 SELECT 'HU','IPO','Ipolytarnoc','',''  UNION ALL
 SELECT 'HU','IPS','Ipolytolgyes','',''  UNION ALL
@@ -32378,7 +32556,7 @@ SELECT 'HU','KGY','Kerekegyhaza','',''  UNION ALL
 SELECT 'HU','KIA','Kisvarda','',''  UNION ALL
 SELECT 'HU','KIS','Kiskunfelegyhaza','',''  UNION ALL
 SELECT 'HU','KIT','Kistarcsa','',''  UNION ALL
-SELECT 'HU','KKS','Kisk?ros','',''  UNION ALL
+SELECT 'HU','KKS','Kiskőrös','',''  UNION ALL
 SELECT 'HU','KLK','Kistelek','',''  UNION ALL
 SELECT 'HU','KMD','Kunmadaras','',''  UNION ALL
 SELECT 'HU','KMJ','Kiskunmajsa','',''  UNION ALL
@@ -33338,7 +33516,7 @@ SELECT 'IN','BNR','Bhimnagar','','BR'  UNION ALL
 SELECT 'IN','BNY','Berhni','','UP'  UNION ALL
 SELECT 'IN','BOL','Bolanganj','','ML'  UNION ALL
 SELECT 'IN','BOM','Mumbai (ex Bombay)','','MH'  UNION ALL
-SELECT 'IN','BPT','Bang?rapet','','KA'  UNION ALL
+SELECT 'IN','BPT','Bangarapet','','KA'  UNION ALL
 SELECT 'IN','BRA','Barsora','','ML'  UNION ALL
 SELECT 'IN','BRC','Baroda','','GJ'  UNION ALL
 SELECT 'IN','BRH','Broach','','GJ'  UNION ALL
@@ -33354,7 +33532,7 @@ SELECT 'IN','BTK','Bhatkal','','KA'  UNION ALL
 SELECT 'IN','BTM','Bhithamore (Sursnad)','','BR'  UNION ALL
 SELECT 'IN','BTR','Bitra Is','','LD'  UNION ALL
 SELECT 'IN','BUD','Budge-Budge','','WB'  UNION ALL
-SELECT 'IN','BUN','Bund?la','','PB'  UNION ALL
+SELECT 'IN','BUN','Budhlada','','PB'  UNION ALL
 SELECT 'IN','BUP','Bhatinda','','PB'  UNION ALL
 SELECT 'IN','BWD','Bhiwadi','','RJ'  UNION ALL
 SELECT 'IN','BWN','Bhiwandi','','MH'  UNION ALL
@@ -33451,7 +33629,7 @@ SELECT 'IN','GUD','Gudur','','' ;
 INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'IN','GUX','Guna','',''  UNION ALL
 SELECT 'IN','GWL','Gwalior','','MP'  UNION ALL
-SELECT 'IN','GZD','Gh?zi?b?d','','UP'  UNION ALL
+SELECT 'IN','GZD','Ghazipur','','UP'  UNION ALL
 SELECT 'IN','HAL','Haldia','','WB'  UNION ALL
 SELECT 'IN','HAS','Hassan','','KA'  UNION ALL
 SELECT 'IN','HBX','Hubli','',''  UNION ALL
@@ -36614,7 +36792,7 @@ SELECT 'JO','','','',''  UNION ALL
 SELECT 'JO','AMM','Amman','',''  UNION ALL
 SELECT 'JO','AQB','Aqaba Free Zone','',''  UNION ALL
 SELECT 'JO','AQJ','Al ''Aqabah','',''  UNION ALL
-SELECT 'JO','ASA','As Samr?''','',''  UNION ALL
+SELECT 'JO','ASA','Sama as-Sarhan','',''  UNION ALL
 SELECT 'JO','FUH','Al Fuhays','',''  UNION ALL
 SELECT 'JO','MPQ','Ma''an','',''  UNION ALL
 SELECT 'JO','QIR','Irbid','',''  UNION ALL
@@ -38630,7 +38808,7 @@ SELECT 'KW','SAA','Shuaiba','',''  UNION ALL
 SELECT 'KW','SAF','Safat','',''  UNION ALL
 SELECT 'KW','SAL','As Salimiyah','',''  UNION ALL
 SELECT 'KW','SWK','Shuwaikh','',''  UNION ALL
-SELECT 'KW','SYA','As Saba?iyah','',''  UNION ALL
+SELECT 'KW','SYA','As Sabaiyah','',''  UNION ALL
 SELECT 'KW','WAF','Al Wafrah','','' ;
 INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'KY','','','',''  UNION ALL
@@ -38936,7 +39114,7 @@ SELECT 'LV','APE','Aizpute','','LE'  UNION ALL
 SELECT 'LV','ASE','Aluksne','','AL'  UNION ALL
 SELECT 'LV','AUC','Auce','','DO'  UNION ALL
 SELECT 'LV','BAU','Bauska','','BU'  UNION ALL
-SELECT 'LV','BRC','Broc?ni','','SA'  UNION ALL
+SELECT 'LV','BRC','Brocēni','','SA'  UNION ALL
 SELECT 'LV','BZC','Briezuciems','','BL'  UNION ALL
 SELECT 'LV','CES','Cesis','','CE'  UNION ALL
 SELECT 'LV','DGP','Daugavpils','','DW'  UNION ALL
@@ -39079,7 +39257,7 @@ SELECT 'MD','LEU','Leusheny','',''  UNION ALL
 SELECT 'MD','RIB','Ribnita','',''  UNION ALL
 SELECT 'MD','TIR','Tiraspol','',''  UNION ALL
 SELECT 'MD','UNG','Ungeny','',''  UNION ALL
-SELECT 'MD','VUL','Vulc?nesti','',''  UNION ALL
+SELECT 'MD','VUL','Vulcăneşti','',''  UNION ALL
 SELECT 'ME','','','',''  UNION ALL
 SELECT 'ME','BAR','Bar','',''  UNION ALL
 SELECT 'ME','BIJ','Bijela','',''  UNION ALL
@@ -39401,8 +39579,8 @@ SELECT 'MT','MOA','Mosta','',''  UNION ALL
 SELECT 'MT','MSX','Marsamxett','',''  UNION ALL
 SELECT 'MT','PAO','Paola','',''  UNION ALL
 SELECT 'MT','RMI','Qormi','',''  UNION ALL
-SELECT 'MT','SGW','San ?wann, Valletta','',''  UNION ALL
-SELECT 'MT','SJN','San ?iljan (St Julian)','',''  UNION ALL
+SELECT 'MT','SGW','San A Wann, Valletta','',''  UNION ALL
+SELECT 'MT','SJN','San Julián (St Julian)','',''  UNION ALL
 SELECT 'MT','SPB','St Paul''s Bay (San Paul il-Bahir)','',''  UNION ALL
 SELECT 'MU','','','',''  UNION ALL
 SELECT 'MU','CDE','Cloverdale','',''  UNION ALL
@@ -40268,807 +40446,1195 @@ SELECT 'NI','SIU','Siuna','',''  UNION ALL
 SELECT 'NI','SJS','San Juan del Sur','',''  UNION ALL
 SELECT 'NI','TEU','Teustepe','',''  UNION ALL
 SELECT 'NI','WSP','Waspam','',''  UNION ALL
-SELECT 'NL','MOO','Moordrecht','','ZH'  UNION ALL
-SELECT 'NL','MHK','Mookhoek','','ZH'  UNION ALL
-SELECT 'NL','MOK','Mook','','LI'  UNION ALL
-SELECT 'NL','MNT','Montfoort','','UT'  UNION ALL
-SELECT 'NL','MON','Monster','','ZH'  UNION ALL
-SELECT 'NL','MNN','Monnickendam','','NH'  UNION ALL
-SELECT 'NL','MWU','Molkwerum','','FR'  UNION ALL
-SELECT 'NL','MOT','Molenschot','','NB'  UNION ALL
-SELECT 'NL','MOL','Molenhoek','','LI'  UNION ALL
-SELECT 'NL','MGT','Molengat','','NB'  UNION ALL
-SELECT 'NL','MOG','Molenaarsgraaf','','ZH'  UNION ALL
-SELECT 'NL','MKP','Moerkapelle','','ZH'  UNION ALL
-SELECT 'NL','MOE','Moerdijk','','NB'  UNION ALL
-SELECT 'NL','MBK','Milsbeek','','LI'  UNION ALL
-SELECT 'NL','MLR','Millingen aan de Rijn','','GE'  UNION ALL
-SELECT 'NL','MLL','Mill','','NB'  UNION ALL
-SELECT 'NL','MZE','Milheeze','','NB'  UNION ALL
-SELECT 'NL','MDT','Mildert','','LI'  UNION ALL
-SELECT 'NL','MIJ','Mijdrecht','','UT'  UNION ALL
-SELECT 'NL','MIE','Mierlo','','NB'  UNION ALL
-SELECT 'NL','MWD','Midwolda','','GR'  UNION ALL
-SELECT 'NL','ZBD','Middenmeer','','NH'  UNION ALL
-SELECT 'NL','MDU','Middelstum','','GR'  UNION ALL
-SELECT 'NL','MVE','Middelie','','NH'  UNION ALL
-SELECT 'NL','MIH','Middelharnis','','ZH'  UNION ALL
-SELECT 'NL','MID','Middelburg','','ZE'  UNION ALL
-SELECT 'NL','MDL','Middelburg','','ZE'  UNION ALL
-SELECT 'NL','MDB','Middelbeers','','NB'  UNION ALL
-SELECT 'NL','MLA','Middelaar','','LI'  UNION ALL
-SELECT 'NL','MEH','Mesch','','LI'  UNION ALL
-SELECT 'NL','MEB','Merkelbeek','','LI'  UNION ALL
-SELECT 'NL','MEP','Meppel','','DR'  UNION ALL
-SELECT 'NL','MSW','Mensingeweer','','GR'  UNION ALL
-SELECT 'NL','MNU','Menaldum','','FR'  UNION ALL
-SELECT 'NL','MSA','Melissant','','ZH'  UNION ALL
-SELECT 'NL','MCK','Melick','','LI'  UNION ALL
-SELECT 'NL','MDO','Melderslo','','LI'  UNION ALL
-SELECT 'NL','MWE','Meeuwen','','NB'  UNION ALL
-SELECT 'NL','MRN','Meerssen','','LI'  UNION ALL
-SELECT 'NL','MES','Meers','',''  UNION ALL
-SELECT 'NL','MEW','Meerlo-Wansum','',''  UNION ALL
-SELECT 'NL','MKK','Meerkerk','','ZH'  UNION ALL
-SELECT 'NL','MEE','Meer','','NB'  UNION ALL
-SELECT 'NL','MDM','Medemblik','','NH'  UNION ALL
-SELECT 'NL','MEC','Mechelen','','LI'  UNION ALL
-SELECT 'NL','MAU','Maurik','','GE'  UNION ALL
-SELECT 'NL','MRM','Marum','','GR'  UNION ALL
-SELECT 'NL','MRU','Marssum','','FR'  UNION ALL
-SELECT 'NL','MRR','Marrum','','FR'  UNION ALL
-SELECT 'NL','MAN','Marknesse','','FL'  UNION ALL
-SELECT 'NL','MKN','Marken','','NH'  UNION ALL
-SELECT 'NL','MAR','Markelo','','OV'  UNION ALL
-SELECT 'NL','MHO','Mariahout','','NB'  UNION ALL
-SELECT 'NL','ZBF','Margraten','','LI'  UNION ALL
-SELECT 'NL','MRK','Maren-Kessel','','NB'  UNION ALL
-SELECT 'NL','MJA','Mandjeswaard','',''  UNION ALL
-SELECT 'NL','MAD','Malden','','GE'  UNION ALL
-SELECT 'NL','MAK','Makkum','','DR'  UNION ALL
-SELECT 'NL','QDJ','Made','','NB'  UNION ALL
-SELECT 'NL','MSV','Maasvlakte','','ZH'  UNION ALL
-SELECT 'NL','MST','Maastricht','','LI'  UNION ALL
-SELECT 'NL','MSL','Maassluis','','ZH'  UNION ALL
-SELECT 'NL','MAL','Maasland','','ZH'  UNION ALL
-SELECT 'NL','MDK','Maasdijk','','ZH'  UNION ALL
-SELECT 'NL','MSD','Maasdam','','ZH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','ZBC','Maasbree','','LI'  UNION ALL
-SELECT 'NL','MSB','Maasbracht','','LI'  UNION ALL
-SELECT 'NL','MRT','Maartensdijk','','UT'  UNION ALL
-SELECT 'NL','MRS','Maarssenbroek','','UT'  UNION ALL
-SELECT 'NL','MSS','Maarssen','','UT'  UNION ALL
-SELECT 'NL','MAB','Maarsbergen','','UT'  UNION ALL
-SELECT 'NL','MAV','Maarn','','UT'  UNION ALL
-SELECT 'NL','MHU','Maarhuizen','','GR'  UNION ALL
-SELECT 'NL','MHZ','Maarheeze','','NB'  UNION ALL
-SELECT 'NL','LYG','Luyksgestel','','NB'  UNION ALL
-SELECT 'NL','LGE','Luttelgeest','','FL'  UNION ALL
-SELECT 'NL','LWK','Lutjewinkel','','NH'  UNION ALL
-SELECT 'NL','LJB','Lutjebroek','','NH'  UNION ALL
-SELECT 'NL','LTN','Lunteren','','GE'  UNION ALL
-SELECT 'NL','LOS','Losser','','OV'  UNION ALL
-SELECT 'NL','LPM','Loppersum','','GR'  UNION ALL
-SELECT 'NL','LKL','Lopikerkapel','','UT'  UNION ALL
-SELECT 'NL','LPK','Lopik','','UT'  UNION ALL
-SELECT 'NL','ZAQ','Loosdrecht','','NH'  UNION ALL
-SELECT 'NL','LSB','Loosbroek','','NB'  UNION ALL
-SELECT 'NL','LOM','Lomm','','LI'  UNION ALL
-SELECT 'NL','LNO','Loenersloot','','UT'  UNION ALL
-SELECT 'NL','LAV','Loenen aan de Vecht','','UT'  UNION ALL
-SELECT 'NL','LON','Loenen','','UT'  UNION ALL
-SELECT 'NL','LCH','Lochem','','GE'  UNION ALL
-SELECT 'NL','LOB','Lobith','','GE'  UNION ALL
-SELECT 'NL','LTO','Lithoijen','','NB'  UNION ALL
-SELECT 'NL','LIT','Lith','','NB'  UNION ALL
-SELECT 'NL','LBK','Lisserbroek','','NH'  UNION ALL
-SELECT 'NL','QDG','Lisse','','ZH'  UNION ALL
-SELECT 'NL','LWO','Lippenwoude','','FR'  UNION ALL
-SELECT 'NL','LSC','Linschoten','','UT'  UNION ALL
-SELECT 'NL','LIN','Linne','','LI'  UNION ALL
-SELECT 'NL','LMM','Limmen','','NH'  UNION ALL
-SELECT 'NL','LME','Limmel','',''  UNION ALL
-SELECT 'NL','LIJ','Lijnden','','NH'  UNION ALL
-SELECT 'NL','LSL','Liessel','','NB'  UNION ALL
-SELECT 'NL','LSH','Lieshout','','NB'  UNION ALL
-SELECT 'NL','LRP','Lierop','','NB'  UNION ALL
-SELECT 'NL','LIE','Lienden','','GE'  UNION ALL
-SELECT 'NL','LCV','Lichtenvoorde','','GE'  UNION ALL
-SELECT 'NL','LXM','Lexmond','','ZH'  UNION ALL
-SELECT 'NL','LWD','Lewedorp','','ZE'  UNION ALL
-SELECT 'NL','GEL','Leuvenheim','','GE'  UNION ALL
-SELECT 'NL','LTH','Leuth','','GE'  UNION ALL
-SELECT 'NL','LEU','Leusden','','UT'  UNION ALL
-SELECT 'NL','TTE','Lettele','','OV'  UNION ALL
-SELECT 'NL','LEO','Leons','','FR'  UNION ALL
-SELECT 'NL','LNT','Lent','','GE'  UNION ALL
-SELECT 'NL','LEM','Lemsterland','','FR'  UNION ALL
-SELECT 'NL','LMR','Lemmer','','FR'  UNION ALL
-SELECT 'NL','LEY','Lelystad','','FL'  UNION ALL
-SELECT 'NL','LEK','Lekkerkerk','','ZH'  UNION ALL
-SELECT 'NL','LRU','Leimuiderbrug','','NH'  UNION ALL
-SELECT 'NL','LMU','Leimuiden','','ZH'  UNION ALL
-SELECT 'NL','LDS','Leidschendam','','ZH'  UNION ALL
-SELECT 'NL','LDD','Leiderdorp','','ZH'  UNION ALL
-SELECT 'NL','LID','Leiden','','ZH'  UNION ALL
-SELECT 'NL','LWR','Leeuwarden','','FR'  UNION ALL
-SELECT 'NL','LRD','Leerdam','','ZH'  UNION ALL
-SELECT 'NL','LRB','Leerbroek','','ZH'  UNION ALL
-SELECT 'NL','LES','Leens','','GR'  UNION ALL
-SELECT 'NL','LEE','Leek','','GR'  UNION ALL
-SELECT 'NL','LWI','Lauwerzijl','','GR'  UNION ALL
-SELECT 'NL','LAN','Lauwersoog','','GR'  UNION ALL
-SELECT 'NL','LTU','Lathum','','GE'  UNION ALL
-SELECT 'NL','LAR','Laren','','NH'  UNION ALL
-SELECT 'NL','LGW','Langweer','','FR'  UNION ALL
-SELECT 'NL','LZG','Langezwaag','','FR'  UNION ALL
-SELECT 'NL','LWG','Langeweg','','NB'  UNION ALL
-SELECT 'NL','LAG','Langerak','','ZH'  UNION ALL
-SELECT 'NL','LGI','Langelille','','FR'  UNION ALL
-SELECT 'NL','LAK','Langbroek','','UT'  UNION ALL
-SELECT 'NL','LAM','Landsmeer','','NH'  UNION ALL
-SELECT 'NL','LAF','Landgraaf','','LI'  UNION ALL
-SELECT 'NL','LGB','Landgoed Baest','',''  UNION ALL
-SELECT 'NL','LWE','Lalleweer','','GR'  UNION ALL
-SELECT 'NL','LGD','Lageland','','GR'  UNION ALL
-SELECT 'NL','LZA','Lage Zwaluwe','','NB'  UNION ALL
-SELECT 'NL','LAW','Lage Weide','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','LMI','Lage Mierde','','NB'  UNION ALL
-SELECT 'NL','LTS','Laatste Stuiver','',''  UNION ALL
-SELECT 'NL','LGK','Laag-Keppel','','GE'  UNION ALL
-SELECT 'NL','KWS','Kwintsheul','','ZH'  UNION ALL
-SELECT 'NL','KWA','Kwadendamme','','ZE'  UNION ALL
-SELECT 'NL','KHO','Kuikhorne','','FR'  UNION ALL
-SELECT 'NL','KDS','Kudelstaart','','NH'  UNION ALL
-SELECT 'NL','KRU','Kruiningen','','ZE'  UNION ALL
-SELECT 'NL','KNG','Kronenberg','','LI'  UNION ALL
-SELECT 'NL','KRM','Krommenie','','NH'  UNION ALL
-SELECT 'NL','KDO','Kring van Dorth','','GE'  UNION ALL
-SELECT 'NL','KAI','Krimpen aan den IJssel','','ZH'  UNION ALL
-SELECT 'NL','KRP','Krimpen aan de Lek','','ZH'  UNION ALL
-SELECT 'NL','KRE','Kreil','','NH'  UNION ALL
-SELECT 'NL','KMS','Krammersluizen','',''  UNION ALL
-SELECT 'NL','KGB','Kraggenburg','','FL'  UNION ALL
-SELECT 'NL','IJK','Krabbendijke','','ZE'  UNION ALL
-SELECT 'NL','KDM','Koudum','','FR'  UNION ALL
-SELECT 'NL','KOK','Koudekerke','','ZE'  UNION ALL
-SELECT 'NL','KOR','Koudekerk aan den Rijn','','ZH'  UNION ALL
-SELECT 'NL','KOG','Kortgene','','ZE'  UNION ALL
-SELECT 'NL','KTH','Kortenhoef','','NH'  UNION ALL
-SELECT 'NL','KHM','Kortehemmen','','FR'  UNION ALL
-SELECT 'NL','KWZ','Kornwerderzand','','FR'  UNION ALL
-SELECT 'NL','ZAN','Kornhorn','','GR'  UNION ALL
-SELECT 'NL','ZBB','Kootstertille','','FR'  UNION ALL
-SELECT 'NL','KGZ','Koog aan de Zaan','','NH'  UNION ALL
-SELECT 'NL','KGH','Konigsbosch','',''  UNION ALL
-SELECT 'NL','KML','Kommerzijl','','GR'  UNION ALL
-SELECT 'NL','KLM','Kollum','','FR'  UNION ALL
-SELECT 'NL','KHR','Kolhorn','','NH'  UNION ALL
-SELECT 'NL','KHA','Kolham','','GR'  UNION ALL
-SELECT 'NL','KWT','Koewacht','','ZE'  UNION ALL
-SELECT 'NL','KDJ','Koedijk','','NH'  UNION ALL
-SELECT 'NL','KLU','Klundert','','NB'  UNION ALL
-SELECT 'NL','KLT','Kloosterzande','','ZE'  UNION ALL
-SELECT 'NL','KLV','Kloosterveen','','DR'  UNION ALL
-SELECT 'NL','KLZ','Klazienaveen','','DR'  UNION ALL
-SELECT 'NL','KBK','Klarenbeek','','GE'  UNION ALL
-SELECT 'NL','KLW','Klaaswaal','','ZH'  UNION ALL
-SELECT 'NL','KIJ','Kinderdijk','','ZH'  UNION ALL
-SELECT 'NL','KHV','Ketelhaven','','FL'  UNION ALL
-SELECT 'NL','KST','Kesteren','','GE'  UNION ALL
-SELECT 'NL','KSL','Kessel','','LI'  UNION ALL
-SELECT 'NL','KER','Kerkrade','','LI'  UNION ALL
-SELECT 'NL','KRD','Kerkdriel','','GE'  UNION ALL
-SELECT 'NL','KPE','Kelpen','','LI'  UNION ALL
-SELECT 'NL','KEK','Kekerdom','','GE'  UNION ALL
-SELECT 'NL','KZV','Keizersveer','','NB'  UNION ALL
-SELECT 'NL','KEB','Keijenborg','','GE'  UNION ALL
-SELECT 'NL','KAZ','Katwijk aan Zee','','ZH'  UNION ALL
-SELECT 'NL','KWR','Katwijk aan den Rijn','','ZH'  UNION ALL
-SELECT 'NL','KWK','Katwijk','','NB'  UNION ALL
-SELECT 'NL','KAT','Kats','','ZE'  UNION ALL
-SELECT 'NL','KTJ','Katlijk','','FR'  UNION ALL
-SELECT 'NL','KTV','Katerveer','','OV'  UNION ALL
-SELECT 'NL','KAP','Kapellebrug','','ZE'  UNION ALL
-SELECT 'NL','KPL','Kapelle','','ZE'  UNION ALL
-SELECT 'NL','KAV','Kapel-Avezaath','','GE'  UNION ALL
-SELECT 'NL','KTN','Kantens','','GR'  UNION ALL
-SELECT 'NL','KAD','Kamperland','','ZE'  UNION ALL
-SELECT 'NL','KAM','Kampen','','ZE'  UNION ALL
-SELECT 'NL','KMR','Kamerik','','UT'  UNION ALL
-SELECT 'NL','KKO','Kakeshoek','',''  UNION ALL
-SELECT 'NL','KTS','Kaatsheuvel','','NB'  UNION ALL
-SELECT 'NL','KAG','Kaag','','ZH'  UNION ALL
-SELECT 'NL','JNE','Junne','','OV'  UNION ALL
-SELECT 'NL','JLD','Julianadorp','','NH'  UNION ALL
-SELECT 'NL','JOU','Joure','','FR'  UNION ALL
-SELECT 'NL','JSP','Jisp','','NH'  UNION ALL
-SELECT 'NL','ITT','Ittervoort','','LI'  UNION ALL
-SELECT 'NL','ITR','Itteren','','LI'  UNION ALL
-SELECT 'NL','ILP','Ilpendam','','NH'  UNION ALL
-SELECT 'NL','ILO','Illikhoven','','LI'  UNION ALL
-SELECT 'NL','IZD','IJzendijke','','ZE'  UNION ALL
-SELECT 'NL','IJI','IJsselstein','','UT'  UNION ALL
-SELECT 'NL','ISM','IJsselmuiden','','OV'  UNION ALL
-SELECT 'NL','IJM','IJmuiden','','NH'  UNION ALL
-SELECT 'NL','HUN','Hunsel','','LI'  UNION ALL
-SELECT 'NL','HUL','Hulst','','ZE' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','HLS','Hulsen','','LI'  UNION ALL
-SELECT 'NL','HUI','Huizen','','NH'  UNION ALL
-SELECT 'NL','HUS','Huissen','','GE'  UNION ALL
-SELECT 'NL','HTH','Huis ter Heide','','UT'  UNION ALL
-SELECT 'NL','HOU','Houten','','UT'  UNION ALL
-SELECT 'NL','HRS','Horst','','LI'  UNION ALL
-SELECT 'NL','HOX','Horn','','LI'  UNION ALL
-SELECT 'NL','HOR','Hordijkerveld','',''  UNION ALL
-SELECT 'NL','HPT','Hoptille','','FR'  UNION ALL
-SELECT 'NL','HNA','Hoornaar','','ZH'  UNION ALL
-SELECT 'NL','HRN','Hoorn','','ZH'  UNION ALL
-SELECT 'NL','HOO','Hoogwoud','','NH'  UNION ALL
-SELECT 'NL','HGV','Hoogvliet','','ZH'  UNION ALL
-SELECT 'NL','HGM','Hoogmade','','ZH'  UNION ALL
-SELECT 'NL','HOG','Hooglanderveen','','UT'  UNION ALL
-SELECT 'NL','HOL','Hoogland','','UT'  UNION ALL
-SELECT 'NL','HKK','Hoogkerk','','GR'  UNION ALL
-SELECT 'NL','HKP','Hoogkarspel','','NH'  UNION ALL
-SELECT 'NL','HZD','Hoogezand','','ZH'  UNION ALL
-SELECT 'NL','HOV','Hoogeveen','','DR'  UNION ALL
-SELECT 'NL','HMI','Hoogersmilde','','DR'  UNION ALL
-SELECT 'NL','HOH','Hoogerheide','','NB'  UNION ALL
-SELECT 'NL','HGX','Hooge-Hexel','',''  UNION ALL
-SELECT 'NL','HOZ','Hooge Zwaluwe','','NB'  UNION ALL
-SELECT 'NL','HMD','Hooge Mierde','','NB'  UNION ALL
-SELECT 'NL','HPL','Hoofdplaat','','ZE'  UNION ALL
-SELECT 'NL','HFD','Hoofddorp','',''  UNION ALL
-SELECT 'NL','HTN','Hontenisse','',''  UNION ALL
-SELECT 'NL','HNS','Honselersdijk','','ZH'  UNION ALL
-SELECT 'NL','HME','Holtheme','','OV'  UNION ALL
-SELECT 'NL','HLT','Holten','','OV'  UNION ALL
-SELECT 'NL','HOT','Holt','','OV'  UNION ALL
-SELECT 'NL','HSO','Holsloot','','DR'  UNION ALL
-SELECT 'NL','HBU','Hogebrug','','ZH'  UNION ALL
-SELECT 'NL','HON','Hoeven','','LI'  UNION ALL
-SELECT 'NL','HOE','Hoevelaken','','GE'  UNION ALL
-SELECT 'NL','HBR','Hoensbroek','','LI'  UNION ALL
-SELECT 'NL','HVH','Hoek van Holland','','ZH'  UNION ALL
-SELECT 'NL','ZAX','Hoek','','LI'  UNION ALL
-SELECT 'NL','HLP','Hindeloopen','','FR'  UNION ALL
-SELECT 'NL','HVS','Hilversum','','NH'  UNION ALL
-SELECT 'NL','HVK','Hilvarenbeek','','NB'  UNION ALL
-SELECT 'NL','HIL','Hillegom','','ZH'  UNION ALL
-SELECT 'NL','HKM','Hijkersmilde','','DR'  UNION ALL
-SELECT 'NL','HYY','Heythuysen','','LI'  UNION ALL
-SELECT 'NL','HES','Heusden','','NB'  UNION ALL
-SELECT 'NL','HEU','Heurne','','GE'  UNION ALL
-SELECT 'NL','HUM','Heumen','','GE'  UNION ALL
-SELECT 'NL','HTR','Heteren','','GE'  UNION ALL
-SELECT 'NL','HWJ','Herwijnen','','GE'  UNION ALL
-SELECT 'NL','HER','Herven','',''  UNION ALL
-SELECT 'NL','HVD','Herveld','','GE'  UNION ALL
-SELECT 'NL','ZAY','Herten','','LI'  UNION ALL
-SELECT 'NL','HPN','Herpen','','NB'  UNION ALL
-SELECT 'NL','HKI','Herkingen','','ZH'  UNION ALL
-SELECT 'NL','HRK','Herkenbosch','','LI'  UNION ALL
-SELECT 'NL','HEV','Hengevelde','','OV'  UNION ALL
-SELECT 'NL','HNG','Hengelo','','GE'  UNION ALL
-SELECT 'NL','HGL','Hengelo','','GE'  UNION ALL
-SELECT 'NL','HIA','Hendrik-Ido-Ambacht','','ZH'  UNION ALL
-SELECT 'NL','HPE','Hempens','','FR'  UNION ALL
-SELECT 'NL','HEM','Hem','','NH'  UNION ALL
-SELECT 'NL','HVO','Helvoirt','','NB'  UNION ALL
-SELECT 'NL','HLM','Helmond','','NB'  UNION ALL
-SELECT 'NL','HSL','Hellevoetsluis','','ZH'  UNION ALL
-SELECT 'NL','HLD','Hellendoorn','','OV'  UNION ALL
-SELECT 'NL','HEL','Helden','','LI'  UNION ALL
-SELECT 'NL','HKO','Hekendorp','','UT'  UNION ALL
-SELECT 'NL','HEK','Hekelingen','','ZH'  UNION ALL
-SELECT 'NL','HNO','Heino','','OV'  UNION ALL
-SELECT 'NL','HZA','Heinkensand','',''  UNION ALL
-SELECT 'NL','HOD','Heinenoord','','ZH'  UNION ALL
-SELECT 'NL','HNN','Heinen','',''  UNION ALL
-SELECT 'NL','HLO','Heiloo','','NH'  UNION ALL
-SELECT 'NL','HKT','Heikant','','LI'  UNION ALL
-SELECT 'NL','HIJ','Heijplaat','',''  UNION ALL
-SELECT 'NL','HJY','Heijningen','','NB'  UNION ALL
-SELECT 'NL','HEJ','Heijen','','LI'  UNION ALL
-SELECT 'NL','HGN','Heigen','',''  UNION ALL
-SELECT 'NL','HZE','Heeze','','NB' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','HET','Heeten','','OV'  UNION ALL
-SELECT 'NL','HSW','Heeswijk','','NB'  UNION ALL
-SELECT 'NL','HEC','Heesch','','NB'  UNION ALL
-SELECT 'NL','HRL','Heerlen-Autoweg','',''  UNION ALL
-SELECT 'NL','HEN','Heerlen','','LI'  UNION ALL
-SELECT 'NL','HLE','Heerle','','NB'  UNION ALL
-SELECT 'NL','HKF','Heerjansdam','','ZH'  UNION ALL
-SELECT 'NL','HHW','Heerhugowaard','','NH'  UNION ALL
-SELECT 'NL','HRW','Heerewaarden','','GE'  UNION ALL
-SELECT 'NL','HRV','Heerenveen','','FR'  UNION ALL
-SELECT 'NL','HRR','Heerde','','GE'  UNION ALL
-SELECT 'NL','HMS','Heemstede','','NH'  UNION ALL
-SELECT 'NL','HKE','Heemskerk','','NH'  UNION ALL
-SELECT 'NL','HMV','Heemserveen','','OV'  UNION ALL
-SELECT 'NL','HEE','Heel','','LI'  UNION ALL
-SELECT 'NL','HEG','Heeg','','FR'  UNION ALL
-SELECT 'NL','HHU','Hedikhuizen','','NB'  UNION ALL
-SELECT 'NL','HDL','Hedel','','NB'  UNION ALL
-SELECT 'NL','HAZ','Hazerswoude','',''  UNION ALL
-SELECT 'NL','HZK','Hazeldonk','','NB'  UNION ALL
-SELECT 'NL','HVE','Havelte','','DR'  UNION ALL
-SELECT 'NL','HAU','Haulerwijk','','FR'  UNION ALL
-SELECT 'NL','HTK','Hattemerbroek','','GE'  UNION ALL
-SELECT 'NL','HTM','Hattem','','GE'  UNION ALL
-SELECT 'NL','HAS','Hasselt','','LI'  UNION ALL
-SELECT 'NL','HKD','Haskerdijken','','FR'  UNION ALL
-SELECT 'NL','HVL','Harreveld','','GE'  UNION ALL
-SELECT 'NL','HAM','Harmelen','','UT'  UNION ALL
-SELECT 'NL','HAR','Harlingen','','FR'  UNION ALL
-SELECT 'NL','HKA','Harkema-Opeinde','',''  UNION ALL
-SELECT 'NL','HRE','Haren','','NB'  UNION ALL
-SELECT 'NL','HGS','Hardinxveld','',''  UNION ALL
-SELECT 'NL','HRD','Harderwijk','','NH'  UNION ALL
-SELECT 'NL','HBG','Hardenberg','','OV'  UNION ALL
-SELECT 'NL','HPS','Haps','','NB'  UNION ALL
-SELECT 'NL','HAP','Hapert','','NB'  UNION ALL
-SELECT 'NL','HAN','Hansweert','','ZE'  UNION ALL
-SELECT 'NL','HNK','Hank','','NB'  UNION ALL
-SELECT 'NL','HAD','Handel','','NB'  UNION ALL
-SELECT 'NL','HAL','Halsteren','','NB'  UNION ALL
-SELECT 'NL','HLL','Hallum','','FR'  UNION ALL
-SELECT 'NL','ALE','Halle','','GE'  UNION ALL
-SELECT 'NL','HFW','Halfweg','','ZH'  UNION ALL
-SELECT 'NL','HKG','Hakkelaarsbrug','','NH'  UNION ALL
-SELECT 'NL','HST','Haghorst','','NB'  UNION ALL
-SELECT 'NL','HSN','Hagestein','','UT'  UNION ALL
-SELECT 'NL','HAE','Haelen','','LI'  UNION ALL
-SELECT 'NL','HCH','Haastrecht','','ZH'  UNION ALL
-SELECT 'NL','HLR','Haarlemmerliede','','NH'  UNION ALL
-SELECT 'NL','HAA','Haarlem','','NH'  UNION ALL
-SELECT 'NL','HRA','Haaren','','NB'  UNION ALL
-SELECT 'NL','HBK','Haaldersbroek','',''  UNION ALL
-SELECT 'NL','HKH','Haaksbergen','','OV'  UNION ALL
-SELECT 'NL','HFN','Haaften','','GE'  UNION ALL
-SELECT 'NL','GBV','Grubbenvorst','','LI'  UNION ALL
-SELECT 'NL','GRU','Grouw','',''  UNION ALL
-SELECT 'NL','GTG','Grootegast','','GR'  UNION ALL
-SELECT 'NL','GOK','Grootebroek','','NH'  UNION ALL
-SELECT 'NL','GRO','Groot-Ammers','','ZH'  UNION ALL
-SELECT 'NL','GDO','Groot Dochteren','','GE'  UNION ALL
-SELECT 'NL','ELD','Gronsveld','','LI'  UNION ALL
-SELECT 'NL','GRQ','Groningen','','DR'  UNION ALL
-SELECT 'NL','GRS','Groessen','','GE'  UNION ALL
-SELECT 'NL','ZAT','Groesbeek','','GE'  UNION ALL
-SELECT 'NL','GRN','Groenlo','','GE'  UNION ALL
-SELECT 'NL','GWD','Groenewoud','','NB'  UNION ALL
-SELECT 'NL','GRW','Groeneweg','','ZH'  UNION ALL
-SELECT 'NL','GRK','Groenendijk','','NB'  UNION ALL
-SELECT 'NL','GNK','Groenekan','','UT'  UNION ALL
-SELECT 'NL','GRD','Groede','','ZE'  UNION ALL
-SELECT 'NL','GBC','Grevenbicht','','LI'  UNION ALL
-SELECT 'NL','GAV','Grave','','NB'  UNION ALL
-SELECT 'NL','GBG','Gramsbergen','','OV'  UNION ALL
-SELECT 'NL','GOW','Goudswaard','','ZH'  UNION ALL
-SELECT 'NL','GUN','Goudriaan','','ZH'  UNION ALL
-SELECT 'NL','GDK','Gouderak','','ZH'  UNION ALL
-SELECT 'NL','GOU','Gouda','','ZH'  UNION ALL
-SELECT 'NL','DJJ','Gorredijk','','FR'  UNION ALL
-SELECT 'NL','GOR','Gorinchem','','ZH'  UNION ALL
-SELECT 'NL','GOO','Goor','','NB' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','GOI','Goirle','','NB'  UNION ALL
-SELECT 'NL','GOJ','Goingarijp','','FR'  UNION ALL
-SELECT 'NL','GOE','Goes','','ZE'  UNION ALL
-SELECT 'NL','GDR','Goedereede','','ZH'  UNION ALL
-SELECT 'NL','GLA','Glanerbrug','','OV'  UNION ALL
-SELECT 'NL','GZR','Gilzerijen','',''  UNION ALL
-SELECT 'NL','GZE','Gilze','','NB'  UNION ALL
-SELECT 'NL','GHO','Giethoorn','','OV'  UNION ALL
-SELECT 'NL','GTN','Gieten','','DR'  UNION ALL
-SELECT 'NL','GSM','Giessendam','','ZH'  UNION ALL
-SELECT 'NL','GIS','Giessen','','NB'  UNION ALL
-SELECT 'NL','GIB','Giesbeek','','GE'  UNION ALL
-SELECT 'NL','GLL','Geulle','','LI'  UNION ALL
-SELECT 'NL','GEN','Gennep','','LI'  UNION ALL
-SELECT 'NL','GNM','Genemuiden','','OV'  UNION ALL
-SELECT 'NL','GET','Gendt','','GE'  UNION ALL
-SELECT 'NL','GGN','Gendringen','','GE'  UNION ALL
-SELECT 'NL','GND','Genderen','','NB'  UNION ALL
-SELECT 'NL','GEM','Gemert','','NB'  UNION ALL
-SELECT 'NL','GEC','Gellicum','','GE'  UNION ALL
-SELECT 'NL','GEE','Geleen','','LI'  UNION ALL
-SELECT 'NL','GLD','Geldrop','','NB'  UNION ALL
-SELECT 'NL','GDM','Geldermalsen','','GE'  UNION ALL
-SELECT 'NL','GFN','Geffen','','NB'  UNION ALL
-SELECT 'NL','GWU','Geeuwenbrug','','DR'  UNION ALL
-SELECT 'NL','GES','Geesteren','','GE'  UNION ALL
-SELECT 'NL','GSB','Geesbrug','','DR'  UNION ALL
-SELECT 'NL','GRV','Geervliet','','ZH'  UNION ALL
-SELECT 'NL','GTB','Geertruidenberg','','NB'  UNION ALL
-SELECT 'NL','GST','Gasteren','','DR'  UNION ALL
-SELECT 'NL','GAS','Gassel','','NB'  UNION ALL
-SELECT 'NL','GWO','Garmerwolde','','GR'  UNION ALL
-SELECT 'NL','GAR','Garderen','','GE'  UNION ALL
-SELECT 'NL','GAM','Gameren','','GE'  UNION ALL
-SELECT 'NL','GME','Gaastmeer','','FR'  UNION ALL
-SELECT 'NL','GKN','Gaarkeuken','','GR'  UNION ALL
-SELECT 'NL','AAN','Gaanderen','','GE'  UNION ALL
-SELECT 'NL','FRK','Franeker','','FR'  UNION ALL
-SELECT 'NL','FKP','Fraamklap','','GR'  UNION ALL
-SELECT 'NL','FOX','Foxhol','','GR'  UNION ALL
-SELECT 'NL','FOR','Formerum','','FR'  UNION ALL
-SELECT 'NL','FJA','Fonejacht','',''  UNION ALL
-SELECT 'NL','','Flushing  Vlissingen','',''  UNION ALL
-SELECT 'NL','DFG','Fluitenberg','','DR'  UNION ALL
-SELECT 'NL','FLE','Fleringen','','OV'  UNION ALL
-SELECT 'NL','FFJ','Fijnaart','','NB'  UNION ALL
-SELECT 'NL','FWR','Ferwerd','','FR'  UNION ALL
-SELECT 'NL','FEE','Feerwerd','','GR'  UNION ALL
-SELECT 'NL','FAR','Farmsum','','GR'  UNION ALL
-SELECT 'NL','EYL','Eygelshoven','','LI'  UNION ALL
-SELECT 'NL','EXZ','Exmorrazijl','','FR'  UNION ALL
-SELECT 'NL','EWK','Ewijk','','GE'  UNION ALL
-SELECT 'NL','EVG','Everingen','',''  UNION ALL
-SELECT 'NL','EUR','Europoort','','ZH'  UNION ALL
-SELECT 'NL','ETT','Etten Leur','',''  UNION ALL
-SELECT 'NL','ESP','Espel','','FL'  UNION ALL
-SELECT 'NL','ESB','Esbeek','','NB'  UNION ALL
-SELECT 'NL','ERP','Erp','','NB'  UNION ALL
-SELECT 'NL','ERM','Ermelo','','GE'  UNION ALL
-SELECT 'NL','ERA','Erica','','DR'  UNION ALL
-SELECT 'NL','ERI','Eric','',''  UNION ALL
-SELECT 'NL','EPN','Epen','','LI'  UNION ALL
-SELECT 'NL','EPE','Epe','','GE'  UNION ALL
-SELECT 'NL','ENT','Enter','','OV'  UNION ALL
-SELECT 'NL','ENP','Enspijk','','GE'  UNION ALL
-SELECT 'NL','ENX','Ens','','FL'  UNION ALL
-SELECT 'NL','ENS','Enschede','','OV'  UNION ALL
-SELECT 'NL','ENK','Enkhuizen','','NH'  UNION ALL
-SELECT 'NL','ENG','Engwierum','','FR'  UNION ALL
-SELECT 'NL','ZAO','Emst','','GE'  UNION ALL
-SELECT 'NL','EPL','Empel','','NB'  UNION ALL
-SELECT 'NL','EMP','Empe','','GE'  UNION ALL
-SELECT 'NL','EME','Emmer-Erfscheidenveen','','DR'  UNION ALL
-SELECT 'NL','EMC','Emmer-Compascuum','','DR'  UNION ALL
-SELECT 'NL','EMM','Emmen','','OV'  UNION ALL
-SELECT 'NL','EML','Emmeloord','','FL'  UNION ALL
-SELECT 'NL','QCU','Elst','','NB'  UNION ALL
-SELECT 'NL','ELO','Elsloo','','LI'  UNION ALL
-SELECT 'NL','ELS','Elsendorp','','NB'  UNION ALL
-SELECT 'NL','ELZ','Ellerhuizen','','GR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','ELL','Ellecom','','GE'  UNION ALL
-SELECT 'NL','ELX','Ell','','LI'  UNION ALL
-SELECT 'NL','ELB','Elburg','','GE'  UNION ALL
-SELECT 'NL','EKK','Ekkersrijt','',''  UNION ALL
-SELECT 'NL','EIN','Eindhoven','','NB'  UNION ALL
-SELECT 'NL','EYS','Eijsden','','LI'  UNION ALL
-SELECT 'NL','EIB','Eibergen','','GE'  UNION ALL
-SELECT 'NL','EAZ','Egmond aan Zee','','NH'  UNION ALL
-SELECT 'NL','EGL','Egchel','','LI'  UNION ALL
-SELECT 'NL','QCT','Eersel','','NB'  UNION ALL
-SELECT 'NL','EWO','Eernewoude','','FR'  UNION ALL
-SELECT 'NL','EEE','Eerbeek','','GE'  UNION ALL
-SELECT 'NL','EEN','Eenrum','','GR'  UNION ALL
-SELECT 'NL','EEM','Eemshaven','','GR'  UNION ALL
-SELECT 'NL','EES','Eemnes','','UT'  UNION ALL
-SELECT 'NL','EEL','Eelde-Paterswolde','',''  UNION ALL
-SELECT 'NL','LDE','Eelde','','DR'  UNION ALL
-SELECT 'NL','EFE','Eefde','','GE'  UNION ALL
-SELECT 'NL','EED','Eede','','ZE'  UNION ALL
-SELECT 'NL','EVN','Ederveen','','GE'  UNION ALL
-SELECT 'NL','EDE','Ede','','GE'  UNION ALL
-SELECT 'NL','EDM','Edam','','NH'  UNION ALL
-SELECT 'NL','ECK','Eckelrade','','LI'  UNION ALL
-SELECT 'NL','EWI','Eck en Wiel','','GE'  UNION ALL
-SELECT 'NL','EHU','Echtenerbrug','','FR'  UNION ALL
-SELECT 'NL','ETN','Echten','','DR'  UNION ALL
-SELECT 'NL','ECD','Echteld','','GE'  UNION ALL
-SELECT 'NL','ECH','Echt','','LI'  UNION ALL
-SELECT 'NL','DWI','Dwingeloo','','DR'  UNION ALL
-SELECT 'NL','DUS','Dussen','','NB'  UNION ALL
-SELECT 'NL','DUG','Dukenburg','',''  UNION ALL
-SELECT 'NL','DUZ','Duizel','','NB'  UNION ALL
-SELECT 'NL','DVT','Duivendrecht','','NH'  UNION ALL
-SELECT 'NL','DUI','Duiven','','GE'  UNION ALL
-SELECT 'NL','DRU','Druten','','GE'  UNION ALL
-SELECT 'NL','DRN','Drunen','','NB'  UNION ALL
-SELECT 'NL','DRO','Dronten','','FL'  UNION ALL
-SELECT 'NL','DNR','Dronrijp','','FR'  UNION ALL
-SELECT 'NL','DRM','Drimmelen','','NB'  UNION ALL
-SELECT 'NL','DSM','Driesum','','FR'  UNION ALL
-SELECT 'NL','DRL','Driel','','GE'  UNION ALL
-SELECT 'NL','DBU','Driebruggen','','ZH'  UNION ALL
-SELECT 'NL','DRB','Driebergen-Rijsenburg','','UT'  UNION ALL
-SELECT 'NL','DRI','Driebergen','',''  UNION ALL
-SELECT 'NL','DUM','Dreumel','','GE'  UNION ALL
-SELECT 'NL','DPT','Drempt','','GE'  UNION ALL
-SELECT 'NL','DRA','Drachten','','FR'  UNION ALL
-SELECT 'NL','DRS','Dorst','','NB'  UNION ALL
-SELECT 'NL','DOR','Dordrecht','','ZH'  UNION ALL
-SELECT 'NL','DOW','Doorwerth','','GE'  UNION ALL
-SELECT 'NL','DOO','Doorn','','UT'  UNION ALL
-SELECT 'NL','DSI','Doodstil','','GR'  UNION ALL
-SELECT 'NL','DNO','Donkerbroek','','FR'  UNION ALL
-SELECT 'NL','DNU','Dongjum','','FR'  UNION ALL
-SELECT 'NL','DON','Dongen','','NB'  UNION ALL
-SELECT 'NL','DOK','Dokkum','','FR'  UNION ALL
-SELECT 'NL','DOI','Doetinchem','','GE'  UNION ALL
-SELECT 'NL','DOE','Doesburg','','GE'  UNION ALL
-SELECT 'NL','DRE','Doenrade','','LI'  UNION ALL
-SELECT 'NL','DWA','Dodewaard','','GE'  UNION ALL
-SELECT 'NL','DRK','Dirksland','','ZH'  UNION ALL
-SELECT 'NL','DIK','Dirkshorn','','NH'  UNION ALL
-SELECT 'NL','DXP','Dinxperlo','','GE'  UNION ALL
-SELECT 'NL','DIN','Dinteloord','','NB'  UNION ALL
-SELECT 'NL','DKS','Dijkshorne','',''  UNION ALL
-SELECT 'NL','DVB','Dieverbrug','','DR'  UNION ALL
-SELECT 'NL','DIE','Diever','','DR'  UNION ALL
-SELECT 'NL','DSE','Diessen','','NB'  UNION ALL
-SELECT 'NL','DIR','Dieren','','GE'  UNION ALL
-SELECT 'NL','DPH','Diepenheim','','OV'  UNION ALL
-SELECT 'NL','DIM','Diemen','','NH'  UNION ALL
-SELECT 'NL','DDM','Didam','','GE'  UNION ALL
-SELECT 'NL','DEV','Deventer','','OV'  UNION ALL
-SELECT 'NL','DEU','Deurne','','NB'  UNION ALL
-SELECT 'NL','DEN','Denekamp','','OV'  UNION ALL
-SELECT 'NL','DTK','Texel','','NH'  UNION ALL
-SELECT 'NL','DHN','Den Hoorn','','ZH'  UNION ALL
-SELECT 'NL','DHO','Den Hool','','DR'  UNION ALL
-SELECT 'NL','DHR','Den Helder','','NH'  UNION ALL
-SELECT 'NL','DHM','Den Ham','','OV' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','DDO','Den Dolder','','UT'  UNION ALL
-SELECT 'NL','DBG','Den Burg','','NH'  UNION ALL
-SELECT 'NL','DBM','Den Bommel','','ZH'  UNION ALL
-SELECT 'NL','DMK','Demmerik','','UT'  UNION ALL
-SELECT 'NL','DZL','Delfzijl','','GR'  UNION ALL
-SELECT 'NL','DFT','Delft','','ZH'  UNION ALL
-SELECT 'NL','DGW','Delfgauw','','ZH'  UNION ALL
-SELECT 'NL','DEL','Delden','','GE'  UNION ALL
-SELECT 'NL','DST','Deest','','GE'  UNION ALL
-SELECT 'NL','DED','Dedemsvaart','','OV'  UNION ALL
-SELECT 'NL','DZK','De Zilk','','ZH'  UNION ALL
-SELECT 'NL','DEW','De Wilp','','GR'  UNION ALL
-SELECT 'NL','DWK','De Wijk','','GE'  UNION ALL
-SELECT 'NL','DSO','De Strook','','NH'  UNION ALL
-SELECT 'NL','DSG','De Steeg','','GE'  UNION ALL
-SELECT 'NL','DRP','De Rijp','','NH'  UNION ALL
-SELECT 'NL','DPS','De Poppe','',''  UNION ALL
-SELECT 'NL','DPO','De Pol','','OV'  UNION ALL
-SELECT 'NL','DEM','De Meern','','UT'  UNION ALL
-SELECT 'NL','DLU','De Lutte','','OV'  UNION ALL
-SELECT 'NL','DLR','De Lier','','ZH'  UNION ALL
-SELECT 'NL','DKW','De Kwakel','','NH'  UNION ALL
-SELECT 'NL','DKR','De Krim','','GE'  UNION ALL
-SELECT 'NL','DKO','De Kooy','','NH'  UNION ALL
-SELECT 'NL','DKL','De Klomp','','GE'  UNION ALL
-SELECT 'NL','DKP','De Kempen','',''  UNION ALL
-SELECT 'NL','DHE','De Heen','','NB'  UNION ALL
-SELECT 'NL','DHK','De Haukes','','NH'  UNION ALL
-SELECT 'NL','DHA','De Hare','',''  UNION ALL
-SELECT 'NL','OOR','De Goorn','','NH'  UNION ALL
-SELECT 'NL','ZAM','De Glind','','GE'  UNION ALL
-SELECT 'NL','DBI','De Bilt','','UT'  UNION ALL
-SELECT 'NL','DAL','Dalfsen','','OV'  UNION ALL
-SELECT 'NL','CUB','Culemborg','','GE'  UNION ALL
-SELECT 'NL','CUY','Cuijk','','NB'  UNION ALL
-SELECT 'NL','CRU','Cruquius','','NH'  UNION ALL
-SELECT 'NL','CRI','Creil','','FL'  UNION ALL
-SELECT 'NL','COT','Cothen','','UT'  UNION ALL
-SELECT 'NL','COL','Colijnsplaat','','ZE'  UNION ALL
-SELECT 'NL','COE','Coevorden','','DR'  UNION ALL
-SELECT 'NL','CAA','Chaam','','NB'  UNION ALL
-SELECT 'NL','CAS','Castricum','','NH'  UNION ALL
-SELECT 'NL','CPI','Capelle aan den IJssel','','ZH'  UNION ALL
-SELECT 'NL','CAP','Capelle','','NB'  UNION ALL
-SELECT 'NL','CTO','Callantsoog','','NH'  UNION ALL
-SELECT 'NL','CZD','Cadzand','','ZE'  UNION ALL
-SELECT 'NL','BSS','Bussum','','NH'  UNION ALL
-SELECT 'NL','BWE','Burgwerd','','FR'  UNION ALL
-SELECT 'NL','BMS','Burgh Haamstede','',''  UNION ALL
-SELECT 'NL','BVG','Burgervlotbrug','','NH'  UNION ALL
-SELECT 'NL','BUR','Buren','','GE'  UNION ALL
-SELECT 'NL','BSB','Bunschoten-Spakenburg','','UT'  UNION ALL
-SELECT 'NL','BUN','Bunschoten','','UT'  UNION ALL
-SELECT 'NL','BNK','Bunnink','',''  UNION ALL
-SELECT 'NL','BUK','Bunnik','','UT'  UNION ALL
-SELECT 'NL','BNE','Bunde','','LI'  UNION ALL
-SELECT 'NL','BUI','Buitenpost','','FR'  UNION ALL
-SELECT 'NL','BNU','Buggenum','','LI'  UNION ALL
-SELECT 'NL','BDD','Budel-Dorplain','',''  UNION ALL
-SELECT 'NL','BUD','Budel','','NB'  UNION ALL
-SELECT 'NL','BRN','Brunssum','','LI'  UNION ALL
-SELECT 'NL','BRM','Brummen','','GE'  UNION ALL
-SELECT 'NL','BSE','Bruinisse','','ZE'  UNION ALL
-SELECT 'NL','BRU','Bruchem','','GE'  UNION ALL
-SELECT 'NL','BRO','Brouwershaven','','ZE'  UNION ALL
-SELECT 'NL','BRH','Broekhuizenvorst','','LI'  UNION ALL
-SELECT 'NL','BRL','Broek op Langedijk','','NH'  UNION ALL
-SELECT 'NL','BIW','Broek in Waterland','','NH'  UNION ALL
-SELECT 'NL','BRI','Brielle','','ZH'  UNION ALL
-SELECT 'NL','RUK','Breukelen','','UT'  UNION ALL
-SELECT 'NL','BRS','Breskens','','ZE'  UNION ALL
-SELECT 'NL','BRZ','Breezand','','NH'  UNION ALL
-SELECT 'NL','BRD','Breda','','NB'  UNION ALL
-SELECT 'NL','BRK','Brakel','','NB'  UNION ALL
-SELECT 'NL','BXT','Boxtel','','NB'  UNION ALL
-SELECT 'NL','BOX','Boxmeer','','NB'  UNION ALL
-SELECT 'NL','BVI','Bovensmilde','','DR'  UNION ALL
-SELECT 'NL','BOV','Bovenkarspel','','NH'  UNION ALL
-SELECT 'NL','HRX','Boven-Hardinxveld','','ZH'  UNION ALL
-SELECT 'NL','BTA','Bourtange','','GR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','BOT','Botlek','','ZH'  UNION ALL
-SELECT 'NL','BSH','Bosscherheide','','LI'  UNION ALL
-SELECT 'NL','BSK','Boskoop','','ZH'  UNION ALL
-SELECT 'NL','BXC','Bosch','','NB'  UNION ALL
-SELECT 'NL','BOR','Borssele','','ZE'  UNION ALL
-SELECT 'NL','BNB','Bornerbroek','','OV'  UNION ALL
-SELECT 'NL','BRE','Borne','','NB'  UNION ALL
-SELECT 'NL','BON','Born','','LI'  UNION ALL
-SELECT 'NL','BGW','Borgsweer','','GR'  UNION ALL
-SELECT 'NL','BGR','Borger','','DR'  UNION ALL
-SELECT 'NL','BRC','Borculo','','GE'  UNION ALL
-SELECT 'NL','BMK','Boortmeerkerk','',''  UNION ALL
-SELECT 'NL','BWW','Boornzwaag over de Wielen','',''  UNION ALL
-SELECT 'NL','BZW','Boornzwaag','','FR'  UNION ALL
-SELECT 'NL','BOK','Bontebok','','FR'  UNION ALL
-SELECT 'NL','BOL','Bolsward','','FR'  UNION ALL
-SELECT 'NL','BUE','Boesingheliede','','NH'  UNION ALL
-SELECT 'NL','BKL','Boekelo','','OV'  UNION ALL
-SELECT 'NL','BOE','Boekel','','NB'  UNION ALL
-SELECT 'NL','BEL','Boekel','','NB'  UNION ALL
-SELECT 'NL','BOG','Bodegraven','','ZH'  UNION ALL
-SELECT 'NL','BNH','Boarnsterhim','','FR'  UNION ALL
-SELECT 'NL','BZL','Blokzijl','','OV'  UNION ALL
-SELECT 'NL','BLK','Blokker','','NH'  UNION ALL
-SELECT 'NL','BMD','Bloemendaal','','ZH'  UNION ALL
-SELECT 'NL','BLG','Bleskensgraaf','','ZH'  UNION ALL
-SELECT 'NL','BLE','Blerick','','LI'  UNION ALL
-SELECT 'NL','BLW','Bleiswijk','','ZH'  UNION ALL
-SELECT 'NL','BLA','Blaricum','','NH'  UNION ALL
-SELECT 'NL','BLL','Bladel','','NB'  UNION ALL
-SELECT 'NL','BLD','Blaaksedijk','','ZH'  UNION ALL
-SELECT 'NL','BDA','Birdaard','','FR'  UNION ALL
-SELECT 'NL','BNM','Binnenmaas','','ZH'  UNION ALL
-SELECT 'NL','BHV','Bilthoven','','UT'  UNION ALL
-SELECT 'NL','BDR','Bilderdam','','ZH'  UNION ALL
-SELECT 'NL','BZO','Biezenmortel','','NB'  UNION ALL
-SELECT 'NL','BIT','Biest','',''  UNION ALL
-SELECT 'NL','BRV','Biervliet','','ZE'  UNION ALL
-SELECT 'NL','BIR','Bierum','','GR'  UNION ALL
-SELECT 'NL','BNZ','Biddinghuizen','','FL'  UNION ALL
-SELECT 'NL','BEV','Beverwijk','','NH'  UNION ALL
-SELECT 'NL','BEC','Beusichem','','GE'  UNION ALL
-SELECT 'NL','BNN','Beuningen','','GE'  UNION ALL
-SELECT 'NL','BEU','Beugen','','NB'  UNION ALL
-SELECT 'NL','BST','Best','','NB'  UNION ALL
-SELECT 'NL','BLU','Berlicum','','NB'  UNION ALL
-SELECT 'NL','BKT','Berkhout','','NH'  UNION ALL
-SELECT 'NL','BES','Berkel-Enschot','','NB'  UNION ALL
-SELECT 'NL','BER','Berkel en Rodenrijs','','ZH'  UNION ALL
-SELECT 'NL','BKE','Berkel','',''  UNION ALL
-SELECT 'NL','BEJ','Beringe','','LI'  UNION ALL
-SELECT 'NL','BGU','Bergum','','FR'  UNION ALL
-SELECT 'NL','BEK','Bergschenhoek','','ZH'  UNION ALL
-SELECT 'NL','BEH','Bergh-Autoweg','',''  UNION ALL
-SELECT 'NL','BGY','Bergeyk','',''  UNION ALL
-SELECT 'NL','BGI','Bergerheide','',''  UNION ALL
-SELECT 'NL','BGH','Bergentheim','','OV'  UNION ALL
-SELECT 'NL','BZM','Bergen op Zoom','','NB'  UNION ALL
-SELECT 'NL','BEG','Bergen','','LI'  UNION ALL
-SELECT 'NL','BEY','Bergeijk','','NB'  UNION ALL
-SELECT 'NL','BGB','Bergambacht','','ZH'  UNION ALL
-SELECT 'NL','BTT','Berg en Terblijt','','LI'  UNION ALL
-SELECT 'NL','BRG','Berg','','LI'  UNION ALL
-SELECT 'NL','BEN','Bentveld','','NH'  UNION ALL
-SELECT 'NL','BHZ','Benthuizen','','ZH'  UNION ALL
-SELECT 'NL','HOP','Benschop','','UT'  UNION ALL
-SELECT 'NL','BKM','Bennekom','','GE'  UNION ALL
-SELECT 'NL','BEB','Bennebroek','','NH'  UNION ALL
-SELECT 'NL','BUW','Beneden-Leeuwen','','GE'  UNION ALL
-SELECT 'NL','BEM','Bemmel','','GE'  UNION ALL
-SELECT 'NL','BFD','Belfeld','','LI'  UNION ALL
-SELECT 'NL','BEW','Beiswijk','',''  UNION ALL
-SELECT 'NL','BSP','Beinsdorp','','NH'  UNION ALL
-SELECT 'NL','BEI','Beilen','','DR'  UNION ALL
-SELECT 'NL','BTS','Beets','','NH'  UNION ALL
-SELECT 'NL','BGM','Beetgum','','FR'  UNION ALL
-SELECT 'NL','BSD','Beesd','','GE'  UNION ALL
-SELECT 'NL','BBB','Beers','','NB'  UNION ALL
-SELECT 'NL','BEE','Beek en Donk','','NB'  UNION ALL
-SELECT 'NL','ZAK','Beek','','LI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','BEQ','Beek','','LI'  UNION ALL
-SELECT 'NL','BED','Bedum','','GR'  UNION ALL
-SELECT 'NL','BAV','Bavel','','NB'  UNION ALL
-SELECT 'NL','BTH','Bathmen','','OV'  UNION ALL
-SELECT 'NL','BHM','Bartlehiem','','FR'  UNION ALL
-SELECT 'NL','BGO','Barsingerhorn','','NH'  UNION ALL
-SELECT 'NL','BAR','Barneveld','','GE'  UNION ALL
-SELECT 'NL','BRR','Barendrecht','','ZH'  UNION ALL
-SELECT 'NL','BAN','Bant','','FL'  UNION ALL
-SELECT 'NL','BKB','Balkbrug','','OV'  UNION ALL
-SELECT 'NL','BAL','Balk','','FR'  UNION ALL
-SELECT 'NL','BKH','Bakhuizen','','FR'  UNION ALL
-SELECT 'NL','BAK','Bakel','','NB'  UNION ALL
-SELECT 'NL','BAF','Baflo','','GR'  UNION ALL
-SELECT 'NL','BXE','Baexem','','LI'  UNION ALL
-SELECT 'NL','BAD','Badhoevedorp','','NH'  UNION ALL
-SELECT 'NL','BBR','Babberich','','GE'  UNION ALL
-SELECT 'NL','BAA','Baarn','','UT'  UNION ALL
-SELECT 'NL','BLO','Baarlo','','LI'  UNION ALL
-SELECT 'NL','BNS','Baarle-Nassau','','NB'  UNION ALL
-SELECT 'NL','BRA','Baarland','','ZE'  UNION ALL
-SELECT 'NL','ARD','Baard','','FR'  UNION ALL
-SELECT 'NL','BGE','Baambrugge','','UT'  UNION ALL
-SELECT 'NL','AXL','Axel','','ZE'  UNION ALL
-SELECT 'NL','AVE','Avenhorn','','NH'  UNION ALL
-SELECT 'NL','ZAC','Augustinusga','','FR'  UNION ALL
-SELECT 'NL','AST','Asten','','NB'  UNION ALL
-SELECT 'NL','ASD','Assendelft','','NH'  UNION ALL
-SELECT 'NL','ASS','Assen','','DR'  UNION ALL
-SELECT 'NL','ASP','Asperen','','GE'  UNION ALL
-SELECT 'NL','ARN','Arnhem','','GE'  UNION ALL
-SELECT 'NL','ARM','Arnemuiden','','ZE'  UNION ALL
-SELECT 'NL','ARK','Arkel','','ZH'  UNION ALL
-SELECT 'NL','ARC','Arcen','','LI'  UNION ALL
-SELECT 'NL','APP','Appingedam','','GR'  UNION ALL
-SELECT 'NL','APS','Appelscha','','FR'  UNION ALL
-SELECT 'NL','APE','Apeldoorn','','GE'  UNION ALL
-SELECT 'NL','NNE','Annen','','DR'  UNION ALL
-SELECT 'NL','ANP','Anna Paulowna','','NH'  UNION ALL
-SELECT 'NL','AJM','Anjum','','FR'  UNION ALL
-SELECT 'NL','REN','Angeren','','GE'  UNION ALL
-SELECT 'NL','AIJ','Andijk','','NH'  UNION ALL
-SELECT 'NL','ANT','Andelst','','GE'  UNION ALL
-SELECT 'NL','ANL','Andel','','NB'  UNION ALL
-SELECT 'NL','AMS','Amsterdam','','NH'  UNION ALL
-SELECT 'NL','ATR','Amstenrade','','LI'  UNION ALL
-SELECT 'NL','AMV','Amstelveen','','NH'  UNION ALL
-SELECT 'NL','ALH','Amstelhoek','','UT'  UNION ALL
-SELECT 'NL','AMZ','Ammerzoden','','GE'  UNION ALL
-SELECT 'NL','AME','Amersfoort','','UT'  UNION ALL
-SELECT 'NL','AMR','Amerongen','','UT'  UNION ALL
-SELECT 'NL','ZAI','America','','LI'  UNION ALL
-SELECT 'NL','AML','Ameland','','FR'  UNION ALL
-SELECT 'NL','AED','Ameide','','ZH'  UNION ALL
-SELECT 'NL','APN','Alphen aan den Rijn','','ZH'  UNION ALL
-SELECT 'NL','APH','Alphen','','NB'  UNION ALL
-SELECT 'NL','AKK','Almkerk','','NB'  UNION ALL
-SELECT 'NL','AER','Almere','','FL'  UNION ALL
-SELECT 'NL','AMN','Almen','','GE'  UNION ALL
-SELECT 'NL','ALM','Almelo','','OV'  UNION ALL
-SELECT 'NL','ALW','Allingawier','','FR'  UNION ALL
-SELECT 'NL','ALK','Alkmaar','','NH'  UNION ALL
-SELECT 'NL','AWD','Albrandswaard','','ZH'  UNION ALL
-SELECT 'NL','ABL','Alblasserdam','','ZH'  UNION ALL
-SELECT 'NL','ABN','Albergen','','OV'  UNION ALL
-SELECT 'NL','AKR','Akkrum','','FR'  UNION ALL
-SELECT 'NL','AKL','Akersloot','','NH'  UNION ALL
-SELECT 'NL','AEH','Aerdenhout','','NH'  UNION ALL
-SELECT 'NL','ADU','Aduard','','GR'  UNION ALL
-SELECT 'NL','AHZ','Achthuizen','','ZH'  UNION ALL
-SELECT 'NL','AHO','Achthoven','','ZH'  UNION ALL
-SELECT 'NL','QCJ','Acht','','NB'  UNION ALL
-SELECT 'NL','ABC','Abcoude','','UT'  UNION ALL
-SELECT 'NL','ABE','Abbenes','','NH'  UNION ALL
-SELECT 'NL','ABK','Abbenbroek','','ZH'  UNION ALL
-SELECT 'NL','ABB','Abbekerk','','NH'  UNION ALL
-SELECT 'NL','AGT','Abbegaasterketting','','FR'  UNION ALL
+SELECT 'NL','','','',''  UNION ALL
+SELECT 'NL','AAL','Aalst','',''  UNION ALL
+SELECT 'NL','AAM','Aalsmeer','',''  UNION ALL
+SELECT 'NL','AAN','Gaanderen','',''  UNION ALL
+SELECT 'NL','AAR','Aardenburg','',''  UNION ALL
+SELECT 'NL','ABB','Abbekerk','',''  UNION ALL
+SELECT 'NL','ABC','Abcoude','',''  UNION ALL
+SELECT 'NL','ABE','Abbenes','',''  UNION ALL
+SELECT 'NL','ABK','Abbenbroek','',''  UNION ALL
+SELECT 'NL','ABL','Alblasserdam','',''  UNION ALL
+SELECT 'NL','ABN','Albergen','',''  UNION ALL
+SELECT 'NL','ADV','Aarlanderveen','',''  UNION ALL
+SELECT 'NL','AEH','Aerdenhout','',''  UNION ALL
+SELECT 'NL','AER','Almere','',''  UNION ALL
+SELECT 'NL','AGT','Abbegaasterketting','',''  UNION ALL
+SELECT 'NL','AHO','Achthoven','',''  UNION ALL
+SELECT 'NL','AIJ','Andijk','',''  UNION ALL
+SELECT 'NL','AJM','Anjum','',''  UNION ALL
+SELECT 'NL','AKK','Almkerk','',''  UNION ALL
+SELECT 'NL','AKL','Akersloot','',''  UNION ALL
+SELECT 'NL','AKR','Akkrum','',''  UNION ALL
+SELECT 'NL','ALB','Aalburg','',''  UNION ALL
+SELECT 'NL','ALH','Amstelhoek','',''  UNION ALL
+SELECT 'NL','ALK','Alkmaar','',''  UNION ALL
+SELECT 'NL','ALM','Almelo','',''  UNION ALL
+SELECT 'NL','ALW','Allingawier','',''  UNION ALL
+SELECT 'NL','AMB','Aalsmeerderbrug','',''  UNION ALL
+SELECT 'NL','AME','Amersfoort','',''  UNION ALL
+SELECT 'NL','AML','Ameland','',''  UNION ALL
+SELECT 'NL','AMR','Amerongen','',''  UNION ALL
+SELECT 'NL','AMS','Amsterdam','',''  UNION ALL
+SELECT 'NL','AMV','Amstelveen','',''  UNION ALL
+SELECT 'NL','AMZ','Ammerzoden','',''  UNION ALL
+SELECT 'NL','ANL','Andel','',''  UNION ALL
+SELECT 'NL','ANP','Anna Paulowna','',''  UNION ALL
+SELECT 'NL','ANT','Andelst','',''  UNION ALL
+SELECT 'NL','APE','Apeldoorn','',''  UNION ALL
+SELECT 'NL','APN','Alphen aan den Rijn','',''  UNION ALL
+SELECT 'NL','APP','Appingedam','',''  UNION ALL
+SELECT 'NL','ARC','Arcen','',''  UNION ALL
+SELECT 'NL','ARD','Baard','',''  UNION ALL
 SELECT 'NL','ARI','Aarle Rixtel','',''  UNION ALL
-SELECT 'NL','ADV','Aarlanderveen','','ZH'  UNION ALL
-SELECT 'NL','AAR','Aardenburg','','ZE' ;
+SELECT 'NL','ARK','Arkel','',''  UNION ALL
+SELECT 'NL','ARM','Arnemuiden','',''  UNION ALL
+SELECT 'NL','ARN','Arnhem','',''  UNION ALL
+SELECT 'NL','ASD','Assendelft','',''  UNION ALL
+SELECT 'NL','ASP','Asperen','',''  UNION ALL
+SELECT 'NL','ASS','Assen','',''  UNION ALL
+SELECT 'NL','AST','Asten','',''  UNION ALL
+SELECT 'NL','AVE','Avenhorn','',''  UNION ALL
+SELECT 'NL','AWD','Albrandswaard','',''  UNION ALL
+SELECT 'NL','AXL','Axel','',''  UNION ALL
+SELECT 'NL','AZU','Aan de Zuwe','',''  UNION ALL
+SELECT 'NL','BAA','Baarn','',''  UNION ALL
+SELECT 'NL','BAD','Badhoevedorp','',''  UNION ALL
+SELECT 'NL','BAF','Baflo','',''  UNION ALL
+SELECT 'NL','BAK','Bakel','',''  UNION ALL
+SELECT 'NL','BAL','Balk','',''  UNION ALL
+SELECT 'NL','BAN','Bant','',''  UNION ALL
+SELECT 'NL','BAR','Barneveld','',''  UNION ALL
+SELECT 'NL','BAV','Bavel','',''  UNION ALL
+SELECT 'NL','BDA','Birdaard','',''  UNION ALL
+SELECT 'NL','BDD','Budel-Dorplain','',''  UNION ALL
+SELECT 'NL','BDR','Bilderdam','',''  UNION ALL
+SELECT 'NL','BEB','Bennebroek','','' ;
 INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','AZU','Aan de Zuwe','','UT'  UNION ALL
-SELECT 'NL','LTE','Aalten','','GE'  UNION ALL
-SELECT 'NL','AAL','Aalst','','NB'  UNION ALL
-SELECT 'NL','AMB','Aalsmeerderbrug','','NH'  UNION ALL
-SELECT 'NL','AAM','Aalsmeer','','NH'  UNION ALL
-SELECT 'NL','ALB','Aalburg','','NB'  UNION ALL
+SELECT 'NL','BEC','Beusichem','',''  UNION ALL
+SELECT 'NL','BED','Bedum','',''  UNION ALL
+SELECT 'NL','BEE','Beek en Donk','',''  UNION ALL
+SELECT 'NL','BEG','Bergen','',''  UNION ALL
+SELECT 'NL','BEH','Bergh-Autoweg','',''  UNION ALL
+SELECT 'NL','BEI','Beilen','',''  UNION ALL
+SELECT 'NL','BEK','Bergschenhoek','',''  UNION ALL
+SELECT 'NL','BEM','Bemmel','',''  UNION ALL
+SELECT 'NL','BEN','Bentveld','',''  UNION ALL
+SELECT 'NL','BEQ','Beek','',''  UNION ALL
+SELECT 'NL','BER','Berkel en Rodenrijs','',''  UNION ALL
+SELECT 'NL','BES','Berkel-Enschot','',''  UNION ALL
+SELECT 'NL','BEU','Beugen','',''  UNION ALL
+SELECT 'NL','BEV','Beverwijk','',''  UNION ALL
+SELECT 'NL','BEW','Beiswijk','',''  UNION ALL
+SELECT 'NL','BEY','Bergeijk','',''  UNION ALL
+SELECT 'NL','BFD','Belfeld','',''  UNION ALL
+SELECT 'NL','BGB','Bergambacht','',''  UNION ALL
+SELECT 'NL','BGE','Baambrugge','',''  UNION ALL
+SELECT 'NL','BGI','Bergerheide','',''  UNION ALL
+SELECT 'NL','BGM','Beetgum','',''  UNION ALL
+SELECT 'NL','BGO','Barsingerhorn','',''  UNION ALL
+SELECT 'NL','BGR','Borger','',''  UNION ALL
+SELECT 'NL','BGU','Bergum','',''  UNION ALL
+SELECT 'NL','BGW','Borgsweer','',''  UNION ALL
+SELECT 'NL','BHM','Bartlehiem','',''  UNION ALL
+SELECT 'NL','BHV','Bilthoven','',''  UNION ALL
+SELECT 'NL','BHZ','Benthuizen','',''  UNION ALL
+SELECT 'NL','BIT','Biest','',''  UNION ALL
+SELECT 'NL','BIW','Broek in Waterland','',''  UNION ALL
+SELECT 'NL','BKB','Balkbrug','',''  UNION ALL
+SELECT 'NL','BKE','Berkel','',''  UNION ALL
+SELECT 'NL','BKL','Boekelo','',''  UNION ALL
+SELECT 'NL','BKM','Bennekom','',''  UNION ALL
+SELECT 'NL','BLA','Blaricum','',''  UNION ALL
+SELECT 'NL','BLD','Blaaksedijk','',''  UNION ALL
+SELECT 'NL','BLE','Blerick','',''  UNION ALL
+SELECT 'NL','BLG','Bleskensgraaf','',''  UNION ALL
+SELECT 'NL','BLK','Blokker','',''  UNION ALL
+SELECT 'NL','BLL','Bladel','',''  UNION ALL
+SELECT 'NL','BLO','Baarlo','',''  UNION ALL
+SELECT 'NL','BLU','Berlicum','',''  UNION ALL
+SELECT 'NL','BLW','Bleiswijk','',''  UNION ALL
+SELECT 'NL','BMD','Bloemendaal','',''  UNION ALL
+SELECT 'NL','BMK','Boortmeerkerk','',''  UNION ALL
+SELECT 'NL','BNB','Bornerbroek','',''  UNION ALL
+SELECT 'NL','BNE','Bunde','',''  UNION ALL
+SELECT 'NL','BNH','Boarnsterhim','',''  UNION ALL
+SELECT 'NL','BNK','Bunnink','',''  UNION ALL
+SELECT 'NL','BNM','Binnenmaas','',''  UNION ALL
+SELECT 'NL','BNN','Beuningen','',''  UNION ALL
+SELECT 'NL','BNS','Baarle-Nassau','',''  UNION ALL
+SELECT 'NL','BNU','Buggenum','',''  UNION ALL
+SELECT 'NL','BNZ','Biddinghuizen','',''  UNION ALL
+SELECT 'NL','BOE','Boekel','',''  UNION ALL
+SELECT 'NL','BOG','Bodegraven','',''  UNION ALL
+SELECT 'NL','BOK','Bontebok','',''  UNION ALL
+SELECT 'NL','BOL','Bolsward','',''  UNION ALL
+SELECT 'NL','BON','Born','',''  UNION ALL
+SELECT 'NL','BOR','Borssele','',''  UNION ALL
+SELECT 'NL','BOT','Botlek','',''  UNION ALL
+SELECT 'NL','BOV','Bovenkarspel','',''  UNION ALL
+SELECT 'NL','BOX','Boxmeer','',''  UNION ALL
+SELECT 'NL','BRA','Baarland','',''  UNION ALL
+SELECT 'NL','BRC','Borculo','',''  UNION ALL
+SELECT 'NL','BRD','Breda','',''  UNION ALL
+SELECT 'NL','BRG','Berg','',''  UNION ALL
+SELECT 'NL','BRI','Brielle','',''  UNION ALL
+SELECT 'NL','BRK','Brakel','',''  UNION ALL
+SELECT 'NL','BRL','Broek op Langedijk','',''  UNION ALL
+SELECT 'NL','BRM','Brummen','',''  UNION ALL
+SELECT 'NL','BRN','Brunssum','',''  UNION ALL
+SELECT 'NL','BRO','Brouwershaven','',''  UNION ALL
+SELECT 'NL','BRR','Barendrecht','',''  UNION ALL
+SELECT 'NL','BRS','Breskens','',''  UNION ALL
+SELECT 'NL','BRU','Bruchem','',''  UNION ALL
+SELECT 'NL','BRV','Biervliet','',''  UNION ALL
+SELECT 'NL','BRZ','Breezand','',''  UNION ALL
+SELECT 'NL','BSD','Beesd','',''  UNION ALL
+SELECT 'NL','BSE','Bruinisse','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','BSH','Bosscherheide','',''  UNION ALL
+SELECT 'NL','BSK','Boskoop','',''  UNION ALL
+SELECT 'NL','BSS','Bussum','',''  UNION ALL
+SELECT 'NL','BST','Best','',''  UNION ALL
+SELECT 'NL','BTA','Bourtange','',''  UNION ALL
+SELECT 'NL','BTH','Bathmen','',''  UNION ALL
+SELECT 'NL','BTS','Beets','',''  UNION ALL
+SELECT 'NL','BTT','Berg en Terblijt','',''  UNION ALL
+SELECT 'NL','BUD','Budel','',''  UNION ALL
+SELECT 'NL','BUE','Boesingheliede','',''  UNION ALL
+SELECT 'NL','BUK','Bunnik','',''  UNION ALL
+SELECT 'NL','BUN','Bunschoten','',''  UNION ALL
+SELECT 'NL','BUW','Beneden-Leeuwen','',''  UNION ALL
+SELECT 'NL','BVG','Burgervlotbrug','',''  UNION ALL
+SELECT 'NL','BVI','Bovensmilde','',''  UNION ALL
+SELECT 'NL','BWE','Burgwerd','',''  UNION ALL
+SELECT 'NL','BWW','Boornzwaag over de Wielen','',''  UNION ALL
+SELECT 'NL','BXC','Bosch','',''  UNION ALL
+SELECT 'NL','BXE','Baexem','',''  UNION ALL
+SELECT 'NL','BXT','Boxtel','',''  UNION ALL
+SELECT 'NL','BZL','Blokzijl','',''  UNION ALL
+SELECT 'NL','BZM','Bergen op Zoom','',''  UNION ALL
+SELECT 'NL','BZO','Biezenmortel','',''  UNION ALL
+SELECT 'NL','BZW','Boornzwaag','',''  UNION ALL
+SELECT 'NL','CAP','Capelle','',''  UNION ALL
+SELECT 'NL','CAS','Castricum','',''  UNION ALL
+SELECT 'NL','COE','Coevorden','',''  UNION ALL
+SELECT 'NL','COL','Colijnsplaat','',''  UNION ALL
+SELECT 'NL','COT','Cothen','',''  UNION ALL
+SELECT 'NL','CPI','Capelle aan den IJssel','',''  UNION ALL
+SELECT 'NL','CRI','Creil','',''  UNION ALL
+SELECT 'NL','CRU','Cruquius','',''  UNION ALL
+SELECT 'NL','CUB','Culemborg','',''  UNION ALL
+SELECT 'NL','CUY','Cuijk','',''  UNION ALL
+SELECT 'NL','CZD','Cadzand','',''  UNION ALL
+SELECT 'NL','DAL','Dalfsen','',''  UNION ALL
+SELECT 'NL','DBG','Den Burg','',''  UNION ALL
+SELECT 'NL','DBI','De Bilt','',''  UNION ALL
+SELECT 'NL','DBM','Den Bommel','',''  UNION ALL
+SELECT 'NL','DBU','Driebruggen','',''  UNION ALL
+SELECT 'NL','DDM','Didam','',''  UNION ALL
+SELECT 'NL','DDO','Den Dolder','',''  UNION ALL
+SELECT 'NL','DED','Dedemsvaart','',''  UNION ALL
+SELECT 'NL','DEL','Delden','',''  UNION ALL
+SELECT 'NL','DEM','De Meern','',''  UNION ALL
+SELECT 'NL','DEN','Denekamp','',''  UNION ALL
+SELECT 'NL','DEU','Deurne','',''  UNION ALL
+SELECT 'NL','DEV','Deventer','',''  UNION ALL
+SELECT 'NL','DEW','De Wilp','',''  UNION ALL
+SELECT 'NL','DFT','Delft','',''  UNION ALL
+SELECT 'NL','DGW','Delfgauw','',''  UNION ALL
+SELECT 'NL','DHA','De Hare','',''  UNION ALL
+SELECT 'NL','DHE','De Heen','',''  UNION ALL
+SELECT 'NL','DHK','De Haukes','',''  UNION ALL
+SELECT 'NL','DHN','Den Hoorn','',''  UNION ALL
+SELECT 'NL','DHO','Den Hool','',''  UNION ALL
+SELECT 'NL','DHR','Den Helder','',''  UNION ALL
+SELECT 'NL','DIE','Diever','',''  UNION ALL
+SELECT 'NL','DIK','Dirkshorn','',''  UNION ALL
+SELECT 'NL','DIM','Diemen','',''  UNION ALL
+SELECT 'NL','DIN','Dinteloord','',''  UNION ALL
+SELECT 'NL','DIR','Dieren','',''  UNION ALL
+SELECT 'NL','DKO','De Kooy','',''  UNION ALL
+SELECT 'NL','DKP','De Kempen','',''  UNION ALL
+SELECT 'NL','DKR','De Krim','',''  UNION ALL
+SELECT 'NL','DKS','Dijkshorne','',''  UNION ALL
+SELECT 'NL','DKW','De Kwakel','',''  UNION ALL
+SELECT 'NL','DLR','De Lier','',''  UNION ALL
+SELECT 'NL','DLU','De Lutte','',''  UNION ALL
+SELECT 'NL','DMK','Demmerik','',''  UNION ALL
+SELECT 'NL','DNO','Donkerbroek','',''  UNION ALL
+SELECT 'NL','DNR','Dronrijp','',''  UNION ALL
+SELECT 'NL','DNU','Dongjum','',''  UNION ALL
+SELECT 'NL','DOE','Doesburg','',''  UNION ALL
+SELECT 'NL','DOI','Doetinchem','',''  UNION ALL
+SELECT 'NL','DOK','Dokkum','',''  UNION ALL
+SELECT 'NL','DON','Dongen','',''  UNION ALL
+SELECT 'NL','DOO','Doorn','',''  UNION ALL
+SELECT 'NL','DOR','Dordrecht','',''  UNION ALL
+SELECT 'NL','DPH','Diepenheim','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','DPO','De Pol','',''  UNION ALL
+SELECT 'NL','DPS','De Poppe','',''  UNION ALL
+SELECT 'NL','DRA','Drachten','',''  UNION ALL
+SELECT 'NL','DRE','Doenrade','',''  UNION ALL
+SELECT 'NL','DRI','Driebergen','',''  UNION ALL
+SELECT 'NL','DRK','Dirksland','',''  UNION ALL
+SELECT 'NL','DRL','Driel','',''  UNION ALL
+SELECT 'NL','DRM','Drimmelen','',''  UNION ALL
+SELECT 'NL','DRN','Drunen','',''  UNION ALL
+SELECT 'NL','DRO','Dronten','',''  UNION ALL
+SELECT 'NL','DRP','De Rijp','',''  UNION ALL
+SELECT 'NL','DRS','Dorst','',''  UNION ALL
+SELECT 'NL','DRU','Druten','',''  UNION ALL
+SELECT 'NL','DSE','Diessen','',''  UNION ALL
+SELECT 'NL','DSG','De Steeg','',''  UNION ALL
+SELECT 'NL','DSI','Doodstil','',''  UNION ALL
+SELECT 'NL','DSM','Driesum','',''  UNION ALL
+SELECT 'NL','DSO','De Strook','',''  UNION ALL
+SELECT 'NL','DST','Deest','',''  UNION ALL
+SELECT 'NL','DTK','Den Hoorn, Texel','',''  UNION ALL
+SELECT 'NL','DUG','Dukenburg','',''  UNION ALL
+SELECT 'NL','DUI','Duiven','',''  UNION ALL
+SELECT 'NL','DUM','Dreumel','',''  UNION ALL
+SELECT 'NL','DUS','Dussen','',''  UNION ALL
+SELECT 'NL','DUZ','Duizel','',''  UNION ALL
+SELECT 'NL','DVB','Dieverbrug','',''  UNION ALL
+SELECT 'NL','DVT','Duivendrecht','',''  UNION ALL
+SELECT 'NL','DWA','Dodewaard','',''  UNION ALL
+SELECT 'NL','DWK','De Wijk','',''  UNION ALL
+SELECT 'NL','DXP','Dinxperlo','',''  UNION ALL
+SELECT 'NL','DZK','De Zilk','',''  UNION ALL
+SELECT 'NL','DZL','Delfzijl','',''  UNION ALL
+SELECT 'NL','EAZ','Egmond aan Zee','',''  UNION ALL
+SELECT 'NL','ECD','Echteld','',''  UNION ALL
+SELECT 'NL','ECH','Echt','',''  UNION ALL
+SELECT 'NL','EDE','Ede','',''  UNION ALL
+SELECT 'NL','EDM','Edam','',''  UNION ALL
+SELECT 'NL','EED','Eede','',''  UNION ALL
+SELECT 'NL','EEE','Eerbeek','',''  UNION ALL
+SELECT 'NL','EEL','Eelde-Paterswolde','',''  UNION ALL
+SELECT 'NL','EEM','Eemshaven','',''  UNION ALL
+SELECT 'NL','EEN','Eenrum','',''  UNION ALL
+SELECT 'NL','EES','Eemnes','',''  UNION ALL
+SELECT 'NL','EFE','Eefde','',''  UNION ALL
+SELECT 'NL','EGL','Egchel','',''  UNION ALL
+SELECT 'NL','EHU','Echtenerbrug','',''  UNION ALL
+SELECT 'NL','EIB','Eibergen','',''  UNION ALL
+SELECT 'NL','EIN','Eindhoven','',''  UNION ALL
+SELECT 'NL','ELB','Elburg','',''  UNION ALL
+SELECT 'NL','ELL','Ellecom','',''  UNION ALL
+SELECT 'NL','ELO','Elsloo','',''  UNION ALL
+SELECT 'NL','ELS','Elsendorp','',''  UNION ALL
+SELECT 'NL','ELX','Ell','',''  UNION ALL
+SELECT 'NL','ELZ','Ellerhuizen','',''  UNION ALL
+SELECT 'NL','EMC','Emmer-Compascuum','',''  UNION ALL
+SELECT 'NL','EME','Emmer-Erfscheidenveen','',''  UNION ALL
+SELECT 'NL','EML','Emmeloord','',''  UNION ALL
+SELECT 'NL','EMM','Emmen','',''  UNION ALL
+SELECT 'NL','ENG','Engwierum','',''  UNION ALL
+SELECT 'NL','ENK','Enkhuizen','',''  UNION ALL
+SELECT 'NL','ENP','Enspijk','',''  UNION ALL
+SELECT 'NL','ENS','Enschede','',''  UNION ALL
+SELECT 'NL','ENX','Ens','',''  UNION ALL
+SELECT 'NL','EPE','Epe','',''  UNION ALL
+SELECT 'NL','EPL','Empel','',''  UNION ALL
+SELECT 'NL','EPN','Epen','',''  UNION ALL
+SELECT 'NL','ERA','Erica','',''  UNION ALL
+SELECT 'NL','ERI','Eric','',''  UNION ALL
+SELECT 'NL','ERM','Ermelo','',''  UNION ALL
+SELECT 'NL','ERP','Erp','',''  UNION ALL
+SELECT 'NL','ESP','Espel','',''  UNION ALL
+SELECT 'NL','ETN','Echten','',''  UNION ALL
+SELECT 'NL','ETT','Etten Leur','',''  UNION ALL
+SELECT 'NL','EUR','Europoort','',''  UNION ALL
+SELECT 'NL','EVG','Everingen','',''  UNION ALL
+SELECT 'NL','EVN','Ederveen','',''  UNION ALL
+SELECT 'NL','EWK','Ewijk','',''  UNION ALL
+SELECT 'NL','EWO','Eernewoude','',''  UNION ALL
+SELECT 'NL','EXZ','Exmorrazijl','',''  UNION ALL
+SELECT 'NL','EYS','Eijsden','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','FAR','Farmsum','',''  UNION ALL
+SELECT 'NL','FEE','Feerwerd','',''  UNION ALL
+SELECT 'NL','FFJ','Fijnaart','',''  UNION ALL
+SELECT 'NL','FJA','Fonejacht','',''  UNION ALL
+SELECT 'NL','FKP','Fraamklap','',''  UNION ALL
+SELECT 'NL','FOX','Foxhol','',''  UNION ALL
+SELECT 'NL','FRK','Franeker','',''  UNION ALL
+SELECT 'NL','GAM','Gameren','',''  UNION ALL
+SELECT 'NL','GAR','Garderen','',''  UNION ALL
+SELECT 'NL','GAS','Gassel','',''  UNION ALL
+SELECT 'NL','GBC','Grevenbicht','',''  UNION ALL
+SELECT 'NL','GBG','Gramsbergen','',''  UNION ALL
+SELECT 'NL','GBV','Grubbenvorst','',''  UNION ALL
+SELECT 'NL','GDK','Gouderak','',''  UNION ALL
+SELECT 'NL','GDM','Geldermalsen','',''  UNION ALL
+SELECT 'NL','GDO','Groot Dochteren','',''  UNION ALL
+SELECT 'NL','GDR','Goedereede','',''  UNION ALL
+SELECT 'NL','GEC','Gellicum','',''  UNION ALL
+SELECT 'NL','GEE','Geleen','',''  UNION ALL
+SELECT 'NL','GEM','Gemert','',''  UNION ALL
+SELECT 'NL','GEN','Gennep','',''  UNION ALL
+SELECT 'NL','GET','Gendt','',''  UNION ALL
+SELECT 'NL','GFN','Geffen','',''  UNION ALL
+SELECT 'NL','GGN','Gendringen','',''  UNION ALL
+SELECT 'NL','GHO','Giethoorn','',''  UNION ALL
+SELECT 'NL','GIB','Giesbeek','',''  UNION ALL
+SELECT 'NL','GIS','Giessen','',''  UNION ALL
+SELECT 'NL','GKN','Gaarkeuken','',''  UNION ALL
+SELECT 'NL','GLA','Glanerbrug','',''  UNION ALL
+SELECT 'NL','GLD','Geldrop','',''  UNION ALL
+SELECT 'NL','GLL','Geulle','',''  UNION ALL
+SELECT 'NL','GME','Gaastmeer','',''  UNION ALL
+SELECT 'NL','GND','Genderen','',''  UNION ALL
+SELECT 'NL','GNK','Groenekan','',''  UNION ALL
+SELECT 'NL','GNM','Genemuiden','',''  UNION ALL
+SELECT 'NL','GOE','Goes','',''  UNION ALL
+SELECT 'NL','GOI','Goirle','',''  UNION ALL
+SELECT 'NL','GOJ','Goingarijp','',''  UNION ALL
+SELECT 'NL','GOK','Grootebroek','',''  UNION ALL
+SELECT 'NL','GOO','Goor','',''  UNION ALL
+SELECT 'NL','GOR','Gorinchem','',''  UNION ALL
+SELECT 'NL','GOU','Gouda','',''  UNION ALL
+SELECT 'NL','GOW','Goudswaard','',''  UNION ALL
+SELECT 'NL','GOY','''t Goy','',''  UNION ALL
+SELECT 'NL','GRA','''s-Gravendeel','',''  UNION ALL
+SELECT 'NL','GRK','Groenendijk','',''  UNION ALL
+SELECT 'NL','GRN','Groenlo','',''  UNION ALL
+SELECT 'NL','GRO','Groot-Ammers','',''  UNION ALL
+SELECT 'NL','GRQ','Groningen','',''  UNION ALL
+SELECT 'NL','GRS','Groessen','',''  UNION ALL
+SELECT 'NL','GRV','Geervliet','',''  UNION ALL
+SELECT 'NL','GRW','Groeneweg','',''  UNION ALL
+SELECT 'NL','GRZ','''s-Gravenzande','',''  UNION ALL
+SELECT 'NL','GSB','Geesbrug','',''  UNION ALL
+SELECT 'NL','GSM','Giessendam','',''  UNION ALL
+SELECT 'NL','GST','Gasteren','',''  UNION ALL
+SELECT 'NL','GTB','Geertruidenberg','',''  UNION ALL
+SELECT 'NL','GWD','Groenewoud','',''  UNION ALL
+SELECT 'NL','GWO','Garmerwolde','',''  UNION ALL
+SELECT 'NL','GWU','Geeuwenbrug','',''  UNION ALL
+SELECT 'NL','GZE','Gilze','',''  UNION ALL
+SELECT 'NL','GZR','Gilzerijen','',''  UNION ALL
+SELECT 'NL','HAA','Haarlem','',''  UNION ALL
+SELECT 'NL','HAE','Haelen','',''  UNION ALL
+SELECT 'NL','HAG','''s-Gravenhage (Den Haag)','',''  UNION ALL
+SELECT 'NL','HAL','Halsteren','',''  UNION ALL
+SELECT 'NL','HAM','Harmelen','',''  UNION ALL
+SELECT 'NL','HAN','Hansweert','',''  UNION ALL
+SELECT 'NL','HAP','Hapert','',''  UNION ALL
+SELECT 'NL','HAR','Harlingen','',''  UNION ALL
+SELECT 'NL','HAS','Hasselt','',''  UNION ALL
+SELECT 'NL','HAU','Haulerwijk','',''  UNION ALL
+SELECT 'NL','HAZ','Hazerswoude','',''  UNION ALL
+SELECT 'NL','HBG','Hardenberg','',''  UNION ALL
+SELECT 'NL','HBK','Haaldersbroek','',''  UNION ALL
+SELECT 'NL','HBR','Hoensbroek','',''  UNION ALL
+SELECT 'NL','HBU','Hogebrug','',''  UNION ALL
+SELECT 'NL','HCH','Haastrecht','',''  UNION ALL
+SELECT 'NL','HDL','Hedel','',''  UNION ALL
+SELECT 'NL','HE','Hengevelde','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','HEC','Heesch','',''  UNION ALL
+SELECT 'NL','HEE','Heel','',''  UNION ALL
+SELECT 'NL','HEG','Heeg','',''  UNION ALL
+SELECT 'NL','HEJ','Heijen','',''  UNION ALL
+SELECT 'NL','HEL','Helden','',''  UNION ALL
+SELECT 'NL','HEN','Heerlen','',''  UNION ALL
+SELECT 'NL','HES','Heusden','',''  UNION ALL
+SELECT 'NL','HEU','Heurne','',''  UNION ALL
+SELECT 'NL','HFD','Hoofddorp','',''  UNION ALL
+SELECT 'NL','HFN','Haaften','',''  UNION ALL
+SELECT 'NL','HFW','Halfweg','',''  UNION ALL
+SELECT 'NL','HGL','Hengelo','',''  UNION ALL
+SELECT 'NL','HGM','Hoogmade','',''  UNION ALL
+SELECT 'NL','HGV','Hoogvliet','',''  UNION ALL
+SELECT 'NL','HGX','Hooge-Hexel','',''  UNION ALL
+SELECT 'NL','HGZ','Hoogezand','',''  UNION ALL
+SELECT 'NL','HHW','Heerhugowaard','',''  UNION ALL
+SELECT 'NL','HIA','Hendrik-Ido-Ambacht','',''  UNION ALL
+SELECT 'NL','HIL','Hillegom','',''  UNION ALL
+SELECT 'NL','HJY','Heijningen','',''  UNION ALL
+SELECT 'NL','HKD','Haskerdijken','',''  UNION ALL
+SELECT 'NL','HKE','Heemskerk','',''  UNION ALL
+SELECT 'NL','HKF','Heerjansdam','',''  UNION ALL
+SELECT 'NL','HKG','Hakkelaarsbrug','',''  UNION ALL
+SELECT 'NL','HKH','Haaksbergen','',''  UNION ALL
+SELECT 'NL','HKI','Herkingen','',''  UNION ALL
+SELECT 'NL','HKM','Hijkersmilde','',''  UNION ALL
+SELECT 'NL','HKO','Hekendorp','',''  UNION ALL
+SELECT 'NL','HKP','Hoogkarspel','',''  UNION ALL
+SELECT 'NL','HKT','Heikant','',''  UNION ALL
+SELECT 'NL','HLL','Hallum','',''  UNION ALL
+SELECT 'NL','HLM','Helmond','',''  UNION ALL
+SELECT 'NL','HLO','Heiloo','',''  UNION ALL
+SELECT 'NL','HLP','Hindeloopen','',''  UNION ALL
+SELECT 'NL','HLR','Haarlemmerliede','',''  UNION ALL
+SELECT 'NL','HLT','Holten','',''  UNION ALL
+SELECT 'NL','HMD','Hooge Mierde','',''  UNION ALL
+SELECT 'NL','HME','Holtheme','',''  UNION ALL
+SELECT 'NL','HMI','Hoogersmilde','',''  UNION ALL
+SELECT 'NL','HMS','Heemstede','',''  UNION ALL
+SELECT 'NL','HNA','Hoornaar','',''  UNION ALL
+SELECT 'NL','HNK','Hank','',''  UNION ALL
+SELECT 'NL','HNN','Heinen','',''  UNION ALL
+SELECT 'NL','HNO','Heino','',''  UNION ALL
+SELECT 'NL','HNS','Honselersdijk','',''  UNION ALL
+SELECT 'NL','HOD','Heinenoord','',''  UNION ALL
+SELECT 'NL','HOE','Hoevelaken','',''  UNION ALL
+SELECT 'NL','HOG','Hooglanderveen','',''  UNION ALL
+SELECT 'NL','HOH','Hoogerheide','',''  UNION ALL
+SELECT 'NL','HOL','Hoogland','',''  UNION ALL
+SELECT 'NL','HON','Hoeven','',''  UNION ALL
+SELECT 'NL','HOO','Hoogwoud','',''  UNION ALL
+SELECT 'NL','HOR','Hordijkerveld','',''  UNION ALL
+SELECT 'NL','HOT','Holt','',''  UNION ALL
+SELECT 'NL','HOU','Houten','',''  UNION ALL
+SELECT 'NL','HOV','Hoogeveen','',''  UNION ALL
+SELECT 'NL','HOX','Horn','',''  UNION ALL
+SELECT 'NL','HOZ','Hooge Zwaluwe','',''  UNION ALL
+SELECT 'NL','HPE','Hempens','',''  UNION ALL
+SELECT 'NL','HPL','Hoofdplaat','',''  UNION ALL
+SELECT 'NL','HPN','Herpen','',''  UNION ALL
+SELECT 'NL','HPS','Haps','',''  UNION ALL
+SELECT 'NL','HPT','Hoptille','',''  UNION ALL
+SELECT 'NL','HRA','Haaren','',''  UNION ALL
+SELECT 'NL','HRB','s-Heerenberg','',''  UNION ALL
+SELECT 'NL','HRD','Harderwijk','',''  UNION ALL
+SELECT 'NL','HRE','Haren','',''  UNION ALL
+SELECT 'NL','HRK','Herkenbosch','',''  UNION ALL
+SELECT 'NL','HRL','Heerlen-Autoweg','',''  UNION ALL
+SELECT 'NL','HRN','Hoorn','',''  UNION ALL
+SELECT 'NL','HRS','Horst','',''  UNION ALL
+SELECT 'NL','HRV','Heerenveen','',''  UNION ALL
+SELECT 'NL','HRW','Heerewaarden','',''  UNION ALL
+SELECT 'NL','HRX','Boven-Hardinxveld','',''  UNION ALL
+SELECT 'NL','HSL','Hellevoetsluis','',''  UNION ALL
+SELECT 'NL','HSN','Hagestein','',''  UNION ALL
+SELECT 'NL','HSO','Holsloot','',''  UNION ALL
+SELECT 'NL','HST','Haghorst','',''  UNION ALL
+SELECT 'NL','HSW','Heeswijk','',''  UNION ALL
+SELECT 'NL','HTB','''s-Hertogenbosch','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','HTH','Huis ter Heide','',''  UNION ALL
+SELECT 'NL','HTK','Hattemerbroek','',''  UNION ALL
+SELECT 'NL','HTM','Hattem','',''  UNION ALL
+SELECT 'NL','HTN','Hontenisse','',''  UNION ALL
+SELECT 'NL','HTR','Heteren','',''  UNION ALL
+SELECT 'NL','HUI','Huizen','',''  UNION ALL
+SELECT 'NL','HUL','Hulst','',''  UNION ALL
+SELECT 'NL','HUM','Heumen','',''  UNION ALL
+SELECT 'NL','HUN','Hunsel','',''  UNION ALL
+SELECT 'NL','HVD','Herveld','',''  UNION ALL
+SELECT 'NL','HVE','Havelte','',''  UNION ALL
+SELECT 'NL','HVH','Hoek van Holland','',''  UNION ALL
+SELECT 'NL','HVK','Hilvarenbeek','',''  UNION ALL
+SELECT 'NL','HVO','Helvoirt','',''  UNION ALL
+SELECT 'NL','HVS','Hilversum','',''  UNION ALL
+SELECT 'NL','HYY','Heythuysen','',''  UNION ALL
+SELECT 'NL','HZA','Heinkensand','',''  UNION ALL
+SELECT 'NL','HZD','Hoogezand','',''  UNION ALL
+SELECT 'NL','HZE','Heeze','',''  UNION ALL
+SELECT 'NL','HZK','Hazeldonck','',''  UNION ALL
+SELECT 'NL','IJI','IJsselstein','',''  UNION ALL
+SELECT 'NL','IJM','IJmuiden','',''  UNION ALL
+SELECT 'NL','ILO','Illikhoven','',''  UNION ALL
+SELECT 'NL','ILP','Ilpendam','',''  UNION ALL
+SELECT 'NL','ITR','Itteren','',''  UNION ALL
+SELECT 'NL','ITT','Ittervoort','',''  UNION ALL
+SELECT 'NL','IZD','IJzendijke','',''  UNION ALL
+SELECT 'NL','JLD','Julianadorp','',''  UNION ALL
+SELECT 'NL','JNE','Junne','',''  UNION ALL
+SELECT 'NL','JOU','Joure','',''  UNION ALL
+SELECT 'NL','KAD','Kamperland','',''  UNION ALL
+SELECT 'NL','KAG','Kaag','',''  UNION ALL
+SELECT 'NL','KAI','Krimpen aan den IJssel','',''  UNION ALL
+SELECT 'NL','KAM','Kampen','',''  UNION ALL
+SELECT 'NL','KAP','Kapellebrug','',''  UNION ALL
+SELECT 'NL','KAT','Kats','',''  UNION ALL
+SELECT 'NL','KAZ','Katwijk aan Zee','',''  UNION ALL
+SELECT 'NL','KDM','Koudum','',''  UNION ALL
+SELECT 'NL','KEB','Keijenborg','',''  UNION ALL
+SELECT 'NL','KEK','Kekerdom','',''  UNION ALL
+SELECT 'NL','KER','Kerkrade','',''  UNION ALL
+SELECT 'NL','KGH','Konigsbosch','',''  UNION ALL
+SELECT 'NL','KGZ','Koog aan de Zaan','',''  UNION ALL
+SELECT 'NL','KHO','Kuikhorne','',''  UNION ALL
+SELECT 'NL','KHR','Kolhorn','',''  UNION ALL
+SELECT 'NL','KHV','Ketelhaven','',''  UNION ALL
+SELECT 'NL','KIJ','Kinderdijk','',''  UNION ALL
+SELECT 'NL','KKO','Kakeshoek','',''  UNION ALL
+SELECT 'NL','KLM','Kollum','',''  UNION ALL
+SELECT 'NL','KLT','Kloosterzande','',''  UNION ALL
+SELECT 'NL','KLU','Klundert','',''  UNION ALL
+SELECT 'NL','KLV','Kloosterveen','',''  UNION ALL
+SELECT 'NL','KLW','Klaaswaal','',''  UNION ALL
+SELECT 'NL','KLZ','Klazienaveen','',''  UNION ALL
+SELECT 'NL','KML','Kommerzijl','',''  UNION ALL
+SELECT 'NL','KMR','Kamerik','',''  UNION ALL
+SELECT 'NL','KMS','Krammersluizen','',''  UNION ALL
+SELECT 'NL','KOG','Kortgene','',''  UNION ALL
+SELECT 'NL','KOK','Koudekerke','',''  UNION ALL
+SELECT 'NL','KOR','Koudekerk aan den Rijn','',''  UNION ALL
+SELECT 'NL','KPE','Kelpen','',''  UNION ALL
+SELECT 'NL','KPL','Kapelle','',''  UNION ALL
+SELECT 'NL','KRD','Kerkdriel','',''  UNION ALL
+SELECT 'NL','KRE','Kreil','',''  UNION ALL
+SELECT 'NL','KRI','''t Kruis','',''  UNION ALL
+SELECT 'NL','KRM','Krommenie','',''  UNION ALL
+SELECT 'NL','KRP','Krimpen aan de Lek','',''  UNION ALL
+SELECT 'NL','KRU','Kruiningen','',''  UNION ALL
+SELECT 'NL','KSL','Kessel','',''  UNION ALL
+SELECT 'NL','KST','Kesteren','',''  UNION ALL
+SELECT 'NL','KTH','Kortenhoef','',''  UNION ALL
+SELECT 'NL','KTN','Kantens','',''  UNION ALL
+SELECT 'NL','KTS','Kaatsheuvel','',''  UNION ALL
+SELECT 'NL','KTV','Katerveer','',''  UNION ALL
+SELECT 'NL','KWA','Kwadendamme','',''  UNION ALL
+SELECT 'NL','KWK','Katwijk','',''  UNION ALL
+SELECT 'NL','KWR','Katwijk aan den Rijn','',''  UNION ALL
+SELECT 'NL','KWS','Kwintsheul','',''  UNION ALL
+SELECT 'NL','KWT','Koewacht','',''  UNION ALL
+SELECT 'NL','KWZ','Kornwerderzand','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','KZV','Keizersveer','',''  UNION ALL
+SELECT 'NL','LAF','Landgraaf','',''  UNION ALL
+SELECT 'NL','LAG','Langerak','',''  UNION ALL
+SELECT 'NL','LAK','Langbroek','',''  UNION ALL
+SELECT 'NL','LAM','Landsmeer','',''  UNION ALL
+SELECT 'NL','LAN','Lauwersoog','',''  UNION ALL
+SELECT 'NL','LAR','Laren','',''  UNION ALL
+SELECT 'NL','LAV','Loenen aan de Vecht','',''  UNION ALL
+SELECT 'NL','LAW','Lage Weide','',''  UNION ALL
+SELECT 'NL','LBK','Lisserbroek','',''  UNION ALL
+SELECT 'NL','LCH','Lochem','',''  UNION ALL
+SELECT 'NL','LCV','Lichtenvoorde','',''  UNION ALL
+SELECT 'NL','LDD','Leiderdorp','',''  UNION ALL
+SELECT 'NL','LDS','Leidschendam','',''  UNION ALL
+SELECT 'NL','LEE','Leek','',''  UNION ALL
+SELECT 'NL','LEK','Lekkerkerk','',''  UNION ALL
+SELECT 'NL','LEM','Lemsterland','',''  UNION ALL
+SELECT 'NL','LEO','Leons','',''  UNION ALL
+SELECT 'NL','LES','Leens','',''  UNION ALL
+SELECT 'NL','LEU','Leusden','',''  UNION ALL
+SELECT 'NL','LEY','Lelystad','',''  UNION ALL
+SELECT 'NL','LGB','Landgoed Baest','',''  UNION ALL
+SELECT 'NL','LGD','Lageland','',''  UNION ALL
+SELECT 'NL','LGI','Langelille','',''  UNION ALL
+SELECT 'NL','LGW','Langweer','',''  UNION ALL
+SELECT 'NL','LID','Leiden','',''  UNION ALL
+SELECT 'NL','LIE','Lienden','',''  UNION ALL
+SELECT 'NL','LIN','Linne','',''  UNION ALL
+SELECT 'NL','LIT','Lith','',''  UNION ALL
+SELECT 'NL','LKL','Lopikerkapel','',''  UNION ALL
+SELECT 'NL','LKN','''t Leuken','',''  UNION ALL
+SELECT 'NL','LME','Limmel','',''  UNION ALL
+SELECT 'NL','LMM','Limmen','',''  UNION ALL
+SELECT 'NL','LMR','Lemmer','',''  UNION ALL
+SELECT 'NL','LMU','Leimuiden','',''  UNION ALL
+SELECT 'NL','LNO','Loenersloot','',''  UNION ALL
+SELECT 'NL','LNT','Lent','',''  UNION ALL
+SELECT 'NL','LOB','Lobith','',''  UNION ALL
+SELECT 'NL','LOM','Lomm','',''  UNION ALL
+SELECT 'NL','LON','Loenen','',''  UNION ALL
+SELECT 'NL','LOS','Losser','',''  UNION ALL
+SELECT 'NL','LPK','Lopik','',''  UNION ALL
+SELECT 'NL','LRD','Leerdam','',''  UNION ALL
+SELECT 'NL','LRU','Leimuiderbrug','',''  UNION ALL
+SELECT 'NL','LSC','Linschoten','',''  UNION ALL
+SELECT 'NL','LSH','Lieshout','',''  UNION ALL
+SELECT 'NL','LSR','Nieuw-Loosdrecht','',''  UNION ALL
+SELECT 'NL','LTE','Aalten','',''  UNION ALL
+SELECT 'NL','LTH','Leuth','',''  UNION ALL
+SELECT 'NL','LTS','Laatste Stuiver','',''  UNION ALL
+SELECT 'NL','LWE','Lalleweer','',''  UNION ALL
+SELECT 'NL','LWG','Langeweg','',''  UNION ALL
+SELECT 'NL','LWI','Lauwerzijl','',''  UNION ALL
+SELECT 'NL','LWO','Lippenwoude','',''  UNION ALL
+SELECT 'NL','LWR','Leeuwarden','',''  UNION ALL
+SELECT 'NL','LXM','Lexmond','',''  UNION ALL
+SELECT 'NL','LZA','Lage Zwaluwe','',''  UNION ALL
+SELECT 'NL','LZG','Langezwaag','',''  UNION ALL
+SELECT 'NL','MAB','Maarsbergen','',''  UNION ALL
+SELECT 'NL','MAD','Malden','',''  UNION ALL
+SELECT 'NL','MAL','Maasland','',''  UNION ALL
+SELECT 'NL','MAN','Marknesse','',''  UNION ALL
+SELECT 'NL','MAR','Markelo','',''  UNION ALL
+SELECT 'NL','MAU','Maurik','',''  UNION ALL
+SELECT 'NL','MAV','Maarn','',''  UNION ALL
+SELECT 'NL','MBK','Milsbeek','',''  UNION ALL
+SELECT 'NL','MCK','Melick','',''  UNION ALL
+SELECT 'NL','MDB','Middelbeers','',''  UNION ALL
+SELECT 'NL','MDG','Muiderberg','',''  UNION ALL
+SELECT 'NL','MDK','Maasdijk','',''  UNION ALL
+SELECT 'NL','MDL','Middelburg','',''  UNION ALL
+SELECT 'NL','MDM','Medemblik','',''  UNION ALL
+SELECT 'NL','MDO','Melderslo','',''  UNION ALL
+SELECT 'NL','MDT','Mildert','',''  UNION ALL
+SELECT 'NL','MDU','Middelstum','',''  UNION ALL
+SELECT 'NL','MEB','Merkelbeek','',''  UNION ALL
+SELECT 'NL','MEE','Meer','',''  UNION ALL
+SELECT 'NL','MEP','Meppel','',''  UNION ALL
+SELECT 'NL','MES','Meers','',''  UNION ALL
+SELECT 'NL','MEW','Meerlo-Wansum','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','MGT','Molengat','',''  UNION ALL
+SELECT 'NL','MHU','Maarhuizen','',''  UNION ALL
+SELECT 'NL','MHZ','Maarheeze','',''  UNION ALL
+SELECT 'NL','MID','Middelburg','',''  UNION ALL
+SELECT 'NL','MIE','Mierlo','',''  UNION ALL
+SELECT 'NL','MIH','Middelharnis','',''  UNION ALL
+SELECT 'NL','MIJ','Mijdrecht','',''  UNION ALL
+SELECT 'NL','MJA','Mandjeswaard','',''  UNION ALL
+SELECT 'NL','MKE','Munnekeburen','',''  UNION ALL
+SELECT 'NL','MKK','Meerkerk','',''  UNION ALL
+SELECT 'NL','MKN','Marken','',''  UNION ALL
+SELECT 'NL','MKP','Moerkapelle','',''  UNION ALL
+SELECT 'NL','MKZ','Munnekezijl','',''  UNION ALL
+SELECT 'NL','MLA','Middelaar','',''  UNION ALL
+SELECT 'NL','MLL','Mill','',''  UNION ALL
+SELECT 'NL','MLR','Millingen aan de Rijn','',''  UNION ALL
+SELECT 'NL','MNN','Monnickendam','',''  UNION ALL
+SELECT 'NL','MNT','Montfoort','',''  UNION ALL
+SELECT 'NL','MNU','Menaldum','',''  UNION ALL
+SELECT 'NL','MOE','Moerdijk','',''  UNION ALL
+SELECT 'NL','MOG','Molenaarsgraaf','',''  UNION ALL
+SELECT 'NL','MOK','Mook','',''  UNION ALL
+SELECT 'NL','MOL','Molenhoek','',''  UNION ALL
+SELECT 'NL','MON','Monster','',''  UNION ALL
+SELECT 'NL','MOO','Moordrecht','',''  UNION ALL
+SELECT 'NL','MOT','Molenschot','',''  UNION ALL
+SELECT 'NL','MRM','Marum','',''  UNION ALL
+SELECT 'NL','MRS','Maarssenbroek','',''  UNION ALL
+SELECT 'NL','MRT','Maartensdijk','',''  UNION ALL
+SELECT 'NL','MRU','Marssum','',''  UNION ALL
+SELECT 'NL','MSB','Maasbracht','',''  UNION ALL
+SELECT 'NL','MSD','Maasdam','',''  UNION ALL
+SELECT 'NL','MSL','Maassluis','',''  UNION ALL
+SELECT 'NL','MSS','Maarssen','',''  UNION ALL
+SELECT 'NL','MST','Maastricht','',''  UNION ALL
+SELECT 'NL','MSV','Maasvlakte','',''  UNION ALL
+SELECT 'NL','MSW','Mensingeweer','',''  UNION ALL
+SELECT 'NL','MUD','Muiden','',''  UNION ALL
+SELECT 'NL','MVE','Middelie','',''  UNION ALL
+SELECT 'NL','NAA','Naarden','',''  UNION ALL
+SELECT 'NL','NAM','Nieuw-Amsterdam','',''  UNION ALL
+SELECT 'NL','NAW','Naaldwijk','',''  UNION ALL
+SELECT 'NL','NBG','Nieuwerbrug','',''  UNION ALL
+SELECT 'NL','NBU','Nieuwe Brug','',''  UNION ALL
+SELECT 'NL','NBW','Neder-Betuwe','',''  UNION ALL
+SELECT 'NL','NDB','Nederhorst den Berg','',''  UNION ALL
+SELECT 'NL','NDI','Nieuwediep','',''  UNION ALL
+SELECT 'NL','NDL','Noordwijk aan Zee','',''  UNION ALL
+SELECT 'NL','NDP','Nootdorp','',''  UNION ALL
+SELECT 'NL','NEC','Neck','',''  UNION ALL
+SELECT 'NL','NEE','Neede','',''  UNION ALL
+SELECT 'NL','NER','Neer','',''  UNION ALL
+SELECT 'NL','NES','Nes','',''  UNION ALL
+SELECT 'NL','NGA','Nijega','',''  UNION ALL
+SELECT 'NL','NGV','Nigtevecht','',''  UNION ALL
+SELECT 'NL','NHE','Nijehaske','',''  UNION ALL
+SELECT 'NL','NHM','Nieuwehorne','',''  UNION ALL
+SELECT 'NL','NIE','Nieuwerkerk aan den IJssel','',''  UNION ALL
+SELECT 'NL','NIH','Nieuwenhagen','',''  UNION ALL
+SELECT 'NL','NIJ','Nijmegen','',''  UNION ALL
+SELECT 'NL','NIS','Nispen','',''  UNION ALL
+SELECT 'NL','NIU','Nieuwdorp','',''  UNION ALL
+SELECT 'NL','NKK','Nijkerk','',''  UNION ALL
+SELECT 'NL','NKV','Nijkerkerveen','',''  UNION ALL
+SELECT 'NL','NLG','Nagele','',''  UNION ALL
+SELECT 'NL','NLK','Nieuw-Lekkerland','',''  UNION ALL
+SELECT 'NL','NMD','Nijemirdum','',''  UNION ALL
+SELECT 'NL','NNE','Annen','',''  UNION ALL
+SELECT 'NL','NNN','Nuenen','',''  UNION ALL
+SELECT 'NL','NOJ','Noordwijkerhout','',''  UNION ALL
+SELECT 'NL','NPK','Nieuwe Pekela','',''  UNION ALL
+SELECT 'NL','NRW','Nederweert','',''  UNION ALL
+SELECT 'NL','NSA','Nes aan de Amstel','',''  UNION ALL
+SELECT 'NL','NSB','Nieuwe Schans','',''  UNION ALL
+SELECT 'NL','NSC','Nieuweschans','',''  UNION ALL
+SELECT 'NL','NSD','Nieuw-Scheemda','',''  UNION ALL
+SELECT 'NL','NSS','Nisse','',''  UNION ALL
+SELECT 'NL','NST','Nederasselt','',''  UNION ALL
+SELECT 'NL','NSU','Nessersluis','',''  UNION ALL
+SELECT 'NL','NSW','Noord-Scharwoude','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','NSZ','Nieuwe Statenzijl','',''  UNION ALL
+SELECT 'NL','NTH','Nuth','',''  UNION ALL
+SELECT 'NL','NTO','Ten Boer','',''  UNION ALL
+SELECT 'NL','NUD','Numansdorp','',''  UNION ALL
+SELECT 'NL','NUI','Nuis','',''  UNION ALL
+SELECT 'NL','NUN','Nunspeet','',''  UNION ALL
+SELECT 'NL','NVD','Nijverdal','',''  UNION ALL
+SELECT 'NL','NVE','Nieuw-Vennep','',''  UNION ALL
+SELECT 'NL','NVO','Nieuw-Vossemeer','',''  UNION ALL
+SELECT 'NL','NVP','Nieuw-Vennep','',''  UNION ALL
+SELECT 'NL','NWD','Noordwolde','',''  UNION ALL
+SELECT 'NL','NWG','Nieuwegein','',''  UNION ALL
+SELECT 'NL','NWK','Nieuwkoop','',''  UNION ALL
+SELECT 'NL','NWL','Nieuwleusen','',''  UNION ALL
+SELECT 'NL','NWO','Nieuwolda','',''  UNION ALL
+SELECT 'NL','NWP','Nieuwpoort','',''  UNION ALL
+SELECT 'NL','NWS','Nieuwstadt','',''  UNION ALL
+SELECT 'NL','NWT','Nieuwe-Tonge','',''  UNION ALL
+SELECT 'NL','NWV','Nieuwveen','',''  UNION ALL
+SELECT 'NL','NZI','Niezijl','',''  UNION ALL
+SELECT 'NL','NZJ','Nijezijl','',''  UNION ALL
+SELECT 'NL','OAI','Ouderkerk aan den IJssel','',''  UNION ALL
+SELECT 'NL','OBD','Obdam','',''  UNION ALL
+SELECT 'NL','OBG','Oostburg','',''  UNION ALL
+SELECT 'NL','OBL','Oud-Beijerland','',''  UNION ALL
+SELECT 'NL','OBO','Oudenbosch','',''  UNION ALL
+SELECT 'NL','OCC','Ochten','',''  UNION ALL
+SELECT 'NL','ODH','Oudenhoorn','',''  UNION ALL
+SELECT 'NL','ODK','Odijk','',''  UNION ALL
+SELECT 'NL','ODN','Odoorn','',''  UNION ALL
+SELECT 'NL','ODP','Oude Pekela','',''  UNION ALL
+SELECT 'NL','ODR','Ouderkerk aan de Amstel','',''  UNION ALL
+SELECT 'NL','ODT','Oude-Tonge','',''  UNION ALL
+SELECT 'NL','ODW','Oudewater','',''  UNION ALL
+SELECT 'NL','OED','St Oedenrode','',''  UNION ALL
+SELECT 'NL','OGA','Oudega','',''  UNION ALL
+SELECT 'NL','OGE','Oegstgeest','',''  UNION ALL
+SELECT 'NL','OGN','Oud Gein','',''  UNION ALL
+SELECT 'NL','OGP','Ooltgensplaat','',''  UNION ALL
+SELECT 'NL','OHE','Oudehaske','',''  UNION ALL
+SELECT 'NL','OHI','Oudeschild','',''  UNION ALL
+SELECT 'NL','OHM','Oosthem','',''  UNION ALL
+SELECT 'NL','OHN','Oosterhesselen','',''  UNION ALL
+SELECT 'NL','OHW','Oude Schouw','',''  UNION ALL
+SELECT 'NL','OHZ','Oosthuizen','',''  UNION ALL
+SELECT 'NL','OIH','Oirschot','',''  UNION ALL
+SELECT 'NL','OIW','Oisterwijk','',''  UNION ALL
+SELECT 'NL','OLD','Oldeberkoop','',''  UNION ALL
+SELECT 'NL','OLK','Oldemarkt','',''  UNION ALL
+SELECT 'NL','OLO','Oud-Loosdrecht','',''  UNION ALL
+SELECT 'NL','OLS','Oosterlittens','',''  UNION ALL
+SELECT 'NL','OLZ','Oldenzaal','',''  UNION ALL
+SELECT 'NL','OMD','Roermond','',''  UNION ALL
+SELECT 'NL','OME','Oostermeer','',''  UNION ALL
+SELECT 'NL','OMM','Ommen','',''  UNION ALL
+SELECT 'NL','OMR','Oudemirdum','',''  UNION ALL
+SELECT 'NL','OOS','Oosterhout','',''  UNION ALL
+SELECT 'NL','OOT','Ootmarsum','',''  UNION ALL
+SELECT 'NL','OOY','Ooij','',''  UNION ALL
+SELECT 'NL','OPE','Opeinde','',''  UNION ALL
+SELECT 'NL','ORJ','Oudenrijn','',''  UNION ALL
+SELECT 'NL','ORL','Oterleek','',''  UNION ALL
+SELECT 'NL','OSB','Oosterbeek','',''  UNION ALL
+SELECT 'NL','OSD','Oostdijk','',''  UNION ALL
+SELECT 'NL','OSG','Oud-Sabbinge','',''  UNION ALL
+SELECT 'NL','OSH','Ossendrecht','',''  UNION ALL
+SELECT 'NL','OSK','Overschild','',''  UNION ALL
+SELECT 'NL','OSL','Oudesluis','',''  UNION ALL
+SELECT 'NL','OSP','Ospel','',''  UNION ALL
+SELECT 'NL','OSS','Oss','',''  UNION ALL
+SELECT 'NL','OST','Oostrum','',''  UNION ALL
+SELECT 'NL','OSW','Oosterwolde','',''  UNION ALL
+SELECT 'NL','OSZ','Oostzaan','',''  UNION ALL
+SELECT 'NL','OTL','Oosterland','',''  UNION ALL
+SELECT 'NL','OUG','Oud-Gastel','',''  UNION ALL
+SELECT 'NL','OUM','Oude Meer','',''  UNION ALL
+SELECT 'NL','OVL','Overloon','',''  UNION ALL
+SELECT 'NL','OVM','Oud-Vossemeer','',''  UNION ALL
+SELECT 'NL','OVN','Oostvoorne','',''  UNION ALL
+SELECT 'NL','OVR','Oud-Vroenhoven','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','OVZ','Ovezande','',''  UNION ALL
+SELECT 'NL','OZL','Ossenzijl','',''  UNION ALL
+SELECT 'NL','OZU','Oud-Zuilen','',''  UNION ALL
+SELECT 'NL','PAN','Panningen','',''  UNION ALL
+SELECT 'NL','PAP','Papendrecht','',''  UNION ALL
+SELECT 'NL','PDJ','Poederoijen','',''  UNION ALL
+SELECT 'NL','PDK','Poeldijk','',''  UNION ALL
+SELECT 'NL','PER','Pernis','',''  UNION ALL
+SELECT 'NL','PHL','Panheel','',''  UNION ALL
+SELECT 'NL','PIJ','Pijnacker','',''  UNION ALL
+SELECT 'NL','PLP','Sint Philipsland','',''  UNION ALL
+SELECT 'NL','PNN','Pannerden','',''  UNION ALL
+SELECT 'NL','PRB','Prinsenbeek','',''  UNION ALL
+SELECT 'NL','PTN','Putten','',''  UNION ALL
+SELECT 'NL','PTT','Petten','',''  UNION ALL
+SELECT 'NL','PUM','Purmerend','',''  UNION ALL
+SELECT 'NL','PUT','Putte','',''  UNION ALL
+SELECT 'NL','PVT','Poortvliet','',''  UNION ALL
+SELECT 'NL','PZI','Pieterzijl','',''  UNION ALL
+SELECT 'NL','QCJ','Acht','',''  UNION ALL
+SELECT 'NL','QCT','Eersel','',''  UNION ALL
+SELECT 'NL','QCU','Elst','',''  UNION ALL
+SELECT 'NL','QDG','Lisse','',''  UNION ALL
+SELECT 'NL','QDJ','Made','',''  UNION ALL
+SELECT 'NL','QDS','Raalte','',''  UNION ALL
+SELECT 'NL','RAA','Raamsdonksveer','',''  UNION ALL
+SELECT 'NL','RAS','Ravenstein','',''  UNION ALL
+SELECT 'NL','RAV','Roelofarendsveen','',''  UNION ALL
+SELECT 'NL','RBG','Rijnsburg','',''  UNION ALL
+SELECT 'NL','RBO','Robbenoord','',''  UNION ALL
+SELECT 'NL','RCP','Rucphen','',''  UNION ALL
+SELECT 'NL','RED','Ried','',''  UNION ALL
+SELECT 'NL','REU','Reuver','',''  UNION ALL
+SELECT 'NL','REW','Reimerswaal','',''  UNION ALL
+SELECT 'NL','RGT','Rinsumageest','',''  UNION ALL
+SELECT 'NL','RHD','Rheden','',''  UNION ALL
+SELECT 'NL','RHE','Rhenen','',''  UNION ALL
+SELECT 'NL','RHO','Rhoon','',''  UNION ALL
+SELECT 'NL','RID','Ridderkerk','',''  UNION ALL
+SELECT 'NL','RIE','Riel','',''  UNION ALL
+SELECT 'NL','RIJ','Rijs','',''  UNION ALL
+SELECT 'NL','RJE','Rijen','',''  UNION ALL
+SELECT 'NL','RJS','Rijssen','',''  UNION ALL
+SELECT 'NL','RJV','Rijkevoort','',''  UNION ALL
+SELECT 'NL','RLA','Rilland','',''  UNION ALL
+SELECT 'NL','RMA','Rosmalen','',''  UNION ALL
+SELECT 'NL','RNK','Renkum','',''  UNION ALL
+SELECT 'NL','ROD','Roden','',''  UNION ALL
+SELECT 'NL','ROG','Roggel','',''  UNION ALL
+SELECT 'NL','ROO','Roosendaal','',''  UNION ALL
+SELECT 'NL','ROR','Rodenrijs','',''  UNION ALL
+SELECT 'NL','ROZ','Rozenburg','',''  UNION ALL
+SELECT 'NL','RPL','Ramspol','',''  UNION ALL
+SELECT 'NL','RRO','Ruurlo','',''  UNION ALL
+SELECT 'NL','RSH','Rijsenhout','',''  UNION ALL
+SELECT 'NL','RSL','Reusel','',''  UNION ALL
+SELECT 'NL','RST','Roosteren','',''  UNION ALL
+SELECT 'NL','RTG','Rustenburg','',''  UNION ALL
+SELECT 'NL','RTH','Riethoven','',''  UNION ALL
+SELECT 'NL','RTM','Rotterdam','',''  UNION ALL
+SELECT 'NL','RUK','Breukelen','',''  UNION ALL
+SELECT 'NL','RUM','Rumpt','',''  UNION ALL
+SELECT 'NL','RUT','Rutten','',''  UNION ALL
+SELECT 'NL','RUW','Reeuwijk','',''  UNION ALL
+SELECT 'NL','RWD','Renswoude','',''  UNION ALL
+SELECT 'NL','RWI','Rijpwetering','',''  UNION ALL
+SELECT 'NL','RYB','Rijsbergen','',''  UNION ALL
+SELECT 'NL','RYS','Rijswijk','',''  UNION ALL
+SELECT 'NL','RZD','Rozendaal','',''  UNION ALL
+SELECT 'NL','SAN','Sint Annaparochie','',''  UNION ALL
+SELECT 'NL','SAP','Sappemeer','',''  UNION ALL
+SELECT 'NL','SAR','St Andries','',''  UNION ALL
+SELECT 'NL','SAS','Sassenheim','',''  UNION ALL
+SELECT 'NL','SBG','Scharsterbrug','',''  UNION ALL
+SELECT 'NL','SBS','Sijbrandahuis','',''  UNION ALL
+SELECT 'NL','SBU','Schagerbrug','',''  UNION ALL
+SELECT 'NL','SCA','Sprang','',''  UNION ALL
+SELECT 'NL','SCB','Schoonebeek','',''  UNION ALL
+SELECT 'NL','SCE','Scheveningen','',''  UNION ALL
+SELECT 'NL','SCH','Schagen','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','SCI','Schiedam','',''  UNION ALL
+SELECT 'NL','SCN','Schinnen','',''  UNION ALL
+SELECT 'NL','SCP','Schipluiden','',''  UNION ALL
+SELECT 'NL','SDB','Standdaarbuiten','',''  UNION ALL
+SELECT 'NL','SDM','Stadsdam','',''  UNION ALL
+SELECT 'NL','SDN','Steenderen','',''  UNION ALL
+SELECT 'NL','SDW','Schildwolde','',''  UNION ALL
+SELECT 'NL','SGL','''s-Graveland','',''  UNION ALL
+SELECT 'NL','SGM','''s-Gravenmoer','',''  UNION ALL
+SELECT 'NL','SGP','''s-Gravenpolder','',''  UNION ALL
+SELECT 'NL','SHB','''s-Heerenbroek','',''  UNION ALL
+SELECT 'NL','SHE','''s-Heerenhoek','',''  UNION ALL
+SELECT 'NL','SHH','Schoonhoven','',''  UNION ALL
+SELECT 'NL','SHO','Schermerhorn','',''  UNION ALL
+SELECT 'NL','SIM','Simpelveld','',''  UNION ALL
+SELECT 'NL','SIT','Sittard','',''  UNION ALL
+SELECT 'NL','SIV','Silvolde','',''  UNION ALL
+SELECT 'NL','SJB','Strijbeek','',''  UNION ALL
+SELECT 'NL','SJK','Spijk','',''  UNION ALL
+SELECT 'NL','SJO','Sintjohannesga','',''  UNION ALL
+SELECT 'NL','SKG','Slijkenburg','',''  UNION ALL
+SELECT 'NL','SKL','Stieltjeskanaal','',''  UNION ALL
+SELECT 'NL','SKM','Slikkendam','',''  UNION ALL
+SELECT 'NL','SKW','Schalkwijk','',''  UNION ALL
+SELECT 'NL','SLD','Sliedrecht','',''  UNION ALL
+SELECT 'NL','SLG','Stokkelaarsbrug','',''  UNION ALL
+SELECT 'NL','SLI','Slikkerveer','',''  UNION ALL
+SELECT 'NL','SLO','Slochteren','',''  UNION ALL
+SELECT 'NL','SLS','Sluis','',''  UNION ALL
+SELECT 'NL','SLT','Sloten','',''  UNION ALL
+SELECT 'NL','SLU','Sluiskil','',''  UNION ALL
+SELECT 'NL','SMB','Sambeek','',''  UNION ALL
+SELECT 'NL','SMD','Scheemda','',''  UNION ALL
+SELECT 'NL','SMI','Smilde','',''  UNION ALL
+SELECT 'NL','SMK','Sint Maartensdijk','',''  UNION ALL
+SELECT 'NL','SML','Smallingerland','',''  UNION ALL
+SELECT 'NL','SMN','Sint Maarten','',''  UNION ALL
+SELECT 'NL','SMV','Sint Maartensvlotbrug','',''  UNION ALL
+SELECT 'NL','SMZ','Scheemderzwaag','',''  UNION ALL
+SELECT 'NL','SND','Schijndel','',''  UNION ALL
+SELECT 'NL','SNK','Sneek','',''  UNION ALL
+SELECT 'NL','SNW','Snelrewaard','',''  UNION ALL
+SELECT 'NL','SOD','Sondel','',''  UNION ALL
+SELECT 'NL','SOE','Soest','',''  UNION ALL
+SELECT 'NL','SOG','Schin op Geul','',''  UNION ALL
+SELECT 'NL','SOM','Someren','',''  UNION ALL
+SELECT 'NL','SON','Son','',''  UNION ALL
+SELECT 'NL','SOP','Stolpen','',''  UNION ALL
+SELECT 'NL','SOR','Schoor','',''  UNION ALL
+SELECT 'NL','SOS','Soesterberg','',''  UNION ALL
+SELECT 'NL','SPA','Spaubeek','',''  UNION ALL
+SELECT 'NL','SPB','Spanbroek','',''  UNION ALL
+SELECT 'NL','SPD','Spaarndam','',''  UNION ALL
+SELECT 'NL','SPG','Stampersgat','',''  UNION ALL
+SELECT 'NL','SPI','Spijkenisse','',''  UNION ALL
+SELECT 'NL','SPK','Spakenburg','',''  UNION ALL
+SELECT 'NL','SPL','Schiphol','',''  UNION ALL
+SELECT 'NL','SPR','Sprundel','',''  UNION ALL
+SELECT 'NL','SPV','Stolpervlotbrug','',''  UNION ALL
+SELECT 'NL','SRK','Schiphol-Rijk','',''  UNION ALL
+SELECT 'NL','SRP','Scherpenzeel','',''  UNION ALL
+SELECT 'NL','STA','Stavoren','',''  UNION ALL
+SELECT 'NL','STD','Stellendam','',''  UNION ALL
+SELECT 'NL','STE','Steenbergen','',''  UNION ALL
+SELECT 'NL','STH','Staphorst','',''  UNION ALL
+SELECT 'NL','STI','Stein','',''  UNION ALL
+SELECT 'NL','STK','Stadskanaal','',''  UNION ALL
+SELECT 'NL','STN','Stiens','',''  UNION ALL
+SELECT 'NL','STO','''t Stort','',''  UNION ALL
+SELECT 'NL','STW','Steenwijk','',''  UNION ALL
+SELECT 'NL','SUD','St Cloud','',''  UNION ALL
+SELECT 'NL','SUR','Surhuisterveen','',''  UNION ALL
+SELECT 'NL','SVG','Sas van Gent','',''  UNION ALL
+SELECT 'NL','SVW','Stevensweert','',''  UNION ALL
+SELECT 'NL','SWB','Sint Willebrord','',''  UNION ALL
+SELECT 'NL','SWI','Swifterbant','',''  UNION ALL
+SELECT 'NL','SWJ','Stolwijk','',''  UNION ALL
+SELECT 'NL','SWK','Sleeuwijk','',''  UNION ALL
+SELECT 'NL','SWL','Schouwerzijl','',''  UNION ALL
+SELECT 'NL','SWM','Swalmen','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','SZL','Schoterzijl','',''  UNION ALL
+SELECT 'NL','TAK','Ter Apelkanaal','',''  UNION ALL
+SELECT 'NL','TBB','Tubbergen','',''  UNION ALL
+SELECT 'NL','TBO','Terborg','',''  UNION ALL
+SELECT 'NL','TEA','Ter Aar','',''  UNION ALL
+SELECT 'NL','TEG','Tegelen','',''  UNION ALL
+SELECT 'NL','TEX','Texel','',''  UNION ALL
+SELECT 'NL','THO','Tholen','',''  UNION ALL
+SELECT 'NL','TIE','Tiel','',''  UNION ALL
+SELECT 'NL','TKM','Tolkamer','',''  UNION ALL
+SELECT 'NL','TKW','Tjerkwerd','',''  UNION ALL
+SELECT 'NL','TLB','Tilburg','',''  UNION ALL
+SELECT 'NL','TLD','Toldijk','',''  UNION ALL
+SELECT 'NL','TNO','Tynaarlo','',''  UNION ALL
+SELECT 'NL','TNZ','Terneuzen','',''  UNION ALL
+SELECT 'NL','TOK','Tollebeek','',''  UNION ALL
+SELECT 'NL','TOR','Torontostraat','',''  UNION ALL
+SELECT 'NL','TPH','Ter Apel','',''  UNION ALL
+SELECT 'NL','TRJ','Strijen','',''  UNION ALL
+SELECT 'NL','TRO','Terhorne','',''  UNION ALL
+SELECT 'NL','TUH','Tuitjenhorn','',''  UNION ALL
+SELECT 'NL','TUL','Tuil','',''  UNION ALL
+SELECT 'NL','TWA','''t Waar','',''  UNION ALL
+SELECT 'NL','TWE','Twello','',''  UNION ALL
+SELECT 'NL','TZA','''t Zand','',''  UNION ALL
+SELECT 'NL','UDE','Uden','',''  UNION ALL
+SELECT 'NL','UDH','Udenhout','',''  UNION ALL
+SELECT 'NL','UFE','Uffelte','',''  UNION ALL
+SELECT 'NL','UIT','Uithoorn','',''  UNION ALL
+SELECT 'NL','ULF','Ulft','',''  UNION ALL
+SELECT 'NL','ULR','Ulrum','',''  UNION ALL
+SELECT 'NL','ULS','Ulestraten','',''  UNION ALL
+SELECT 'NL','UMO','Urmond','',''  UNION ALL
+SELECT 'NL','URK','Urk','',''  UNION ALL
+SELECT 'NL','URS','Ursem','',''  UNION ALL
+SELECT 'NL','UTC','Utrecht','',''  UNION ALL
+SELECT 'NL','UTG','Uitgeest','',''  UNION ALL
+SELECT 'NL','UTR','Uitermeer','',''  UNION ALL
+SELECT 'NL','UTZ','Uithuizen','',''  UNION ALL
+SELECT 'NL','VAA','Vaassen','',''  UNION ALL
+SELECT 'NL','VAL','Valkenswaard','',''  UNION ALL
+SELECT 'NL','VAN','Vianen','',''  UNION ALL
+SELECT 'NL','VAR','Varsen','',''  UNION ALL
+SELECT 'NL','VBK','Velserbroek','',''  UNION ALL
+SELECT 'NL','VDH','Veldhoven','',''  UNION ALL
+SELECT 'NL','VDM','Veendam','',''  UNION ALL
+SELECT 'NL','VDN','Vredenduin','',''  UNION ALL
+SELECT 'NL','VED','Velden','',''  UNION ALL
+SELECT 'NL','VEE','Veenendaal','',''  UNION ALL
+SELECT 'NL','VEG','Veghel','',''  UNION ALL
+SELECT 'NL','VEL','Velsen','',''  UNION ALL
+SELECT 'NL','VEN','Venlo','',''  UNION ALL
+SELECT 'NL','VEP','Velp','',''  UNION ALL
+SELECT 'NL','VFR','Vorden','',''  UNION ALL
+SELECT 'NL','VGB','Voetangelbrug','',''  UNION ALL
+SELECT 'NL','VGT','Vught','',''  UNION ALL
+SELECT 'NL','VHA','Veldriel','',''  UNION ALL
+SELECT 'NL','VHZ','Voorthuizen','',''  UNION ALL
+SELECT 'NL','VIE','Vierlingsbeek','',''  UNION ALL
+SELECT 'NL','VIJ','Vijfhuizen','',''  UNION ALL
+SELECT 'NL','VIV','Vinkeveen','',''  UNION ALL
+SELECT 'NL','VKK','Vierakker','',''  UNION ALL
+SELECT 'NL','VKS','Valkenisse','',''  UNION ALL
+SELECT 'NL','VLA','Vlaardingen','',''  UNION ALL
+SELECT 'NL','VLD','Vlodrop','',''  UNION ALL
+SELECT 'NL','VLE','Volkel','',''  UNION ALL
+SELECT 'NL','VLI','Vlissingen','',''  UNION ALL
+SELECT 'NL','VLK','Valkenburg','',''  UNION ALL
+SELECT 'NL','VLL','Vlieland','',''  UNION ALL
+SELECT 'NL','VLM','Vlijmen','',''  UNION ALL
+SELECT 'NL','VLO','Venlo-Autoweg','',''  UNION ALL
+SELECT 'NL','VLS','Vaals','',''  UNION ALL
+SELECT 'NL','VLT','Vleuten','',''  UNION ALL
+SELECT 'NL','VLW','Vogelwaarde','',''  UNION ALL
+SELECT 'NL','VNE','Van Essen','',''  UNION ALL
+SELECT 'NL','VNH','Venhuizen','',''  UNION ALL
+SELECT 'NL','VNK','Veendijk','',''  UNION ALL
+SELECT 'NL','VNO','Veenoord','',''  UNION ALL
+SELECT 'NL','VNR','Venray','',''  UNION ALL
+SELECT 'NL','VOB','Voorburg','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','VOD','Volendam','',''  UNION ALL
+SELECT 'NL','VOH','Voorhout','',''  UNION ALL
+SELECT 'NL','VOS','Voorschoten','',''  UNION ALL
+SELECT 'NL','VRA','Vrouwenakker','',''  UNION ALL
+SELECT 'NL','VRD','Vreeland','',''  UNION ALL
+SELECT 'NL','VRH','Vroomshoop','',''  UNION ALL
+SELECT 'NL','VRN','Vuren','',''  UNION ALL
+SELECT 'NL','VRS','Voorst','',''  UNION ALL
+SELECT 'NL','VRZ','Vriezenveen','',''  UNION ALL
+SELECT 'NL','VSI','Visvliet','',''  UNION ALL
+SELECT 'NL','VSM','Vessem','',''  UNION ALL
+SELECT 'NL','VSN','Velsen-Noord','',''  UNION ALL
+SELECT 'NL','VSR','Varsseveld','',''  UNION ALL
+SELECT 'NL','WAA','Waalre','',''  UNION ALL
+SELECT 'NL','WAB','Waardenburg','',''  UNION ALL
+SELECT 'NL','WAD','Waddinxveen','',''  UNION ALL
+SELECT 'NL','WAJ','Wanroij','',''  UNION ALL
+SELECT 'NL','WAL','Waalhaven','',''  UNION ALL
+SELECT 'NL','WAM','West-Knollendam','',''  UNION ALL
+SELECT 'NL','WAP','Wapenveld','',''  UNION ALL
+SELECT 'NL','WAR','Warnsveld','',''  UNION ALL
+SELECT 'NL','WAT','Wateringen','',''  UNION ALL
+SELECT 'NL','WBD','Wijk bij Duurstede','',''  UNION ALL
+SELECT 'NL','WBK','Westerbork','',''  UNION ALL
+SELECT 'NL','WBS','Westbeemster','',''  UNION ALL
+SELECT 'NL','WCH','Wijchen','',''  UNION ALL
+SELECT 'NL','WCM','Woudrichem','',''  UNION ALL
+SELECT 'NL','WDB','Woudenberg','',''  UNION ALL
+SELECT 'NL','WDE','Waarde','',''  UNION ALL
+SELECT 'NL','WDM','Weidum','',''  UNION ALL
+SELECT 'NL','WDN','Waardenburg','',''  UNION ALL
+SELECT 'NL','WDP','Westdorpe','',''  UNION ALL
+SELECT 'NL','WDR','Waarder','',''  UNION ALL
+SELECT 'NL','WDS','Wijdenes','',''  UNION ALL
+SELECT 'NL','WEA','Wijk en Aalburg','',''  UNION ALL
+SELECT 'NL','WED','Wemeldinge','',''  UNION ALL
+SELECT 'NL','WEH','Wervershoof','',''  UNION ALL
+SELECT 'NL','WEL','Well','',''  UNION ALL
+SELECT 'NL','WEM','Westmaas','',''  UNION ALL
+SELECT 'NL','WES','Westerhaar-Vriezenveensewijk','',''  UNION ALL
+SELECT 'NL','WEU','Weurt','',''  UNION ALL
+SELECT 'NL','WEV','Westervoort','',''  UNION ALL
+SELECT 'NL','WFM','Warffum','',''  UNION ALL
+SELECT 'NL','WGD','West-Graftdijk','',''  UNION ALL
+SELECT 'NL','WGE','Westergeest','',''  UNION ALL
+SELECT 'NL','WGN','Wognum','',''  UNION ALL
+SELECT 'NL','WGR','Wieringermeer','',''  UNION ALL
+SELECT 'NL','WGT','Wijgeest','',''  UNION ALL
+SELECT 'NL','WGW','Wageningen','',''  UNION ALL
+SELECT 'NL','WHD','Wilhelminadorp','',''  UNION ALL
+SELECT 'NL','WHL','Wehl','',''  UNION ALL
+SELECT 'NL','WHN','Westerhoven','',''  UNION ALL
+SELECT 'NL','WHO','Wehe-den Hoorn','',''  UNION ALL
+SELECT 'NL','WHT','Wernhout','',''  UNION ALL
+SELECT 'NL','WHU','Warfhuizen','',''  UNION ALL
+SELECT 'NL','WID','Wierden','',''  UNION ALL
+SELECT 'NL','WIE','Wier','',''  UNION ALL
+SELECT 'NL','WIJ','Wijhe','',''  UNION ALL
+SELECT 'NL','WIK','Wijk','',''  UNION ALL
+SELECT 'NL','WIS','Willemstad','',''  UNION ALL
+SELECT 'NL','WIT','Wittelte','',''  UNION ALL
+SELECT 'NL','WIW','Wieringerwerf','',''  UNION ALL
+SELECT 'NL','WJW','Wijnjewoude','',''  UNION ALL
+SELECT 'NL','WKD','Werkendam','',''  UNION ALL
+SELECT 'NL','WKG','Wolsumerketting','',''  UNION ALL
+SELECT 'NL','WKP','Westkapelle','',''  UNION ALL
+SELECT 'NL','WKS','Weakens','',''  UNION ALL
+SELECT 'NL','WKU','Workum','',''  UNION ALL
+SELECT 'NL','WLD','Wildervank','',''  UNION ALL
+SELECT 'NL','WLK','Waalwijk','',''  UNION ALL
+SELECT 'NL','WLL','Wellerlooi','',''  UNION ALL
+SELECT 'NL','WLN','Wilnis','',''  UNION ALL
+SELECT 'NL','WMH','Warmenhuizen','',''  UNION ALL
+SELECT 'NL','WMO','Wormer','',''  UNION ALL
+SELECT 'NL','WMS','Wommels','',''  UNION ALL
+SELECT 'NL','WNK','Winkel','',''  UNION ALL
+SELECT 'NL','WNS','Winsum','',''  UNION ALL
+SELECT 'NL','WOR','Woerden','',''  UNION ALL
+SELECT 'NL','WOU','Wouw','',''  UNION ALL
+SELECT 'NL','WPI','Waspik','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NL','WRA','Warga','',''  UNION ALL
+SELECT 'NL','WRD','Warder','',''  UNION ALL
+SELECT 'NL','WRG','Wieringen','',''  UNION ALL
+SELECT 'NL','WRL','Waarland','',''  UNION ALL
+SELECT 'NL','WRM','Warmond','',''  UNION ALL
+SELECT 'NL','WRP','Welsrijp','',''  UNION ALL
+SELECT 'NL','WRT','Weert','',''  UNION ALL
+SELECT 'NL','WRV','Wormerveer','',''  UNION ALL
+SELECT 'NL','WSC','Winschoten','',''  UNION ALL
+SELECT 'NL','WSD','Woudsend','',''  UNION ALL
+SELECT 'NL','WSM','Wessem','',''  UNION ALL
+SELECT 'NL','WSO','Walsoorden','',''  UNION ALL
+SELECT 'NL','WSP','Weesp','',''  UNION ALL
+SELECT 'NL','WSR','Waspik','',''  UNION ALL
+SELECT 'NL','WSS','Wassenaar','',''  UNION ALL
+SELECT 'NL','WTE','West-Terschelling','',''  UNION ALL
+SELECT 'NL','WTN','Warten','',''  UNION ALL
+SELECT 'NL','WTU','Westwoud','',''  UNION ALL
+SELECT 'NL','WTW','Winterswijk','',''  UNION ALL
+SELECT 'NL','WTZ','Westzaan','',''  UNION ALL
+SELECT 'NL','WVG','Wolvega','',''  UNION ALL
+SELECT 'NL','WWO','Wijdewormer','',''  UNION ALL
+SELECT 'NL','WWR','Wijde Wormer','',''  UNION ALL
+SELECT 'NL','WXM','Wamel','',''  UNION ALL
+SELECT 'NL','YPG','Ypenburg','',''  UNION ALL
+SELECT 'NL','YSK','Yerseke','',''  UNION ALL
+SELECT 'NL','ZAA','Zaandam','',''  UNION ALL
+SELECT 'NL','ZAD','Zaandijk','',''  UNION ALL
+SELECT 'NL','ZAG','Zwaag','',''  UNION ALL
+SELECT 'NL','ZBJ','Zuid-Beijerland','',''  UNION ALL
+SELECT 'NL','ZBK','Zevenbergschen Hoek','',''  UNION ALL
+SELECT 'NL','ZBO','Zuidbroek','',''  UNION ALL
+SELECT 'NL','ZDL','Zuidlaren','',''  UNION ALL
+SELECT 'NL','ZDM','Zeddam','',''  UNION ALL
+SELECT 'NL','ZDV','Zandvoort','',''  UNION ALL
+SELECT 'NL','ZEI','Zuideinde','',''  UNION ALL
+SELECT 'NL','ZEM','Zelhem','',''  UNION ALL
+SELECT 'NL','ZET','Zetten','',''  UNION ALL
+SELECT 'NL','ZEV','Zevenaar','',''  UNION ALL
+SELECT 'NL','ZEW','Zeewolde','',''  UNION ALL
+SELECT 'NL','ZGD','Zwaagdijk','',''  UNION ALL
+SELECT 'NL','ZGE','Zwiggelte','',''  UNION ALL
+SELECT 'NL','ZHN','Zevenhuizen (Utrecht)','',''  UNION ALL
+SELECT 'NL','ZHO','Zwaanshoek','',''  UNION ALL
+SELECT 'NL','ZHU','Zevenhuizen (Friesland)','',''  UNION ALL
+SELECT 'NL','ZIE','Zierikzee','',''  UNION ALL
+SELECT 'NL','ZIT','Zeist','',''  UNION ALL
+SELECT 'NL','ZLB','Zaltbommel','',''  UNION ALL
+SELECT 'NL','ZLD','Zoutelande','',''  UNION ALL
+SELECT 'NL','ZLK','Zalk','',''  UNION ALL
+SELECT 'NL','ZMM','Zwammerdam','',''  UNION ALL
+SELECT 'NL','ZND','Zenderen','',''  UNION ALL
+SELECT 'NL','ZOE','Zoelen','',''  UNION ALL
+SELECT 'NL','ZOT','Zoutkamp','',''  UNION ALL
+SELECT 'NL','ZPO','Zandpol','',''  UNION ALL
+SELECT 'NL','ZPS','Zijpersluis','',''  UNION ALL
+SELECT 'NL','ZTM','Zoetermeer','',''  UNION ALL
+SELECT 'NL','ZUD','Zundert','',''  UNION ALL
+SELECT 'NL','ZUL','Zuidland','',''  UNION ALL
+SELECT 'NL','ZUT','Zutphen','',''  UNION ALL
+SELECT 'NL','ZVB','Zevenbergen','',''  UNION ALL
+SELECT 'NL','ZWA','Zwanenburg','',''  UNION ALL
+SELECT 'NL','ZWB','Zwartenberg','',''  UNION ALL
+SELECT 'NL','ZWD','Zoeterwoude-Rijndijk','',''  UNION ALL
+SELECT 'NL','ZWE','Zwaagwesteinde','',''  UNION ALL
+SELECT 'NL','ZWI','Zwijndrecht','',''  UNION ALL
+SELECT 'NL','ZWL','Zuidwolde','',''  UNION ALL
+SELECT 'NL','ZWN','Zwinderen','',''  UNION ALL
+SELECT 'NL','ZWO','Zwolle','',''  UNION ALL
+SELECT 'NL','ZWS','Zwartsluis','',''  UNION ALL
 SELECT 'NO','','','',''  UNION ALL
 SELECT 'NO','AAF','Afjord','','16'  UNION ALL
 SELECT 'NO','AAN','Ardal','','14'  UNION ALL
@@ -41078,7 +41644,8 @@ SELECT 'NO','ABN','Aarebakken','','08'  UNION ALL
 SELECT 'NO','ADL','Alvdal','','04'  UNION ALL
 SELECT 'NO','ADN','Andenes','','18'  UNION ALL
 SELECT 'NO','ADY','Andoy','','18'  UNION ALL
-SELECT 'NO','AES','Alesund','','15'  UNION ALL
+SELECT 'NO','AES','Alesund','','15' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','AFT','Agnefest','','10'  UNION ALL
 SELECT 'NO','AGD','Agdenes','','16'  UNION ALL
 SELECT 'NO','AGO','Agotnes','','12'  UNION ALL
@@ -41142,8 +41709,7 @@ SELECT 'NO','BOR','Borgenhaugen','','01'  UNION ALL
 SELECT 'NO','BOS','Borkenes','','19'  UNION ALL
 SELECT 'NO','BOX','Bo','',''  UNION ALL
 SELECT 'NO','BRA','Bryggja','','14'  UNION ALL
-SELECT 'NO','BRE','Bremanger','','14' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','BRE','Bremanger','','14'  UNION ALL
 SELECT 'NO','BRG','Borg','',''  UNION ALL
 SELECT 'NO','BRK','Berkak','','12'  UNION ALL
 SELECT 'NO','BRO','Bronnoy','','18'  UNION ALL
@@ -41159,7 +41725,8 @@ SELECT 'NO','BVK','Brevik','','08'  UNION ALL
 SELECT 'NO','BVL','Brandval','','04'  UNION ALL
 SELECT 'NO','BYG','Bygland','','09'  UNION ALL
 SELECT 'NO','DAL','Dal','','02'  UNION ALL
-SELECT 'NO','DGR','Digernes','','04'  UNION ALL
+SELECT 'NO','DGR','Digernes','','04' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','DIM','Dimmelsvik','','12'  UNION ALL
 SELECT 'NO','DIR','Dirdal','',''  UNION ALL
 SELECT 'NO','DIS','Disena','','04'  UNION ALL
@@ -41223,8 +41790,7 @@ SELECT 'NO','FRJ','Frei','','15'  UNION ALL
 SELECT 'NO','FRK','Fredrikstad','','01'  UNION ALL
 SELECT 'NO','FRN','Frogn','','02'  UNION ALL
 SELECT 'NO','FRO','Floro','','14'  UNION ALL
-SELECT 'NO','FRS','Forus','','11' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','FRS','Forus','','11'  UNION ALL
 SELECT 'NO','FRT','Frosta','','17'  UNION ALL
 SELECT 'NO','FSD','Fjellstrand','',''  UNION ALL
 SELECT 'NO','FSN','Fosnes','','17'  UNION ALL
@@ -41240,7 +41806,8 @@ SELECT 'NO','GDM','Gjerdrum','','02'  UNION ALL
 SELECT 'NO','GEI','Geilo','','06'  UNION ALL
 SELECT 'NO','GEN','Gardermoen','','02'  UNION ALL
 SELECT 'NO','GFR','Gamle Fredrikstad','',''  UNION ALL
-SELECT 'NO','GIL','Gildeskal','','18'  UNION ALL
+SELECT 'NO','GIL','Gildeskal','','18' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','GIS','Giske','','15'  UNION ALL
 SELECT 'NO','GJM','Gjemnes','','15'  UNION ALL
 SELECT 'NO','GJS','Gjesdal','','11'  UNION ALL
@@ -41304,8 +41871,7 @@ SELECT 'NO','HMN','Haslemoen','','04'  UNION ALL
 SELECT 'NO','HMR','Hamar','','04'  UNION ALL
 SELECT 'NO','HMS','Hemnes','','18'  UNION ALL
 SELECT 'NO','HMY','Hamaroy','','18'  UNION ALL
-SELECT 'NO','HND','Hornindal','','14' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','HND','Hornindal','','14'  UNION ALL
 SELECT 'NO','HNE','Hemnesberget','','18'  UNION ALL
 SELECT 'NO','HNN','Hovdenakken','',''  UNION ALL
 SELECT 'NO','HNS','Hanestad','','04'  UNION ALL
@@ -41321,7 +41887,8 @@ SELECT 'NO','HRE','Herre-Bamble','','08'  UNION ALL
 SELECT 'NO','HRI','Hareid','','15'  UNION ALL
 SELECT 'NO','HRY','Heroya','','08'  UNION ALL
 SELECT 'NO','HSD','Hemsedal','','06'  UNION ALL
-SELECT 'NO','HSY','Hellesylt','','15'  UNION ALL
+SELECT 'NO','HSY','Hellesylt','','15' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','HUN','Hunndalen','','05'  UNION ALL
 SELECT 'NO','HUR','Hurum','','06'  UNION ALL
 SELECT 'NO','HUS','Husnes','','12'  UNION ALL
@@ -41385,8 +41952,7 @@ SELECT 'NO','KSV','Kongsvinger','','04'  UNION ALL
 SELECT 'NO','KSY','Kvitsoy','','11'  UNION ALL
 SELECT 'NO','KTK','Kautokeino','','20'  UNION ALL
 SELECT 'NO','KVA','Kalvaag','','14'  UNION ALL
-SELECT 'NO','KVB','Kvaleberg','','11' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','KVB','Kvaleberg','','11'  UNION ALL
 SELECT 'NO','KVD','Kvinesdal','','10'  UNION ALL
 SELECT 'NO','KVF','Kvafjord','','19'  UNION ALL
 SELECT 'NO','KVH','Kvinnherad','','12'  UNION ALL
@@ -41402,7 +41968,8 @@ SELECT 'NO','LDS','Lindesnes','','10'  UNION ALL
 SELECT 'NO','LEB','Lebesby','','20'  UNION ALL
 SELECT 'NO','LEF','Leirfjord','','18'  UNION ALL
 SELECT 'NO','LEI','Leira','','05'  UNION ALL
-SELECT 'NO','LEK','Leikanger','','14'  UNION ALL
+SELECT 'NO','LEK','Leikanger','','14' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','LEN','Lensvik','','16'  UNION ALL
 SELECT 'NO','LEP','Leirpollen','','20'  UNION ALL
 SELECT 'NO','LER','Lervik','','01'  UNION ALL
@@ -41466,8 +42033,7 @@ SELECT 'NO','MQN','Mo i Rana','','18'  UNION ALL
 SELECT 'NO','MRV','Muruvik','','16'  UNION ALL
 SELECT 'NO','MSF','Masfjorden','','12'  UNION ALL
 SELECT 'NO','MSK','Moskenes','','18'  UNION ALL
-SELECT 'NO','MSS','Moss','','01' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','MSS','Moss','','01'  UNION ALL
 SELECT 'NO','MSV','Mosvik','','17'  UNION ALL
 SELECT 'NO','MSY','Masoy','','20'  UNION ALL
 SELECT 'NO','MYO','Myre-Oksnes','','18'  UNION ALL
@@ -41483,7 +42049,8 @@ SELECT 'NO','NHS','Norheimsund','','12'  UNION ALL
 SELECT 'NO','NIT','Nittedal','','02'  UNION ALL
 SELECT 'NO','NKB','Nordkjosbotn','','19'  UNION ALL
 SELECT 'NO','NLD','Nodeland','',''  UNION ALL
-SELECT 'NO','NOD','Norddal','','15'  UNION ALL
+SELECT 'NO','NOD','Norddal','','15' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','NOK','Nordkapp','','20'  UNION ALL
 SELECT 'NO','NOR','Nordreisa','','19'  UNION ALL
 SELECT 'NO','NRS','Noresund','','06'  UNION ALL
@@ -41547,8 +42114,7 @@ SELECT 'NO','RFS','Raufoss','','05'  UNION ALL
 SELECT 'NO','RHT','Raholt','','02'  UNION ALL
 SELECT 'NO','RIA','Rislokka','','03'  UNION ALL
 SELECT 'NO','RIN','Ringebu','','05'  UNION ALL
-SELECT 'NO','RIS','Risor','','09' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','RIS','Risor','','09'  UNION ALL
 SELECT 'NO','RKN','Rjukan','','08'  UNION ALL
 SELECT 'NO','RLL','Rollag','','06'  UNION ALL
 SELECT 'NO','RLN','Raelingen','','14'  UNION ALL
@@ -41564,7 +42130,8 @@ SELECT 'NO','RSD','Rausand','','15'  UNION ALL
 SELECT 'NO','RSG','Romskog','','01'  UNION ALL
 SELECT 'NO','RSN','Raudsandnes','',''  UNION ALL
 SELECT 'NO','RSS','Rissa','','16'  UNION ALL
-SELECT 'NO','RVK','Rorvik','','17'  UNION ALL
+SELECT 'NO','RVK','Rorvik','','17' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','RVY','Rolvsoy','','01'  UNION ALL
 SELECT 'NO','RYG','Rygge','','01'  UNION ALL
 SELECT 'NO','SAA','Skaland','','19'  UNION ALL
@@ -41628,8 +42195,7 @@ SELECT 'NO','SLX','Sortland','','18'  UNION ALL
 SELECT 'NO','SMM','Strommen','','02'  UNION ALL
 SELECT 'NO','SMN','Somna','','18'  UNION ALL
 SELECT 'NO','SMO','Smola','','15'  UNION ALL
-SELECT 'NO','SMR','Sofiemyr','','02' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','SMR','Sofiemyr','','02'  UNION ALL
 SELECT 'NO','SNA','Sokna','','06'  UNION ALL
 SELECT 'NO','SND','Sund','','12'  UNION ALL
 SELECT 'NO','SNE','Sogne','','10'  UNION ALL
@@ -41645,7 +42211,8 @@ SELECT 'NO','SOV','Sovik','','15'  UNION ALL
 SELECT 'NO','SPD','Spongdal','','16'  UNION ALL
 SELECT 'NO','SPG','Sarpsborg','','01'  UNION ALL
 SELECT 'NO','SPM','Spillam','','17'  UNION ALL
-SELECT 'NO','SPV','Spjelkavik','','15'  UNION ALL
+SELECT 'NO','SPV','Spjelkavik','','15' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','SPY','Spydeberg','','01'  UNION ALL
 SELECT 'NO','SRA','Sorreisa','','19'  UNION ALL
 SELECT 'NO','SRM','Straumsnes','','18'  UNION ALL
@@ -41709,8 +42276,7 @@ SELECT 'NO','TNB','Tranby','','06'  UNION ALL
 SELECT 'NO','TNS','Trones','',''  UNION ALL
 SELECT 'NO','TOF','Tofte i Hurum','','06'  UNION ALL
 SELECT 'NO','TOM','Tomrefjord','',''  UNION ALL
-SELECT 'NO','TON','Tonsberg','','07' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NO','TON','Tonsberg','','07'  UNION ALL
 SELECT 'NO','TOR','Torsken','','19'  UNION ALL
 SELECT 'NO','TOS','Tromso','','19'  UNION ALL
 SELECT 'NO','TOV','Tovik','','19'  UNION ALL
@@ -41726,7 +42292,8 @@ SELECT 'NO','TUN','Tunborg','',''  UNION ALL
 SELECT 'NO','TUS','Tustna','','15'  UNION ALL
 SELECT 'NO','TVE','Tvedestrand','','09'  UNION ALL
 SELECT 'NO','TVT','Tveit','','10'  UNION ALL
-SELECT 'NO','TYF','Tysfjord','','18'  UNION ALL
+SELECT 'NO','TYF','Tysfjord','','18' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NO','TYN','Tysnes','','12'  UNION ALL
 SELECT 'NO','TYV','Tysvar','','11'  UNION ALL
 SELECT 'NO','UGD','Uggdal','','12'  UNION ALL
@@ -41790,8 +42357,7 @@ SELECT 'NP','BJU','Bajura','',''  UNION ALL
 SELECT 'NP','BRG','Birgunj','',''  UNION ALL
 SELECT 'NP','BWA','Bhairawa','',''  UNION ALL
 SELECT 'NP','DAP','Darchula','',''  UNION ALL
-SELECT 'NP','DHG','Dhaulagiri','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NP','DHG','Dhaulagiri','',''  UNION ALL
 SELECT 'NP','DHI','Dhangarhi','',''  UNION ALL
 SELECT 'NP','DNP','Dang','',''  UNION ALL
 SELECT 'NP','DOP','Dolpa','',''  UNION ALL
@@ -41807,7 +42373,8 @@ SELECT 'NP','KAI','Kailali','',''  UNION ALL
 SELECT 'NP','KAK','Kakarbitta','',''  UNION ALL
 SELECT 'NP','KEP','Nepalganj','',''  UNION ALL
 SELECT 'NP','KGJ','Kanchenjunga','',''  UNION ALL
-SELECT 'NP','KTM','Kathmandu','',''  UNION ALL
+SELECT 'NP','KTM','Kathmandu','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NP','LDN','Lamidanda','',''  UNION ALL
 SELECT 'NP','LTG','Langtang','',''  UNION ALL
 SELECT 'NP','LUA','Lukla','',''  UNION ALL
@@ -41871,8 +42438,7 @@ SELECT 'NZ','FOR','Fortrose','','STL'  UNION ALL
 SELECT 'NZ','FOX','Foxton','','MWT'  UNION ALL
 SELECT 'NZ','GBS','Port Fitzroy','','AUK'  UNION ALL
 SELECT 'NZ','GBZ','Great Barrier Is','','AUK'  UNION ALL
-SELECT 'NZ','GIS','Gisborne','','GIS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NZ','GIS','Gisborne','','GIS'  UNION ALL
 SELECT 'NZ','GMN','Greymouth','','WTC'  UNION ALL
 SELECT 'NZ','GOB','Golden Bay','','TAS'  UNION ALL
 SELECT 'NZ','GOR','Gore','','STL'  UNION ALL
@@ -41888,7 +42454,8 @@ SELECT 'NZ','KAK','Kakariki','','MWT'  UNION ALL
 SELECT 'NZ','KAP','Kaiapoi','','CAN'  UNION ALL
 SELECT 'NZ','KAT','Kaitaia','','NTL'  UNION ALL
 SELECT 'NZ','KAW','Kawerau','','BOP'  UNION ALL
-SELECT 'NZ','KBZ','Kaikoura','','CAN'  UNION ALL
+SELECT 'NZ','KBZ','Kaikoura','','CAN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NZ','KKE','Kerikeri','','AUK'  UNION ALL
 SELECT 'NZ','KKO','Kaikohe','','NTL'  UNION ALL
 SELECT 'NZ','KOK','Kokiri','','WTC'  UNION ALL
@@ -41952,8 +42519,7 @@ SELECT 'NZ','RAV','Ravensbourne','','OTA'  UNION ALL
 SELECT 'NZ','RGO','Rangiora','','CAN'  UNION ALL
 SELECT 'NZ','RMD','Richmond','','NSN'  UNION ALL
 SELECT 'NZ','RNW','Renwick','','MBH'  UNION ALL
-SELECT 'NZ','ROT','Rotorua','','BOP' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'NZ','ROT','Rotorua','','BOP'  UNION ALL
 SELECT 'NZ','RUS','Russel','',''  UNION ALL
 SELECT 'NZ','RXB','Roxburgh','','OTA'  UNION ALL
 SELECT 'NZ','SBN','Sockburn','',''  UNION ALL
@@ -41969,7 +42535,8 @@ SELECT 'NZ','THH','Taharoa','','WKO'  UNION ALL
 SELECT 'NZ','THP','Taihape','','MWT'  UNION ALL
 SELECT 'NZ','TIU','Timaru','','CAN'  UNION ALL
 SELECT 'NZ','TKA','Temuka','','CAN'  UNION ALL
-SELECT 'NZ','TKH','Tarakohe','','TAS'  UNION ALL
+SELECT 'NZ','TKH','Tarakohe','','TAS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'NZ','TKI','Te Kuiti','','WKO'  UNION ALL
 SELECT 'NZ','TKU','Takapau','','HKB'  UNION ALL
 SELECT 'NZ','TKZ','Tokoroa','','WKO'  UNION ALL
@@ -42033,8 +42600,7 @@ SELECT 'OM','RAY','Raysut','',''  UNION ALL
 SELECT 'OM','RMB','Buraimi','',''  UNION ALL
 SELECT 'OM','RWI','Ruwi','',''  UNION ALL
 SELECT 'OM','SEE','Seeb','',''  UNION ALL
-SELECT 'OM','SLL','Salalah','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'OM','SLL','Salalah','',''  UNION ALL
 SELECT 'OM','SOH','Sohar','',''  UNION ALL
 SELECT 'OM','STQ','Mina Sultan Qaboos, Muscat','',''  UNION ALL
 SELECT 'OM','SUH','Sur','',''  UNION ALL
@@ -42050,7 +42616,8 @@ SELECT 'PA','ALA','Alanje','',''  UNION ALL
 SELECT 'PA','AML','Puerto Armuelles','',''  UNION ALL
 SELECT 'PA','ATA','Atalaya','',''  UNION ALL
 SELECT 'PA','BAG','Bagala','',''  UNION ALL
-SELECT 'PA','BAY','Bayano','',''  UNION ALL
+SELECT 'PA','BAY','Bayano','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PA','BEL','Bella Vista','',''  UNION ALL
 SELECT 'PA','BFQ','Bahia Pina','',''  UNION ALL
 SELECT 'PA','BLB','Balboa','',''  UNION ALL
@@ -42114,8 +42681,7 @@ SELECT 'PA','PAM','Almirante','',''  UNION ALL
 SELECT 'PA','PAY','Payardi','',''  UNION ALL
 SELECT 'PA','PBE','Portobelo','',''  UNION ALL
 SELECT 'PA','PBM','Bahia Las Minas','',''  UNION ALL
-SELECT 'PA','PCA','Puerto Caimito','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PA','PCA','Puerto Caimito','',''  UNION ALL
 SELECT 'PA','PCO','Pacora','',''  UNION ALL
 SELECT 'PA','PDS','Pedasi','',''  UNION ALL
 SELECT 'PA','PED','Pedregal','',''  UNION ALL
@@ -42131,7 +42697,8 @@ SELECT 'PA','PYV','Yavisa','',''  UNION ALL
 SELECT 'PA','RHA','Rio Hato','',''  UNION ALL
 SELECT 'PA','RIO','Rio Viejo de los Valdes','',''  UNION ALL
 SELECT 'PA','RIT','Rio Tigre','',''  UNION ALL
-SELECT 'PA','RIZ','Rio Azucar','',''  UNION ALL
+SELECT 'PA','RIZ','Rio Azucar','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PA','RSI','Rio Sidra','',''  UNION ALL
 SELECT 'PA','SAX','Sambu','',''  UNION ALL
 SELECT 'PA','SCL','Santa Clara','',''  UNION ALL
@@ -42195,8 +42762,7 @@ SELECT 'PE','LPN','La Planchada','',''  UNION ALL
 SELECT 'PE','LPP','La Pampilla','',''  UNION ALL
 SELECT 'PE','MAL','Mala','',''  UNION ALL
 SELECT 'PE','MBP','Moyobamba','',''  UNION ALL
-SELECT 'PE','MCA','Mancora','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PE','MCA','Mancora','',''  UNION ALL
 SELECT 'PE','MFT','Machu Picchu','',''  UNION ALL
 SELECT 'PE','MLQ','Mollendo','',''  UNION ALL
 SELECT 'PE','MRI','Matarani','',''  UNION ALL
@@ -42212,7 +42778,8 @@ SELECT 'PE','PIO','Pisco','',''  UNION ALL
 SELECT 'PE','PIU','Piura','',''  UNION ALL
 SELECT 'PE','PLO','Punta Lobitos','',''  UNION ALL
 SELECT 'PE','PMT','Pimentel','',''  UNION ALL
-SELECT 'PE','PUB','Bayovar','',''  UNION ALL
+SELECT 'PE','PUB','Bayovar','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PE','PUN','Puno','',''  UNION ALL
 SELECT 'PE','QUI','Quinches','',''  UNION ALL
 SELECT 'PE','RIJ','Rioja','',''  UNION ALL
@@ -42276,8 +42843,7 @@ SELECT 'PF','TIH','Tikehau','',''  UNION ALL
 SELECT 'PF','TJN','Takume','',''  UNION ALL
 SELECT 'PF','TKP','Takapoto','',''  UNION ALL
 SELECT 'PF','TKV','Tatakoto','',''  UNION ALL
-SELECT 'PF','TKX','Takaroa','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PF','TKX','Takaroa','',''  UNION ALL
 SELECT 'PF','TTI','Tetiaroa Is','',''  UNION ALL
 SELECT 'PF','TUB','Tubuai','',''  UNION ALL
 SELECT 'PF','UAH','Ua Huka','',''  UNION ALL
@@ -42293,7 +42859,8 @@ SELECT 'PG','ABW','Abau','',''  UNION ALL
 SELECT 'PG','AEK','Aseki','',''  UNION ALL
 SELECT 'PG','AFR','Afore','',''  UNION ALL
 SELECT 'PG','AGG','Angoram','',''  UNION ALL
-SELECT 'PG','AGK','Kagua','',''  UNION ALL
+SELECT 'PG','AGK','Kagua','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','AGL','Wanigela','',''  UNION ALL
 SELECT 'PG','AHO','Ahioma','',''  UNION ALL
 SELECT 'PG','AIE','Aiome','',''  UNION ALL
@@ -42357,8 +42924,7 @@ SELECT 'PG','CPN','Cape Rodney','',''  UNION ALL
 SELECT 'PG','CVB','Chungribu','',''  UNION ALL
 SELECT 'PG','CVL','Cape Vogel','',''  UNION ALL
 SELECT 'PG','DAF','Daup','',''  UNION ALL
-SELECT 'PG','DAU','Daru','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PG','DAU','Daru','',''  UNION ALL
 SELECT 'PG','DBP','Debepare','',''  UNION ALL
 SELECT 'PG','DDM','Dodoima','',''  UNION ALL
 SELECT 'PG','DER','Derim','',''  UNION ALL
@@ -42374,7 +42940,8 @@ SELECT 'PG','EGA','Engati','',''  UNION ALL
 SELECT 'PG','EIA','Eia','',''  UNION ALL
 SELECT 'PG','EMI','Emirau','',''  UNION ALL
 SELECT 'PG','EMO','Emo','',''  UNION ALL
-SELECT 'PG','EMS','Embessa','',''  UNION ALL
+SELECT 'PG','EMS','Embessa','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','EPT','Eliptamin','',''  UNION ALL
 SELECT 'PG','ERE','Erave','',''  UNION ALL
 SELECT 'PG','ERU','Erume','',''  UNION ALL
@@ -42438,8 +43005,7 @@ SELECT 'PG','KAQ','Kamulai','',''  UNION ALL
 SELECT 'PG','KBM','Kabwum','',''  UNION ALL
 SELECT 'PG','KCJ','Komaio','',''  UNION ALL
 SELECT 'PG','KDE','Koroba','',''  UNION ALL
-SELECT 'PG','KDP','Kandep','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PG','KDP','Kandep','',''  UNION ALL
 SELECT 'PG','KDQ','Kamberatoro','',''  UNION ALL
 SELECT 'PG','KDR','Kandrian','',''  UNION ALL
 SELECT 'PG','KEG','Keglsugl','',''  UNION ALL
@@ -42455,7 +43021,8 @@ SELECT 'PG','KIQ','Kira','',''  UNION ALL
 SELECT 'PG','KIZ','Kikinonda','',''  UNION ALL
 SELECT 'PG','KJU','Kamiraba','',''  UNION ALL
 SELECT 'PG','KKD','Kokoda','',''  UNION ALL
-SELECT 'PG','KLO','Kalo','',''  UNION ALL
+SELECT 'PG','KLO','Kalo','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','KMA','Kerema','',''  UNION ALL
 SELECT 'PG','KMB','Koinambe','',''  UNION ALL
 SELECT 'PG','KMF','Kamina','',''  UNION ALL
@@ -42519,8 +43086,7 @@ SELECT 'PG','MAN','Manda','',''  UNION ALL
 SELECT 'PG','MAP','Mamai','',''  UNION ALL
 SELECT 'PG','MAS','Manus Island','',''  UNION ALL
 SELECT 'PG','MBV','Masa','',''  UNION ALL
-SELECT 'PG','MDM','Munduku','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PG','MDM','Munduku','',''  UNION ALL
 SELECT 'PG','MDU','Mendi','',''  UNION ALL
 SELECT 'PG','MFO','Manguna','',''  UNION ALL
 SELECT 'PG','MFZ','Mesalia','',''  UNION ALL
@@ -42536,7 +43102,8 @@ SELECT 'PG','MMV','Mal','',''  UNION ALL
 SELECT 'PG','MNP','Maron','',''  UNION ALL
 SELECT 'PG','MPF','Mapoda','',''  UNION ALL
 SELECT 'PG','MPG','Makini','',''  UNION ALL
-SELECT 'PG','MPU','Mapua','',''  UNION ALL
+SELECT 'PG','MPU','Mapua','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','MPX','Miyanmin','',''  UNION ALL
 SELECT 'PG','MRH','May River','',''  UNION ALL
 SELECT 'PG','MRM','Manare','',''  UNION ALL
@@ -42600,8 +43167,7 @@ SELECT 'PG','RNR','Robinson River','',''  UNION ALL
 SELECT 'PG','ROR','Orobay','',''  UNION ALL
 SELECT 'PG','RUU','Ruti','',''  UNION ALL
 SELECT 'PG','RVI','Russel Island','',''  UNION ALL
-SELECT 'PG','SAM','Salamo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PG','SAM','Salamo','',''  UNION ALL
 SELECT 'PG','SBC','Selbang','',''  UNION ALL
 SELECT 'PG','SBE','Suabi','',''  UNION ALL
 SELECT 'PG','SBV','Sabah','',''  UNION ALL
@@ -42617,7 +43183,8 @@ SELECT 'PG','SIZ','Sissano','',''  UNION ALL
 SELECT 'PG','SKC','Suki','',''  UNION ALL
 SELECT 'PG','SMH','Sapmanga','',''  UNION ALL
 SELECT 'PG','SMJ','Sim','',''  UNION ALL
-SELECT 'PG','SMP','Stockholm','',''  UNION ALL
+SELECT 'PG','SMP','Stockholm','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','SMU','Salamaua','',''  UNION ALL
 SELECT 'PG','SOI','Sokar Island','',''  UNION ALL
 SELECT 'PG','SPH','Sopu','',''  UNION ALL
@@ -42681,8 +43248,7 @@ SELECT 'PG','VLA','Vailala','',''  UNION ALL
 SELECT 'PG','VMU','Baimuru','',''  UNION ALL
 SELECT 'PG','WAB','Wabag','',''  UNION ALL
 SELECT 'PG','WAJ','Wawoi Falls','',''  UNION ALL
-SELECT 'PG','WAO','Wabo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PG','WAO','Wabo','',''  UNION ALL
 SELECT 'PG','WBC','Wapolu','',''  UNION ALL
 SELECT 'PG','WBM','Wapenamanda','',''  UNION ALL
 SELECT 'PG','WED','Wedau','',''  UNION ALL
@@ -42698,7 +43264,8 @@ SELECT 'PG','WSA','Wasua','',''  UNION ALL
 SELECT 'PG','WSU','Wasu','',''  UNION ALL
 SELECT 'PG','WTP','Woitape','',''  UNION ALL
 SELECT 'PG','WTT','Wantoat','',''  UNION ALL
-SELECT 'PG','WUG','Wau','',''  UNION ALL
+SELECT 'PG','WUG','Wau','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PG','WUM','Wasum','',''  UNION ALL
 SELECT 'PG','WUV','Wuvulu Is','',''  UNION ALL
 SELECT 'PG','WWK','Wewak','',''  UNION ALL
@@ -42762,8 +43329,7 @@ SELECT 'PH','BTN','Bataan, Mariveles','',''  UNION ALL
 SELECT 'PH','BTS','Batarasa/Puerto Princesa','',''  UNION ALL
 SELECT 'PH','BTY','Bantayon/San Jose','',''  UNION ALL
 SELECT 'PH','BUD','Budbud/Davao','',''  UNION ALL
-SELECT 'PH','BUG','Bugo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PH','BUG','Bugo','',''  UNION ALL
 SELECT 'PH','BUL','Bulan, Luzon','',''  UNION ALL
 SELECT 'PH','BUR','Burdeos, Polillo Isl','',''  UNION ALL
 SELECT 'PH','BXU','Butuan Bay/Masao','',''  UNION ALL
@@ -42779,7 +43345,8 @@ SELECT 'PH','CAM','Camarines Norte/Jose Panganiban','',''  UNION ALL
 SELECT 'PH','CAZ','Cadiz','',''  UNION ALL
 SELECT 'PH','CBO','Cotabato, Mindanao','',''  UNION ALL
 SELECT 'PH','CBY','Calbayog, Samar','',''  UNION ALL
-SELECT 'PH','CCG','Calag-Calag/Dumaguete','',''  UNION ALL
+SELECT 'PH','CCG','Calag-Calag/Dumaguete','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PH','CDB','Caldera Bay/Zamboanga','',''  UNION ALL
 SELECT 'PH','CDY','Cagayan De Sulu','',''  UNION ALL
 SELECT 'PH','CEB','Cebu','',''  UNION ALL
@@ -42843,8 +43410,7 @@ SELECT 'PH','GNI','General Island/Bislig','',''  UNION ALL
 SELECT 'PH','GUI','Guinabasan','',''  UNION ALL
 SELECT 'PH','HIJ','Hijo Wharf/Davao','',''  UNION ALL
 SELECT 'PH','HIM','Himamaylan, Negros','',''  UNION ALL
-SELECT 'PH','HNB','Hinobaan/Iloilo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PH','HNB','Hinobaan/Iloilo','',''  UNION ALL
 SELECT 'PH','HNG','Hinigaran/Iloilo','',''  UNION ALL
 SELECT 'PH','HNT','Hinatuan/Bislig','',''  UNION ALL
 SELECT 'PH','HON','Hondagua/Siain','',''  UNION ALL
@@ -42860,7 +43426,8 @@ SELECT 'PH','JAG','Jagna','',''  UNION ALL
 SELECT 'PH','JAS','Jasaan','',''  UNION ALL
 SELECT 'PH','JNZ','Jimenez/Ozamis','',''  UNION ALL
 SELECT 'PH','JOL','Jolo','',''  UNION ALL
-SELECT 'PH','JPM','Jose Panganiban, Luzon','',''  UNION ALL
+SELECT 'PH','JPM','Jose Panganiban, Luzon','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PH','KAR','Karomatan/Iligan','',''  UNION ALL
 SELECT 'PH','KAS','Kabasalan/Zamboanga','',''  UNION ALL
 SELECT 'PH','KAT','Katipunan/Ozamis','',''  UNION ALL
@@ -42924,8 +43491,7 @@ SELECT 'PH','MGI','Mambagid','',''  UNION ALL
 SELECT 'PH','MHT','Marihatag, Mindanao','',''  UNION ALL
 SELECT 'PH','MIC','Misamis Or./Cagayan De Oro','',''  UNION ALL
 SELECT 'PH','MIL','Milbuk/Dadiangas','',''  UNION ALL
-SELECT 'PH','MIO','Misamis Occ./Ozamis','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PH','MIO','Misamis Occ./Ozamis','',''  UNION ALL
 SELECT 'PH','MLB','Maluso, Basilan','',''  UNION ALL
 SELECT 'PH','MLL','Malalag/Davao','',''  UNION ALL
 SELECT 'PH','MLP','Malabang','',''  UNION ALL
@@ -42941,7 +43507,8 @@ SELECT 'PH','MRQ','Marinduque','',''  UNION ALL
 SELECT 'PH','MSB','Malasugat Bay/Zamboanga','',''  UNION ALL
 SELECT 'PH','MSC','Masinloc/Sual','',''  UNION ALL
 SELECT 'PH','MSS','Mission/Aparri','',''  UNION ALL
-SELECT 'PH','MSY','Manansalay/Batangas','',''  UNION ALL
+SELECT 'PH','MSY','Manansalay/Batangas','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PH','MTA','Matina Aplaya/Davao','',''  UNION ALL
 SELECT 'PH','MUL','Mulanay/Siain','',''  UNION ALL
 SELECT 'PH','MVS','Mariveles, Luzon','',''  UNION ALL
@@ -43005,8 +43572,7 @@ SELECT 'PH','QBL','Quinablagan/Mati','',''  UNION ALL
 SELECT 'PH','QPT','Quipit Bay/Ozamis','',''  UNION ALL
 SELECT 'PH','QUE','Queson/Siain','',''  UNION ALL
 SELECT 'PH','QUI','Quiddiao/Aparri','',''  UNION ALL
-SELECT 'PH','REA','Real/Siain','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PH','REA','Real/Siain','',''  UNION ALL
 SELECT 'PH','RIZ','Rizal, Luzon','',''  UNION ALL
 SELECT 'PH','RLN','Romblon','',''  UNION ALL
 SELECT 'PH','RSO','Rosario','',''  UNION ALL
@@ -43022,7 +43588,8 @@ SELECT 'PH','SBY','Sablayan/Batangas','',''  UNION ALL
 SELECT 'PH','SCA','San Carlos/Dumaguete','',''  UNION ALL
 SELECT 'PH','SCR','Santa Cruz/Sual','',''  UNION ALL
 SELECT 'PH','SCT','Santa Catalina/Dumaguete','',''  UNION ALL
-SELECT 'PH','SDG','Sindangan/Ozamis','',''  UNION ALL
+SELECT 'PH','SDG','Sindangan/Ozamis','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PH','SFE','San Fernando, Luzon','',''  UNION ALL
 SELECT 'PH','SFS','Subic Bay','',''  UNION ALL
 SELECT 'PH','SGD','Sogod/Tacloban','',''  UNION ALL
@@ -43086,8 +43653,7 @@ SELECT 'PH','URR','Umrur','',''  UNION ALL
 SELECT 'PH','USU','Busuanga','',''  UNION ALL
 SELECT 'PH','VCS','Victorias, Negros','',''  UNION ALL
 SELECT 'PH','VNV','Villanueva','',''  UNION ALL
-SELECT 'PH','VRC','Virac','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PH','VRC','Virac','',''  UNION ALL
 SELECT 'PH','VTL','Vitali/Zamboanga','',''  UNION ALL
 SELECT 'PH','VTO','Vito/Iloilo','',''  UNION ALL
 SELECT 'PH','WAS','Wasag/Dadiangas','',''  UNION ALL
@@ -43103,7 +43669,8 @@ SELECT 'PK','ATG','Attock','',''  UNION ALL
 SELECT 'PK','BDN','Badin','',''  UNION ALL
 SELECT 'PK','BHC','Bhurban','',''  UNION ALL
 SELECT 'PK','BHV','Bahawalpur','',''  UNION ALL
-SELECT 'PK','BNP','Bannu','',''  UNION ALL
+SELECT 'PK','BNP','Bannu','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PK','BQM','Karachi-Muhammad Bin Qasim','',''  UNION ALL
 SELECT 'PK','CHB','Chilas','',''  UNION ALL
 SELECT 'PK','CJL','Chitral','',''  UNION ALL
@@ -43167,14 +43734,12 @@ SELECT 'PK','TLB','Tarbela','',''  UNION ALL
 SELECT 'PK','TOR','Torkham','',''  UNION ALL
 SELECT 'PK','TUK','Turbat','',''  UNION ALL
 SELECT 'PK','UET','Quetta','',''  UNION ALL
-SELECT 'PK','WAF','Wana','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PK','WAF','Wana','',''  UNION ALL
 SELECT 'PK','WAG','Wagha','',''  UNION ALL
 SELECT 'PK','WGB','Bahawalnagar','',''  UNION ALL
 SELECT 'PK','WGH','Wagah','',''  UNION ALL
 SELECT 'PK','WNS','Nawabshah','',''  UNION ALL
 SELECT 'PK','ZEO','Savi Ragha','',''  UNION ALL
-SELECT 'PL','','','',''  UNION ALL
 SELECT 'PL','ADC','Andrychow','',''  UNION ALL
 SELECT 'PL','ADJ','Adamow','',''  UNION ALL
 SELECT 'PL','ALK','Aleksandrow Kujawski','',''  UNION ALL
@@ -43183,9 +43748,10 @@ SELECT 'PL','AWL','Aleksandrow Lodzki','',''  UNION ALL
 SELECT 'PL','BAP','Biala Podlaska','',''  UNION ALL
 SELECT 'PL','BAR','Bartoszyce','',''  UNION ALL
 SELECT 'PL','BCA','Bochnia','',''  UNION ALL
-SELECT 'PL','BED','B?dzino','',''  UNION ALL
-SELECT 'PL','BEL','Be??yce','',''  UNION ALL
-SELECT 'PL','BGA','Boguchwala','',''  UNION ALL
+SELECT 'PL','BED','Będzin','',''  UNION ALL
+SELECT 'PL','BEL','Bełżyce','',''  UNION ALL
+SELECT 'PL','BGA','Boguchwala','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','BGW','BoguchwaBa','',''  UNION ALL
 SELECT 'PL','BGY','Bogatynia','',''  UNION ALL
 SELECT 'PL','BIA','Bialystok','',''  UNION ALL
@@ -43248,9 +43814,8 @@ SELECT 'PL','DCE','Dobczyce','',''  UNION ALL
 SELECT 'PL','DEB','Debica','',''  UNION ALL
 SELECT 'PL','DKA','Debnica Kaszubska','',''  UNION ALL
 SELECT 'PL','DNW','Dobrzyn nad Wisla','',''  UNION ALL
-SELECT 'PL','DOK','Dobrzyniewo Koscielne','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'PL','DOL','Do?uje Mierzyn','',''  UNION ALL
+SELECT 'PL','DOK','Dobrzyniewo Koscielne','',''  UNION ALL
+SELECT 'PL','DOL','Dołuje Mierzyn','',''  UNION ALL
 SELECT 'PL','DUS','Duszniki Zdroj','',''  UNION ALL
 SELECT 'PL','DZE','Dobrzykowice Wroclawskie','',''  UNION ALL
 SELECT 'PL','DZI','Dzialdowo','',''  UNION ALL
@@ -43266,7 +43831,8 @@ SELECT 'PL','GDY','Gdynia','',''  UNION ALL
 SELECT 'PL','GIZ','Gizycko','',''  UNION ALL
 SELECT 'PL','GJW','Grajewo','',''  UNION ALL
 SELECT 'PL','GKI','Glinki','',''  UNION ALL
-SELECT 'PL','GKW','Godzikowice','',''  UNION ALL
+SELECT 'PL','GKW','Godzikowice','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','GLE','Garbatka-Letnisko','',''  UNION ALL
 SELECT 'PL','GLO','Gluchowo','',''  UNION ALL
 SELECT 'PL','GLW','Glogow','',''  UNION ALL
@@ -43327,15 +43893,14 @@ SELECT 'PL','JWP','Janow Podlaski','',''  UNION ALL
 SELECT 'PL','JWR','Jawor','',''  UNION ALL
 SELECT 'PL','JZB','Jastrzebie Zdroj','',''  UNION ALL
 SELECT 'PL','JZW','Jedrzejow','',''  UNION ALL
-SELECT 'PL','KAA','Kowala St?pocina','',''  UNION ALL
+SELECT 'PL','KAA','Kowala Stepocina','',''  UNION ALL
 SELECT 'PL','KAJ','Karlikowo','',''  UNION ALL
-SELECT 'PL','KAL','Kalisz','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','KAL','Kalisz','',''  UNION ALL
 SELECT 'PL','KAM','Kamienna Gora','',''  UNION ALL
 SELECT 'PL','KAZ','Kazimierz','',''  UNION ALL
 SELECT 'PL','KCL','Kucelinska','',''  UNION ALL
 SELECT 'PL','KCN','Krasocin','',''  UNION ALL
-SELECT 'PL','KEK','K?dzierzyn-Ko?le','',''  UNION ALL
+SELECT 'PL','KEK','Kędzierzyn-','',''  UNION ALL
 SELECT 'PL','KEP','Kepno','',''  UNION ALL
 SELECT 'PL','KIJ','Kijow','',''  UNION ALL
 SELECT 'PL','KKE','Krapkowice','',''  UNION ALL
@@ -43347,7 +43912,8 @@ SELECT 'PL','KLN','Kolno','',''  UNION ALL
 SELECT 'PL','KLO','Klodzko','',''  UNION ALL
 SELECT 'PL','KLQ','Kolo','',''  UNION ALL
 SELECT 'PL','KLS','Koluszki','',''  UNION ALL
-SELECT 'PL','KLU','Kluczbork','',''  UNION ALL
+SELECT 'PL','KLU','Kluczbork','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','KLW','Klimontow','',''  UNION ALL
 SELECT 'PL','KMC','Kamieniec','',''  UNION ALL
 SELECT 'PL','KNK','Koneck','',''  UNION ALL
@@ -43410,8 +43976,7 @@ SELECT 'PL','LEJ','Lekawica','',''  UNION ALL
 SELECT 'PL','LEK','Lezajsk','',''  UNION ALL
 SELECT 'PL','LEZ','Leszno','',''  UNION ALL
 SELECT 'PL','LGO','Legionowo','',''  UNION ALL
-SELECT 'PL','LIP','Lipno','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','LIP','Lipno','',''  UNION ALL
 SELECT 'PL','LIW','Lidzbark Warminski','',''  UNION ALL
 SELECT 'PL','LKO','Lyszkowice','',''  UNION ALL
 SELECT 'PL','LKW','Lukow','',''  UNION ALL
@@ -43428,7 +43993,8 @@ SELECT 'PL','LUL','Lublin','',''  UNION ALL
 SELECT 'PL','LUN','Lubin','',''  UNION ALL
 SELECT 'PL','LWK','Lubawka','',''  UNION ALL
 SELECT 'PL','LZN','Leszno','',''  UNION ALL
-SELECT 'PL','LZO','Luzino','',''  UNION ALL
+SELECT 'PL','LZO','Luzino','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','LZW','Laskarzew','',''  UNION ALL
 SELECT 'PL','LZY','Leczyca','',''  UNION ALL
 SELECT 'PL','MAA','Malaszewicze','',''  UNION ALL
@@ -43442,7 +44008,7 @@ SELECT 'PL','MIA','Modlinica','',''  UNION ALL
 SELECT 'PL','MIC','Miechow','',''  UNION ALL
 SELECT 'PL','MID','Miedzyzdroje','',''  UNION ALL
 SELECT 'PL','MIE','Michalowice','',''  UNION ALL
-SELECT 'PL','MIK','Miko?ow','',''  UNION ALL
+SELECT 'PL','MIK','Mikołów','',''  UNION ALL
 SELECT 'PL','MIN','Minsk Mazowiecki','',''  UNION ALL
 SELECT 'PL','MIR','Mirkow','',''  UNION ALL
 SELECT 'PL','MKI','Marki','',''  UNION ALL
@@ -43491,8 +44057,7 @@ SELECT 'PL','NWY','Nowy Dwor Mazowiecki','',''  UNION ALL
 SELECT 'PL','NWZ','Nowogrodziec','',''  UNION ALL
 SELECT 'PL','NYS','Nysa','',''  UNION ALL
 SELECT 'PL','NYT','Nowy Tomysl','',''  UNION ALL
-SELECT 'PL','NZW','Naleczow','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','NZW','Naleczow','',''  UNION ALL
 SELECT 'PL','OAI','Omianki','',''  UNION ALL
 SELECT 'PL','OBN','Oborniki','',''  UNION ALL
 SELECT 'PL','ODO','Odolanow','',''  UNION ALL
@@ -43509,7 +44074,8 @@ SELECT 'PL','OPA','Opatow','',''  UNION ALL
 SELECT 'PL','OPO','Opole','',''  UNION ALL
 SELECT 'PL','OPZ','Opoczno','',''  UNION ALL
 SELECT 'PL','ORL','Orle','',''  UNION ALL
-SELECT 'PL','ORN','Orneta','',''  UNION ALL
+SELECT 'PL','ORN','Orneta','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','OSJ','Ostrow Mazowiecka','',''  UNION ALL
 SELECT 'PL','OSR','Ostrowiec Swietokrzyski','',''  UNION ALL
 SELECT 'PL','OSS','Ostroleka','',''  UNION ALL
@@ -43572,8 +44138,7 @@ SELECT 'PL','PZO','Pilzno','',''  UNION ALL
 SELECT 'PL','PZW','Pleszew','',''  UNION ALL
 SELECT 'PL','PZY','Przysucha','',''  UNION ALL
 SELECT 'PL','QAZ','Zakopane','',''  UNION ALL
-SELECT 'PL','QEP','Tarnobrzeg','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','QEP','Tarnobrzeg','',''  UNION ALL
 SELECT 'PL','QKD','Elk','',''  UNION ALL
 SELECT 'PL','QLC','Gliwice','',''  UNION ALL
 SELECT 'PL','QOY','Lomza','',''  UNION ALL
@@ -43590,7 +44155,8 @@ SELECT 'PL','RES','Resko','',''  UNION ALL
 SELECT 'PL','RGZ','Rudna gwizdanow','',''  UNION ALL
 SELECT 'PL','RMA','Rawa Mazowiecka','',''  UNION ALL
 SELECT 'PL','RNW','Rakoniewice','',''  UNION ALL
-SELECT 'PL','ROG','Rogozno','',''  UNION ALL
+SELECT 'PL','ROG','Rogozno','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','ROP','Ropczyce','',''  UNION ALL
 SELECT 'PL','RUI','Rumia','',''  UNION ALL
 SELECT 'PL','RUS','Rusiec','',''  UNION ALL
@@ -43623,7 +44189,7 @@ SELECT 'PL','SKL','Szklarska Poreba','',''  UNION ALL
 SELECT 'PL','SKP','Skopanie','',''  UNION ALL
 SELECT 'PL','SKW','Skwierzyna','',''  UNION ALL
 SELECT 'PL','SKZ','Skalmierzyce','',''  UNION ALL
-SELECT 'PL','SLA','S?awno','',''  UNION ALL
+SELECT 'PL','SLA','Sławno','',''  UNION ALL
 SELECT 'PL','SLC','Slupca','',''  UNION ALL
 SELECT 'PL','SLE','Slubice, Mazowieckie','',''  UNION ALL
 SELECT 'PL','SLP','Slupsk','',''  UNION ALL
@@ -43653,8 +44219,7 @@ SELECT 'PL','STC','Stupiec','',''  UNION ALL
 SELECT 'PL','STD','Starogard','',''  UNION ALL
 SELECT 'PL','STE','Starachowice','',''  UNION ALL
 SELECT 'PL','STG','Starogard Gdanski','',''  UNION ALL
-SELECT 'PL','STJ','Stare Je?ewo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','STJ','Stare Jeżewo','',''  UNION ALL
 SELECT 'PL','STM','Stare Miasto','',''  UNION ALL
 SELECT 'PL','STN','Straszyn','',''  UNION ALL
 SELECT 'PL','STP','Stare Pole','',''  UNION ALL
@@ -43671,7 +44236,8 @@ SELECT 'PL','SWC','Sosnowiec','',''  UNION ALL
 SELECT 'PL','SWD','Swidwin','',''  UNION ALL
 SELECT 'PL','SWE','Swiebodzice','',''  UNION ALL
 SELECT 'PL','SWI','Swinoujscie','',''  UNION ALL
-SELECT 'PL','SWL','Suwalki','',''  UNION ALL
+SELECT 'PL','SWL','Suwalki','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','SWN','Swidnica','',''  UNION ALL
 SELECT 'PL','SWO','Sulaszewo','',''  UNION ALL
 SELECT 'PL','SWT','Swietochlowice','',''  UNION ALL
@@ -43693,7 +44259,7 @@ SELECT 'PL','TBZ','Trzebiez','',''  UNION ALL
 SELECT 'PL','TDZ','Tubadzin','',''  UNION ALL
 SELECT 'PL','TEN','Tenczynek','',''  UNION ALL
 SELECT 'PL','TER','Terespol','',''  UNION ALL
-SELECT 'PL','TES','TeresinÃƒâ€šÃ‚Â ','',''  UNION ALL
+SELECT 'PL','TES','Teresin','',''  UNION ALL
 SELECT 'PL','TGO','Tarnowskie Gory','',''  UNION ALL
 SELECT 'PL','TMO','Tolkmicko','',''  UNION ALL
 SELECT 'PL','TMW','Tomaszow Mazowiecki','',''  UNION ALL
@@ -43734,8 +44300,7 @@ SELECT 'PL','WDW','Wadowice','',''  UNION ALL
 SELECT 'PL','WEJ','Wejherowo','',''  UNION ALL
 SELECT 'PL','WIA','Wisznia Mala','',''  UNION ALL
 SELECT 'PL','WIE','Wierzchoslawice','',''  UNION ALL
-SELECT 'PL','WIS','Wisla','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PL','WIS','Wisla','',''  UNION ALL
 SELECT 'PL','WKA','Warka','',''  UNION ALL
 SELECT 'PL','WLA','Wladyslawowo','',''  UNION ALL
 SELECT 'PL','WLB','Warlubie','',''  UNION ALL
@@ -43752,7 +44317,8 @@ SELECT 'PL','WRN','Wronki','',''  UNION ALL
 SELECT 'PL','WRO','Wroclaw','',''  UNION ALL
 SELECT 'PL','WSC','Wschowa','',''  UNION ALL
 SELECT 'PL','WWE','Wilkowice','',''  UNION ALL
-SELECT 'PL','WYG','Wygledi','',''  UNION ALL
+SELECT 'PL','WYG','Wygledi','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PL','WYM','Wysokie Mazowieckie','',''  UNION ALL
 SELECT 'PL','WYZ','Wyszkow','',''  UNION ALL
 SELECT 'PL','WZA','Wrzesnia','',''  UNION ALL
@@ -43775,7 +44341,7 @@ SELECT 'PL','ZGI','Zgierz','',''  UNION ALL
 SELECT 'PL','ZGZ','Zagorz','',''  UNION ALL
 SELECT 'PL','ZIE','Ziebice','',''  UNION ALL
 SELECT 'PL','ZIL','Zielonka','',''  UNION ALL
-SELECT 'PL','ZKW','?yrakow','',''  UNION ALL
+SELECT 'PL','ZKW','Żyraków','',''  UNION ALL
 SELECT 'PL','ZLA','Zolynia','',''  UNION ALL
 SELECT 'PL','ZLO','Zlotow','',''  UNION ALL
 SELECT 'PL','ZNI','Znin','',''  UNION ALL
@@ -43815,8 +44381,7 @@ SELECT 'PR','CAN','Canovanas','',''  UNION ALL
 SELECT 'PR','CAR','Carolina','',''  UNION ALL
 SELECT 'PR','CAT','Catano','',''  UNION ALL
 SELECT 'PR','CAY','Cayey','',''  UNION ALL
-SELECT 'PR','CBJ','Cabo Rojo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PR','CBJ','Cabo Rojo','',''  UNION ALL
 SELECT 'PR','CIA','Cidra','',''  UNION ALL
 SELECT 'PR','CID','Cidra','',''  UNION ALL
 SELECT 'PR','CLE','Ciales','',''  UNION ALL
@@ -43833,7 +44398,8 @@ SELECT 'PR','GUO','Guaynabo','',''  UNION ALL
 SELECT 'PR','GUR','Gurabo','',''  UNION ALL
 SELECT 'PR','GUX','Guanica','',''  UNION ALL
 SELECT 'PR','GUY','Guayanilla','',''  UNION ALL
-SELECT 'PR','HDE','Hato Tejas','',''  UNION ALL
+SELECT 'PR','HDE','Hato Tejas','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PR','HRE','Hato Rey','',''  UNION ALL
 SELECT 'PR','HTL','Hatillo','',''  UNION ALL
 SELECT 'PR','HUC','Humacao','',''  UNION ALL
@@ -43896,8 +44462,7 @@ SELECT 'PT','AER','Alem da Ribeira','','16'  UNION ALL
 SELECT 'PT','AES','Aves','','13'  UNION ALL
 SELECT 'PT','AFA','Alfena','','13'  UNION ALL
 SELECT 'PT','AFE','Alfandega da Fe','','04'  UNION ALL
-SELECT 'PT','AGB','Aguiar da Beira','','09' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','AGB','Aguiar da Beira','','09'  UNION ALL
 SELECT 'PT','AGE','Agrela','','03'  UNION ALL
 SELECT 'PT','AGL','Argoncilhe','','01'  UNION ALL
 SELECT 'PT','AGM','Aguas de Moura','','15'  UNION ALL
@@ -43914,7 +44479,8 @@ SELECT 'PT','ALD','Almeida','','09'  UNION ALL
 SELECT 'PT','ALE','Alcochete','','15'  UNION ALL
 SELECT 'PT','ALJ','Alijo','','17'  UNION ALL
 SELECT 'PT','ALM','Almada','','15'  UNION ALL
-SELECT 'PT','ALN','Alenquer','','11'  UNION ALL
+SELECT 'PT','ALN','Alenquer','','11' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','ALO','Alcobaca','','10'  UNION ALL
 SELECT 'PT','ALR','Almeirim','','14'  UNION ALL
 SELECT 'PT','ALS','Alcains','','05'  UNION ALL
@@ -43977,8 +44543,7 @@ SELECT 'PT','BHC','Banho e Carvalhosa','','13'  UNION ALL
 SELECT 'PT','BLS','Belas','','11'  UNION ALL
 SELECT 'PT','BLZ','Balazar','','13'  UNION ALL
 SELECT 'PT','BML','Belem','','08'  UNION ALL
-SELECT 'PT','BMT','Belmonte','','05' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','BMT','Belmonte','','05'  UNION ALL
 SELECT 'PT','BNT','Benedita','','10'  UNION ALL
 SELECT 'PT','BNV','Benavente','','14'  UNION ALL
 SELECT 'PT','BOM','Bombarral','','10'  UNION ALL
@@ -43995,7 +44560,8 @@ SELECT 'PT','CAN','Condeixa a Nova','','06'  UNION ALL
 SELECT 'PT','CAR','Carvalhos','','03'  UNION ALL
 SELECT 'PT','CAS','Cascais','','11'  UNION ALL
 SELECT 'PT','CAX','Caxias','','11'  UNION ALL
-SELECT 'PT','CBL','Cabrela','','07'  UNION ALL
+SELECT 'PT','CBL','Cabrela','','07' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','CBN','Casal dos Bernardos','','14'  UNION ALL
 SELECT 'PT','CBP','Coimbra','','06'  UNION ALL
 SELECT 'PT','CBR','Castelo Branco','','05'  UNION ALL
@@ -44058,8 +44624,7 @@ SELECT 'PT','CVO','Covelo','','06'  UNION ALL
 SELECT 'PT','CVP','Cova da Piedade','','15'  UNION ALL
 SELECT 'PT','CVR','Castro Verde','','02'  UNION ALL
 SELECT 'PT','CVU','Corvo Island Apt','','20'  UNION ALL
-SELECT 'PT','CVZ','Caldas de Vizela','','03' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','CVZ','Caldas de Vizela','','03'  UNION ALL
 SELECT 'PT','CXO','Cartaxo','','14'  UNION ALL
 SELECT 'PT','CXP','Charneca da Caparica','','15'  UNION ALL
 SELECT 'PT','CZZ','Carrazeda de Anciaes','','04'  UNION ALL
@@ -44076,7 +44641,8 @@ SELECT 'PT','ERS','Ermidas','','15'  UNION ALL
 SELECT 'PT','ESC','Escandarao','','14'  UNION ALL
 SELECT 'PT','ESP','Espinho','','18'  UNION ALL
 SELECT 'PT','EST','Estoril','','11'  UNION ALL
-SELECT 'PT','ESZ','Estremoz','','07'  UNION ALL
+SELECT 'PT','ESZ','Estremoz','','07' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','ETR','Estarreja','','01'  UNION ALL
 SELECT 'PT','EVR','Evora','','07'  UNION ALL
 SELECT 'PT','EXP','Lisboa-EXPO','','11'  UNION ALL
@@ -44139,8 +44705,7 @@ SELECT 'PT','LMG','Lamego','','18'  UNION ALL
 SELECT 'PT','LNH','Lourinha','','11'  UNION ALL
 SELECT 'PT','LOA','Lousada','','13'  UNION ALL
 SELECT 'PT','LOS','Lagos','','08'  UNION ALL
-SELECT 'PT','LOU','Lourosa','','01' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','LOU','Lourosa','','01'  UNION ALL
 SELECT 'PT','LRC','Lourical','','10'  UNION ALL
 SELECT 'PT','LRS','Loures','','11'  UNION ALL
 SELECT 'PT','LSA','Lousa','','06'  UNION ALL
@@ -44157,7 +44722,8 @@ SELECT 'PT','MAT','Matosinhos','','13'  UNION ALL
 SELECT 'PT','MBR','Moimenta da Beira','','18'  UNION ALL
 SELECT 'PT','MCD','Macedo de Cavaleiros','','04'  UNION ALL
 SELECT 'PT','MCH','Machico','','30'  UNION ALL
-SELECT 'PT','MCQ','Monchique','','08'  UNION ALL
+SELECT 'PT','MCQ','Monchique','','08' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','MCV','Miranda do Corvo','','06'  UNION ALL
 SELECT 'PT','MDA','Meda','','09'  UNION ALL
 SELECT 'PT','MDB','Mondim de Basto','','17'  UNION ALL
@@ -44220,8 +44786,7 @@ SELECT 'PT','OEI','Oeiras','','11'  UNION ALL
 SELECT 'PT','OFR','Oliveira de Frades','','18'  UNION ALL
 SELECT 'PT','OHP','Oliveira do Hospital','','06'  UNION ALL
 SELECT 'PT','OLB','Olival do Basto','','11'  UNION ALL
-SELECT 'PT','OLH','Olhao','','08' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','OLH','Olhao','','08'  UNION ALL
 SELECT 'PT','OLI','Oliveira do Bairro','','01'  UNION ALL
 SELECT 'PT','OLR','Oleiros','','05'  UNION ALL
 SELECT 'PT','OPO','Porto','','13'  UNION ALL
@@ -44238,7 +44803,8 @@ SELECT 'PT','PCZ','Porto da Cruz','','30'  UNION ALL
 SELECT 'PT','PDL','Ponta Delgada','','20'  UNION ALL
 SELECT 'PT','PDM','Porto de Mos','','10'  UNION ALL
 SELECT 'PT','PDR','Ponte do Rol','','11'  UNION ALL
-SELECT 'PT','PDS','Ponte de Sor','','12'  UNION ALL
+SELECT 'PT','PDS','Ponte de Sor','','12' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','PDV','Povoa de Varzim','','13'  UNION ALL
 SELECT 'PT','PEG','Pegoes','','15'  UNION ALL
 SELECT 'PT','PEN','Peniche','','10'  UNION ALL
@@ -44301,8 +44867,7 @@ SELECT 'PT','RMA','Rio Maior','','14'  UNION ALL
 SELECT 'PT','RMZ','Reguengos de Monsaraz','','07'  UNION ALL
 SELECT 'PT','RPN','Ribeira de Pena','','17'  UNION ALL
 SELECT 'PT','RSD','Resende','','18'  UNION ALL
-SELECT 'PT','RTI','Rio Tinto','','13' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','RTI','Rio Tinto','','13'  UNION ALL
 SELECT 'PT','SAC','Sacavem','','11'  UNION ALL
 SELECT 'PT','SAN','Sangalhos','','01'  UNION ALL
 SELECT 'PT','SAT','Satao','','18'  UNION ALL
@@ -44319,7 +44884,8 @@ SELECT 'PT','SCZ','Santa Cruz','','30'  UNION ALL
 SELECT 'PT','SDM','Salir de Matos','','10'  UNION ALL
 SELECT 'PT','SDR','Sao Domingos de Rana','','11'  UNION ALL
 SELECT 'PT','SEE','Seia','','09'  UNION ALL
-SELECT 'PT','SEI','Seixal','','15'  UNION ALL
+SELECT 'PT','SEI','Seixal','','15' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','SER','Serzedo','','13'  UNION ALL
 SELECT 'PT','SET','Setubal','','15'  UNION ALL
 SELECT 'PT','SFR','Safara','','02'  UNION ALL
@@ -44382,8 +44948,7 @@ SELECT 'PT','UGV','Agualva','','11'  UNION ALL
 SELECT 'PT','VAL','Valongo','','12'  UNION ALL
 SELECT 'PT','VBP','Vila do Bispo','','08'  UNION ALL
 SELECT 'PT','VCA','Vale de Cambra','','01'  UNION ALL
-SELECT 'PT','VDC','Viana do Castelo','','16' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'PT','VDC','Viana do Castelo','','16'  UNION ALL
 SELECT 'PT','VDE','Vide','','09'  UNION ALL
 SELECT 'PT','VDG','Vidago','','17'  UNION ALL
 SELECT 'PT','VDN','Vendas Novas','','07'  UNION ALL
@@ -44400,7 +44965,8 @@ SELECT 'PT','VIC','Vila do Conde','','13'  UNION ALL
 SELECT 'PT','VIV','Vila Vicosa','','07'  UNION ALL
 SELECT 'PT','VLD','Vila da Ponte','','18'  UNION ALL
 SELECT 'PT','VLF','Vilar Formoso','','09'  UNION ALL
-SELECT 'PT','VLN','Valenca','','16'  UNION ALL
+SELECT 'PT','VLN','Valenca','','16' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'PT','VLP','Valpacos','','17'  UNION ALL
 SELECT 'PT','VLR','Vila de Rei','','05'  UNION ALL
 SELECT 'PT','VMA','Vila Mea','','13'  UNION ALL
@@ -44463,8 +45029,7 @@ SELECT 'QA','HAL','Halul','',''  UNION ALL
 SELECT 'QA','HNA','Hanna','',''  UNION ALL
 SELECT 'QA','RLF','Ras Laffan','',''  UNION ALL
 SELECT 'QA','UMS','Umm Sa''id (Mesaieed)','',''  UNION ALL
-SELECT 'RE','','','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RE','','','',''  UNION ALL
 SELECT 'RE','LPT','Le Port','',''  UNION ALL
 SELECT 'RE','PDG','Port de Pointe des Galets','',''  UNION ALL
 SELECT 'RE','REU','Reunion','',''  UNION ALL
@@ -44481,7 +45046,8 @@ SELECT 'RO','ABM','Abram','',''  UNION ALL
 SELECT 'RO','ACB','Alexandru cel Bun','',''  UNION ALL
 SELECT 'RO','AGI','Agigea','',''  UNION ALL
 SELECT 'RO','ALB','Albesti','',''  UNION ALL
-SELECT 'RO','ALD','Alesd','',''  UNION ALL
+SELECT 'RO','ALD','Alesd','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RO','ALI','Alba Iulia','',''  UNION ALL
 SELECT 'RO','ALX','Alexandria','',''  UNION ALL
 SELECT 'RO','AMI','Afumati','',''  UNION ALL
@@ -44499,7 +45065,7 @@ SELECT 'RO','BCA','Borca','',''  UNION ALL
 SELECT 'RO','BCM','Bacau','',''  UNION ALL
 SELECT 'RO','BCN','Beclean','',''  UNION ALL
 SELECT 'RO','BCO','Bacova','',''  UNION ALL
-SELECT 'RO','BCT','BechetÃƒâ€šÃ‚Â ','',''  UNION ALL
+SELECT 'RO','BCT','Bechet','',''  UNION ALL
 SELECT 'RO','BCU','Baciu, Cluj','',''  UNION ALL
 SELECT 'RO','BDI','Bodesti','',''  UNION ALL
 SELECT 'RO','BDU','Bragadiru, Ilfov','',''  UNION ALL
@@ -44524,7 +45090,7 @@ SELECT 'RO','BRV','Brasov','',''  UNION ALL
 SELECT 'RO','BSC','Borsec','',''  UNION ALL
 SELECT 'RO','BTD','Baile Tusnad','',''  UNION ALL
 SELECT 'RO','BUB','Bucuresti Basarab','',''  UNION ALL
-SELECT 'RO','BUC','Buce?','',''  UNION ALL
+SELECT 'RO','BUC','Bucecea','',''  UNION ALL
 SELECT 'RO','BUD','Budesti, Calarasi','',''  UNION ALL
 SELECT 'RO','BUF','Buftea','',''  UNION ALL
 SELECT 'RO','BUH','Bucuresti','',''  UNION ALL
@@ -44544,8 +45110,7 @@ SELECT 'RO','CBI','Colibasi','',''  UNION ALL
 SELECT 'RO','CCA','Carcea','',''  UNION ALL
 SELECT 'RO','CCI','Clinceni','',''  UNION ALL
 SELECT 'RO','CCL','Caracal','',''  UNION ALL
-SELECT 'RO','CDA','Curtea de Arge?','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RO','CDA','Curtea de Argeș','',''  UNION ALL
 SELECT 'RO','CEV','Cernavoda','',''  UNION ALL
 SELECT 'RO','CJA','Chiajna','',''  UNION ALL
 SELECT 'RO','CLA','Codlea','',''  UNION ALL
@@ -44562,7 +45127,8 @@ SELECT 'RO','CPG','Cimpulung la Tisa','',''  UNION ALL
 SELECT 'RO','CPI','Campeni','',''  UNION ALL
 SELECT 'RO','CRA','Craiova','',''  UNION ALL
 SELECT 'RO','CRB','Corbeanca','',''  UNION ALL
-SELECT 'RO','CRI','Criseni','',''  UNION ALL
+SELECT 'RO','CRI','Criseni','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RO','CRU','Cerasu','',''  UNION ALL
 SELECT 'RO','CSB','Caransebes','',''  UNION ALL
 SELECT 'RO','CTA','Chitila','',''  UNION ALL
@@ -44575,7 +45141,7 @@ SELECT 'RO','DCI','Dulcesti, Neamt','',''  UNION ALL
 SELECT 'RO','DCU','Dascalu','',''  UNION ALL
 SELECT 'RO','DEJ','Dej','',''  UNION ALL
 SELECT 'RO','DHO','Dorohoi','',''  UNION ALL
-SELECT 'RO','DIM','Dimbovi?a','',''  UNION ALL
+SELECT 'RO','DIM','Dâmbovița','',''  UNION ALL
 SELECT 'RO','DOR','Dornesti','',''  UNION ALL
 SELECT 'RO','DSI','Dragasani','',''  UNION ALL
 SELECT 'RO','DTS','Drobeta Turnu Severin','',''  UNION ALL
@@ -44625,8 +45191,7 @@ SELECT 'RO','LMA','Lumina','',''  UNION ALL
 SELECT 'RO','LMN','Lemnia','',''  UNION ALL
 SELECT 'RO','LMU','Lunca Muresului, Alba','',''  UNION ALL
 SELECT 'RO','LRM','Lancram','',''  UNION ALL
-SELECT 'RO','LUG','Lugoj','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RO','LUG','Lugoj','',''  UNION ALL
 SELECT 'RO','MAG','Mangalia','',''  UNION ALL
 SELECT 'RO','MAU','Mediesu Aurit','',''  UNION ALL
 SELECT 'RO','MCA','Miercurea-Ciuc','',''  UNION ALL
@@ -44643,7 +45208,8 @@ SELECT 'RO','MSA','Mogosoaia','',''  UNION ALL
 SELECT 'RO','MSI','Moisei','',''  UNION ALL
 SELECT 'RO','MTI','Mateesti','',''  UNION ALL
 SELECT 'RO','MUR','Murfatlar','',''  UNION ALL
-SELECT 'RO','MVU','Mihai Viteazu','',''  UNION ALL
+SELECT 'RO','MVU','Mihai Viteazu','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RO','NAD','Naidas','',''  UNION ALL
 SELECT 'RO','NAZ','Nazna','',''  UNION ALL
 SELECT 'RO','NDI','Navodari','',''  UNION ALL
@@ -44668,7 +45234,7 @@ SELECT 'RO','PCA','Pecica','',''  UNION ALL
 SELECT 'RO','PCI','Pascani','',''  UNION ALL
 SELECT 'RO','PDM','Poienarii de Muscel','',''  UNION ALL
 SELECT 'RO','PEI','Petrosani','',''  UNION ALL
-SELECT 'RO','PET','Petre?ti','',''  UNION ALL
+SELECT 'RO','PET','Petroșani','',''  UNION ALL
 SELECT 'RO','PFD','Portile de Fier Doi','',''  UNION ALL
 SELECT 'RO','PFU','Portile de Fier Unu','',''  UNION ALL
 SELECT 'RO','PIA','Piatra Olt','',''  UNION ALL
@@ -44706,8 +45272,7 @@ SELECT 'RO','RZV','Roznov','',''  UNION ALL
 SELECT 'RO','SAT','Salonta','',''  UNION ALL
 SELECT 'RO','SAU','Saulia','',''  UNION ALL
 SELECT 'RO','SBA','Slobozia','',''  UNION ALL
-SELECT 'RO','SBS','Sebes, Alba','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RO','SBS','Sebes, Alba','',''  UNION ALL
 SELECT 'RO','SBZ','Sibiu','',''  UNION ALL
 SELECT 'RO','SCI','Sincraieni','',''  UNION ALL
 SELECT 'RO','SCS','Suncuius','',''  UNION ALL
@@ -44724,7 +45289,8 @@ SELECT 'RO','SIT','Simeria','',''  UNION ALL
 SELECT 'RO','SLA','Slatina','',''  UNION ALL
 SELECT 'RO','SLE','Saliste','',''  UNION ALL
 SELECT 'RO','SLO','Slobozia, Arges','',''  UNION ALL
-SELECT 'RO','SMU','Sintana de Mures','',''  UNION ALL
+SELECT 'RO','SMU','Sintana de Mures','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RO','SOC','Socetu','',''  UNION ALL
 SELECT 'RO','SOI','Sabaoani','',''  UNION ALL
 SELECT 'RO','SOL','Socola','',''  UNION ALL
@@ -44787,8 +45353,7 @@ SELECT 'RS','ARJ','Arilje','',''  UNION ALL
 SELECT 'RS','BCN','Beocin','',''  UNION ALL
 SELECT 'RS','BEC','Becej','',''  UNION ALL
 SELECT 'RS','BEG','Belgrade (Beograd)','',''  UNION ALL
-SELECT 'RS','BOR','Bor','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RS','BOR','Bor','',''  UNION ALL
 SELECT 'RS','BPA','Backa Palanka','',''  UNION ALL
 SELECT 'RS','BRC','Baric','',''  UNION ALL
 SELECT 'RS','BSA','Baracka','',''  UNION ALL
@@ -44805,7 +45370,8 @@ SELECT 'RS','CVC','Cerevic','',''  UNION ALL
 SELECT 'RS','DIM','Dimitrovgrad','',''  UNION ALL
 SELECT 'RS','DZC','Drazevac','',''  UNION ALL
 SELECT 'RS','GMI','Gornji Milanovac','',''  UNION ALL
-SELECT 'RS','GRU','Gruza','',''  UNION ALL
+SELECT 'RS','GRU','Gruza','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RS','INI','Nis','',''  UNION ALL
 SELECT 'RS','IVA','Ivanjica','',''  UNION ALL
 SELECT 'RS','JAG','Jagodina','',''  UNION ALL
@@ -44868,8 +45434,7 @@ SELECT 'RS','VLA','Vlasotince','',''  UNION ALL
 SELECT 'RS','VLJ','Valjevo','',''  UNION ALL
 SELECT 'RS','VRA','Vranje','',''  UNION ALL
 SELECT 'RS','VRB','Vrbas','',''  UNION ALL
-SELECT 'RS','VRS','Vrsac','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RS','VRS','Vrsac','',''  UNION ALL
 SELECT 'RS','ZAJ','Zajecar','',''  UNION ALL
 SELECT 'RS','ZEM','Zemun','',''  UNION ALL
 SELECT 'RS','ZRN','Zrenjanin','',''  UNION ALL
@@ -44886,7 +45451,8 @@ SELECT 'RU','AGI','Aginskoye','',''  UNION ALL
 SELECT 'RU','AHR','Akhtari','',''  UNION ALL
 SELECT 'RU','ALV','Aleksandrov','',''  UNION ALL
 SELECT 'RU','AMB','Ambetsu','',''  UNION ALL
-SELECT 'RU','AMV','Amderma','',''  UNION ALL
+SELECT 'RU','AMV','Amderma','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','ARH','Arkhangelsk','',''  UNION ALL
 SELECT 'RU','ARM','Arman (Magadan)','',''  UNION ALL
 SELECT 'RU','ASB','Asbest','',''  UNION ALL
@@ -44949,8 +45515,7 @@ SELECT 'RU','EKO','Ekonomiya','',''  UNION ALL
 SELECT 'RU','ELG','Elektrogorsk','',''  UNION ALL
 SELECT 'RU','ESL','Elista','',''  UNION ALL
 SELECT 'RU','ESS','Yessentuki (Essentuki)','',''  UNION ALL
-SELECT 'RU','EVK','Yegor''yevsk','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RU','EVK','Yegor''yevsk','',''  UNION ALL
 SELECT 'RU','FUR','Furmanov','',''  UNION ALL
 SELECT 'RU','GAT','Gatchina','',''  UNION ALL
 SELECT 'RU','GDG','Magdagachi','',''  UNION ALL
@@ -44967,7 +45532,8 @@ SELECT 'RU','GRV','Groznyj','',''  UNION ALL
 SELECT 'RU','GSA','Gorskaya','',''  UNION ALL
 SELECT 'RU','GUB','Gubkin','',''  UNION ALL
 SELECT 'RU','GUO','Znamenskoye Gubailovo','',''  UNION ALL
-SELECT 'RU','GVS','Gusevskiy','',''  UNION ALL
+SELECT 'RU','GVS','Gusevskiy','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','GVY','Gavrilov-Yam','',''  UNION ALL
 SELECT 'RU','GZV','Glazov','',''  UNION ALL
 SELECT 'RU','HOR','Horlovo','',''  UNION ALL
@@ -45030,8 +45596,7 @@ SELECT 'RU','KNY','Khvalynsk','',''  UNION ALL
 SELECT 'RU','KOH','Kokhma','',''  UNION ALL
 SELECT 'RU','KOK','Konakovo','',''  UNION ALL
 SELECT 'RU','KOR','Korsakov','',''  UNION ALL
-SELECT 'RU','KOV','Kovrov','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RU','KOV','Kovrov','',''  UNION ALL
 SELECT 'RU','KPA','Kondopoga','',''  UNION ALL
 SELECT 'RU','KRA','Krasnoyarsk','',''  UNION ALL
 SELECT 'RU','KRF','Korf','',''  UNION ALL
@@ -45048,7 +45613,8 @@ SELECT 'RU','KUY','Kamensk-Ural''skiy','',''  UNION ALL
 SELECT 'RU','KUZ','Kuznetsk','',''  UNION ALL
 SELECT 'RU','KVK','Kirovsk','',''  UNION ALL
 SELECT 'RU','KVX','Kirov','',''  UNION ALL
-SELECT 'RU','KXK','Komsomolsk Na Amure','',''  UNION ALL
+SELECT 'RU','KXK','Komsomolsk Na Amure','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','KYB','Krasnyye Barrikady','',''  UNION ALL
 SELECT 'RU','KYZ','Kyzyl','',''  UNION ALL
 SELECT 'RU','KZN','Kazan','',''  UNION ALL
@@ -45111,8 +45677,7 @@ SELECT 'RU','NVR','Novgorod','',''  UNION ALL
 SELECT 'RU','NVS','Novorossiysk','',''  UNION ALL
 SELECT 'RU','NVY','Novyy','',''  UNION ALL
 SELECT 'RU','NYM','Nadym','',''  UNION ALL
-SELECT 'RU','NZK','Nizhnekamsk','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RU','NZK','Nizhnekamsk','',''  UNION ALL
 SELECT 'RU','NZL','Nizhniy Lomov','',''  UNION ALL
 SELECT 'RU','NZV','Novozybkov','',''  UNION ALL
 SELECT 'RU','OBK','Obninsk','',''  UNION ALL
@@ -45129,7 +45694,8 @@ SELECT 'RU','ONK','Obninsk','',''  UNION ALL
 SELECT 'RU','ORE','Orel','',''  UNION ALL
 SELECT 'RU','ORL','Or''ol','',''  UNION ALL
 SELECT 'RU','OSO','Odintsovo','',''  UNION ALL
-SELECT 'RU','OSW','Orsk','',''  UNION ALL
+SELECT 'RU','OSW','Orsk','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','OTR','Otradnyy','',''  UNION ALL
 SELECT 'RU','OVB','Novosibirsk','',''  UNION ALL
 SELECT 'RU','OYA','Olya','',''  UNION ALL
@@ -45192,8 +45758,7 @@ SELECT 'RU','SAL','Salavat','',''  UNION ALL
 SELECT 'RU','SAR','Sarova','',''  UNION ALL
 SELECT 'RU','SCW','Syktyvkar','',''  UNION ALL
 SELECT 'RU','SEG','Segezha','',''  UNION ALL
-SELECT 'RU','SEW','Severodvinsk','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RU','SEW','Severodvinsk','',''  UNION ALL
 SELECT 'RU','SGC','Surgut','',''  UNION ALL
 SELECT 'RU','SGV','Sergiyev Posad','',''  UNION ALL
 SELECT 'RU','SHA','Shakhtersk','',''  UNION ALL
@@ -45210,7 +45775,8 @@ SELECT 'RU','SLV','Solovyevsk','',''  UNION ALL
 SELECT 'RU','SLY','Salehard','',''  UNION ALL
 SELECT 'RU','SNG','Solnechnogorsk','',''  UNION ALL
 SELECT 'RU','SOB','Sosnovyy Bor','',''  UNION ALL
-SELECT 'RU','SOC','Sochi','',''  UNION ALL
+SELECT 'RU','SOC','Sochi','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','SOG','Sovetskaya Gavan','',''  UNION ALL
 SELECT 'RU','SOK','Solikamsk','',''  UNION ALL
 SELECT 'RU','SPA','Spafaryeva, O','',''  UNION ALL
@@ -45273,8 +45839,7 @@ SELECT 'RU','USS','Ussuriysk','',''  UNION ALL
 SELECT 'RU','UUA','Bugulma','',''  UNION ALL
 SELECT 'RU','UUD','Ulan-Ude','',''  UNION ALL
 SELECT 'RU','UUS','Yuzhno-Sakhalinsk','',''  UNION ALL
-SELECT 'RU','VAO','Vassilevsky Ostrov/St Petersburg','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'RU','VAO','Vassilevsky Ostrov/St Petersburg','',''  UNION ALL
 SELECT 'RU','VAR','Varandey','',''  UNION ALL
 SELECT 'RU','VCG','Vichuga','',''  UNION ALL
 SELECT 'RU','VGD','Vologda','',''  UNION ALL
@@ -45291,7 +45856,8 @@ SELECT 'RU','VMR','Vladimir, Vladimirskaya','',''  UNION ALL
 SELECT 'RU','VNN','Vanino','',''  UNION ALL
 SELECT 'RU','VNP','Verkhnedneprovskiy','',''  UNION ALL
 SELECT 'RU','VOG','Volgograd','',''  UNION ALL
-SELECT 'RU','VOS','Voskresensk','',''  UNION ALL
+SELECT 'RU','VOS','Voskresensk','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'RU','VOZ','Voronezh','',''  UNION ALL
 SELECT 'RU','VPO','Vyatskiye Polyany','',''  UNION ALL
 SELECT 'RU','VRH','Verkhove','',''  UNION ALL
@@ -45354,8 +45920,7 @@ SELECT 'SA','DHU','Dhuba','',''  UNION ALL
 SELECT 'SA','DMM','Ad Dammam','',''  UNION ALL
 SELECT 'SA','EAM','Nejran','',''  UNION ALL
 SELECT 'SA','EJH','Wedjh','',''  UNION ALL
-SELECT 'SA','ELQ','Gassim','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SA','ELQ','Gassim','',''  UNION ALL
 SELECT 'SA','GIZ','Jizan','',''  UNION ALL
 SELECT 'SA','HAS','Hail','',''  UNION ALL
 SELECT 'SA','HBT','Hafar al Batin','',''  UNION ALL
@@ -45372,7 +45937,8 @@ SELECT 'SA','LIT','Lith','',''  UNION ALL
 SELECT 'SA','MAK','Makkah','',''  UNION ALL
 SELECT 'SA','MAN','Manailih','',''  UNION ALL
 SELECT 'SA','MED','Madinah','',''  UNION ALL
-SELECT 'SA','MJH','Majma','',''  UNION ALL
+SELECT 'SA','MJH','Majma','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SA','MUF','Manfouha','',''  UNION ALL
 SELECT 'SA','QAL','Qalsn','',''  UNION ALL
 SELECT 'SA','QTF','Qatif','',''  UNION ALL
@@ -45435,8 +46001,7 @@ SELECT 'SB','OTV','Ontong Java','',''  UNION ALL
 SELECT 'SB','PRS','Parasi, Malaita Island','',''  UNION ALL
 SELECT 'SB','PSG','Pulisingau','',''  UNION ALL
 SELECT 'SB','RBV','Ramata','',''  UNION ALL
-SELECT 'SB','RIN','Ringgi Cove, Kolombangara','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SB','RIN','Ringgi Cove, Kolombangara','',''  UNION ALL
 SELECT 'SB','RNL','Rennell Island','',''  UNION ALL
 SELECT 'SB','RRI','Barora Ite Island','',''  UNION ALL
 SELECT 'SB','RUS','Marau Sound, Guadalcanal Is','',''  UNION ALL
@@ -45453,7 +46018,8 @@ SELECT 'SB','XYA','Yandina, Russell Island','',''  UNION ALL
 SELECT 'SC','','','',''  UNION ALL
 SELECT 'SC','BDI','Bird Island','',''  UNION ALL
 SELECT 'SC','DEI','Denis Island','',''  UNION ALL
-SELECT 'SC','DES','Ile Desroches','',''  UNION ALL
+SELECT 'SC','DES','Ile Desroches','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SC','FRK','Fregate','',''  UNION ALL
 SELECT 'SC','MAW','Mahe','',''  UNION ALL
 SELECT 'SC','POV','Port Victoria','',''  UNION ALL
@@ -45516,8 +46082,7 @@ SELECT 'SE','ALI','Alingsas','','O'  UNION ALL
 SELECT 'SE','ALM','Almhult','','G'  UNION ALL
 SELECT 'SE','ALN','Alvenas','','S'  UNION ALL
 SELECT 'SE','ALS','Alvsjo/Stockholm','','AB'  UNION ALL
-SELECT 'SE','ALV','Alvesta','','G' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','ALV','Alvesta','','G'  UNION ALL
 SELECT 'SE','AMA','Amal','','O'  UNION ALL
 SELECT 'SE','ANG','Angelholm','','M'  UNION ALL
 SELECT 'SE','ANK','Ankarsvik','','C'  UNION ALL
@@ -45534,7 +46099,8 @@ SELECT 'SE','ARK','Arnoviken','','C'  UNION ALL
 SELECT 'SE','ARL','Arlov','','M'  UNION ALL
 SELECT 'SE','ARN','Arlanda Apt/Stockholm','','C'  UNION ALL
 SELECT 'SE','ARS','Arsta/Stockholm','','AB'  UNION ALL
-SELECT 'SE','ART','Arlandastad','','AB'  UNION ALL
+SELECT 'SE','ART','Arlandastad','','AB' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','ARV','Arvika','','S'  UNION ALL
 SELECT 'SE','ASA','Asarum','','K'  UNION ALL
 SELECT 'SE','ASD','Askersund','','T'  UNION ALL
@@ -45597,8 +46163,7 @@ SELECT 'SE','BOT','Bottnaryd','','F'  UNION ALL
 SELECT 'SE','BOX','Boxholm','','E'  UNION ALL
 SELECT 'SE','BPG','Bispgarden','','Z'  UNION ALL
 SELECT 'SE','BRA','Bralanda','','O'  UNION ALL
-SELECT 'SE','BRD','Bredaryd','','F' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','BRD','Bredaryd','','F'  UNION ALL
 SELECT 'SE','BRE','Bredviken','',''  UNION ALL
 SELECT 'SE','BRH','Brakne-Hoby','','K'  UNION ALL
 SELECT 'SE','BRM','Bromolla','','M'  UNION ALL
@@ -45615,7 +46180,8 @@ SELECT 'SE','BYS','Byske (Brannfors)','','AC'  UNION ALL
 SELECT 'SE','BYU','Bygdsiljum','','AC'  UNION ALL
 SELECT 'SE','BYX','Byxelkrok','','H'  UNION ALL
 SELECT 'SE','CHA','Charlottenberg','','S'  UNION ALL
-SELECT 'SE','DAL','Dals-Langed','','O'  UNION ALL
+SELECT 'SE','DAL','Dals-Langed','','O' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','DAN','Dannemora','','C'  UNION ALL
 SELECT 'SE','DEG','Degerhamn','','H'  UNION ALL
 SELECT 'SE','DEJ','Deje','','S'  UNION ALL
@@ -45678,8 +46244,7 @@ SELECT 'SE','FLX','Flaxenvik','',''  UNION ALL
 SELECT 'SE','FOA','Forsbacka','','X'  UNION ALL
 SELECT 'SE','FOM','Forserum','','F'  UNION ALL
 SELECT 'SE','FOR','Forsmark','','C'  UNION ALL
-SELECT 'SE','FOS','Forshaga','','S' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','FOS','Forshaga','','S'  UNION ALL
 SELECT 'SE','FRA','Frano','','Y'  UNION ALL
 SELECT 'SE','FRI','Fristad','','O'  UNION ALL
 SELECT 'SE','FRO','Frovi','','T'  UNION ALL
@@ -45696,7 +46261,8 @@ SELECT 'SE','GAR','Garphyttan','','T'  UNION ALL
 SELECT 'SE','GET','Getinge','','N'  UNION ALL
 SELECT 'SE','GEV','Gallivare','','BD'  UNION ALL
 SELECT 'SE','GGE','Grangarde','','W'  UNION ALL
-SELECT 'SE','GGF','Gagnef','','W'  UNION ALL
+SELECT 'SE','GGF','Gagnef','','W' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','GHR','Ganghester','','O'  UNION ALL
 SELECT 'SE','GIS','Gislaved','','F'  UNION ALL
 SELECT 'SE','GKS','Gustavsvik/Stockholm','','AB'  UNION ALL
@@ -45759,8 +46325,7 @@ SELECT 'SE','HIT','Hittarp','','M'  UNION ALL
 SELECT 'SE','HJA','Hjarnarp','','M'  UNION ALL
 SELECT 'SE','HJD','Hjorted','','H'  UNION ALL
 SELECT 'SE','HJO','Hjo','','O'  UNION ALL
-SELECT 'SE','HLD','Holmsund','','AC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','HLD','Holmsund','','AC'  UNION ALL
 SELECT 'SE','HLF','Hultsfred','','H'  UNION ALL
 SELECT 'SE','HLL','Hallefors','','T'  UNION ALL
 SELECT 'SE','HLN','Helgenas','',''  UNION ALL
@@ -45777,7 +46342,8 @@ SELECT 'SE','HNK','Hanaskog','','M'  UNION ALL
 SELECT 'SE','HNO','Hono','','O'  UNION ALL
 SELECT 'SE','HOD','Horred','','O'  UNION ALL
 SELECT 'SE','HOE','Horby','','M'  UNION ALL
-SELECT 'SE','HOF','Hofors','','X'  UNION ALL
+SELECT 'SE','HOF','Hofors','','X' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','HOG','Hoganas','','M'  UNION ALL
 SELECT 'SE','HOL','Holmsjo','','K'  UNION ALL
 SELECT 'SE','HON','Honsater','','O'  UNION ALL
@@ -45840,8 +46406,7 @@ SELECT 'SE','KIA','Kinna','','O'  UNION ALL
 SELECT 'SE','KID','Kristianstad','','M'  UNION ALL
 SELECT 'SE','KIL','Kil','','S'  UNION ALL
 SELECT 'SE','KIN','Kinnarp','','O'  UNION ALL
-SELECT 'SE','KIS','Kista','','AB' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','KIS','Kista','','AB'  UNION ALL
 SELECT 'SE','KKO','Krokom','','Z'  UNION ALL
 SELECT 'SE','KKS','Kyrkesund','','O'  UNION ALL
 SELECT 'SE','KLA','Klavrestrom','','G'  UNION ALL
@@ -45858,7 +46423,8 @@ SELECT 'SE','KOL','Kolback','','U'  UNION ALL
 SELECT 'SE','KOR','Korsberga','','F'  UNION ALL
 SELECT 'SE','KOS','Korsnas','','W'  UNION ALL
 SELECT 'SE','KPA','Karpalund','','M'  UNION ALL
-SELECT 'SE','KPH','Kappelshamn','','I'  UNION ALL
+SELECT 'SE','KPH','Kappelshamn','','I' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','KPO','Kopparberg','','T'  UNION ALL
 SELECT 'SE','KPS','Kapellskar','','AB'  UNION ALL
 SELECT 'SE','KRD','Kagerod','','M'  UNION ALL
@@ -45921,8 +46487,7 @@ SELECT 'SE','LOF','Loftahammar','','H'  UNION ALL
 SELECT 'SE','LOM','Lomma','','M'  UNION ALL
 SELECT 'SE','LOT','Loten','',''  UNION ALL
 SELECT 'SE','LOU','Loudden/Stockholm','','AB'  UNION ALL
-SELECT 'SE','LPI','Linkoping','','E' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','LPI','Linkoping','','E'  UNION ALL
 SELECT 'SE','LUD','Lund','','M'  UNION ALL
 SELECT 'SE','LUG','Lugnvik','','Y'  UNION ALL
 SELECT 'SE','LUN','Lovholmen','','BD'  UNION ALL
@@ -45939,7 +46504,8 @@ SELECT 'SE','MBT','Malmberget','','BD'  UNION ALL
 SELECT 'SE','MDM','Munkedalshamn','','O'  UNION ALL
 SELECT 'SE','MEL','Mellerud','','O'  UNION ALL
 SELECT 'SE','MEM','Mem','','E'  UNION ALL
-SELECT 'SE','MHA','Moheda','','G'  UNION ALL
+SELECT 'SE','MHA','Moheda','','G' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','MHM','Moholm','','O'  UNION ALL
 SELECT 'SE','MJB','Mjolby','','E'  UNION ALL
 SELECT 'SE','MLJ','Munka-Ljungby','','M'  UNION ALL
@@ -46002,8 +46568,7 @@ SELECT 'SE','NYB','Nybro','','H'  UNION ALL
 SELECT 'SE','NYM','Nymolla','','M'  UNION ALL
 SELECT 'SE','NYN','Nynashamn','','AB'  UNION ALL
 SELECT 'SE','NYO','Nykoping','','D'  UNION ALL
-SELECT 'SE','NYP','Nyvarp','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','NYP','Nyvarp','',''  UNION ALL
 SELECT 'SE','OAX','Oaxen','','D'  UNION ALL
 SELECT 'SE','OBB','Obbola','','AC'  UNION ALL
 SELECT 'SE','OCK','Ockelbo','','X'  UNION ALL
@@ -46020,7 +46585,8 @@ SELECT 'SE','ORB','Orebro','','T'  UNION ALL
 SELECT 'SE','ORK','Orkelljunga','','M'  UNION ALL
 SELECT 'SE','ORS','Orsa','','W'  UNION ALL
 SELECT 'SE','ORT','Ortviken','','Y'  UNION ALL
-SELECT 'SE','ORV','Orviken','','AC'  UNION ALL
+SELECT 'SE','ORV','Orviken','','AC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','OSB','Osby','','M'  UNION ALL
 SELECT 'SE','OSD','Ostersund','','Z'  UNION ALL
 SELECT 'SE','OSH','Osthammar','','C'  UNION ALL
@@ -46083,8 +46649,7 @@ SELECT 'SE','SGZ','Skogas','','AB'  UNION ALL
 SELECT 'SE','SIK','Sikea','','AC'  UNION ALL
 SELECT 'SE','SIM','Simrishamn','','M'  UNION ALL
 SELECT 'SE','SJA','Svenljunga','','O'  UNION ALL
-SELECT 'SE','SJQ','Savsjo','','F' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','SJQ','Savsjo','','F'  UNION ALL
 SELECT 'SE','SKA','Skapafors','','O'  UNION ALL
 SELECT 'SE','SKB','Skarblacka','','E'  UNION ALL
 SELECT 'SE','SKE','Skelleftehamn','','AC'  UNION ALL
@@ -46101,7 +46666,8 @@ SELECT 'SE','SKT','Skattkarr','','S'  UNION ALL
 SELECT 'SE','SKU','Skurup','','M'  UNION ALL
 SELECT 'SE','SKV','Skovde','','O'  UNION ALL
 SELECT 'SE','SKZ','Skene','','O'  UNION ALL
-SELECT 'SE','SLF','Solleftea','','Y'  UNION ALL
+SELECT 'SE','SLF','Solleftea','','Y' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','SLG','Sloinge','','N'  UNION ALL
 SELECT 'SE','SLI','Slite','','I'  UNION ALL
 SELECT 'SE','SLN','Solna','','AB'  UNION ALL
@@ -46164,8 +46730,7 @@ SELECT 'SE','TAG','Tangaberg','','N'  UNION ALL
 SELECT 'SE','TAN','Tanumshede','','O'  UNION ALL
 SELECT 'SE','TAO','Tranemo','','O'  UNION ALL
 SELECT 'SE','TBO','Tobo','','C'  UNION ALL
-SELECT 'SE','TBY','Taby','','AB' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','TBY','Taby','','AB'  UNION ALL
 SELECT 'SE','TEG','Taberg','','F'  UNION ALL
 SELECT 'SE','THN','Trollhattan','','O'  UNION ALL
 SELECT 'SE','THR','Torpshammar','','Y'  UNION ALL
@@ -46182,7 +46747,8 @@ SELECT 'SE','TNS','Tranas','','F'  UNION ALL
 SELECT 'SE','TOA','Torshalla','','D'  UNION ALL
 SELECT 'SE','TOB','Toreboda','','O'  UNION ALL
 SELECT 'SE','TOE','Tore','','BD'  UNION ALL
-SELECT 'SE','TOM','Tomelilla','','M'  UNION ALL
+SELECT 'SE','TOM','Tomelilla','','M' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','TOP','Torup','','N'  UNION ALL
 SELECT 'SE','TOR','Torsas','','H'  UNION ALL
 SELECT 'SE','TOV','Torekov','','M'  UNION ALL
@@ -46245,8 +46811,7 @@ SELECT 'SE','VIA','Vingaker','','D'  UNION ALL
 SELECT 'SE','VIK','Vikmanshyttan','','W'  UNION ALL
 SELECT 'SE','VIM','Vimmerby','','H'  UNION ALL
 SELECT 'SE','VIN','Vindeln','','BD'  UNION ALL
-SELECT 'SE','VIO','Virsbo Bruk','','U' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SE','VIO','Virsbo Bruk','','U'  UNION ALL
 SELECT 'SE','VIR','Virserum','','H'  UNION ALL
 SELECT 'SE','VIS','Vinslov','','M'  UNION ALL
 SELECT 'SE','VIT','Vittaryd','','G'  UNION ALL
@@ -46263,7 +46828,8 @@ SELECT 'SE','VST','Vasteras','','U'  UNION ALL
 SELECT 'SE','VTA','Vallentuna','','AB'  UNION ALL
 SELECT 'SE','VTL','Vetlanda','','F'  UNION ALL
 SELECT 'SE','VVK','Vastervik','','H'  UNION ALL
-SELECT 'SE','VXH','Vaxholm','','AB'  UNION ALL
+SELECT 'SE','VXH','Vaxholm','','AB' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SE','VXO','Vaxjo','','G'  UNION ALL
 SELECT 'SE','VXT','Vaxtorp','','N'  UNION ALL
 SELECT 'SE','WAL','Wallhamn','','O'  UNION ALL
@@ -46326,8 +46892,7 @@ SELECT 'SI','POW','Portoroz','',''  UNION ALL
 SELECT 'SI','PTV','Petrovce','',''  UNION ALL
 SELECT 'SI','RNA','Ribnica','',''  UNION ALL
 SELECT 'SI','RNK','Ravne na Koroskem','',''  UNION ALL
-SELECT 'SI','RSA','Rogaska Slatina','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SI','RSA','Rogaska Slatina','',''  UNION ALL
 SELECT 'SI','SBA','Slovenska Bistrica','',''  UNION ALL
 SELECT 'SI','SLG','Slovenj Gradec','',''  UNION ALL
 SELECT 'SI','SLK','Slovenske Konjice','',''  UNION ALL
@@ -46344,7 +46909,8 @@ SELECT 'SJ','LYR','Longyearbyen','',''  UNION ALL
 SELECT 'SJ','NYA','Ny-Alesund','',''  UNION ALL
 SELECT 'SJ','SVE','Sveagruva','',''  UNION ALL
 SELECT 'SK','','','',''  UNION ALL
-SELECT 'SK','BAA','Devinska Nova Ves/Bratislava','',''  UNION ALL
+SELECT 'SK','BAA','Devinska Nova Ves/Bratislava','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SK','BAB','Bratislava Port','',''  UNION ALL
 SELECT 'SK','BBY','Banska Bystrica','',''  UNION ALL
 SELECT 'SK','BCA','Bytca','',''  UNION ALL
@@ -46407,8 +46973,7 @@ SELECT 'SK','KNP','Komarno Port','',''  UNION ALL
 SELECT 'SK','KOC','Kocovce','',''  UNION ALL
 SELECT 'SK','KPY','Krompachy','',''  UNION ALL
 SELECT 'SK','KRA','Kral','',''  UNION ALL
-SELECT 'SK','KRM','Koromla','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SK','KRM','Koromla','',''  UNION ALL
 SELECT 'SK','KRU','Krupina','',''  UNION ALL
 SELECT 'SK','KRV','Krivan','',''  UNION ALL
 SELECT 'SK','KRY','Krizovany','',''  UNION ALL
@@ -46425,7 +46990,8 @@ SELECT 'SK','LVE','Levice','',''  UNION ALL
 SELECT 'SK','LYD','Lysa nad Dunajcom','',''  UNION ALL
 SELECT 'SK','LZO','Lozorno','',''  UNION ALL
 SELECT 'SK','MAC','Malacky','',''  UNION ALL
-SELECT 'SK','MAT','Martovce','',''  UNION ALL
+SELECT 'SK','MAT','Martovce','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SK','MED','Medvedov','',''  UNION ALL
 SELECT 'SK','MHB','Makov-Horni Becva','',''  UNION ALL
 SELECT 'SK','MHC','Michalovce','',''  UNION ALL
@@ -46488,8 +47054,7 @@ SELECT 'SK','SLB','Stara Lubovna','',''  UNION ALL
 SELECT 'SK','SLD','Sliac','',''  UNION ALL
 SELECT 'SK','SLO','Slovenska Lupca','',''  UNION ALL
 SELECT 'SK','SLP','Selpice','',''  UNION ALL
-SELECT 'SK','SLV','Sladkovicovo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SK','SLV','Sladkovicovo','',''  UNION ALL
 SELECT 'SK','SMO','Smolenice','',''  UNION ALL
 SELECT 'SK','SNA','Snina','',''  UNION ALL
 SELECT 'SK','SNC','Senica, Okres','',''  UNION ALL
@@ -46506,7 +47071,8 @@ SELECT 'SK','SUH','Sucha Hora','',''  UNION ALL
 SELECT 'SK','SVC','Secovce','',''  UNION ALL
 SELECT 'SK','SVK','Svidnik','',''  UNION ALL
 SELECT 'SK','SVR','Srvcinovec','',''  UNION ALL
-SELECT 'SK','SVT','Svit','',''  UNION ALL
+SELECT 'SK','SVT','Svit','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SK','SZY','Smizany','',''  UNION ALL
 SELECT 'SK','TAT','Poprad/Tatry','',''  UNION ALL
 SELECT 'SK','TCY','Topol''cany','',''  UNION ALL
@@ -46569,8 +47135,7 @@ SELECT 'SN','KGG','Kedougou','',''  UNION ALL
 SELECT 'SN','KLC','Kaolack','',''  UNION ALL
 SELECT 'SN','LOU','Louga','',''  UNION ALL
 SELECT 'SN','LYN','Lyndiane','',''  UNION ALL
-SELECT 'SN','MAX','Matam','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SN','MAX','Matam','',''  UNION ALL
 SELECT 'SN','MBA','M''bao Terminal','',''  UNION ALL
 SELECT 'SN','MBO','Mbour','',''  UNION ALL
 SELECT 'SN','NIK','Niokolo Koba','',''  UNION ALL
@@ -46587,7 +47152,8 @@ SELECT 'SO','ALU','Alula','',''  UNION ALL
 SELECT 'SO','BBO','Berbera','',''  UNION ALL
 SELECT 'SO','BIB','Baidoa','',''  UNION ALL
 SELECT 'SO','BSA','Bossaso','',''  UNION ALL
-SELECT 'SO','BSY','Bardera','',''  UNION ALL
+SELECT 'SO','BSY','Bardera','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SO','BUO','Burao','',''  UNION ALL
 SELECT 'SO','BXX','Borama','',''  UNION ALL
 SELECT 'SO','CMO','Obbia','',''  UNION ALL
@@ -46650,8 +47216,7 @@ SELECT 'SV','CNG','Chalatenango','',''  UNION ALL
 SELECT 'SV','CPL','Comalapa','',''  UNION ALL
 SELECT 'SV','CSC','Cara Sucia','',''  UNION ALL
 SELECT 'SV','EPL','El Pedregal','',''  UNION ALL
-SELECT 'SV','LLD','La Libertad','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'SV','LLD','La Libertad','',''  UNION ALL
 SELECT 'SV','LUN','La Union','',''  UNION ALL
 SELECT 'SV','MET','Metapan','',''  UNION ALL
 SELECT 'SV','OLO','Olocuilta','',''  UNION ALL
@@ -46668,7 +47233,8 @@ SELECT 'SV','STA','Santa Ana','',''  UNION ALL
 SELECT 'SV','STO','Santo Tomas','',''  UNION ALL
 SELECT 'SV','SVE','San Vicente','',''  UNION ALL
 SELECT 'SV','USU','Usulutan','',''  UNION ALL
-SELECT 'SY','','','',''  UNION ALL
+SELECT 'SY','','','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'SY','ALD','Al Ladhiqiyah','',''  UNION ALL
 SELECT 'SY','ALP','Aleppo (Alep)','',''  UNION ALL
 SELECT 'SY','ARW','Arwad','',''  UNION ALL
@@ -46731,8 +47297,7 @@ SELECT 'TD','OUM','Oum Hadjer','',''  UNION ALL
 SELECT 'TD','OUT','Bousso','',''  UNION ALL
 SELECT 'TD','PLF','Pala','',''  UNION ALL
 SELECT 'TD','SRH','Sarh','',''  UNION ALL
-SELECT 'TF','','','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TF','','','',''  UNION ALL
 SELECT 'TG','','','',''  UNION ALL
 SELECT 'TG','ANE','Aneho','',''  UNION ALL
 SELECT 'TG','DPG','Dapaong','',''  UNION ALL
@@ -46749,7 +47314,8 @@ SELECT 'TH','BAO','Ban Mak Khaen','',''  UNION ALL
 SELECT 'TH','BFV','Buri Ram','',''  UNION ALL
 SELECT 'TH','BGP','Bangpakong','',''  UNION ALL
 SELECT 'TH','BKK','Bangkok','',''  UNION ALL
-SELECT 'TH','BMT','Bangkok Modern Terminals/Bangkok','',''  UNION ALL
+SELECT 'TH','BMT','Bangkok Modern Terminals/Bangkok','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TH','BND','Bandon','',''  UNION ALL
 SELECT 'TH','BNG','Bangnara','',''  UNION ALL
 SELECT 'TH','BNK','Ban Kantang','',''  UNION ALL
@@ -46812,8 +47378,7 @@ SELECT 'TH','PBS','Patong Beach','',''  UNION ALL
 SELECT 'TH','PCH','Pak Chong','',''  UNION ALL
 SELECT 'TH','PHA','Phangnga','',''  UNION ALL
 SELECT 'TH','PHE','Phet Buri','',''  UNION ALL
-SELECT 'TH','PHS','Phitsanulok','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TH','PHS','Phitsanulok','',''  UNION ALL
 SELECT 'TH','PHT','Phan Thong','',''  UNION ALL
 SELECT 'TH','PHZ','Phi Phi Island','',''  UNION ALL
 SELECT 'TH','PKB','Pakbara','',''  UNION ALL
@@ -46830,7 +47395,8 @@ SELECT 'TH','PTH','Pathum Thani','',''  UNION ALL
 SELECT 'TH','PTR','Photharam','',''  UNION ALL
 SELECT 'TH','QJX','Nong Khai','',''  UNION ALL
 SELECT 'TH','RAT','Ratchaburi','',''  UNION ALL
-SELECT 'TH','ROI','Roi Et','',''  UNION ALL
+SELECT 'TH','ROI','Roi Et','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TH','RYG','Rayong','',''  UNION ALL
 SELECT 'TH','SAM','Samphanthawong','',''  UNION ALL
 SELECT 'TH','SAN','Sam Phran','',''  UNION ALL
@@ -46893,8 +47459,7 @@ SELECT 'TM','CJV','Charjew','',''  UNION ALL
 SELECT 'TM','CRZ','Tchardjou','',''  UNION ALL
 SELECT 'TM','DHZ','Dashhowuz','',''  UNION ALL
 SELECT 'TM','FAR','Farap','',''  UNION ALL
-SELECT 'TM','GAL','Galkynys','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TM','GAL','Galkynys','',''  UNION ALL
 SELECT 'TM','GUB','Gubadag','',''  UNION ALL
 SELECT 'TM','HAL','Halach','',''  UNION ALL
 SELECT 'TM','KAK','Kaka','',''  UNION ALL
@@ -46911,7 +47476,8 @@ SELECT 'TM','SAK','Sakar','',''  UNION ALL
 SELECT 'TM','SAY','Sayat','',''  UNION ALL
 SELECT 'TM','SHI','Shirvan-Kala','',''  UNION ALL
 SELECT 'TM','SRK','Sarakhs','',''  UNION ALL
-SELECT 'TM','TAG','Tagta','',''  UNION ALL
+SELECT 'TM','TAG','Tagta','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TM','TAZ','Tashauz','',''  UNION ALL
 SELECT 'TM','TEJ','Tejen','',''  UNION ALL
 SELECT 'TM','TMZ','Termez','',''  UNION ALL
@@ -46974,8 +47540,7 @@ SELECT 'TO','TBU','Nuku''alofa','',''  UNION ALL
 SELECT 'TO','VAV','Vava''u','',''  UNION ALL
 SELECT 'TR','','','',''  UNION ALL
 SELECT 'TR','ABK','Alibeykoy','','34'  UNION ALL
-SELECT 'TR','ACI','Acibadem','','34' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','ACI','Acibadem','','34'  UNION ALL
 SELECT 'TR','ADA','Adana','','01'  UNION ALL
 SELECT 'TR','ADI','Adiyaman','','02'  UNION ALL
 SELECT 'TR','ADK','Anadolukavagi','','34'  UNION ALL
@@ -46992,7 +47557,8 @@ SELECT 'TR','AKB','Akcaabat','','61'  UNION ALL
 SELECT 'TR','AKI','Akseki','','07'  UNION ALL
 SELECT 'TR','AKS','Aksaray','','34'  UNION ALL
 SELECT 'TR','AKY','Akcay','','10'  UNION ALL
-SELECT 'TR','AKZ','Akyazi','','54'  UNION ALL
+SELECT 'TR','AKZ','Akyazi','','54' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','ALA','Alanya','','07'  UNION ALL
 SELECT 'TR','ALE','Alemdag','','34'  UNION ALL
 SELECT 'TR','ALI','Aliaga','','35'  UNION ALL
@@ -47055,8 +47621,7 @@ SELECT 'TR','BOR','Bornova','','35'  UNION ALL
 SELECT 'TR','BOS','Bostanci','','34'  UNION ALL
 SELECT 'TR','BOT','Botas','',''  UNION ALL
 SELECT 'TR','BPZ','Beypazari','','06'  UNION ALL
-SELECT 'TR','BTN','Bartin','','74' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','BTN','Bartin','','74'  UNION ALL
 SELECT 'TR','BTS','Besiktas','','34'  UNION ALL
 SELECT 'TR','BTZ','Bursa','','16'  UNION ALL
 SELECT 'TR','BUC','Buca','','35'  UNION ALL
@@ -47073,7 +47638,8 @@ SELECT 'TR','BYS','Beysehir','','42'  UNION ALL
 SELECT 'TR','BYT','Bayburt','','69'  UNION ALL
 SELECT 'TR','BZB','Bozburun','','48'  UNION ALL
 SELECT 'TR','BZC','Bozcaada','','17'  UNION ALL
-SELECT 'TR','BZI','Balikesir','','10'  UNION ALL
+SELECT 'TR','BZI','Balikesir','','10' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','BZY','Bozuyuk','','11'  UNION ALL
 SELECT 'TR','CAB','Caybasi','','16'  UNION ALL
 SELECT 'TR','CAL','Cal','','20'  UNION ALL
@@ -47136,8 +47702,7 @@ SELECT 'TR','ECE','Eceabat','','17'  UNION ALL
 SELECT 'TR','EDI','Edirne','','22'  UNION ALL
 SELECT 'TR','EDK','Edincik','','10'  UNION ALL
 SELECT 'TR','EDO','Edremit','','10'  UNION ALL
-SELECT 'TR','EGI','Egirdir','','32' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','EGI','Egirdir','','32'  UNION ALL
 SELECT 'TR','EGZ','Emirgazi','','42'  UNION ALL
 SELECT 'TR','ELI','Eregli','','42'  UNION ALL
 SELECT 'TR','ELM','Elmali','','07'  UNION ALL
@@ -47154,7 +47719,8 @@ SELECT 'TR','ERN','Erenkoy','','34'  UNION ALL
 SELECT 'TR','ERZ','Erzurum','','25'  UNION ALL
 SELECT 'TR','ESB','Esenboga Apt/Ankara','','06'  UNION ALL
 SELECT 'TR','ESE','Esenler','','34'  UNION ALL
-SELECT 'TR','ESK','Eskisehir','','26'  UNION ALL
+SELECT 'TR','ESK','Eskisehir','','26' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','ESM','Esme','','64'  UNION ALL
 SELECT 'TR','ESY','Esenyurt','','34'  UNION ALL
 SELECT 'TR','ETI','Etiler','','34'  UNION ALL
@@ -47217,8 +47783,7 @@ SELECT 'TR','HMA','Haymana','','06'  UNION ALL
 SELECT 'TR','HOP','Hopa','','08'  UNION ALL
 SELECT 'TR','HVR','Havran','','10'  UNION ALL
 SELECT 'TR','HYR','Hayrabolu','','59'  UNION ALL
-SELECT 'TR','ICE','Icerenkoy','','34' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','ICE','Icerenkoy','','34'  UNION ALL
 SELECT 'TR','ICO','Incirliova','','09'  UNION ALL
 SELECT 'TR','IGD','Igdir','','76'  UNION ALL
 SELECT 'TR','IGN','Igneada','','39'  UNION ALL
@@ -47235,7 +47800,8 @@ SELECT 'TR','ISK','Iskenderun','','31'  UNION ALL
 SELECT 'TR','IST','Istanbul','','34'  UNION ALL
 SELECT 'TR','ITY','Istinye/Istambul','','34'  UNION ALL
 SELECT 'TR','IZK','Iznik','','16'  UNION ALL
-SELECT 'TR','IZM','?zmir','','35'  UNION ALL
+SELECT 'TR','IZM','Izmir','','35' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','IZT','Izmit','','41'  UNION ALL
 SELECT 'TR','KAD','Kadikoy','','34'  UNION ALL
 SELECT 'TR','KAG','Kagithane','','34'  UNION ALL
@@ -47298,8 +47864,7 @@ SELECT 'TR','KST','Kepsut','','10'  UNION ALL
 SELECT 'TR','KSY','Kars','','36'  UNION ALL
 SELECT 'TR','KTM','Kastamonu','','37'  UNION ALL
 SELECT 'TR','KTY','Kutahya','','43'  UNION ALL
-SELECT 'TR','KUC','Kucukbakkal','','34' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','KUC','Kucukbakkal','','34'  UNION ALL
 SELECT 'TR','KUK','Kucukkoy','','34'  UNION ALL
 SELECT 'TR','KUL','Kulu','','42'  UNION ALL
 SELECT 'TR','KUM','Kumluca','','07'  UNION ALL
@@ -47316,7 +47881,8 @@ SELECT 'TR','LAL','Lalapasa','','22'  UNION ALL
 SELECT 'TR','LAP','Lapseki','','17'  UNION ALL
 SELECT 'TR','LEV','Levent','','34'  UNION ALL
 SELECT 'TR','LMA','Limas','','35'  UNION ALL
-SELECT 'TR','LUL','Luleburgaz','','39'  UNION ALL
+SELECT 'TR','LUL','Luleburgaz','','39' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','MAD','Mardas','','34'  UNION ALL
 SELECT 'TR','MAH','Mahmutbey','','34'  UNION ALL
 SELECT 'TR','MAL','Maltepe','','34'  UNION ALL
@@ -47331,7 +47897,7 @@ SELECT 'TR','MER','Mersin','','33'  UNION ALL
 SELECT 'TR','MFZ','Mersin-Free Zone','','33'  UNION ALL
 SELECT 'TR','MHM','Mahmudiye','','26'  UNION ALL
 SELECT 'TR','MIL','Milas','','48'  UNION ALL
-SELECT 'TR','MKP','Mustafa Kemalpa?a','','16'  UNION ALL
+SELECT 'TR','MKP','Mustafakemalpaşa','','16'  UNION ALL
 SELECT 'TR','MLK','Malkara','','59'  UNION ALL
 SELECT 'TR','MLX','Malatya','','44'  UNION ALL
 SELECT 'TR','MNM','Menemen','','35'  UNION ALL
@@ -47379,8 +47945,7 @@ SELECT 'TR','PTL','Polatli','','06'  UNION ALL
 SELECT 'TR','PYI','Pazaryeri','','11'  UNION ALL
 SELECT 'TR','PZR','Pazar','',''  UNION ALL
 SELECT 'TR','RAH','Rahmanlar','','34'  UNION ALL
-SELECT 'TR','RAI','Rami','','34' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','RAI','Rami','','34'  UNION ALL
 SELECT 'TR','RAM','Raman','','21'  UNION ALL
 SELECT 'TR','RES','Resadiye','','60'  UNION ALL
 SELECT 'TR','RIZ','Rize','','53'  UNION ALL
@@ -47397,7 +47962,8 @@ SELECT 'TR','SEF','Sefakoy','','34'  UNION ALL
 SELECT 'TR','SEI','Serik','','07'  UNION ALL
 SELECT 'TR','SEL','Selimiye','','34'  UNION ALL
 SELECT 'TR','SEN','Senirkent','','32'  UNION ALL
-SELECT 'TR','SER','Serviburun','','34'  UNION ALL
+SELECT 'TR','SER','Serviburun','','34' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','SEY','Seydisehir','','42'  UNION ALL
 SELECT 'TR','SFH','Seferihisar','','35'  UNION ALL
 SELECT 'TR','SFQ','Sanliurfa','','63'  UNION ALL
@@ -47422,7 +47988,7 @@ SELECT 'TR','SNU','Sarayonu','','42'  UNION ALL
 SELECT 'TR','SRG','Sarigazi','','34'  UNION ALL
 SELECT 'TR','SRK','Sarkoy','','59'  UNION ALL
 SELECT 'TR','SRN','Sirinevler','','34'  UNION ALL
-SELECT 'TR','SRS','Sar?seki','','31'  UNION ALL
+SELECT 'TR','SRS','Samandağ','','31'  UNION ALL
 SELECT 'TR','SRY','Sariyer','','34'  UNION ALL
 SELECT 'TR','SSL','Susurluk','','10'  UNION ALL
 SELECT 'TR','SSX','Samsun','','55'  UNION ALL
@@ -47460,8 +48026,7 @@ SELECT 'TR','TZX','Trabzon','','61'  UNION ALL
 SELECT 'TR','ULA','Ula','','48'  UNION ALL
 SELECT 'TR','ULU','Ulubey','','64'  UNION ALL
 SELECT 'TR','UMR','Umraniye','','34'  UNION ALL
-SELECT 'TR','UNY','Unye','','52' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TR','UNY','Unye','','52'  UNION ALL
 SELECT 'TR','URL','Urla','','35'  UNION ALL
 SELECT 'TR','USA','Usak','','64'  UNION ALL
 SELECT 'TR','USK','Uskudar','','34'  UNION ALL
@@ -47478,7 +48043,8 @@ SELECT 'TR','YCA','Yenicaga','','14'  UNION ALL
 SELECT 'TR','YEN','Yenice','','17'  UNION ALL
 SELECT 'TR','YES','Yesilkoy','','34'  UNION ALL
 SELECT 'TR','YEZ','Yenipazar','','11'  UNION ALL
-SELECT 'TR','YKP','Yakuplu','','34'  UNION ALL
+SELECT 'TR','YKP','Yakuplu','','34' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TR','YLV','Yalvac','','32'  UNION ALL
 SELECT 'TR','YOZ','Yozgat','','66'  UNION ALL
 SELECT 'TR','YPZ','Yenipazar','','09'  UNION ALL
@@ -47541,8 +48107,7 @@ SELECT 'TW','TGH','Tung Hai','',''  UNION ALL
 SELECT 'TW','TNN','Tainan','',''  UNION ALL
 SELECT 'TW','TOF','Toufen','',''  UNION ALL
 SELECT 'TW','TPE','Taipei','',''  UNION ALL
-SELECT 'TW','TTT','Taitung','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'TW','TTT','Taitung','',''  UNION ALL
 SELECT 'TW','TUZ','Tou-liu','',''  UNION ALL
 SELECT 'TW','TXG','Taichung','',''  UNION ALL
 SELECT 'TW','TYN','Taoyuan','',''  UNION ALL
@@ -47559,7 +48124,8 @@ SELECT 'TZ','DOD','Dodoma','',''  UNION ALL
 SELECT 'TZ','GIT','Geita','',''  UNION ALL
 SELECT 'TZ','IKW','Ikwiriri','',''  UNION ALL
 SELECT 'TZ','IRI','Iringa','',''  UNION ALL
-SELECT 'TZ','ISK','Isaka','',''  UNION ALL
+SELECT 'TZ','ISK','Isaka','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'TZ','JOM','Njombe','',''  UNION ALL
 SELECT 'TZ','JRO','Kilimanjaro','',''  UNION ALL
 SELECT 'TZ','KHM','Kahama','',''  UNION ALL
@@ -47622,8 +48188,7 @@ SELECT 'UA','FEO','Feodosiya','',''  UNION ALL
 SELECT 'UA','HMJ','Khmelnitskiy','',''  UNION ALL
 SELECT 'UA','HRK','Kharkov','',''  UNION ALL
 SELECT 'UA','IEV','Kiev','',''  UNION ALL
-SELECT 'UA','IFO','Ivano-Frankovsk','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'UA','IFO','Ivano-Frankovsk','',''  UNION ALL
 SELECT 'UA','ILK','Illichivs''k','',''  UNION ALL
 SELECT 'UA','IZM','Izmail','',''  UNION ALL
 SELECT 'UA','KAL','Kalush','',''  UNION ALL
@@ -47640,7 +48205,8 @@ SELECT 'UA','KSK','Komsomol''sk','',''  UNION ALL
 SELECT 'UA','KTP','Konotop','',''  UNION ALL
 SELECT 'UA','KUL','Kulinichi','',''  UNION ALL
 SELECT 'UA','KVL','Kovel''','',''  UNION ALL
-SELECT 'UA','KWG','Krivoy Rog','',''  UNION ALL
+SELECT 'UA','KWG','Krivoy Rog','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'UA','LVI','L''viv','',''  UNION ALL
 SELECT 'UA','LWO','Lwow','',''  UNION ALL
 SELECT 'UA','MDK','Mandrykino','',''  UNION ALL
@@ -47703,8 +48269,7 @@ SELECT 'UG','EBB','Entebbe','',''  UNION ALL
 SELECT 'UG','FPO','Fort Portal','',''  UNION ALL
 SELECT 'UG','GAB','Gaba','',''  UNION ALL
 SELECT 'UG','JIN','Jinja','',''  UNION ALL
-SELECT 'UG','KAB','Kabale','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'UG','KAB','Kabale','',''  UNION ALL
 SELECT 'UG','KBG','Kabalega Falls','',''  UNION ALL
 SELECT 'UG','KCU','Masindi','',''  UNION ALL
 SELECT 'UG','KGM','Kitgum','',''  UNION ALL
@@ -47721,7 +48286,8 @@ SELECT 'UG','MUB','Mubende','',''  UNION ALL
 SELECT 'UG','OYG','Moyo','',''  UNION ALL
 SELECT 'UG','PAF','Pakuba','',''  UNION ALL
 SELECT 'UG','PKE','Pakelle','',''  UNION ALL
-SELECT 'UG','RUA','Arua','',''  UNION ALL
+SELECT 'UG','RUA','Arua','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'UG','SRT','Soroti','',''  UNION ALL
 SELECT 'UG','TRY','Tororo','',''  UNION ALL
 SELECT 'UG','ULU','Gulu','',''  UNION ALL
@@ -47784,8 +48350,7 @@ SELECT 'US','ABN','Ashburn','','GA'  UNION ALL
 SELECT 'US','ABO','Bartow','','GA'  UNION ALL
 SELECT 'US','ABP','St Charles','','MO'  UNION ALL
 SELECT 'US','ABQ','Albuquerque','','NM'  UNION ALL
-SELECT 'US','ABR','Aberdeen','','SD' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ABR','Aberdeen','','SD'  UNION ALL
 SELECT 'US','ABS','Spring','','TX'  UNION ALL
 SELECT 'US','ABT','Sabattus','','ME'  UNION ALL
 SELECT 'US','ABU','Auburn','','MA'  UNION ALL
@@ -47802,7 +48367,8 @@ SELECT 'US','ACB','Bellaire','','MI'  UNION ALL
 SELECT 'US','ACC','Raymond','','WA'  UNION ALL
 SELECT 'US','ACD','Capitol Heights','','MD'  UNION ALL
 SELECT 'US','ACE','Carol Stream','','IL'  UNION ALL
-SELECT 'US','ACF','Sumas','','WA'  UNION ALL
+SELECT 'US','ACF','Sumas','','WA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ACG','Catskill','','NY'  UNION ALL
 SELECT 'US','ACH','Central Falls','','RI'  UNION ALL
 SELECT 'US','ACI','Machias','','ME'  UNION ALL
@@ -47865,8 +48431,7 @@ SELECT 'US','AEG','Marengo','','IN'  UNION ALL
 SELECT 'US','AEH','Greensburg','','KY'  UNION ALL
 SELECT 'US','AEI','Amelia','','LA'  UNION ALL
 SELECT 'US','AEJ','Adamstown','','PA'  UNION ALL
-SELECT 'US','AEK','Aberdeen','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','AEK','Aberdeen','','MS'  UNION ALL
 SELECT 'US','AEL','Albert Lea','','MN'  UNION ALL
 SELECT 'US','AEM','Water Mill','','NY'  UNION ALL
 SELECT 'US','AEN','Alsen','','NY'  UNION ALL
@@ -47883,7 +48448,8 @@ SELECT 'US','AEX','Alexander','','IA'  UNION ALL
 SELECT 'US','AEY','Carneys Point','','NJ'  UNION ALL
 SELECT 'US','AEZ','Armstrong','','IA'  UNION ALL
 SELECT 'US','AF2','Ashford','','AL'  UNION ALL
-SELECT 'US','AFA','Alstead','','NH'  UNION ALL
+SELECT 'US','AFA','Alstead','','NH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','AFB','Avondale','','PA'  UNION ALL
 SELECT 'US','AFC','Atascadero','','CA'  UNION ALL
 SELECT 'US','AFD','Mansfield','','LA'  UNION ALL
@@ -47946,8 +48512,7 @@ SELECT 'US','AHL','Ashland','','NH'  UNION ALL
 SELECT 'US','AHM','Hampton','','AL'  UNION ALL
 SELECT 'US','AHN','Athens','','GA'  UNION ALL
 SELECT 'US','AHO','Athol','','MA'  UNION ALL
-SELECT 'US','AHR','Amherst','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','AHR','Amherst','','VA'  UNION ALL
 SELECT 'US','AHS','Calhoun Falls','','SC'  UNION ALL
 SELECT 'US','AHT','Amchitka','','AK'  UNION ALL
 SELECT 'US','AHU','Alachua','','FL'  UNION ALL
@@ -47964,7 +48529,8 @@ SELECT 'US','AIG','Lansing','','OH'  UNION ALL
 SELECT 'US','AIH','Alliance','','OH'  UNION ALL
 SELECT 'US','AII','Sardinia','','NY'  UNION ALL
 SELECT 'US','AIJ','Saint James','','MO'  UNION ALL
-SELECT 'US','AIK','Aiken','','SC'  UNION ALL
+SELECT 'US','AIK','Aiken','','SC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','AIL','Annville','','PA'  UNION ALL
 SELECT 'US','AIM','Mannington Mills','','NJ'  UNION ALL
 SELECT 'US','AIN','Wainwright','','AK'  UNION ALL
@@ -48027,8 +48593,7 @@ SELECT 'US','ALS','Alamosa','','CO'  UNION ALL
 SELECT 'US','ALT','Allerton','','IA'  UNION ALL
 SELECT 'US','ALU','Alburtis','','PA'  UNION ALL
 SELECT 'US','ALV','Albertville','','MN'  UNION ALL
-SELECT 'US','ALW','Walla Walla','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ALW','Walla Walla','','WA'  UNION ALL
 SELECT 'US','ALX','Alexander City','','AL'  UNION ALL
 SELECT 'US','ALY','Ashland','','AL'  UNION ALL
 SELECT 'US','ALZ','Alitak','','AK'  UNION ALL
@@ -48045,7 +48610,8 @@ SELECT 'US','AMJ','Amity','','OR'  UNION ALL
 SELECT 'US','AMK','Atmore','','AL'  UNION ALL
 SELECT 'US','AML','Amelia','','VA'  UNION ALL
 SELECT 'US','AMM','Amasa','','MI'  UNION ALL
-SELECT 'US','AMN','Alma','','MI'  UNION ALL
+SELECT 'US','AMN','Alma','','MI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','AMO','Alamo','','TX'  UNION ALL
 SELECT 'US','AMP','Assumption','','IL'  UNION ALL
 SELECT 'US','AMQ','Alma','','GA'  UNION ALL
@@ -48108,8 +48674,7 @@ SELECT 'US','AOY','Alloy','','WV'  UNION ALL
 SELECT 'US','AOZ','Andersonville','','TN'  UNION ALL
 SELECT 'US','APA','Alpha','','NJ'  UNION ALL
 SELECT 'US','APB','Campbell','','TX'  UNION ALL
-SELECT 'US','APC','Napa','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','APC','Napa','','CA'  UNION ALL
 SELECT 'US','APD','Aberdeen','','ID'  UNION ALL
 SELECT 'US','APE','Lapeer','','MI'  UNION ALL
 SELECT 'US','APF','Naples','','FL'  UNION ALL
@@ -48126,7 +48691,8 @@ SELECT 'US','APP','Appleton','','MN'  UNION ALL
 SELECT 'US','APS','Attapulgus','','GA'  UNION ALL
 SELECT 'US','APT','Jasper','','TN'  UNION ALL
 SELECT 'US','APU','Sapulpa','','OK'  UNION ALL
-SELECT 'US','APV','Apple Valley','','CA'  UNION ALL
+SELECT 'US','APV','Apple Valley','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','APW','Wickenburg','','AZ'  UNION ALL
 SELECT 'US','APX','Apex','','NC'  UNION ALL
 SELECT 'US','AQB','Ava','','MO'  UNION ALL
@@ -48189,8 +48755,7 @@ SELECT 'US','ASQ','Austin','','NV'  UNION ALL
 SELECT 'US','ASR','Asheboro','','NC'  UNION ALL
 SELECT 'US','ASS','Ware Shoals','','SC'  UNION ALL
 SELECT 'US','AST','Astoria','','OR'  UNION ALL
-SELECT 'US','ASU','Asbury, Warren','','NJ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ASU','Asbury, Warren','','NJ'  UNION ALL
 SELECT 'US','ASV','Ashton','','ID'  UNION ALL
 SELECT 'US','ASW','Watsontown','','PA'  UNION ALL
 SELECT 'US','ASX','Ashland','','WI'  UNION ALL
@@ -48207,7 +48772,8 @@ SELECT 'US','ATE','Antlers','','OK'  UNION ALL
 SELECT 'US','ATF','Atkins','','AR'  UNION ALL
 SELECT 'US','ATG','Atwood','','CA'  UNION ALL
 SELECT 'US','ATH','Bath','','NY'  UNION ALL
-SELECT 'US','ATI','Mantachie','','MS'  UNION ALL
+SELECT 'US','ATI','Mantachie','','MS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ATJ','Almont','','MI'  UNION ALL
 SELECT 'US','ATK','Atqasuk','','AK'  UNION ALL
 SELECT 'US','ATL','Atlanta','','GA'  UNION ALL
@@ -48270,8 +48836,7 @@ SELECT 'US','AVQ','Avon','','OH'  UNION ALL
 SELECT 'US','AVR','Manville','','RI'  UNION ALL
 SELECT 'US','AVS','Avalon','','GA'  UNION ALL
 SELECT 'US','AVT','Avery','','TX'  UNION ALL
-SELECT 'US','AVU','Aventura','','FL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','AVU','Aventura','','FL'  UNION ALL
 SELECT 'US','AVV','Avon','','NY'  UNION ALL
 SELECT 'US','AVW','Avenel/Washington, D.C.','','MD'  UNION ALL
 SELECT 'US','AVX','Advance','','MO'  UNION ALL
@@ -48288,7 +48853,8 @@ SELECT 'US','AWN','Allentown','','PA'  UNION ALL
 SELECT 'US','AWO','Allenwood','','NJ'  UNION ALL
 SELECT 'US','AWP','Wall','','PA'  UNION ALL
 SELECT 'US','AWQ','Harwood','','MO'  UNION ALL
-SELECT 'US','AWR','Acworth','','GA'  UNION ALL
+SELECT 'US','AWR','Acworth','','GA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','AWS','Newcastle','','ME'  UNION ALL
 SELECT 'US','AWW','Awendaw','','SC'  UNION ALL
 SELECT 'US','AWX','Athens','','TX'  UNION ALL
@@ -48351,8 +48917,7 @@ SELECT 'US','BAA','Bad Axe','','MI'  UNION ALL
 SELECT 'US','BAB','Barboursville','','WV'  UNION ALL
 SELECT 'US','BAC','Bassett','','CA'  UNION ALL
 SELECT 'US','BAD','Baldwin','','NY'  UNION ALL
-SELECT 'US','BAE','Baden','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BAE','Baden','','PA'  UNION ALL
 SELECT 'US','BAF','Westfield','','MA'  UNION ALL
 SELECT 'US','BAG','Bagdad','','PA'  UNION ALL
 SELECT 'US','BAH','Beacon Hills','','NY'  UNION ALL
@@ -48369,7 +48934,8 @@ SELECT 'US','BAR','Baker Island','','AK'  UNION ALL
 SELECT 'US','BAS','Bastrop','','LA'  UNION ALL
 SELECT 'US','BAT','Barberton','','OH'  UNION ALL
 SELECT 'US','BAU','Burgaw','','NC'  UNION ALL
-SELECT 'US','BAV','Barnesville','','GA'  UNION ALL
+SELECT 'US','BAV','Barnesville','','GA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BAW','Balfour','','NC'  UNION ALL
 SELECT 'US','BAX','Baldwin','','FL'  UNION ALL
 SELECT 'US','BAY','Bayonne','','NJ'  UNION ALL
@@ -48432,8 +48998,7 @@ SELECT 'US','BCZ','Bruce','','MS'  UNION ALL
 SELECT 'US','BDA','Boardman','','OR'  UNION ALL
 SELECT 'US','BDB','Bridgeport','','NY'  UNION ALL
 SELECT 'US','BDC','Bland','','VA'  UNION ALL
-SELECT 'US','BDD','Braddock','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BDD','Braddock','','PA'  UNION ALL
 SELECT 'US','BDE','Baudette','','MN'  UNION ALL
 SELECT 'US','BDF','Bradford','','IL'  UNION ALL
 SELECT 'US','BDG','Blanding','','UT'  UNION ALL
@@ -48450,7 +49015,8 @@ SELECT 'US','BDQ','Bland','','MO'  UNION ALL
 SELECT 'US','BDR','Bridgeport','','CT'  UNION ALL
 SELECT 'US','BDS','Biscoe','','NC'  UNION ALL
 SELECT 'US','BDT','Bridgewater','','ME'  UNION ALL
-SELECT 'US','BDU','Buda','','TX'  UNION ALL
+SELECT 'US','BDU','Buda','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BDV','Baldwinsville','','NY'  UNION ALL
 SELECT 'US','BDW','Broadway','','VA'  UNION ALL
 SELECT 'US','BDX','Broadus','','MT'  UNION ALL
@@ -48513,8 +49079,7 @@ SELECT 'US','BFZ','Brookfield','','OH'  UNION ALL
 SELECT 'US','BG2','Bangor','','WI'  UNION ALL
 SELECT 'US','BG3','Bulls Gap','','TN'  UNION ALL
 SELECT 'US','BG4','Boling','','TX'  UNION ALL
-SELECT 'US','BGA','Burlington','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BGA','Burlington','','WA'  UNION ALL
 SELECT 'US','BGB','Burr Ridge','','IL'  UNION ALL
 SELECT 'US','BGC','Bushnell','','IL'  UNION ALL
 SELECT 'US','BGD','Bowdon','','GA'  UNION ALL
@@ -48531,7 +49096,8 @@ SELECT 'US','BGN','Bennington','','VT'  UNION ALL
 SELECT 'US','BGO','Buffalo Grove','','IL'  UNION ALL
 SELECT 'US','BGP','Bridgeport','','NE'  UNION ALL
 SELECT 'US','BGQ','Big Lake','','AK'  UNION ALL
-SELECT 'US','BGR','Bangor','','ME'  UNION ALL
+SELECT 'US','BGR','Bangor','','ME' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BGS','Billings','','MO'  UNION ALL
 SELECT 'US','BGT','Bagdad','','AZ'  UNION ALL
 SELECT 'US','BGU','Belgium','','WI'  UNION ALL
@@ -48594,8 +49160,7 @@ SELECT 'US','BIV','Bishopville','','SC'  UNION ALL
 SELECT 'US','BIW','Blair','','SC'  UNION ALL
 SELECT 'US','BIX','Biloxi','','MS'  UNION ALL
 SELECT 'US','BIY','Big Sandy','','TN'  UNION ALL
-SELECT 'US','BIZ','Birmingham','','MI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BIZ','Birmingham','','MI'  UNION ALL
 SELECT 'US','BJA','Barree','','PA'  UNION ALL
 SELECT 'US','BJB','Bridgeburg','','PA'  UNION ALL
 SELECT 'US','BJC','Broomfield','','CO'  UNION ALL
@@ -48612,7 +49177,8 @@ SELECT 'US','BJQ','Brooklyn Park','','MD'  UNION ALL
 SELECT 'US','BJR','Barnet','','VT'  UNION ALL
 SELECT 'US','BJT','Bridgetown','','MD'  UNION ALL
 SELECT 'US','BJW','Bridgewater','','MA'  UNION ALL
-SELECT 'US','BJX','Bellingham','','MA'  UNION ALL
+SELECT 'US','BJX','Bellingham','','MA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BJY','Buena','','NJ'  UNION ALL
 SELECT 'US','BKA','Bucks','','AL'  UNION ALL
 SELECT 'US','BKB','Bunker','','MO'  UNION ALL
@@ -48675,8 +49241,7 @@ SELECT 'US','BMD','Bloomingdale','','GA'  UNION ALL
 SELECT 'US','BME','Bay Minette','','AL'  UNION ALL
 SELECT 'US','BMF','Bloomfield','','IN'  UNION ALL
 SELECT 'US','BMG','Bloomington','','IN'  UNION ALL
-SELECT 'US','BMH','Sandoval','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BMH','Sandoval','','IL'  UNION ALL
 SELECT 'US','BMI','Bloomington-Normal Apt','','IL'  UNION ALL
 SELECT 'US','BMJ','Belmont','','MI'  UNION ALL
 SELECT 'US','BMK','Belmond','','IA'  UNION ALL
@@ -48693,7 +49258,8 @@ SELECT 'US','BMU','Blakely','','GA'  UNION ALL
 SELECT 'US','BMV','Bessemer','','AL'  UNION ALL
 SELECT 'US','BMW','Bowmanstown','','PA'  UNION ALL
 SELECT 'US','BMX','Big Mountain','','AK'  UNION ALL
-SELECT 'US','BMY','Brimfield','','IN'  UNION ALL
+SELECT 'US','BMY','Brimfield','','IN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BMZ','Bridgeton','','MO'  UNION ALL
 SELECT 'US','BN2','Brighton','','MN'  UNION ALL
 SELECT 'US','BN3','Benton','','LA'  UNION ALL
@@ -48756,8 +49322,7 @@ SELECT 'US','BPB','Bayport','','MN'  UNION ALL
 SELECT 'US','BPC','Brook Park','','MN'  UNION ALL
 SELECT 'US','BPD','Blue Rapids','','KS'  UNION ALL
 SELECT 'US','BPE','Bonsall','','CA'  UNION ALL
-SELECT 'US','BPF','Boundary','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BPF','Boundary','','WA'  UNION ALL
 SELECT 'US','BPG','Bridgeport','','NJ'  UNION ALL
 SELECT 'US','BPH','Boiling Springs, Barnwell','','SC'  UNION ALL
 SELECT 'US','BPI','Big Piney','','WY'  UNION ALL
@@ -48774,7 +49339,8 @@ SELECT 'US','BPV','Belhaven','','NC'  UNION ALL
 SELECT 'US','BPX','Bayport','','TX'  UNION ALL
 SELECT 'US','BPY','Big Pine Key','','FL'  UNION ALL
 SELECT 'US','BPZ','Bayport','','NY'  UNION ALL
-SELECT 'US','BQA','Bowie','','MD'  UNION ALL
+SELECT 'US','BQA','Bowie','','MD' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BQB','Brentwood','','NY'  UNION ALL
 SELECT 'US','BQC','Bell','','CA'  UNION ALL
 SELECT 'US','BQD','Bradford','','RI'  UNION ALL
@@ -48837,8 +49403,7 @@ SELECT 'US','BSH','Bay Shore','','NY'  UNION ALL
 SELECT 'US','BSI','Blairsville','','PA'  UNION ALL
 SELECT 'US','BSJ','Bristol','','WI'  UNION ALL
 SELECT 'US','BSK','Basking Ridge','','NJ'  UNION ALL
-SELECT 'US','BSL','Bay Saint Louis','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BSL','Bay Saint Louis','','MS'  UNION ALL
 SELECT 'US','BSM','Big Sandy','','MT'  UNION ALL
 SELECT 'US','BSN','Boston','','VA'  UNION ALL
 SELECT 'US','BSO','Bristol Apt','','TN'  UNION ALL
@@ -48855,7 +49420,8 @@ SELECT 'US','BSY','Broussard, Lafayette','','LA'  UNION ALL
 SELECT 'US','BSZ','Bartletts','','AK'  UNION ALL
 SELECT 'US','BT2','Bryant, Hamlin','','SD'  UNION ALL
 SELECT 'US','BTA','Batavia','','IL'  UNION ALL
-SELECT 'US','BTB','Boonton','','NJ'  UNION ALL
+SELECT 'US','BTB','Boonton','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BTC','Braintree','','MA'  UNION ALL
 SELECT 'US','BTD','Bettendorf','','IA'  UNION ALL
 SELECT 'US','BTE','Bethune','','SC'  UNION ALL
@@ -48918,8 +49484,7 @@ SELECT 'US','BVF','Beaver Falls','','NY'  UNION ALL
 SELECT 'US','BVG','Bevington','','IA'  UNION ALL
 SELECT 'US','BVH','Beverly Hills','','CA'  UNION ALL
 SELECT 'US','BVI','Breinigsville','','PA'  UNION ALL
-SELECT 'US','BVJ','Belvidere','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BVJ','Belvidere','','IL'  UNION ALL
 SELECT 'US','BVK','Belleville','','WI'  UNION ALL
 SELECT 'US','BVL','Boonville','','NC'  UNION ALL
 SELECT 'US','BVM','Boonville','','MO'  UNION ALL
@@ -48936,7 +49501,8 @@ SELECT 'US','BVW','Beaverton','','OR'  UNION ALL
 SELECT 'US','BVX','Batesville','','AR'  UNION ALL
 SELECT 'US','BVY','Beverly','','MA'  UNION ALL
 SELECT 'US','BVZ','Batesville','','MS'  UNION ALL
-SELECT 'US','BWA','Brookwood','','AL'  UNION ALL
+SELECT 'US','BWA','Brookwood','','AL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BWB','Brownsburg','','IN'  UNION ALL
 SELECT 'US','BWC','Brawley','','CA'  UNION ALL
 SELECT 'US','BWD','Brownwood','','TX'  UNION ALL
@@ -48999,8 +49565,7 @@ SELECT 'US','BYH','Blytheville','','AR'  UNION ALL
 SELECT 'US','BYI','Burley-Rupert Apt','','ID'  UNION ALL
 SELECT 'US','BYJ','Broadway','','NJ'  UNION ALL
 SELECT 'US','BYK','Byron Center','','MI'  UNION ALL
-SELECT 'US','BYL','Bradley','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','BYL','Bradley','','IL'  UNION ALL
 SELECT 'US','BYM','Byram','','CT'  UNION ALL
 SELECT 'US','BYN','Burney','','CA'  UNION ALL
 SELECT 'US','BYO','Burnsville','','MN'  UNION ALL
@@ -49017,7 +49582,8 @@ SELECT 'US','BYY','Breckenridge','','MN'  UNION ALL
 SELECT 'US','BYZ','Boyne City','','MI'  UNION ALL
 SELECT 'US','BZA','Brazil','','IN'  UNION ALL
 SELECT 'US','BZB','Baltimore','','OH'  UNION ALL
-SELECT 'US','BZC','Barnesville','','OH'  UNION ALL
+SELECT 'US','BZC','Barnesville','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','BZD','Boston','','GA'  UNION ALL
 SELECT 'US','BZE','Belton','','MO'  UNION ALL
 SELECT 'US','BZH','Bethesda','','MD'  UNION ALL
@@ -49080,8 +49646,7 @@ SELECT 'US','CBM','Cabool','','MO'  UNION ALL
 SELECT 'US','CBN','Cleburne','','TX'  UNION ALL
 SELECT 'US','CBO','Campobello','','SC'  UNION ALL
 SELECT 'US','CBP','Courtland','','AL'  UNION ALL
-SELECT 'US','CBQ','Courtland','','KS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CBQ','Courtland','','KS'  UNION ALL
 SELECT 'US','CBR','Courtland','','MN'  UNION ALL
 SELECT 'US','CBS','Centerburg','','OH'  UNION ALL
 SELECT 'US','CBT','Clinton','','MO'  UNION ALL
@@ -49098,7 +49663,8 @@ SELECT 'US','CC5','City of Commerce','','CA'  UNION ALL
 SELECT 'US','CC6','Claycomo','','MO'  UNION ALL
 SELECT 'US','CCA','Fort Chaffee','','AR'  UNION ALL
 SELECT 'US','CCB','Upland','','CA'  UNION ALL
-SELECT 'US','CCC','Cicero','','NY'  UNION ALL
+SELECT 'US','CCC','Cicero','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CCD','Caledonia','','OH'  UNION ALL
 SELECT 'US','CCE','Chicopee','','MO'  UNION ALL
 SELECT 'US','CCF','Concord','','MA'  UNION ALL
@@ -49161,8 +49727,7 @@ SELECT 'US','CED','Cedar Grove','','NJ'  UNION ALL
 SELECT 'US','CEE','Centerville','','CA'  UNION ALL
 SELECT 'US','CEF','Chicopee','','MA'  UNION ALL
 SELECT 'US','CEG','Cedarburg','','WI'  UNION ALL
-SELECT 'US','CEH','Campbell Hall','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CEH','Campbell Hall','','NY'  UNION ALL
 SELECT 'US','CEI','Cooper Landing','','AK'  UNION ALL
 SELECT 'US','CEJ','Coppell','','TX'  UNION ALL
 SELECT 'US','CEK','Cerritos','','CA'  UNION ALL
@@ -49179,7 +49744,8 @@ SELECT 'US','CEU','Clemson','','SC'  UNION ALL
 SELECT 'US','CEV','Connersville','','IN'  UNION ALL
 SELECT 'US','CEW','Crestview','','FL'  UNION ALL
 SELECT 'US','CEX','Chena Hot Springs','','AK'  UNION ALL
-SELECT 'US','CEY','Murray','','KY'  UNION ALL
+SELECT 'US','CEY','Murray','','KY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CEZ','Cortez','','CO'  UNION ALL
 SELECT 'US','CF2','Claflin','','KS'  UNION ALL
 SELECT 'US','CF3','Clifton, Mesa','','CO'  UNION ALL
@@ -49242,8 +49808,7 @@ SELECT 'US','CH5','Crest Hill','','IL'  UNION ALL
 SELECT 'US','CHA','Chattanooga','','TN'  UNION ALL
 SELECT 'US','CHB','Chadbourn','','NC'  UNION ALL
 SELECT 'US','CHC','Cheshire','','CT'  UNION ALL
-SELECT 'US','CHD','Chandler','','AZ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CHD','Chandler','','AZ'  UNION ALL
 SELECT 'US','CHE','Chapel Hill','','NC'  UNION ALL
 SELECT 'US','CHF','Chalfont','','PA'  UNION ALL
 SELECT 'US','CHG','Cheboygan','','MI'  UNION ALL
@@ -49260,7 +49825,8 @@ SELECT 'US','CHQ','Chanhassen','','MN'  UNION ALL
 SELECT 'US','CHR','Chugiak','','AK'  UNION ALL
 SELECT 'US','CHS','Charleston','','SC'  UNION ALL
 SELECT 'US','CHT','Chester','','PA'  UNION ALL
-SELECT 'US','CHU','Chuathbaluk','','AK'  UNION ALL
+SELECT 'US','CHU','Chuathbaluk','','AK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CHV','Cherry Valley','','CA'  UNION ALL
 SELECT 'US','CHW','Cheswold','','DE'  UNION ALL
 SELECT 'US','CHX','Cherry Hill','','NJ'  UNION ALL
@@ -49323,8 +49889,7 @@ SELECT 'US','CKF','Cherokee Falls','','SC'  UNION ALL
 SELECT 'US','CKG','Cherokee','','AL'  UNION ALL
 SELECT 'US','CKH','Cheriton','','VA'  UNION ALL
 SELECT 'US','CKI','Catalina Is','','CA'  UNION ALL
-SELECT 'US','CKJ','Clarksboro','','NJ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CKJ','Clarksboro','','NJ'  UNION ALL
 SELECT 'US','CKK','Cherokee','','AR'  UNION ALL
 SELECT 'US','CKL','Clarkston','','WA'  UNION ALL
 SELECT 'US','CKM','Clarksdale','','MS'  UNION ALL
@@ -49341,7 +49906,8 @@ SELECT 'US','CKW','Choctaw','','MS'  UNION ALL
 SELECT 'US','CKX','Chicken','','AK'  UNION ALL
 SELECT 'US','CKY','Clayton','','IL'  UNION ALL
 SELECT 'US','CKZ','Clayton','','IN'  UNION ALL
-SELECT 'US','CL2','Castorland','','NY'  UNION ALL
+SELECT 'US','CL2','Castorland','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CL3','Chualar','','CA'  UNION ALL
 SELECT 'US','CL4','Clark','','MO'  UNION ALL
 SELECT 'US','CL5','Cleveland','','IL'  UNION ALL
@@ -49404,8 +49970,7 @@ SELECT 'US','CMY','Sparta','','WI'  UNION ALL
 SELECT 'US','CMZ','Carmel','','NY'  UNION ALL
 SELECT 'US','CN2','Cheney','','KS'  UNION ALL
 SELECT 'US','CN6','New Connecticut','','NY'  UNION ALL
-SELECT 'US','CNA','Collins','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CNA','Collins','','MS'  UNION ALL
 SELECT 'US','CNB','Clinton','','MD'  UNION ALL
 SELECT 'US','CNC','Clinton','','MI'  UNION ALL
 SELECT 'US','CND','Canandaigua','','NY'  UNION ALL
@@ -49422,7 +49987,8 @@ SELECT 'US','CNN','Canonsburg','','PA'  UNION ALL
 SELECT 'US','CNO','Chino','','CA'  UNION ALL
 SELECT 'US','CNP','Canton','','MS'  UNION ALL
 SELECT 'US','CNQ','Canton','','NC'  UNION ALL
-SELECT 'US','CNR','Candor','','NC'  UNION ALL
+SELECT 'US','CNR','Candor','','NC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CNS','Canastota','','NY'  UNION ALL
 SELECT 'US','CNT','Canton','','MI'  UNION ALL
 SELECT 'US','CNU','Chanute','','KS'  UNION ALL
@@ -49485,8 +50051,7 @@ SELECT 'US','CPU','Coopersburg','','PA'  UNION ALL
 SELECT 'US','CPV','Cape Canaveral','','FL'  UNION ALL
 SELECT 'US','CPW','Cooper City','','FL'  UNION ALL
 SELECT 'US','CPX','Chester Springs','','PA'  UNION ALL
-SELECT 'US','CPY','Copley','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CPY','Copley','','OH'  UNION ALL
 SELECT 'US','CPZ','Capistrano Beach','','CA'  UNION ALL
 SELECT 'US','CQA','Colma','','CA'  UNION ALL
 SELECT 'US','CQB','Columbus Junction','','IA'  UNION ALL
@@ -49503,7 +50068,8 @@ SELECT 'US','CQL','Colo','','IA'  UNION ALL
 SELECT 'US','CQM','Cloquet','','MN'  UNION ALL
 SELECT 'US','CQN','Crescent','','IA'  UNION ALL
 SELECT 'US','CQO','Charter Oak','','CA'  UNION ALL
-SELECT 'US','CQP','Connellsville','','PA'  UNION ALL
+SELECT 'US','CQP','Connellsville','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CQQ','Crete','','IL'  UNION ALL
 SELECT 'US','CQR','Carrollton','','OH'  UNION ALL
 SELECT 'US','CQS','Chesnee','','SC'  UNION ALL
@@ -49566,8 +50132,7 @@ SELECT 'US','CSO','Casnovia','','MI'  UNION ALL
 SELECT 'US','CSP','Cape Spencer','','AK'  UNION ALL
 SELECT 'US','CSQ','Creston','','IA'  UNION ALL
 SELECT 'US','CSR','Chester','','NY'  UNION ALL
-SELECT 'US','CSS','Clifton Springs','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CSS','Clifton Springs','','NY'  UNION ALL
 SELECT 'US','CST','Charleston','','TX'  UNION ALL
 SELECT 'US','CSU','Carsonville','','MI'  UNION ALL
 SELECT 'US','CSV','Crossville','','TN'  UNION ALL
@@ -49584,7 +50149,8 @@ SELECT 'US','CTB','Cut Bank','','MT'  UNION ALL
 SELECT 'US','CTC','Charleston','','TN'  UNION ALL
 SELECT 'US','CTD','Crystal Lake','','IL'  UNION ALL
 SELECT 'US','CTE','Chattahoochee','','FL'  UNION ALL
-SELECT 'US','CTF','Crete','','NE'  UNION ALL
+SELECT 'US','CTF','Crete','','NE' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CTG','Cresco','','PA'  UNION ALL
 SELECT 'US','CTH','Coatesville','','PA'  UNION ALL
 SELECT 'US','CTI','Contoocook','','NH'  UNION ALL
@@ -49647,8 +50213,7 @@ SELECT 'US','CVD','Cleveland','','MS'  UNION ALL
 SELECT 'US','CVE','Centerville','','GA'  UNION ALL
 SELECT 'US','CVF','Covington','','GA'  UNION ALL
 SELECT 'US','CVG','Cincinnati','','OH'  UNION ALL
-SELECT 'US','CVH','Crothersville','','IN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CVH','Crothersville','','IN'  UNION ALL
 SELECT 'US','CVI','Cape Vincent','','NY'  UNION ALL
 SELECT 'US','CVJ','Covington','','VA'  UNION ALL
 SELECT 'US','CVK','Covington','','KY'  UNION ALL
@@ -49665,7 +50230,8 @@ SELECT 'US','CVU','Channelview','','TX'  UNION ALL
 SELECT 'US','CVV','Cloverdale','','VA'  UNION ALL
 SELECT 'US','CVW','Cleveland','','WI'  UNION ALL
 SELECT 'US','CVX','Cavendish','','VT'  UNION ALL
-SELECT 'US','CVY','Clarksville','','VA'  UNION ALL
+SELECT 'US','CVY','Clarksville','','VA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CVZ','Centerville','','LA'  UNION ALL
 SELECT 'US','CW2','Cowen, Webster','','WV'  UNION ALL
 SELECT 'US','CW3','Cropwell','','AL'  UNION ALL
@@ -49728,8 +50294,7 @@ SELECT 'US','CYA','Clyde','','NY'  UNION ALL
 SELECT 'US','CYB','Clyde','','OH'  UNION ALL
 SELECT 'US','CYC','Cayce','','SC'  UNION ALL
 SELECT 'US','CYD','Cecilton','','MD'  UNION ALL
-SELECT 'US','CYE','Crystal Lake','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','CYE','Crystal Lake','','PA'  UNION ALL
 SELECT 'US','CYF','Chefornak','','AK'  UNION ALL
 SELECT 'US','CYG','Cayuga','','IN'  UNION ALL
 SELECT 'US','CYH','Crystal Springs','','MS'  UNION ALL
@@ -49746,7 +50311,8 @@ SELECT 'US','CYR','Conyers','','GA'  UNION ALL
 SELECT 'US','CYS','Cheyenne','','WY'  UNION ALL
 SELECT 'US','CYT','Clayton','','OH'  UNION ALL
 SELECT 'US','CYU','Cayuta','','NY'  UNION ALL
-SELECT 'US','CYV','Cordova','','WV'  UNION ALL
+SELECT 'US','CYV','Cordova','','WV' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','CYW','Clyattville','','GA'  UNION ALL
 SELECT 'US','CYX','Cypress','','TX'  UNION ALL
 SELECT 'US','CYY','Crystal City','','TX'  UNION ALL
@@ -49809,8 +50375,7 @@ SELECT 'US','DBI','Dubois','','IN'  UNION ALL
 SELECT 'US','DBL','Dublin','','TX'  UNION ALL
 SELECT 'US','DBN','Dublin','','GA'  UNION ALL
 SELECT 'US','DBO','Dalbo','','MN'  UNION ALL
-SELECT 'US','DBQ','Dubuque','','IA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','DBQ','Dubuque','','IA'  UNION ALL
 SELECT 'US','DBR','Diamond Bar','','CA'  UNION ALL
 SELECT 'US','DBS','Dubois','','ID'  UNION ALL
 SELECT 'US','DBU','Middleburg, Logan','','OH'  UNION ALL
@@ -49827,7 +50392,8 @@ SELECT 'US','DCL','Declo','','ID'  UNION ALL
 SELECT 'US','DCO','Ducor','','CA'  UNION ALL
 SELECT 'US','DCQ','Dacono','','CO'  UNION ALL
 SELECT 'US','DCR','Decatur','','IN'  UNION ALL
-SELECT 'US','DCS','Dorchester','','WI'  UNION ALL
+SELECT 'US','DCS','Dorchester','','WI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','DCT','Derby','','CT'  UNION ALL
 SELECT 'US','DCU','Decatur','','AL'  UNION ALL
 SELECT 'US','DD2','Ada','','MN'  UNION ALL
@@ -49890,8 +50456,7 @@ SELECT 'US','DFW','Dallas-Fort Worth Int Apt','','TX'  UNION ALL
 SELECT 'US','DFX','Defense','','TX'  UNION ALL
 SELECT 'US','DGA','Duluth','','GA'  UNION ALL
 SELECT 'US','DGB','Danger Bay','','AK'  UNION ALL
-SELECT 'US','DGE','Chenango Bridge','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','DGE','Chenango Bridge','','NY'  UNION ALL
 SELECT 'US','DGL','Douglassville','','PA'  UNION ALL
 SELECT 'US','DGN','Dahlgren','','VA'  UNION ALL
 SELECT 'US','DGO','Edgewood','','NM'  UNION ALL
@@ -49908,7 +50473,8 @@ SELECT 'US','DHI','Delhi','','IA'  UNION ALL
 SELECT 'US','DHL','Dahlonega','','GA'  UNION ALL
 SELECT 'US','DHN','Dothan','','AL'  UNION ALL
 SELECT 'US','DHQ','Durham','','CT'  UNION ALL
-SELECT 'US','DHS','Desert Hot Springs','','CA'  UNION ALL
+SELECT 'US','DHS','Desert Hot Springs','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','DHT','Dalhart','','TX'  UNION ALL
 SELECT 'US','DHX','Delhi','','LA'  UNION ALL
 SELECT 'US','DIA','Adrian','','WI'  UNION ALL
@@ -49971,8 +50537,7 @@ SELECT 'US','DMT','Deer River','','MN'  UNION ALL
 SELECT 'US','DMU','Damascus','','VA'  UNION ALL
 SELECT 'US','DMZ','Dominguez','','CA'  UNION ALL
 SELECT 'US','DN2','Del Norte','','CO'  UNION ALL
-SELECT 'US','DN3','Darrington','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','DN3','Darrington','','WA'  UNION ALL
 SELECT 'US','DNA','Donaldsonville','','LA'  UNION ALL
 SELECT 'US','DNB','Dunedin','','FL'  UNION ALL
 SELECT 'US','DNC','Dorrance','','KS'  UNION ALL
@@ -49989,7 +50554,8 @@ SELECT 'US','DNP','Derry','','NH'  UNION ALL
 SELECT 'US','DNQ','Denver','','PA'  UNION ALL
 SELECT 'US','DNR','Drain','','OR'  UNION ALL
 SELECT 'US','DNS','Denison','','IA'  UNION ALL
-SELECT 'US','DNT','Downingtown','','PA'  UNION ALL
+SELECT 'US','DNT','Downingtown','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','DNV','Dunnville','','KY'  UNION ALL
 SELECT 'US','DNY','Danby','','VT'  UNION ALL
 SELECT 'US','DNZ','Dunmore','','PA'  UNION ALL
@@ -50052,8 +50618,7 @@ SELECT 'US','DRU','Drummond','','MT'  UNION ALL
 SELECT 'US','DRV','Dover','','NH'  UNION ALL
 SELECT 'US','DRW','De Pere','','WI'  UNION ALL
 SELECT 'US','DRX','Drexel','','NC'  UNION ALL
-SELECT 'US','DRY','Dry Branch','','GA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','DRY','Dry Branch','','GA'  UNION ALL
 SELECT 'US','DRZ','Del Rio','','TN'  UNION ALL
 SELECT 'US','DSC','Damascus','','OR'  UNION ALL
 SELECT 'US','DSD','Dresden','','TN'  UNION ALL
@@ -50070,7 +50635,8 @@ SELECT 'US','DSP','Dallas','','PA'  UNION ALL
 SELECT 'US','DSQ','De Soto','','MO'  UNION ALL
 SELECT 'US','DSR','Deshler','','NE'  UNION ALL
 SELECT 'US','DST','Adamston','','WV'  UNION ALL
-SELECT 'US','DSU','Decatur','','NE'  UNION ALL
+SELECT 'US','DSU','Decatur','','NE' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','DSV','Dansville','','NY'  UNION ALL
 SELECT 'US','DSW','Dresser','','WI'  UNION ALL
 SELECT 'US','DSX','Dickinson','','TX'  UNION ALL
@@ -50133,8 +50699,7 @@ SELECT 'US','DVO','Davison','','MI'  UNION ALL
 SELECT 'US','DVP','Davenport','','FL'  UNION ALL
 SELECT 'US','DVQ','Delmont','','PA'  UNION ALL
 SELECT 'US','DVR','Danvers','','MA'  UNION ALL
-SELECT 'US','DVS','Davis','','OK' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','DVS','Davis','','OK'  UNION ALL
 SELECT 'US','DVT','Davant','','LA'  UNION ALL
 SELECT 'US','DVV','Davisville','','RI'  UNION ALL
 SELECT 'US','DVW','Grandview','','IN'  UNION ALL
@@ -50151,7 +50716,8 @@ SELECT 'US','DWO','Dewey','','OK'  UNION ALL
 SELECT 'US','DWR','Redwood','','MS'  UNION ALL
 SELECT 'US','DWT','De Witt','','MI'  UNION ALL
 SELECT 'US','DWV','Dunbar','','WV'  UNION ALL
-SELECT 'US','DWW','Dewitt','','IA'  UNION ALL
+SELECT 'US','DWW','Dewitt','','IA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','DWX','De Witt','','NE'  UNION ALL
 SELECT 'US','DWZ','Downey','','PA'  UNION ALL
 SELECT 'US','DX2','Dexter City','','OH'  UNION ALL
@@ -50214,8 +50780,7 @@ SELECT 'US','EAV','Eagleville','','PA'  UNION ALL
 SELECT 'US','EAW','Elma','','WA'  UNION ALL
 SELECT 'US','EAY','East Lyme','','CT'  UNION ALL
 SELECT 'US','EB2','Elburn','','IL'  UNION ALL
-SELECT 'US','EBA','Elba','','AL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','EBA','Elba','','AL'  UNION ALL
 SELECT 'US','EBB','West Babylon','','NY'  UNION ALL
 SELECT 'US','EBC','East Bridgeport','','CT'  UNION ALL
 SELECT 'US','EBD','East Bend','','NC'  UNION ALL
@@ -50232,7 +50797,8 @@ SELECT 'US','EC2','Eclectic','','AL'  UNION ALL
 SELECT 'US','ECA','East Tawas','','MI'  UNION ALL
 SELECT 'US','ECB','Edgecomb','','ME'  UNION ALL
 SELECT 'US','ECC','Ellicott City','','MD'  UNION ALL
-SELECT 'US','ECD','Escondido','','CA'  UNION ALL
+SELECT 'US','ECD','Escondido','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ECE','Spencerville','','OH'  UNION ALL
 SELECT 'US','ECG','Elizabeth City','','NC'  UNION ALL
 SELECT 'US','ECH','East Chicago','','IN'  UNION ALL
@@ -50295,8 +50861,7 @@ SELECT 'US','EEM','Belle Mina','','AL'  UNION ALL
 SELECT 'US','EEN','Keene','','NH'  UNION ALL
 SELECT 'US','EEO','Greenwood','','MO'  UNION ALL
 SELECT 'US','EEP','Enterprise, Washington','','UT'  UNION ALL
-SELECT 'US','EER','Beaver','','OR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','EER','Beaver','','OR'  UNION ALL
 SELECT 'US','EES','Weedsport','','NY'  UNION ALL
 SELECT 'US','EET','Leetonia','','OH'  UNION ALL
 SELECT 'US','EEV','Reeseville','','WI'  UNION ALL
@@ -50313,7 +50878,8 @@ SELECT 'US','EFK','Newport','','VT'  UNION ALL
 SELECT 'US','EFL','Enfield','','NC'  UNION ALL
 SELECT 'US','EFN','East Freetown','','MA'  UNION ALL
 SELECT 'US','EFO','East Fork','','AK'  UNION ALL
-SELECT 'US','EFR','East Farmingdale','','NY'  UNION ALL
+SELECT 'US','EFR','East Farmingdale','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','EFT','Effort','','PA'  UNION ALL
 SELECT 'US','EFW','Jefferson','','IA'  UNION ALL
 SELECT 'US','EG2','Ewing','','NE'  UNION ALL
@@ -50376,8 +50942,7 @@ SELECT 'US','EJD','East Jordan','','MI'  UNION ALL
 SELECT 'US','EJW','Edgewater','','FL'  UNION ALL
 SELECT 'US','EKA','Eureka','','CA'  UNION ALL
 SELECT 'US','EKD','Elkridge','','MD'  UNION ALL
-SELECT 'US','EKE','Elkview','','WV' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','EKE','Elkview','','WV'  UNION ALL
 SELECT 'US','EKH','Elkhart','','IA'  UNION ALL
 SELECT 'US','EKI','Elkhart','','IN'  UNION ALL
 SELECT 'US','EKK','Elkhart Lake','','WI'  UNION ALL
@@ -50394,7 +50959,8 @@ SELECT 'US','EKX','Elizabethtown','','KY'  UNION ALL
 SELECT 'US','EKZ','Elkton','','SD'  UNION ALL
 SELECT 'US','EL2','Elma, Erie','','NY'  UNION ALL
 SELECT 'US','ELA','Eagle Lake','','TX'  UNION ALL
-SELECT 'US','ELB','Elberton','','GA'  UNION ALL
+SELECT 'US','ELB','Elberton','','GA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ELC','Euless','','TX'  UNION ALL
 SELECT 'US','ELD','El Dorado','','AR'  UNION ALL
 SELECT 'US','ELE','Tennille','','GA'  UNION ALL
@@ -50457,8 +51023,7 @@ SELECT 'US','ENH','Chestnut Hill','','MA'  UNION ALL
 SELECT 'US','ENI','Lenni','','PA'  UNION ALL
 SELECT 'US','ENJ','Ellenton','','FL'  UNION ALL
 SELECT 'US','ENK','Enka','','NC'  UNION ALL
-SELECT 'US','ENL','Centralia','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ENL','Centralia','','IL'  UNION ALL
 SELECT 'US','ENM','Enon','','OH'  UNION ALL
 SELECT 'US','ENN','Nenana','','AK'  UNION ALL
 SELECT 'US','ENO','Encino','','CA'  UNION ALL
@@ -50475,7 +51040,8 @@ SELECT 'US','EOA','Metamora','','IL'  UNION ALL
 SELECT 'US','EOD','Edmond','','OK'  UNION ALL
 SELECT 'US','EOE','Glencoe','','IL'  UNION ALL
 SELECT 'US','EOG','East Orange','','NJ'  UNION ALL
-SELECT 'US','EOH','Shorter','','AL'  UNION ALL
+SELECT 'US','EOH','Shorter','','AL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','EOI','Caledonia','','MN'  UNION ALL
 SELECT 'US','EOK','Keokuk','','IA'  UNION ALL
 SELECT 'US','EOL','East Alton','','IL'  UNION ALL
@@ -50538,8 +51104,7 @@ SELECT 'US','ERZ','Erie','','IL'  UNION ALL
 SELECT 'US','ES2','East Swanzey','','NH'  UNION ALL
 SELECT 'US','ES3','Westchester','','IL'  UNION ALL
 SELECT 'US','ESA','East Sparta','','OH'  UNION ALL
-SELECT 'US','ESB','Estero Bay','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ESB','Estero Bay','','CA'  UNION ALL
 SELECT 'US','ESC','Escanaba','','MI'  UNION ALL
 SELECT 'US','ESD','Eastsound','','WA'  UNION ALL
 SELECT 'US','ESE','Essex','','MD'  UNION ALL
@@ -50556,7 +51121,8 @@ SELECT 'US','ESP','East Stroudsburg','','PA'  UNION ALL
 SELECT 'US','ESR','Ellsworth','','ME'  UNION ALL
 SELECT 'US','ESS','Essex Junction','','VT'  UNION ALL
 SELECT 'US','EST','Estherville','','IA'  UNION ALL
-SELECT 'US','ESV','Evansville','','WI'  UNION ALL
+SELECT 'US','ESV','Evansville','','WI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ESW','Easton','','WA'  UNION ALL
 SELECT 'US','ESX','Eddystone','','PA'  UNION ALL
 SELECT 'US','ESY','East Syracuse','','NY'  UNION ALL
@@ -50619,8 +51185,7 @@ SELECT 'US','EVT','Everett','','MA'  UNION ALL
 SELECT 'US','EVV','Evansville','','IN'  UNION ALL
 SELECT 'US','EVW','Evanston','','WY'  UNION ALL
 SELECT 'US','EVY','Beverly','','WV'  UNION ALL
-SELECT 'US','EVZ','Everett','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','EVZ','Everett','','PA'  UNION ALL
 SELECT 'US','EW2','East Woodstock','','CT'  UNION ALL
 SELECT 'US','EW3','Elmwood, Pierce','','WI'  UNION ALL
 SELECT 'US','EW4','Englewood','','NY'  UNION ALL
@@ -50637,7 +51202,8 @@ SELECT 'US','EWH','Ewa Beach (Oahu)','','HI'  UNION ALL
 SELECT 'US','EWI','Elwood','','IL'  UNION ALL
 SELECT 'US','EWJ','Erwin','','NC'  UNION ALL
 SELECT 'US','EWK','Newton','','KS'  UNION ALL
-SELECT 'US','EWN','New Bern','','NC'  UNION ALL
+SELECT 'US','EWN','New Bern','','NC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','EWO','Bellwood','','PA'  UNION ALL
 SELECT 'US','EWP','Elmwood Park','','NJ'  UNION ALL
 SELECT 'US','EWQ','Elwood','','NJ'  UNION ALL
@@ -50700,8 +51266,7 @@ SELECT 'US','FAT','Fresno','','CA'  UNION ALL
 SELECT 'US','FAU','Franklin Furnace','','OH'  UNION ALL
 SELECT 'US','FAV','Fall River','','MA'  UNION ALL
 SELECT 'US','FAW','Farwell','','TX'  UNION ALL
-SELECT 'US','FAX','Fairfield','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','FAX','Fairfield','','TX'  UNION ALL
 SELECT 'US','FAY','Fayetteville','','NC'  UNION ALL
 SELECT 'US','FAZ','Fall River','','WI'  UNION ALL
 SELECT 'US','FBA','Fairborn','','OH'  UNION ALL
@@ -50718,7 +51283,8 @@ SELECT 'US','FCB','Frisco City','','AL'  UNION ALL
 SELECT 'US','FCC','Forest City','','IL'  UNION ALL
 SELECT 'US','FCD','Candler','','FL'  UNION ALL
 SELECT 'US','FCE','Florence','','WI'  UNION ALL
-SELECT 'US','FCH','Fitchville','','CT'  UNION ALL
+SELECT 'US','FCH','Fitchville','','CT' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','FCI','Foster City','','CA'  UNION ALL
 SELECT 'US','FCK','Frisco','','PA'  UNION ALL
 SELECT 'US','FCL','Florence','','CA'  UNION ALL
@@ -50781,8 +51347,7 @@ SELECT 'US','FFS','Fife','','WA'  UNION ALL
 SELECT 'US','FFT','Frankfort','','KY'  UNION ALL
 SELECT 'US','FFX','Fairfax','','AL'  UNION ALL
 SELECT 'US','FFY','Fairfield','','NY'  UNION ALL
-SELECT 'US','FGA','Fort George G Meade','','MD' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','FGA','Fort George G Meade','','MD'  UNION ALL
 SELECT 'US','FGD','Fredonia','','KY'  UNION ALL
 SELECT 'US','FGH','Feeding Hills','','MA'  UNION ALL
 SELECT 'US','FGM','Frogmore','','SC'  UNION ALL
@@ -50799,7 +51364,8 @@ SELECT 'US','FHO','Fort Hood','','TX'  UNION ALL
 SELECT 'US','FHP','Fair Hill','','PA'  UNION ALL
 SELECT 'US','FHQ','Firth','','ID'  UNION ALL
 SELECT 'US','FHS','Far Hills','','NJ'  UNION ALL
-SELECT 'US','FHU','Fort Huachuca-Sierra Vista Apt','','AZ'  UNION ALL
+SELECT 'US','FHU','Fort Huachuca-Sierra Vista Apt','','AZ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','FHV','Fishersville','','VA'  UNION ALL
 SELECT 'US','FIA','Fairdale','','KY'  UNION ALL
 SELECT 'US','FIC','Fire Cove','','AK'  UNION ALL
@@ -50862,8 +51428,7 @@ SELECT 'US','FLT','Flat','','AK'  UNION ALL
 SELECT 'US','FLU','Flushing Apt/New York','','NY'  UNION ALL
 SELECT 'US','FLV','Fort Leavenworth','','KS'  UNION ALL
 SELECT 'US','FLW','Franklin','','WI'  UNION ALL
-SELECT 'US','FLX','Florence','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','FLX','Florence','','TX'  UNION ALL
 SELECT 'US','FLY','Fair Lawn','','NJ'  UNION ALL
 SELECT 'US','FLZ','Florence','','CO'  UNION ALL
 SELECT 'US','FM3','Folsom','','NJ'  UNION ALL
@@ -50880,7 +51445,8 @@ SELECT 'US','FMK','Fairmount','','ND'  UNION ALL
 SELECT 'US','FML','Fort Mill','','SC'  UNION ALL
 SELECT 'US','FMN','Farmington','','NM'  UNION ALL
 SELECT 'US','FMO','Fillmore','','NY'  UNION ALL
-SELECT 'US','FMQ','Farmington','','ME'  UNION ALL
+SELECT 'US','FMQ','Farmington','','ME' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','FMS','Fort Madison','','IA'  UNION ALL
 SELECT 'US','FMT','Fremont','','IN'  UNION ALL
 SELECT 'US','FMU','Fairmount','','GA'  UNION ALL
@@ -50943,8 +51509,7 @@ SELECT 'US','FQE','Florence','','OR'  UNION ALL
 SELECT 'US','FQL','Franklin','','NC'  UNION ALL
 SELECT 'US','FQN','Fresno','','OH'  UNION ALL
 SELECT 'US','FQP','Frank','','PA'  UNION ALL
-SELECT 'US','FQR','Frank','','WV' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','FQR','Frank','','WV'  UNION ALL
 SELECT 'US','FQS','Fresno','','TX'  UNION ALL
 SELECT 'US','FQT','Fayette','','IA'  UNION ALL
 SELECT 'US','FQV','Franklinville','','NJ'  UNION ALL
@@ -50961,7 +51526,8 @@ SELECT 'US','FRH','French Lick','','IN'  UNION ALL
 SELECT 'US','FRI','Fort Riley','','KS'  UNION ALL
 SELECT 'US','FRJ','Friant','','CA'  UNION ALL
 SELECT 'US','FRK','Frankfort Springs','','PA'  UNION ALL
-SELECT 'US','FRL','Franklin Lakes','','NJ'  UNION ALL
+SELECT 'US','FRL','Franklin Lakes','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','FRM','Fairmont','','MN'  UNION ALL
 SELECT 'US','FRN','Fort Richardson','','AK'  UNION ALL
 SELECT 'US','FRO','Frontier','','WA'  UNION ALL
@@ -51024,8 +51590,7 @@ SELECT 'US','FTZ','Fulton','','MS'  UNION ALL
 SELECT 'US','FUA','Falmouth','','ME'  UNION ALL
 SELECT 'US','FUD','Fulda','','IN'  UNION ALL
 SELECT 'US','FUH','Flushing','','MI'  UNION ALL
-SELECT 'US','FUI','Fruithurst','','AL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','FUI','Fruithurst','','AL'  UNION ALL
 SELECT 'US','FUL','Fullerton','','CA'  UNION ALL
 SELECT 'US','FUN','Fulton','','NY'  UNION ALL
 SELECT 'US','FUO','Belle Fourche','','SD'  UNION ALL
@@ -51042,7 +51607,8 @@ SELECT 'US','FVR','Fort Recovery','','OH'  UNION ALL
 SELECT 'US','FVW','Franksville','','WI'  UNION ALL
 SELECT 'US','FW2','Floodwood','','MN'  UNION ALL
 SELECT 'US','FW3','Fairwater','','WI'  UNION ALL
-SELECT 'US','FWA','Fort Wayne','','IN'  UNION ALL
+SELECT 'US','FWA','Fort Wayne','','IN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','FWB','Fort Walton Beach','','FL'  UNION ALL
 SELECT 'US','FWD','Flowood','','MS'  UNION ALL
 SELECT 'US','FWE','Fernwood','','ID'  UNION ALL
@@ -51105,8 +51671,7 @@ SELECT 'US','GAN','Gallatin','','TN'  UNION ALL
 SELECT 'US','GAO','Grafton','','WV'  UNION ALL
 SELECT 'US','GAP','Gallipolis','','OH'  UNION ALL
 SELECT 'US','GAQ','Galt','','CA'  UNION ALL
-SELECT 'US','GAR','Garden City','','NJ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GAR','Garden City','','NJ'  UNION ALL
 SELECT 'US','GAS','Granite Shoals','','TX'  UNION ALL
 SELECT 'US','GAT','Gaston','','SC'  UNION ALL
 SELECT 'US','GAV','Gassville','','AR'  UNION ALL
@@ -51123,7 +51688,8 @@ SELECT 'US','GBD','Great Bend','','KS'  UNION ALL
 SELECT 'US','GBE','Gilbert','','AZ'  UNION ALL
 SELECT 'US','GBG','Galesburg','','IL'  UNION ALL
 SELECT 'US','GBH','Galbraith Lake','','AK'  UNION ALL
-SELECT 'US','GBI','Greenbrier, Robertson','','TN'  UNION ALL
+SELECT 'US','GBI','Greenbrier, Robertson','','TN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GBK','Green Brook','','NJ'  UNION ALL
 SELECT 'US','GBL','Braselton','','GA'  UNION ALL
 SELECT 'US','GBM','Glen Burnie','','MD'  UNION ALL
@@ -51186,8 +51752,7 @@ SELECT 'US','GDY','Gardner','','PA'  UNION ALL
 SELECT 'US','GDZ','Gardner','','KS'  UNION ALL
 SELECT 'US','GEA','Germantown','','IL'  UNION ALL
 SELECT 'US','GEB','Greenboro','','NY'  UNION ALL
-SELECT 'US','GEC','Garden City','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GEC','Garden City','','TX'  UNION ALL
 SELECT 'US','GED','Georgetown','','DE'  UNION ALL
 SELECT 'US','GEE','Glendale','','WI'  UNION ALL
 SELECT 'US','GEF','Glenford','','OH'  UNION ALL
@@ -51204,7 +51769,8 @@ SELECT 'US','GER','Georgetown','','GA'  UNION ALL
 SELECT 'US','GES','Geneseo','','NY'  UNION ALL
 SELECT 'US','GET','Gravette','','AR'  UNION ALL
 SELECT 'US','GEU','Glen Allen','','VA'  UNION ALL
-SELECT 'US','GEV','Geneva','','NE'  UNION ALL
+SELECT 'US','GEV','Geneva','','NE' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GEW','Georgetown','','WA'  UNION ALL
 SELECT 'US','GEY','Greybull','','WY'  UNION ALL
 SELECT 'US','GEZ','Gilbertville','','MA'  UNION ALL
@@ -51267,8 +51833,7 @@ SELECT 'US','GHT','Graham','','TX'  UNION ALL
 SELECT 'US','GHZ','Garfield Heights','','OH'  UNION ALL
 SELECT 'US','GIA','Greenfield','','IA'  UNION ALL
 SELECT 'US','GIB','Gibbstown','','NJ'  UNION ALL
-SELECT 'US','GIC','Gilbert','','SC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GIC','Gilbert','','SC'  UNION ALL
 SELECT 'US','GID','Gideon','','MO'  UNION ALL
 SELECT 'US','GIE','Greenville','','WI'  UNION ALL
 SELECT 'US','GIF','Winter Haven','','FL'  UNION ALL
@@ -51285,7 +51850,8 @@ SELECT 'US','GIS','Gibsonburg','','OH'  UNION ALL
 SELECT 'US','GIT','Gibraltar','','MI'  UNION ALL
 SELECT 'US','GIV','Grain Valley','','MO'  UNION ALL
 SELECT 'US','GIW','Grinnell','','IA'  UNION ALL
-SELECT 'US','GIX','Gilmer','','TX'  UNION ALL
+SELECT 'US','GIX','Gilmer','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GIY','Gainesville','','MO'  UNION ALL
 SELECT 'US','GIZ','Gibson','','PA'  UNION ALL
 SELECT 'US','GJC','Genesee','','WI'  UNION ALL
@@ -51348,8 +51914,7 @@ SELECT 'US','GNH','Greenfield','','MA'  UNION ALL
 SELECT 'US','GNI','Geneva','','IL'  UNION ALL
 SELECT 'US','GNJ','Georgetown, Vermilion','','OH'  UNION ALL
 SELECT 'US','GNK','Great Neck','','NY'  UNION ALL
-SELECT 'US','GNL','Greenland','','NH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GNL','Greenland','','NH'  UNION ALL
 SELECT 'US','GNM','Greenville','','MI'  UNION ALL
 SELECT 'US','GNN','Greenland','','TN'  UNION ALL
 SELECT 'US','GNO','Greensboro','','GA'  UNION ALL
@@ -51366,7 +51931,8 @@ SELECT 'US','GNZ','Gonzales','','LA'  UNION ALL
 SELECT 'US','GO2','Goleta','','CA'  UNION ALL
 SELECT 'US','GOA','Goddard','','KS'  UNION ALL
 SELECT 'US','GOB','Gibson','','GA'  UNION ALL
-SELECT 'US','GOC','Glen Rock','','PA'  UNION ALL
+SELECT 'US','GOC','Glen Rock','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GOD','Godwin','','NC'  UNION ALL
 SELECT 'US','GOE','Golden','','CO'  UNION ALL
 SELECT 'US','GOG','Goshen','','VA'  UNION ALL
@@ -51429,8 +51995,7 @@ SELECT 'US','GRX','Garland','','TX'  UNION ALL
 SELECT 'US','GRY','Gramercy','','LA'  UNION ALL
 SELECT 'US','GRZ','Griffin','','GA'  UNION ALL
 SELECT 'US','GSB','Goldsboro','','NC'  UNION ALL
-SELECT 'US','GSC','Goose Creek','','SC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GSC','Goose Creek','','SC'  UNION ALL
 SELECT 'US','GSE','Glouster','','OH'  UNION ALL
 SELECT 'US','GSF','Gales Ferry','','CT'  UNION ALL
 SELECT 'US','GSG','Glasgow','','MT'  UNION ALL
@@ -51447,7 +52012,8 @@ SELECT 'US','GSU','Galesburg','','MI'  UNION ALL
 SELECT 'US','GSV','Griswoldville','','MA'  UNION ALL
 SELECT 'US','GSW','Big Sur','','CA'  UNION ALL
 SELECT 'US','GSY','Gassaway','','WV'  UNION ALL
-SELECT 'US','GSZ','Garrison','','MO'  UNION ALL
+SELECT 'US','GSZ','Garrison','','MO' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GT2','Gates','','TN'  UNION ALL
 SELECT 'US','GTA','Grant','','AL'  UNION ALL
 SELECT 'US','GTB','Granite Bay','','CA'  UNION ALL
@@ -51510,8 +52076,7 @@ SELECT 'US','GVX','Glen View','','IL'  UNION ALL
 SELECT 'US','GVY','Golden Valley','','MN'  UNION ALL
 SELECT 'US','GVZ','Gordonville','','PA'  UNION ALL
 SELECT 'US','GW2','Gwinnett','','ID'  UNION ALL
-SELECT 'US','GW3','Greenwood','','NE' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','GW3','Greenwood','','NE'  UNION ALL
 SELECT 'US','GW4','Greenwood, Henry','','GA'  UNION ALL
 SELECT 'US','GWA','George','','WA'  UNION ALL
 SELECT 'US','GWC','Greenwood','','WI'  UNION ALL
@@ -51528,7 +52093,8 @@ SELECT 'US','GWO','Greenwood','','MS'  UNION ALL
 SELECT 'US','GWR','Bridgewater','','CT'  UNION ALL
 SELECT 'US','GWS','Glenwood Springs','','CO'  UNION ALL
 SELECT 'US','GWT','Goodwater','','AL'  UNION ALL
-SELECT 'US','GWU','Guin','','AL'  UNION ALL
+SELECT 'US','GWU','Guin','','AL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','GWV','Glendale','','WV'  UNION ALL
 SELECT 'US','GWW','Glenwillow','','OH'  UNION ALL
 SELECT 'US','GWX','Glenwood','','IA'  UNION ALL
@@ -51542,7 +52108,7 @@ SELECT 'US','GXV','Gilbertsville','','PA'  UNION ALL
 SELECT 'US','GXX','Greer','','SC'  UNION ALL
 SELECT 'US','GXY','Greeley','','CO'  UNION ALL
 SELECT 'US','GY2','Gascoyne','','ND'  UNION ALL
-SELECT 'US','GY3','GridleyÃƒâ€šÃ‚Â ','','CA'  UNION ALL
+SELECT 'US','GY3','Gridley','','CA'  UNION ALL
 SELECT 'US','GY4','Gurley','','AL'  UNION ALL
 SELECT 'US','GY5','Gray','','TN'  UNION ALL
 SELECT 'US','GYA','Gray','','LA'  UNION ALL
@@ -51591,8 +52157,7 @@ SELECT 'US','HAT','Hatfield','','PA'  UNION ALL
 SELECT 'US','HAU','Harrisburg','','SD'  UNION ALL
 SELECT 'US','HAV','Haverhill','','MA'  UNION ALL
 SELECT 'US','HAW','Hawthorne','','NY'  UNION ALL
-SELECT 'US','HAX','Hampton','','NH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HAX','Hampton','','NH'  UNION ALL
 SELECT 'US','HAY','Haycock','','AK'  UNION ALL
 SELECT 'US','HAZ','Hawkinsville','','GA'  UNION ALL
 SELECT 'US','HB2','Hackleburg','','AL'  UNION ALL
@@ -51609,7 +52174,8 @@ SELECT 'US','HBG','Hattiesburg','','MS'  UNION ALL
 SELECT 'US','HBH','Hobart Bay','','AK'  UNION ALL
 SELECT 'US','HBI','Hubbard','','OR'  UNION ALL
 SELECT 'US','HBK','Hoboken','','NJ'  UNION ALL
-SELECT 'US','HBL','Hannibal','','MO'  UNION ALL
+SELECT 'US','HBL','Hannibal','','MO' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HBM','Hillburn','','NY'  UNION ALL
 SELECT 'US','HBN','Hebron','','KY'  UNION ALL
 SELECT 'US','HBO','Hansboro','','ND'  UNION ALL
@@ -51672,8 +52238,7 @@ SELECT 'US','HEA','Hearne','','TX'  UNION ALL
 SELECT 'US','HEB','Hebron','','OH'  UNION ALL
 SELECT 'US','HEC','Hermosa Beach','','CA'  UNION ALL
 SELECT 'US','HED','Herendeen','','AK'  UNION ALL
-SELECT 'US','HEE','Helena','','AR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HEE','Helena','','AR'  UNION ALL
 SELECT 'US','HEF','Heflin','','AL'  UNION ALL
 SELECT 'US','HEH','Hershey','','PA'  UNION ALL
 SELECT 'US','HEI','Sheffield','','OH'  UNION ALL
@@ -51690,7 +52255,8 @@ SELECT 'US','HEU','Helm','','CA'  UNION ALL
 SELECT 'US','HEV','Hendersonville','','NC'  UNION ALL
 SELECT 'US','HEW','Hopewell','','NJ'  UNION ALL
 SELECT 'US','HEY','Henry','','TN'  UNION ALL
-SELECT 'US','HEZ','Natchez','','MS'  UNION ALL
+SELECT 'US','HEZ','Natchez','','MS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HF2','Highland Falls','','NY'  UNION ALL
 SELECT 'US','HFA','Honeoye Falls','','NY'  UNION ALL
 SELECT 'US','HFC','Hartford City','','IN'  UNION ALL
@@ -51753,8 +52319,7 @@ SELECT 'US','HIL','Hills','','IA'  UNION ALL
 SELECT 'US','HIM','White Marsh','','MD'  UNION ALL
 SELECT 'US','HIN','Highlands','','TX'  UNION ALL
 SELECT 'US','HIO','Hillsboro','','OR'  UNION ALL
-SELECT 'US','HIP','Highland Park','','MI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HIP','Highland Park','','MI'  UNION ALL
 SELECT 'US','HIQ','Highland','','CA'  UNION ALL
 SELECT 'US','HIR','Harrison','','MI'  UNION ALL
 SELECT 'US','HIS','Highgate Springs','','VT'  UNION ALL
@@ -51771,7 +52336,8 @@ SELECT 'US','HJO','Hamilton, Ocean','','NJ'  UNION ALL
 SELECT 'US','HJQ','Hood','','CA'  UNION ALL
 SELECT 'US','HJW','Hillsboro','','IN'  UNION ALL
 SELECT 'US','HKB','Healy Lake','','AK'  UNION ALL
-SELECT 'US','HKI','Haskins','','OH'  UNION ALL
+SELECT 'US','HKI','Haskins','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HKK','Hickok','','KS'  UNION ALL
 SELECT 'US','HKL','Hinckley','','ME'  UNION ALL
 SELECT 'US','HKM','Herkimer','','KS'  UNION ALL
@@ -51834,8 +52400,7 @@ SELECT 'US','HMS','Homeshore','','AK'  UNION ALL
 SELECT 'US','HMT','Hemet','','CA'  UNION ALL
 SELECT 'US','HMV','Homerville','','GA'  UNION ALL
 SELECT 'US','HMW','Homewood','','IL'  UNION ALL
-SELECT 'US','HMX','Humble','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HMX','Humble','','TX'  UNION ALL
 SELECT 'US','HMY','Harmony','','PA'  UNION ALL
 SELECT 'US','HMZ','Hamilton','','MS'  UNION ALL
 SELECT 'US','HN2','Haney','','TX'  UNION ALL
@@ -51852,7 +52417,8 @@ SELECT 'US','HNH','Hoonah','','AK'  UNION ALL
 SELECT 'US','HNI','Hansen','','ID'  UNION ALL
 SELECT 'US','HNJ','Henning','','TN'  UNION ALL
 SELECT 'US','HNK','Hancock','','ME'  UNION ALL
-SELECT 'US','HNL','Honolulu','','HI'  UNION ALL
+SELECT 'US','HNL','Honolulu','','HI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HNM','Hana','','HI'  UNION ALL
 SELECT 'US','HNN','Hanoverton','','OH'  UNION ALL
 SELECT 'US','HNO','China Grove','','NC'  UNION ALL
@@ -51915,8 +52481,7 @@ SELECT 'US','HQB','Hillsborough','','CA'  UNION ALL
 SELECT 'US','HQF','Highgrove','','CA'  UNION ALL
 SELECT 'US','HQG','Hagaman','','NY'  UNION ALL
 SELECT 'US','HQH','Highway Highlands','','CA'  UNION ALL
-SELECT 'US','HQL','Haskell','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HQL','Haskell','','TX'  UNION ALL
 SELECT 'US','HQM','Hoquiam','','WA'  UNION ALL
 SELECT 'US','HQN','Houston','','MO'  UNION ALL
 SELECT 'US','HQO','Holden','','WV'  UNION ALL
@@ -51933,7 +52498,8 @@ SELECT 'US','HRC','Hurricane','','UT'  UNION ALL
 SELECT 'US','HRE','Harlem','','GA'  UNION ALL
 SELECT 'US','HRF','Harford','','PA'  UNION ALL
 SELECT 'US','HRG','Harrington','','ME'  UNION ALL
-SELECT 'US','HRH','Horseheads','','NY'  UNION ALL
+SELECT 'US','HRH','Horseheads','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HRI','Harriman','','NY'  UNION ALL
 SELECT 'US','HRJ','Harahan','','LA'  UNION ALL
 SELECT 'US','HRK','Holbrook','','MA'  UNION ALL
@@ -51996,8 +52562,7 @@ SELECT 'US','HTG','Huntingdon','','PA'  UNION ALL
 SELECT 'US','HTH','Hawthorne','','NV'  UNION ALL
 SELECT 'US','HTI','Hawthorne','','NJ'  UNION ALL
 SELECT 'US','HTK','Hutchinson','','KS'  UNION ALL
-SELECT 'US','HTL','Houghton','','MI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HTL','Houghton','','MI'  UNION ALL
 SELECT 'US','HTM','Hartwell','','GA'  UNION ALL
 SELECT 'US','HTN','Hinton','','VA'  UNION ALL
 SELECT 'US','HTO','East Hampton','','NY'  UNION ALL
@@ -52014,7 +52579,8 @@ SELECT 'US','HTZ','Huntington','','VA'  UNION ALL
 SELECT 'US','HU2','Hurley','','NM'  UNION ALL
 SELECT 'US','HUA','Huber','','GA'  UNION ALL
 SELECT 'US','HUB','Huron','','OH'  UNION ALL
-SELECT 'US','HUC','Hurlock','','MD'  UNION ALL
+SELECT 'US','HUC','Hurlock','','MD' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HUD','Humboldt','','IA'  UNION ALL
 SELECT 'US','HUE','Humboldt','','KS'  UNION ALL
 SELECT 'US','HUF','Terre Haute','','IN'  UNION ALL
@@ -52077,8 +52643,7 @@ SELECT 'US','HX2','Hoxie','','AR'  UNION ALL
 SELECT 'US','HXB','Hammond','','OR'  UNION ALL
 SELECT 'US','HXC','Haslett','','TX'  UNION ALL
 SELECT 'US','HXF','Hungerford','','TX'  UNION ALL
-SELECT 'US','HXM','Hope Mills','','NC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','HXM','Hope Mills','','NC'  UNION ALL
 SELECT 'US','HXN','Henderson','','TX'  UNION ALL
 SELECT 'US','HXO','Huxford','','AL'  UNION ALL
 SELECT 'US','HXP','Hampton Falls','','NH'  UNION ALL
@@ -52095,7 +52660,8 @@ SELECT 'US','HYE','Hyde Park','','MA'  UNION ALL
 SELECT 'US','HYF','Hickory Flat, Chicasaw','','MS'  UNION ALL
 SELECT 'US','HYG','Hydaburg','','AK'  UNION ALL
 SELECT 'US','HYH','Holcomb','','NY'  UNION ALL
-SELECT 'US','HYI','Harlan','','IA'  UNION ALL
+SELECT 'US','HYI','Harlan','','IA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','HYK','Holyoke','','CO'  UNION ALL
 SELECT 'US','HYL','Hollis','','AK'  UNION ALL
 SELECT 'US','HYM','Chrome','','NJ'  UNION ALL
@@ -52158,8 +52724,7 @@ SELECT 'US','IDA','Idaho Falls','','ID'  UNION ALL
 SELECT 'US','IDC','Independence','','VA'  UNION ALL
 SELECT 'US','IDD','Middlesex','','NC'  UNION ALL
 SELECT 'US','IDE','Independence','','OR'  UNION ALL
-SELECT 'US','IDG','Ida Grove','','IA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','IDG','Ida Grove','','IA'  UNION ALL
 SELECT 'US','IDH','Idaho Springs','','CO'  UNION ALL
 SELECT 'US','IDI','Indiana','','PA'  UNION ALL
 SELECT 'US','IDL','Indianola','','WA'  UNION ALL
@@ -52176,7 +52741,8 @@ SELECT 'US','IEA','Mineral','','VA'  UNION ALL
 SELECT 'US','IEL','Litchfield Park','','AZ'  UNION ALL
 SELECT 'US','IER','Silverton','','CO'  UNION ALL
 SELECT 'US','IES','Winters','','CA'  UNION ALL
-SELECT 'US','IET','Marietta','','FL'  UNION ALL
+SELECT 'US','IET','Marietta','','FL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','IEV','Circleville','','UT'  UNION ALL
 SELECT 'US','IEY','Riley','','KS'  UNION ALL
 SELECT 'US','IFA','Iowa Falls','','IA'  UNION ALL
@@ -52239,8 +52805,7 @@ SELECT 'US','ILT','Manito','','IL'  UNION ALL
 SELECT 'US','ILU','Buda','','IL'  UNION ALL
 SELECT 'US','ILV','Silvis','','IL'  UNION ALL
 SELECT 'US','ILY','Baileyville','','ME'  UNION ALL
-SELECT 'US','IMA','Marion','','WI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','IMA','Marion','','WI'  UNION ALL
 SELECT 'US','IME','Wilmerding','','PA'  UNION ALL
 SELECT 'US','IMG','Wilmington','','VA'  UNION ALL
 SELECT 'US','IMK','Mokena','','IL'  UNION ALL
@@ -52257,7 +52822,8 @@ SELECT 'US','INA','Institute','','WV'  UNION ALL
 SELECT 'US','INB','Windsor, Bertie','','NC'  UNION ALL
 SELECT 'US','INC','Lincoln','','AR'  UNION ALL
 SELECT 'US','IND','Indianapolis','','IN'  UNION ALL
-SELECT 'US','INE','Independence','','IA'  UNION ALL
+SELECT 'US','INE','Independence','','IA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','INF','Winfield','','TX'  UNION ALL
 SELECT 'US','ING','Inglewood','','CA'  UNION ALL
 SELECT 'US','INH','Shelby','','IN'  UNION ALL
@@ -52320,8 +52886,7 @@ SELECT 'US','IRR','Irrigon','','OR'  UNION ALL
 SELECT 'US','IRS','Sturgis','','MI'  UNION ALL
 SELECT 'US','IRT','Irving','','TX'  UNION ALL
 SELECT 'US','IRV','Irving','','PA'  UNION ALL
-SELECT 'US','IRW','Iron River','','MI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','IRW','Iron River','','MI'  UNION ALL
 SELECT 'US','IRY','Iron City','','TN'  UNION ALL
 SELECT 'US','IRZ','Irvington','','AL'  UNION ALL
 SELECT 'US','IS2','Iron Station','','NC'  UNION ALL
@@ -52338,7 +52903,8 @@ SELECT 'US','ISO','Kinston','','NC'  UNION ALL
 SELECT 'US','ISP','Islip','','NY'  UNION ALL
 SELECT 'US','ISQ','Manistique','','MI'  UNION ALL
 SELECT 'US','ISR','Islamorada','','FL'  UNION ALL
-SELECT 'US','ISS','Wiscasset','','ME'  UNION ALL
+SELECT 'US','ISS','Wiscasset','','ME' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','IST','Sistersville','','WV'  UNION ALL
 SELECT 'US','ISU','Salisbury','','MO'  UNION ALL
 SELECT 'US','ISV','Sissonville','','WV'  UNION ALL
@@ -52401,8 +52967,7 @@ SELECT 'US','JBC','Jensen Beach','','FL'  UNION ALL
 SELECT 'US','JBE','Belle','','MO'  UNION ALL
 SELECT 'US','JBK','Berkeley','','CA'  UNION ALL
 SELECT 'US','JBN','Blanca','','CO'  UNION ALL
-SELECT 'US','JBO','Jonesboro','','GA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','JBO','Jonesboro','','GA'  UNION ALL
 SELECT 'US','JBR','Jonesboro','','AR'  UNION ALL
 SELECT 'US','JBS','Pleasanton','','CA'  UNION ALL
 SELECT 'US','JBY','St Johnsbury','','VT'  UNION ALL
@@ -52419,7 +52984,8 @@ SELECT 'US','JCX','Jacinto City','','TX'  UNION ALL
 SELECT 'US','JCY','Johnson City','','TX'  UNION ALL
 SELECT 'US','JDA','John Day','','OR'  UNION ALL
 SELECT 'US','JDN','Jordan','','MT'  UNION ALL
-SELECT 'US','JDY','Downey','','CA'  UNION ALL
+SELECT 'US','JDY','Downey','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','JEA','Jeannette','','PA'  UNION ALL
 SELECT 'US','JEC','Jersey City','','NJ'  UNION ALL
 SELECT 'US','JED','Jefferson Island','','LA'  UNION ALL
@@ -52482,8 +53048,7 @@ SELECT 'US','JMP','Jamesport','','MO'  UNION ALL
 SELECT 'US','JMS','Jamestown','','ND'  UNION ALL
 SELECT 'US','JMT','Jamestown','','KY'  UNION ALL
 SELECT 'US','JMV','Jamesville','','VA'  UNION ALL
-SELECT 'US','JMW','Jamestown','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','JMW','Jamestown','','CA'  UNION ALL
 SELECT 'US','JN2','Jourdanton','','TX'  UNION ALL
 SELECT 'US','JN3','Jordan, Scott','','MN'  UNION ALL
 SELECT 'US','JNA','Jena','','LA'  UNION ALL
@@ -52500,7 +53065,8 @@ SELECT 'US','JOE','Jonesville','','MI'  UNION ALL
 SELECT 'US','JOI','Jonesville','','NC'  UNION ALL
 SELECT 'US','JOL','Jonesville','','SC'  UNION ALL
 SELECT 'US','JON','Jonesport','','ME'  UNION ALL
-SELECT 'US','JOO','Jonesboro','','TN'  UNION ALL
+SELECT 'US','JOO','Jonesboro','','TN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','JOP','Joppa','','MD'  UNION ALL
 SELECT 'US','JOQ','San Joaquin','','CA'  UNION ALL
 SELECT 'US','JOR','Orange','','CA'  UNION ALL
@@ -52563,8 +53129,7 @@ SELECT 'US','KAM','Kalama','','WA'  UNION ALL
 SELECT 'US','KAN','Kane','','PA'  UNION ALL
 SELECT 'US','KAO','Kanosh','','UT'  UNION ALL
 SELECT 'US','KAP','Knapp','','WI'  UNION ALL
-SELECT 'US','KAT','Katonah','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','KAT','Katonah','','NY'  UNION ALL
 SELECT 'US','KAU','Kaukauna','','WI'  UNION ALL
 SELECT 'US','KAV','Kaneville','','IL'  UNION ALL
 SELECT 'US','KAY','Kaysville','','UT'  UNION ALL
@@ -52581,7 +53146,8 @@ SELECT 'US','KBS','Key Biscayne','','FL'  UNION ALL
 SELECT 'US','KBU','Keithsburg','','IL'  UNION ALL
 SELECT 'US','KBY','Boykin','','GA'  UNION ALL
 SELECT 'US','KCC','Coffman Cove','','AK'  UNION ALL
-SELECT 'US','KCK','Kansas City','','KS'  UNION ALL
+SELECT 'US','KCK','Kansas City','','KS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','KCL','Chignik','','AK'  UNION ALL
 SELECT 'US','KCM','Chatom','','AL'  UNION ALL
 SELECT 'US','KCN','Chernofski','','AK'  UNION ALL
@@ -52644,8 +53210,7 @@ SELECT 'US','KHA','Brookhaven','','PA'  UNION ALL
 SELECT 'US','KHE','Kaneohe','','HI'  UNION ALL
 SELECT 'US','KHH','Kailua Kona','','HI'  UNION ALL
 SELECT 'US','KHX','Karthaus','','PA'  UNION ALL
-SELECT 'US','KIA','Kiawah Island','','SC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','KIA','Kiawah Island','','SC'  UNION ALL
 SELECT 'US','KIB','Ivanof Bay','','AK'  UNION ALL
 SELECT 'US','KIC','King City','','CA'  UNION ALL
 SELECT 'US','KID','Kidron','','OH'  UNION ALL
@@ -52662,7 +53227,8 @@ SELECT 'US','KIR','Kirkwood','','NY'  UNION ALL
 SELECT 'US','KIS','Kiska Island','','AK'  UNION ALL
 SELECT 'US','KIU','Kiln','','MS'  UNION ALL
 SELECT 'US','KIW','Kingwood','','TX'  UNION ALL
-SELECT 'US','KIY','Kimberly','','ID'  UNION ALL
+SELECT 'US','KIY','Kimberly','','ID' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','KK2','Kealakekua','','HI'  UNION ALL
 SELECT 'US','KK3','Krakow','','WI'  UNION ALL
 SELECT 'US','KKA','Koyuk','','AK'  UNION ALL
@@ -52725,8 +53291,7 @@ SELECT 'US','KNW','New Stuyahok','','AK'  UNION ALL
 SELECT 'US','KNX','Knox','','IN'  UNION ALL
 SELECT 'US','KNY','McKinleyville','','CA'  UNION ALL
 SELECT 'US','KO2','Kootenai','','ID'  UNION ALL
-SELECT 'US','KOD','Rockford','','MN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','KOD','Rockford','','MN'  UNION ALL
 SELECT 'US','KON','Killona','','LA'  UNION ALL
 SELECT 'US','KOO','Rockwood','','IL'  UNION ALL
 SELECT 'US','KOR','Kohler','','WI'  UNION ALL
@@ -52743,7 +53308,8 @@ SELECT 'US','KPK','Parks','','AK'  UNION ALL
 SELECT 'US','KPL','Kaplan','','LA'  UNION ALL
 SELECT 'US','KPN','Kipnuk','','AK'  UNION ALL
 SELECT 'US','KPP','Koppel','','PA'  UNION ALL
-SELECT 'US','KPT','Jackpot','','NV'  UNION ALL
+SELECT 'US','KPT','Jackpot','','NV' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','KPV','Perryville','','AK'  UNION ALL
 SELECT 'US','KPY','Pt Bailey','','AK'  UNION ALL
 SELECT 'US','KQA','Akutan','','AK'  UNION ALL
@@ -52806,8 +53372,7 @@ SELECT 'US','KWA','Kiowa','','OK'  UNION ALL
 SELECT 'US','KWC','Kennewick','','WA'  UNION ALL
 SELECT 'US','KWD','Kentwood','','MI'  UNION ALL
 SELECT 'US','KWE','Rockwell','','NC'  UNION ALL
-SELECT 'US','KWF','Waterfall','','AK' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','KWF','Waterfall','','AK'  UNION ALL
 SELECT 'US','KWH','Kawaihae','','HI'  UNION ALL
 SELECT 'US','KWI','Kewaskum','','WI'  UNION ALL
 SELECT 'US','KWK','Kwigillingok','','AK'  UNION ALL
@@ -52824,7 +53389,8 @@ SELECT 'US','KXV','Knoxville','','AR'  UNION ALL
 SELECT 'US','KY2','Keymar','','MD'  UNION ALL
 SELECT 'US','KY3','Keyser','','WV'  UNION ALL
 SELECT 'US','KYE','Kearney','','MO'  UNION ALL
-SELECT 'US','KYK','Karluk','','AK'  UNION ALL
+SELECT 'US','KYK','Karluk','','AK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','KYL','Key Largo','','FL'  UNION ALL
 SELECT 'US','KYN','Kenyon','','RI'  UNION ALL
 SELECT 'US','KYO','Kenton','','OR'  UNION ALL
@@ -52887,8 +53453,7 @@ SELECT 'US','LBU','Lewisburg','','OH'  UNION ALL
 SELECT 'US','LBV','Libertyville','','IL'  UNION ALL
 SELECT 'US','LBW','Lake Buena Vista','','FL'  UNION ALL
 SELECT 'US','LBX','Liberty','','TX'  UNION ALL
-SELECT 'US','LBY','Liberty','','SC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LBY','Liberty','','SC'  UNION ALL
 SELECT 'US','LBZ','Libby','','MT'  UNION ALL
 SELECT 'US','LC2','Loup City','','NE'  UNION ALL
 SELECT 'US','LCA','La Canada-Flintridge','','CA'  UNION ALL
@@ -52905,7 +53470,8 @@ SELECT 'US','LCL','Lincoln','','IL'  UNION ALL
 SELECT 'US','LCM','Leicester','','MA'  UNION ALL
 SELECT 'US','LCN','Lincoln','','RI'  UNION ALL
 SELECT 'US','LCO','Lincolnshire','','IL'  UNION ALL
-SELECT 'US','LCP','Lecompte','','LA'  UNION ALL
+SELECT 'US','LCP','Lecompte','','LA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LCQ','Lincoln','','MA'  UNION ALL
 SELECT 'US','LCR','La Crescenta','','CA'  UNION ALL
 SELECT 'US','LCS','Lancaster','','MA'  UNION ALL
@@ -52968,8 +53534,7 @@ SELECT 'US','LEW','Auburn-Lewiston Apt','','ME'  UNION ALL
 SELECT 'US','LEX','Lexington','','KY'  UNION ALL
 SELECT 'US','LEY','Locust Valley','','NY'  UNION ALL
 SELECT 'US','LEZ','Lester','','PA'  UNION ALL
-SELECT 'US','LF2','Lafayette','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LF2','Lafayette','','OH'  UNION ALL
 SELECT 'US','LF3','Lisbon Falls','','ME'  UNION ALL
 SELECT 'US','LFA','Lebanon','','KY'  UNION ALL
 SELECT 'US','LFB','Laughlin Air Force Base','','TX'  UNION ALL
@@ -52986,7 +53551,8 @@ SELECT 'US','LFN','Louisburg','','NC'  UNION ALL
 SELECT 'US','LFO','La Follette','','TN'  UNION ALL
 SELECT 'US','LFP','Laflin','','PA'  UNION ALL
 SELECT 'US','LFQ','Lewisburg','','PA'  UNION ALL
-SELECT 'US','LFR','Lake Forest','','IL'  UNION ALL
+SELECT 'US','LFR','Lake Forest','','IL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LFS','Little Falls','','MN'  UNION ALL
 SELECT 'US','LFT','Lafayette','','LA'  UNION ALL
 SELECT 'US','LFW','Lafayette','','NJ'  UNION ALL
@@ -53049,8 +53615,7 @@ SELECT 'US','LIG','Ligonier','','PA'  UNION ALL
 SELECT 'US','LIH','Kauai Island Apt','','HI'  UNION ALL
 SELECT 'US','LII','Los Indios','','TX'  UNION ALL
 SELECT 'US','LIJ','Long Island','','AK'  UNION ALL
-SELECT 'US','LIK','St Clair, Franklin','','MO' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LIK','St Clair, Franklin','','MO'  UNION ALL
 SELECT 'US','LIL','Lakeville','','MA'  UNION ALL
 SELECT 'US','LIM','Milan','','OH'  UNION ALL
 SELECT 'US','LIN','Lionville','','PA'  UNION ALL
@@ -53067,7 +53632,8 @@ SELECT 'US','LIX','Livingston','','TX'  UNION ALL
 SELECT 'US','LIY','Hinesville','','GA'  UNION ALL
 SELECT 'US','LIZ','Limestone','','ME'  UNION ALL
 SELECT 'US','LJA','Cordelia','','CA'  UNION ALL
-SELECT 'US','LJB','Lisbon','','NH'  UNION ALL
+SELECT 'US','LJB','Lisbon','','NH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LJH','La Junta','','CO'  UNION ALL
 SELECT 'US','LJK','Lakewood','','CO'  UNION ALL
 SELECT 'US','LJL','La Jolla','','CA'  UNION ALL
@@ -53130,8 +53696,7 @@ SELECT 'US','LLX','Lyndonville','','VT'  UNION ALL
 SELECT 'US','LLY','Mt Holly','','NJ'  UNION ALL
 SELECT 'US','LLZ','Levelland','','TX'  UNION ALL
 SELECT 'US','LM2','Lamont','','MS'  UNION ALL
-SELECT 'US','LM3','Leoma','','TN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LM3','Leoma','','TN'  UNION ALL
 SELECT 'US','LM4','Livingston Manor','','NY'  UNION ALL
 SELECT 'US','LMA','Lake Minchumina','','AK'  UNION ALL
 SELECT 'US','LMB','Lumberton','','TX'  UNION ALL
@@ -53148,7 +53713,8 @@ SELECT 'US','LMM','Calumet','','MI'  UNION ALL
 SELECT 'US','LMN','Clermont','','GA'  UNION ALL
 SELECT 'US','LMO','Morgan City','','LA'  UNION ALL
 SELECT 'US','LMP','Lampeter','','PA'  UNION ALL
-SELECT 'US','LMQ','Lyme','','NH'  UNION ALL
+SELECT 'US','LMQ','Lyme','','NH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LMR','Leominster','','MA'  UNION ALL
 SELECT 'US','LMS','Louisville','','MS'  UNION ALL
 SELECT 'US','LMT','Klamath Falls','','OR'  UNION ALL
@@ -53211,8 +53777,7 @@ SELECT 'US','LOX','Lennox','','CA'  UNION ALL
 SELECT 'US','LOY','Lyons','','OH'  UNION ALL
 SELECT 'US','LOZ','London','','KY'  UNION ALL
 SELECT 'US','LPA','La Palma','','CA'  UNION ALL
-SELECT 'US','LPB','Lowell','','MI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LPB','Lowell','','MI'  UNION ALL
 SELECT 'US','LPC','Lompoc','','CA'  UNION ALL
 SELECT 'US','LPD','Lincoln Park, Chicago','','IL'  UNION ALL
 SELECT 'US','LPE','La Porte','','CA'  UNION ALL
@@ -53229,7 +53794,8 @@ SELECT 'US','LPS','Lopez Island','','WA'  UNION ALL
 SELECT 'US','LPT','Lockport','','LA'  UNION ALL
 SELECT 'US','LPV','Lorton','','VA'  UNION ALL
 SELECT 'US','LPW','Little Port Walter','','AK'  UNION ALL
-SELECT 'US','LPX','Liverpool','','NY'  UNION ALL
+SELECT 'US','LPX','Liverpool','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LPY','Plains','','PA'  UNION ALL
 SELECT 'US','LQB','Lacombe','','LA'  UNION ALL
 SELECT 'US','LQD','Holland','','MO'  UNION ALL
@@ -53292,8 +53858,7 @@ SELECT 'US','LSS','Lake Success','','NY'  UNION ALL
 SELECT 'US','LST','Logansport','','LA'  UNION ALL
 SELECT 'US','LSU','Lees Summit','','MO'  UNION ALL
 SELECT 'US','LSV','Leesville','','LA'  UNION ALL
-SELECT 'US','LSW','Laguna Woods','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LSW','Laguna Woods','','CA'  UNION ALL
 SELECT 'US','LSX','Lone Star','','TX'  UNION ALL
 SELECT 'US','LSY','Lindsay','','CA'  UNION ALL
 SELECT 'US','LT2','Latonia','','KY'  UNION ALL
@@ -53310,7 +53875,8 @@ SELECT 'US','LTJ','Layton','','UT'  UNION ALL
 SELECT 'US','LTK','Flat Rock','','IL'  UNION ALL
 SELECT 'US','LTL','Littleton','','NH'  UNION ALL
 SELECT 'US','LTM','Latham','','NY'  UNION ALL
-SELECT 'US','LTN','Littleton','','MA'  UNION ALL
+SELECT 'US','LTN','Littleton','','MA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LTO','Littleton','','CO'  UNION ALL
 SELECT 'US','LTQ','Lecanto','','FL'  UNION ALL
 SELECT 'US','LTR','Flat Rock','','NC'  UNION ALL
@@ -53373,8 +53939,7 @@ SELECT 'US','LW2','Lawyers','','VA'  UNION ALL
 SELECT 'US','LWA','Lake Wales','','FL'  UNION ALL
 SELECT 'US','LWB','Lewisburg','','WV'  UNION ALL
 SELECT 'US','LWC','Lawrence','','KS'  UNION ALL
-SELECT 'US','LWD','Lewisport','','KY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','LWD','Lewisport','','KY'  UNION ALL
 SELECT 'US','LWE','Lawrence','','NY'  UNION ALL
 SELECT 'US','LWF','Lowville','','NY'  UNION ALL
 SELECT 'US','LWG','Lakewood','','GA'  UNION ALL
@@ -53391,7 +53956,8 @@ SELECT 'US','LWQ','Lowell, Lake','','IN'  UNION ALL
 SELECT 'US','LWR','Lawrence','','MI'  UNION ALL
 SELECT 'US','LWS','Lewiston','','ID'  UNION ALL
 SELECT 'US','LWT','Lewistown','','MT'  UNION ALL
-SELECT 'US','LWU','Lakeview','','FL'  UNION ALL
+SELECT 'US','LWU','Lakeview','','FL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','LWV','Lawrenceville','','IL'  UNION ALL
 SELECT 'US','LWW','Lewistown, Mifflin','','PA'  UNION ALL
 SELECT 'US','LWX','Lena','','WI'  UNION ALL
@@ -53454,8 +54020,7 @@ SELECT 'US','LZX','Lafayette','','CA'  UNION ALL
 SELECT 'US','LZZ','Lenoir City','','TN'  UNION ALL
 SELECT 'US','MA2','McAlisterville','','PA'  UNION ALL
 SELECT 'US','MAA','Mayo','','FL'  UNION ALL
-SELECT 'US','MAB','Mandeville','','LA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MAB','Mandeville','','LA'  UNION ALL
 SELECT 'US','MAC','Macon','','MO'  UNION ALL
 SELECT 'US','MAD','Madawaska','','ME'  UNION ALL
 SELECT 'US','MAE','Madera','','CA'  UNION ALL
@@ -53472,7 +54037,8 @@ SELECT 'US','MAO','Madison','','TN'  UNION ALL
 SELECT 'US','MAP','Maple Heights','','OH'  UNION ALL
 SELECT 'US','MAQ','Manor','','TX'  UNION ALL
 SELECT 'US','MAR','Marrero','','LA'  UNION ALL
-SELECT 'US','MAS','Mansfield','','PA'  UNION ALL
+SELECT 'US','MAS','Mansfield','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MAT','Mahrt','','AL'  UNION ALL
 SELECT 'US','MAU','Mauldin','','SC'  UNION ALL
 SELECT 'US','MAV','Manvel','','TX'  UNION ALL
@@ -53535,8 +54101,7 @@ SELECT 'US','MCR','Manchester','','WA'  UNION ALL
 SELECT 'US','MCS','Mancos','','CO'  UNION ALL
 SELECT 'US','MCT','McKinney','','TX'  UNION ALL
 SELECT 'US','MCU','McArthur','','OH'  UNION ALL
-SELECT 'US','MCV','McAdenville','','NC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MCV','McAdenville','','NC'  UNION ALL
 SELECT 'US','MCW','Mason City','','IA'  UNION ALL
 SELECT 'US','MCX','Manchester','','KY'  UNION ALL
 SELECT 'US','MCY','Minden City','','MI'  UNION ALL
@@ -53553,7 +54118,8 @@ SELECT 'US','MDB','Montville','','NJ'  UNION ALL
 SELECT 'US','MDC','Medfield','','MA'  UNION ALL
 SELECT 'US','MDD','Midland','','TX'  UNION ALL
 SELECT 'US','MDE','Medford','','NY'  UNION ALL
-SELECT 'US','MDF','Medford','','WI'  UNION ALL
+SELECT 'US','MDF','Medford','','WI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MDG','Mendota Heights','','MN'  UNION ALL
 SELECT 'US','MDH','Carbondale','','IL'  UNION ALL
 SELECT 'US','MDI','Madison','','NC'  UNION ALL
@@ -53616,8 +54182,7 @@ SELECT 'US','MFE','McAllen-Mission Apt','','TX'  UNION ALL
 SELECT 'US','MFF','Milford','','IL'  UNION ALL
 SELECT 'US','MFG','Myrtle Point','','OR'  UNION ALL
 SELECT 'US','MFH','Mesquite','','NV'  UNION ALL
-SELECT 'US','MFI','Marshfield','','WI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MFI','Marshfield','','WI'  UNION ALL
 SELECT 'US','MFJ','Milford','','IA'  UNION ALL
 SELECT 'US','MFK','Milford','','MA'  UNION ALL
 SELECT 'US','MFL','Mansfield','','TX'  UNION ALL
@@ -53634,7 +54199,8 @@ SELECT 'US','MFV','Melfa','','VA'  UNION ALL
 SELECT 'US','MFW','Milford','','NH'  UNION ALL
 SELECT 'US','MFX','Milford','','CT'  UNION ALL
 SELECT 'US','MFY','Martins Ferry','','OH'  UNION ALL
-SELECT 'US','MFZ','Moundsville','','WV'  UNION ALL
+SELECT 'US','MFZ','Moundsville','','WV' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MG2','McGregor','','IA'  UNION ALL
 SELECT 'US','MG3','McGregor','','MN'  UNION ALL
 SELECT 'US','MG4','McGregor','','TX'  UNION ALL
@@ -53697,8 +54263,7 @@ SELECT 'US','MHU','Mountain Home','','NC'  UNION ALL
 SELECT 'US','MHV','Mechanicville','','NY'  UNION ALL
 SELECT 'US','MHW','Mahwah','','NJ'  UNION ALL
 SELECT 'US','MHX','Mt Holly','','NC'  UNION ALL
-SELECT 'US','MHY','Maryland Heights','','MO' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MHY','Maryland Heights','','MO'  UNION ALL
 SELECT 'US','MHZ','Mine Hill','','NJ'  UNION ALL
 SELECT 'US','MI2','Mio','','MI'  UNION ALL
 SELECT 'US','MIA','Miami','','FL'  UNION ALL
@@ -53715,7 +54280,8 @@ SELECT 'US','MIK','Mira Loma','','CA'  UNION ALL
 SELECT 'US','MIL','Madill','','OK'  UNION ALL
 SELECT 'US','MIM','Maple Island','','MN'  UNION ALL
 SELECT 'US','MIN','Marion','','NC'  UNION ALL
-SELECT 'US','MIO','Miami','','OK'  UNION ALL
+SELECT 'US','MIO','Miami','','OK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MIP','Middleport','','OH'  UNION ALL
 SELECT 'US','MIQ','Milan','','IL'  UNION ALL
 SELECT 'US','MIR','Marietta','','OK'  UNION ALL
@@ -53778,8 +54344,7 @@ SELECT 'US','MKT','Mankato','','MN'  UNION ALL
 SELECT 'US','MKU','Menlo Park','','CA'  UNION ALL
 SELECT 'US','MKV','Mocksville','','NC'  UNION ALL
 SELECT 'US','MKW','Mill Creek','','WA'  UNION ALL
-SELECT 'US','MKX','McCalla','','AL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MKX','McCalla','','AL'  UNION ALL
 SELECT 'US','MKY','Mt Airy','','NC'  UNION ALL
 SELECT 'US','MKZ','Mukwonago','','WI'  UNION ALL
 SELECT 'US','ML2','Marlin','','PA'  UNION ALL
@@ -53796,7 +54361,8 @@ SELECT 'US','MLD','Malad City','','ID'  UNION ALL
 SELECT 'US','MLE','Maumelle','','AR'  UNION ALL
 SELECT 'US','MLF','Milford','','UT'  UNION ALL
 SELECT 'US','MLG','Moss Landing','','CA'  UNION ALL
-SELECT 'US','MLH','Midlothian','','IL'  UNION ALL
+SELECT 'US','MLH','Midlothian','','IL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MLI','Moline','','IL'  UNION ALL
 SELECT 'US','MLJ','Milledgeville','','GA'  UNION ALL
 SELECT 'US','MLK','Malta','','MT'  UNION ALL
@@ -53859,8 +54425,7 @@ SELECT 'US','MNE','Manchester','','CT'  UNION ALL
 SELECT 'US','MNF','Marianna','','FL'  UNION ALL
 SELECT 'US','MNG','Manning','','SC'  UNION ALL
 SELECT 'US','MNH','Manhattan/New York','','NY'  UNION ALL
-SELECT 'US','MNI','Monmouth','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MNI','Monmouth','','IL'  UNION ALL
 SELECT 'US','MNJ','Manchester Center','','VT'  UNION ALL
 SELECT 'US','MNK','Moncks Corner','','SC'  UNION ALL
 SELECT 'US','MNL','Menlo','','GA'  UNION ALL
@@ -53877,7 +54442,8 @@ SELECT 'US','MNV','Minerva','','OH'  UNION ALL
 SELECT 'US','MNW','Mattawan','','MI'  UNION ALL
 SELECT 'US','MNX','Manchester','','IA'  UNION ALL
 SELECT 'US','MNY','Manchester','','MO'  UNION ALL
-SELECT 'US','MNZ','Manassas','','VA'  UNION ALL
+SELECT 'US','MNZ','Manassas','','VA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MOA','Moundville','','AL'  UNION ALL
 SELECT 'US','MOB','Mobile','','AL'  UNION ALL
 SELECT 'US','MOC','Monticello','','KY'  UNION ALL
@@ -53940,8 +54506,7 @@ SELECT 'US','MQC','Monticello','','GA'  UNION ALL
 SELECT 'US','MQD','Monticello','','IL'  UNION ALL
 SELECT 'US','MQE','Moores Mill','','NY'  UNION ALL
 SELECT 'US','MQF','Maywood, Albany','','NY'  UNION ALL
-SELECT 'US','MQG','Moneta','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MQG','Moneta','','VA'  UNION ALL
 SELECT 'US','MQH','Marlette','','MI'  UNION ALL
 SELECT 'US','MQI','Quincy','','MA'  UNION ALL
 SELECT 'US','MQJ','Melbourne','','AR'  UNION ALL
@@ -53958,7 +54523,8 @@ SELECT 'US','MQT','Marquette','','MI'  UNION ALL
 SELECT 'US','MQU','Mequon','','WI'  UNION ALL
 SELECT 'US','MQV','Mt Olive','','NJ'  UNION ALL
 SELECT 'US','MQW','McRae','','GA'  UNION ALL
-SELECT 'US','MQX','Mercer','','PA'  UNION ALL
+SELECT 'US','MQX','Mercer','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MQY','Smyrna','','TN'  UNION ALL
 SELECT 'US','MQZ','Mercer Island','','WA'  UNION ALL
 SELECT 'US','MR2','Marseilles','','IL'  UNION ALL
@@ -54021,8 +54587,7 @@ SELECT 'US','MSS','Massena','','NY'  UNION ALL
 SELECT 'US','MST','Muenster','','TX'  UNION ALL
 SELECT 'US','MSU','Masury','','OH'  UNION ALL
 SELECT 'US','MSV','Monticello','','NY'  UNION ALL
-SELECT 'US','MSW','Morris','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MSW','Morris','','IL'  UNION ALL
 SELECT 'US','MSX','Mesilla Park','','NM'  UNION ALL
 SELECT 'US','MSY','New Orleans','','LA'  UNION ALL
 SELECT 'US','MSZ','Moose Pass','','AK'  UNION ALL
@@ -54039,7 +54604,8 @@ SELECT 'US','MTE','Metairie','','LA'  UNION ALL
 SELECT 'US','MTF','Metaline Falls','','WA'  UNION ALL
 SELECT 'US','MTG','Mont Belvieu','','TX'  UNION ALL
 SELECT 'US','MTH','Marathon','','FL'  UNION ALL
-SELECT 'US','MTI','Morton','','IL'  UNION ALL
+SELECT 'US','MTI','Morton','','IL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MTJ','Montrose','','CO'  UNION ALL
 SELECT 'US','MTK','Mount Carmel','','PA'  UNION ALL
 SELECT 'US','MTL','Millington','','MD'  UNION ALL
@@ -54102,8 +54668,7 @@ SELECT 'US','MVM','Kayenta','','AZ'  UNION ALL
 SELECT 'US','MVN','Mount Vernon','','IL'  UNION ALL
 SELECT 'US','MVO','Montevallo','','AL'  UNION ALL
 SELECT 'US','MVP','Minersville','','PA'  UNION ALL
-SELECT 'US','MVQ','Madisonville','','KY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MVQ','Madisonville','','KY'  UNION ALL
 SELECT 'US','MVR','Malvern','','OH'  UNION ALL
 SELECT 'US','MVS','Mercerville','','NJ'  UNION ALL
 SELECT 'US','MVT','McVeytown','','PA'  UNION ALL
@@ -54120,7 +54685,8 @@ SELECT 'US','MW5','Mineralwells','','WV'  UNION ALL
 SELECT 'US','MWA','Marion','','IL'  UNION ALL
 SELECT 'US','MWB','Mabank','','TX'  UNION ALL
 SELECT 'US','MWC','Midway City','','CA'  UNION ALL
-SELECT 'US','MWD','Meadow Lands','','PA'  UNION ALL
+SELECT 'US','MWD','Meadow Lands','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MWE','Marlow Heights','','MD'  UNION ALL
 SELECT 'US','MWF','Mt Wolf','','PA'  UNION ALL
 SELECT 'US','MWG','Morgantown','','TN'  UNION ALL
@@ -54183,8 +54749,7 @@ SELECT 'US','MYI','Mayville','','WI'  UNION ALL
 SELECT 'US','MYJ','Mays Landing','','NJ'  UNION ALL
 SELECT 'US','MYK','May Creek','','AK'  UNION ALL
 SELECT 'US','MYL','McCall','','ID'  UNION ALL
-SELECT 'US','MYM','Mt Airy','','MD' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','MYM','Mt Airy','','MD'  UNION ALL
 SELECT 'US','MYN','Middleton','','MA'  UNION ALL
 SELECT 'US','MYO','Mayodan','','NC'  UNION ALL
 SELECT 'US','MYP','Marysville','','PA'  UNION ALL
@@ -54201,7 +54766,8 @@ SELECT 'US','MYZ','Mooresville','','IN'  UNION ALL
 SELECT 'US','MZA','Meridian','','CA'  UNION ALL
 SELECT 'US','MZB','Meta','','MO'  UNION ALL
 SELECT 'US','MZC','Midvale','','UT'  UNION ALL
-SELECT 'US','MZD','Millington','','TN'  UNION ALL
+SELECT 'US','MZD','Millington','','TN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','MZE','Milroy','','PA'  UNION ALL
 SELECT 'US','MZF','Mazon','','IL'  UNION ALL
 SELECT 'US','MZG','Milton','','NY'  UNION ALL
@@ -54264,8 +54830,7 @@ SELECT 'US','NBO','Northborough','','MA'  UNION ALL
 SELECT 'US','NBP','North Brookfield','','MA'  UNION ALL
 SELECT 'US','NBQ','Sanborn','','NY'  UNION ALL
 SELECT 'US','NBR','New Berlin','','NY'  UNION ALL
-SELECT 'US','NBS','North Brunswick','','NJ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NBS','North Brunswick','','NJ'  UNION ALL
 SELECT 'US','NBT','New Baltimore','','MI'  UNION ALL
 SELECT 'US','NBU','Glenview','','IL'  UNION ALL
 SELECT 'US','NBV','North Bay Shore','','NY'  UNION ALL
@@ -54282,7 +54847,8 @@ SELECT 'US','NCH','North Charlotte','','NC'  UNION ALL
 SELECT 'US','NCI','National City','','IL'  UNION ALL
 SELECT 'US','NCK','Nicholasville','','KY'  UNION ALL
 SELECT 'US','NCL','Nichols','','SC'  UNION ALL
-SELECT 'US','NCM','Norco','','LA'  UNION ALL
+SELECT 'US','NCM','Norco','','LA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NCN','New Chenega','','AK'  UNION ALL
 SELECT 'US','NCO','Quonset Point','','RI'  UNION ALL
 SELECT 'US','NCP','New Castle','','PA'  UNION ALL
@@ -54345,8 +54911,7 @@ SELECT 'US','NFI','Penfield','','NY'  UNION ALL
 SELECT 'US','NFJ','Norfolk','','MA'  UNION ALL
 SELECT 'US','NFK','Norfolk','','NY'  UNION ALL
 SELECT 'US','NFL','Fallon','','NV'  UNION ALL
-SELECT 'US','NFM','Newton Upper Falls','','MA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NFM','Newton Upper Falls','','MA'  UNION ALL
 SELECT 'US','NFN','New Franken','','WI'  UNION ALL
 SELECT 'US','NFO','New Florence','','MO'  UNION ALL
 SELECT 'US','NFQ','New Florence','','PA'  UNION ALL
@@ -54363,7 +54928,8 @@ SELECT 'US','NGR','North Grafton','','MA'  UNION ALL
 SELECT 'US','NGT','Northgate','','ND'  UNION ALL
 SELECT 'US','NGU','Narragansett','','RI'  UNION ALL
 SELECT 'US','NGV','Newton Grove','','NC'  UNION ALL
-SELECT 'US','NGW','Niagara','','WI'  UNION ALL
+SELECT 'US','NGW','Niagara','','WI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NGY','Montgomery','','OH'  UNION ALL
 SELECT 'US','NGZ','Alameda','','CA'  UNION ALL
 SELECT 'US','NH2','New Haven','','MO'  UNION ALL
@@ -54426,8 +54992,7 @@ SELECT 'US','NKP','New Kensington','','PA'  UNION ALL
 SELECT 'US','NKQ','Newark','','CA'  UNION ALL
 SELECT 'US','NKT','North Kingstown','','RI'  UNION ALL
 SELECT 'US','NKV','Nichen Cove','','AK'  UNION ALL
-SELECT 'US','NKX','New Knoxville','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NKX','New Knoxville','','OH'  UNION ALL
 SELECT 'US','NKY','North Kansas City','','MO'  UNION ALL
 SELECT 'US','NL2','New Londonderry','','NH'  UNION ALL
 SELECT 'US','NL3','North Long Beach','','CA'  UNION ALL
@@ -54444,7 +55009,8 @@ SELECT 'US','NLL','Nunnelly','','TN'  UNION ALL
 SELECT 'US','NLN','National City','','CA'  UNION ALL
 SELECT 'US','NLO','New London','','CT'  UNION ALL
 SELECT 'US','NLQ','North Loup','','NE'  UNION ALL
-SELECT 'US','NLR','New Liberty','','IA'  UNION ALL
+SELECT 'US','NLR','New Liberty','','IA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NLS','Niles','','OH'  UNION ALL
 SELECT 'US','NLV','Pine Level, Johnston','','NC'  UNION ALL
 SELECT 'US','NLW','North Little Rock','','AR'  UNION ALL
@@ -54507,8 +55073,7 @@ SELECT 'US','NOS','North Manchester','','IN'  UNION ALL
 SELECT 'US','NOT','Novato','','CA'  UNION ALL
 SELECT 'US','NOV','Novi','','MI'  UNION ALL
 SELECT 'US','NOW','Norwell','','MA'  UNION ALL
-SELECT 'US','NOX','New Lenox','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NOX','New Lenox','','IL'  UNION ALL
 SELECT 'US','NOY','Noyes','','MN'  UNION ALL
 SELECT 'US','NOZ','Newport','','ME'  UNION ALL
 SELECT 'US','NP2','New Preston','','CT'  UNION ALL
@@ -54525,7 +55090,8 @@ SELECT 'US','NPH','Nephi','','UT'  UNION ALL
 SELECT 'US','NPI','New Paris','','IN'  UNION ALL
 SELECT 'US','NPK','Naples','','NY'  UNION ALL
 SELECT 'US','NPL','Naples','','NC'  UNION ALL
-SELECT 'US','NPM','Newport','','MN'  UNION ALL
+SELECT 'US','NPM','Newport','','MN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NPN','Newport','','AR'  UNION ALL
 SELECT 'US','NPO','Newport','','OR'  UNION ALL
 SELECT 'US','NPP','New Philadelphia','','PA'  UNION ALL
@@ -54588,8 +55154,7 @@ SELECT 'US','NSR','Seward','','NE'  UNION ALL
 SELECT 'US','NSS','Sabine Pass','','TX'  UNION ALL
 SELECT 'US','NST','New Stanton','','PA'  UNION ALL
 SELECT 'US','NSU','Mansura','','LA'  UNION ALL
-SELECT 'US','NSV','Mannsville','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NSV','Mannsville','','NY'  UNION ALL
 SELECT 'US','NT2','Northford','','CT'  UNION ALL
 SELECT 'US','NTA','North Chicago','','IL'  UNION ALL
 SELECT 'US','NTB','North Bennington','','VT'  UNION ALL
@@ -54606,7 +55171,8 @@ SELECT 'US','NTL','National Gardens','','FL'  UNION ALL
 SELECT 'US','NTM','Newton','','MS'  UNION ALL
 SELECT 'US','NTN','Newton','','MA'  UNION ALL
 SELECT 'US','NTO','Nettleton','','MS'  UNION ALL
-SELECT 'US','NTP','North Pole','','AK'  UNION ALL
+SELECT 'US','NTP','North Pole','','AK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NTQ','Newtown Square','','PA'  UNION ALL
 SELECT 'US','NTR','Norton Shores','','MI'  UNION ALL
 SELECT 'US','NTS','North Charleston','','SC'  UNION ALL
@@ -54669,8 +55235,7 @@ SELECT 'US','NWN','Newton','','NJ'  UNION ALL
 SELECT 'US','NWO','Newaygo','','MI'  UNION ALL
 SELECT 'US','NWP','New Prague','','MN'  UNION ALL
 SELECT 'US','NWQ','New Weston','','OH'  UNION ALL
-SELECT 'US','NWR','Newburg','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','NWR','Newburg','','OH'  UNION ALL
 SELECT 'US','NWS','New Salem','','PA'  UNION ALL
 SELECT 'US','NWT','New Britain','','CT'  UNION ALL
 SELECT 'US','NWU','Newton','','NH'  UNION ALL
@@ -54687,7 +55252,8 @@ SELECT 'US','NXG','New Eagle','','PA'  UNION ALL
 SELECT 'US','NXI','Nixa','','MO'  UNION ALL
 SELECT 'US','NXO','Norwood','','NC'  UNION ALL
 SELECT 'US','NXP','Noxapater','','MS'  UNION ALL
-SELECT 'US','NXQ','Newcomerstown','','OH'  UNION ALL
+SELECT 'US','NXQ','Newcomerstown','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','NXV','Nashville','','IL'  UNION ALL
 SELECT 'US','NXX','Willow Grove','','PA'  UNION ALL
 SELECT 'US','NXY','North City','','WA'  UNION ALL
@@ -54750,8 +55316,7 @@ SELECT 'US','OBS','Robertsdale','','AL'  UNION ALL
 SELECT 'US','OBT','Oakland','','MD'  UNION ALL
 SELECT 'US','OBU','Kobuk','','AK'  UNION ALL
 SELECT 'US','OBV','Bernville','','PA'  UNION ALL
-SELECT 'US','OC2','Orange City','','IA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OC2','Orange City','','IA'  UNION ALL
 SELECT 'US','OC3','Osco','','IL'  UNION ALL
 SELECT 'US','OCA','Ocean Reef','','FL'  UNION ALL
 SELECT 'US','OCC','Orange Cove','','CA'  UNION ALL
@@ -54768,7 +55333,8 @@ SELECT 'US','OCM','Ocoee','','FL'  UNION ALL
 SELECT 'US','OCN','Oceanside','','CA'  UNION ALL
 SELECT 'US','OCO','Oconomowoc','','WI'  UNION ALL
 SELECT 'US','OCQ','Oconto','','WI'  UNION ALL
-SELECT 'US','OCR','Social Circle','','GA'  UNION ALL
+SELECT 'US','OCR','Social Circle','','GA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','OCU','Cuba','','MO'  UNION ALL
 SELECT 'US','OCV','Rockville','','CT'  UNION ALL
 SELECT 'US','OCW','Washington','','NC'  UNION ALL
@@ -54831,8 +55397,7 @@ SELECT 'US','OGE','Orange','','VA'  UNION ALL
 SELECT 'US','OGG','Kahului','','HI'  UNION ALL
 SELECT 'US','OGI','Oregon','','IL'  UNION ALL
 SELECT 'US','OGK','Oak Grove','','LA'  UNION ALL
-SELECT 'US','OGN','Logan','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OGN','Logan','','OH'  UNION ALL
 SELECT 'US','OGO','Ogden','','IA'  UNION ALL
 SELECT 'US','OGP','Logansport','','KY'  UNION ALL
 SELECT 'US','OGQ','Onondaga','','NY'  UNION ALL
@@ -54849,7 +55414,8 @@ SELECT 'US','OHD','Himrod','','NY'  UNION ALL
 SELECT 'US','OHE','Weston','','OH'  UNION ALL
 SELECT 'US','OHH','Ohatchee','','AL'  UNION ALL
 SELECT 'US','OHI','Old Hickory','','AR'  UNION ALL
-SELECT 'US','OHL','Oak Hill, Pittsylvania','','VA'  UNION ALL
+SELECT 'US','OHL','Oak Hill, Pittsylvania','','VA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','OHM','Amelia','','OH'  UNION ALL
 SELECT 'US','OHN','Cochran','','GA'  UNION ALL
 SELECT 'US','OHO','Oak Harbor','','OH'  UNION ALL
@@ -54912,8 +55478,7 @@ SELECT 'US','OLH','Old Harbor','','AK'  UNION ALL
 SELECT 'US','OLI','Oakland','','IA'  UNION ALL
 SELECT 'US','OLJ','Orland','','IN'  UNION ALL
 SELECT 'US','OLK','Roland','','OK'  UNION ALL
-SELECT 'US','OLL','Old Lyme','','CT' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OLL','Old Lyme','','CT'  UNION ALL
 SELECT 'US','OLM','Olympia','','WA'  UNION ALL
 SELECT 'US','OLN','Orleans','','MA'  UNION ALL
 SELECT 'US','OLO','Montello','','WI'  UNION ALL
@@ -54930,7 +55495,8 @@ SELECT 'US','OLZ','Coleman','','OK'  UNION ALL
 SELECT 'US','OM2','Omro','','WI'  UNION ALL
 SELECT 'US','OMA','Omaha','','NE'  UNION ALL
 SELECT 'US','OMB','Macomb','','MI'  UNION ALL
-SELECT 'US','OMC','Commerce','','TX'  UNION ALL
+SELECT 'US','OMC','Commerce','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','OMD','Romoland','','CA'  UNION ALL
 SELECT 'US','OME','Nome','','AK'  UNION ALL
 SELECT 'US','OMF','Comfort','','TX'  UNION ALL
@@ -54993,8 +55559,7 @@ SELECT 'US','OON','Monon','','IN'  UNION ALL
 SELECT 'US','OOO','Bronwood','','GA'  UNION ALL
 SELECT 'US','OOR','Moorestown','','PA'  UNION ALL
 SELECT 'US','OOS','Crooksville','','OH'  UNION ALL
-SELECT 'US','OOT','Wolcott','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OOT','Wolcott','','NY'  UNION ALL
 SELECT 'US','OOU','Moosup','','CT'  UNION ALL
 SELECT 'US','OOV','Brookville','','OH'  UNION ALL
 SELECT 'US','OOW','Otis Orchards','','WA'  UNION ALL
@@ -55011,7 +55576,8 @@ SELECT 'US','OPL','Opelousas','','LA'  UNION ALL
 SELECT 'US','OPR','Woodland Park','','CO'  UNION ALL
 SELECT 'US','OPY','Orchard Park','','NY'  UNION ALL
 SELECT 'US','OQH','Oak Hill','','FL'  UNION ALL
-SELECT 'US','OQL','Coquille','','OR'  UNION ALL
+SELECT 'US','OQL','Coquille','','OR' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','OQO','Conroy','','IA'  UNION ALL
 SELECT 'US','OQR','Oakridge','','OR'  UNION ALL
 SELECT 'US','OQY','Oakley','','CA'  UNION ALL
@@ -55074,8 +55640,7 @@ SELECT 'US','OTK','Poestenkill','','NY'  UNION ALL
 SELECT 'US','OTL','Ottawa Lake','','MI'  UNION ALL
 SELECT 'US','OTM','Ottumwa','','IA'  UNION ALL
 SELECT 'US','OTN','Oaktown','','IN'  UNION ALL
-SELECT 'US','OTO','Otto','','NM' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OTO','Otto','','NM'  UNION ALL
 SELECT 'US','OTP','Orrtanna','','PA'  UNION ALL
 SELECT 'US','OTQ','Ottawa','','OH'  UNION ALL
 SELECT 'US','OTR','Ottawa','','KS'  UNION ALL
@@ -55092,7 +55657,8 @@ SELECT 'US','OUF','Oakland','','IL'  UNION ALL
 SELECT 'US','OUG','South Gate','','FL'  UNION ALL
 SELECT 'US','OUH','Southgate','','KY'  UNION ALL
 SELECT 'US','OUI','Blountville','','TN'  UNION ALL
-SELECT 'US','OUK','Mounds','','OK'  UNION ALL
+SELECT 'US','OUK','Mounds','','OK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','OUL','South Charleston','','OH'  UNION ALL
 SELECT 'US','OUM','Mount Meigs','','AL'  UNION ALL
 SELECT 'US','OUN','Norman','','OK'  UNION ALL
@@ -55155,8 +55721,7 @@ SELECT 'US','OYM','Otay Mesa','','CA'  UNION ALL
 SELECT 'US','OYN','Brooklyn','','IA'  UNION ALL
 SELECT 'US','OYS','Yosemite Ntl Park','','CA'  UNION ALL
 SELECT 'US','OYT','Savoy','','TX'  UNION ALL
-SELECT 'US','OYY','Troy','','IN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','OYY','Troy','','IN'  UNION ALL
 SELECT 'US','OZA','Ozona','','TX'  UNION ALL
 SELECT 'US','OZB','Millheim','','PA'  UNION ALL
 SELECT 'US','OZE','Ocoee, Polk','','TN'  UNION ALL
@@ -55173,7 +55738,8 @@ SELECT 'US','PAD','Paulding','','OH'  UNION ALL
 SELECT 'US','PAE','Everett','','WA'  UNION ALL
 SELECT 'US','PAF','Plainfield','','IN'  UNION ALL
 SELECT 'US','PAG','Pisgah','','AL'  UNION ALL
-SELECT 'US','PAH','Paducah','','KY'  UNION ALL
+SELECT 'US','PAH','Paducah','','KY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PAI','Paintsville','','KY'  UNION ALL
 SELECT 'US','PAK','Hanapepe','','HI'  UNION ALL
 SELECT 'US','PAL','Pt Allen','','HI'  UNION ALL
@@ -55236,8 +55802,7 @@ SELECT 'US','PCN','Pt Clinton','','OH'  UNION ALL
 SELECT 'US','PCO','Princeton','','IL'  UNION ALL
 SELECT 'US','PCP','Patchogue','','NY'  UNION ALL
 SELECT 'US','PCQ','Patterson','','CA'  UNION ALL
-SELECT 'US','PCR','Point Comfort','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PCR','Point Comfort','','TX'  UNION ALL
 SELECT 'US','PCS','Ponchatoula','','LA'  UNION ALL
 SELECT 'US','PCT','Princeton','','NJ'  UNION ALL
 SELECT 'US','PCU','Picayune','','MS'  UNION ALL
@@ -55254,7 +55819,8 @@ SELECT 'US','PDL','Pt Lions','','AL'  UNION ALL
 SELECT 'US','PDM','Pounding Mill','','VA'  UNION ALL
 SELECT 'US','PDN','Pendleton','','IN'  UNION ALL
 SELECT 'US','PDO','Pendleton','','SC'  UNION ALL
-SELECT 'US','PDP','Philadelphia','','NY'  UNION ALL
+SELECT 'US','PDP','Philadelphia','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PDQ','Doral','','FL'  UNION ALL
 SELECT 'US','PDS','Powder Springs','','GA'  UNION ALL
 SELECT 'US','PDT','Pendleton','','OR'  UNION ALL
@@ -55317,8 +55883,7 @@ SELECT 'US','PGE','Pagedale','','MO'  UNION ALL
 SELECT 'US','PGF','Pisgah Forest','','NC'  UNION ALL
 SELECT 'US','PGG','Pendergrass','','GA'  UNION ALL
 SELECT 'US','PGH','Pt Gamble','','WA'  UNION ALL
-SELECT 'US','PGI','Portageville','','MO' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PGI','Portageville','','MO'  UNION ALL
 SELECT 'US','PGJ','Pine Grove, Clearfield','','PA'  UNION ALL
 SELECT 'US','PGL','Pascagoula','','MS'  UNION ALL
 SELECT 'US','PGM','Pt Graham','','AK'  UNION ALL
@@ -55331,11 +55896,12 @@ SELECT 'US','PGT','Pennington','','AR'  UNION ALL
 SELECT 'US','PGV','Greenville','','NC'  UNION ALL
 SELECT 'US','PGW','Parkwood','','PA'  UNION ALL
 SELECT 'US','PGY','Spring Valley, San Diego','','CA'  UNION ALL
-SELECT 'US','PH2','PocahontasÃƒâ€šÃ‚Â ','','MS'  UNION ALL
+SELECT 'US','PH2','Pocahontas','','MS'  UNION ALL
 SELECT 'US','PH3','Philmont','','NY'  UNION ALL
 SELECT 'US','PH4','Panhandle, Cass','','TX'  UNION ALL
 SELECT 'US','PHA','Phenix City','','AL'  UNION ALL
-SELECT 'US','PHB','Peoria Heights','','IL'  UNION ALL
+SELECT 'US','PHB','Peoria Heights','','IL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PHC','Pointe a la Hache','','LA'  UNION ALL
 SELECT 'US','PHD','New Philadelphia','','OH'  UNION ALL
 SELECT 'US','PHE','Pelahatchie','','MS'  UNION ALL
@@ -55398,8 +55964,7 @@ SELECT 'US','PKA','Napaskiak','','AK'  UNION ALL
 SELECT 'US','PKB','Parkersburg','','WV'  UNION ALL
 SELECT 'US','PKC','Park City','','IL'  UNION ALL
 SELECT 'US','PKD','Park Rapids','','MN'  UNION ALL
-SELECT 'US','PKE','Prior Lake','','MN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PKE','Prior Lake','','MN'  UNION ALL
 SELECT 'US','PKF','Park Falls','','WI'  UNION ALL
 SELECT 'US','PKH','Park Hills','','MO'  UNION ALL
 SELECT 'US','PKI','Pekin','','IL'  UNION ALL
@@ -55416,7 +55981,8 @@ SELECT 'US','PKT','Parkton','','NC'  UNION ALL
 SELECT 'US','PKU','Piketon','','OH'  UNION ALL
 SELECT 'US','PKV','Spokane Valley','','WA'  UNION ALL
 SELECT 'US','PKW','Parker','','WA'  UNION ALL
-SELECT 'US','PKX','Pekin','','IN'  UNION ALL
+SELECT 'US','PKX','Pekin','','IN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PKY','Parksley','','VA'  UNION ALL
 SELECT 'US','PKZ','Parkrose','','OR'  UNION ALL
 SELECT 'US','PL2','Palmer','','PA'  UNION ALL
@@ -55479,8 +56045,7 @@ SELECT 'US','PN2','Pana','','IL'  UNION ALL
 SELECT 'US','PN3','Pioneer, Amador','','CA'  UNION ALL
 SELECT 'US','PN4','Pound','','VA'  UNION ALL
 SELECT 'US','PNA','Pinedale','','AZ'  UNION ALL
-SELECT 'US','PNB','Pontoon Beach','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PNB','Pontoon Beach','','IL'  UNION ALL
 SELECT 'US','PNC','Ponca City','','OK'  UNION ALL
 SELECT 'US','PND','Pearland','','TX'  UNION ALL
 SELECT 'US','PNE','Philadelphia North East Apt','','PA'  UNION ALL
@@ -55497,7 +56062,8 @@ SELECT 'US','PNO','Plano','','IL'  UNION ALL
 SELECT 'US','PNP','Pentwater','','MI'  UNION ALL
 SELECT 'US','PNQ','Patterson','','NC'  UNION ALL
 SELECT 'US','PNR','Penn Run','','PA'  UNION ALL
-SELECT 'US','PNS','Pensacola','','FL'  UNION ALL
+SELECT 'US','PNS','Pensacola','','FL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PNT','Piedmont','','WV'  UNION ALL
 SELECT 'US','PNU','Panguitch','','UT'  UNION ALL
 SELECT 'US','PNV','Pineville','','NC'  UNION ALL
@@ -55560,8 +56126,7 @@ SELECT 'US','PQA','Piqua','','OH'  UNION ALL
 SELECT 'US','PQB','Paton','','IA'  UNION ALL
 SELECT 'US','PQC','Pomona','','CA'  UNION ALL
 SELECT 'US','PQD','Portland','','TN'  UNION ALL
-SELECT 'US','PQH','Peachtree City','','GA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PQH','Peachtree City','','GA'  UNION ALL
 SELECT 'US','PQI','Presque Isle','','ME'  UNION ALL
 SELECT 'US','PQL','Pelican','','LA'  UNION ALL
 SELECT 'US','PQM','Palm','','PA'  UNION ALL
@@ -55578,7 +56143,8 @@ SELECT 'US','PQY','Perry','','OH'  UNION ALL
 SELECT 'US','PQZ','Patten','','ME'  UNION ALL
 SELECT 'US','PR2','Penrose','','CO'  UNION ALL
 SELECT 'US','PR3','Perkins','','OK'  UNION ALL
-SELECT 'US','PR4','Piercy','','CA'  UNION ALL
+SELECT 'US','PR4','Piercy','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PR5','Proctor','','WV'  UNION ALL
 SELECT 'US','PR6','Prairie','','MS'  UNION ALL
 SELECT 'US','PR7','Puerto Rico','','TX'  UNION ALL
@@ -55641,8 +56207,7 @@ SELECT 'US','PT5','Pleasanton','','TX'  UNION ALL
 SELECT 'US','PTA','Pt Alsworth','','AK'  UNION ALL
 SELECT 'US','PTB','Petersburg','','VA'  UNION ALL
 SELECT 'US','PTC','Pt Alice','','AK'  UNION ALL
-SELECT 'US','PTD','Pt Alexander','','AK' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PTD','Pt Alexander','','AK'  UNION ALL
 SELECT 'US','PTE','Portage','','MI'  UNION ALL
 SELECT 'US','PTF','Pittsfield','','ME'  UNION ALL
 SELECT 'US','PTG','Pt Allegany','','PA'  UNION ALL
@@ -55659,7 +56224,8 @@ SELECT 'US','PTQ','Portland','','CT'  UNION ALL
 SELECT 'US','PTR','Pleasant Harbour','','AK'  UNION ALL
 SELECT 'US','PTS','Pittsburg','','KS'  UNION ALL
 SELECT 'US','PTT','Pratt','','KS'  UNION ALL
-SELECT 'US','PTU','Platinum','','AK'  UNION ALL
+SELECT 'US','PTU','Platinum','','AK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PTV','Porterville','','CA'  UNION ALL
 SELECT 'US','PTW','Pottstown','','PA'  UNION ALL
 SELECT 'US','PTX','Pearlington','','MS'  UNION ALL
@@ -55722,8 +56288,7 @@ SELECT 'US','PWI','Pt Williams','','AK'  UNION ALL
 SELECT 'US','PWL','Pawling','','NY'  UNION ALL
 SELECT 'US','PWM','Portland','','ME'  UNION ALL
 SELECT 'US','PWN','Pt Wentworth','','GA'  UNION ALL
-SELECT 'US','PWO','Porter','','IN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','PWO','Porter','','IN'  UNION ALL
 SELECT 'US','PWP','Pawcatuck','','CT'  UNION ALL
 SELECT 'US','PWR','Pt Walter','','AK'  UNION ALL
 SELECT 'US','PWS','Prosser','','WA'  UNION ALL
@@ -55740,7 +56305,8 @@ SELECT 'US','PXM','Portales','','NM'  UNION ALL
 SELECT 'US','PXO','Pt Orchard','','WA'  UNION ALL
 SELECT 'US','PXR','Promontory','','UT'  UNION ALL
 SELECT 'US','PXS','Paxinos','','PA'  UNION ALL
-SELECT 'US','PXT','Phoenix Township','','AR'  UNION ALL
+SELECT 'US','PXT','Phoenix Township','','AR' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','PXV','Phoenixville','','PA'  UNION ALL
 SELECT 'US','PXW','Punxsutawney','','PA'  UNION ALL
 SELECT 'US','PXX','Philadelphia','','MS'  UNION ALL
@@ -55803,8 +56369,7 @@ SELECT 'US','QBL','Belfast','','TN'  UNION ALL
 SELECT 'US','QBM','Baltic','','CT'  UNION ALL
 SELECT 'US','QBO','Bondsville','','MA'  UNION ALL
 SELECT 'US','QBR','Brownsville','','FL'  UNION ALL
-SELECT 'US','QBS','Bessemer','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','QBS','Bessemer','','PA'  UNION ALL
 SELECT 'US','QBT','Bettsville','','OH'  UNION ALL
 SELECT 'US','QBU','Burton','','MI'  UNION ALL
 SELECT 'US','QBV','Brownville','','NY'  UNION ALL
@@ -55821,7 +56386,8 @@ SELECT 'US','QCK','Queen Creek','','AZ'  UNION ALL
 SELECT 'US','QCL','Richland','','NY'  UNION ALL
 SELECT 'US','QCN','Coal Center','','PA'  UNION ALL
 SELECT 'US','QCO','Clarion','','PA'  UNION ALL
-SELECT 'US','QCP','Campbellsport','','WI'  UNION ALL
+SELECT 'US','QCP','Campbellsport','','WI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','QCQ','Chautauqua','','NY'  UNION ALL
 SELECT 'US','QCS','Chelsea','','NY'  UNION ALL
 SELECT 'US','QCT','Clanton','','AL'  UNION ALL
@@ -55884,8 +56450,7 @@ SELECT 'US','QIL','Idabel','','OK'  UNION ALL
 SELECT 'US','QIM','Coldwater','','MS'  UNION ALL
 SELECT 'US','QIS','Inverness','','CA'  UNION ALL
 SELECT 'US','QJB','Jobstown','','NJ'  UNION ALL
-SELECT 'US','QJE','Jefferson','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','QJE','Jefferson','','PA'  UNION ALL
 SELECT 'US','QJM','Jamestown','','SC'  UNION ALL
 SELECT 'US','QKC','Kimberling City','','MO'  UNION ALL
 SELECT 'US','QKF','Beresford','','SD'  UNION ALL
@@ -55902,7 +56467,8 @@ SELECT 'US','QLE','Lee','','FL'  UNION ALL
 SELECT 'US','QLF','Linn Creek','','MO'  UNION ALL
 SELECT 'US','QLH','Laurelville','','OH'  UNION ALL
 SELECT 'US','QLI','Loves Park','','IL'  UNION ALL
-SELECT 'US','QLM','Salem','','SD'  UNION ALL
+SELECT 'US','QLM','Salem','','SD' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','QLN','Carrollton','','VA'  UNION ALL
 SELECT 'US','QLO','Leonia','','NJ'  UNION ALL
 SELECT 'US','QLR','Laureldale','','PA'  UNION ALL
@@ -55965,8 +56531,7 @@ SELECT 'US','QPT','Port Alto','','TX'  UNION ALL
 SELECT 'US','QPV','Ponte Vedra','','FL'  UNION ALL
 SELECT 'US','QPW','Poway','','CA'  UNION ALL
 SELECT 'US','QPX','Prosper','','TX'  UNION ALL
-SELECT 'US','QPY','Pine Plains','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','QPY','Pine Plains','','NY'  UNION ALL
 SELECT 'US','QQZ','Strasburg','','PA'  UNION ALL
 SELECT 'US','QRA','Parma','','MO'  UNION ALL
 SELECT 'US','QRC','Rockville Centre','','NY'  UNION ALL
@@ -55983,7 +56548,8 @@ SELECT 'US','QSI','Sea Island','','GA'  UNION ALL
 SELECT 'US','QSK','Saco','','ME'  UNION ALL
 SELECT 'US','QSN','South Easton','','MA'  UNION ALL
 SELECT 'US','QSO','Nelson','','CA'  UNION ALL
-SELECT 'US','QSQ','Smock','','PA'  UNION ALL
+SELECT 'US','QSQ','Smock','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','QSR','Seward','','IL'  UNION ALL
 SELECT 'US','QST','Stoystown','','PA'  UNION ALL
 SELECT 'US','QSV','Somerville','','TN'  UNION ALL
@@ -56046,8 +56612,7 @@ SELECT 'US','RAU','Raiford','','FL'  UNION ALL
 SELECT 'US','RAV','Ransomville','','NY'  UNION ALL
 SELECT 'US','RAY','Rahway','','OH'  UNION ALL
 SELECT 'US','RAZ','Rancho Palos Verdes','','CA'  UNION ALL
-SELECT 'US','RB2','Reinbeck','','IA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RB2','Reinbeck','','IA'  UNION ALL
 SELECT 'US','RB3','Rimersburg','','PA'  UNION ALL
 SELECT 'US','RBA','Robards','','KY'  UNION ALL
 SELECT 'US','RBB','Robbinsville','','NC'  UNION ALL
@@ -56064,7 +56629,8 @@ SELECT 'US','RBN','Fort Jefferson','','FL'  UNION ALL
 SELECT 'US','RBO','Rancho Bernardo','','CA'  UNION ALL
 SELECT 'US','RBP','Red Boiling Springs','','TN'  UNION ALL
 SELECT 'US','RBR','Ranburne','','AL'  UNION ALL
-SELECT 'US','RBS','Robbins','','NC'  UNION ALL
+SELECT 'US','RBS','Robbins','','NC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RBT','Roberts','','WI'  UNION ALL
 SELECT 'US','RBU','Cedar Bluff','','AL'  UNION ALL
 SELECT 'US','RBV','Robbinsville','','NJ'  UNION ALL
@@ -56127,8 +56693,7 @@ SELECT 'US','RED','Lewistown-Reedsville Apt','','PA'  UNION ALL
 SELECT 'US','REE','Reidsville','','GA'  UNION ALL
 SELECT 'US','REF','Roderfield','','WV'  UNION ALL
 SELECT 'US','REG','Marengo','','IL'  UNION ALL
-SELECT 'US','REH','Rehoboth Beach','','DE' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','REH','Rehoboth Beach','','DE'  UNION ALL
 SELECT 'US','REI','Reedsville','','WI'  UNION ALL
 SELECT 'US','REK','Reamstown','','PA'  UNION ALL
 SELECT 'US','REL','Reedsville','','PA'  UNION ALL
@@ -56145,7 +56710,8 @@ SELECT 'US','REV','Reedville','','VA'  UNION ALL
 SELECT 'US','REW','Red Hook','','NY'  UNION ALL
 SELECT 'US','REX','Rex','','GA'  UNION ALL
 SELECT 'US','REY','Reynolds','','GA'  UNION ALL
-SELECT 'US','REZ','Revere','','MA'  UNION ALL
+SELECT 'US','REZ','Revere','','MA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RF2','Reform','','AL'  UNION ALL
 SELECT 'US','RF3','Ridgefield','','CT'  UNION ALL
 SELECT 'US','RF4','Rockfall','','CT'  UNION ALL
@@ -56208,8 +56774,7 @@ SELECT 'US','RHN','Rahns','','PA'  UNION ALL
 SELECT 'US','RHO','Rhode Island','','NY'  UNION ALL
 SELECT 'US','RHR','Rochester','','PA'  UNION ALL
 SELECT 'US','RHS','Crestview Hills','','KY'  UNION ALL
-SELECT 'US','RHT','Brighton','','TN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RHT','Brighton','','TN'  UNION ALL
 SELECT 'US','RHU','Rathdrum','','ID'  UNION ALL
 SELECT 'US','RHV','Fair Haven','','MI'  UNION ALL
 SELECT 'US','RHW','Rowland Heights','','CA'  UNION ALL
@@ -56226,7 +56791,8 @@ SELECT 'US','RIH','Ririe','','ID'  UNION ALL
 SELECT 'US','RII','Richfield','','ID'  UNION ALL
 SELECT 'US','RIK','Rincon','','GA'  UNION ALL
 SELECT 'US','RIL','Rifle','','CO'  UNION ALL
-SELECT 'US','RIM','Rimer','','OH'  UNION ALL
+SELECT 'US','RIM','Rimer','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RIN','Richardson','','TX'  UNION ALL
 SELECT 'US','RIO','Ringwood','','IL'  UNION ALL
 SELECT 'US','RIP','Ripon','','CA'  UNION ALL
@@ -56289,8 +56855,7 @@ SELECT 'US','RLR','Colt','','AR'  UNION ALL
 SELECT 'US','RLS','Redlands','','CA'  UNION ALL
 SELECT 'US','RLT','Roosevelt','','WA'  UNION ALL
 SELECT 'US','RLU','Bornite','','AK'  UNION ALL
-SELECT 'US','RLV','Richlands','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RLV','Richlands','','VA'  UNION ALL
 SELECT 'US','RLW','Relay','','MD'  UNION ALL
 SELECT 'US','RLZ','Reelsville','','IN'  UNION ALL
 SELECT 'US','RM2','Raymond','','WI'  UNION ALL
@@ -56307,7 +56872,8 @@ SELECT 'US','RML','Carmel','','IN'  UNION ALL
 SELECT 'US','RMM','Rosemount','','MN'  UNION ALL
 SELECT 'US','RMN','Richmond','','IL'  UNION ALL
 SELECT 'US','RMO','Romeo','','MI'  UNION ALL
-SELECT 'US','RMP','Rampart','','AK'  UNION ALL
+SELECT 'US','RMP','Rampart','','AK' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RMQ','Redmond','','UT'  UNION ALL
 SELECT 'US','RMT','Birmingport','','AL'  UNION ALL
 SELECT 'US','RMV','Raymondville','','TX'  UNION ALL
@@ -56370,8 +56936,7 @@ SELECT 'US','RPG','Red Springs','','NC'  UNION ALL
 SELECT 'US','RPI','Arpin','','WI'  UNION ALL
 SELECT 'US','RPK','Ridley Park','','PA'  UNION ALL
 SELECT 'US','RPL','Ripley','','TN'  UNION ALL
-SELECT 'US','RPM','Ripley','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RPM','Ripley','','MS'  UNION ALL
 SELECT 'US','RPN','Ripon','','WI'  UNION ALL
 SELECT 'US','RPO','Freeport','','MN'  UNION ALL
 SELECT 'US','RPQ','Rancho Park','','CA'  UNION ALL
@@ -56388,7 +56953,8 @@ SELECT 'US','RQJ','Roebling','','NJ'  UNION ALL
 SELECT 'US','RQL','Rolla','','ND'  UNION ALL
 SELECT 'US','RQO','Rockwood','','OR'  UNION ALL
 SELECT 'US','RQP','Rockport','','IN'  UNION ALL
-SELECT 'US','RQQ','River Edge','','NJ'  UNION ALL
+SELECT 'US','RQQ','River Edge','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RQS','La Crosse','','KS'  UNION ALL
 SELECT 'US','RQV','Riverdale','','GA'  UNION ALL
 SELECT 'US','RQX','Roanoke','','IL'  UNION ALL
@@ -56451,8 +57017,7 @@ SELECT 'US','RTL','Spirit Lake','','IA'  UNION ALL
 SELECT 'US','RTM','North Bloomfield','','OH'  UNION ALL
 SELECT 'US','RTN','Rittman','','OH'  UNION ALL
 SELECT 'US','RTO','Colton','','CA'  UNION ALL
-SELECT 'US','RTP','North Palm Springs','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RTP','North Palm Springs','','CA'  UNION ALL
 SELECT 'US','RTS','Rothschild','','WI'  UNION ALL
 SELECT 'US','RTT','Marietta','','OH'  UNION ALL
 SELECT 'US','RTU','Rantoul','','KS'  UNION ALL
@@ -56469,7 +57034,8 @@ SELECT 'US','RUF','Rushford','','MN'  UNION ALL
 SELECT 'US','RUH','Rushville','','IN'  UNION ALL
 SELECT 'US','RUI','Ruidoso','','NM'  UNION ALL
 SELECT 'US','RUK','Ruckersville','','VA'  UNION ALL
-SELECT 'US','RUL','Rule','','TX'  UNION ALL
+SELECT 'US','RUL','Rule','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','RUN','Rising Sun','','MD'  UNION ALL
 SELECT 'US','RUO','Russells Point','','OH'  UNION ALL
 SELECT 'US','RUP','Russell Springs','','KS'  UNION ALL
@@ -56532,8 +57098,7 @@ SELECT 'US','RYE','Cherryvale','','KS'  UNION ALL
 SELECT 'US','RYG','Reynoldsburg','','OH'  UNION ALL
 SELECT 'US','RYL','Rayne','','LA'  UNION ALL
 SELECT 'US','RYM','Royal Oak','','MI'  UNION ALL
-SELECT 'US','RYO','Raymond','','NH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','RYO','Raymond','','NH'  UNION ALL
 SELECT 'US','RYP','Ramapo','','NY'  UNION ALL
 SELECT 'US','RYR','Rothbury','','MI'  UNION ALL
 SELECT 'US','RYT','Cranberry Township','','PA'  UNION ALL
@@ -56550,7 +57115,8 @@ SELECT 'US','SA3','St Albans','','WV'  UNION ALL
 SELECT 'US','SAA','Saratoga','','WY'  UNION ALL
 SELECT 'US','SAB','Sabine','','TX'  UNION ALL
 SELECT 'US','SAC','Sacramento','','CA'  UNION ALL
-SELECT 'US','SAD','Safford','','AZ'  UNION ALL
+SELECT 'US','SAD','Safford','','AZ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SAE','Salem','','OH'  UNION ALL
 SELECT 'US','SAF','Santa Fe','','NM'  UNION ALL
 SELECT 'US','SAG','Sagwon','','AK'  UNION ALL
@@ -56613,8 +57179,7 @@ SELECT 'US','SCB','Scribner','','NE'  UNION ALL
 SELECT 'US','SCC','Prudhoe Bay','','AK'  UNION ALL
 SELECT 'US','SCD','Scotland Neck','','NC'  UNION ALL
 SELECT 'US','SCE','State College','','PA'  UNION ALL
-SELECT 'US','SCF','Sanford','','NC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SCF','Sanford','','NC'  UNION ALL
 SELECT 'US','SCG','Scarsdale','','NY'  UNION ALL
 SELECT 'US','SCH','Schenectady','','NY'  UNION ALL
 SELECT 'US','SCI','Sun City','','AZ'  UNION ALL
@@ -56631,7 +57196,8 @@ SELECT 'US','SCS','St Clairsville','','OH'  UNION ALL
 SELECT 'US','SCT','South Charleston','','WV'  UNION ALL
 SELECT 'US','SCU','Scituate','','MA'  UNION ALL
 SELECT 'US','SCV','Scottsville','','KY'  UNION ALL
-SELECT 'US','SCW','Scobeyville','','NJ'  UNION ALL
+SELECT 'US','SCW','Scobeyville','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SCX','Schaller','','IA'  UNION ALL
 SELECT 'US','SCY','Studio City','','CA'  UNION ALL
 SELECT 'US','SCZ','Santa Clara','','CA'  UNION ALL
@@ -56694,8 +57260,7 @@ SELECT 'US','SEZ','Seatac','','WA'  UNION ALL
 SELECT 'US','SF2','St Francis','','KS'  UNION ALL
 SELECT 'US','SF3','Smithfield','','PA'  UNION ALL
 SELECT 'US','SFA','Southgate','','MI'  UNION ALL
-SELECT 'US','SFB','Sanford','','FL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SFB','Sanford','','FL'  UNION ALL
 SELECT 'US','SFC','Stafford Springs','','CT'  UNION ALL
 SELECT 'US','SFD','South Plainfield','','NJ'  UNION ALL
 SELECT 'US','SFE','Seaford','','DE'  UNION ALL
@@ -56712,7 +57277,8 @@ SELECT 'US','SFO','San Francisco','','CA'  UNION ALL
 SELECT 'US','SFP','Safety Harbor','','FL'  UNION ALL
 SELECT 'US','SFQ','Saraland','','AL'  UNION ALL
 SELECT 'US','SFR','San Fernando','','CA'  UNION ALL
-SELECT 'US','SFS','Seneca Falls','','NY'  UNION ALL
+SELECT 'US','SFS','Seneca Falls','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SFT','Schaefferstown','','PA'  UNION ALL
 SELECT 'US','SFU','Spanish Fork','','UT'  UNION ALL
 SELECT 'US','SFV','St Francisville','','LA'  UNION ALL
@@ -56775,8 +57341,7 @@ SELECT 'US','SHR','Sheridan','','WY'  UNION ALL
 SELECT 'US','SHS','Sharon Springs','','NY'  UNION ALL
 SELECT 'US','SHT','Stonehurst','','CA'  UNION ALL
 SELECT 'US','SHU','Shrewsbury','','MA'  UNION ALL
-SELECT 'US','SHV','Shreveport','','LA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SHV','Shreveport','','LA'  UNION ALL
 SELECT 'US','SHW','Sherwood','','ND'  UNION ALL
 SELECT 'US','SHX','Shageluk','','AK'  UNION ALL
 SELECT 'US','SHY','Shadyside','','OH'  UNION ALL
@@ -56793,7 +57358,8 @@ SELECT 'US','SIH','Showell','','MD'  UNION ALL
 SELECT 'US','SII','Signal Hill','','CA'  UNION ALL
 SELECT 'US','SIJ','Simpsonville','','KY'  UNION ALL
 SELECT 'US','SIK','Sikeston','','MO'  UNION ALL
-SELECT 'US','SIL','Suitland','','MD'  UNION ALL
+SELECT 'US','SIL','Suitland','','MD' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SIM','Sierra Madre','','CA'  UNION ALL
 SELECT 'US','SIN','Singer Island','','FL'  UNION ALL
 SELECT 'US','SIO','Simsboro','','LA'  UNION ALL
@@ -56856,8 +57422,7 @@ SELECT 'US','SKR','Santa Clara','','UT'  UNION ALL
 SELECT 'US','SKS','Sinking Spring','','PA'  UNION ALL
 SELECT 'US','SKT','Stickney','','IL'  UNION ALL
 SELECT 'US','SKU','Schuylkill Haven','','PA'  UNION ALL
-SELECT 'US','SKV','Spicewood','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SKV','Spicewood','','TX'  UNION ALL
 SELECT 'US','SKW','Skwentna','','AK'  UNION ALL
 SELECT 'US','SKX','Sugar Creek','','MO'  UNION ALL
 SELECT 'US','SKY','Sandusky, Erie','','OH'  UNION ALL
@@ -56874,7 +57439,8 @@ SELECT 'US','SLF','Salem','','IN'  UNION ALL
 SELECT 'US','SLG','Siloam Springs','','AR'  UNION ALL
 SELECT 'US','SLH','Seal Beach','','CA'  UNION ALL
 SELECT 'US','SLI','San Luis','','AZ'  UNION ALL
-SELECT 'US','SLJ','Sledge','','MS'  UNION ALL
+SELECT 'US','SLJ','Sledge','','MS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SLK','Saranac Lake','','NY'  UNION ALL
 SELECT 'US','SLL','Saltillo','','MS'  UNION ALL
 SELECT 'US','SLM','Salem','','MA'  UNION ALL
@@ -56937,8 +57503,7 @@ SELECT 'US','SNM','San Marcos','','CA'  UNION ALL
 SELECT 'US','SNN','Sunnyvale','','CA'  UNION ALL
 SELECT 'US','SNO','Swannanoa','','NC'  UNION ALL
 SELECT 'US','SNP','St Paul Island','','AK'  UNION ALL
-SELECT 'US','SNQ','Savanna','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SNQ','Savanna','','IL'  UNION ALL
 SELECT 'US','SNR','Severna Park','','MD'  UNION ALL
 SELECT 'US','SNS','Salinas','','CA'  UNION ALL
 SELECT 'US','SNT','Sioux Center','','IA'  UNION ALL
@@ -56955,7 +57520,8 @@ SELECT 'US','SOD','Sodus Point','','NY'  UNION ALL
 SELECT 'US','SOE','Seminole','','TX'  UNION ALL
 SELECT 'US','SOF','South Bay','','FL'  UNION ALL
 SELECT 'US','SOG','South Boston','','VA'  UNION ALL
-SELECT 'US','SOH','South Haven','','MI'  UNION ALL
+SELECT 'US','SOH','South Haven','','MI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SOI','South Dayton','','NY'  UNION ALL
 SELECT 'US','SOJ','Somerset','','NJ'  UNION ALL
 SELECT 'US','SOK','Skokie','','IL'  UNION ALL
@@ -57018,8 +57584,7 @@ SELECT 'US','SQK','Sheldon Springs','','VT'  UNION ALL
 SELECT 'US','SQL','San Carlos','','CA'  UNION ALL
 SELECT 'US','SQM','Skillman','','NJ'  UNION ALL
 SELECT 'US','SQN','Shepherdsville','','KY'  UNION ALL
-SELECT 'US','SQO','Springboro','','OH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SQO','Springboro','','OH'  UNION ALL
 SELECT 'US','SQP','Sheldon','','MO'  UNION ALL
 SELECT 'US','SQQ','Soquel','','CA'  UNION ALL
 SELECT 'US','SQR','Shelton','','CT'  UNION ALL
@@ -57036,7 +57601,8 @@ SELECT 'US','SR3','South Rockwood','','MI'  UNION ALL
 SELECT 'US','SR4','Shalimar','','FL'  UNION ALL
 SELECT 'US','SR5','Shamrock, Wheeler','','TX'  UNION ALL
 SELECT 'US','SR6','Sahuarita','','AZ'  UNION ALL
-SELECT 'US','SRA','Sauk Rapids','','MN'  UNION ALL
+SELECT 'US','SRA','Sauk Rapids','','MN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SRB','Saratoga','','MN'  UNION ALL
 SELECT 'US','SRC','Searcy','','AR'  UNION ALL
 SELECT 'US','SRD','Sheridan','','NY'  UNION ALL
@@ -57099,8 +57665,7 @@ SELECT 'US','STA','St Albans','','VT'  UNION ALL
 SELECT 'US','STB','Stafford','','VA'  UNION ALL
 SELECT 'US','STC','St Cloud','','MN'  UNION ALL
 SELECT 'US','STD','Stafford','','TX'  UNION ALL
-SELECT 'US','STE','Stevens Point','','WI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','STE','Stevens Point','','WI'  UNION ALL
 SELECT 'US','STF','Stamford','','TX'  UNION ALL
 SELECT 'US','STG','St George Island','','AK'  UNION ALL
 SELECT 'US','STH','St Helens','','OR'  UNION ALL
@@ -57117,7 +57682,8 @@ SELECT 'US','STR','Streator','','IL'  UNION ALL
 SELECT 'US','STS','Santa Rosa','','CA'  UNION ALL
 SELECT 'US','STT','Stockertown','','PA'  UNION ALL
 SELECT 'US','STU','Stoneham','','MA'  UNION ALL
-SELECT 'US','STV','Stoneville','','MS'  UNION ALL
+SELECT 'US','STV','Stoneville','','MS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','STW','Strausstown','','PA'  UNION ALL
 SELECT 'US','STX','Stanton','','TX'  UNION ALL
 SELECT 'US','STY','Smithtown','','NY'  UNION ALL
@@ -57180,8 +57746,7 @@ SELECT 'US','SVW','Sparrevohn','','AK'  UNION ALL
 SELECT 'US','SVX','Stoneville','','NC'  UNION ALL
 SELECT 'US','SVY','Sun Valley','','CA'  UNION ALL
 SELECT 'US','SVZ','Shelbyville','','KY'  UNION ALL
-SELECT 'US','SW2','Sedro Woolley','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SW2','Sedro Woolley','','WA'  UNION ALL
 SELECT 'US','SW3','Shorewood','','IL'  UNION ALL
 SELECT 'US','SW4','South West City','','MO'  UNION ALL
 SELECT 'US','SW5','Swanzey','','NH'  UNION ALL
@@ -57198,7 +57763,8 @@ SELECT 'US','SWI','Swissvale','','PA'  UNION ALL
 SELECT 'US','SWJ','Swainsboro','','GA'  UNION ALL
 SELECT 'US','SWK','Seekonk','','MA'  UNION ALL
 SELECT 'US','SWL','Stonewall','','MS'  UNION ALL
-SELECT 'US','SWM','Snowmass Village','','CO'  UNION ALL
+SELECT 'US','SWM','Snowmass Village','','CO' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SWN','Sewaren','','NJ'  UNION ALL
 SELECT 'US','SWO','Stillwater','','OK'  UNION ALL
 SELECT 'US','SWP','Summit Point','','WV'  UNION ALL
@@ -57261,8 +57827,7 @@ SELECT 'US','SYU','Sylacauga','','AL'  UNION ALL
 SELECT 'US','SYV','Sylvester','','GA'  UNION ALL
 SELECT 'US','SYW','Seymour','','WI'  UNION ALL
 SELECT 'US','SYX','Supreme','','LA'  UNION ALL
-SELECT 'US','SYY','Sylmar','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','SYY','Sylmar','','CA'  UNION ALL
 SELECT 'US','SYZ','Syracuse','','IN'  UNION ALL
 SELECT 'US','SZA','Sparta','','NJ'  UNION ALL
 SELECT 'US','SZB','Solana Beach','','CA'  UNION ALL
@@ -57279,7 +57844,8 @@ SELECT 'US','SZL','Warrensburg','','MO'  UNION ALL
 SELECT 'US','SZM','Sherman','','MS'  UNION ALL
 SELECT 'US','SZN','Shannon','','MS'  UNION ALL
 SELECT 'US','SZO','Solomon','','KS'  UNION ALL
-SELECT 'US','SZP','Santa Paula','','CA'  UNION ALL
+SELECT 'US','SZP','Santa Paula','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','SZR','Somerset','','PA'  UNION ALL
 SELECT 'US','SZS','Summit','','PA'  UNION ALL
 SELECT 'US','SZT','Stanleytown','','VA'  UNION ALL
@@ -57342,8 +57908,7 @@ SELECT 'US','TDV','Toddville','','NC'  UNION ALL
 SELECT 'US','TEA','Teaneck','','NJ'  UNION ALL
 SELECT 'US','TEB','Teterboro','','NJ'  UNION ALL
 SELECT 'US','TEC','Tecate','','CA'  UNION ALL
-SELECT 'US','TED','Toleda','','IA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','TED','Toleda','','IA'  UNION ALL
 SELECT 'US','TEE','Terrell','','TN'  UNION ALL
 SELECT 'US','TEF','Telford','','PA'  UNION ALL
 SELECT 'US','TEG','Pantego','','NC'  UNION ALL
@@ -57360,7 +57925,8 @@ SELECT 'US','TEQ','Trenton','','IL'  UNION ALL
 SELECT 'US','TER','Stewart','','AL'  UNION ALL
 SELECT 'US','TES','Stevensville','','MT'  UNION ALL
 SELECT 'US','TET','Teton Village','','WY'  UNION ALL
-SELECT 'US','TEU','Tequesta','','FL'  UNION ALL
+SELECT 'US','TEU','Tequesta','','FL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','TEV','Temperance','','MI'  UNION ALL
 SELECT 'US','TEW','Tewksbury','','MA'  UNION ALL
 SELECT 'US','TEX','Texarkana','','TX'  UNION ALL
@@ -57423,8 +57989,7 @@ SELECT 'US','TIV','Tiverton','','RI'  UNION ALL
 SELECT 'US','TIW','Tacoma','','WA'  UNION ALL
 SELECT 'US','TIX','Titusville','','FL'  UNION ALL
 SELECT 'US','TIY','Terminal Island','','CA'  UNION ALL
-SELECT 'US','TJN','Tujunga','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','TJN','Tujunga','','CA'  UNION ALL
 SELECT 'US','TJS','St James','','NY'  UNION ALL
 SELECT 'US','TKA','Talkeetna','','AK'  UNION ALL
 SELECT 'US','TKE','Tenakee Springs','','AK'  UNION ALL
@@ -57441,7 +58006,8 @@ SELECT 'US','TL3','Timber Lake','','SD'  UNION ALL
 SELECT 'US','TL4','Tuolumne','','CA'  UNION ALL
 SELECT 'US','TLA','Teller','','AK'  UNION ALL
 SELECT 'US','TLC','Turtle Creek','','PA'  UNION ALL
-SELECT 'US','TLD','Tolland','','CT'  UNION ALL
+SELECT 'US','TLD','Tolland','','CT' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','TLE','Timberlake','','NC'  UNION ALL
 SELECT 'US','TLF','Telida','','AK'  UNION ALL
 SELECT 'US','TLG','Telogia','','FL'  UNION ALL
@@ -57504,8 +58070,7 @@ SELECT 'US','TNW','Tarrant','','AL'  UNION ALL
 SELECT 'US','TNX','Trenton','','OH'  UNION ALL
 SELECT 'US','TNY','Anthony','','NM'  UNION ALL
 SELECT 'US','TOA','Torrance','','CA'  UNION ALL
-SELECT 'US','TOB','Tomball','','TX' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','TOB','Tomball','','TX'  UNION ALL
 SELECT 'US','TOC','Toccoa','','GA'  UNION ALL
 SELECT 'US','TOD','Toronto','','OH'  UNION ALL
 SELECT 'US','TOG','Togiak Village','','AK'  UNION ALL
@@ -57522,7 +58087,8 @@ SELECT 'US','TOT','Totowa','','NJ'  UNION ALL
 SELECT 'US','TOV','Ottoville','','OH'  UNION ALL
 SELECT 'US','TOW','Towanda','','PA'  UNION ALL
 SELECT 'US','TOX','Tremont','','PA'  UNION ALL
-SELECT 'US','TOY','Troy','','ME'  UNION ALL
+SELECT 'US','TOY','Troy','','ME' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','TPA','Tampa','','FL'  UNION ALL
 SELECT 'US','TPE','Tempe','','AZ'  UNION ALL
 SELECT 'US','TPH','Tonopah','','NV'  UNION ALL
@@ -57585,8 +58151,7 @@ SELECT 'US','TSL','Ten Sleep','','WY'  UNION ALL
 SELECT 'US','TSM','Taos','','NM'  UNION ALL
 SELECT 'US','TSO','Lost Hills','','CA'  UNION ALL
 SELECT 'US','TSP','Tehachapi','','CA'  UNION ALL
-SELECT 'US','TSS','Curtiss','','WI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','TSS','Curtiss','','WI'  UNION ALL
 SELECT 'US','TST','Stennis Space Center','','MS'  UNION ALL
 SELECT 'US','TSU','Treasure Island/Los Angeles','','CA'  UNION ALL
 SELECT 'US','TSV','Thiensville','','WI'  UNION ALL
@@ -57603,7 +58168,8 @@ SELECT 'US','TTE','Tate','','GA'  UNION ALL
 SELECT 'US','TTF','Monett','','KS'  UNION ALL
 SELECT 'US','TTH','Smethport','','PA'  UNION ALL
 SELECT 'US','TTI','Stateline','','NV'  UNION ALL
-SELECT 'US','TTJ','Potterstown','','NJ'  UNION ALL
+SELECT 'US','TTJ','Potterstown','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','TTK','Turtle Lake','','WI'  UNION ALL
 SELECT 'US','TTL','Whitehall','','OH'  UNION ALL
 SELECT 'US','TTM','Tarentum','','PA'  UNION ALL
@@ -57666,8 +58232,7 @@ SELECT 'US','TWY','Tawas City','','MI'  UNION ALL
 SELECT 'US','TWZ','Tarrytown','','NY'  UNION ALL
 SELECT 'US','TXA','Texas','','MD'  UNION ALL
 SELECT 'US','TXC','McAllen','','TX'  UNION ALL
-SELECT 'US','TXD','Tuxedo','','MD' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','TXD','Tuxedo','','MD'  UNION ALL
 SELECT 'US','TXG','Gladewater','','TX'  UNION ALL
 SELECT 'US','TXH','Haslet','','TX'  UNION ALL
 SELECT 'US','TXK','Texarkana','','AR'  UNION ALL
@@ -57684,7 +58249,8 @@ SELECT 'US','TYC','Taylorsville','','UT'  UNION ALL
 SELECT 'US','TYE','Tyonek','','AK'  UNION ALL
 SELECT 'US','TYG','Troy Grove','','IL'  UNION ALL
 SELECT 'US','TYH','Troy','','OH'  UNION ALL
-SELECT 'US','TYI','Troy','','MS'  UNION ALL
+SELECT 'US','TYI','Troy','','MS' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','TYJ','Tyro','','VA'  UNION ALL
 SELECT 'US','TYK','Trinity Park','','NC'  UNION ALL
 SELECT 'US','TYL','Tyler','','AL'  UNION ALL
@@ -57747,8 +58313,7 @@ SELECT 'US','UBO','Andrews','','TX'  UNION ALL
 SELECT 'US','UBP','Allegheny','','PA'  UNION ALL
 SELECT 'US','UBQ','Columbia Heights','','MN'  UNION ALL
 SELECT 'US','UBR','Aspers','','PA'  UNION ALL
-SELECT 'US','UBS','Columbus','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','UBS','Columbus','','MS'  UNION ALL
 SELECT 'US','UBT','Brookline','','NH'  UNION ALL
 SELECT 'US','UBU','Belleville','','NJ'  UNION ALL
 SELECT 'US','UBV','Blythewood','','SC'  UNION ALL
@@ -57765,7 +58330,8 @@ SELECT 'US','UCS','Union','','SC'  UNION ALL
 SELECT 'US','UCT','Strum','','WI'  UNION ALL
 SELECT 'US','UCU','Columbus','','KS'  UNION ALL
 SELECT 'US','UCY','Union City','','TN'  UNION ALL
-SELECT 'US','UDA','Saluda','','SC'  UNION ALL
+SELECT 'US','UDA','Saluda','','SC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','UDC','Cumberland City','','TN'  UNION ALL
 SELECT 'US','UDE','Burnside','','LA'  UNION ALL
 SELECT 'US','UDL','Unadilla','','GA'  UNION ALL
@@ -57828,8 +58394,7 @@ SELECT 'US','UJO','Hillside','','IL'  UNION ALL
 SELECT 'US','UJP','Hanson','','MA'  UNION ALL
 SELECT 'US','UJQ','Holyoke','','MA'  UNION ALL
 SELECT 'US','UJS','Hampton','','SC'  UNION ALL
-SELECT 'US','UJT','Hightstown','','NJ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','UJT','Hightstown','','NJ'  UNION ALL
 SELECT 'US','UJV','Jamaica/Queens/New York','','NY'  UNION ALL
 SELECT 'US','UJX','Kinnelon','','NJ'  UNION ALL
 SELECT 'US','UJY','La Salle','','IL'  UNION ALL
@@ -57846,7 +58411,8 @@ SELECT 'US','ULL','Hull','','IA'  UNION ALL
 SELECT 'US','ULM','New Ulm','','MN'  UNION ALL
 SELECT 'US','ULO','Bunola','','PA'  UNION ALL
 SELECT 'US','ULT','Sultana','','CA'  UNION ALL
-SELECT 'US','ULU','Lindsay','','TX'  UNION ALL
+SELECT 'US','ULU','Lindsay','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ULV','Sullivan','','NH'  UNION ALL
 SELECT 'US','ULW','Lake Worth','','TX'  UNION ALL
 SELECT 'US','UMA','Umatilla','','OR'  UNION ALL
@@ -57909,8 +58475,7 @@ SELECT 'US','UQL','Mableton','','GA'  UNION ALL
 SELECT 'US','UQN','Medford','','NJ'  UNION ALL
 SELECT 'US','UQO','Maiden','','NC'  UNION ALL
 SELECT 'US','UQS','Mt Holly','','SC'  UNION ALL
-SELECT 'US','UQT','Middletown','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','UQT','Middletown','','PA'  UNION ALL
 SELECT 'US','UQV','Mt Jackson','','VA'  UNION ALL
 SELECT 'US','UQX','McKenzie','','TN'  UNION ALL
 SELECT 'US','UQY','Milesburg','','PA'  UNION ALL
@@ -57927,7 +58492,8 @@ SELECT 'US','URO','Urbana','','OH'  UNION ALL
 SELECT 'US','URR','Port Murray','','NJ'  UNION ALL
 SELECT 'US','URT','Duart','','NC'  UNION ALL
 SELECT 'US','URW','Washburn','','TN'  UNION ALL
-SELECT 'US','URY','Middlebury Center','','PA'  UNION ALL
+SELECT 'US','URY','Middlebury Center','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','USA','Bourbonnais','','IL'  UNION ALL
 SELECT 'US','USB','Curtis Bay, Baltimore','','MD'  UNION ALL
 SELECT 'US','USC','Union South Carolina','','SC'  UNION ALL
@@ -57990,8 +58556,7 @@ SELECT 'US','UYB','Pulaski','','VA'  UNION ALL
 SELECT 'US','UYD','Bayside','','WI'  UNION ALL
 SELECT 'US','UYE','Ridgefield','','NJ'  UNION ALL
 SELECT 'US','UYG','Raymond','','MS'  UNION ALL
-SELECT 'US','UYH','Royersford','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','UYH','Royersford','','PA'  UNION ALL
 SELECT 'US','UYI','Rutherford','','NJ'  UNION ALL
 SELECT 'US','UYJ','Steubenville','','OH'  UNION ALL
 SELECT 'US','UYK','Secaucus','','NJ'  UNION ALL
@@ -58008,7 +58573,8 @@ SELECT 'US','UYX','Summit','','NJ'  UNION ALL
 SELECT 'US','UYY','Straughn','','IN'  UNION ALL
 SELECT 'US','UYZ','Skyland','','NC'  UNION ALL
 SELECT 'US','UZA','Stanley','','NC'  UNION ALL
-SELECT 'US','UZB','Somerville','','MA'  UNION ALL
+SELECT 'US','UZB','Somerville','','MA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','UZC','Summerville','','SC'  UNION ALL
 SELECT 'US','UZD','Tarboro','','NC'  UNION ALL
 SELECT 'US','UZE','Tipp City','','OH'  UNION ALL
@@ -58071,8 +58637,7 @@ SELECT 'US','VDO','Vidor','','TX'  UNION ALL
 SELECT 'US','VDW','Vardaman','','MS'  UNION ALL
 SELECT 'US','VDZ','Valdez','','AK'  UNION ALL
 SELECT 'US','VE8','Colville','','WA'  UNION ALL
-SELECT 'US','VEA','Verona','','MO' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','VEA','Verona','','MO'  UNION ALL
 SELECT 'US','VED','Vineyard','','UT'  UNION ALL
 SELECT 'US','VEE','Venetie','','AK'  UNION ALL
 SELECT 'US','VEG','Vega','','TX'  UNION ALL
@@ -58089,7 +58654,8 @@ SELECT 'US','VEW','Westwood','','MA'  UNION ALL
 SELECT 'US','VEX','Tioga','','ND'  UNION ALL
 SELECT 'US','VEY','Harvey','','ND'  UNION ALL
 SELECT 'US','VFG','Valley Forge','','PA'  UNION ALL
-SELECT 'US','VGE','Savage','','MT'  UNION ALL
+SELECT 'US','VGE','Savage','','MT' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','VGF','Vandergrift','','PA'  UNION ALL
 SELECT 'US','VGI','Virginia','','MN'  UNION ALL
 SELECT 'US','VGN','Western Grove','','AR'  UNION ALL
@@ -58152,8 +58718,7 @@ SELECT 'US','VNQ','Vale','','NC'  UNION ALL
 SELECT 'US','VNS','Devens','','MA'  UNION ALL
 SELECT 'US','VNT','Ventura','','CA'  UNION ALL
 SELECT 'US','VNW','Van Wert','','OH'  UNION ALL
-SELECT 'US','VNY','Van Nuys','','CA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','VNY','Van Nuys','','CA'  UNION ALL
 SELECT 'US','VOA','Viola','','ID'  UNION ALL
 SELECT 'US','VOK','Camp Douglas','','WI'  UNION ALL
 SELECT 'US','VOL','Viola','','VA'  UNION ALL
@@ -58170,7 +58735,8 @@ SELECT 'US','VPR','Villa Park','','IL'  UNION ALL
 SELECT 'US','VPS','Valparaiso','','FL'  UNION ALL
 SELECT 'US','VPT','Ville Platte','','LA'  UNION ALL
 SELECT 'US','VPZ','Valparaiso','','IN'  UNION ALL
-SELECT 'US','VQN','Vonore','','TN'  UNION ALL
+SELECT 'US','VQN','Vonore','','TN' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','VRA','Verona','','WI'  UNION ALL
 SELECT 'US','VRB','Vero Beach','','FL'  UNION ALL
 SELECT 'US','VRI','Vernalis','','CA'  UNION ALL
@@ -58233,8 +58799,7 @@ SELECT 'US','WAC','Walnut Creek','','CA'  UNION ALL
 SELECT 'US','WAD','Waddington','','NY'  UNION ALL
 SELECT 'US','WAE','Wardensville','','WV'  UNION ALL
 SELECT 'US','WAF','Watertown','','WI'  UNION ALL
-SELECT 'US','WAG','Walnut Grove','','MS' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WAG','Walnut Grove','','MS'  UNION ALL
 SELECT 'US','WAH','Wahpeton','','ND'  UNION ALL
 SELECT 'US','WAI','Waitsfield','','VT'  UNION ALL
 SELECT 'US','WAJ','Warren','','RI'  UNION ALL
@@ -58251,7 +58816,8 @@ SELECT 'US','WAT','Waterbury','','CT'  UNION ALL
 SELECT 'US','WAU','Wauna','','OR'  UNION ALL
 SELECT 'US','WAV','Waverly','','OH'  UNION ALL
 SELECT 'US','WAW','Walworth','','WI'  UNION ALL
-SELECT 'US','WAX','Waxahachie','','TX'  UNION ALL
+SELECT 'US','WAX','Waxahachie','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WAY','Waynesburg','','PA'  UNION ALL
 SELECT 'US','WAZ','Waynesville','','MO'  UNION ALL
 SELECT 'US','WB2','Wittenberg','','WI'  UNION ALL
@@ -58314,8 +58880,7 @@ SELECT 'US','WDB','Deep Bay','','AK'  UNION ALL
 SELECT 'US','WDC','Ward Cove','','AK'  UNION ALL
 SELECT 'US','WDD','Wood Dale','','IL'  UNION ALL
 SELECT 'US','WDE','Wendell','','ID'  UNION ALL
-SELECT 'US','WDF','Womelsdorf','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WDF','Womelsdorf','','PA'  UNION ALL
 SELECT 'US','WDG','Enid','','OK'  UNION ALL
 SELECT 'US','WDH','Wadsworth','','OH'  UNION ALL
 SELECT 'US','WDI','Woodlawn','','IL'  UNION ALL
@@ -58332,7 +58897,8 @@ SELECT 'US','WDT','Wadsworth','','TX'  UNION ALL
 SELECT 'US','WDU','Woodbury, Nassau','','NY'  UNION ALL
 SELECT 'US','WDV','Woodinville','','WA'  UNION ALL
 SELECT 'US','WDW','Wendover','','WY'  UNION ALL
-SELECT 'US','WDX','Wendell','','NC'  UNION ALL
+SELECT 'US','WDX','Wendell','','NC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WDY','Woodbury','','MN'  UNION ALL
 SELECT 'US','WDZ','Woodside','','CA'  UNION ALL
 SELECT 'US','WEA','Weatherford','','TX'  UNION ALL
@@ -58395,8 +58961,7 @@ SELECT 'US','WGM','West Groton','','MA'  UNION ALL
 SELECT 'US','WGN','Wellington','','OH'  UNION ALL
 SELECT 'US','WGO','Winchester','','VA'  UNION ALL
 SELECT 'US','WGP','Wyomissing','','PA'  UNION ALL
-SELECT 'US','WGQ','Weyers Cave','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WGQ','Weyers Cave','','VA'  UNION ALL
 SELECT 'US','WGR','Walnut Grove','','MO'  UNION ALL
 SELECT 'US','WGS','Waynesboro','','MS'  UNION ALL
 SELECT 'US','WGT','Washington','','UT'  UNION ALL
@@ -58413,7 +58978,8 @@ SELECT 'US','WHF','West Hartford','','CT'  UNION ALL
 SELECT 'US','WHG','Whiting','','IN'  UNION ALL
 SELECT 'US','WHH','Warrensville Heights','','OH'  UNION ALL
 SELECT 'US','WHI','Whippany','','NJ'  UNION ALL
-SELECT 'US','WHJ','Walhalla','','SC'  UNION ALL
+SELECT 'US','WHJ','Walhalla','','SC' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WHK','Whitner','','KY'  UNION ALL
 SELECT 'US','WHL','Whitlash','','MT'  UNION ALL
 SELECT 'US','WHM','Windham','','OH'  UNION ALL
@@ -58476,8 +59042,7 @@ SELECT 'US','WJZ','Watts','','CA'  UNION ALL
 SELECT 'US','WKA','Waseca','','MN'  UNION ALL
 SELECT 'US','WKB','Wilkes Barre','','PA'  UNION ALL
 SELECT 'US','WKC','Walkerton','','IN'  UNION ALL
-SELECT 'US','WKD','Wakefield','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WKD','Wakefield','','VA'  UNION ALL
 SELECT 'US','WKE','Waukee','','IA'  UNION ALL
 SELECT 'US','WKF','Wakefield','','MA'  UNION ALL
 SELECT 'US','WKG','Watkins Glen','','NY'  UNION ALL
@@ -58494,7 +59059,8 @@ SELECT 'US','WKT','Whitakers','','NC'  UNION ALL
 SELECT 'US','WKV','Wilkesville','','OH'  UNION ALL
 SELECT 'US','WKW','Waunakee','','WI'  UNION ALL
 SELECT 'US','WKX','Weskan','','KS'  UNION ALL
-SELECT 'US','WKY','Wickliffe','','KY'  UNION ALL
+SELECT 'US','WKY','Wickliffe','','KY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WKZ','West Covina','','CA'  UNION ALL
 SELECT 'US','WL2','Wayland','','MA'  UNION ALL
 SELECT 'US','WL3','West Liberty','','IA'  UNION ALL
@@ -58557,8 +59123,7 @@ SELECT 'US','WNC','Tuxekan Island','','AK'  UNION ALL
 SELECT 'US','WND','Windsor','','CT'  UNION ALL
 SELECT 'US','WNE','Wayne','','MI'  UNION ALL
 SELECT 'US','WNF','Wisconsin Dells','','WI'  UNION ALL
-SELECT 'US','WNG','Wind Gap','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WNG','Wind Gap','','PA'  UNION ALL
 SELECT 'US','WNH','Wentworth','','NH'  UNION ALL
 SELECT 'US','WNI','Warrenville','','NJ'  UNION ALL
 SELECT 'US','WNJ','Windsor','','NJ'  UNION ALL
@@ -58575,7 +59140,8 @@ SELECT 'US','WNT','Winterset','','IA'  UNION ALL
 SELECT 'US','WNU','Walnutport','','PA'  UNION ALL
 SELECT 'US','WNV','Waynesville','','PA'  UNION ALL
 SELECT 'US','WNW','Wrightwood','','CA'  UNION ALL
-SELECT 'US','WNX','Wellman','','TX'  UNION ALL
+SELECT 'US','WNX','Wellman','','TX' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WNY','West New York','','NJ'  UNION ALL
 SELECT 'US','WNZ','West End','','NC'  UNION ALL
 SELECT 'US','WOA','Woodland','','TX'  UNION ALL
@@ -58638,8 +59204,7 @@ SELECT 'US','WQJ','West Los Angeles','','CA'  UNION ALL
 SELECT 'US','WQL','Westlake','','LA'  UNION ALL
 SELECT 'US','WQN','Wauconda','','IL'  UNION ALL
 SELECT 'US','WQO','Waconia','','MN'  UNION ALL
-SELECT 'US','WQR','Warren','','AR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WQR','Warren','','AR'  UNION ALL
 SELECT 'US','WQS','Wasco','','CA'  UNION ALL
 SELECT 'US','WQV','Westlake Village','','CA'  UNION ALL
 SELECT 'US','WQW','Winlock','','WA'  UNION ALL
@@ -58656,7 +59221,8 @@ SELECT 'US','WRG','Wrangell','','AK'  UNION ALL
 SELECT 'US','WRH','Worth','','IL'  UNION ALL
 SELECT 'US','WRI','Fort Dix','','NJ'  UNION ALL
 SELECT 'US','WRJ','Wray','','GA'  UNION ALL
-SELECT 'US','WRK','Warwick','','NY'  UNION ALL
+SELECT 'US','WRK','Warwick','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WRL','Worland','','WY'  UNION ALL
 SELECT 'US','WRM','Warminster','','PA'  UNION ALL
 SELECT 'US','WRN','Warren','','OH'  UNION ALL
@@ -58719,8 +59285,7 @@ SELECT 'US','WTN','Wilmington','','CA'  UNION ALL
 SELECT 'US','WTO','Warrenton','','OR'  UNION ALL
 SELECT 'US','WTP','West Point','','PA'  UNION ALL
 SELECT 'US','WTQ','Wharton','','NJ'  UNION ALL
-SELECT 'US','WTR','White River','','AZ' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WTR','White River','','AZ'  UNION ALL
 SELECT 'US','WTS','White Plains','','NY'  UNION ALL
 SELECT 'US','WTT','Watertown','','CT'  UNION ALL
 SELECT 'US','WTU','Wartburg','','TN'  UNION ALL
@@ -58737,7 +59302,8 @@ SELECT 'US','WUF','Woodway','','WA'  UNION ALL
 SELECT 'US','WUG','Whittington','','IL'  UNION ALL
 SELECT 'US','WUI','West Union','','IA'  UNION ALL
 SELECT 'US','WUL','Woodlake','','CA'  UNION ALL
-SELECT 'US','WUN','Wauseon','','OH'  UNION ALL
+SELECT 'US','WUN','Wauseon','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WUO','Warrenton','','OH'  UNION ALL
 SELECT 'US','WUP','Waupaca','','WI'  UNION ALL
 SELECT 'US','WUQ','West Union','','OR'  UNION ALL
@@ -58800,8 +59366,7 @@ SELECT 'US','WWV','Washington','','WV'  UNION ALL
 SELECT 'US','WWW','Weaver','','AL'  UNION ALL
 SELECT 'US','WWX','Wautoma','','WI'  UNION ALL
 SELECT 'US','WWY','Willow Island','','WV'  UNION ALL
-SELECT 'US','WWZ','Watertown','','TN' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','WWZ','Watertown','','TN'  UNION ALL
 SELECT 'US','WXA','Walthourville','','GA'  UNION ALL
 SELECT 'US','WXD','Wexford','','PA'  UNION ALL
 SELECT 'US','WXG','Washougal','','WA'  UNION ALL
@@ -58818,7 +59383,8 @@ SELECT 'US','WXT','Winston','','NM'  UNION ALL
 SELECT 'US','WXV','Waverly','','VA'  UNION ALL
 SELECT 'US','WXW','Warsaw','','IL'  UNION ALL
 SELECT 'US','WXX','Waterford','','PA'  UNION ALL
-SELECT 'US','WXY','Westfield','','NY'  UNION ALL
+SELECT 'US','WXY','Westfield','','NY' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','WXZ','Winton','','CA'  UNION ALL
 SELECT 'US','WY2','Wadley','','AL'  UNION ALL
 SELECT 'US','WYA','Weatherford','','OK'  UNION ALL
@@ -58881,8 +59447,7 @@ SELECT 'US','XBH','Ashland','','PA'  UNION ALL
 SELECT 'US','XBI','Au Gres','','MI'  UNION ALL
 SELECT 'US','XBJ','Austin','','IN'  UNION ALL
 SELECT 'US','XBK','Avard','','OK'  UNION ALL
-SELECT 'US','XBL','Agawam','','MA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XBL','Agawam','','MA'  UNION ALL
 SELECT 'US','XBM','Arlington','','WI'  UNION ALL
 SELECT 'US','XBN','Ashland City','','TN'  UNION ALL
 SELECT 'US','XBO','Alta','','UT'  UNION ALL
@@ -58899,7 +59464,8 @@ SELECT 'US','XBY','Bedford','','VA'  UNION ALL
 SELECT 'US','XBZ','Bedford','','PA'  UNION ALL
 SELECT 'US','XCA','Bedford','','OH'  UNION ALL
 SELECT 'US','XCB','Bustleton','','PA'  UNION ALL
-SELECT 'US','XCC','Belding','','MI'  UNION ALL
+SELECT 'US','XCC','Belding','','MI' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','XCD','Big Island','','VA'  UNION ALL
 SELECT 'US','XCE','Bridesburg','','PA'  UNION ALL
 SELECT 'US','XCF','Bingen','','WA'  UNION ALL
@@ -58962,8 +59528,7 @@ SELECT 'US','XEP','Clover','','ID'  UNION ALL
 SELECT 'US','XEQ','Canal Winchester','','OH'  UNION ALL
 SELECT 'US','XER','Cleona','','PA'  UNION ALL
 SELECT 'US','XES','Lake Geneva','','WI'  UNION ALL
-SELECT 'US','XET','Dayton','','OR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XET','Dayton','','OR'  UNION ALL
 SELECT 'US','XEU','Dodge Center','','MN'  UNION ALL
 SELECT 'US','XEV','Dracut','','MA'  UNION ALL
 SELECT 'US','XEW','Englewood','','FL'  UNION ALL
@@ -58980,7 +59545,8 @@ SELECT 'US','XFG','Flower Mound','','TX'  UNION ALL
 SELECT 'US','XFH','Ellwood City','','PA'  UNION ALL
 SELECT 'US','XFI','Fairmont','','WV'  UNION ALL
 SELECT 'US','XFJ','Feura Bush','','NY'  UNION ALL
-SELECT 'US','XFK','Fremont','','OH'  UNION ALL
+SELECT 'US','XFK','Fremont','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','XFL','Finderne','','NJ'  UNION ALL
 SELECT 'US','XFM','Falls Mills','','VA'  UNION ALL
 SELECT 'US','XFN','Falkner','','MS'  UNION ALL
@@ -59043,8 +59609,7 @@ SELECT 'US','XHU','Loudon','','TN'  UNION ALL
 SELECT 'US','XHV','Largo','','FL'  UNION ALL
 SELECT 'US','XHX','Livingston','','MI'  UNION ALL
 SELECT 'US','XHY','Locust Summit','','PA'  UNION ALL
-SELECT 'US','XHZ','Litchfield','','IL' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XHZ','Litchfield','','IL'  UNION ALL
 SELECT 'US','XIA','Leavenworth','','KS'  UNION ALL
 SELECT 'US','XIB','Langsville','','OH'  UNION ALL
 SELECT 'US','XIC','Mabie','','WV'  UNION ALL
@@ -59061,7 +59626,8 @@ SELECT 'US','XIM','Mingo Junction','','OH'  UNION ALL
 SELECT 'US','XIN','Middletown','','CT'  UNION ALL
 SELECT 'US','XIO','Morrisville','','PA'  UNION ALL
 SELECT 'US','XIQ','Mickleton','','NJ'  UNION ALL
-SELECT 'US','XIR','Millburn','','NJ'  UNION ALL
+SELECT 'US','XIR','Millburn','','NJ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','XIS','Mapleton','','IL'  UNION ALL
 SELECT 'US','XIT','Malott','','WA'  UNION ALL
 SELECT 'US','XIU','Magna','','UT'  UNION ALL
@@ -59124,8 +59690,7 @@ SELECT 'US','XLF','Raynham','','MA'  UNION ALL
 SELECT 'US','XLG','Richland Hills','','TX'  UNION ALL
 SELECT 'US','XLI','Rockwall','','TX'  UNION ALL
 SELECT 'US','XLJ','Remington','','VA'  UNION ALL
-SELECT 'US','XLK','Rowesville','','SC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XLK','Rowesville','','SC'  UNION ALL
 SELECT 'US','XLL','Saegertown','','PA'  UNION ALL
 SELECT 'US','XLM','Saint Joseph','','IL'  UNION ALL
 SELECT 'US','XLN','South Brunswick','','NJ'  UNION ALL
@@ -59142,7 +59707,8 @@ SELECT 'US','XLY','Savage','','MN'  UNION ALL
 SELECT 'US','XLZ','Shoreham','','NY'  UNION ALL
 SELECT 'US','XMA','Sharonville','','OH'  UNION ALL
 SELECT 'US','XMB','Sheldon','','TX'  UNION ALL
-SELECT 'US','XMC','Shellman','','GA'  UNION ALL
+SELECT 'US','XMC','Shellman','','GA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','XMD','Madison','','SD'  UNION ALL
 SELECT 'US','XME','Slaton','','TX'  UNION ALL
 SELECT 'US','XMF','South Miami','','FL'  UNION ALL
@@ -59205,8 +59771,7 @@ SELECT 'US','XOM','West Sedona','','AZ'  UNION ALL
 SELECT 'US','XON','Lexington','','OR'  UNION ALL
 SELECT 'US','XOR','Oberlin','','OH'  UNION ALL
 SELECT 'US','XOT','Scott','','MS'  UNION ALL
-SELECT 'US','XOU','Plymouth','','UT' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XOU','Plymouth','','UT'  UNION ALL
 SELECT 'US','XOX','Pleasant View, Weber','','UT'  UNION ALL
 SELECT 'US','XPE','Perdue Hill','','AL'  UNION ALL
 SELECT 'US','XPI','Piedmont','','AL'  UNION ALL
@@ -59223,7 +59788,8 @@ SELECT 'US','XRE','Clare','','MI'  UNION ALL
 SELECT 'US','XRI','Morris','','AL'  UNION ALL
 SELECT 'US','XRL','Roseland','','LA'  UNION ALL
 SELECT 'US','XRN','Rancocas','','NJ'  UNION ALL
-SELECT 'US','XRO','North Randall','','OH'  UNION ALL
+SELECT 'US','XRO','North Randall','','OH' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','XRS','Rock Springs','','GA'  UNION ALL
 SELECT 'US','XRT','Rock Tavern','','NY'  UNION ALL
 SELECT 'US','XRY','Ridgeway','','CO'  UNION ALL
@@ -59286,8 +59852,7 @@ SELECT 'US','XYS','Murrysville','','PA'  UNION ALL
 SELECT 'US','XYT','Wyatt','','IN'  UNION ALL
 SELECT 'US','XYV','Taylorsville','','GA'  UNION ALL
 SELECT 'US','XZM','Morrisville','','NC'  UNION ALL
-SELECT 'US','XZV','Victoria','','VA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','XZV','Victoria','','VA'  UNION ALL
 SELECT 'US','XZW','Willianstown','','NY'  UNION ALL
 SELECT 'US','YAB','Albion','','IN'  UNION ALL
 SELECT 'US','YAD','Yadkinville','','NC'  UNION ALL
@@ -59304,7 +59869,8 @@ SELECT 'US','YAP','Yardley','','PA'  UNION ALL
 SELECT 'US','YAR','Yarmouth','','ME'  UNION ALL
 SELECT 'US','YAS','Aransas Pass','','TX'  UNION ALL
 SELECT 'US','YAT','Yatesboro','','PA'  UNION ALL
-SELECT 'US','YAV','Yucca Valley','','CA'  UNION ALL
+SELECT 'US','YAV','Yucca Valley','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','YAW','Apple Valley','','MN'  UNION ALL
 SELECT 'US','YAX','Alexander','','AR'  UNION ALL
 SELECT 'US','YAZ','Yazoo City','','MS'  UNION ALL
@@ -59367,8 +59933,7 @@ SELECT 'US','YEX','Dyer','','NV'  UNION ALL
 SELECT 'US','YFA','Florida City','','FL'  UNION ALL
 SELECT 'US','YFB','Fort Bliss','','TX'  UNION ALL
 SELECT 'US','YFD','Flandreau','','SD'  UNION ALL
-SELECT 'US','YFE','Fairfield','','ME' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','YFE','Fairfield','','ME'  UNION ALL
 SELECT 'US','YFG','Fort Gratiot','','MI'  UNION ALL
 SELECT 'US','YFH','Fletcher','','OH'  UNION ALL
 SELECT 'US','YFL','Fairfield','','IL'  UNION ALL
@@ -59385,7 +59950,8 @@ SELECT 'US','YGW','Youngwood','','PA'  UNION ALL
 SELECT 'US','YGY','Montgomery','','TN'  UNION ALL
 SELECT 'US','YHA','Haviland','','OH'  UNION ALL
 SELECT 'US','YHB','Heyburn','','ID'  UNION ALL
-SELECT 'US','YHD','Hopland','','CA'  UNION ALL
+SELECT 'US','YHD','Hopland','','CA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','YHE','Cowiche','','WA'  UNION ALL
 SELECT 'US','YHI','Hickory Flat, Benton','','MS'  UNION ALL
 SELECT 'US','YHJ','Yamhill','','OR'  UNION ALL
@@ -59448,8 +60014,7 @@ SELECT 'US','YMU','Plymouth','','CT'  UNION ALL
 SELECT 'US','YMV','Mount Vernon','','NY'  UNION ALL
 SELECT 'US','YMY','Milroy','','IN'  UNION ALL
 SELECT 'US','YMZ','Montezuma','','IA'  UNION ALL
-SELECT 'US','YNA','Naches','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','YNA','Naches','','WA'  UNION ALL
 SELECT 'US','YNC','Newcastle','','UT'  UNION ALL
 SELECT 'US','YND','Lyndon Station','','WI'  UNION ALL
 SELECT 'US','YNE','Wayne','','NY'  UNION ALL
@@ -59466,7 +60031,8 @@ SELECT 'US','YNW','Norwood','','MN'  UNION ALL
 SELECT 'US','YOA','Yoakum','','TX'  UNION ALL
 SELECT 'US','YOB','Oakboro','','NC'  UNION ALL
 SELECT 'US','YOF','Olmsted Falls','','OH'  UNION ALL
-SELECT 'US','YOG','Gilberts','','IL'  UNION ALL
+SELECT 'US','YOG','Gilberts','','IL' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','YOK','Yoke Bay','','AK'  UNION ALL
 SELECT 'US','YON','Yonkers','','NY'  UNION ALL
 SELECT 'US','YOO','Yolo','','CA'  UNION ALL
@@ -59529,8 +60095,7 @@ SELECT 'US','YSW','Sewell','','NJ'  UNION ALL
 SELECT 'US','YSZ','San Lorenzo','','CA'  UNION ALL
 SELECT 'US','YTA','Tallassee, Elmore','','AL'  UNION ALL
 SELECT 'US','YTB','Tinker Air Force Base','','OK'  UNION ALL
-SELECT 'US','YTC','Tri-Cities','','WA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','YTC','Tri-Cities','','WA'  UNION ALL
 SELECT 'US','YTH','Bothell','','WA'  UNION ALL
 SELECT 'US','YTK','Myrtle Creek','','OR'  UNION ALL
 SELECT 'US','YTL','Talent','','OR'  UNION ALL
@@ -59547,7 +60112,8 @@ SELECT 'US','YUB','Yuba City','','CA'  UNION ALL
 SELECT 'US','YUC','Yucaipa','','CA'  UNION ALL
 SELECT 'US','YUG','Union Gap','','WA'  UNION ALL
 SELECT 'US','YUL','Yulee','','FL'  UNION ALL
-SELECT 'US','YUM','Yuma','','AZ'  UNION ALL
+SELECT 'US','YUM','Yuma','','AZ' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','YUN','Union','','ME'  UNION ALL
 SELECT 'US','YUP','Upper Brookville','','NY'  UNION ALL
 SELECT 'US','YUR','Gettysburg','','OH'  UNION ALL
@@ -59610,8 +60176,7 @@ SELECT 'US','ZBY','Boyce','','VA'  UNION ALL
 SELECT 'US','ZCA','Carmel','','CA'  UNION ALL
 SELECT 'US','ZCB','Cibolo','','TX'  UNION ALL
 SELECT 'US','ZCC','Clara City','','MN'  UNION ALL
-SELECT 'US','ZCD','Camden','','NY' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ZCD','Camden','','NY'  UNION ALL
 SELECT 'US','ZCE','Creedmoor','','NC'  UNION ALL
 SELECT 'US','ZCG','Childersburg','','AL'  UNION ALL
 SELECT 'US','ZCH','Cedar Hill','','TX'  UNION ALL
@@ -59628,7 +60193,8 @@ SELECT 'US','ZCY','Clancy','','MT'  UNION ALL
 SELECT 'US','ZCZ','Cazenovia','','NY'  UNION ALL
 SELECT 'US','ZDC','Clarendon Heights','','PA'  UNION ALL
 SELECT 'US','ZDE','Dolores','','CO'  UNION ALL
-SELECT 'US','ZDG','West Reading','','PA'  UNION ALL
+SELECT 'US','ZDG','West Reading','','PA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ZDN','Denton','','MD'  UNION ALL
 SELECT 'US','ZDQ','Duquesne','','PA'  UNION ALL
 SELECT 'US','ZDS','Sands Point','','NY'  UNION ALL
@@ -59691,8 +60257,7 @@ SELECT 'US','ZIO','Zion','','IL'  UNION ALL
 SELECT 'US','ZIR','Irondale','','AL'  UNION ALL
 SELECT 'US','ZIW','Winter Springs','','FL'  UNION ALL
 SELECT 'US','ZJP','Jasper','','GA'  UNION ALL
-SELECT 'US','ZJS','Jersey Shore','','PA' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ZJS','Jersey Shore','','PA'  UNION ALL
 SELECT 'US','ZKB','Kings Bay','','GA'  UNION ALL
 SELECT 'US','ZKN','Dickson','','TN'  UNION ALL
 SELECT 'US','ZKR','Parker','','CO'  UNION ALL
@@ -59709,7 +60274,8 @@ SELECT 'US','ZLN','Lindon','','UT'  UNION ALL
 SELECT 'US','ZLP','Circle Pines','','MN'  UNION ALL
 SELECT 'US','ZLT','League City','','TX'  UNION ALL
 SELECT 'US','ZLV','Longview','','TX'  UNION ALL
-SELECT 'US','ZLW','Longmeadow','','MA'  UNION ALL
+SELECT 'US','ZLW','Longmeadow','','MA' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ZMC','Mendota','','CA'  UNION ALL
 SELECT 'US','ZMD','Seminole','','OK'  UNION ALL
 SELECT 'US','ZMG','Miami Gardens','','FL'  UNION ALL
@@ -59772,8 +60338,7 @@ SELECT 'US','ZQK','Zachary','','LA'  UNION ALL
 SELECT 'US','ZQU','Queen City','','TX'  UNION ALL
 SELECT 'US','ZQZ','Coalfield','','TN'  UNION ALL
 SELECT 'US','ZRB','Riverbank','','CA'  UNION ALL
-SELECT 'US','ZRC','Cramerton','','NC' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'US','ZRC','Cramerton','','NC'  UNION ALL
 SELECT 'US','ZRE','Rowlett','','TX'  UNION ALL
 SELECT 'US','ZRH','Center Hill','','FL'  UNION ALL
 SELECT 'US','ZRK','Seal Rock','','OR'  UNION ALL
@@ -59790,7 +60355,8 @@ SELECT 'US','ZSD','Sutherland','','VA'  UNION ALL
 SELECT 'US','ZSE','Summerville','','GA'  UNION ALL
 SELECT 'US','ZSG','Spring Grove','','PA'  UNION ALL
 SELECT 'US','ZSH','St Stephen','','SC'  UNION ALL
-SELECT 'US','ZSI','San Acacio','','CO'  UNION ALL
+SELECT 'US','ZSI','San Acacio','','CO' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'US','ZSM','Smiths','','NC'  UNION ALL
 SELECT 'US','ZSO','Sherborn','','MA'  UNION ALL
 SELECT 'US','ZSP','Stephen','','MN'  UNION ALL
@@ -59853,8 +60419,7 @@ SELECT 'UY','CLZ','Colonia Suiza','',''  UNION ALL
 SELECT 'UY','CYR','Colonia','',''  UNION ALL
 SELECT 'UY','DZO','Durazno','',''  UNION ALL
 SELECT 'UY','FDA','Florida','',''  UNION ALL
-SELECT 'UY','FZB','Fray Bentos','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'UY','FZB','Fray Bentos','',''  UNION ALL
 SELECT 'UY','JIT','Jose Ignacio Terminal','',''  UNION ALL
 SELECT 'UY','LAG','Lagomar','',''  UNION ALL
 SELECT 'UY','LAP','La Paloma/Rocha','',''  UNION ALL
@@ -59871,7 +60436,8 @@ SELECT 'UY','PDP','Punta del Este','',''  UNION ALL
 SELECT 'UY','PDU','Paysandu','',''  UNION ALL
 SELECT 'UY','PRB','Poblado Rincon de la Bolsa','',''  UNION ALL
 SELECT 'UY','RCH','Rocha','',''  UNION ALL
-SELECT 'UY','RVY','Rivera','',''  UNION ALL
+SELECT 'UY','RVY','Rivera','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'UY','SJC','San Jose de Carrasco','',''  UNION ALL
 SELECT 'UY','SJS','San Jose','',''  UNION ALL
 SELECT 'UY','STY','Salto','',''  UNION ALL
@@ -59934,8 +60500,7 @@ SELECT 'VE','CBS','Cabimas/Maracaibo L','',''  UNION ALL
 SELECT 'VE','CCS','Caracas','',''  UNION ALL
 SELECT 'VE','CGU','Ciudad Guayana','',''  UNION ALL
 SELECT 'VE','CHV','Chichiriviche','',''  UNION ALL
-SELECT 'VE','CLM','Catia La Mar','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'VE','CLM','Catia La Mar','',''  UNION ALL
 SELECT 'VE','CLZ','Calabozo','',''  UNION ALL
 SELECT 'VE','CMR','Cumarebo','',''  UNION ALL
 SELECT 'VE','COL','Coloncha','',''  UNION ALL
@@ -59952,7 +60517,8 @@ SELECT 'VE','EOZ','Elorza','',''  UNION ALL
 SELECT 'VE','ETV','El Tablazo/Maracaibo L','',''  UNION ALL
 SELECT 'VE','GCR','Guacara','',''  UNION ALL
 SELECT 'VE','GDO','Guasdualito','',''  UNION ALL
-SELECT 'VE','GGU','Guaraguao','',''  UNION ALL
+SELECT 'VE','GGU','Guaraguao','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'VE','GUA','Guaranao','',''  UNION ALL
 SELECT 'VE','GUB','Guaranao Bay','',''  UNION ALL
 SELECT 'VE','GUI','Guiria','',''  UNION ALL
@@ -60015,8 +60581,7 @@ SELECT 'VE','SCA','San Carlos','',''  UNION ALL
 SELECT 'VE','SCI','San Cristobal','',''  UNION ALL
 SELECT 'VE','SCR','Santa Cruz, Aragua','',''  UNION ALL
 SELECT 'VE','SFD','San Fernando de Apure','',''  UNION ALL
-SELECT 'VE','SFX','San Felix','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'VE','SFX','San Felix','',''  UNION ALL
 SELECT 'VE','SJM','San Juan de los Morros','',''  UNION ALL
 SELECT 'VE','SJQ','San Joaquin','',''  UNION ALL
 SELECT 'VE','SLV','San Lorenzo/Maracaibo L','',''  UNION ALL
@@ -60033,7 +60598,8 @@ SELECT 'VE','TUR','Turiamo','',''  UNION ALL
 SELECT 'VE','TUV','Tucupita','',''  UNION ALL
 SELECT 'VE','URM','Uriman','',''  UNION ALL
 SELECT 'VE','VCR','Carora','',''  UNION ALL
-SELECT 'VE','VDP','Valle De Pascua','',''  UNION ALL
+SELECT 'VE','VDP','Valle De Pascua','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'VE','VIG','El Vigia','',''  UNION ALL
 SELECT 'VE','VLN','Valencia','',''  UNION ALL
 SELECT 'VE','VLV','Valera','',''  UNION ALL
@@ -60096,8 +60662,7 @@ SELECT 'VN','MTH','My Thoi','',''  UNION ALL
 SELECT 'VN','MUT','My Tho','',''  UNION ALL
 SELECT 'VN','NGH','Nghi Son','',''  UNION ALL
 SELECT 'VN','NGT','Nghe Tinh','',''  UNION ALL
-SELECT 'VN','NHA','Nha Trang','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'VN','NHA','Nha Trang','',''  UNION ALL
 SELECT 'VN','NMD','Nam Dinh','',''  UNION ALL
 SELECT 'VN','NVT','Nguyen Van Troi Port','',''  UNION ALL
 SELECT 'VN','PHA','Phan Rang','',''  UNION ALL
@@ -60114,7 +60679,8 @@ SELECT 'VN','RDG','Rang Dong','',''  UNION ALL
 SELECT 'VN','RQU','Rao Qua','',''  UNION ALL
 SELECT 'VN','SAD','Sa Dec','',''  UNION ALL
 SELECT 'VN','SGN','Ho Chi Minh City','',''  UNION ALL
-SELECT 'VN','SQH','Son La','',''  UNION ALL
+SELECT 'VN','SQH','Son La','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'VN','TBB','Tuy Hoa','',''  UNION ALL
 SELECT 'VN','TBH','Thai Binh','',''  UNION ALL
 SELECT 'VN','TBI','Thang Binh','',''  UNION ALL
@@ -60177,8 +60743,7 @@ SELECT 'WF','SIG','Sigave','',''  UNION ALL
 SELECT 'WF','WLS','Wallis Island Apt','',''  UNION ALL
 SELECT 'WS','','','',''  UNION ALL
 SELECT 'WS','AAU','Asau','',''  UNION ALL
-SELECT 'WS','APW','Apia','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'WS','APW','Apia','',''  UNION ALL
 SELECT 'WS','LAV','Lalomalava','',''  UNION ALL
 SELECT 'WS','MXS','Maota Savaii Is','',''  UNION ALL
 SELECT 'WS','SAL','Salelologa','',''  UNION ALL
@@ -60195,7 +60760,8 @@ SELECT 'XZ','DRA','Draugen','',''  UNION ALL
 SELECT 'XZ','DTL','Dulang Marine Terminal','',''  UNION ALL
 SELECT 'XZ','HEI','Heidrun','',''  UNION ALL
 SELECT 'XZ','KMT','Kakap Marine Terminal','',''  UNION ALL
-SELECT 'XZ','LAM','Laminaria Terminal','',''  UNION ALL
+SELECT 'XZ','LAM','Laminaria Terminal','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'XZ','LGT','Legendre Terminal','',''  UNION ALL
 SELECT 'XZ','NJO','Njord','',''  UNION ALL
 SELECT 'XZ','NNE','Norne','',''  UNION ALL
@@ -60258,8 +60824,7 @@ SELECT 'YT','LON','Longoni','',''  UNION ALL
 SELECT 'YT','MAM','Mamoudzou','',''  UNION ALL
 SELECT 'YT','SAD','Sada','',''  UNION ALL
 SELECT 'ZA','','','',''  UNION ALL
-SELECT 'ZA','AAM','Mala Mala','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'ZA','AAM','Mala Mala','',''  UNION ALL
 SELECT 'ZA','ABT','Alberton','',''  UNION ALL
 SELECT 'ZA','ADY','Alldays','',''  UNION ALL
 SELECT 'ZA','AFD','Port Alfred','',''  UNION ALL
@@ -60276,7 +60841,8 @@ SELECT 'ZA','BEW','Beaufort West','',''  UNION ALL
 SELECT 'ZA','BFN','Bloemfontein','',''  UNION ALL
 SELECT 'ZA','BFV','Bedfordview','',''  UNION ALL
 SELECT 'ZA','BHT','Bronkhorstspruit','',''  UNION ALL
-SELECT 'ZA','BIY','Bisho','',''  UNION ALL
+SELECT 'ZA','BIY','Bisho','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'ZA','BNI','Benoni','',''  UNION ALL
 SELECT 'ZA','BOK','Boksburg','',''  UNION ALL
 SELECT 'ZA','BOT','BotrivIer','',''  UNION ALL
@@ -60339,8 +60905,7 @@ SELECT 'ZA','HOW','Howick','',''  UNION ALL
 SELECT 'ZA','HRS','Harrismith','',''  UNION ALL
 SELECT 'ZA','HSL','Hammanskraal','',''  UNION ALL
 SELECT 'ZA','HZV','Hazyview','',''  UNION ALL
-SELECT 'ZA','INY','Inyati','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'ZA','INY','Inyati','',''  UNION ALL
 SELECT 'ZA','ISB','Isithebe','',''  UNION ALL
 SELECT 'ZA','ISD','Isando','',''  UNION ALL
 SELECT 'ZA','ISP','Isipingo Beach','',''  UNION ALL
@@ -60357,7 +60922,8 @@ SELECT 'ZA','KIR','Kirkwood','',''  UNION ALL
 SELECT 'ZA','KLA','Klawer','',''  UNION ALL
 SELECT 'ZA','KLZ','Kleinzee','',''  UNION ALL
 SELECT 'ZA','KMH','Kuruman','',''  UNION ALL
-SELECT 'ZA','KMP','Kempton Park','',''  UNION ALL
+SELECT 'ZA','KMP','Kempton Park','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'ZA','KNY','Knysna','',''  UNION ALL
 SELECT 'ZA','KOF','Komatipoort','',''  UNION ALL
 SELECT 'ZA','KPM','Kaapmuiden','',''  UNION ALL
@@ -60420,8 +60986,7 @@ SELECT 'ZA','POR','Porterville','',''  UNION ALL
 SELECT 'ZA','PRF','Piet Retief','',''  UNION ALL
 SELECT 'ZA','PRK','Prieska','',''  UNION ALL
 SELECT 'ZA','PRW','Parow','',''  UNION ALL
-SELECT 'ZA','PRY','Pretoria','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'ZA','PRY','Pretoria','',''  UNION ALL
 SELECT 'ZA','PTG','Pietersburg','',''  UNION ALL
 SELECT 'ZA','PTN','Prospecton','',''  UNION ALL
 SELECT 'ZA','PZB','Pietermaritzburg','',''  UNION ALL
@@ -60438,7 +61003,8 @@ SELECT 'ZA','RVA','Rivonia','',''  UNION ALL
 SELECT 'ZA','RVO','Reivilo','',''  UNION ALL
 SELECT 'ZA','SAS','Sasolburg','',''  UNION ALL
 SELECT 'ZA','SBU','Springbok','',''  UNION ALL
-SELECT 'ZA','SCT','Scottburgh','',''  UNION ALL
+SELECT 'ZA','SCT','Scottburgh','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'ZA','SDB','Saldanha Bay','',''  UNION ALL
 SELECT 'ZA','SDT','Sandton','',''  UNION ALL
 SELECT 'ZA','SFB','St Francis Bay','',''  UNION ALL
@@ -60501,8 +61067,7 @@ SELECT 'ZM','CIP','Chipata','',''  UNION ALL
 SELECT 'ZM','KAA','Kasama','',''  UNION ALL
 SELECT 'ZM','KAF','Kafue','',''  UNION ALL
 SELECT 'ZM','KAM','Kapiri Mposhi','',''  UNION ALL
-SELECT 'ZM','KAO','Kalomo','','' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
+SELECT 'ZM','KAO','Kalomo','',''  UNION ALL
 SELECT 'ZM','KIW','Kitwe','',''  UNION ALL
 SELECT 'ZM','KLB','Kalabo','',''  UNION ALL
 SELECT 'ZM','KMZ','Kaoma','',''  UNION ALL
@@ -60519,7 +61084,8 @@ SELECT 'ZM','MNR','Mongu','',''  UNION ALL
 SELECT 'ZM','MNS','Mansa','',''  UNION ALL
 SELECT 'ZM','MPU','Mpulungu','',''  UNION ALL
 SELECT 'ZM','MRB','Maramba','',''  UNION ALL
-SELECT 'ZM','MZE','Monze','',''  UNION ALL
+SELECT 'ZM','MZE','Monze','','' ;
+INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
 SELECT 'ZM','NLA','Ndola','',''  UNION ALL
 SELECT 'ZM','QKE','Kabwe','',''  UNION ALL
 SELECT 'ZM','SJQ','Sesheke','',''  UNION ALL
@@ -60550,674 +61116,17 @@ SELECT 'ZW','MVZ','Masvingo','',''  UNION ALL
 SELECT 'ZW','STH','Southerton','',''  UNION ALL
 SELECT 'ZW','UTA','Mutare','',''  UNION ALL
 SELECT 'ZW','VFA','Victoria Falls','',''  UNION ALL
-SELECT 'ZW','WKI','Hwange','',''  UNION ALL
-SELECT 'NL','MUD','Muiden','','NH'  UNION ALL
-SELECT 'NL','MDG','Muiderberg','','NH'  UNION ALL
-SELECT 'NL','MKE','Munnekeburen','','FR'  UNION ALL
-SELECT 'NL','MKZ','Munnekezijl','','FR'  UNION ALL
-SELECT 'NL','MUS','Musselkanaal','','GR'  UNION ALL
-SELECT 'NL','NAW','Naaldwijk','','ZH'  UNION ALL
-SELECT 'NL','NAA','Naarden','','NH'  UNION ALL
-SELECT 'NL','NLG','Nagele','','FL'  UNION ALL
-SELECT 'NL','NEC','Neck','','NH'  UNION ALL
-SELECT 'NL','NST','Nederasselt','','GE'  UNION ALL
-SELECT 'NL','NBW','Neder-Betuwe','','GE'  UNION ALL
-SELECT 'NL','ZBA','Nederhemert','','GE'  UNION ALL
-SELECT 'NL','NDB','Nederhorst den Berg','','NH'  UNION ALL
-SELECT 'NL','NRW','Nederweert','','LI'  UNION ALL
-SELECT 'NL','NEE','Neede','','GE'  UNION ALL
-SELECT 'NL','NER','Neer','','LI'  UNION ALL
-SELECT 'NL','NES','Nes','','NH'  UNION ALL
-SELECT 'NL','NSA','Nes aan de Amstel','','NH'  UNION ALL
-SELECT 'NL','NSU','Nessersluis','','UT'  UNION ALL
-SELECT 'NL','NTD','Netterden','','GE'  UNION ALL
-SELECT 'NL','NXO','Nibbixwoud','','NH'  UNION ALL
-SELECT 'NL','NAM','Nieuw-Amsterdam','','DR'  UNION ALL
-SELECT 'NL','NIB','Nieuw-Bergen','',''  UNION ALL
-SELECT 'NL','NIU','Nieuwdorp','','ZE'  UNION ALL
-SELECT 'NL','NBU','Nieuwe Brug','',''  UNION ALL
-SELECT 'NL','NPK','Nieuwe Pekela','','GR'  UNION ALL
-SELECT 'NL','NSB','Nieuwe Schans','','GE'  UNION ALL
-SELECT 'NL','NSZ','Nieuwe Statenzijl','','GR'  UNION ALL
-SELECT 'NL','NDI','Nieuwediep','','DR'  UNION ALL
-SELECT 'NL','NWG','Nieuwegein','','UT'  UNION ALL
-SELECT 'NL','NHM','Nieuwehorne','','FR'  UNION ALL
-SELECT 'NL','NIH','Nieuwenhagen','','LI' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','NBG','Nieuwerbrug','','ZH'  UNION ALL
-SELECT 'NL','NIE','Nieuwerkerk aan den IJssel','','ZH'  UNION ALL
-SELECT 'NL','NSC','Nieuweschans','','GR'  UNION ALL
-SELECT 'NL','NWT','Nieuwe-Tonge','','ZH'  UNION ALL
-SELECT 'NL','NWK','Nieuwkoop','','ZH'  UNION ALL
-SELECT 'NL','NKU','Nieuwkuijk','','NB'  UNION ALL
-SELECT 'NL','NIL','Nieuwland','','ZE'  UNION ALL
-SELECT 'NL','NUW','Nieuwland','','ZE'  UNION ALL
-SELECT 'NL','NLK','Nieuw-Lekkerland','','ZH'  UNION ALL
-SELECT 'NL','NWL','Nieuwleusen','','OV'  UNION ALL
-SELECT 'NL','LSR','Nieuw-Loosdrecht','','NH'  UNION ALL
-SELECT 'NL','NMG','Nieuw-Millingen','',''  UNION ALL
-SELECT 'NL','NWO','Nieuwolda','','GR'  UNION ALL
-SELECT 'NL','NWP','Nieuwpoort','','ZH'  UNION ALL
-SELECT 'NL','NSD','Nieuw-Scheemda','',''  UNION ALL
-SELECT 'NL','NWS','Nieuwstadt','','LI'  UNION ALL
-SELECT 'NL','NWV','Nieuwveen','','ZH'  UNION ALL
-SELECT 'NL','NVP','Nieuw-Vennep','','NH'  UNION ALL
-SELECT 'NL','NVO','Nieuw-Vossemeer','','NB'  UNION ALL
-SELECT 'NL','NZI','Niezijl','','GR'  UNION ALL
-SELECT 'NL','NGV','Nigtevecht','','UT'  UNION ALL
-SELECT 'NL','NGA','Nijega','','FR'  UNION ALL
-SELECT 'NL','NHE','Nijehaske','','FR'  UNION ALL
-SELECT 'NL','NMD','Nijemirdum','','FR'  UNION ALL
-SELECT 'NL','JEV','Nijeveen','','DR'  UNION ALL
-SELECT 'NL','NZJ','Nijezijl','','FR'  UNION ALL
-SELECT 'NL','NKK','Nijkerk','','GE'  UNION ALL
-SELECT 'NL','NKV','Nijkerkerveen','','GE'  UNION ALL
-SELECT 'NL','NIJ','Nijmegen','','GE'  UNION ALL
-SELECT 'NL','ZBG','Nijnsel','','NB'  UNION ALL
-SELECT 'NL','NVD','Nijverdal','','OV'  UNION ALL
-SELECT 'NL','NIS','Nispen','','NB'  UNION ALL
-SELECT 'NL','NSS','Nisse','','ZE'  UNION ALL
-SELECT 'NL','NTR','Nistelrode','','NB'  UNION ALL
-SELECT 'NL','NDN','Noorden','','ZH'  UNION ALL
-SELECT 'NL','NWE','Noordgouwe','','ZE'  UNION ALL
-SELECT 'NL','NSW','Noord-Scharwoude','','NH'  UNION ALL
-SELECT 'NL','NDL','Noordwijk aan Zee','','ZH'  UNION ALL
-SELECT 'NL','NOJ','Noordwijkerhout','','ZH'  UNION ALL
-SELECT 'NL','NWD','Noordwolde','','FR'  UNION ALL
-SELECT 'NL','NDP','Nootdorp','','ZH'  UNION ALL
-SELECT 'NL','NRG','Norg','','DR'  UNION ALL
-SELECT 'NL','NNN','Nuenen','','NB'  UNION ALL
-SELECT 'NL','NUI','Nuis','','GR'  UNION ALL
-SELECT 'NL','NUL','Nuland','','NB'  UNION ALL
-SELECT 'NL','NUD','Numansdorp','','ZH'  UNION ALL
-SELECT 'NL','NNM','Nunhem','','LI'  UNION ALL
-SELECT 'NL','NUN','Nunspeet','','GE'  UNION ALL
-SELECT 'NL','NTH','Nuth','','LI'  UNION ALL
-SELECT 'NL','OBD','Obdam','','NH'  UNION ALL
-SELECT 'NL','OCC','Ochten','','GE'  UNION ALL
-SELECT 'NL','ODK','Odijk','','UT'  UNION ALL
-SELECT 'NL','ODN','Odoorn','','DR'  UNION ALL
-SELECT 'NL','OGE','Oegstgeest','','ZH'  UNION ALL
-SELECT 'NL','OIL','Oirlo','','LI'  UNION ALL
-SELECT 'NL','OIH','Oirschot','','NB'  UNION ALL
-SELECT 'NL','OIW','Oisterwijk','','NB'  UNION ALL
-SELECT 'NL','OLD','Oldeberkoop','','FR'  UNION ALL
-SELECT 'NL','OLB','Oldebroek','','GE'  UNION ALL
-SELECT 'NL','OLE','Oldehove','','GR'  UNION ALL
-SELECT 'NL','OLK','Oldemarkt','','OV'  UNION ALL
-SELECT 'NL','OLZ','Oldenzaal','','OV'  UNION ALL
-SELECT 'NL','OSI','Olst','','OV'  UNION ALL
-SELECT 'NL','OML','Ommel','','NB'  UNION ALL
-SELECT 'NL','OMM','Ommen','','OV'  UNION ALL
-SELECT 'NL','ORE','Ommeren','','GE'  UNION ALL
-SELECT 'NL','OOY','Ooij','','GE'  UNION ALL
-SELECT 'NL','OGP','Ooltgensplaat','','ZH'  UNION ALL
-SELECT 'NL','OBG','Oostburg','','ZE'  UNION ALL
-SELECT 'NL','OSD','Oostdijk','','ZE'  UNION ALL
-SELECT 'NL','OOE','Oosteind','','NB'  UNION ALL
-SELECT 'NL','OSB','Oosterbeek','','GE'  UNION ALL
-SELECT 'NL','OHN','Oosterhesselen','','DR'  UNION ALL
-SELECT 'NL','OOS','Oosterhout','','NB'  UNION ALL
-SELECT 'NL','OTH','Oosterhout','','NB'  UNION ALL
-SELECT 'NL','OTL','Oosterland','','ZE'  UNION ALL
-SELECT 'NL','OLS','Oosterlittens','','FR'  UNION ALL
-SELECT 'NL','OME','Oostermeer','','FR'  UNION ALL
-SELECT 'NL','OSW','Oosterwolde','','GE'  UNION ALL
-SELECT 'NL','OHM','Oosthem','','FR' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','OHZ','Oosthuizen','','NH'  UNION ALL
-SELECT 'NL','OMH','Oostmahorn','','FR'  UNION ALL
-SELECT 'NL','OST','Oostrum','','LI'  UNION ALL
-SELECT 'NL','OVN','Oostvoorne','','ZH'  UNION ALL
-SELECT 'NL','OSZ','Oostzaan','','NH'  UNION ALL
-SELECT 'NL','OOT','Ootmarsum','','OV'  UNION ALL
-SELECT 'NL','ZBI','Ooy','','GE'  UNION ALL
-SELECT 'NL','OPE','Opeinde','','FR'  UNION ALL
-SELECT 'NL','OPH','Ophemert','','GE'  UNION ALL
-SELECT 'NL','ZBQ','Opmeer','','NH'  UNION ALL
-SELECT 'NL','OSP','Ospel','','LI'  UNION ALL
-SELECT 'NL','OSS','Oss','','NB'  UNION ALL
-SELECT 'NL','OSH','Ossendrecht','','NB'  UNION ALL
-SELECT 'NL','OZL','Ossenzijl','','OV'  UNION ALL
-SELECT 'NL','ORL','Oterleek','','NH'  UNION ALL
-SELECT 'NL','OUA','Oud Ade','',''  UNION ALL
-SELECT 'NL','OGN','Oud Gein','',''  UNION ALL
-SELECT 'NL','OBL','Oud-Beijerland','','ZH'  UNION ALL
-SELECT 'NL','OBZ','Oude Bildtzijl','','FR'  UNION ALL
-SELECT 'NL','ZBH','Oude Leye','',''  UNION ALL
-SELECT 'NL','OUM','Oude Meer','','NH'  UNION ALL
-SELECT 'NL','ODP','Oude Pekela','','GR'  UNION ALL
-SELECT 'NL','OHW','Oude Schouw','','FR'  UNION ALL
-SELECT 'NL','OGA','Oudega','','FR'  UNION ALL
-SELECT 'NL','OHE','Oudehaske','','FR'  UNION ALL
-SELECT 'NL','OMR','Oudemirdum','','FR'  UNION ALL
-SELECT 'NL','OBO','Oudenbosch','','NB'  UNION ALL
-SELECT 'NL','ODH','Oudenhoorn','','ZH'  UNION ALL
-SELECT 'NL','ORJ','Oudenrijn','',''  UNION ALL
-SELECT 'NL','ODR','Ouderkerk aan de Amstel','','NH'  UNION ALL
-SELECT 'NL','OAI','Ouderkerk aan den IJssel','','ZH'  UNION ALL
-SELECT 'NL','OHI','Oudeschild','','NH'  UNION ALL
-SELECT 'NL','OSL','Oudesluis','','ZH'  UNION ALL
-SELECT 'NL','ODT','Oude-Tonge','','ZH'  UNION ALL
-SELECT 'NL','ODW','Oudewater','','UT'  UNION ALL
-SELECT 'NL','OUG','Oud-Gastel','',''  UNION ALL
-SELECT 'NL','OKP','Oudkarspel','','NH'  UNION ALL
-SELECT 'NL','OLO','Oud-Loosdrecht','','NH'  UNION ALL
-SELECT 'NL','OUD','Oudorp','','NH'  UNION ALL
-SELECT 'NL','OSG','Oud-Sabbinge','','ZE'  UNION ALL
-SELECT 'NL','OVM','Oud-Vossemeer','','ZE'  UNION ALL
-SELECT 'NL','OVR','Oud-Vroenhoven','',''  UNION ALL
-SELECT 'NL','OZU','Oud-Zuilen','','UT'  UNION ALL
-SELECT 'NL','OAS','Overasselt','','GE'  UNION ALL
-SELECT 'NL','OOV','Overdinkel','','OV'  UNION ALL
-SELECT 'NL','OVL','Overloon','','NB'  UNION ALL
-SELECT 'NL','OSK','Overschild','','GR'  UNION ALL
-SELECT 'NL','OVV','Overveen','','NH'  UNION ALL
-SELECT 'NL','OVZ','Ovezande','','ZE'  UNION ALL
-SELECT 'NL','PHL','Panheel','','LI'  UNION ALL
-SELECT 'NL','PNN','Pannerden','','GE'  UNION ALL
-SELECT 'NL','PAN','Panningen','','LI'  UNION ALL
-SELECT 'NL','PAP','Papendrecht','','ZH'  UNION ALL
-SELECT 'NL','PER','Pernis','','ZH'  UNION ALL
-SELECT 'NL','PTT','Petten','','NH'  UNION ALL
-SELECT 'NL','ZBM','Philippine','','ZE'  UNION ALL
-SELECT 'NL','PSI','Piershil','','ZH'  UNION ALL
-SELECT 'NL','PZI','Pieterzijl','','GR'  UNION ALL
-SELECT 'NL','PIJ','Pijnacker','','ZH'  UNION ALL
-SELECT 'NL','ZBN','Pingjum','','FR'  UNION ALL
-SELECT 'NL','PDJ','Poederoijen','','GE'  UNION ALL
-SELECT 'NL','PDK','Poeldijk','','ZH'  UNION ALL
-SELECT 'NL','PTG','Poortugaal','','ZH'  UNION ALL
-SELECT 'NL','PVT','Poortvliet','','ZE'  UNION ALL
-SELECT 'NL','PRB','Prinsenbeek','','NB'  UNION ALL
-SELECT 'NL','PUM','Purmerend','','NH'  UNION ALL
-SELECT 'NL','PUT','Putte','','NB'  UNION ALL
-SELECT 'NL','PTN','Putten','','GE'  UNION ALL
-SELECT 'NL','PTK','Puttershoek','','ZH'  UNION ALL
-SELECT 'NL','QDS','Raalte','','OV'  UNION ALL
-SELECT 'NL','RAA','Raamsdonksveer','','NB'  UNION ALL
-SELECT 'NL','ZBP','Raamsdonkveer','',''  UNION ALL
-SELECT 'NL','RPL','Ramspol','',''  UNION ALL
-SELECT 'NL','RAS','Ravenstein','','NB'  UNION ALL
-SELECT 'NL','RUW','Reeuwijk','','ZH'  UNION ALL
-SELECT 'NL','REI','Reid','',''  UNION ALL
-SELECT 'NL','REW','Reimerswaal','','ZE'  UNION ALL
-SELECT 'NL','RNS','Renesse','','ZE'  UNION ALL
-SELECT 'NL','RNK','Renkum','','GE'  UNION ALL
-SELECT 'NL','RWD','Renswoude','','UT' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','NLD','Ressen','','GE'  UNION ALL
-SELECT 'NL','RSL','Reusel','','NB'  UNION ALL
-SELECT 'NL','REU','Reuver','','LI'  UNION ALL
-SELECT 'NL','RHD','Rheden','','GE'  UNION ALL
-SELECT 'NL','RHE','Rhenen','','UT'  UNION ALL
-SELECT 'NL','RHO','Rhoon','','ZH'  UNION ALL
-SELECT 'NL','RID','Ridderkerk','','ZH'  UNION ALL
-SELECT 'NL','RED','Ried','','FR'  UNION ALL
-SELECT 'NL','RIE','Riel','','NB'  UNION ALL
-SELECT 'NL','RTH','Riethoven','','NB'  UNION ALL
-SELECT 'NL','RJE','Rijen','','NB'  UNION ALL
-SELECT 'NL','RJV','Rijkevoort','','NB'  UNION ALL
-SELECT 'NL','RBG','Rijnsburg','','ZH'  UNION ALL
-SELECT 'NL','RWI','Rijpwetering','','ZH'  UNION ALL
-SELECT 'NL','RIJ','Rijs','','FR'  UNION ALL
-SELECT 'NL','RYB','Rijsbergen','','NB'  UNION ALL
-SELECT 'NL','RSH','Rijsenhout','','NH'  UNION ALL
-SELECT 'NL','RJS','Rijssen','','OV'  UNION ALL
-SELECT 'NL','RYS','Rijswijk','','NB'  UNION ALL
-SELECT 'NL','RLA','Rilland','','ZE'  UNION ALL
-SELECT 'NL','RGT','Rinsumageest','','FR'  UNION ALL
-SELECT 'NL','RTT','Ritthem','','ZE'  UNION ALL
-SELECT 'NL','RBO','Robbenoord','',''  UNION ALL
-SELECT 'NL','ROC','Rockanje','','ZH'  UNION ALL
-SELECT 'NL','ROD','Roden','','DR'  UNION ALL
-SELECT 'NL','ROR','Rodenrijs','',''  UNION ALL
-SELECT 'NL','RAV','Roelofarendsveen','','ZH'  UNION ALL
-SELECT 'NL','OMD','Roermond','','LI'  UNION ALL
-SELECT 'NL','ROG','Roggel','','LI'  UNION ALL
-SELECT 'NL','ROL','Rolde','','DR'  UNION ALL
-SELECT 'NL','ROO','Roosendaal','','NB'  UNION ALL
-SELECT 'NL','RST','Roosteren','','LI'  UNION ALL
-SELECT 'NL','RMA','Rosmalen','','NB'  UNION ALL
-SELECT 'NL','RTM','Rotterdam','','ZH'  UNION ALL
-SELECT 'NL','RTU','Rottum','','FR'  UNION ALL
-SELECT 'NL','ROZ','Rozenburg','','ZH'  UNION ALL
-SELECT 'NL','RZD','Rozendaal','','ZH'  UNION ALL
-SELECT 'NL','RCP','Rucphen','','NB'  UNION ALL
-SELECT 'NL','RUI','Ruinen','','DR'  UNION ALL
-SELECT 'NL','RUM','Rumpt','','GE'  UNION ALL
-SELECT 'NL','RTG','Rustenburg','','NH'  UNION ALL
-SELECT 'NL','RUT','Rutten','','FL'  UNION ALL
-SELECT 'NL','RRO','Ruurlo','','GE'  UNION ALL
-SELECT 'NL','HAK','S Heer Arendskerke','',''  UNION ALL
-SELECT 'NL','SVE','Saasveld','','OV'  UNION ALL
-SELECT 'NL','SMB','Sambeek','','NB'  UNION ALL
-SELECT 'NL','SAP','Sappemeer','','GR'  UNION ALL
-SELECT 'NL','SVG','Sas van Gent','','ZE'  UNION ALL
-SELECT 'NL','SAS','Sassenheim','','ZH'  UNION ALL
-SELECT 'NL','SCH','Schagen','','NH'  UNION ALL
-SELECT 'NL','SBU','Schagerbrug','','NH'  UNION ALL
-SELECT 'NL','SKW','Schalkwijk','','UT'  UNION ALL
-SELECT 'NL','SBG','Scharsterbrug','','FR'  UNION ALL
-SELECT 'NL','SMD','Scheemda','','GR'  UNION ALL
-SELECT 'NL','SMZ','Scheemderzwaag','','GR'  UNION ALL
-SELECT 'NL','SLN','Schelluinen','','ZH'  UNION ALL
-SELECT 'NL','SHO','Schermerhorn','','NH'  UNION ALL
-SELECT 'NL','SRP','Scherpenzeel','','GE'  UNION ALL
-SELECT 'NL','SCE','Scheveningen','','ZH'  UNION ALL
-SELECT 'NL','SCI','Schiedam','','ZH'  UNION ALL
-SELECT 'NL','SCY','Schijf','','NB'  UNION ALL
-SELECT 'NL','SND','Schijndel','','NB'  UNION ALL
-SELECT 'NL','SDW','Schildwolde','','GR'  UNION ALL
-SELECT 'NL','SOG','Schin op Geul','','LI'  UNION ALL
-SELECT 'NL','SCN','Schinnen','','LI'  UNION ALL
-SELECT 'NL','SPL','Schiphol','','NH'  UNION ALL
-SELECT 'NL','SRK','Schiphol-Rijk','','NH'  UNION ALL
-SELECT 'NL','SCP','Schipluiden','','ZH'  UNION ALL
-SELECT 'NL','SCB','Schoonebeek','','DR'  UNION ALL
-SELECT 'NL','SHH','Schoonhoven','','ZH'  UNION ALL
-SELECT 'NL','SOR','Schoor','','LI'  UNION ALL
-SELECT 'NL','SZL','Schoterzijl','','FR'  UNION ALL
-SELECT 'NL','SWL','Schouwerzijl','','GR'  UNION ALL
-SELECT 'NL','SVM','Sevenum','','LI'  UNION ALL
-SELECT 'NL','SGL','''s-Graveland','','NH'  UNION ALL
-SELECT 'NL','GRA','''s-Gravendeel','','ZH'  UNION ALL
-SELECT 'NL','HAG','''s-Gravenhage (Den Haag)','','ZH'  UNION ALL
-SELECT 'NL','SGM','''s-Gravenmoer','',''  UNION ALL
-SELECT 'NL','SGP','''s-Gravenpolder','','ZE'  UNION ALL
-SELECT 'NL','GRZ','''s-Gravenzande','','ZH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','HRB','''s-Heerenberg','','GE'  UNION ALL
-SELECT 'NL','SHB','''s-Heerenbroek','','OV'  UNION ALL
-SELECT 'NL','SHE','''s-Heerenhoek','','ZE'  UNION ALL
-SELECT 'NL','HTB','''s-Hertogenbosch','','NB'  UNION ALL
-SELECT 'NL','SRB','Sibrandabuorren','','FR'  UNION ALL
-SELECT 'NL','SBS','Sijbrandahuis','','FR'  UNION ALL
-SELECT 'NL','SIV','Silvolde','','GE'  UNION ALL
-SELECT 'NL','SIM','Simpelveld','','LI'  UNION ALL
-SELECT 'NL','SAN','Sint Annaparochie','','FR'  UNION ALL
-SELECT 'NL','SJP','Sint Jacobiparochie','','FR'  UNION ALL
-SELECT 'NL','SMN','Sint Maarten','','NH'  UNION ALL
-SELECT 'NL','ZBE','Sint Maartensbrug','','NH'  UNION ALL
-SELECT 'NL','SMK','Sint Maartensdijk','','ZE'  UNION ALL
-SELECT 'NL','SMV','Sint Maartensvlotbrug','','NH'  UNION ALL
-SELECT 'NL','SNG','Sint Nicolaasga','','FR'  UNION ALL
-SELECT 'NL','OED','Sint Oedenrode','',''  UNION ALL
-SELECT 'NL','ANC','Sint Pancras','','NH'  UNION ALL
-SELECT 'NL','PLP','Sint Philipsland','','ZE'  UNION ALL
-SELECT 'NL','SWB','Sint Willebrord','','NB'  UNION ALL
-SELECT 'NL','SJO','Sintjohannesga','','FR'  UNION ALL
-SELECT 'NL','SRJ','Sirjansland','','ZE'  UNION ALL
-SELECT 'NL','SIT','Sittard','','LI'  UNION ALL
-SELECT 'NL','SWK','Sleeuwijk','','NB'  UNION ALL
-SELECT 'NL','SLD','Sliedrecht','','ZH'  UNION ALL
-SELECT 'NL','SKG','Slijkenburg','','FR'  UNION ALL
-SELECT 'NL','SKM','Slikkendam','','ZH'  UNION ALL
-SELECT 'NL','SLI','Slikkerveer','','ZH'  UNION ALL
-SELECT 'NL','SLO','Slochteren','','GR'  UNION ALL
-SELECT 'NL','SDP','Slootdorp','','NH'  UNION ALL
-SELECT 'NL','SLT','Sloten','','NH'  UNION ALL
-SELECT 'NL','SLS','Sluis','','ZE'  UNION ALL
-SELECT 'NL','SLU','Sluiskil','','ZE'  UNION ALL
-SELECT 'NL','SML','Smallingerland','','FR'  UNION ALL
-SELECT 'NL','SMI','Smilde','','DR'  UNION ALL
-SELECT 'NL','SNK','Sneek','','FR'  UNION ALL
-SELECT 'NL','SNW','Snelrewaard','','UT'  UNION ALL
-SELECT 'NL','SOE','Soest','','UT'  UNION ALL
-SELECT 'NL','SOS','Soesterberg','','UT'  UNION ALL
-SELECT 'NL','SOM','Someren','','NB'  UNION ALL
-SELECT 'NL','SON','Son','','NB'  UNION ALL
-SELECT 'NL','SBR','Son en Breugel','','NB'  UNION ALL
-SELECT 'NL','SOD','Sondel','','FR'  UNION ALL
-SELECT 'NL','SPD','Spaarndam','','NH'  UNION ALL
-SELECT 'NL','SPK','Spakenburg','','UT'  UNION ALL
-SELECT 'NL','SPB','Spanbroek','','NH'  UNION ALL
-SELECT 'NL','SPA','Spaubeek','','LI'  UNION ALL
-SELECT 'NL','SJK','Spijk','','NB'  UNION ALL
-SELECT 'NL','SPI','Spijkenisse','','ZH'  UNION ALL
-SELECT 'NL','SCA','Sprang','','NB'  UNION ALL
-SELECT 'NL','SPC','Sprang-Capelle','','NB'  UNION ALL
-SELECT 'NL','SPR','Sprundel','','NB'  UNION ALL
-SELECT 'NL','SAR','St Andries','',''  UNION ALL
-SELECT 'NL','SUD','St Cloud','',''  UNION ALL
-SELECT 'NL','SAT','Stad aan ''t Haringvliet','','ZH'  UNION ALL
-SELECT 'NL','SAH','Stad Aan ''T Haringvliet','','ZH'  UNION ALL
-SELECT 'NL','SDM','Stadsdam','','UT'  UNION ALL
-SELECT 'NL','STK','Stadskanaal','','GR'  UNION ALL
-SELECT 'NL','SPG','Stampersgat','','NB'  UNION ALL
-SELECT 'NL','SDB','Standdaarbuiten','','NB'  UNION ALL
-SELECT 'NL','STH','Staphorst','','OV'  UNION ALL
-SELECT 'NL','SVN','Stavenisse','','ZE'  UNION ALL
-SELECT 'NL','STA','Stavoren','','FR'  UNION ALL
-SELECT 'NL','STE','Steenbergen','','NB'  UNION ALL
-SELECT 'NL','SDN','Steenderen','','GE'  UNION ALL
-SELECT 'NL','STW','Steenwijk','','OV'  UNION ALL
-SELECT 'NL','STG','Steggerda','','FR'  UNION ALL
-SELECT 'NL','STI','Stein','','LI'  UNION ALL
-SELECT 'NL','STD','Stellendam','','ZH'  UNION ALL
-SELECT 'NL','STR','Sterksel','','NB'  UNION ALL
-SELECT 'NL','STB','Stevensbeek','','NB'  UNION ALL
-SELECT 'NL','SVW','Stevensweert','','LI'  UNION ALL
-SELECT 'NL','SKL','Stieltjeskanaal','','DR'  UNION ALL
-SELECT 'NL','STN','Stiens','','FR'  UNION ALL
-SELECT 'NL','SLG','Stokkelaarsbrug','','UT'  UNION ALL
-SELECT 'NL','SOP','Stolpen','','NH'  UNION ALL
-SELECT 'NL','SPV','Stolpervlotbrug','',''  UNION ALL
-SELECT 'NL','SWJ','Stolwijk','','ZH'  UNION ALL
-SELECT 'NL','SPT','Stompetoren','','NH'  UNION ALL
-SELECT 'NL','ZBU','Stompwijk','','ZH'  UNION ALL
-SELECT 'NL','SRE','Streefkerk','','ZH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','SJB','Strijbeek','','NB'  UNION ALL
-SELECT 'NL','TRJ','Strijen','','ZH'  UNION ALL
-SELECT 'NL','SUR','Surhuisterveen','','FR'  UNION ALL
-SELECT 'NL','ZAJ','Susteren','','LI'  UNION ALL
-SELECT 'NL','SWM','Swalmen','','LI'  UNION ALL
-SELECT 'NL','SWI','Swifterbant','','FL'  UNION ALL
-SELECT 'NL','GOY','''t Goy','','UT'  UNION ALL
-SELECT 'NL','THA','''T Harde','','GE'  UNION ALL
-SELECT 'NL','KRI','''t Kruis','','NH'  UNION ALL
-SELECT 'NL','LKN','''t Leuken','','LI'  UNION ALL
-SELECT 'NL','STO','''t Stort','','GR'  UNION ALL
-SELECT 'NL','VET','''t Veld','','NH'  UNION ALL
-SELECT 'NL','TWA','''t Waar','','GR'  UNION ALL
-SELECT 'NL','TZA','''t Zand','','NB'  UNION ALL
-SELECT 'NL','TEG','Tegelen','','LI'  UNION ALL
-SELECT 'NL','NTO','Ten Boer','','GR'  UNION ALL
-SELECT 'NL','TPT','Ten Post','','GR'  UNION ALL
-SELECT 'NL','TEA','Ter Aar','','ZH'  UNION ALL
-SELECT 'NL','TPH','Ter Apel','','GR'  UNION ALL
-SELECT 'NL','TAK','Ter Apelkanaal','','GR'  UNION ALL
-SELECT 'NL','TBO','Terborg','','GE'  UNION ALL
-SELECT 'NL','TER','Terheijden','','NB'  UNION ALL
-SELECT 'NL','TRO','Terhorne','',''  UNION ALL
-SELECT 'NL','TND','Ternaard','','FR'  UNION ALL
-SELECT 'NL','TNZ','Terneuzen','','ZE'  UNION ALL
-SELECT 'NL','TSL','Terschelling','','FR'  UNION ALL
-SELECT 'NL','TET','Teteringen','','NB'  UNION ALL
-SELECT 'NL','TEX','Texel','','NH'  UNION ALL
-SELECT 'NL','THO','Tholen','','ZE'  UNION ALL
-SELECT 'NL','THN','Thorn','','LI'  UNION ALL
-SELECT 'NL','TIE','Tiel','','GE'  UNION ALL
-SELECT 'NL','TLB','Tilburg','','NB'  UNION ALL
-SELECT 'NL','TKW','Tjerkwerd','','FR'  UNION ALL
-SELECT 'NL','TOL','Tolbert','','GR'  UNION ALL
-SELECT 'NL','TLD','Toldijk','','GE'  UNION ALL
-SELECT 'NL','TKM','Tolkamer','','GE'  UNION ALL
-SELECT 'NL','TOK','Tollebeek','','FL'  UNION ALL
-SELECT 'NL','TOR','Torontostraat','',''  UNION ALL
-SELECT 'NL','TRC','Tricht','','GE'  UNION ALL
-SELECT 'NL','TBB','Tubbergen','','OV'  UNION ALL
-SELECT 'NL','TUL','Tuil','','GE'  UNION ALL
-SELECT 'NL','TUH','Tuitjenhorn','','NH'  UNION ALL
-SELECT 'NL','TWE','Twello','','GE'  UNION ALL
-SELECT 'NL','TNO','Tynaarlo','','DR'  UNION ALL
-SELECT 'NL','UDL','Uddel','','GE'  UNION ALL
-SELECT 'NL','UDE','Uden','','NB'  UNION ALL
-SELECT 'NL','UDH','Udenhout','','NB'  UNION ALL
-SELECT 'NL','UFE','Uffelte','','DR'  UNION ALL
-SELECT 'NL','UTR','Uitermeer','','NH'  UNION ALL
-SELECT 'NL','UTG','Uitgeest','','NH'  UNION ALL
-SELECT 'NL','UIT','Uithoorn','','NH'  UNION ALL
-SELECT 'NL','UTZ','Uithuizen','','GR'  UNION ALL
-SELECT 'NL','ULS','Ulestraten','','LI'  UNION ALL
-SELECT 'NL','ULF','Ulft','','GE'  UNION ALL
-SELECT 'NL','UCT','Ulicoten','','NB'  UNION ALL
-SELECT 'NL','ULR','Ulrum','','GR'  UNION ALL
-SELECT 'NL','URK','Urk','','FL'  UNION ALL
-SELECT 'NL','UMO','Urmond','','LI'  UNION ALL
-SELECT 'NL','URS','Ursem','','NH'  UNION ALL
-SELECT 'NL','UTC','Utrecht','','UT'  UNION ALL
-SELECT 'NL','VLS','Vaals','','LI'  UNION ALL
-SELECT 'NL','VAA','Vaassen','','GE'  UNION ALL
-SELECT 'NL','VLK','Valkenburg','','LI'  UNION ALL
-SELECT 'NL','VKS','Valkenisse','',''  UNION ALL
-SELECT 'NL','VAL','Valkenswaard','','NB'  UNION ALL
-SELECT 'NL','VNE','Essen','','GE'  UNION ALL
-SELECT 'NL','VAR','Varsen','','OV'  UNION ALL
-SELECT 'NL','VSR','Varsseveld','','GE'  UNION ALL
-SELECT 'NL','NEV','Veen','','NB'  UNION ALL
-SELECT 'NL','VDM','Veendam','','GR'  UNION ALL
-SELECT 'NL','VNK','Veendijk','','DR'  UNION ALL
-SELECT 'NL','VEE','Veenendaal','','UT'  UNION ALL
-SELECT 'NL','VNO','Veenoord','','DR'  UNION ALL
-SELECT 'NL','VWO','Veenwouden','','FR'  UNION ALL
-SELECT 'NL','VEG','Veghel','','NB'  UNION ALL
-SELECT 'NL','VED','Velden','','LI'  UNION ALL
-SELECT 'NL','VDE','Velden','','LI'  UNION ALL
-SELECT 'NL','VDH','Veldhoven','','NB'  UNION ALL
-SELECT 'NL','VHA','Veldriel','',''  UNION ALL
-SELECT 'NL','VEP','Velp','','NB' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','VEL','Velsen','','NH'  UNION ALL
-SELECT 'NL','VSN','Velsen-Noord','','NH'  UNION ALL
-SELECT 'NL','VBK','Velserbroek','','NH'  UNION ALL
-SELECT 'NL','VHR','Venhorst','','NB'  UNION ALL
-SELECT 'NL','VNH','Venhuizen','','NH'  UNION ALL
-SELECT 'NL','VEN','Venlo','','LI'  UNION ALL
-SELECT 'NL','VLO','Venlo-Autoweg','',''  UNION ALL
-SELECT 'NL','VNR','Venray','','LI'  UNION ALL
-SELECT 'NL','VZH','Ven-Zelderheide','','LI'  UNION ALL
-SELECT 'NL','VSM','Vessem','','NB'  UNION ALL
-SELECT 'NL','VAN','Vianen','','NB'  UNION ALL
-SELECT 'NL','VKK','Vierakker','','GE'  UNION ALL
-SELECT 'NL','VIE','Vierlingsbeek','','NB'  UNION ALL
-SELECT 'NL','VPD','Vierpolders','','ZH'  UNION ALL
-SELECT 'NL','VVL','Vierverlaten','','GR'  UNION ALL
-SELECT 'NL','VIJ','Vijfhuizen','','NB'  UNION ALL
-SELECT 'NL','VIV','Vinkeveen','','UT'  UNION ALL
-SELECT 'NL','VSI','Visvliet','','GR'  UNION ALL
-SELECT 'NL','VLA','Vlaardingen','','ZH'  UNION ALL
-SELECT 'NL','VLT','Vleuten','','UT'  UNION ALL
-SELECT 'NL','VLL','Vlieland','','ZH'  UNION ALL
-SELECT 'NL','VLM','Vlijmen','','NB'  UNION ALL
-SELECT 'NL','VLI','Vlissingen','','ZE'  UNION ALL
-SELECT 'NL','VLD','Vlodrop','','LI'  UNION ALL
-SELECT 'NL','VDL','Voerendaal','','LI'  UNION ALL
-SELECT 'NL','VGB','Voetangelbrug','',''  UNION ALL
-SELECT 'NL','VLW','Vogelwaarde','','ZE'  UNION ALL
-SELECT 'NL','VOD','Volendam','','NH'  UNION ALL
-SELECT 'NL','VLE','Volkel','','NB'  UNION ALL
-SELECT 'NL','VKR','Volkerak','',''  UNION ALL
-SELECT 'NL','VHV','Vollenhove','','OV'  UNION ALL
-SELECT 'NL','ZBW','Vondelingenplaat','','ZH'  UNION ALL
-SELECT 'NL','VOB','Voorburg','','ZH'  UNION ALL
-SELECT 'NL','VOH','Voorhout','','ZH'  UNION ALL
-SELECT 'NL','VOS','Voorschoten','','ZH'  UNION ALL
-SELECT 'NL','VRS','Voorst','','LI'  UNION ALL
-SELECT 'NL','VHZ','Voorthuizen','','GE'  UNION ALL
-SELECT 'NL','VFR','Vorden','','GE'  UNION ALL
-SELECT 'NL','VGR','Vragender','','GE'  UNION ALL
-SELECT 'NL','VDN','Vredenduin','',''  UNION ALL
-SELECT 'NL','VPL','Vredepeel','','LI'  UNION ALL
-SELECT 'NL','VRD','Vreeland','','UT'  UNION ALL
-SELECT 'NL','VIS','Vries','','DR'  UNION ALL
-SELECT 'NL','VRZ','Vriezenveen','','OV'  UNION ALL
-SELECT 'NL','VRH','Vroomshoop','','OV'  UNION ALL
-SELECT 'NL','VRA','Vrouwenakker','','ZH'  UNION ALL
-SELECT 'NL','VGT','Vught','','NB'  UNION ALL
-SELECT 'NL','VRN','Vuren','','GE'  UNION ALL
-SELECT 'NL','WAL','Waalhaven','',''  UNION ALL
-SELECT 'NL','WAA','Waalre','','NB'  UNION ALL
-SELECT 'NL','WLK','Waalwijk','','NB'  UNION ALL
-SELECT 'NL','WDE','Waarde','','ZE'  UNION ALL
-SELECT 'NL','WAB','Waardenburg','','GE'  UNION ALL
-SELECT 'NL','WDN','Waardenburg','','GE'  UNION ALL
-SELECT 'NL','WDR','Waarder','','ZH'  UNION ALL
-SELECT 'NL','WRL','Waarland','','NH'  UNION ALL
-SELECT 'NL','WAD','Waddinxveen','','ZH'  UNION ALL
-SELECT 'NL','WAG','Wagenberg','','NB'  UNION ALL
-SELECT 'NL','WGW','Wageningen','','GE'  UNION ALL
-SELECT 'NL','WHW','Wahlwiller','','LI'  UNION ALL
-SELECT 'NL','WSO','Walsoorden','','ZE'  UNION ALL
-SELECT 'NL','WXM','Wamel','','GE'  UNION ALL
-SELECT 'NL','WAJ','Wanroij','','NB'  UNION ALL
-SELECT 'NL','WAS','Wanssum','','LI'  UNION ALL
-SELECT 'NL','WAP','Wapenveld','','GE'  UNION ALL
-SELECT 'NL','WRD','Warder','','NH'  UNION ALL
-SELECT 'NL','WFM','Warffum','','GR'  UNION ALL
-SELECT 'NL','WHU','Warfhuizen','','GR'  UNION ALL
-SELECT 'NL','WRA','Warga','',''  UNION ALL
-SELECT 'NL','WMH','Warmenhuizen','','NH'  UNION ALL
-SELECT 'NL','WRM','Warmond','','ZH'  UNION ALL
-SELECT 'NL','WAR','Warnsveld','','GE'  UNION ALL
-SELECT 'NL','WTN','Warten','','FR'  UNION ALL
-SELECT 'NL','WTA','Wartena','',''  UNION ALL
-SELECT 'NL','WPI','Waspik','','NB'  UNION ALL
-SELECT 'NL','WSS','Wassenaar','','ZH'  UNION ALL
-SELECT 'NL','WAT','Wateringen','','ZH'  UNION ALL
-SELECT 'NL','WKS','Weakens','','FR'  UNION ALL
-SELECT 'NL','WRT','Weert','','LI'  UNION ALL
-SELECT 'NL','WSP','Weesp','','NH' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','WHO','Wehe-den Hoorn','','GR'  UNION ALL
-SELECT 'NL','WHL','Wehl','','GE'  UNION ALL
-SELECT 'NL','WDM','Weidum','','FR'  UNION ALL
-SELECT 'NL','WKO','Wekerom','','GE'  UNION ALL
-SELECT 'NL','WEL','Well','','LI'  UNION ALL
-SELECT 'NL','WLL','Wellerlooi','','LI'  UNION ALL
-SELECT 'NL','WRP','Welsrijp','','FR'  UNION ALL
-SELECT 'NL','WED','Wemeldinge','','ZE'  UNION ALL
-SELECT 'NL','WWL','Wenum','','GE'  UNION ALL
-SELECT 'NL','WWS','Wenum-Wiesel','',''  UNION ALL
-SELECT 'NL','WKD','Werkendam','','NB'  UNION ALL
-SELECT 'NL','WER','Werkhoven','','UT'  UNION ALL
-SELECT 'NL','WHT','Wernhout','','NB'  UNION ALL
-SELECT 'NL','WEH','Wervershoof','','NH'  UNION ALL
-SELECT 'NL','WPP','Wesepe','','OV'  UNION ALL
-SELECT 'NL','WSM','Wessem','','LI'  UNION ALL
-SELECT 'NL','WBS','Westbeemster','','NH'  UNION ALL
-SELECT 'NL','WDP','Westdorpe','','ZE'  UNION ALL
-SELECT 'NL','WBK','Westerbork','','DR'  UNION ALL
-SELECT 'NL','WBR','Westerbroek','','GR'  UNION ALL
-SELECT 'NL','WGE','Westergeest','','NH'  UNION ALL
-SELECT 'NL','WES','Westerhaar-Vriezenveensewijk','','OV'  UNION ALL
-SELECT 'NL','WHN','Westerhoven','','NB'  UNION ALL
-SELECT 'NL','WEV','Westervoort','','GE'  UNION ALL
-SELECT 'NL','WGD','West-Graftdijk','','NH'  UNION ALL
-SELECT 'NL','WHK','Westhoek','','FR'  UNION ALL
-SELECT 'NL','WKP','Westkapelle','','ZE'  UNION ALL
-SELECT 'NL','WAM','West-Knollendam','','NH'  UNION ALL
-SELECT 'NL','WEM','Westmaas','','ZH'  UNION ALL
-SELECT 'NL','WTE','West-Terschelling','',''  UNION ALL
-SELECT 'NL','WTU','Westwoud','','NH'  UNION ALL
-SELECT 'NL','WTZ','Westzaan','','NH'  UNION ALL
-SELECT 'NL','WEU','Weurt','','GE'  UNION ALL
-SELECT 'NL','WZP','Wezep','','GE'  UNION ALL
-SELECT 'NL','WIE','Wier','','FR'  UNION ALL
-SELECT 'NL','WID','Wierden','','OV'  UNION ALL
-SELECT 'NL','WRG','Wieringen','','NH'  UNION ALL
-SELECT 'NL','WGR','Wieringermeer','','NH'  UNION ALL
-SELECT 'NL','WIW','Wieringerwerf','','NH'  UNION ALL
-SELECT 'NL','WWD','Wieringewaard','',''  UNION ALL
-SELECT 'NL','WRU','Wierum','','FR'  UNION ALL
-SELECT 'NL','WCH','Wijchen','','GE'  UNION ALL
-SELECT 'NL','WWR','Wijde Wormer','',''  UNION ALL
-SELECT 'NL','WDS','Wijdenes','','NH'  UNION ALL
-SELECT 'NL','WWO','Wijdewormer','','NH'  UNION ALL
-SELECT 'NL','WGT','Wijgeest','','FR'  UNION ALL
-SELECT 'NL','WIJ','Wijhe','','OV'  UNION ALL
-SELECT 'NL','WIK','Wijk','',''  UNION ALL
-SELECT 'NL','WKA','Wijk','',''  UNION ALL
-SELECT 'NL','WBD','Wijk bij Duurstede','','UT'  UNION ALL
-SELECT 'NL','WEA','Wijk en Aalburg','','NB'  UNION ALL
-SELECT 'NL','WJW','Wijnjewoude','','FR'  UNION ALL
-SELECT 'NL','WLD','Wildervank','','GR'  UNION ALL
-SELECT 'NL','WHD','Wilhelminadorp','','ZE'  UNION ALL
-SELECT 'NL','WIS','Willemstad','','NB'  UNION ALL
-SELECT 'NL','WLN','Wilnis','','UT'  UNION ALL
-SELECT 'NL','WIL','Wilp','','GE'  UNION ALL
-SELECT 'NL','WNK','Winkel','','NB'  UNION ALL
-SELECT 'NL','WSC','Winschoten','','GR'  UNION ALL
-SELECT 'NL','WSN','Winssen','','GE'  UNION ALL
-SELECT 'NL','WNS','Winsum','','FR'  UNION ALL
-SELECT 'NL','WTW','Winterswijk','','GE'  UNION ALL
-SELECT 'NL','WIT','Wittelte','','DR'  UNION ALL
-SELECT 'NL','WOE','Woensdrecht','','NB'  UNION ALL
-SELECT 'NL','WOR','Woerden','','UT'  UNION ALL
-SELECT 'NL','WGN','Wognum','','NH'  UNION ALL
-SELECT 'NL','WOL','Wolfheze','','GE'  UNION ALL
-SELECT 'NL','WKG','Wolsumerketting','','FR'  UNION ALL
-SELECT 'NL','WVG','Wolvega','','FR'  UNION ALL
-SELECT 'NL','WMS','Wommels','','FR'  UNION ALL
-SELECT 'NL','WKU','Workum','','FR'  UNION ALL
-SELECT 'NL','WMO','Wormer','','NH'  UNION ALL
-SELECT 'NL','WRV','Wormerveer','','NH'  UNION ALL
-SELECT 'NL','WDB','Woudenberg','','UT'  UNION ALL
-SELECT 'NL','WCM','Woudrichem','','NB'  UNION ALL
-SELECT 'NL','WSD','Woudsend','','FR'  UNION ALL
-SELECT 'NL','WOU','Wouw','','NB'  UNION ALL
-SELECT 'NL','YSK','Yerseke','','ZE'  UNION ALL
-SELECT 'NL','YPG','Ypenburg','','ZH'  UNION ALL
-SELECT 'NL','ZAH','Zaamslag','','ZE' ;
-INSERT INTO ISO_LOCATION ([IC_UID],[IL_UID],[IL_NAME],[IL_NORMAL_NAME],[IS_UID]) 
-SELECT 'NL','ZAA','Zaandam','','NH'  UNION ALL
-SELECT 'NL','ZAD','Zaandijk','','NH'  UNION ALL
-SELECT 'NL','ZST','Zaanstad','','NH'  UNION ALL
-SELECT 'NL','ZLK','Zalk','','OV'  UNION ALL
-SELECT 'NL','ZLB','Zaltbommel','','GE'  UNION ALL
-SELECT 'NL','ZPO','Zandpol','','DR'  UNION ALL
-SELECT 'NL','ZDV','Zandvoort','','NH'  UNION ALL
-SELECT 'NL','ZDM','Zeddam','','GE'  UNION ALL
-SELECT 'NL','ZLA','Zeeland','','NB'  UNION ALL
-SELECT 'NL','ZEW','Zeewolde','','FL'  UNION ALL
-SELECT 'NL','ZEG','Zegge','','NB'  UNION ALL
-SELECT 'NL','ZIT','Zeist','','UT'  UNION ALL
-SELECT 'NL','ZEM','Zelhem','','GE'  UNION ALL
-SELECT 'NL','ZND','Zenderen','','OV'  UNION ALL
-SELECT 'NL','ZET','Zetten','','GE'  UNION ALL
-SELECT 'NL','ZEV','Zevenaar','','GE'  UNION ALL
-SELECT 'NL','ZVB','Zevenbergen','','NB'  UNION ALL
-SELECT 'NL','ZBK','Zevenbergschen Hoek','','NB'  UNION ALL
-SELECT 'NL','ZHV','Zevenhoven','','ZH'  UNION ALL
-SELECT 'NL','ZVH','Zevenhuizen','','NB'  UNION ALL
-SELECT 'NL','ZHU','Zevenhuizen','','FR'  UNION ALL
-SELECT 'NL','ZHN','Zevenhuizen','','UT'  UNION ALL
-SELECT 'NL','ZIE','Zierikzee','','ZE'  UNION ALL
-SELECT 'NL','ZDW','Zijdewind','','NH'  UNION ALL
-SELECT 'NL','ZPS','Zijpersluis','','NH'  UNION ALL
-SELECT 'NL','ZOE','Zoelen','','GE'  UNION ALL
-SELECT 'NL','ZTM','Zoetermeer','','ZH'  UNION ALL
-SELECT 'NL','ZOU','Zoeterwoude','','ZH'  UNION ALL
-SELECT 'NL','ZWD','Zoeterwoude-Rijndijk','','ZH'  UNION ALL
-SELECT 'NL','ZLD','Zoutelande','','ZE'  UNION ALL
-SELECT 'NL','ZOT','Zoutkamp','','GR'  UNION ALL
-SELECT 'NL','ZBJ','Zuid-Beijerland','','ZH'  UNION ALL
-SELECT 'NL','ZBO','Zuidbroek','','ZH'  UNION ALL
-SELECT 'NL','ZBY','Zuiddorpe','','ZE'  UNION ALL
-SELECT 'NL','ZEI','Zuideinde','','ZH'  UNION ALL
-SELECT 'NL','ZUL','Zuidland','','ZH'  UNION ALL
-SELECT 'NL','ZDL','Zuidlaren','','DR'  UNION ALL
-SELECT 'NL','ZOB','Zuidoostbeemster','','NH'  UNION ALL
-SELECT 'NL','ZWL','Zuidwolde','','DR'  UNION ALL
-SELECT 'NL','ZCH','Zuilichem','','GE'  UNION ALL
-SELECT 'NL','ZUN','Zuna','','OV'  UNION ALL
-SELECT 'NL','ZUD','Zundert','','NB'  UNION ALL
-SELECT 'NL','ZUR','Zurich','','FR'  UNION ALL
-SELECT 'NL','ZUT','Zutphen','','GE'  UNION ALL
-SELECT 'NL','ZAG','Zwaag','','NH'  UNION ALL
-SELECT 'NL','ZGD','Zwaagdijk','','NH'  UNION ALL
-SELECT 'NL','ZWE','Zwaagwesteinde','','FR'  UNION ALL
-SELECT 'NL','ZHO','Zwaanshoek','','NH'  UNION ALL
-SELECT 'NL','ZMM','Zwammerdam','','ZH'  UNION ALL
-SELECT 'NL','ZWA','Zwanenburg','','NH'  UNION ALL
-SELECT 'NL','ZBR','Zwartebroek','','GE'  UNION ALL
-SELECT 'NL','ZWB','Zwartenberg','','NB'  UNION ALL
-SELECT 'NL','ZWW','Zwartewaal','','ZH'  UNION ALL
-SELECT 'NL','ZWS','Zwartsluis','','OV'  UNION ALL
-SELECT 'NL','ZGE','Zwiggelte','','DR'  UNION ALL
-SELECT 'NL','ZWI','Zwijndrecht','','ZH'  UNION ALL
-SELECT 'NL','ZWN','Zwinderen','','DR'  UNION ALL
-SELECT 'NL','ZWO','Zwolle','','GE' ;
+SELECT 'ZW','WKI','Hwange','','' ;
 
 INSERT INTO [DASHLET] ([DAS_UID],[DAS_CLASS],[DAS_TITLE],[DAS_DESCRIPTION],[DAS_VERSION],[DAS_CREATE_DATE],[DAS_UPDATE_DATE],[DAS_STATUS])
-SELECT '00000000000000000000000000000002','dashletProcessMakerCommunity','ProcessMaker Community','ProcessMaker Community Links and Information','1.0','2011-12-01 00:00:00','2011-12-01 00:00:00','1' UNION ALL
 SELECT '00000000000000000000000000000001','dashletOpenVSCompleted','Open Cases VS Completed Cases','Open Cases VS Completed Cases','1.0','2011-10-28 00:00:00','2011-10-28 00:00:00','1' UNION ALL
-SELECT '00000000000000000000000000000003','dashletProcessMakerEnterprise','ProcessMaker Enterprise Plugins and Addons','The following list of Enterprise plug-ins includes features and functionality that extend and enhance ProcessMaker performance and functionality.','1.0','2011-12-05 00:00:00','2011-12-05 00:00:00','1' UNION ALL
+SELECT '00000000000000000000000000000002','dashletProcessMakerCommunity','ProcessMaker Community','ProcessMaker Community Links and Information','1.0','2011-12-01 00:00:00','2011-12-01 00:00:00','1' UNION ALL
+SELECT '00000000000000000000000000000003','dashletProcessMakerEnterprise','ProcessMaker Enterprise Plugins and Addons','The following list of Enterprise plug-ins includes features and functionality that extend and enhance ProcessMaker's performance and functionality.','1.0','2011-12-05 00:00:00','2011-12-05 00:00:00','1' UNION ALL
 SELECT '00000000000000000000000000000004','dashletRssReader','Simple RSS reader','Simple RSS reader for ProcessMaker','1.0','2012-04-16 00:00:00','2012-04-16 00:00:00','1';
 
 INSERT INTO [DASHLET_INSTANCE] ([DAS_INS_UID],[DAS_UID],[DAS_INS_OWNER_TYPE],[DAS_INS_OWNER_UID],[DAS_INS_ADDITIONAL_PROPERTIES],[DAS_INS_CREATE_DATE],[DAS_INS_UPDATE_DATE],[DAS_INS_STATUS])
-SELECT '00000000000000000000000000000002','00000000000000000000000000000002','EVERYBODY','','a:1:{s:13:"DAS_INS_TITLE";s:22:"ProcessMaker Community";}','2011-12-02 00:00:00','2011-12-02 00:00:00',1 UNION ALL
-SELECT '00000000000000000000000000000001','00000000000000000000000000000001','EVERYBODY','','a:8:{s:13:"DAS_INS_TITLE";s:29:"Open Cases VS Completed Cases";s:20:"DAS_INS_CONTEXT_TIME";s:5:"TODAY";s:12:"DAS_RED_FROM";s:1:"0";s:10:"DAS_RED_TO";s:2:"30";s:15:"DAS_YELLOW_FROM";s:2:"30";s:13:"DAS_YELLOW_TO";s:2:"50";s:14:"DAS_GREEN_FROM";s:2:"50";s:12:"DAS_GREEN_TO";s:3:"100";}','2011-12-02 00:00:00','2011-12-02 00:00:00',1 UNION ALL
-SELECT '00000000000000000000000000000003','00000000000000000000000000000003','EVERYBODY','','a:1:{s:13:"DAS_INS_TITLE";s:42:"ProcessMaker Enterprise Plugins and Addons";}','2011-12-05 00:00:00','2011-12-05 00:00:00',1;
+SELECT '00000000000000000000000000000004','00000000000000000000000000000004','EVERYBODY','','a:2:{s:13:"DAS_INS_TITLE";s:15:"PM Plugins News";s:7:"DAS_URL";s:71:"http://license.processmaker.com/syspmLicenseSrv/en/green/services/rssAP";}','2012-04-16 00:00:00','2012-04-16 00:00:00',1 UNION ALL
+SELECT '00000000000000000000000000000002','00000000000000000000000000000002','EVERYBODY','','','2011-12-02 00:00:00','2011-12-02 00:00:00',1 UNION ALL
+SELECT '00000000000000000000000000000001','00000000000000000000000000000001','EVERYBODY','','a:7:{s:20:"DAS_INS_CONTEXT_TIME";s:5:"TODAY";s:12:"DAS_RED_FROM";s:1:"0";s:10:"DAS_RED_TO";s:2:"30";s:15:"DAS_YELLOW_FROM";s:2:"30";s:13:"DAS_YELLOW_TO";s:2:"50";s:14:"DAS_GREEN_FROM";s:2:"50";s:12:"DAS_GREEN_TO";s:3:"100";}','2011-12-02 00:00:00','2011-12-02 00:00:00',1 UNION ALL
+SELECT '00000000000000000000000000000003','00000000000000000000000000000003','EVERYBODY','','','2011-12-05 00:00:00','2011-12-05 00:00:00',1;
 

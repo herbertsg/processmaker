@@ -183,6 +183,8 @@
             <xs:element name="email" type="xs:string"/>
             <xs:element name="role" type="xs:string"/>
             <xs:element name="password" type="xs:string"/>
+            <xs:element name="dueDate" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="status" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -192,6 +194,31 @@
             <xs:element name="status_code" type="xs:integer"/>
             <xs:element name="message" type="xs:string"/>
             <xs:element name="userUID" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="updateUserRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="userUid" type="xs:string"/>
+            <xs:element name="userName" type="xs:string"/>
+            <xs:element name="firstName" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="lastName" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="email" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="dueDate" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="status" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+            <xs:element name="password" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="updateUserResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
             <xs:element name="timestamp" type="xs:string"/>
           </xs:sequence>
         </xs:complexType>
@@ -281,6 +308,11 @@
           <xs:element name="value" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="variableListNameStruct">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:element name="variableListRequest">
         <xs:complexType>
           <xs:sequence>
@@ -298,12 +330,30 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="getVariablesNamesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+            <xs:element name="variables" minOccurs="0" maxOccurs="unbounded" type="xs0:variableListNameStruct"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="getVariablesRequest">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="sessionId" type="xs:string"/>
             <xs:element name="caseId" type="xs:string"/>
             <xs:element name="variables" maxOccurs="unbounded" type="xs0:variableStruct"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getVariablesNamesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="caseId" type="xs:string"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -449,6 +499,7 @@
             <xs:element name="processId" minOccurs="0" type="xs:string"/>
             <xs:element name="processName" minOccurs="0" type="xs:string"/>
             <xs:element name="createDate" minOccurs="0" type="xs:string"/>
+            <xs:element name="updateDate" minOccurs="0" type="xs:string"/>
             <xs:element name="currentUsers" minOccurs="0" maxOccurs="unbounded" type="xs0:getCaseInfoStruct"/>
           </xs:sequence>
         </xs:complexType>
@@ -697,8 +748,84 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="deleteCaseRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="caseUid" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="deleteCaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="cancelCaseRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="caseUid" type="xs:string"/>
+            <xs:element name="delIndex" type="xs:string"/>
+            <xs:element name="userUid" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="cancelCaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="pauseCaseRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="caseUid" type="xs:string"/>
+            <xs:element name="delIndex" type="xs:string"/>
+            <xs:element name="userUid" type="xs:string"/>
+            <xs:element name="unpauseDate" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="pauseCaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="unpauseCaseRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="sessionId" type="xs:string"/>
+            <xs:element name="caseUid" type="xs:string"/>
+            <xs:element name="delIndex" type="xs:string"/>
+            <xs:element name="userUid" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="unpauseCaseResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="status_code" type="xs:integer"/>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
   </types>
+
   <message name="loginRequest">
     <part name="parameters" element="xs0:login"/>
   </message>
@@ -759,6 +886,12 @@
   <message name="createUserResponse">
     <part name="parameters" element="xs0:createUserResponse"/>
   </message>
+  <message name="updateUserRequest">
+    <part name="parameters" element="xs0:updateUserRequest"/>
+  </message>
+  <message name="updateUserResponse">
+    <part name="parameters" element="xs0:updateUserResponse"/>
+  </message>
   <message name="createGroupRequest">
     <part name="parameters" element="xs0:createGroupRequest"/>
   </message>
@@ -809,6 +942,12 @@
   </message>
   <message name="getVariablesResponse">
     <part name="parameters" element="xs0:getVariablesResponse"/>
+  </message>
+  <message name="getVariablesNamesRequest">
+    <part name="parameters" element="xs0:getVariablesNamesRequest"/>
+  </message>
+  <message name="getVariablesNamesResponse">
+    <part name="parameters" element="xs0:getVariablesNamesResponse"/>
   </message>
   <message name="sendMessageRequest">
     <part name="parameters" element="xs0:sendMessageRequest"/>
@@ -879,10 +1018,34 @@
   <message name="getCaseNotesResponse">
     <part name="parameters" element="xs0:getCaseNotesResponse"/>
   </message>
-
   <message name="removeUserFromGroupRequest">
     <part name="parameters" element="xs0:removeUserFromGroupRequest"/>
   </message>
+    <message name="deleteCaseRequest">
+    <part name="parameters" element="xs0:deleteCaseRequest"/>
+  </message>
+  <message name="deleteCaseResponse">
+    <part name="parameters" element="xs0:deleteCaseResponse"/>
+  </message>
+  <message name="cancelCaseRequest">
+    <part name="parameters" element="xs0:cancelCaseRequest"/>
+  </message>
+  <message name="cancelCaseResponse">
+    <part name="parameters" element="xs0:cancelCaseResponse"/>
+  </message>
+  <message name="pauseCaseRequest">
+    <part name="parameters" element="xs0:pauseCaseRequest"/>
+  </message>
+  <message name="pauseCaseResponse">
+    <part name="parameters" element="xs0:pauseCaseResponse"/>
+  </message>
+  <message name="unpauseCaseRequest">
+    <part name="parameters" element="xs0:unpauseCaseRequest"/>
+  </message>
+  <message name="unpauseCaseResponse">
+    <part name="parameters" element="xs0:unpauseCaseResponse"/>
+  </message>
+
   <portType name="ProcessMakerServiceSoap">
     <operation name="login">
       <input message="xs0:loginRequest"/>
@@ -919,6 +1082,10 @@
     <operation name="createUser">
       <input message="xs0:createUserRequest"/>
       <output message="xs0:createUserResponse"/>
+    </operation>
+    <operation name="updateUser">
+      <input message="xs0:updateUserRequest"/>
+      <output message="xs0:updateUserResponse"/>
     </operation>
     <operation name="createGroup">
       <input message="xs0:createGroupRequest"/>
@@ -963,6 +1130,10 @@
     <operation name="getVariables">
       <input message="xs0:getVariablesRequest"/>
       <output message="xs0:getVariablesResponse"/>
+    </operation>
+    <operation name="getVariablesNames">
+      <input message="xs0:getVariablesNamesRequest"/>
+      <output message="xs0:getVariablesNamesResponse"/>
     </operation>
     <operation name="sendMessage">
       <input message="xs0:sendMessageRequest"/>
@@ -1012,16 +1183,32 @@
       <input message="xs0:getCaseNotesRequest"/>
       <output message="xs0:getCaseNotesResponse"/>
     </operation>
-    
     <operation name="removeUserFromGroup">
       <input message="xs0:removeUserFromGroupRequest"/>
       <output message="xs0:pmResponse"/>
     </operation>
+    <operation name="deleteCase">
+      <input message="xs0:deleteCaseRequest"/>
+      <output message="xs0:deleteCaseResponse"/>
+    </operation>
+    <operation name="cancelCase">
+      <input message="xs0:cancelCaseRequest"/>
+      <output message="xs0:cancelCaseResponse"/>
+    </operation>
+    <operation name="pauseCase">
+      <input message="xs0:pauseCaseRequest"/>
+      <output message="xs0:pauseCaseResponse"/>
+    </operation>
+    <operation name="unpauseCase">
+      <input message="xs0:unpauseCaseRequest"/>
+      <output message="xs0:unpauseCaseResponse"/>
+    </operation>
   </portType>
+
   <binding name="ProcessMakerServiceSoap" type="xs0:ProcessMakerServiceSoap">
     <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="login">
-      <soap12:operation soapAction="http://www.processmaker.comlogin" soapActionRequired="true" style="document"/>
+      <soap12:operation soapAction="http://www.processmaker.com/login" soapActionRequired="true" style="document"/>
       <input>
         <soap12:body use="literal"/>
       </input>
@@ -1094,6 +1281,15 @@
     </operation>
     <operation name="createUser">
       <soap12:operation soapAction="urn:createUser" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="updateUser">
+      <soap12:operation soapAction="urn:updateUser" soapActionRequired="true" style="document"/>
       <input>
         <soap12:body use="literal"/>
       </input>
@@ -1193,6 +1389,15 @@
     </operation>
     <operation name="getVariables">
       <soap12:operation soapAction="urn:getVariables" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getVariablesNames">
+      <soap12:operation soapAction="urn:getVariablesNames" soapActionRequired="true" style="document"/>
       <input>
         <soap12:body use="literal"/>
       </input>
@@ -1308,7 +1513,6 @@
         <soap12:body use="literal"/>
       </output>
     </operation>
-    
     <operation name="removeUserFromGroup">
       <soap12:operation soapAction="urn:removeUserFromGroup" soapActionRequired="true" style="document"/>
       <input>
@@ -1318,7 +1522,44 @@
         <soap12:body use="literal"/>
       </output>
     </operation>
+    <operation name="deleteCase">
+      <soap12:operation soapAction="urn:deleteCase" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="cancelCase">
+      <soap12:operation soapAction="urn:cancelCase" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="pauseCase">
+      <soap12:operation soapAction="urn:pauseCase" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="unpauseCase">
+      <soap12:operation soapAction="urn:unpauseCase" soapActionRequired="true" style="document"/>
+      <input>
+        <soap12:body use="literal"/>
+      </input>
+      <output>
+        <soap12:body use="literal"/>
+      </output>
+    </operation>
   </binding>
+
   <service name="ProcessMakerService">
     <documentation>ProcessMaker Web Service</documentation>
     <port name="ProcessMakerServiceSoap" binding="xs0:ProcessMakerServiceSoap">

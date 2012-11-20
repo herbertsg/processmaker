@@ -15,64 +15,65 @@ require_once 'classes/model/om/BaseAppNotes.php';
  */
 class AppNotes extends BaseAppNotes {
 
-  function getNotesList($appUid, $usrUid = '', $start = '', $limit = '') {
-    require_once ( "classes/model/Users.php" );
+    function getNotesList($appUid, $usrUid='', $start='', $limit='')
+    {
+        require_once ("classes/model/Users.php");
 
-    G::LoadClass('ArrayPeer');
+        G::LoadClass('ArrayPeer');
 
-    $Criteria = new Criteria('workflow');
-    $Criteria->clearSelectColumns();
+        $Criteria = new Criteria('workflow');
+        $Criteria->clearSelectColumns();
 
-    $Criteria->addSelectColumn(AppNotesPeer::APP_UID);
-    $Criteria->addSelectColumn(AppNotesPeer::USR_UID);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_DATE);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_CONTENT);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_TYPE);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_AVAILABILITY);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_ORIGIN_OBJ);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_AFFECTED_OBJ1);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_AFFECTED_OBJ2);
-    $Criteria->addSelectColumn(AppNotesPeer::NOTE_RECIPIENTS);
-    $Criteria->addSelectColumn(UsersPeer::USR_USERNAME);
-    $Criteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-    $Criteria->addSelectColumn(UsersPeer::USR_LASTNAME);
-    $Criteria->addSelectColumn(UsersPeer::USR_EMAIL);
+        $Criteria->addSelectColumn(AppNotesPeer::APP_UID);
+        $Criteria->addSelectColumn(AppNotesPeer::USR_UID);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_DATE);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_CONTENT);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_TYPE);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_AVAILABILITY);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_ORIGIN_OBJ);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_AFFECTED_OBJ1);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_AFFECTED_OBJ2);
+        $Criteria->addSelectColumn(AppNotesPeer::NOTE_RECIPIENTS);
+        $Criteria->addSelectColumn(UsersPeer::USR_USERNAME);
+        $Criteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+        $Criteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+        $Criteria->addSelectColumn(UsersPeer::USR_EMAIL);
 
-    $Criteria->addJoin(AppNotesPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+        $Criteria->addJoin(AppNotesPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
-    $Criteria->add(appNotesPeer::APP_UID, $appUid, CRITERIA::EQUAL);
-    
-    if ($usrUid != '') {
-      $Criteria->add(appNotesPeer::USR_UID, $usrUid, CRITERIA::EQUAL);
+        $Criteria->add(appNotesPeer::APP_UID, $appUid, CRITERIA::EQUAL);
+
+        if ($usrUid != '') {
+            $Criteria->add(appNotesPeer::USR_UID, $usrUid, CRITERIA::EQUAL);
+        }
+
+        $Criteria->addDescendingOrderByColumn(AppNotesPeer::NOTE_DATE);
+
+        $response = array();
+        $totalCount = AppNotesPeer::doCount($Criteria);
+        $response['totalCount'] = $totalCount;
+        $response['notes'] = array();
+
+        if ($start != '') {
+            $Criteria->setLimit($limit);
+            $Criteria->setOffset($start);
+        }
+
+        $oDataset = appNotesPeer::doSelectRS($Criteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+
+        while ($aRow = $oDataset->getRow()) {
+            $aRow['NOTE_CONTENT'] = stripslashes($aRow['NOTE_CONTENT']);
+            $response['notes'][] = $aRow;
+            $oDataset->next();
+        }
+
+        $result['criteria'] = $Criteria;
+        $result['array'] = $response;
+
+        return $result;
     }
-
-    $Criteria->addDescendingOrderByColumn(AppNotesPeer::NOTE_DATE);
-
-    $response = array();
-    $totalCount = AppNotesPeer::doCount($Criteria);
-    $response['totalCount'] = $totalCount;
-    $response['notes'] = array();
-
-    if ($start != '') {
-      $Criteria->setLimit($limit);
-      $Criteria->setOffset($start);
-    }
-
-    $oDataset = appNotesPeer::doSelectRS($Criteria);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-
-    while ($aRow = $oDataset->getRow()) {
-
-      $response['notes'][] = $aRow;
-      $oDataset->next();
-    }
-
-    $result['criteria'] = $Criteria;
-    $result['array'] = $response;
-
-    return $result;
-  }
 
 
   function postNewNote($appUid, $usrUid, $noteContent, $notify=true, $noteAvalibility="PUBLIC", $noteRecipients="", $noteType="USER", $noteDate="now") {
@@ -146,12 +147,18 @@ class AppNotes extends BaseAppNotes {
         $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
         if ($aConfiguration['CFG_VALUE'] != '') {
           $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
-          $passwd = $aConfiguration['MESS_PASSWORD'];           
+          $passwd = $aConfiguration['MESS_PASSWORD'];
           $passwdDec = G::decrypt($passwd,'EMAILENCRYPT');
-          if (strpos( $passwdDec, 'hash:' ) !== false) {
-    	      list($hash, $pass) = explode(":", $passwdDec);   
-    	      $aConfiguration['MESS_PASSWORD'] = $pass;
-          }
+          $auxPass = explode('hash:', $passwdDec);
+		  if (count($auxPass) > 1) {
+              if (count($auxPass) == 2) {
+                  $passwd = $auxPass[1];
+              } else {
+                  array_shift($auxPass);
+                  $passwd = implode('', $auxPass);
+              }
+		  }
+          $aConfiguration['MESS_PASSWORD'] = $passwd;
         } else {
           $aConfiguration = array();
         }
@@ -175,26 +182,30 @@ class AppNotes extends BaseAppNotes {
         $sFrom = '"ProcessMaker"';
       }
 
-      if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
-        $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
-      } else {
-        if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
-          $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
+      $hasEmailFrom = preg_match('/(.+)@(.+)\.(.+)/', $sFrom, $match);
+
+      if (!$hasEmailFrom || strpos($sFrom, $aConfiguration['MESS_ACCOUNT']) === false) {
+        if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
+          $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
         } else {
-          if ($aConfiguration['MESS_SERVER'] != '') {
-            if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
-              $sFrom .= ' <info@' . $sAux . '>';
-            } else {
-              $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
-            }
+          if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
+            $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
           } else {
-            $sFrom .= ' <info@processmaker.com>';
+            if ($aConfiguration['MESS_SERVER'] != '') {
+              if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
+                $sFrom .= ' <info@' . $sAux . '>';
+              } else {
+                $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
+              }
+            } else {
+              $sFrom .= ' <info@processmaker.com>';
+            }
           }
         }
       }
 
-        $sSubject = G::replaceDataField($configNoteNotification['subject'], $aFields);
-      
+      $sSubject = G::replaceDataField($configNoteNotification['subject'], $aFields);
+
 
       //erik: new behaviour for messages
       //G::loadClass('configuration');
@@ -219,7 +230,7 @@ class AppNotes extends BaseAppNotes {
 
       G::LoadClass('spool');
       $oUser = new Users();
-      
+
         $recipientsArray=explode(",",$noteRecipients);
 
         foreach($recipientsArray as $recipientUid){
@@ -254,7 +265,7 @@ class AppNotes extends BaseAppNotes {
           if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
             $oSpool->sendMail();
           }
-        
+
         }
 
       //Send derivation notification - End

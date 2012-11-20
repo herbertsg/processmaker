@@ -1,7 +1,7 @@
 <?php
 /**
  * class.xmlform.php
- * @package gulliver.system 
+ * @package gulliver.system
  *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2011 Colosa Inc.
@@ -33,6 +33,7 @@ class XmlForm_Field {
   var $name             = '';
   var $type             = 'field';
   var $label            = '';
+  var $pmLabel          = '';
   var $owner;
   var $language;
   var $group            = 0;
@@ -41,7 +42,7 @@ class XmlForm_Field {
   var $gridFieldType    = '';
   var $gridLabel        = '';
   /* Hint value generic declaration */
-  var $hint             = '';       
+  var $hint             = '';
   /*to change the presentation*/
   var $enableHtml       = false;
   var $style            = '';
@@ -70,7 +71,7 @@ class XmlForm_Field {
   var $pmconnection     = '';
   var $pmfield          = '';
 
-  // For mode cases Grid 
+  // For mode cases Grid
   var $modeGrid         = '';
   var $modeForGrid      = '';
   /**
@@ -101,7 +102,7 @@ class XmlForm_Field {
         }
       }
     }
-    @$this->label = $data->value;
+    @$this->label = $this->pmLabel = $data->value;
 
 
     /*Loads the field attributes*/
@@ -124,11 +125,22 @@ class XmlForm_Field {
     $this->options = (isset ( $this->option )) ? $this->option : array ();
     //Sql Options : cause warning because values are not setted yet.
     //if ($this->sql!=='') $this->executeSQL();
-    //maybe $ownerMode is not defined..
-    $ownerMode = isset ( $owner->mode ) ? $owner->mode : 'edit';
-    if ($this->mode === '')
-      $this->mode = $ownerMode !== '' ? $ownerMode : 'edit';
-    $this->modeForGrid = $this->mode ;
+    if (isset($owner)) {
+        if (isset($owner->mode)) {
+            $ownerMode = $owner->mode;
+        } else {
+            $ownerMode = '';
+        }
+    } else {
+        $ownerMode = '';
+    }
+    if ($ownerMode != '') {
+        $this->mode = $ownerMode;
+    }
+    if ($this->mode == '') {
+        $this->mode = 'edit';
+    }
+    $this->modeForGrid = $this->mode;
   }
 
   /**
@@ -230,7 +242,7 @@ class XmlForm_Field {
           $aAux [$key] = $data;
         }
       }
-      
+
       //echo '2';
       //g::pr($aAux);
       $query = G::replaceDataField ( $this->sql, $aAux );
@@ -689,20 +701,20 @@ class XmlForm_Field {
     }
     return $sValue;
   }
- 
+
   /**
    * Prepares NS Required Value
    * @author Enrique Ponce de Leon <enrique@colosa.com>
    * @param boolean optional (true = always show, false = show only if not empty)
    * @return string
    */
-  
+
   function NSRequiredValue($show = false){
     if (isset($this->required)){
       $req = ($this->required)? '1':'0';
     }else{
       $req = '0';
-    }  
+    }
     $idv = 'pm:required="'.$req.'"';
     if ($show){
       return $idv;
@@ -710,25 +722,25 @@ class XmlForm_Field {
       return ($req != '0')? $idv : '';
     }
   }
-  
-  
+
+
   /**
    * Prepares NS Required Value
    * @author Enrique Ponce de Leon <enrique@colosa.com>
    * @param boolean optional (true = always show, false = show only if not empty)
-   * @return string 
+   * @return string
    */
-  
+
   function NSGridLabel($show = false){
-    $idv = 'pm:label="'.$this->label.'"';
+    $idv = 'pm:label="'.$this->pmLabel.'"';
     if ($show){
       return $idv;
     }else{
-      return ($this->label != '')? $idv : '';
+      return ($this->pmLabel != '')? $idv : '';
     }
   }
-  
-  
+
+
   /**
    * Prepares NS Default Text
    * @author Enrique Ponce de Leon <enrique@colosa.com>
@@ -743,7 +755,7 @@ class XmlForm_Field {
       return ($this->defaultValue != '')? $idv : '';
     }
   }
-  
+
   /**
    * Prepares NS Grid Type
    * @author Enrique Ponce de Leon <enrique@colosa.com>
@@ -758,7 +770,7 @@ class XmlForm_Field {
       return ($this->gridFieldType != '')? $igt : '';
     }
   }
-  
+
   /**
    * Prepares NS Grid Type
    * @author Enrique Ponce de Leon <enrique@colosa.com>
@@ -773,14 +785,14 @@ class XmlForm_Field {
       return ($this->dependentFields != '')? $idf : '';
     }
   }
-  
+
   /**
    * Prepares Hint HTML if hint value is defined
    * @author Enrique Ponce de Leon <enrique@colosa.com>
    * @param void
    * @return string
    **/
-  
+
   function renderHint(){
     $_outHint = '';
     if ($this->hint != '' && $this->mode=='edit'){
@@ -790,8 +802,8 @@ class XmlForm_Field {
     }
     return $_outHint;
   }
-  
-}  
+
+}
 /**
  * Class XmlForm_Field_Title
  * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -901,7 +913,7 @@ class XmlForm_Field_SimpleText extends XmlForm_Field
     $result = array ();
     $r = 1;
     if ($owner->mode != 'view') $this->renderMode = $this->modeForGrid;
-    
+
     foreach ( $values as $v ) {
       $html = '';
       if ($this->renderMode === 'edit'){ //EDIT MODE
@@ -957,8 +969,9 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
   var $function         = '';
   var $replaceTags      = 0;
   var $renderMode       = '';
-  
-  
+  var $comma_separator = '.';
+
+
   /**
    * Function render
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -988,7 +1001,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
     if ($this->replaceTags == 1) {
       $value = G::replaceDataField ( $value, $owner->values );
     }
-    
+
     $html = '';
     if ($this->renderMode == 'edit'){ //EDIT MODE
       $readOnlyText = ($this->readOnly == 1 || $this->readOnly == '1') ? 'readOnly="readOnly"': '';
@@ -1001,6 +1014,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
       $html .= 'onkeypress="'.$this->htmlentities($onkeypress, ENT_COMPAT, 'utf-8').'" ';
       $html .= $this->NSDefaultValue().' ';
       $html .= $this->NSRequiredValue().' ';
+      $html .= 'pm:decimal_separator="' . $this->comma_separator . '" ';
       $html .= '/>';
     }else{ //VIEW MODE
       $html .= $this->htmlentities($value, ENT_QUOTES, 'utf-8');
@@ -1009,11 +1023,11 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
       $html .= 'name="form[' . $this->name . ']" ';
       $html .= 'type="hidden" value="'.$this->htmlentities($value, ENT_QUOTES, 'utf-8').'" />';
     }
-    
-    $html .= $this->renderHint();  
-    if (($this->readOnly == 1)&&($this->renderMode == 'edit'))    
+
+    $html .= $this->renderHint();
+    if (($this->readOnly == 1)&&($this->renderMode == 'edit'))
       $html = str_replace("class=\"module_app_input___gray\"","class=\"module_app_input___gray_readOnly\"",$html);
- 
+
     return $html;
   }
 
@@ -1040,7 +1054,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
         $v = G::replaceDataField ( $v, $owner->values );
       }
       $aux [$r] = $v;
-      
+
       $html = '';
       if ($this->renderMode == 'edit'){ //EDIT MODE
         $readOnlyText = ($this->readOnly == 1 || $this->readOnly == '1') ? 'readOnly="readOnly"': '';
@@ -1064,7 +1078,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
         $html .= $this->NSDefaultValue().' ';
         $html .= 'type="hidden" value="'.$this->htmlentities($v, ENT_QUOTES, 'utf-8').'" />';
       }
-      
+
       $result [] = $html;
       $r ++;
     }
@@ -1107,7 +1121,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
   var $replaceTags           = 0;
 
   var $ajaxServer            = '../gulliver/genericAjax';
-  var $maxresults;
+  var $maxresults            = '6';
   var $savelabel             = 1;
   var $shownoresults;
   var $callback              = '';
@@ -1133,7 +1147,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
   function render($value = NULL, $owner = NULL)
   {
 
-    
+
     if (! $this->sqlConnection)
       $this->sqlConnection = 'workflow';
 
@@ -1154,9 +1168,12 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
         'size'  => '"'.$this->size.'"',
     );
 
-    $storeEntry = '';
-    if($this->store_new_entry){
-      $storeEntry = 'onchange="storeEntry(this, \''.$this->sqlConnection.'\', \''.$this->table.'\', \''.$this->primary_key.'\', \''.$this->primary_key_type.'\', \''.$this->field.'\')"';
+    $storeEntry = null;
+    $storeEntryData = ", storeEntryData: [0]";
+
+    if ($this->store_new_entry) {
+        $storeEntry = ' title="' . G::LoadTranslation("ID_FIELD_DYNAFORM_SUGGEST_INPUT_TITLE") . '"';
+        $storeEntryData = ", storeEntryData: [1, \"form[". $this->name . "_label]\", \"" . $this->sqlConnection . "\", \"" . $this->table . "\", \"" . $this->primary_key . "\", \"" . $this->primary_key_type . "\", \"" . $this->field . "\"]";
     }
 
     $formVariableValue    = '';
@@ -1180,7 +1197,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
           $value = $formVariableValue;
         }
         $name = "'".$this->name."'";
-        $str  = '<input type="text" '.$storeEntry.' class="module_app_input___gray" size="'.$this->size.'" id="form[' . $this->name . '_label]" name="form[' . $this->name . '_label]" value="'.$this->htmlentities($value, ENT_COMPAT, 'utf-8').'" onblur="idSet('. $name . ');"';
+        $str  = '<input type="text" '.$storeEntry.' class="module_app_input___gray" size="'.$this->size.'" id="form[' . $this->name . '_label]" name="form[' . $this->name . '_label]" value="'.$this->htmlentities($value, ENT_COMPAT, 'utf-8').'" onblur="idSet('. $name . ');" ';
         $str .= $this->NSDependentFields(true).' ';
         $str .= '/>';
         $str .= '<input ';
@@ -1189,7 +1206,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
         $str .= 'value="' . $this->htmlentities ( $formVariableKeyValue, ENT_COMPAT, 'utf-8' ) . '" ' ;
         $str .= 'type="hidden" />';
 
-        $str .= $this->renderHint();      
+        $str .= $this->renderHint();
         if( trim($this->callback) != '' ) {
           $sCallBack = 'try{'.$this->callback.'}catch(e){alert("Suggest Widget call back error: "+e)}';
         } else {
@@ -1228,21 +1245,90 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
           $sResultKeys = '';
           $depValues = '+';
         }
-        
-        $sOptions  = 'script: function (input) {var inputValue = base64_encode(getField(\''. $this->name .'_label\').value); return "'.$this->ajaxServer.'?request=suggest&json=true&limit='.$this->maxresults.'&hash='.$hash.'&dependentFieldsKeys=' . $sResultKeys . '&dependentFieldsValue="'.$depValues.'"&input="+inputValue+"&inputEnconde64=enable"; },';
+
+        $aDepFields = array();
+        $count = 0;
+        if ($this->dependentFields !== '') {
+            $dependentFields = explode(",",$this->dependentFields);
+            foreach ($dependentFields as $keyDependent => $valueDependent) {
+                $sqlDepField = $owner->fields[$valueDependent]->sql;
+                $count = preg_match_all('/\@(?:([\@\%\#\=\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/',
+                        $sqlDepField, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+                for ($cnt = 0; $cnt < $count; $cnt++) {
+                    $aDepFields[$cnt] = $match[2][$cnt][0];
+                }
+            }
+        }
+
+        $sOptions  = 'script: function (input) { ';
+        $sOptions .= '  var inputValue = base64_encode(getField(\''. $this->name .'_label\').value); ';
+
+        $sOptions .= '  return "' . $this->ajaxServer . '?request=suggest&json=true&limit=' . $this->maxresults ;
+        $sOptions .= '&hash=' . $hash . '&dependentFieldsKeys=' . $sResultKeys . '&dependentFieldsValue="';
+        $sOptions .= $depValues . '"&input="+inputValue+"&inputEnconde64=enable"; ';
+        $sOptions .= '},';
         $sOptions .= 'json: true,';
         $sOptions .= 'limit: '.$this->maxresults.',';
-        // $sOptions .= 'varname: "input",';
-        $sOptions .= 'shownoresults: '.($this->shownoresults?'true':'false').',';
+
+        $sOptions .= 'shownoresults: ' . ($this->shownoresults ? 'true' : 'false') . ',';
         $sOptions .= 'maxresults: '.$this->maxresults.',';
         $sOptions .= 'chache: true,';
 
-        $setValue = ($this->savelabel == '1')? 'obj.value': 'obj.id';
+        $setValue = ($this->savelabel == '1') ? 'obj.value' : 'obj.id';
 
-        $sOptions .= 'callback: function(obj){'.$sCallBack.'; getField("'. $this->name. '").value = obj.id; return false;}';
+        $sOptions .= 'callback: function (obj) { ';
+        $sOptions .= 'if (typeof obj != "undefined") { ';
+        $sOptions .= ' var jField = { };';
+        $sOptions .= ' var sField = "[]"; ';
+
+        if ($count > 0) {
+            for ($cnt = 0; $cnt < $count; $cnt++ ) {
+                $sOptions .= 'if ( "' . $this->name . '" == "' . $aDepFields[$cnt] . '" ) {';
+                $sOptions .= '  jField[\'' . $aDepFields[$cnt] . '\'] = obj.id;';
+                $sOptions .= '} else { ';
+                $sOptions .= '  jField[\'' . $aDepFields[$cnt] . '\'] = getField(\'' . $aDepFields[$cnt] . '\').value; ';
+                $sOptions .= '}';
+            }
+        }
+
+        $sOptions .= ' var sField = "["+ encodeURIComponent(jField.toJSONString()) + "]"; ';
+
+        $sOptions .= $sCallBack . '; getField("' . $this->name . '").value = obj.id;';
+        $sOptions .= 'var response = ajax_function("../gulliver/defaultAjaxDynaform", "reloadField", ';
+        $sOptions .= '               "form=' . $owner->id . '&fields=" + sField, "POST"); ';
+
+        $sOptions .= 'if (response.substr(0,1) === \'[\') { ';
+        $sOptions .= '  var newcont; ';
+        $sOptions .= '  eval(\'newcont=\' + response + \';\'); ';
+        $sOptions .= '  for(var i = 0; i<newcont.length; i++) { ';
+        $sOptions .= '    var j = getField(newcont[i].name); ';
+        $sOptions .= '    getField(newcont[i].name).value = newcont[i].value; ';
+        $sOptions .= '    if (newcont[i].content.type == \'dropdown\') { ';
+
+        $sOptions .= '      fieldLength = getField(newcont[i].name).options.length; ';
+        $sOptions .= '      for (ni = 0; ni < fieldLength; ni++ ){ ';
+        $sOptions .= '        getField(newcont[i].name).options.remove(ni); ';
+        $sOptions .= '      } ';
+        $sOptions .= '      getField(newcont[i].name).length = 0; ';
+
+        $sOptions .= '      for (ni = 0; ni < newcont[i].content.options.length; ni++ ){ ';
+        $sOptions .= '        var opt = document.createElement("OPTION"); ';
+        $sOptions .= '        opt.value = newcont[i].content.options[ni].key; ';
+        $sOptions .= '        opt.text  = newcont[i].content.options[ni].value; ';
+        $sOptions .= '        getField(newcont[i].name).options.add(opt); ';
+        $sOptions .= '      } ';
+        $sOptions .= '    } ';
+
+        $sOptions .= '  } ';
+        $sOptions .= '} else { ';
+        $sOptions .= '  alert(\'Invalid response: \' + response); ' ;
+        $sOptions .= '} ';
+        $sOptions .= '} ';
+        $sOptions .= 'return false; ';
+        $sOptions .= '}';
 
         $str .= '<script type="text/javascript">';
-        $str .= 'var as_json = new bsn.AutoSuggest(\'form[' . $this->name . '_label]\', {'.$sOptions.'});';
+        $str .= 'var as_json = new bsn.AutoSuggest(\'form[' . $this->name . '_label]\', {' . $sOptions . $storeEntryData . '});';
         $str .= '</script>';
 
         return $str;
@@ -1455,7 +1541,7 @@ class XmlForm_Field_Password extends XmlForm_Field {
     } elseif ($this->mode === 'view') {
         $html=  '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="hidden" autocomplete="'.$this->autocomplete.'" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '\' readOnly="readOnly"/>';
         $html.= $this->htmlentities ( str_repeat ( '*', 10 ), ENT_COMPAT, 'utf-8' );
-        return $html; 
+        return $html;
     } else {
        return $this->htmlentities ( str_repeat ( '*', 10 ), ENT_COMPAT, 'utf-8' );
     }
@@ -1475,7 +1561,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
   var $wrap     = 'OFF';
   var $className;
   var $renderMode = '';
-  
+
 
   /**
    * Function render
@@ -1485,7 +1571,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
-    
+
     if (($this->pmconnection != '') && ($this->pmfield != '') && $value == NULL) {
       $value = $this->getPMTableValue($owner);
     }
@@ -1498,9 +1584,9 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
     }
 
     $className = isset($this->className) ?  $this->className : 'module_app_input___gray';
-    
+
     if ($this->renderMode == '') $this->renderMode = $this->mode;
-    
+
     $html = '';
     $scrollStyle = $this->style . "overflow:scroll;overflow-y:scroll;overflow-x:hidden;overflow:-moz-scrollbars-vertical;";
     if ($this->renderMode == 'edit'){ //EDIT MODE
@@ -1525,7 +1611,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
       $html .= $this->htmlentities($value, ENT_COMPAT, 'utf-8');
       $html .= '</textarea>';
     }
- 
+
 
     $html .= $this->renderHint();
     return $html;
@@ -1540,12 +1626,12 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
    */
   function renderGrid($values = NULL, $owner) {
     $this->gridFieldType = 'textarea';
-    
+
     if ($owner->mode != 'view') $this->renderMode = $this->modeForGrid;
 
     $result = array ();
     $r = 1;
-    
+
     foreach ( $values as $v ) {
       $scrollStyle = $this->style . "overflow:scroll;overflow-y:scroll;overflow-x:hidden;overflow:-moz-scrollbars-vertical;";
       $html = '';
@@ -1608,14 +1694,14 @@ class XmlForm_Field_Currency extends XmlForm_Field_SimpleText {
    * @return <String>
    */
   function render( $value = NULL, $owner = NULL) {
-    
+
     if ($this->renderMode == '') $this->renderMode = $this->mode;
     $onkeypress = G::replaceDataField ( $this->onkeypress, $owner->values );
-    
+
     $html = '';
-    $currency = preg_replace( '/([#,.])/', '',$this->mask);
+    $currency = preg_replace( '/([_;#,.])/', '',$this->mask);
     if (! $value) $value= $currency;
-    
+
     if ($this->renderMode == 'edit'){ //EDIT MODE
        $readOnlyText = ($this->readOnly == 1 || $this->readOnly == '1') ? 'readOnly="readOnly"' : '';
        $html .= '<input '.$readOnlyText.' class="module_app_input___gray" ';
@@ -1628,7 +1714,7 @@ class XmlForm_Field_Currency extends XmlForm_Field_SimpleText {
        $html .= $this->NSDefaultValue().' ';
        $html .= $this->NSRequiredValue().' ';
        $html .= $this->NSGridType().' ';
-       $html .= 'pm:decimal_separator="'.$this->comma_separator.'" ';
+       $html .= 'pm:decimal_separator="' . $this->comma_separator . '" ';
        $html .= '/>';
     }else{ //VIEW MODE
        $html .= $this->htmlentities($value, ENT_COMPAT, 'utf-8');
@@ -1641,11 +1727,11 @@ class XmlForm_Field_Currency extends XmlForm_Field_SimpleText {
       $html = str_replace("class=\"module_app_input___gray\"", "class=\"module_app_input___gray_readOnly\"", $html);
     }
     $html .= $this->renderHint();
-    
+
     return $html;
 
   }
-  
+
   /**
    * Function renderGrid
    * @author alvaro campos sanchez  <alvaro@colosa.com>
@@ -1662,7 +1748,7 @@ class XmlForm_Field_Currency extends XmlForm_Field_SimpleText {
 
     foreach ( $values as $v ) {
       $html = '';
-      $currency = preg_replace( '/([#,.])/', '',$this->mask);
+      $currency = preg_replace( '/([_;#,.])/', '',$this->mask);
       if (! $v) $v= $currency;
       if ($this->renderMode === 'edit'){ //EDIT MODE
         $readOnlyText = ($this->readOnly == 1 || $this->readOnly == '1') ? 'readOnly="readOnly"' : '';
@@ -1727,12 +1813,12 @@ class XmlForm_Field_Percentage extends XmlForm_Field_SimpleText {
   var $comma_separator = '.';
 
   function render( $value = NULL, $owner = NULL) {
-    
+
     if ($this->renderMode == '') $this->renderMode = $this->mode;
     $onkeypress = G::replaceDataField ( $this->onkeypress, $owner->values );
-    
+
     $html = '';
-    
+
     if ($this->renderMode == 'edit'){ //EDIT MODE
        $readOnlyText = ($this->readOnly == 1 || $this->readOnly == '1') ? 'readOnly="readOnly"' : '';
        $html .= '<input '.$readOnlyText.' class="module_app_input___gray" ';
@@ -1744,7 +1830,7 @@ class XmlForm_Field_Percentage extends XmlForm_Field_SimpleText {
        $html .= 'onkeypress="'.$this->htmlentities($onkeypress, ENT_COMPAT, 'utf-8').'" ';
        $html .= $this->NSDefaultValue().' ';
        $html .= $this->NSRequiredValue().' ';
-       $html .= 'pm:decimal_separator="' + $this->comma_separator + '" ';
+       $html .= 'pm:decimal_separator="' . $this->comma_separator . '" ';
        $html .= '/>';
     }else{ //VIEW MODE
        $html .= $this->htmlentities($value, ENT_COMPAT, 'utf-8');
@@ -1759,7 +1845,7 @@ class XmlForm_Field_Percentage extends XmlForm_Field_SimpleText {
     }
     $html .= $this->renderHint();
     return $html;
-    
+
 //    $onkeypress = G::replaceDataField ( $this->onkeypress, $owner->values );
 //    if ($this->mode === 'edit') {
 //      if ($this->readOnly)
@@ -2066,7 +2152,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     if (($this->pmconnection != '') && ($this->pmfield != '') && $value == NULL) {
       $value = $this->getPMTableValue($owner);
     }
-    if ($value == '') $value = '0';    
+    if ($value == '') $value = '0';
     if ($this->renderMode == '') $this->renderMode = $this->mode;
     $html = '';
     if ($this->renderMode == 'edit'){ //EDIT MODE
@@ -2087,7 +2173,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field
         $html .= 'type="hidden" value="'.(($value==='0')? '0':'1').'" />';
       }
     }else{ //VIEW MODE
-    
+
       $html .= '<span id="form['. $this->name . ']">';
       $html .= ($value==='0') ? G::LoadTranslation('ID_NO_VALUE') : G::LoadTranslation('ID_YES_VALUE');
       $html .= '<input ';
@@ -2111,7 +2197,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     $result = array ();
     $r      = 1;
     if ($owner->mode != 'view') $this->renderMode = $this->modeForGrid;
-    
+
     foreach ( $values as $v ) {
       $html = '';
       if ($v == '') $v = '0';
@@ -2179,6 +2265,7 @@ class XmlForm_Field_Link extends XmlForm_Field {
     $html   .= (($this->onclick) ? ' onclick="' . htmlentities ( $onclick, ENT_QUOTES, 'utf-8' ) . '"' : '') ;
     $html   .= (($this->target) ? ' target="' . htmlentities ( $target, ENT_QUOTES, 'utf-8' ) . '"' : '') . '>';
     $html   .= $this->htmlentities ( $this->value === '' ? $label : $value, ENT_QUOTES, 'utf-8' ) . '</a>';
+    $html   .= $this->renderHint();
     return $html;
   }
 
@@ -2204,7 +2291,7 @@ class XmlForm_Field_Link extends XmlForm_Field {
       $html     .= (($this->onclick) ? ' onclick="' . htmlentities ( $onclick, ENT_QUOTES, 'utf-8' ) . '"' : '');
       $html     .= (($this->target) ? ' target="' . htmlentities ( $target, ENT_QUOTES, 'utf-8' ) . '"' : '') ;
       if ($this->mode == 'view')
-        $html     .= 'style="color: #006699; text-decoration: none;font-weight: normal;"';      
+        $html     .= 'style="color: #006699; text-decoration: none;font-weight: normal;"';
       $html     .=  '>'.$this->htmlentities ( $this->value === '' ? $label : $value, ENT_QUOTES, 'utf-8' ) . '</a>';
       $result [] = $html;
       $r ++;
@@ -2238,43 +2325,111 @@ class XmlForm_Field_Link extends XmlForm_Field {
  * @package gulliver.system
  * @access public
  */
-class XmlForm_Field_File extends XmlForm_Field {
-  var $required = false;
-  var $input    = '';
-  /**
-   * Function render
-   * @author David S. Callizaya S. <davidsantos@colosa.com>
-   * @access public
-   * @param string value
-   * @return string
-   */
-  function render($value = NULL) {
-    $mode = ($this->mode == 'view') ? ' disabled="disabled"' : '';
-    if($this->mode == 'view'){
-      $displayStyle = 'display:none;';
-      $html = $value.'<input class="module_app_input___gray_file" ' . $mode .'style='.$displayStyle .' id="form[' . $this->name . ']" name="form[' . $this->name . ']" type=\'file\' value=\'' . $value . '\' />';   
+class XmlForm_Field_File extends XmlForm_Field
+{
+    public $required = false;
+    public $input = null;
+
+    /**
+     * Function render
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param string value
+     * @return string
+     */
+    public function render($value=null, $owner=null, $rowId=null, $row=-1, $therow=-1)
+    {
+        $permission = false;
+        $url = null;
+
+        if (isset($_SESSION["APPLICATION"]) &&
+            isset($_SESSION["USER_LOGGED"]) &&
+            isset($_SESSION["TASK"]) &&
+            isset($this->input) && $this->input != null &&
+            $this->mode == "view"
+        ) {
+            require_once ("classes/model/AppDocument.php");
+            G::LoadClass("case");
+
+            $case = new Cases();
+            $arrayField = $case->loadCase($_SESSION["APPLICATION"]);
+            $arrayPermission = $case->getAllObjects($arrayField["PRO_UID"], $_SESSION["APPLICATION"], $_SESSION["TASK"], $_SESSION["USER_LOGGED"]);
+
+            $criteria = new Criteria();
+            $criteria->add(AppDocumentPeer::APP_DOC_UID, $arrayPermission["INPUT_DOCUMENTS"], Criteria::IN);
+
+            switch ($owner->type) {
+                case "xmlform":
+                    break;
+                case "grid":
+                    $criteria->add(AppDocumentPeer::APP_DOC_FIELDNAME, $owner->name . "_" . $row . "_" . $this->name);
+                    break;
+            }
+
+            $criteria->addDescendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+            $rsCriteria = AppDocumentPeer::doSelectRS($criteria);
+            $rsCriteria->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $sw = 0;
+
+            while (($rsCriteria->next()) && $sw == 0) {
+                $row = $rsCriteria->getRow();
+
+                if ($row["DOC_UID"] == $this->input) {
+                    $permission = true;
+                    $url = ((G::is_https())? "https://" : "http://") . $_SERVER["HTTP_HOST"] . dirname($_SERVER["REQUEST_URI"]) . "/cases_ShowDocument?a=" . $row["APP_DOC_UID"] . "&v=" . $row["DOC_VERSION"];
+                    $sw = 1;
+                }
+            }
+        }
+
+        $html1 = null;
+        $html2 = null;
+        $mode  = ($this->mode == "view")? " disabled=\"disabled\"" : null;
+        $styleDisplay = null;
+
+        if ($this->mode == "view") {
+            if ($permission) {
+                $html1 = "<a href=\"" . $url . "\"" . (($owner->type == "grid")? " class=\"tableOption\" style=\"color: #006699; text-decoration: none; font-weight: normal;\"" : null) . ">";
+                $html2 = "</a>";
+            }
+
+            $html1 = $html1 . $value;
+            $styleDisplay = "display: none;";
+        }
+
+        $html = $html1 . "<input type=\"file\" id=\"form" . $rowId . "[" . $this->name . "]\" name=\"form" . $rowId . "[" . $this->name . "]\" value=\"" . $value . "\" class=\"module_app_input___gray_file\" style=\"" . $styleDisplay . "\"" . $mode . " />" . $html2;
+
+        if (isset($this->input) && $this->input != null) {
+            require_once ("classes/model/InputDocument.php");
+
+            try {
+                $indoc = new InputDocument();
+                $aDoc = $indoc->load($this->input);
+                $aDoc["INP_DOC_TITLE"] = (isset($aDoc["INP_DOC_TITLE"]))? $aDoc["INP_DOC_TITLE"] : null;
+                $html = $html . "<label><img src=\"/images/inputdocument.gif\" width=\"22px\" width=\"22px\" alt=\"\" /><font size=\"1\">(" . trim($aDoc["INP_DOC_TITLE"]) . ")</font></label>";
+            } catch (Exception $e) {
+                //Then the input document doesn"t exits, id referencial broken
+                $html = $html . "&nbsp;<font color=\"red\"><img src=\"/images/alert_icon.gif\" width=\"16px\" width=\"16px\" alt=\"\" /><font size=\"1\">(" . G::loadTranslation("ID_INPUT_DOC_DOESNT_EXIST") . ")</font></font>";
+            }
+        }
+
+        $html = $html . $this->renderHint();
+
+        return $html;
     }
-    else{ 
-      $html = '<input class="module_app_input___gray_file" ' . $mode . 'id="form[' . $this->name . ']" name="form[' . $this->name . ']" type=\'file\' value=\'' . $value . '\'/>';
+
+    public function renderGrid($value=array(), $owner=null, $therow=-1)
+    {
+        $arrayResult = array();
+        $r = 1;
+
+        foreach ($value as $v) {
+            $arrayResult[] = $this->render($v, $owner, "[" . $owner->name . "][" . $r . "]", $r, $therow);
+            $r = $r + 1;
+        }
+
+        return $arrayResult;
     }
-    
-    if( isset($this->input) && $this->input != '') {
-      require_once 'classes/model/InputDocument.php';
-      $oiDoc = new InputDocument;
-      
-      try {
-        $aDoc  = $oiDoc->load($this->input);
-        $aDoc['INP_DOC_TITLE'] = isset($aDoc['INP_DOC_TITLE'])? $aDoc['INP_DOC_TITLE']: '';
-        $html .= '<label><img src="/images/inputdocument.gif" width="22px" width="22px"/><font size="1">('.trim($aDoc['INP_DOC_TITLE']).')</font></label>';
-      } 
-      catch (Exception $e) {
-        // then the input document doesn't exits, id referencial broken
-        $html .= '&nbsp;<font color="red"><img src="/images/alert_icon.gif" width="16px" width="16px"/><font size="1">('.G::loadTranslation('ID_INPUT_DOC_DOESNT_EXIST').')</font></font>'; 
-      }
-    }	 
-    $html .= $this->renderHint();
-    return $html;
-  }
 }
 
 /**
@@ -2393,17 +2548,17 @@ class XmlForm_Field_Checkbox extends XmlForm_Field
   if (($this->pmconnection != '') && ($this->pmfield != '') && $value == NULL) {
       $value = $this->getPMTableValue($owner);
     }
- 
+
     $disabled = '';
     if($this->readOnly==='readonly' or $this->readOnly==='1' ){
      $readOnly = 'readonly="readonly" onclick="javascript: return false;"';//$disabled = "disabled";
     }
     else{
       $readOnly = '';
-   } 
- 
+   }
+
     $checked = (isset ( $value ) && ($value == $this->value)) ? 'checked' : '';
- 
+
     if ($this->mode === 'edit') {
       //$readOnly = isset ( $this->readOnly ) && $this->readOnly ? 'disabled' : '';
       if ($this->labelOnRight) {
@@ -2453,17 +2608,17 @@ class XmlForm_Field_Checkbox extends XmlForm_Field
       else {
         $disabled = '';
       }
-      if ($this->mode==='edit') {        
+      if ($this->mode==='edit') {
         $html = $res = "<input id='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' value='{$this->value}' falseValue= ".$this->falseValue."  name='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' type='checkbox' $checked $disabled readonly = '{$this->readOnly}' ".$this->NSDefaultValue()." ".$this->NSGridType()."/>";
         $result [] = $html;
-        $r ++;      
+        $r ++;
       }
       else {
         //$disabled = (($this->value == 'view') ? 'disabled="disabled"' : '');
         $html = $res = "<input id='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' value='{$this->value}' falseValue= ".$this->falseValue." name='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' type='checkbox' $checked disabled readonly = '{$this->readOnly}' ".$this->NSDefaultValue()." ".$this->NSGridType()."/>";
         $result [] = $html;
-        $r ++;      
-      }      
+        $r ++;
+      }
     }
     return $result;
   }
@@ -2549,7 +2704,7 @@ class XmlForm_Field_Reset extends XmlForm_Field
     } else {
       return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
     }
-    
+
   }
 }
 /**
@@ -2691,7 +2846,7 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
     return isset($value) && ( array_key_exists( $value , $this->options ) );*/
     return true;
   }
-  
+
  /**
    * Function render
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -2703,8 +2858,8 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
   function render($value = NULL, $owner = NULL, $rowId = '', $onlyValue = false, $row = -1, $therow = -1)
   {
     $displayStyle = '';
-    
-    //Returns value from a PMTable when it is exists. 
+
+    //Returns value from a PMTable when it is exists.
     if (($this->pmconnection != '') && ($this->pmfield != '') && $value == NULL) {
       $value = $this->getPMTableValue($owner);
     }
@@ -2717,12 +2872,12 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
         $this->executeSQL ( $owner, $row );
       }
     }
-    
+
     $html = '';
     $displayLabel = '';
-   
+
     if ($this->renderMode == '') $this->renderMode = $this->mode;
-    
+
     if (!$onlyValue){ //Render Field if not defined onlyValue
       if ($this->renderMode != 'edit') { //EDIT MODE
         $displayStyle = 'display:none;';
@@ -2769,7 +2924,7 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
         $html .= 'value="'.(($findValue != '') ? $findValue : $firstValue).'" />';
       }
       $this->selectedValue = ($findValue != '') ? $findValue : ($cont==0)? $firstValue : '';
-    
+
     }else{ //Render Field showing only value;
       foreach ($this->option as $optValue => $optName) {
         if ($optValue == $value) {
@@ -2787,7 +2942,7 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
     if ($displayStyle != '') $html = $displayLabel . $html;
     return $html;
   }
-  
+
   /**
    * Function renderGrid
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -2872,7 +3027,7 @@ class XmlForm_Field_Listbox extends XmlForm_Field
       }
       foreach ( $this->sqlOption as $optionName => $option ) {
         $html .= '<option value="' . $optionName . '" ' . ((in_array ( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
-      } 
+      }
       $html .= '</select>';
       foreach ( $this->option as $optionName => $option ) {
       	  $html .= '<input style="color:white;" type="hidden"  id="form[' . $this->name . ']" name="form[' . $this->name . '][]" value="'.((in_array ( $optionName, $value )) ? $optionName : '').'">';
@@ -2912,7 +3067,7 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field {
   var $sqlOption     = array ();
   var $viewAlign     = 'vertical';
   var $linkType;
-  
+
   /**
    * validate the execution of a query
    * @param  $value
@@ -2951,10 +3106,10 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field {
         if(++$i==count($this->options)){
           $html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$this->renderHint();
         }
-        
+
         if($this->viewAlign == 'horizontal')
           $html .='&nbsp;';
-        else   
+        else
           $html .='<br>';
 
       }
@@ -3154,7 +3309,7 @@ class XmlForm_Field_Grid extends XmlForm_Field
    * @param  $owner
    * @return <Template Object>
    */
-   
+
   function render($values, $owner = NULL){
     $arrayKeys  = array_keys ( $this->fields );
     $emptyRow   = array ();
@@ -3168,7 +3323,7 @@ class XmlForm_Field_Grid extends XmlForm_Field
           }
         }*/
       }else{
-      
+
         $emptyValue = '';
       }
       if(isset($this->fields[$key]->size))
@@ -3177,13 +3332,39 @@ class XmlForm_Field_Grid extends XmlForm_Field
       $fieldsSize +=  $size;
       $emptyRow [$key] = array ($emptyValue);
     }
-    if($fieldsSize>100)
-      $owner->width = '100%';
+
+    if (isset($owner->adjustgridswidth) && $owner->adjustgridswidth == '1') {
+      // 400w -> 34s to Firefox
+      // 400w -> 43s to Chrome
+
+      $baseWidth = 400;
+      $minusWidth = 30;
+      if (eregi('chrome', $_SERVER['HTTP_USER_AGENT'])) {
+        $baseSize  = 43;
+      } else {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
+          $minusWidth = 20;
+        }
+        $baseSize  = 34;
+      }
+
+      $baseWidth = 400;
+      $formWidth = (int)$owner->width;
+      $maxSize = (($formWidth*$baseSize) / $baseWidth);
+
+      if ($fieldsSize > $maxSize) {
+        $this->scrollStyle = 'height:100%; overflow-x: scroll; width:';
+        $this->scrollStyle .= $formWidth - $minusWidth . ';';
+      }
+    } else {
+      if($fieldsSize>100)
+        $owner->width = '100%';
+    }
   //  else
   //    $owner->width = $fieldsSize . 'em';
     return $this->renderGrid ( $emptyRow, $owner );
-    
-    
+
+
   }
 
   /**
@@ -3196,10 +3377,26 @@ class XmlForm_Field_Grid extends XmlForm_Field
   function renderGrid($values, $owner = NULL, $therow = -1)
   {
     $this->id = $this->owner->id . $this->name;
-    $using_template = "grid";
+    $using_template = 'grid';
 
-    if( $this->mode == 'view' || $this->modeGrid === 'view' ){
-      $using_template = "grid_view";
+    if (isset($this->mode)) {
+        $ownerMode = $this->mode;
+    } else {
+        $ownerMode = '';
+    }
+
+    if ($ownerMode != '') {
+        $this->mode = $ownerMode;
+    }
+
+    if ($this->mode == '') {
+        $this->mode = 'edit';
+    }
+
+    $this->modeForGrid = $this->mode;
+
+    if ($this->mode == 'view') {
+      $using_template = 'grid_view';
     }
 
     $tpl = new xmlformTemplate ( $this, PATH_CORE . "templates/{$using_template}.html" );
@@ -3216,10 +3413,14 @@ class XmlForm_Field_Grid extends XmlForm_Field
       for ($c=1; $c <= $therow; $c++){
         if ($c == $therow){
           $xValues[$therow] = $aRow;
-        }else{
-          foreach ($aRow as $key=>$value){
-            $xValues[$c][$key] = '';  
-          }
+        } else {
+            if (is_array($aRow)) {
+                foreach ($aRow as $key => $value){
+                    $xValues[$c][$key] = "";
+                }
+            } else {
+                //
+            }
         }
       }
       $values = $xValues;
@@ -3246,7 +3447,7 @@ class XmlForm_Field_Grid extends XmlForm_Field
         $this->fields [$k]->aggregate = '0';
       }
     }
-    
+
     $this->values      = $values;
 
     $this->NewLabel    = G::LoadTranslation('ID_NEW');
@@ -3260,22 +3461,29 @@ class XmlForm_Field_Grid extends XmlForm_Field
     return $tpl->printObject ( $this, $therow );
   }
 
-  /**
-   * Change the columns for rows and rows to columns
-   * @param <array> $values
-   * @return <array>
-   */
-  function flipValues($values) {
-    $flipped = array ();
-    foreach ( $values as $rowKey => $row ) {
-      foreach ( $row as $colKey => $cell ) {
-        if (! isset ( $flipped [$colKey] ) || ! is_array ( $flipped [$colKey] ))
-          $flipped [$colKey] = array ();
-        $flipped [$colKey] [$rowKey] = $cell;
-      }
+    /**
+     * Change the columns for rows and rows to columns
+     * @param <array> $arrayData
+     * @return <array>
+     */
+    public function flipValues($arrayData)
+    {
+        $flipped = array();
+
+        foreach ($arrayData as $rowIndex => $rowValue) {
+            if (is_array($rowValue)) {
+                foreach ($rowValue as $colIndex => $colValue) {
+                    if (!isset($flipped[$colIndex]) || !is_array($flipped[$colIndex])) {
+                        $flipped[$colIndex] = array();
+                    }
+
+                    $flipped[$colIndex][$rowIndex] = $colValue;
+                }
+            }
+        }
+
+        return $flipped;
     }
-    return $flipped;
-  }
 }
 
 /**
@@ -3383,7 +3591,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
   var $onchange;
   var $renderMode = '';
   var $gridFieldType = '';
-  
+
   /*
    * Verify the format of a date
    * @param <Date> $date
@@ -3460,7 +3668,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
     }
     //$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
     $id        = "form[$this->name]";
-    
+
     if ($this->renderMode != 'edit' && $value == 'today' ){
       $mask = str_replace("%", "", $this->mask);
       $value = date($mask);
@@ -3537,7 +3745,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
     if ($startDate == '' && isset ( $this->size ) && is_numeric ( $this->size ) && $this->size >= 1900 && $this->size <= 2100) {
       $startDate = $this->size . '-01-01';
     }
-    
+
     if ($endDate != '') {
       if (! $this->verifyDateFormat ( $endDate ))
         $endDate = '';
@@ -3564,6 +3772,10 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
       $mask = '%Y-%m-%d'; //set default
     }
 
+    if ($this->defaultValue == "today") {
+        $defaultValue = masktophp($mask);
+    }
+
     if( strpos($mask, '%') === false ) {
       if( strpos($mask, '-') !== false )
         $separator = '-';
@@ -3571,7 +3783,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
         $separator = '/';
       if( strpos($mask, '.') !== false )
         $separator = '.';
-      
+
       $maskparts = explode($separator, $mask);
       $mask = '';
       foreach($maskparts as $part) {
@@ -3583,34 +3795,34 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
           $part='d';
         if($part=='mm')
           $part='m';
-        if($part=='yy') 
+        if($part=='yy')
           $part='y';
         $mask .= '%'.$part;
       }
     }
-    
+
     $tmp = str_replace("%", "", $mask);
     if ( trim ($value) == '' or $value == NULL ) {
       $value = ''; //date ($tmp);
-    } else 
-      {      
+    } else
+      {
         switch(strtolower($value)){
-          case 'today':       
+          case 'today':
             $value=masktophp ($mask);//   $value = date($tmp);
-            break;        
+            break;
           default:
             if(!$this->verifyDateFormat($value))
               //$value='';
             break;
         }
       }
- 
+
     //onchange
     if( isset($this->onchange) && $this->onchange != '' )
       $onchange = 'onchange="'.$this->onchange.'"';
     else
       $onchange = '';
-    
+
     if ($this->renderMode == 'edit') {
       $maskleng = strlen($mask);
       $hour   = '%H';$min   = '%M';$sec   = '%S';
@@ -3618,20 +3830,20 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
       $sizemin = strpos($mask, $hour);
       $sizesec = strpos($mask, $hour);
       $Time = 'false';
-      
+
       if (($sizehour !== false)&&($sizemin !== false)&&($sizesec !== false)) {
         $sizeend = $maskleng + 2;
         $Time = 'true';
       } else
-        {        
+        {
           $sizeend = $maskleng + 2;
         }
-      if ($this->required) 
+      if ($this->required)
         $isRequired = '1';
-      else      
+      else
         $isRequired = '0';
       if ( $this->editable != "0") {
-        $html = '<input pm:required="'. $isRequired .'" id="'.$pID.'" name="'.$pID.'" pm:mask="'.$mask.'"'          
+        $html = '<input pm:required="'. $isRequired .'" id="'.$pID.'" name="'.$pID.'" pm:mask="'.$mask.'"'
               . 'pm:start="'.$startDate.'" pm:end="'.$endDate.'" pm:time="'.$Time.'" '.$onchange.' class="module_app_input___gray" size="'.$sizeend.'"'
               .  'value="'.$value.'" pm:defaultvalue="'.$defaultValue.'"/>'
               . '<a onclick="removeValue(\''.$pID.'\'); return false;" style="position:relative;left:-17px;top:5px;" > '
@@ -3641,8 +3853,8 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
               . '  <img src="/images/pmdateicon.png" border="0" width="12" height="14" />'
               . '</a>'
               . '<script>datePicker4("", \''.$pID.'\', \''.$mask.'\', \''.$startDate.'\', \''.$endDate.'\','.$Time.')</script>';
-      } else 
-        { 
+      } else
+        {
           $html = '<input pm:required="'. $isRequired .'" id="'.$pID.'" name="'.$pID.'" pm:mask="'.$mask.'" pm:start="'.$startDate.'"'
                 . 'pm:end="'.$endDate.'" pm:time="'.$Time.'" '.$onchange.' class="module_app_input___gray" size="'.$sizeend.'"'
                 . 'value="'.$value.'"pm:defaultvalue="'.$defaultValue.'" readonly="readonly" />'
@@ -3654,25 +3866,25 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
                 . '</a>'
                 . '<script>datePicker4("", \''.$pID.'\', \''.$mask.'\', \''.$startDate.'\', \''.$endDate.'\','.$Time.')</script>';
         }
-    } else {           
+    } else {
         $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>"
               . '<input type="hidden" id="'.$pID.'" name="'.$pID.'" pm:mask="'.$mask.'" pm:start="'.$startDate.'"'
               . 'pm:end="'.$endDate.'"  '.$onchange.' class="module_app_input___gray" value="'.$value.'"/>';
-          
-      } 
+
+      }
     /*** Commented because seems is not working well *
     $idIsoDate  = substr($pID,0,strlen($pID)-1).'_isodate]';
     $amask      = explode('-',str_replace('%','',$mask));
     $axDate     = explode('-',$value);
     $valisoDate = '';
 
-    if ( sizeof($amask) == sizeof($axDate) ) {	
+    if ( sizeof($amask) == sizeof($axDate) ) {
       $aisoDate = array_combine($amask, $axDate);
       if ( isset($aisoDate['Y']) && isset($aisoDate['m']) && isset($aisoDate['d']) )
         $valisoDate = $aisoDate['Y'].'-'.$aisoDate['m'].'-'.$aisoDate['d'];
     }
-    
-    $html .= '<input type="hidden" id="'.$idIsoDate.'" name="'.$idIsoDate.'" value="'.$valisoDate.'"/>';   
+
+    $html .= '<input type="hidden" id="'.$idIsoDate.'" name="'.$idIsoDate.'" value="'.$valisoDate.'"/>';
     ***/
 
     if ($this->gridFieldType == '') $html .= $this->renderHint();
@@ -4053,7 +4265,7 @@ class XmlForm_Field_Date5 extends XmlForm_Field_SimpleText
   }
 }
 
- 
+
 /**
  * @package gulliver.system
  * AVOID TO ENTER HERE : EXPERIMENTAL !!!
@@ -4214,11 +4426,17 @@ class XmlForm
     $parsedFilePath = defined ( 'PATH_C' ) ? ( defined('SYS_SYS') ? PATH_C . 'ws' . PATH_SEP . SYS_SYS . PATH_SEP: PATH_C ) : PATH_DATA;
     $parsedFilePath .= 'xmlform/' . substr ( $parsedFile, strlen ( $this->home ) );
 
+    // Improvement for the js cache - Start
+    $realPath = substr(realpath($this->fileName), strlen(realpath($this->home)), - 4);
+    if (substr($realPath, 0, 1) != PATH_SEP) {
+        $realPath = PATH_SEP . $realPath;
+    }
+    $filesToDelete = substr((defined('PATH_C') ? PATH_C : PATH_DATA) . 'xmlform/', 0, - 1) . $realPath . '.*.js';
+    $auxPath = explode(PATH_SEP, $realPath);
+    $auxPath[count($auxPath) - 1] = $auxPath[count($auxPath) - 1] . '.' . md5(filemtime($this->fileName));
+    $realPath = implode(PATH_SEP, $auxPath);
+    // Improvement for the js cache - End
     $this->parsedFile = $parsedFilePath;
-    //Note that scriptFile must be public URL.
-    $realPath = substr ( realpath ( $this->fileName ), strlen ( realpath ( $this->home ) ), - 4 );
-    if (substr ( $realPath, 0, 1 ) != PATH_SEP)
-      $realPath = PATH_SEP . $realPath;
     $this->scriptURL = '/jsform' . $realPath . '.js';
     $this->scriptFile = substr ( (defined ( 'PATH_C' ) ? PATH_C : PATH_DATA) . 'xmlform/', 0, - 1 ) . substr ( $this->scriptURL, 7 );
     $this->id = G::createUID ( '', substr ( $this->fileName, strlen ( $this->home ) ) );
@@ -4226,6 +4444,9 @@ class XmlForm
 
     $newVersion = false;
     if ($forceParse || ((! file_exists ( $this->parsedFile )) || (filemtime ( $filename ) > filemtime ( $this->parsedFile )) || (filemtime ( __FILE__ ) > filemtime ( $this->parsedFile ))) || (! file_exists ( $this->scriptFile )) || (filemtime ( $filename ) > filemtime ( $this->scriptFile ))) {
+      foreach (glob($filesToDelete) as $fileToDelete) {
+          @unlink($fileToDelete);
+      }
       $this->tree = new Xml_Document ( );
       $this->tree->parseXmlFile ( $filename );
       //$this->tree->unsetParent();
@@ -4263,32 +4484,32 @@ class XmlForm
           $field->language = $this->language;
           $this->fields [$field->name] = $field;
         }
-			
+
         if (isset($xmlNode [$k]->attributes ['required'] ) || isset($xmlNode [$k]->attributes ['validate'] )) {
           // the fields or xml nodes with a required attribute are put in an array that is passed to the view file
           $isEditMode = isset($xmlNode[$k]->attributes['mode']) && $xmlNode[$k]->attributes['mode'] == 'view' ? false: true;
-          
+
           if ($isEditMode && $this->mode != 'view') {
-          
+
             $validateValue = "";
-            if(isset($xmlNode[$k]->attributes['validate'])) {            
+            if(isset($xmlNode[$k]->attributes['validate'])) {
               $validateValue = $xmlNode[$k]->attributes['validate'];
             }
             $requiredValue = "0";
             if(isset($xmlNode[$k]->attributes['required'])) {
               $requiredValue = $xmlNode[$k]->attributes['required'] == 1 ? '1': '0';
-            }          
-            
+            }
+
             $this->requiredFields [] = array (
               'name' => $field->name,
               'type' => $xmlNode [$k]->attributes ['type'],
-              'label' => addslashes(trim ( $field->label )),                
+              'label' => addslashes(trim ( $field->label )),
               'validate' => $validateValue,
               'required' => $requiredValue
-            );          
+            );
           }
 
-        }        
+        }
       }
 
       $oJSON = new Services_JSON ( );
@@ -4485,7 +4706,7 @@ class xmlformTemplate extends Smarty
           $ft->fields [$k]->field = '{' . $varPrefix . 'form.' . $k . '[row]}';
         if (strcasecmp ( $target, 'templatePower' ) === 0)
           $ft->fields [$k]->field = '{' . $varPrefix . 'form[' . $k . '][row]}';
-      } 
+      }
       else {
         if (strcasecmp ( $target, 'smarty' ) === 0)
           $ft->fields [$k]->field = '{' . $varPrefix . 'form.' . $k . '}';
@@ -4503,7 +4724,7 @@ class xmlformTemplate extends Smarty
     if (isset($menu)) {
       if (isset($menu->owner->values['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'])) {
         $prevStep_url = $menu->owner->values['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'];
-        
+
         $this->assign('prevStep_url', $prevStep_url);
         $this->assign('prevStep_label', G::loadTranslation('ID_BACK'));
       }
@@ -4567,12 +4788,20 @@ class xmlformTemplate extends Smarty
       //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
       $value = (isset ( $form->values [$k] )) ? $form->values [$k] : NULL;
       $result [$k] = G::replaceDataField ( $form->fields [$k]->label, $form->values );
+      if ($form->type == 'xmlform') {
+        $result[$k] = '<label for="form[' . $k . ']">' . $result[$k] . '</label>';
+      }
       if (! is_array ( $value )) {
         if ($form->type == 'grid') {
-          $aAux = array ();
-         // $index = ($therow >count ( $form->owner->values [$form->name] ))? $therow : count($form->owner->values [$form->name] );
-          for($i = 0; $i < $therow; $i ++) {
-            $aAux [] = '';
+          $aAux = array();
+          if ($therow == -1) {
+            for($i = 0; $i < count($form->values[$form->name]); $i++) {
+              $aAux [] = '';
+            }
+          } else {
+            for($i = 0; $i < $therow; $i++) {
+              $aAux [] = '';
+            }
           }
           $result ['form'] [$k] = $form->fields [$k]->renderGrid ( $aAux, $form );
         } else {
@@ -4591,14 +4820,20 @@ class xmlformTemplate extends Smarty
           }
         }*/
 
-        if ($v->type == 'grid') {
-          $result ['form'] [$k] = $form->fields [$k]->renderGrid ( $value, $form, $therow );
+        if ($v->type == "grid") {
+            $result["form"][$k] = $form->fields[$k]->renderGrid($value, $form, $therow);
         } else {
-          if ($v->type == 'dropdown') {
-            $result ['form'] [$k] = $form->fields [$k]->renderGrid ( $value, $form, false, $therow );
-          } else {
-            $result ['form'] [$k] = $form->fields [$k]->renderGrid ( $value, $form );
-          }
+            switch ($v->type) {
+                case "dropdown":
+                    $result["form"][$k] = $form->fields[$k]->renderGrid($value, $form, false, $therow);
+                    break;
+                case "file":
+                    $result["form"][$k] = $form->fields[$k]->renderGrid($value, $form, $therow);
+                    break;
+                default:
+                    $result["form"][$k] = $form->fields[$k]->renderGrid($value, $form);
+                    break;
+            }
         }
       }
     }
@@ -4608,7 +4843,7 @@ class xmlformTemplate extends Smarty
     }
     return $result;
   }
-  
+
   /**
    * Function printObject
    * @author David S. Callizaya S. <davidsantos@colosa.com>

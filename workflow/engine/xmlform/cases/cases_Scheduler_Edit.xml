@@ -8,7 +8,7 @@
 <en>General Information</en>
 </GENERAL_INF>
 <PROPERTIES_INF type="subtitle" enablehtml="1">
-<en>Enter the username and password for the user who will be assigned to the initial task in the case(s).</en>
+<en>Enter the username and password of the user who will be assigned to the initial task in the case.</en>
 </PROPERTIES_INF>
 <SCH_UID type="hidden" >
 <en></en>
@@ -50,17 +50,11 @@
 <SCH_NAME type="text" maxlength="100" validate="Any" required="1" readonly="0" size="40" mode="edit" mask="" strto="" dependentfields="" defaultvalue="" hint="" formula="" function="" sqlconnection="" savelabel="0">
 <en>Description</en>
 </SCH_NAME>
-<PRO_UID type="dropdown" required="1"  style="width:300px" options="Array" dependentfields="TAS_UID">
-<![CDATA[	SELECT DISTINCT(TASK.PRO_UID) AS PRO_UID, CONTENT.CON_VALUE as PRO_TITLE FROM TASK
-  LEFT JOIN PROCESS ON (PROCESS.PRO_UID=TASK.PRO_UID)
-  LEFT JOIN TASK_USER ON (TASK.TAS_UID=TASK_USER.TAS_UID)
-  LEFT JOIN CONTENT ON (PROCESS.PRO_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='PRO_TITLE')
-WHERE USR_UID = '@#SCH_USER_UID']]>
-<en>Process </en>
+<PRO_UID type="hidden" required="1"  style="width:300px" dependentfields="TAS_UID" mode="edit">
 </PRO_UID>
 <TAS_UID type="dropdown" required="1"  style="width:300px" options="Array"  >
-<![CDATA[	SELECT DISTINCT A.TAS_UID, B.CON_VALUE AS TAS_TITLE 
-FROM TASK A INNER JOIN CONTENT B ON A.TAS_UID = B.CON_ID AND B.CON_CATEGORY='TAS_TITLE' 
+<![CDATA[	SELECT DISTINCT A.TAS_UID, B.CON_VALUE AS TAS_TITLE
+FROM TASK A INNER JOIN CONTENT B ON A.TAS_UID = B.CON_ID AND B.CON_CATEGORY='TAS_TITLE'
 WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 <en>Task </en>
 </TAS_UID>
@@ -99,10 +93,10 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 
 <SELECT_1 type="subtitle" enablehtml="1">
 <en> Daily</en>
-</SELECT_1> 
+</SELECT_1>
 <!--
 <SCH_DAYS_PERFORM_TASK type="radiogroup" required="0" defaultValue="1" mode="edit" options="Array">
-<en>Perform this task 
+<en>Perform this task
 <option name="1">Every Day</option>
 <option name="2">Weekdays</option>
 <option name="3">Every</option>
@@ -123,7 +117,7 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 </SCH_EVERY_DAYS>
 
 <SCH_WEEK_DAYS type="checkgroup" required="0" mode="edit" options="Array" COLS="2" defaultvalue="" hint="" sqlconnection="" readonly="0" savelabel="0">
-<en>Select the day(s) of the week 
+<en>Select the day(s) of the week
 		<option name="1">Monday</option>
 		<option name="2">Tuesday</option>
 		<option name="3">Wednesday</option>
@@ -131,7 +125,7 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 </SCH_WEEK_DAYS>
 
 <SCH_WEEK_DAYS_2 type="checkgroup" required="0" mode="edit" options="Array" defaultvalue="" hint="" sqlconnection="" readonly="0" savelabel="0">
-<en> 
+<en>
 		<option name="5">Friday</option>
 		<option name="6">Saturday</option>
 		<option name="7">Sunday</option></en>
@@ -171,7 +165,7 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 </SCH_START_DAY_OPT_2_DAYS_WEEK>
 
 <SCH_MONTHS type="checkgroup" mode="edit" options="Array">
-<en>Of the month(s) 
+<en>Of the month(s)
 <option name="1">Jan</option>
 <option name="2">Feb</option>
 <option name="3">Mar</option>
@@ -216,8 +210,14 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 <SCH_REPEAT_TASK_CHK type="checkbox" value="On" falsevalue="Off" defaultvalue="Off" labelonright="1" enablehtml="1">
 <en>Repeat Task</en>
 </SCH_REPEAT_TASK_CHK>
-<SCH_REPEAT_EVERY type="text" maxlength="4" validate="Int" required="0" readonly="0" size="4" mode="edit">
-<en>Every</en>
+<!--<SCH_REPEAT_EVERY type="text" maxlength="4" validate="Int" required="0" readonly="0" size="4" mode="edit">-->
+<!--<en>Every</en>-->
+<!--</SCH_REPEAT_EVERY>-->
+<SELECT_EVERY type="subtitle" enablehtml="1">
+<en>Record the time.</en>
+</SELECT_EVERY>
+<SCH_REPEAT_EVERY type="text" maxlength="5" validate="Real" mask="##.##" required="0" readonly="0" size="5" mode="edit" comma_separator =".">
+<en>Execute every</en>
 </SCH_REPEAT_EVERY>
 
 <SCH_ADVANCED type="hidden" >
@@ -230,7 +230,7 @@ WHERE A.PRO_UID='@#PRO_UID' AND A.TAS_START = 'TRUE' ]]>
 </en>
 </SCH_REPEAT_EVERY_OPT>
 
-<!--   
+<!--
 <SCH_REPEAT_UNTIL type="text" maxlength="5" validate="Any" required="0" readonly="0" size="5"  mode="edit" mask="##:##" strto="" dependentfields=""  defaultvalue="" hint="" formula="" function=""  sqlconnection="" savelabel="0">
 <en>Until Hours/Minutes(HH:MM)</en>
 </SCH_REPEAT_UNTIL>
@@ -279,19 +279,12 @@ switch (getField('SCH_OPTION').value){
     break;
     case '4':
     getField('SCH_OPTION_VIEW').value = 'One Time Only';
+    case '5':
+    getField('SCH_OPTION_VIEW').value = 'Every';
     break;
 }
 
 showProperties();
-document.getElementById('processLabel').innerHTML = document.getElementById('form[PRO_UID]')[document.getElementById('form[PRO_UID]').selectedIndex].innerHTML;
-;
-//hideAll();
-/*
-if (getField('SCH_ADVANCED').value=='false'){
-    contractSubtitle('ADVANCED_4');
-    document.getElementById('checkAdvanced').checked=false;
-}
-*/
 
 function hideProperties(){
         //hiddeRow('EDIT_USER');
@@ -304,7 +297,7 @@ function hideProperties(){
         document.getElementById('form[PERFORM_TASK]').style.display='none';
         document.getElementById('form[SELECT_TIME_DAY]').style.display='none';
         document.getElementById('form[SELECT_PLUGIN]').style.display='none';
-        document.getElementById('form[SELECT_PLUGIN]').style.display='none';
+        document.getElementById('form[SELECT_EVERY]').style.display='none';
         // end of enabling
 }
 
@@ -316,7 +309,7 @@ function showProperties(){
     document.getElementById('form[EDIT_USER]').style.display='';
     document.getElementById('form[PERFORM_TASK]').style.display='';
     document.getElementById('form[SELECT_TIME_DAY]').style.display='';
-
+    document.getElementById('form[SELECT_EVERY]').style.display='';
 }
 
 
@@ -342,17 +335,17 @@ if (getField('SCH_REPEAT_EVERY').value!=''){
 function disableAdvanced(){
 	//disable(getField('SCH_END_DATE'));
 
-	disable(getField('SCH_REPEAT_EVERY'));		
-	disable(getField('SCH_REPEAT_EVERY_OPT'));		
-	// disable(getField('SCH_REPEAT_UNTIL'));		
+	<!--disable(getField('SCH_REPEAT_EVERY'));-->
+	disable(getField('SCH_REPEAT_EVERY_OPT'));
+	// disable(getField('SCH_REPEAT_UNTIL'));
 	// disable(getField('SCH_REPEAT_STOP_IF_RUNNING'));
 	getField('UPDATE').disabled=true;
-		
+
 	document.getElementById('form[SELECT_DATE]').style.display='none';
 	document.getElementById('form[SELECT_1]').style.display='none';
 	document.getElementById('form[SELECT_2]').style.display='none';
 	document.getElementById('form[SELECT_3]').style.display='none';
-	
+
 }
 
 function hideAll() {
@@ -362,7 +355,11 @@ function hideAll() {
 	contractSubtitle('SELECT_1');
 	contractSubtitle('SELECT_2');
 	contractSubtitle('SELECT_3');
+    contractSubtitle('SELECT_EVERY');
+
 	//contractSubtitle('ADVANCED_4');
+    document.getElementById('startTime').style.display='none';
+    document.getElementById('everyTime').style.display='none';
 
 }
 function showPluginSelection(opt,pro_uid) {
@@ -377,10 +374,10 @@ var oRPCProcess = new leimnud.module.rpc.xmlhttp({
        oRPCProcess.callback = function(rpc){
        //alert(rpc.xmlhttp.responseText);
        if(rpc.xmlhttp.responseText!=""){
-        
+
         document.getElementById("pluginsListContent").innerHTML = rpc.xmlhttp.responseText;
        }
-                
+
        }.extend(this);
 
        oRPCProcess.make();
@@ -406,24 +403,28 @@ function showSelection(opt) {
         document.getElementById("pluginsListDropdown").innerHTML = rpc.xmlhttp.responseText;
         showPluginSelection(plgUid,getField('PRO_UID').value);
        }
-                
+
        }.extend(this);
 
        oRPCProcess.make();
-		
-			
+
+
 	} else {
 		contractSubtitle('SELECT_TIME_DAY');
-		getField('UPDATE').disabled=true;	
+		getField('UPDATE').disabled=true;
 	}
 	switch(opt){
-		case '0' : 	hideAll(); 
+		case '0' : 	hideAll();
                                 break;
 		case '1' :	expandSubtitle('SELECT_DATE');
                                 expandSubtitle('SELECT_1');
                                 contractSubtitle('SELECT_2');
                                 contractSubtitle('SELECT_3');
+
+                                document.getElementById('form[SELECT_EVERY]').style.display='none';
                                 document.getElementById('endDateTable').style.display='';
+                                document.getElementById('startTime').style.display='';
+                                document.getElementById('everyTime').style.display='none';
                                 // SCH_START_DATE
                                 break;
 		case '2' : 	contractSubtitle('SELECT_DATE');
@@ -431,13 +432,16 @@ function showSelection(opt) {
                                 expandSubtitle('SELECT_2');
                                 contractSubtitle('SELECT_3');
                                 hideRow('SCH_EVERY_DAYS');
+
+                                document.getElementById('form[SELECT_EVERY]').style.display='none';
                                 document.getElementById('endDateTable').style.display='';
+                                document.getElementById('startTime').style.display='';
+                                document.getElementById('everyTime').style.display='none';
                                 break;
 		case '3' : 	contractSubtitle('SELECT_DATE');
                                 contractSubtitle('SELECT_1');
                                 contractSubtitle('SELECT_2');
                                 expandSubtitle('SELECT_3');
-                                document.getElementById('endDateTable').style.display='';
                                 if (getField('SCH_START_DAY][1').checked){
                                     getField('SCH_START_DAY_OPT_1').disabled=false;
                                     getField('SCH_START_DAY_OPT_1').style.display="";
@@ -453,14 +457,34 @@ function showSelection(opt) {
                                     getField('SCH_START_DAY_OPT_2_DAYS_WEEK').disabled=false;
                                     getField('SCH_START_DAY_OPT_2_DAYS_WEEK').style.display="";
                                 }
+
+                                document.getElementById('form[SELECT_EVERY]').style.display='none';
+                                document.getElementById('endDateTable').style.display='';
+                                document.getElementById('startTime').style.display='';
+                                document.getElementById('everyTime').style.display='none';
                                 break;
-		case '4' : 	expandSubtitle('SELECT_DATE');
+        case '4' :  expandSubtitle('SELECT_DATE');
                                 contractSubtitle('SELECT_1');
                                 contractSubtitle('SELECT_2');
                                 contractSubtitle('SELECT_3');
-                                document.getElementById('endDateTable').style.display='none';
+
+                                document.getElementById('form[SELECT_EVERY]').style.display='none';
+                                document.getElementById('endDateTable').style.display='';
+                                document.getElementById('startTime').style.display='';
+                                document.getElementById('everyTime').style.display='none';
                                 break;
-	
+        case '5' :  expandSubtitle('SELECT_EVERY');
+                                contractSubtitle('SELECT_1');
+                                contractSubtitle('SELECT_2');
+                                contractSubtitle('SELECT_3');
+                                enable(getField('SCH_REPEAT_EVERY'));
+
+                                document.getElementById('form[SELECT_TIME_DAY]').style.display='none';
+                                document.getElementById('endDateTable').style.display='none';
+                                document.getElementById('startTime').style.display='none';
+                                document.getElementById('everyTime').style.display='';
+                                break;
+
 	}
 
 }
@@ -468,7 +492,7 @@ function showSelection(opt) {
 leimnud.event.add(getField('SCH_OPTION'), 'change', function() {
 		var opt = getField('SCH_OPTION').value;
 		showSelection(opt);
-		
+
 });
 
 leimnud.event.add(getField('SCH_START_DAY][1'), 'click', function() {
@@ -511,7 +535,7 @@ leimnud.event.add(getField('SCH_EVERY_DAYS'), 'change', function() {
 		weeks = getField('SCH_EVERY_DAYS').value;
 		if(!(weeks>=1 && weeks<=52) ) {
 			msgBox('Weeks must be between 1 and 52', 'alert');
-			getField('SCH_EVERY_DAYS').value = ''; 
+			getField('SCH_EVERY_DAYS').value = '';
 		}
 });
 
@@ -519,7 +543,7 @@ leimnud.event.add(getField('SCH_START_DAY_OPT_1'), 'change', function() {
 		days = getField('SCH_START_DAY_OPT_1').value;
 		if(!(days>=1 && days<=31) ) {
 			msgBox('The days must be between 1 and 31', 'alert');
-			getField('SCH_START_DAY_OPT_1').value = '1'; 
+			getField('SCH_START_DAY_OPT_1').value = '1';
 		}
 });
 
@@ -541,15 +565,15 @@ leimnud.event.add(getField('SCH_END_DATE_CHK'), 'click', function() {
 
 leimnud.event.add(getField('SCH_REPEAT_TASK_CHK'), 'click', function() {
 	if(getField('SCH_REPEAT_TASK_CHK').checked){
-		enable(getField('SCH_REPEAT_EVERY'));		
-		enable(getField('SCH_REPEAT_EVERY_OPT'));		
-		// enable(getField('SCH_REPEAT_UNTIL'));		
-		// enable(getField('SCH_REPEAT_STOP_IF_RUNNING'));		
+		enable(getField('SCH_REPEAT_EVERY'));
+		enable(getField('SCH_REPEAT_EVERY_OPT'));
+		// enable(getField('SCH_REPEAT_UNTIL'));
+		// enable(getField('SCH_REPEAT_STOP_IF_RUNNING'));
 	}	else {
-		disable(getField('SCH_REPEAT_EVERY'));		
-		disable(getField('SCH_REPEAT_EVERY_OPT'));		
-		// disable(getField('SCH_REPEAT_UNTIL'));		
-		// disable(getField('SCH_REPEAT_STOP_IF_RUNNING'));		
+		<!--disable(getField('SCH_REPEAT_EVERY'));-->
+		<!--disable(getField('SCH_REPEAT_EVERY_OPT'));-->
+		// disable(getField('SCH_REPEAT_UNTIL'));
+		// disable(getField('SCH_REPEAT_STOP_IF_RUNNING'));
 	}
 
 });
@@ -566,12 +590,30 @@ leimnud.event.add(getField('SCH_START_TIME'), 'change', function() {
         //getField('SCH_REPEAT_UNTIL').value='';
         //getField('SCH_REPEAT_UNTIL').focus();
         getField('UPDATE').focus();
-    } 
-    if(parties[1]>59){ 
+    }
+    if(parties[1]>59){
         msgBox(G_STRINGS.ID_SCHEDULER_CANT_PUT_MINUTES, 'alert');
         getField('SCH_START_TIME').value='';
         //getField('SCH_REPEAT_UNTIL').value='';
         //getField('SCH_REPEAT_UNTIL').focus();
+        getField('UPDATE').focus();
+    }
+});
+
+leimnud.event.add(getField('SCH_REPEAT_EVERY'), 'change', function() {
+    hours = getField('SCH_REPEAT_EVERY').value;
+    answer = hours;
+    var parties = answer.split('.');
+
+    if(parties[0]>23){
+        msgBox(G_STRINGS.ID_SCHEDULER_CANT_PUT_TIME, 'alert');
+        getField('SCH_REPEAT_EVERY').value='';
+        getField('UPDATE').focus();
+
+    }
+    if(parties[1]>99){
+        msgBox('The minutes can not be greater than 99', 'alert');
+        getField('SCH_REPEAT_EVERY').value='';
         getField('UPDATE').focus();
     }
 });
@@ -590,8 +632,8 @@ leimnud.event.add(getField('SCH_REPEAT_UNTIL'), 'change', function() {
         //getField('SCH_REPEAT_UNTIL').focus();
         getField('UPDATE').focus();
 
-    } 
-    if(parties[1]>59){ 
+    }
+    if(parties[1]>59){
         msgBox(G_STRINGS.ID_SCHEDULER_CANT_PUT_MINUTES, 'alert');
         //getField('SCH_REPEAT_UNTIL').value='';
         //getField('SCH_REPEAT_UNTIL').focus();
@@ -605,22 +647,25 @@ leimnud.event.add(getField('SCH_REPEAT_UNTIL'), 'change', function() {
  * @return void
  */
 function case_userSchedulerValidate(username, password) {
-    //G.alert(username);
-    //G.alert(password);
     var user_uid;
 
     var oRPC = new leimnud.module.rpc.xmlhttp({
        	    url   : '../cases/cases_SchedulerValidateUser',
              async : true,
              method: 'POST',
-             args  : "USERNAME="+username+"&PASSWORD="+password
+             args  : "USERNAME="+username+"&PASSWORD="+password+"&PRO_UID="+$_GET('PRO_UID')
     });
 
     oRPC.callback = function(rpc){
-       //msgBox(rpc.xmlhttp.responseText,"alert");
-       getField('SCH_USER_UID').value = rpc.xmlhttp.responseText;
-       user_uid = rpc.xmlhttp.responseText;
-       //alert(user_uid);
+       sresponse = rpc.xmlhttp.responseText.parseJSON();
+
+       if (sresponse.status_code != 0) {
+         msgBox(sresponse.message, "alert");
+         return false;
+       }
+
+       getField('SCH_USER_UID').value = sresponse.message;
+       user_uid = sresponse.message;
 
        var oRPCProcess = new leimnud.module.rpc.xmlhttp({
        	    url   : '../cases/cases_SchedulerGetProcesses',
@@ -630,7 +675,6 @@ function case_userSchedulerValidate(username, password) {
        });
 
        oRPCProcess.callback = function(rpc){
-          document.getElementById("processListDropdown").innerHTML = rpc.xmlhttp.responseText;
           if (getField('PRO_UID')!=null){
             var process_uid = getField('PRO_UID').value;
             loadTasksDropdown(process_uid,user_uid);
@@ -643,15 +687,7 @@ function case_userSchedulerValidate(username, password) {
 
        oRPCProcess.make();
 
-       /*  if(rpc.xmlhttp.responseText>=1){
-           //getField('SEARCH').disabled = false;
-           msgBox("User successfully logged","alert");
-           getField('SCH_USR_UID').value = rpc.xmlhttp.responseText;
-         } else {
-           //getField('SEARCH').disabled = true;
-           msgBox(rpc.xmlhttp.responseText,"alert");
-         }
-       */
+
       }.extend(this);
     oRPC.make();
 
@@ -757,10 +793,16 @@ endDate   = new Date(endDate[0],endDate[1],endDate[2]);
         msgBox('The time format is invalid','alert');
         return false;
     }
+    if (document.getElementById('form[SCH_OPTION]').value == 5) {
+      if (document.getElementById('form[SCH_REPEAT_EVERY]').value==''){
+          requiredFields = requiredFields + 'Every,';
+          validFields = false;
+      }
+    }
     switch(document.getElementById('form[SCH_OPTION]').value){
         // daily
         case '1':
-            
+
 //                if(document.getElementById('form[SCH_DAYS_PERFORM_TASK][1]').checked==true||document.getElementById('form[SCH_DAYS_PERFORM_TASK][2]').checked==true||document.getElementById('form[SCH_DAYS_PERFORM_TASK][3]').checked==true){
                 if(document.getElementById('form[SCH_DAYS_PERFORM_TASK]').value!=''){
                     validFields = true;
@@ -768,7 +810,7 @@ endDate   = new Date(endDate[0],endDate[1],endDate[2]);
                     requiredFields = requiredFields + 'Weekdays,';
                     validFields = false;
                 }
-            
+
         break;
         // weekly
         case '2':
@@ -830,9 +872,13 @@ endDate   = new Date(endDate[0],endDate[1],endDate[2]);
         break;
         //run once
         case '4':
-            
+
                 validFields = true;
-            
+
+        break;
+        //run once
+        case '5':
+                validFields = true;
         break;
         default:
             validFields = false;

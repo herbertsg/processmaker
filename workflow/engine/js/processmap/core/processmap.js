@@ -23,9 +23,9 @@ var processmap=function(){
           Wx = (lanzado=='dynaforms' || lanzado=='triggers' || lanzado=='outputs') ?600 : 500;
           Hx = 460;
 
-          if(lanzado=='reportTables'){
-            Wx = _client.width-20; //900;
-            Hx = _client.height-15; //600;
+          if (lanzado == "reportTables") {
+            Wx = _client.width - 30;
+            Hx = _client.height - 15;
           }
 
           var bbk = {
@@ -157,16 +157,32 @@ var processmap=function(){
                 r.make();
               }.extend(this),
               reportTables:function(){
-                var panel = this.panels.buildingBlocks;
-                panel.addContentTitle('');
-                panel.clearContent();
-                var iframe=document.createElement('iframe');
-                iframe.setAttribute('id','reportTablesIframe');
-                iframe.src = '../pmTables?PRO_UID=' + this.options.uid;
-                iframe.style.border='0px';
-                iframe.style.width=_client.width-36;//'886px';
-                iframe.style.height=_client.height-60;//'564px';
-                panel.addContent(iframe);
+                  var url = "../pmTables?PRO_UID=" + this.options.uid;
+                  var isIE = (navigator.userAgent.toLowerCase().indexOf("msie") != -1)? 1 : 0;
+
+                  if (isIE == 1) {
+                      this.panels.buildingBlocks.remove();
+
+                      //var w = _client.width - 20;
+                      //var h = _client.height - 300;
+                      var w = screen.width - 150;
+                      var h = screen.height - 300;
+
+                      var windowAux = window.open(url, "reportTable", "width=" + w + ", height=" + h + ", resizable=no, toolbar=no, menubar=no, scrollbars=yes, status=no, location=no, left=" + ((screen.width / 2) - (w / 2)) + ", top=" + ((screen.height / 2) - (h / 2) + 50));
+                  } else {
+                      var panel = this.panels.buildingBlocks;
+                      panel.addContentTitle("");
+                      panel.clearContent();
+
+                      var iframe = document.createElement("iframe");
+                      iframe.setAttribute("id", "reportTablesIframe");
+                      iframe.src = url;
+                      iframe.frameBorder = 0;
+                      iframe.style.width  = _client.width - 40;
+                      iframe.style.height = _client.height - 70;
+
+                      panel.addContent(iframe);
+                  }
               }.extend(this),
               dynaforms:function(){
                 var panel = this.panels.buildingBlocks;
@@ -219,49 +235,52 @@ var processmap=function(){
             textAlign:"center"
            });
                var dr1 = document.createElement("img");
-               dr1.src = this.options.images_dir+"0.gif";
-               dr1.title = G_STRINGS.ID_PROCESSMAP_SEQUENTIAL;
+               dr1.src = this.options.images_dir + "0.gif";
+               dr1.title = _("ID_PROCESSMAP_SEQUENTIAL");
                div.appendChild(dr1);
-               //dr1.style.marginTop=7;
+               //dr1.style.marginTop = 7;
                //div.appendChild(document.createElement("p"));
-               var dr2 = document.createElement("img");
-               //dr2.style.marginTop=7;
-               dr2.src = this.options.images_dir+"1.gif";
-               dr2.title = G_STRINGS.ID_PROCESSMAP_SELECTION;
 
+               var dr2 = document.createElement("img");
+               //dr2.style.marginTop = 7;
+               dr2.src = this.options.images_dir + "1.gif";
+               dr2.title = _("ID_PROCESSMAP_SELECTION");
                div.appendChild(dr2);
                //div.appendChild(document.createElement("p"));
+
                var dr3 = document.createElement("img");
-               dr3.src = this.options.images_dir+"2.gif";
-               dr3.title = G_STRINGS.ID_PROCESSMAP_EVALUATION;
-               //dr3.style.marginTop=7;
+               dr3.src = this.options.images_dir + "2.gif";
+               dr3.title = _("ID_PROCESSMAP_EVALUATION");
+               //dr3.style.marginTop = 7;
                div.appendChild(dr3);
                //div.appendChild(document.createElement("p"));
+
                var dr4 = document.createElement("img");
-               dr4.src = this.options.images_dir+"3.gif";
-               dr4.title = G_STRINGS.ID_PROCESSMAP_PARALLEL_FORK;
-               //dr4.style.marginTop=7;
+               dr4.src = this.options.images_dir + "3.gif";
+               dr4.title = _("ID_PROCESSMAP_PARALLEL_FORK");
+               //dr4.style.marginTop = 7;
                div.appendChild(dr4);
                //div.appendChild(document.createElement("p"));
+
                var dr5 = document.createElement("img");
-               dr5.src = this.options.images_dir+"4.gif";
-               dr5.title = G_STRINGS.ID_PROCESSMAP_PARALLEL_EVALUATION_FORK;
-               //dr5.style.marginTop=7;
+               dr5.src = this.options.images_dir + "4.gif";
+               dr5.title = _("ID_PROCESSMAP_PARALLEL_EVALUATION_FORK");
+               //dr5.style.marginTop = 7;
                div.appendChild(dr5);
 
                var dr6 = document.createElement("img");
-               dr6.src = this.options.images_dir+"5.gif";
-               dr6.title = G_STRINGS.ID_PROCESSMAP_PARALLEL_JOIN;
+               dr6.src = this.options.images_dir + "5.gif";
+               dr6.title = _("ID_PROCESSMAP_PARALLEL_JOIN");
                div.appendChild(dr6);
 
                var fin = document.createElement("img");
-               fin.src = this.options.images_dir+"6.gif";
-               fin.title = G_STRINGS.ID_END_OF_PROCESS;
+               fin.src = this.options.images_dir + "6.gif";
+               fin.title = _("ID_END_OF_PROCESS");
                div.appendChild(fin);
 
                var ini = document.createElement("img");
-               ini.src = this.options.images_dir+"7.gif";
-               ini.title = "Starting task";
+               ini.src = this.options.images_dir + "7.gif";
+               ini.title = _("ID_START_TASK");
                div.appendChild(ini);
 
              /*var dis = document.createElement("img");
@@ -340,7 +359,7 @@ var processmap=function(){
             this.tmp.editProcessPanel = panel =new leimnud.module.panel();
             panel.options={
               limit :true,
-              size  :{w:700,h:420},
+              size  :{w:700,h:480},
               position:{x:50,y:50,center:true},
               title :G_STRINGS.ID_PROCESSMAP_EDIT_PROCESS+": "+ moldTitle(this.data.db.title.label,700),//this.data.db.title.label,s
               theme :this.options.theme,
@@ -836,6 +855,10 @@ var processmap=function(){
         this.observers.menu.register(this.parent.closure({instance:this.menu,method:this.menu.remove}),this.menu);
         }
         this.data.render.task();
+        if (maximunX > this.options.size.w && document.getElementById('pm_separator_div')) {
+          var pm_separator_div = document.getElementById('pm_separator_div');
+          pm_separator_div.style.width = maximunX + 200;
+        }
       },
       task:function()
         {
@@ -919,13 +942,15 @@ var processmap=function(){
             if(deri.type===5 || deri.type===8)
             {
               var toTask = this.data.db.task[this.tools.getIndexOfUid(deri.to[i].task)];
-              toTask.object.inJoin = toTask.object.inJoin-1;
-              if(toTask.object.inJoin===0)
-              {
-                this.parent.dom.setStyle(toTask.object.elements.init,{
-                  backgroundPosition:"0 0",
-                  background:""
-                });
+              if (typeof(toTask) != 'undefined') {
+                toTask.object.inJoin = toTask.object.inJoin-1;
+                if(toTask.object.inJoin===0)
+                {
+                  this.parent.dom.setStyle(toTask.object.elements.init,{
+                    backgroundPosition:"0 0",
+                    background:""
+                  });
+                }
               }
             }
           }
@@ -1347,8 +1372,8 @@ var processmap=function(){
         /* Change label End */
         var menu = new this.parent.module.app.menuRight();
         var textMenu = G_STRINGS.ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC;
-        var lengthText = textMenu.length * 0.60;
-        
+        var lengthText = mb_strlen(textMenu) * 0.60;
+
         menu.make({
           target: a,
           width: (3 + lengthText) + "em",
@@ -1511,17 +1536,18 @@ var processmap=function(){
           },args:index})},
           {image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_TASK,launch:this.parent.closure({instance:this,method:function(index){
             var data = this.data.db.task[index];
-            
+
             var r = new leimnud.module.rpc.xmlhttp({
               url: this.options.dataServer,
               args: "action=taskCases&data=" + {
+                pro_uid: this.options.uid,
                 task_uid: data.uid
               }.toJSONString()
             });
             r.callback = function (rpc) {
               var rs = rpc.xmlhttp.responseText.parseJSON();
               var casesNumRec = rs.casesNumRec;
-              
+
               if (casesNumRec == 0) {
                 new this.parent.module.app.confirm().make({
                   label: G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_TASK + " " + data.label,
@@ -1545,14 +1571,14 @@ var processmap=function(){
                 var msg = _("ID_TASK_CANT_DELETE");
                 msg = msg.replace("{0}", data.label);
                 msg = msg.replace("{1}", casesNumRec);
-              
+
                 new this.parent.module.app.info().make({label: msg});
               }
             }.extend(this);
             r.make();
-            
+
             return;
-            
+
             if(confirm(G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_TASK+" "+ data.label))
             {
               data.object.drag.flush();
@@ -1569,7 +1595,19 @@ var processmap=function(){
           {simage:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:this.parent.closure({instance:this,method:function(index){
             var panel;
             var iForm=function(panel,index,ifo){
-              saveDataTaskTemporal(ifo);
+              //saveDataTaskTemporal(ifo);
+              if(typeof(panel.flag) == 'undefined') {
+                if (!saveDataTaskTemporal(ifo)) {
+                  var tabPass = panel.tabSelected;
+                  panel.tabSelected = panel.tabLastSelected;
+                  panel.tabLastSelected = tabPass;
+                  panel.flag = true;
+                  panel.makeTab();
+                  return false;
+                }
+              }
+              delete panel.flag;
+
               panel.command(panel.loader.show);
               var r = new this.parent.module.rpc.xmlhttp({
                 url:this.options.dataServer,
@@ -2207,7 +2245,7 @@ var processmap=function(){
           iHeight = 350;
         break;
         case 4:
-          iWidth  = 500;
+          iWidth  = 600;
           iHeight = 350;
         break;
         case 5:
@@ -2227,7 +2265,7 @@ var processmap=function(){
         position:{x:50,y:50,center:true},
         title :G_STRINGS.ID_PROCESSMAP_WORKFLOW_PATTERNS+": "+task.label,
         theme :this.options.theme,
-        control :{close:true,resize:false},
+        control :{close:true,resize:true},
         fx  :{modal:true}
       };
       panel.make();
@@ -2351,6 +2389,7 @@ processmap.prototype={
       sep.className = "pm_separatorOff___"+this.options.theme;
       this.menuRolled=false;
       var dse = document.createElement("div");
+      dse.id = 'pm_separator_div';
       dse.className = "pm_separatorDOff___"+this.options.theme;
       sep.appendChild(dse);
       sep.onmouseup=function()
@@ -2424,8 +2463,7 @@ processmap.prototype={
 
     this.panels.editor.options={
       limit:true,
-//      size:{w:this.options.size.w,h:this.options.size.h},
-      size:{w:this.options.size.w,h:heightPanel},
+      size:{w:(maximunX > this.options.size.w ? maximunX + 200 : this.options.size.w),h:heightPanel},
       position:{x:200,y:0,centerX:true},
       title:"",
       titleBar:false,

@@ -109,7 +109,7 @@
              </tr>
 											<tr>
 												<td class="FormLabel" width="140">{RETURN_LABEL}</td>
-												<td class="FormFieldContent"><input
+												<td class="FormFieldContent" style = '{DISPLAY_MODE}'><input
 													class="module_app_input___gray" id="TRI_ANSWER"
 													name="TRI_ANSWER" type="text" size="53" maxlength="255"
 													value='{RETURN_VALUE}' style="" onkeypress="" /> <input type="button"
@@ -120,18 +120,14 @@
 												</td>
 											</tr>
 											<tr>
-												<input type="hidden" name="PMFUNTION_NAME"
-													value="{PMFUNTION}">
-													<input type="hidden" name="LIBRARY_CLASS"
-													value="{LIBRARY_CLASS}">
-												<input type="hidden" id="PRO_UID" name="PRO_UID" value="{PRO_UID}">
-												<input type="hidden" id="ALLFUNCTION" name="ALLFUNCTION"	value="{ALLFUNCTION}">
-												<input type="hidden" name="PAGED_TABLE_ID"
-													id="PAGED_TABLE_ID" value="{PAGED_TABLE_ID}">
-													<input type="hidden" name="LIBRARY_NAME"
-													id="LIBRARY_NAME" value="{LIBRARY_NAME}">
-													<input type="hidden" name="PMFUNTION_LABEL"
-													id="PMFUNTION_LABEL" value="{PMFUNTION_LABEL}">												
+                                                <input type="hidden" id="FIELDS_REQUIRED" name="FIELDS_REQUIRED" value="{FIELDS_REQUIRED}">
+                                                <input type="hidden" name="PMFUNTION_NAME" value="{PMFUNTION}">
+                                                <input type="hidden" name="LIBRARY_CLASS" value="{LIBRARY_CLASS}">
+                                                <input type="hidden" id="PRO_UID" name="PRO_UID" value="{PRO_UID}">
+                                                <input type="hidden" id="ALLFUNCTION" name="ALLFUNCTION" value="{ALLFUNCTION}">
+                                                <input type="hidden" name="PAGED_TABLE_ID" id="PAGED_TABLE_ID" value="{PAGED_TABLE_ID}">
+                                                <input type="hidden" name="LIBRARY_NAME" id="LIBRARY_NAME" value="{LIBRARY_NAME}">
+                                                <input type="hidden" name="PMFUNTION_LABEL" id="PMFUNTION_LABEL" value="{PMFUNTION_LABEL}">												
 												<td class="FormButton" colspan="2" align=""><input
 													style="" class='module_app_button___gray ' id="savek"
 													name="savek" type='button' value="{ID_SAVE}"
