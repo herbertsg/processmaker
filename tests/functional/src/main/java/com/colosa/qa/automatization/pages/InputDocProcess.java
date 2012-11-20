@@ -20,10 +20,6 @@ public class InputDocProcess extends Page{
 
 	public void uploadFile(String filePath, String description) throws Exception{
 
-		Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
 		Browser.getElement("inputDocProcess.webelement.new").click();
 	
 		Browser.getElement("inputDocProcess.webelement.path").sendKeys(filePath);
@@ -38,6 +34,14 @@ public class InputDocProcess extends Page{
 
 		Browser.getElement("inputDocProcess.webelement.continue").click();
 
+	}
+
+	public void openCaseFrame() throws Exception{
+
+		Browser.driver().switchTo().defaultContent();
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		Browser.driver().switchTo().frame("openCaseFrame");
 	}
 
 }
