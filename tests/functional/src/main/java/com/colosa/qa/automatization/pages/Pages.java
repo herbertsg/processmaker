@@ -26,6 +26,12 @@ public class Pages{
 		return document;
 	}
 
+	public static ProcessDesigner ProcessDesigner() throws Exception{
+		ProcessDesigner processDesigner = new ProcessDesigner();
+
+		return processDesigner;
+	}
+
 	public static ProcessList ProcessList() throws Exception{
 		ProcessList processList = new ProcessList();
 
@@ -43,4 +49,16 @@ public class Pages{
 
 		return outputDocProcess;
 	}	
+
+	public static InputDocumentList InputDocumentList() throws Exception{
+		InputDocumentList inputdDocList = new InputDocumentList();
+
+		return inputdDocList;
+	}
+
+	public static OutputDocumentList OutputDocumentList() throws Exception{
+		OutputDocumentList outputdDocList = new OutputDocumentList();
+
+		return outputdDocList;
+	}
 }
