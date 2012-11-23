@@ -4,11 +4,11 @@ import java.util.List;
 import java.lang.Exception;
 import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
-import com.colosa.qa.automatization.common.dynaform.DynaformDesigner;
+import com.colosa.qa.automatization.pages.DynaformDesigner;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class ProcessDesigner{
+public class ProcessDesigner extends Page{
 
 	public enum DynaformType{
 		BLANK("blankType"),
@@ -60,51 +60,58 @@ public class ProcessDesigner{
 			return this.id;
 		}
 	};
+
+	public ProcessDesigner() throws Exception{
+
+	}
 	
-	public static void open(MenuOption option) throws Exception{
+	public void open(MenuOption option) throws Exception{
+		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("frameMain");
 		Browser.getElement("processDesigner.webElement.menuItems."+option.getId()).click();
 		Browser.driver().switchTo().defaultContent();
 	}
 
-	private static void openDynaforms() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.DYNAFORMS);
+	private void openDynaforms() throws Exception{
+		this.open(ProcessDesigner.MenuOption.DYNAFORMS);
 	}
 
-	public static void openInputDocuments() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.INPUT_DOCUMENTS);	
+	public void openInputDocuments() throws Exception{
+		this.open(ProcessDesigner.MenuOption.INPUT_DOCUMENTS);	
 	}
 
-	public static void openOutputDocuments() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.OUTPUT_DOCUMENTS);
+	public void openOutputDocuments() throws Exception{
+		this.open(ProcessDesigner.MenuOption.OUTPUT_DOCUMENTS);
 	}
 
-	public static void openTriggers() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.TRIGGERS);
+	public void openTriggers() throws Exception{
+		this.open(ProcessDesigner.MenuOption.TRIGGERS);
 	}
 
-	public static void openReportTables() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.REPORT_TABLES);
+	public void openReportTables() throws Exception{
+		this.open(ProcessDesigner.MenuOption.REPORT_TABLES);
 	}
 
-	public static void openDatabaseConnections() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.DATABASE_CONNECTIONS);
+	public void openDatabaseConnections() throws Exception{
+		this.open(ProcessDesigner.MenuOption.DATABASE_CONNECTIONS);
 	}
 
-	public static void openCaseScheduler() throws Exception{
-		ProcessDesigner.open(ProcessDesigner.MenuOption.CASE_SCHEDULER);
+	public void openCaseScheduler() throws Exception{
+		this.open(ProcessDesigner.MenuOption.CASE_SCHEDULER);
 	}
 
-	public static void newDynaform(DynaformType type) throws Exception{
-		ProcessDesigner.openDynaforms();
+	private void newDynaform(DynaformType type) throws Exception{
+		this.openDynaforms();
 		Browser.driver().switchTo().frame("frameMain");
 		Browser.getElement("processDesigner.webElement.panelNewButton").click();
 		Browser.getElement("processDesigner.webElement.newDynaform."+type.getId()).click();
 		Browser.getElement("processDesigner.webElement.newDynaform.selectDynaformTypeButton").click();
 	}
 
-	public static DynaformDesigner newBlankDynaform(String title, DynaformSubType type, String description) throws Exception{
-		ProcessDesigner.newDynaform(ProcessDesigner.DynaformType.BLANK);
+	public DynaformDesigner newBlankDynaform(String title, DynaformSubType type, String description) throws Exception{
+		Browser.driver().switchTo().defaultContent();
+		Browser.driver().switchTo().frame("frameMain");
+		this.newDynaform(ProcessDesigner.DynaformType.BLANK);
 		Browser.getElement("processDesigner.webElement.newBlankDynaform.title").sendKeys(title);
 		new Select(Browser.getElement("processDesigner.webElement.newBlankDynaform.type")).selectByValue(ConfigurationSettings.getInstance().getSetting("processDesigner.webElement.newBlankDynaform.type."+type.getId()));
 		Browser.getElement("processDesigner.webElement.newBlankDynaform.description").sendKeys(description);
@@ -112,7 +119,17 @@ public class ProcessDesigner{
 		return new DynaformDesigner(Browser.getElement("processDesigner.webElement.newBlankDynaform.designer"));
 	}
 
-	public static DynaformDesigner newBlankDynaform(String title, DynaformSubType type) throws Exception{
-		return ProcessDesigner.newBlankDynaform(title, type, "");
+	public DynaformDesigner newBlankDynaform(String title, DynaformSubType type) throws Exception{
+		return this.newBlankDynaform(title, type, "");
+	}
+
+	public Boolean inPage() throws Exception{
+		return (Browser.driver().getCurrentUrl().indexOf(ConfigurationSettings.getInstance().getSetting("processDesigner.idURL")) >= 0);
+	}
+
+	public Boolean inPage(String processName) throws Exception{
+		if(Browser.getElements("processDesigner.processNameLocation").size() == 0)
+			return false;
+		return (Browser.getElement("processDesigner.processNameLocation").getText().trim().equals(processName.trim())) && this.inPage();
 	}
 }

@@ -15,6 +15,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class Browser {
 
@@ -89,11 +90,12 @@ public class Browser {
 	}
 
 	private static String[] getSearchCriteria(String str, Object... args) throws Exception{		
+		String key = str;
 		if(str==null)
 			throw new Exception("The the search criteria must be specified");
 		str = ConfigurationSettings.getInstance().getSetting(str);
 		if(str == null)
-			throw new Exception("There's no value for the key: "+str);
+			throw new Exception("There's no value for the key: "+key);
 		str = String.format(str, args);
 		if(str.lastIndexOf("___")==-1)
 			throw new Exception("The search prefix to find the element must be specified");
@@ -103,6 +105,10 @@ public class Browser {
 
 	public static WebElement getElement(String str) throws Exception{
 		return Browser.findElement(Browser.getSearchCriteria(str));		
+	}
+
+	public static List<WebElement> getElements(String str) throws Exception{
+		return Browser.findElements(Browser.getSearchCriteria(str));		
 	}
 
 	private static WebElement findElement(String[] criteria) throws Exception{
@@ -130,8 +136,41 @@ public class Browser {
 		return we;
 	}
 
+	private static List<WebElement> findElements(String[] criteria) throws Exception{
+		List<WebElement> we = null;
+		
+		if(criteria[0].equals("id"))
+			we = Browser.driver().findElements(By.id(criteria[1]));
+		else if(criteria[0].equals("cssSelector"))
+			we = Browser.driver().findElements(By.cssSelector(criteria[1]));
+		else if(criteria[0].equals("className"))
+			we = Browser.driver().findElements(By.className(criteria[1]));
+		else if(criteria[0].equals("linkText"))
+			we = Browser.driver().findElements(By.linkText(criteria[1]));
+		else if(criteria[0].equals("name"))
+			we = Browser.driver().findElements(By.name(criteria[1]));
+		else if(criteria[0].equals("partialLinkText"))
+			we = Browser.driver().findElements(By.partialLinkText(criteria[1]));
+		else if(criteria[0].equals("tagName"))
+			we = Browser.driver().findElements(By.tagName(criteria[1]));
+		else if(criteria[0].equals("xpath"))
+			we = Browser.driver().findElements(By.xpath(criteria[1]));
+		else
+			throw new Exception("Invalid search prefix");
+
+		return we;
+	}
+
 	public static WebElement getElementf(String str, Object... args) throws Exception{
 		return Browser.findElement(Browser.getSearchCriteria(str, args));
+	}
+
+	public static Boolean elementExists(String key, int ocurrences) throws Exception{
+		return (Browser.findElements(Browser.getSearchCriteria(key)).size()) == ocurrences;
+	}
+
+	public static Boolean elementExists(String key) throws Exception{
+		return Browser.elementExists(key, 1);
 	}
 
 /*
