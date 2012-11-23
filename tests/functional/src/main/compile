@@ -5,8 +5,9 @@
 # ln -s /usr/share/junit/junit-4.8.2.jar junit.jar
 # ln -s /usr/share/selenium/selenium-java-2.25.0.jar selenium-java.jar
 # ln -s /usr/share/selenium/libs/ libs
+
 #compile common
-javac -cp .:./resources/libs/*:./resources/selenium-java.jar ./java/com/colosa/qa/automatization/common/*.java
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/ ./java/com/colosa/qa/automatization/common/*.java
 
 #compile pages
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/pages/*.java

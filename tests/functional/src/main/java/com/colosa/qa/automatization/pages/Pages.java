@@ -61,4 +61,9 @@ public class Pages{
 
 		return outputdDocList;
 	}
+
+	public static DynaformDesigner DynaformDesigner() throws Exception{
+		
+		return new DynaformDesigner();
+	}
 }
