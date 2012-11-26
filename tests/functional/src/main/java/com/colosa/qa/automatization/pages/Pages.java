@@ -66,4 +66,10 @@ public class Pages{
 		
 		return new DynaformDesigner();
 	}
+
+	public static TriggersProcess TriggersProcess() throws Exception{
+		TriggersProcess triggerProcess = new TriggersProcess();
+
+		return triggerProcess;
+	}	
 }
