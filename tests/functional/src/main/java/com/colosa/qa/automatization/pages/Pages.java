@@ -71,5 +71,11 @@ public class Pages{
 		TriggersProcess triggerProcess = new TriggersProcess();
 
 		return triggerProcess;
+	}
+
+	public static Designer Designer() throws Exception{
+		Designer designer = new Designer();
+
+		return designer;
 	}	
 }
