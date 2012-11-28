@@ -20,7 +20,7 @@ public class TestTriggersProcess{
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goDesigner();
-		Pages.ProcessList().newProcess("Test ProcessTriggers", "Test process triggers");
+		Pages.ProcessList().newProcess("Test ProcessTriggers " + new java.util.Date().toString(), "Test process triggers");
 
 		// Test custom triggers
 		Pages.ProcessDesigner().openTriggers();
