@@ -7,4 +7,4 @@
 #Run Test extjs tree class
 #java -cp .:./resources/libs/*:./resources/selenium-java-2.25.0.jar:./java/:./resources/junit-4.10.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.outputDocuments.TestOutputDocProcess
 #java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.inputDocuments.TestInputDocument
-java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.login.ProcessDesignerTest
+java -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar org.junit.runner.JUnitCore com.colosa.qa.automatization.tests.withParallelCondition.TestWithParallelCondition

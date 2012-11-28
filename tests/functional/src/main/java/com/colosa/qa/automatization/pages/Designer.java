@@ -30,12 +30,12 @@ public class Designer{
 		
 	}
 
-	public void createTask() throws Exception{
+	public boolean createTask() throws Exception{
 
 		String taskName = "Task ";
 		int tNum = taskNum + 1; 
 		Actions action = new Actions(Browser.driver());
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
 		action.contextClick(gridPanel).perform();
 
@@ -50,9 +50,11 @@ public class Designer{
 		taskList();
 		taskN++;
 
+		return true; 
+
 	}
 
-	public void initialTask(String taskName) throws Exception{
+	public boolean initialTask(String taskName) throws Exception{
 
 		WebElement task = getTask(taskName);
 
@@ -63,12 +65,31 @@ public class Designer{
 				
 		(new Actions(Browser.driver())).dragAndDrop(Browser.driver().findElement(By.xpath("//*[@id='pm_target']/div[2]/div[1]/div[3]/div/img[8]")), task).build().perform();
 
+		return true;
 	}
 
-	public void sequential(String taskName1, String taskName2) throws Exception{
+	public boolean sequential(String taskName1, String taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
 		WebElement task2 = getTask(taskName2);
+
+		Browser.driver().switchTo().defaultContent();
+		Browser.driver().switchTo().frame("frameMain");
+
+		Actions action = new Actions(Browser.driver());
+				
+		(new Actions(Browser.driver())).dragAndDrop(Browser.driver().findElement(By.xpath("//*[@id='pm_target']/div[2]/div[1]/div[3]/div/img[1]")), task1).build().perform();
+
+		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform(); 
+
+		return true;
+
+	}
+
+	public boolean selection(String taskName1, String[] taskName2) throws Exception{
+
+		WebElement task1 = getTask(taskName1);
+		WebElement task2 = getTask(taskName2[0]);
 
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("frameMain");
@@ -79,9 +100,13 @@ public class Designer{
 
 		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform(); 
 
+		editCondition(taskName1, taskName2, 1);
+
+		return true;
+
 	}
 
-	public void evaluation(String taskName1, String[] taskName2) throws Exception{
+	public boolean evaluation(String taskName1, String[] taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
 		WebElement task2 = getTask(taskName2[0]);
@@ -95,11 +120,13 @@ public class Designer{
 
 		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform(); 
 
-		editCondition(taskName1, taskName2);
+		editCondition(taskName1, taskName2, 2);
+
+		return true;
 
 	}
 
-	public void paralellFork(String taskName1, String[] taskName2) throws Exception{
+	public boolean parallelFork(String taskName1, String[] taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
 		WebElement task2 = getTask(taskName2[0]);
@@ -113,10 +140,12 @@ public class Designer{
 
 		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform();
 
-		editCondition(taskName1, taskName2);
+		editCondition(taskName1, taskName2, 3);
+
+		return true;
 	}
 
-	public void paralellByEvaluation(String taskName1, String[] taskName2)  throws Exception{
+	public boolean parallelByEvaluation(String taskName1, String[] taskName2)  throws Exception{
 
 		WebElement task1 = getTask(taskName1);
 		WebElement task2 = getTask(taskName2[0]);
@@ -130,14 +159,16 @@ public class Designer{
 
 		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform();
 
-		editCondition(taskName1, taskName2);
+		editCondition(taskName1, taskName2, 4);
+
+		return true;
 
 	}
 
-	public void paralellJoin(String taskName1, String[] taskName2) throws Exception{
+	public boolean parallelJoin(String taskName1, String taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
-		WebElement task2 = getTask(taskName2[0]);
+		WebElement task2 = getTask(taskName2);
 
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("frameMain");
@@ -148,10 +179,11 @@ public class Designer{
 
 		(new Actions(Browser.driver())).dragAndDropBy(task2, 0, 0).build().perform();
 
-		editCondition(taskName1, taskName2);
+
+		return true;
 	}
 
-	public void endTask(String taskName) throws Exception{
+	public boolean endTask(String taskName) throws Exception{
 
 		WebElement task = getTask(taskName);
 
@@ -161,6 +193,8 @@ public class Designer{
 		Actions action = new Actions(Browser.driver());
 				
 		(new Actions(Browser.driver())).dragAndDrop(Browser.driver().findElement(By.xpath("//*[@id='pm_target']/div[2]/div[1]/div[3]/div/img[7]")), task).build().perform();
+	
+		return true;
 	}
 
 	public void moveTask(String taskName, int positionX, int positionY) throws Exception{
@@ -194,7 +228,7 @@ public class Designer{
 
 	}
 
-	public void editCondition(String taskName, String[] arrayTasks) throws Exception{
+	public void editCondition(String taskName, String[] arrayTasks, int conditionType) throws Exception{
 
 
 		int i = 0;			
@@ -204,6 +238,29 @@ public class Designer{
 		WebElement btnSend = null;
 		Select droplist;
 		int dropdownCount = 0;
+		String namePath = "";
+
+		if(conditionType==1){
+			namePath = "GRID_SELECT_TYPE";
+		}
+		else
+		{
+			if(conditionType==2){
+				namePath = "GRID_EVALUATE_TYPE";
+			}
+			else
+			{
+				if (conditionType==3) {
+					namePath = "GRID_PARALLEL_TYPE";
+				}
+				else
+				{
+					if (conditionType==4) {
+						namePath = "GRID_PARALLEL_EVALUATION_TYPE";
+					}
+				}
+			}
+		}
 		while(!founded && i < elements.length) 
 		{
 			elem = Browser.driver().findElement(By.xpath(elements[i][0]));
@@ -233,14 +290,18 @@ public class Designer{
 		{
 			for(int l=0;l<arrayTasks.length-1;l++)
 			{
-				btnAdd = Browser.driver().findElement(By.id("form[GRID_EVALUATE_TYPE][addLink]"));
+				System.out.println("Path: "+namePath);
+				
+					
+				btnAdd = Browser.driver().findElement(By.id("form["+namePath+"][addLink]"));
+				Thread.sleep(5000);
 				btnAdd.click();
 			}
 
 			for(int j=0;j<arrayTasks.length;j++)
 			{
 				dropdownCount = j + 1;
-				elem = Browser.driver().findElement(By.id("form[GRID_EVALUATE_TYPE]["+dropdownCount+"][ROU_NEXT_TASK]"));
+				elem = Browser.driver().findElement(By.id("form["+namePath+"]["+dropdownCount+"][ROU_NEXT_TASK]"));
 				droplist = new Select(elem);
 				droplist.selectByVisibleText(arrayTasks[j]);
 			}
