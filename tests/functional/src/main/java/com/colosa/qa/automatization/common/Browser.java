@@ -8,10 +8,11 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.util.List;
 public class Browser {
 
 	private static WebDriver _driver = null;
+	private static long _timeoutSeconds = 0;
 
 	public static WebDriver driver() throws FileNotFoundException, IOException{
 		if(_driver == null){
@@ -103,8 +105,10 @@ public class Browser {
 		return str.split("___", 2);
 	}
 
+	
+
 	public static WebElement getElement(String str) throws Exception{
-		return Browser.findElement(Browser.getSearchCriteria(str));		
+		return Browser.findElement(Browser.getSearchCriteria(str));	
 	}
 
 	public static List<WebElement> getElements(String str) throws Exception{
@@ -172,6 +176,23 @@ public class Browser {
 	public static Boolean elementExists(String key) throws Exception{
 		return Browser.elementExists(key, 1);
 	}
+
+	public static boolean waitForElement(By elementLocator, long timeoutSeconds) throws Exception{
+        
+        final By elem = elementLocator;
+
+		WebElement myDynamicElement = (new WebDriverWait(_driver, 10))
+  		.until(new ExpectedCondition<WebElement>(){
+        	@Override
+		        public WebElement apply(WebDriver d) {
+		        	return d.findElement(elem);
+				}
+			}
+
+		); 
+		
+		return true;
+     }
 
 /*
 	public static WebElement getElement(String str, int timeout) throws Exception{

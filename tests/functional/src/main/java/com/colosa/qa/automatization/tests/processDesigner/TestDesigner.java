@@ -1,4 +1,4 @@
-package com.colosa.qa.automatization.tests.designer;
+package com.colosa.qa.automatization.tests.processDesigner;
 
 import org.junit.Assert;
 import org.junit.AfterClass;
@@ -24,14 +24,14 @@ public class TestDesigner{
 		Pages.Designer().moveTask("Task 1", -100, -300);
 		Pages.Designer().createTask();
 		Pages.Designer().moveTask("Task 2", -300, -150);
-		Pages.Designer().createTask();
+		/*Pages.Designer().createTask();
 		Pages.Designer().moveTask("Task 3", -200, -150);
 		Pages.Designer().createTask();
 		Pages.Designer().moveTask("Task 4", -100, -150);
 		Pages.Designer().createTask();
-		Pages.Designer().moveTask("Task 5", 0, -150);
+		Pages.Designer().moveTask("Task 5", 0, -150);*/
 		Pages.Designer().initialTask("Task 1");		
-		String[] tasksListArray = {"Task 2", "Task 3", "Task 4", "Task 5"};
+		String[] tasksListArray = {"Task 2"};
 		Pages.Designer().evaluation("Task 1", tasksListArray);					
 
 	}
