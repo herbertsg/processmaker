@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestWithParallelCondition{
+public class TestWithParallelByEvalCondition{
 
 	@Test
 	public void createProcess() throws FileNotFoundException, IOException, Exception{
@@ -19,7 +19,7 @@ public class TestWithParallelCondition{
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goDesigner();		
-		Pages.ProcessList().newProcess("Prueba 17","");
+		Pages.ProcessList().newProcess("Prueba 19","");
 		Assert.assertTrue(Pages.Designer().createTask());
 		Pages.Designer().moveTask("Task 1", -100, -300);
 		Assert.assertTrue(Pages.Designer().createTask());
@@ -31,8 +31,8 @@ public class TestWithParallelCondition{
 		Assert.assertTrue(Pages.Designer().createTask());
 		Pages.Designer().moveTask("Task 5", -100, -80);
 		Assert.assertTrue(Pages.Designer().initialTask("Task 1"));		
-		String[][] tasksListArray = {{"Task 2",""}, {"Task 3",""}, {"Task 4",""}};
-		Assert.assertTrue(Pages.Designer().parallelFork("Task 1", tasksListArray));
+		String[][] tasksListArray = {{"Task 2","@@PROCESS"}, {"Task 3","@@PROCESS"}, {"Task 4","@@PROCESS"}};
+		Assert.assertTrue(Pages.Designer().parallelByEvaluation("Task 1", tasksListArray));
 		Assert.assertTrue(Pages.Designer().parallelJoin("Task 2", "Task 5"));
 		Assert.assertTrue(Pages.Designer().parallelJoin("Task 3", "Task 5"));
 		Assert.assertTrue(Pages.Designer().parallelJoin("Task 4", "Task 5"));

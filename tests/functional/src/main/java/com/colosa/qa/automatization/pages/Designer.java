@@ -86,10 +86,10 @@ public class Designer{
 
 	}
 
-	public boolean selection(String taskName1, String[] taskName2) throws Exception{
+	public boolean selection(String taskName1, String[][] taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
-		WebElement task2 = getTask(taskName2[0]);
+		WebElement task2 = getTask(taskName2[0][0]);
 
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("frameMain");
@@ -106,10 +106,10 @@ public class Designer{
 
 	}
 
-	public boolean evaluation(String taskName1, String[] taskName2) throws Exception{
+	public boolean evaluation(String taskName1, String[][] taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
-		WebElement task2 = getTask(taskName2[0]);
+		WebElement task2 = getTask(taskName2[0][0]);
 
 		if(task1==null||task2==null)
 			throw new Exception();
@@ -129,10 +129,10 @@ public class Designer{
 
 	}
 
-	public boolean parallelFork(String taskName1, String[] taskName2) throws Exception{
+	public boolean parallelFork(String taskName1, String[][] taskName2) throws Exception{
 
 		WebElement task1 = getTask(taskName1);
-		WebElement task2 = getTask(taskName2[0]);
+		WebElement task2 = getTask(taskName2[0][0]);
 
 		if(task1==null||task2==null)
 			throw new Exception();
@@ -152,10 +152,10 @@ public class Designer{
 				
 	}
 
-	public boolean parallelByEvaluation(String taskName1, String[] taskName2)  throws Exception{
+	public boolean parallelByEvaluation(String taskName1, String[][] taskName2)  throws Exception{
 
 		WebElement task1 = getTask(taskName1);
-		WebElement task2 = getTask(taskName2[0]);
+		WebElement task2 = getTask(taskName2[0][0]);
 
 		if(task1==null||task2==null)
 			throw new Exception();
@@ -244,7 +244,7 @@ public class Designer{
 
 	}
 
-	public void editCondition(String taskName, String[] arrayTasks, int conditionType) throws Exception{
+	public void editCondition(String taskName, String[][] arrayTasks, int conditionType) throws Exception{
 
 
 		int i = 0;			
@@ -316,7 +316,13 @@ public class Designer{
 				dropdownCount = j + 1;
 				elem = Browser.driver().findElement(By.id("form["+namePath+"]["+dropdownCount+"][ROU_NEXT_TASK]"));
 				droplist = new Select(elem);
-				droplist.selectByVisibleText(arrayTasks[j]);
+				droplist.selectByVisibleText(arrayTasks[j][0]);
+
+				if(conditionType!=3)
+				{
+					elem = Browser.driver().findElement(By.id("form["+namePath+"]["+dropdownCount+"][ROU_CONDITION]"));
+					elem.sendKeys(arrayTasks[j][1]);
+				}
 			}
 
 			btnSend = Browser.driver().findElement(By.id("form[SAVE]"));
