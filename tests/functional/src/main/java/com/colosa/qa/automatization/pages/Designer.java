@@ -332,4 +332,130 @@ public class Designer{
 	}
 
 
+	public boolean addEventMessage(String description, String status, String type, String startTask, String taskEnd, String taskDuration, 
+			String taskDurationUnti, String exeTime, String exeTimeUnit, String subject, String[] mailto, String[] mailcc, String[] mailbcc) throws Exception{
+
+		openMenuEvent();
+		WebElement eventMessageElem = Browser.driver().findElement(By.xpath("/html/body/div[4]/div[1]/div[2]"));
+		if(eventMessageElem.getText().equals("Intermediate message"))
+		{
+			eventMessageElem.click();
+		}
+		fillBasicFieldsEvents(description, status, type, startTask, taskEnd, taskDuration, taskDurationUnti, exeTime, exeTimeUnit); 
+		Browser.getElement("events.webElement.Continue").click();
+		Browser.getElement("events.webElement.Subject").sendKeys(subject);
+		addEmails("events.webElement.SendTo", mailto);
+		addEmails("events.webElement.CopyCarbon", mailcc);
+		addEmails("events.webElement.Blind", mailbcc);
+		Browser.getElement("events.webElement.Save").click();
+		return true;
+
+	}
+
+	public boolean addEventConditional(String description, String status, String type, String startTask, String taskEnd, String taskDuration, 
+			String taskDurationUnti, String exeTime, String exeTimeUnit, String trigger, String condition) throws Exception{
+		Browser.driver().switchTo().frame("frameMain");
+		openMenuEvent();
+		WebElement eventMessageElem = Browser.driver().findElement(By.xpath("/html/body/div[4]/div[2]/div[2]"));
+		if(eventMessageElem.getText().equals("Intermediate Conditional"))
+		{
+			eventMessageElem.click();
+		}
+		fillBasicFieldsEvents(description, status, type, startTask, taskEnd, taskDuration, taskDurationUnti, exeTime, exeTimeUnit); 
+		//WebElement element = Browser.getElement("events.webElement.Trigger");
+		//Select listTrigger = new Select(element);
+		//listTrigger.selectByVisibleText(trigger);
+		Browser.getElement("events.webElement.Condition").sendKeys(condition);
+		Browser.getElement("events.webElement.Continue").click();
+		Browser.getElement("events.webElement.Save").click();
+		return true;
+
+	}
+
+
+	public boolean addEventTimer(String description, String status, String type, String startTask, String taskEnd, String taskDuration, 
+			String taskDurationUnti, String exeTime, String exeTimeUnit, String trigger) throws Exception{
+		//Browser.driver().switchTo().frame("frameMain");
+		openMenuEvent();
+		WebElement eventMessageElem = Browser.driver().findElement(By.xpath("/html/body/div[4]/div[3]/div[2]"));
+		
+		if(eventMessageElem.getText().equals("Intermediate timer"))
+		{
+			eventMessageElem.click();
+		}
+		fillBasicFieldsEvents(description, status, type, startTask, taskEnd, taskDuration, taskDurationUnti, exeTime, exeTimeUnit); 
+		//WebElement element = Browser.getElement("events.webElement.Trigger");
+		//Select listTrigger = new Select(element);
+		//listTrigger.selectByVisibleText(trigger);
+		Browser.getElement("events.webElement.Continue").click();
+		Browser.getElement("events.webElement.Save").click();
+		return true;
+
+	}
+
+	public void fillBasicFieldsEvents(String description, String status, String type, String startTask, String taskEnd, String taskDuration, 
+			String taskDurationUnti, String exeTime, String exeTimeUnit) throws Exception{
+
+		WebElement elem = null;
+		Select droplist = null;
+		Browser.driver().switchTo().defaultContent();
+		Browser.driver().switchTo().frame("frameMain");
+		Browser.getElement("events.webElement.New").click();
+		Browser.getElement("events.webElement.Description").sendKeys(description);
+		elem = Browser.getElement("events.webElement.Status");
+		droplist = new Select(elem);
+		droplist.selectByVisibleText(status);
+		elem = Browser.getElement("events.webElement.Type");
+		droplist = new Select(elem);
+		droplist.selectByVisibleText(type);
+		if(type.equals("Multiple Tasks")){
+			elem = Browser.getElement("events.webElement.TaskFrom");
+			droplist = new Select(elem);
+			droplist.selectByVisibleText(startTask);
+			elem = Browser.getElement("events.webElement.TaskTo");
+			droplist = new Select(elem);
+			droplist.selectByVisibleText(taskEnd);
+		}
+		else{
+			elem = Browser.getElement("events.webElement.TaskStart");
+			droplist = new Select(elem);
+			droplist.selectByVisibleText(startTask);	
+		}
+
+		Browser.getElement("events.webElement.EstDuration").sendKeys(taskDuration);
+		elem = Browser.getElement("events.webElement.EstDurationUnit");
+		droplist = new Select(elem);
+		droplist.selectByVisibleText(taskDurationUnti);
+		Browser.getElement("events.webElement.ExeTimeWhen").sendKeys(exeTime);
+		elem = Browser.getElement("events.webElement.ExeTimeWhenOccurs");
+		droplist = new Select(elem);
+		droplist.selectByVisibleText(exeTimeUnit);
+	}
+
+	public void addEmails(String pathElement, String[] emailsList) throws Exception{
+
+		for(int j=0;j<emailsList.length;j++)
+		{
+			Browser.getElement(pathElement).sendKeys(emailsList[j]);
+			Browser.getElement(pathElement + "Add").click();
+		}
+
+	}
+
+	public void openMenuEvent() throws Exception{
+
+		Actions action = new Actions(Browser.driver());
+		Thread.sleep(5000);
+		WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
+		action.contextClick(gridPanel).perform();
+		WebElement eventElem = Browser.driver().findElement(By.xpath("/html/body/div[2]/div[17]"));
+
+		if(eventElem.getText().equals("Events"))
+		{
+			eventElem.click();
+		}
+
+	}
+
+
 }
