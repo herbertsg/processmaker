@@ -78,4 +78,10 @@ public class Pages{
 
 		return designer;
 	}	
+
+	public static TaskProperties TaskProperties() throws Exception{
+		TaskProperties taskProperties = new TaskProperties();
+
+		return taskProperties;
+	}
 }
