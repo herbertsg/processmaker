@@ -193,7 +193,7 @@ public class Home extends Main{
 	public void openCase(int numCase)throws Exception{
 		ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
-		this.selectMenuTreePanelOption("Cases/Inbox");
+		//this.selectMenuTreePanelOption("Cases/Inbox");
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
@@ -203,5 +203,7 @@ public class Home extends Main{
 		action.doubleClick(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
         action.perform();
 	}
+
+
 
 }
