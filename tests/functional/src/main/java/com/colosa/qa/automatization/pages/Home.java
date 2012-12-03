@@ -193,7 +193,7 @@ public class Home extends Main{
 	public void openCase(int numCase)throws Exception{
 		ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
-		this.selectMenuTreePanelOption("Cases/Inbox");
+		Browser.driver().switchTo().defaultContent();		
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
@@ -202,6 +202,17 @@ public class Home extends Main{
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
 		action.doubleClick(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
         action.perform();
+	}
+
+	public boolean existCase(int numCase)throws Exception{
+		ExtJSGrid grid;
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+		if(row==null)
+			throw new Exception("Case # "+Integer.toString(numCase)+" not exist in Inbox folder");
+		return true;
 	}
 
 }

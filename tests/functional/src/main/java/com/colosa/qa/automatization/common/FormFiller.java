@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class FormFiller{
 
@@ -110,6 +111,14 @@ public class FormFiller{
 								if(fieldData[i].fieldType=="check")
 								{
 									elem.click();
+								}
+								else
+								{
+									if(fieldData[i].fieldType=="readonly")
+									{
+										((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i].fieldValue);
+										
+									}
 								}							
 							}
 						}
