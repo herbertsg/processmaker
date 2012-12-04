@@ -36,8 +36,14 @@ public class InputDocProcess extends Page{
 
 	public void continuebtn() throws Exception{
 
-		Browser.getElement("inputDocProcess.webelement.continue").click();
+		WebElement nextBtn = Browser.getElement("inputDocProcess.webelement.continue");
 
+		if(nextBtn==null)
+			throw new Exception("The element is not found");
+		else{
+			nextBtn.click();
+			return true;
+			}
 	}
 
 

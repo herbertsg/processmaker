@@ -20,7 +20,7 @@ import org.openqa.selenium.JavascriptExecutor;
 
 public class FormFiller{
 
-	public static void formFillElements(FormFieldData[] fieldData) throws FileNotFoundException, IOException, Exception{
+	public static boolean formFillElements(FormFieldData[] fieldData) throws FileNotFoundException, IOException, Exception{
 		WebElement elem = null;
 		System.out.println("Tamaño del elemento: "+fieldData.length);
 
@@ -125,7 +125,9 @@ public class FormFiller{
 					}
 				}
 			}
-		}		
+		}
+
+		return true;		
 
 	}
 
