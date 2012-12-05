@@ -34,7 +34,7 @@ public class InputDocProcess extends Page{
 
 	}
 
-	public void continuebtn() throws Exception{
+	public boolean continuebtn() throws Exception{
 
 		WebElement nextBtn = Browser.getElement("inputDocProcess.webelement.continue");
 
@@ -44,6 +44,7 @@ public class InputDocProcess extends Page{
 			nextBtn.click();
 			return true;
 			}
+			
 	}
 
 
