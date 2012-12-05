@@ -30,6 +30,7 @@ require_once ("classes/model/AppCacheView.php");
 require_once ("classes/model/AppDelegation.php");
 require_once ("classes/model/AppDocument.php");
 require_once ("classes/model/AppDelay.php");
+require_once ("classes/model/AppNotes.php");
 require_once ("classes/model/AppThread.php");
 require_once ("classes/model/Department.php");
 require_once ("classes/model/Dynaform.php");
@@ -76,7 +77,6 @@ class wsBase
 {
     public $stored_system_variables; //boolean
     public $wsSessionId; //web service session id, if the wsbase function is used from a WS request
-    private $originalValues = array (); // SESSION temporary array store.
 
     public function __construct ($params = null)
     {
@@ -728,10 +728,24 @@ class wsBase
      * @param string $sSubject
      * @param string $sTemplate
      * @param $appFields = null
+     * @param $aAttachment = null
+     * @param boolean $showMessage = true
+     * @param int $delIndex = 0
      * @return $result will return an object
      */
-    public function sendMessage ($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null, $aAttachment = null, $showMessage = true)
-    {
+    public function sendMessage(
+        $caseId,
+        $sFrom,
+        $sTo,
+        $sCc,
+        $sBcc,
+        $sSubject,
+        $sTemplate,
+        $appFields = null,
+        $aAttachment = null,
+        $showMessage = true,
+        $delIndex = 0
+    ) {
         try {
             G::loadClass( 'system' );
 
@@ -749,6 +763,11 @@ class wsBase
                 }
             }
             $aSetup['MESS_PASSWORD'] = $passwd;
+            if ($aSetup['MESS_RAUTH'] == false || (is_string($aSetup['MESS_RAUTH']) && $aSetup['MESS_RAUTH'] == 'false')) {
+                $aSetup['MESS_RAUTH'] = 0;
+            } else {
+                $aSetup['MESS_RAUTH'] = 1;
+            }
 
             $oSpool = new spoolRun();
             $oSpool->setConfig( array ('MESS_ENGINE' => $aSetup['MESS_ENGINE'],'MESS_SERVER' => $aSetup['MESS_SERVER'],'MESS_PORT' => $aSetup['MESS_PORT'],'MESS_ACCOUNT' => $aSetup['MESS_ACCOUNT'],'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],'SMTPAuth' => $aSetup['MESS_RAUTH']
@@ -783,7 +802,21 @@ class wsBase
             }
             $showMessage = ($showMessage) ? 1 : 0 ;
 
-            $messageArray = array ('msg_uid' => '','app_uid' => $caseId,'del_index' => 0,'app_msg_type' => 'TRIGGER','app_msg_subject' => $sSubject,'app_msg_from' => $sFrom,'app_msg_to' => $sTo,'app_msg_body' => $sBody,'app_msg_cc' => $sCc,'app_msg_bcc' => $sBcc,'app_msg_attach' => $aAttachment,'app_msg_template' => '','app_msg_status' => 'pending', 'app_msg_show_message' => $showMessage
+            $messageArray = array(
+                "msg_uid" => "",
+                "app_uid" => $caseId,
+                "del_index"    => $delIndex,
+                "app_msg_type" => "TRIGGER",
+                "app_msg_subject" => $sSubject,
+                "app_msg_from"    => $sFrom,
+                "app_msg_to"   => $sTo,
+                "app_msg_body" => $sBody,
+                "app_msg_cc"   => $sCc,
+                "app_msg_bcc"  => $sBcc,
+                "app_msg_attach"   => $aAttachment,
+                "app_msg_template" => "",
+                "app_msg_status"   => "pending",
+                "app_msg_show_message" => $showMessage
             );
 
             $oSpool->create( $messageArray );
@@ -1212,7 +1245,41 @@ class wsBase
 
             return $result;
         } catch (Exception $e) {
-            $result = wsResponse( 100, $e->getMessage() );
+            $result = new wsResponse(100, $e->getMessage());
+
+            return $result;
+        }
+    }
+
+    /**
+     * Information User
+     * @param string userUid : The user UID.
+     * @return $result will return an object
+     */
+    public function informationUser($userUid)
+    {
+        try {
+            if (empty($userUid)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " userUid");
+
+                return $result;
+            }
+
+            $user = new Users();
+            $userInfo = $user->getAllInformation($userUid);
+
+            //Response
+            $res = new wsResponse(0, G::LoadTranslation("ID_COMMAND_EXECUTED_SUCCESSFULLY"));
+
+            $result = new stdClass();
+            $result->status_code = $res->status_code;
+            $result->message     = $res->message;
+            $result->timestamp   = $res->timestamp;
+            $result->info = $userInfo;
+
+            return $result;
+        } catch (Exception $e) {
+            $result = new wsResponse(100, $e->getMessage());
 
             return $result;
         }
@@ -1618,92 +1685,6 @@ class wsBase
     }
 
     /**
-     * save the $_SESSION variables into $originalValues array, to unset them temporary.
-     *
-     */
-    private function saveTemporarySessionVars()
-    {
-        //Unset any variable, because we are starting a new case
-        if (isset( $_SESSION['APPLICATION'] )) {
-            $this->originalValues['APPLICATION'] = $_SESSION['APPLICATION'];
-            unset( $_SESSION['APPLICATION'] );
-        }
-
-        if (isset( $_SESSION['PROCESS'] )) {
-            $this->originalValues['PROCESS'] = $_SESSION['PROCESS'];
-            unset( $_SESSION['PROCESS'] );
-        }
-
-        if (isset( $_SESSION['TASK'] )) {
-            $this->originalValues['TASK'] = $_SESSION['TASK'];
-            unset( $_SESSION['TASK'] );
-        }
-
-        if (isset( $_SESSION['INDEX'] )) {
-            $this->originalValues['INDEX'] = $_SESSION['INDEX'];
-            unset( $_SESSION['INDEX'] );
-        }
-        
-        if (isset( $_SESSION['USER_LOGGED'] )) {
-            $this->originalValues['USER_LOGGED'] = $_SESSION['USER_LOGGED'];
-            unset( $_SESSION['USER_LOGGED'] );
-        }
-
-        if (isset( $_SESSION['USR_USERNAME'] )) {
-            $this->originalValues['USR_USERNAME'] = $_SESSION['USR_USERNAME'];
-            unset( $_SESSION['USR_USERNAME'] );
-        }
-
-        if (isset( $_SESSION['STEP_POSITION'] )) {
-            $this->originalValues['STEP_POSITION'] = $_SESSION['STEP_POSITION'];
-            unset( $_SESSION['STEP_POSITION'] );
-        }
-    }
-    
-    /**
-     * restore the Session variables with values of $originalValues array, if this is set.
-     *
-     */
-    private function restoreSessionVars()
-    {
-        //Restore original values
-        if (isset( $this->originalValues['APPLICATION'] )) {
-            $_SESSION['APPLICATION'] = $this->originalValues['APPLICATION'];
-            unset( $this->originalValues['APPLICATION']);
-        }
-
-        if (isset( $this->originalValues['PROCESS'] )) {
-            $_SESSION['PROCESS'] = $this->originalValues['PROCESS'];
-            unset( $this->originalValues['PROCESS']);
-        }
-
-        if (isset( $this->originalValues['TASK'] )) {
-            $_SESSION['TASK'] = $this->originalValues['TASK'];
-            unset( $this->originalValues['TASK']);
-        }
-
-        if (isset( $this->originalValues['INDEX'] )) {
-            $_SESSION['INDEX'] = $this->originalValues['INDEX'];
-            unset( $this->originalValues['INDEX']);
-        }
-
-        if (isset( $this->originalValues['USR_USERNAME'] )) {
-            $_SESSION['USR_USERNAME'] = $this->originalValues['USR_USERNAME'];
-            unset( $this->originalValues['USR_USERNAME']);
-        }
-        
-        if (isset( $this->originalValues['USER_LOGGED'] )) {
-            $_SESSION['USER_LOGGED'] = $this->originalValues['USER_LOGGED'];
-            unset( $this->originalValues['USER_LOGGED']);
-        }
-
-        if (isset( $this->originalValues['STEP_POSITION'] )) {
-            $_SESSION['STEP_POSITION'] = $this->originalValues['STEP_POSITION'];
-            unset( $this->originalValues['STEP_POSITION']);
-        }
-    }
-
-    /**
      * new Case begins a new case under the name of the logged-in user.
      *
      * @param string $processId
@@ -1714,10 +1695,15 @@ class wsBase
      */
     public function newCase ($processId, $userId, $taskId, $variables)
     {
+        $g = new G();
+
         try {
-        
-            $this->saveTemporarySessionVars();
-    
+            $g->sessionVarSave();
+
+            $_SESSION["PROCESS"] = $processId;
+            $_SESSION["TASK"] = $taskId;
+            $_SESSION["USER_LOGGED"] = $userId;
+
             $Fields = array ();
 
             if (is_array( $variables ) && count( $variables ) > 0) {
@@ -1729,7 +1715,9 @@ class wsBase
 
             if (! $pro) {
                 $result = new wsResponse( 11, G::loadTranslation( 'ID_INVALID_PROCESS' ) . " " . $processId );
-                $this->restoreSessionVars();
+
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
@@ -1760,14 +1748,18 @@ class wsBase
 
                 if ($tasksInThisProcess > 1) {
                     $result = new wsResponse( 13, G::loadTranslation( 'ID_MULTIPLE_STARTING_TASKS' ) );
-                    $this->restoreSessionVars();
+
+                    $g->sessionVarRestore();
+
                     return $result;
                 }
             }
 
             if ($founded == '') {
                 $result = new wsResponse( 14, G::loadTranslation( 'ID_TASK_INVALID_USER_NOT_ASSIGNED_TASK' ) );
-                $this->restoreSessionVars();
+
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
@@ -1790,16 +1782,18 @@ class wsBase
 
             $up_case = $oCase->updateCase( $caseId, $oldFields );
 
-            $this->restoreSessionVars();
-            
             $result = new wsResponse( 0, G::loadTranslation( 'ID_STARTED_SUCCESSFULLY' ) );
             $result->caseId = $caseId;
             $result->caseNumber = $caseNr;
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
             $result = new wsResponse( 100, $e->getMessage() );
-            $this->restoreSessionVars();
+
+            $g->sessionVarRestore();
+
             return $result;
         }
     }
@@ -1901,7 +1895,15 @@ class wsBase
      */
     public function derivateCase ($userId, $caseId, $delIndex, $bExecuteTriggersBeforeAssignment = false)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseId;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userId;
+
             $sStatus = 'TO_DO';
 
             $varResponse = '';
@@ -2289,9 +2291,13 @@ class wsBase
 
             $res['routing'] = $aCurrentUsers;
 
+            $g->sessionVarRestore();
+
             return $res;
         } catch (Exception $e) {
             $result = new wsResponse( 100, $e->getMessage() );
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2309,18 +2315,30 @@ class wsBase
      */
     public function executeTrigger ($userId, $caseId, $triggerIndex, $delIndex)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseId;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userId;
+
             $oAppDel = new AppDelegation();
             $appdel = $oAppDel->Load( $caseId, $delIndex );
 
             if ($userId != $appdel['USR_UID']) {
                 $result = new wsResponse( 17, G::loadTranslation( 'ID_CASE_ASSIGNED_ANOTHER_USER' ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             if ($appdel['DEL_FINISH_DATE'] != null) {
                 $result = new wsResponse( 18, G::loadTranslation( 'ID_CASE_DELEGATION_ALREADY_CLOSED' ) );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2339,6 +2357,8 @@ class wsBase
             if (is_array( $aRow )) {
                 if ($aRow['APP_DISABLE_ACTION_USER'] != 0 && $aRow['APP_DISABLE_ACTION_DATE'] != '') {
                     $result = new wsResponse( 19, G::loadTranslation( 'ID_CASE_IN_STATUS' ) . " " . $aRow['APP_TYPE'] );
+
+                    $g->sessionVarRestore();
 
                     return $result;
                 }
@@ -2380,16 +2400,21 @@ class wsBase
                 $data['TRIGGER_INDEX'] = $triggerIndex;
                 $result = new wsResponse( 100, G::loadTranslation( 'ID_INVALID_TRIGGER', SYS_LANG, $data ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             $result = new wsResponse( 0, G::loadTranslation( 'ID_EXECUTED' ) . ": " . trim( $row['TRI_WEBBOT'] ) );
             //$result = new wsResponse(0, 'executed: ' . print_r($oPMScript, 1));
 
+            $g->sessionVarRestore();
 
             return $result;
         } catch (Exception $e) {
             $result = new wsResponse( 100, $e->getMessage() );
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2487,9 +2512,19 @@ class wsBase
      */
     public function reassignCase ($sessionId, $caseId, $delIndex, $userIdSource, $userIdTarget)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseId;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userIdSource;
+
             if ($userIdTarget == $userIdSource) {
                 $result = new wsResponse( 30, G::loadTranslation( 'ID_TARGET_ORIGIN_USER_SAME' ) );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2508,6 +2543,8 @@ class wsBase
             if (! is_array( $aRow )) {
                 $result = new wsResponse( 31, G::loadTranslation( 'ID_INVALID_ORIGIN_USER' ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
@@ -2519,6 +2556,8 @@ class wsBase
 
             if (! is_array( $aRow )) {
                 $result = new wsResponse( 32, G::loadTranslation( 'ID_CASE_NOT_OPEN' ) );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2544,6 +2583,8 @@ class wsBase
             if (! is_array( $aRow )) {
                 $result = new wsResponse( 33, G::loadTranslation( 'ID_INVALID_CASE_DELEGATION_INDEX' ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
@@ -2553,6 +2594,8 @@ class wsBase
 
             if (! in_array( $userIdTarget, $userList )) {
                 $result = new wsResponse( 34, G::loadTranslation( 'ID_TARGET_USER_DOES_NOT_HAVE_RIGHTS' ) );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2571,6 +2614,8 @@ class wsBase
             if (! is_array( $aRow )) {
                 $result = new wsResponse( 35, G::loadTranslation( 'ID_TARGET_USER_DESTINATION_INVALID' ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
@@ -2582,15 +2627,21 @@ class wsBase
             if (! $var) {
                 $result = new wsResponse( 36, G::loadTranslation( 'ID_CASE_COULD_NOT_REASSIGNED' ) );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             $result = new wsResponse( 0, G::loadTranslation( 'ID_COMMAND_EXECUTED_SUCCESSFULLY' ) );
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
             $result[] = array ('guid' => $e->getMessage(),'name' => $e->getMessage()
             );
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2816,9 +2867,17 @@ class wsBase
      */
     public function deleteCase ($caseUid)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseUid;
+
             if (empty( $caseUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " caseUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2832,9 +2891,13 @@ class wsBase
             $result = array ("status_code" => $res->status_code,"message" => $res->message,"timestamp" => $res->timestamp
             );
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
-            $result = wsResponse( 100, $e->getMessage() );
+            $result = new wsResponse(100, $e->getMessage());
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2850,9 +2913,19 @@ class wsBase
      */
     public function cancelCase ($caseUid, $delIndex, $userUid)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseUid;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userUid;
+
             if (empty( $caseUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " caseUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2860,11 +2933,15 @@ class wsBase
             if (empty( $delIndex )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " delIndex" );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             if (empty( $userUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " userUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2878,9 +2955,13 @@ class wsBase
             $result = array ("status_code" => $res->status_code,"message" => $res->message,"timestamp" => $res->timestamp
             );
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
-            $result = wsResponse( 100, $e->getMessage() );
+            $result = new wsResponse(100, $e->getMessage());
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2898,9 +2979,19 @@ class wsBase
      */
     public function pauseCase ($caseUid, $delIndex, $userUid, $unpauseDate = null)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseUid;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userUid;
+
             if (empty( $caseUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " caseUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2908,11 +2999,15 @@ class wsBase
             if (empty( $delIndex )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " delIndex" );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             if (empty( $userUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " userUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2920,6 +3015,8 @@ class wsBase
             if (! empty( $unpauseDate )) {
                 if (! preg_match( "/^\d{4}-\d{2}-\d{2}$/", $unpauseDate )) {
                     $result = new wsResponse( 100, G::LoadTranslation( "ID_INVALID_DATA" ) . " $unpauseDate" );
+
+                    $g->sessionVarRestore();
 
                     return $result;
                 }
@@ -2934,9 +3031,13 @@ class wsBase
             $result = array ("status_code" => $res->status_code,"message" => $res->message,"timestamp" => $res->timestamp
             );
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
-            $result = wsResponse( 100, $e->getMessage() );
+            $result = new wsResponse(100, $e->getMessage());
+
+            $g->sessionVarRestore();
 
             return $result;
         }
@@ -2952,9 +3053,19 @@ class wsBase
      */
     public function unpauseCase ($caseUid, $delIndex, $userUid)
     {
+        $g = new G();
+
         try {
+            $g->sessionVarSave();
+
+            $_SESSION["APPLICATION"] = $caseUid;
+            $_SESSION["INDEX"] = $delIndex;
+            $_SESSION["USER_LOGGED"] = $userUid;
+
             if (empty( $caseUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " caseUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2962,11 +3073,15 @@ class wsBase
             if (empty( $delIndex )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " delIndex" );
 
+                $g->sessionVarRestore();
+
                 return $result;
             }
 
             if (empty( $userUid )) {
                 $result = new wsResponse( 100, G::LoadTranslation( "ID_REQUIRED_FIELD" ) . " userUid" );
+
+                $g->sessionVarRestore();
 
                 return $result;
             }
@@ -2980,9 +3095,83 @@ class wsBase
             $result = array ("status_code" => $res->status_code,"message" => $res->message,"timestamp" => $res->timestamp
             );
 
+            $g->sessionVarRestore();
+
             return $result;
         } catch (Exception $e) {
-            $result = wsResponse( 100, $e->getMessage() );
+            $result = new wsResponse(100, $e->getMessage());
+
+            $g->sessionVarRestore();
+
+            return $result;
+        }
+    }
+
+    /**
+     * Add case note
+     *
+     * @param string caseUid : ID of the case.
+     * @param string processUid : ID of the process.
+     * @param string taskUid : ID of the task.
+     * @param string userUid : The unique ID of the user who will add note case.
+     * @param string note : Note of the case.
+     * @param int sendMail : Optional parameter. If set to 1, will send an email to all participants in the case.
+     * @return $result will return an object
+     */
+    public function addCaseNote($caseUid, $processUid, $taskUid, $userUid, $note, $sendMail = 1)
+    {
+        try {
+            if (empty($caseUid)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " caseUid");
+
+                return $result;
+            }
+
+            if (empty($processUid)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " processUid");
+
+                return $result;
+            }
+
+            if (empty($taskUid)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " taskUid");
+
+                return $result;
+            }
+
+            if (empty($userUid)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " userUid");
+
+                return $result;
+            }
+
+            if (empty($note)) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_REQUIRED_FIELD") . " note");
+
+                return $result;
+            }
+
+            $case = new Cases();
+
+            $respView = $case->getAllObjectsFrom($processUid, $caseUid, $taskUid, $userUid, "VIEW");
+            $respBlock = $case->getAllObjectsFrom($processUid, $caseUid, $taskUid, $userUid, "BLOCK");
+
+            if ($respView["CASES_NOTES"] == 0 && $respBlock["CASES_NOTES"] == 0) {
+                $result = new wsResponse(100, G::LoadTranslation("ID_CASES_NOTES_NO_PERMISSIONS"));
+
+                return $result;
+            }
+
+            //Add note case
+            $appNote = new AppNotes();
+            $response = $appNote->addCaseNote($caseUid, $userUid, $note, $sendMail);
+
+            //Response
+            $result = new wsResponse(0, G::LoadTranslation("ID_COMMAND_EXECUTED_SUCCESSFULLY"));
+
+            return $result;
+        } catch (Exception $e) {
+            $result = new wsResponse(100, $e->getMessage());
 
             return $result;
         }

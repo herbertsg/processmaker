@@ -3,6 +3,8 @@ package com.colosa.qa.automatization.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
+
 import com.colosa.qa.automatization.common.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class Login extends Page{
 	WebElement workspace;
 	WebElement submitButton;
 	WebElement logOutLink;
-	WebElement language;
+	Select languageDropDown;
 
 	public Login() throws FileNotFoundException, IOException{
 		url = ConfigurationSettings.getInstance().getSetting("server.url");
@@ -30,7 +32,7 @@ public class Login extends Page{
 		this.workspace = Browser.getElement("login.webElement.workspace");
 		this.submitButton = Browser.getElement("login.webElement.submitButton");
 
-		this.language = Browser.getElement("login.webElement.language");
+		this.languageDropDown = new Select(Browser.getElement("login.webElement.language"));
 	}
 
 	public boolean isAtLoginPage() throws Exception{
@@ -43,17 +45,27 @@ public class Login extends Page{
 		this.user.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultUserName"));
 		this.password.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultPassword"));
 		this.workspace.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultWorkspace"));
+		this.languageDropDown.selectByVisibleText(ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
+
 		this.submitButton.click();
 	}
 
-	public void loginUser(String userName, String password, String workspace) throws Exception{
+	public void loginUser(String userName, String password, String workspace, String language) throws Exception{
+		Browser.waitForElement("login.webElement.userName", 40);
+		
 		this.initWebElements();
 
 		this.user.sendKeys(userName);
 		this.password.sendKeys(password);
 		this.workspace.sendKeys(workspace);
+		this.languageDropDown.selectByVisibleText(language);
+
 		this.submitButton.click();
 	}
+
+	public void loginUser(String userName, String password, String workspace) throws Exception{
+		this.loginUser(userName, password, workspace, ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
+	}	
 
 	public boolean isUserLogged() throws Exception{
 		this.logOutLink = Browser.getElement("login.WebElement.logoutButton");

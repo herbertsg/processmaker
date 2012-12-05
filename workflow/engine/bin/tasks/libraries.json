@@ -79,6 +79,12 @@
                 "full": "gulliver/js/widgets/tooltip/pmtooltip.js",
                 "mini": "gulliver/js/widgets/tooltip/pmtooltip.js",
                 "minify": true
+            },
+            {
+                "name": "tinymce",
+                "full": "gulliver/js/tinymce/jscripts/tiny_mce/tiny_mce_src.js",
+                "mini": "gulliver/js/tinymce/jscripts/tiny_mce/tiny_mce_src.js",
+                "minify": true
             }
         ],
         "build" : true,
@@ -133,6 +139,12 @@
                 "name": "module.dom",
                 "full": "gulliver/js/maborak/core/module.dom.js",
                 "mini": "gulliver/js/maborak/core/module.dom.js",
+                "minify": true
+            },
+            {
+                "name": "module.abbr",
+                "full": "gulliver/js/maborak/core/module.abbr.js",
+                "mini": "gulliver/js/maborak/core/module.abbr.js",
                 "minify": true
             },
             {
