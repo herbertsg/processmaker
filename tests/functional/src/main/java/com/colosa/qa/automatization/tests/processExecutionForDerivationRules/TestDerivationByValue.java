@@ -27,16 +27,16 @@ public class TestDerivationByValue{
 		arrayData[2] = new FormFieldData();
 
 		arrayData[0].fieldPath = "form[nombre]";
-		arrayData[0].fieldFindType = "id";
-		arrayData[0].fieldType = "textbox";
+		arrayData[0].fieldFindType = FieldKeyType.ID;
+		arrayData[0].fieldType = FieldType.TEXTBOX;
 		arrayData[0].fieldValue = "Ernesto Vega";
 		arrayData[1].fieldPath = "form[comentarios]";
-		arrayData[1].fieldFindType = "id";
-		arrayData[1].fieldType = "textarea";
+		arrayData[1].fieldFindType = FieldKeyType.ID;
+		arrayData[1].fieldType = FieldType.TEXTAREA;
 		arrayData[1].fieldValue = "Prueba";
 		arrayData[2].fieldPath = "form[next]";
-		arrayData[2].fieldFindType = "id";
-		arrayData[2].fieldType = "button";
+		arrayData[2].fieldFindType = FieldKeyType.ID;
+		arrayData[2].fieldType = FieldType.BUTTON;
 		arrayData[2].fieldValue = "";
 		Pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));

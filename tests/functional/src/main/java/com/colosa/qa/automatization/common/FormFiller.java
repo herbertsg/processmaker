@@ -17,6 +17,9 @@ import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.openqa.selenium.JavascriptExecutor;
+import com.colosa.qa.automatization.common.*;
+
+
 
 public class FormFiller{
 
@@ -26,105 +29,58 @@ public class FormFiller{
 
 		for(int i = 0;i<fieldData.length;i++)
 		{
-			if(fieldData[i].fieldPath=="")
+			switch(fieldData[i].fieldFindType)
 			{
-				break;
-			}
-			else
-			{
-				if(fieldData[i].fieldFindType=="id")
-				{
-					elem = Browser.driver().findElement(By.id(fieldData[i].fieldPath));
-				}
-				else
-				{
-					if(fieldData[i].fieldFindType=="xpath")
-					{
-						elem = Browser.driver().findElement(By.xpath(fieldData[i].fieldPath));
-					}
-					else
-					{
-						if(fieldData[i].fieldFindType=="cssSelector")
-						{
-							elem = Browser.driver().findElement(By.cssSelector(fieldData[i].fieldPath));
-						}
-						else
-						{
-							if(fieldData[i].fieldFindType=="linkText")
-							{
-								elem = Browser.driver().findElement(By.linkText(fieldData[i].fieldPath));
-							}
-							else
-							{
-								if(fieldData[i].fieldFindType=="partialLinkText")
-								{
-									elem = Browser.driver().findElement(By.partialLinkText(fieldData[i].fieldPath));
-								}
-								else
-								{
-									if(fieldData[i].fieldFindType=="tagName")
-									{
-										elem = Browser.driver().findElement(By.tagName(fieldData[i].fieldPath));
-									}
-									else
-									{
-										throw new Exception("Invalid search prefix");
-									}
-								}
-							}
-						}
-					}
-				}
+
+				case ID: 	elem = Browser.driver().findElement(By.id(fieldData[i].fieldPath));
+										break;
+				
+				case XPATH: 	elem = Browser.driver().findElement(By.xpath(fieldData[i].fieldPath));
+											break;
+				
+				case CSSSELECTOR:	elem = Browser.driver().findElement(By.cssSelector(fieldData[i].fieldPath));
+												break;
+				
+				case LINKTEXT:	elem = Browser.driver().findElement(By.linkText(fieldData[i].fieldPath));
+											break;
+				
+				case PARTIALLINKTEXT:	elem = Browser.driver().findElement(By.partialLinkText(fieldData[i].fieldPath));
+													break;
+				
+				case TAGNAME: 	elem = Browser.driver().findElement(By.tagName(fieldData[i].fieldPath));
+											break;
+				
+				default:	break;
+
 			}
 
-			if(fieldData[i].fieldType=="textbox")
+			switch(fieldData[i].fieldType)
 			{
-				elem.sendKeys(fieldData[i].fieldValue);
-			}
-			else
-			{
-				if(fieldData[i].fieldType=="button")
-				{
-					elem.click();
-				}
-				else
-				{
-					if(fieldData[i].fieldType=="textarea")
-					{
-						elem.sendKeys(fieldData[i].fieldValue);
-					}
-					else
-					{
-						if(fieldData[i].fieldType=="dropdown")
-						{
-							Select droplist = new Select(elem);
-							droplist.selectByVisibleText(fieldData[i].fieldValue);
-						}
-						else
-						{
-							if(fieldData[i].fieldType=="radiobutton")
-							{
-								elem.click();
-							}
-							else
-							{
-								if(fieldData[i].fieldType=="check")
-								{
-									elem.click();
-								}
-								else
-								{
-									if(fieldData[i].fieldType=="readonly")
-									{
-										((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i].fieldValue);
+				case TEXTBOX: elem.sendKeys(fieldData[i].fieldValue);
+										break;
+
+				case BUTTON: 	elem.click();
+										break;	
+
+				case TEXTAREA: elem.sendKeys(fieldData[i].fieldValue);
+										 break;	
+
+				case DROPDOWN: Select droplist = new Select(elem);
+										 droplist.selectByVisibleText(fieldData[i].fieldValue);;
+										 break;
+
+				case RADIOBUTTON:	elem.click();
+											break;
+
+				case CHECK: 	elem.click();
+										break;	
 										
-									}
-								}							
-							}
-						}
-					}
-				}
+				case READONLY:  ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i].fieldValue);
+          						break;
+         
+				default: 	break;																																						
 			}
+			
 		}
 
 		return true;		

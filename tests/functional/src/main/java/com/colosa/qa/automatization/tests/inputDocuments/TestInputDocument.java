@@ -30,28 +30,28 @@ public class TestInputDocument{
 
 
 		fieldArray[0].fieldPath = "form[nombre]";
-		fieldArray[0].fieldFindType = "id";
-		fieldArray[0].fieldType = "textbox";
+		fieldArray[0].fieldFindType = FieldKeyType.ID;
+		fieldArray[0].fieldType = FieldType.TEXTBOX;
 		fieldArray[0].fieldValue = "Ernesto Vega";
 		fieldArray[1].fieldPath = "form[fechanacimiento]";
-		fieldArray[1].fieldFindType = "id";
-		fieldArray[1].fieldType = "textbox";
+		fieldArray[1].fieldFindType = FieldKeyType.ID;
+		fieldArray[1].fieldType = FieldType.TEXTBOX;
 		fieldArray[1].fieldValue = "1987-12-29";
 		fieldArray[2].fieldPath = "form[CI]";
-		fieldArray[2].fieldFindType = "id";
-		fieldArray[2].fieldType = "textbox";
+		fieldArray[2].fieldFindType = FieldKeyType.ID;
+		fieldArray[2].fieldType = FieldType.TEXTBOX;
 		fieldArray[2].fieldValue = "6812278";
 		fieldArray[3].fieldPath = "form[carrera]";
-		fieldArray[3].fieldFindType = "id";
-		fieldArray[3].fieldType = "dropdown";
+		fieldArray[3].fieldFindType = FieldKeyType.ID;
+		fieldArray[3].fieldType = FieldType.DROPDOWN;
 		fieldArray[3].fieldValue = "ingenieria electronica";
 		fieldArray[4].fieldPath = "form[beca][par]";
-		fieldArray[4].fieldFindType = "id";
-		fieldArray[4].fieldType = "radiobutton";
+		fieldArray[4].fieldFindType = FieldKeyType.ID;
+		fieldArray[4].fieldType = FieldType.RADIOBUTTON;
 		fieldArray[4].fieldValue = "";
 		fieldArray[5].fieldPath = "form[send]";
-		fieldArray[5].fieldFindType = "id";
-		fieldArray[5].fieldType = "button";
+		fieldArray[5].fieldFindType = FieldKeyType.ID;
+		fieldArray[5].fieldType = FieldType.BUTTON;
 		fieldArray[5].fieldValue = "";
 		FormFiller.formFillElements(fieldArray);
 		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
@@ -63,8 +63,8 @@ public class TestInputDocument{
 		fieldArray2[0] = new FormFieldData();
 
 		fieldArray2[0].fieldPath = "form[send]";
-		fieldArray2[0].fieldFindType = "id";
-		fieldArray2[0].fieldType = "button";
+		fieldArray2[0].fieldFindType = FieldKeyType.ID;
+		fieldArray2[0].fieldType = FieldType.BUTTON;
 		fieldArray2[0].fieldValue = "";
 		FormFiller.formFillElements(fieldArray2);
 		

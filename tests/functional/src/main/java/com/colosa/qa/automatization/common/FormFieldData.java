@@ -18,8 +18,8 @@ import java.io.IOException;
 
 public class FormFieldData{
 	public String fieldPath;
-	public String fieldFindType;
-	public String fieldType;
+	public FieldKeyType fieldFindType;
+	public FieldType fieldType;
 	public String fieldValue;	
 
 	public FormFieldData(){

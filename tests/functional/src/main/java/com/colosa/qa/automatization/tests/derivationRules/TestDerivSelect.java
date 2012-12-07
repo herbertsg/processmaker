@@ -27,23 +27,23 @@ import java.io.IOException;
     fieldArray[3]=new FormFieldData();
 
     fieldArray[0].fieldPath="form[nombre]";
-    fieldArray[0].fieldFindType="id";
-    fieldArray[0].fieldType="textbox";
+    fieldArray[0].fieldFindType=FieldKeyType.ID;
+    fieldArray[0].fieldType=FieldType.TEXTBOX;
     fieldArray[0].fieldValue="rodrigo ivan";
 
     fieldArray[1].fieldPath="form[monto]";
-    fieldArray[1].fieldFindType="id";
-    fieldArray[1].fieldType="textbox";
+    fieldArray[1].fieldFindType=FieldKeyType.ID;
+    fieldArray[1].fieldType=FieldType.TEXTBOX;
     fieldArray[1].fieldValue="5300";
 
     fieldArray[2].fieldPath="form[tipocuenta]";
-    fieldArray[2].fieldFindType="id";
-    fieldArray[2].fieldType="dropdown";
+    fieldArray[2].fieldFindType=FieldKeyType.ID;
+    fieldArray[2].fieldType=FieldType.DROPDOWN;
     fieldArray[2].fieldValue="caja de ahorro";
 
     fieldArray[3].fieldPath="form[send]";
-    fieldArray[3].fieldFindType="id";
-    fieldArray[3].fieldType="button";
+    fieldArray[3].fieldFindType=FieldKeyType.ID;
+    fieldArray[3].fieldType=FieldType.BUTTON;
     fieldArray[3].fieldValue="";
 
     FormFiller.formFillElements(fieldArray);
@@ -57,8 +57,8 @@ import java.io.IOException;
     fieldArray1[0]=new FormFieldData();
 
     fieldArray1[0].fieldPath="form[send]";
-    fieldArray1[0].fieldFindType="id";
-    fieldArray1[0].fieldType="button";
+    fieldArray1[0].fieldFindType=FieldKeyType.ID;
+    fieldArray1[0].fieldType=FieldType.BUTTON;
     fieldArray1[0].fieldValue="";
 
     FormFiller.formFillElements(fieldArray1);

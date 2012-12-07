@@ -27,23 +27,23 @@ public void runProcess() throws Exception{
 	fieldArray[3]=new FormFieldData();
 
 	fieldArray[0].fieldPath="form[nombre]";
-	fieldArray[0].fieldFindType="id";
-	fieldArray[0].fieldType="textbox";
+	fieldArray[0].fieldFindType=FieldKeyType.ID;
+	fieldArray[0].fieldType=FieldType.TEXTBOX;
 	fieldArray[0].fieldValue="rodrigo ivan";
 
 	fieldArray[1].fieldPath="form[saldo]";
-	fieldArray[1].fieldFindType="id";
-	fieldArray[1].fieldType="textbox";
+	fieldArray[1].fieldFindType=FieldKeyType.ID;
+	fieldArray[1].fieldType=FieldType.TEXTBOX;
 	fieldArray[1].fieldValue="4500";
 
 	fieldArray[2].fieldPath="form[cuenta]";
-	fieldArray[2].fieldFindType="id";
-	fieldArray[2].fieldType="dropdown";
+	fieldArray[2].fieldFindType=FieldKeyType.ID;
+	fieldArray[2].fieldType=FieldType.DROPDOWN;
 	fieldArray[2].fieldValue="bolivianos";
 
 	fieldArray[3].fieldPath="form[send]";
-	fieldArray[3].fieldFindType="id";
-	fieldArray[3].fieldType="button";
+	fieldArray[3].fieldFindType=FieldKeyType.ID;
+	fieldArray[3].fieldType=FieldType.BUTTON;
 	fieldArray[3].fieldValue="";
 
 	FormFiller.formFillElements(fieldArray);
@@ -65,8 +65,8 @@ Pages.Login().gotoUrl();
 	fieldArray1[0] = new FormFieldData();
 	
 	fieldArray1[0].fieldPath="form[send]";
-	fieldArray1[0].fieldFindType="id";
-	fieldArray1[0].fieldType="button";
+	fieldArray1[0].fieldFindType=FieldKeyType.ID;
+	fieldArray1[0].fieldType=FieldType.BUTTON;
 	fieldArray1[0].fieldValue="";
 
 	FormFiller.formFillElements(fieldArray1);
@@ -91,13 +91,13 @@ public void openTask3(int casenumber) throws Exception{
 
 
 	fieldArray2[0].fieldPath="form[tipocuenta][corriente]";
-	fieldArray2[0].fieldFindType="id";
-	fieldArray2[0].fieldType="radiobutton";
+	fieldArray2[0].fieldFindType=FieldKeyType.ID;
+	fieldArray2[0].fieldType=FieldType.RADIOBUTTON;
 	fieldArray2[0].fieldValue="";
 
 	fieldArray2[1].fieldPath="form[send]";
-	fieldArray2[1].fieldFindType="id";
-	fieldArray2[1].fieldType="button";
+	fieldArray2[1].fieldFindType=FieldKeyType.ID;
+	fieldArray2[1].fieldType=FieldType.BUTTON;
 	fieldArray2[1].fieldValue="";
 
 	FormFiller.formFillElements(fieldArray2);
@@ -120,13 +120,13 @@ public void openTask4(int casenumber) throws Exception{
 	fieldArray3[1]=new FormFieldData();
 
 	fieldArray3[0].fieldPath="form[porcentaje]";
-	fieldArray3[0].fieldFindType="id";
-	fieldArray3[0].fieldType="textbox";
+	fieldArray3[0].fieldFindType=FieldKeyType.ID;
+	fieldArray3[0].fieldType=FieldType.TEXTBOX;
 	fieldArray3[0].fieldValue="5%";
 
 	fieldArray3[1].fieldPath="form[send]";
-	fieldArray3[1].fieldFindType="id";
-	fieldArray3[1].fieldType="button";
+	fieldArray3[1].fieldFindType=FieldKeyType.ID;
+	fieldArray3[1].fieldType=FieldType.BUTTON;
 	fieldArray3[1].fieldValue="";
 
 	FormFiller.formFillElements(fieldArray3);
@@ -150,18 +150,18 @@ public void openTask5(int casenumber) throws Exception{
 	fieldArray4[2]=new FormFieldData();
 
 	fieldArray4[0].fieldPath="form[incidencias]";
-	fieldArray4[0].fieldFindType="id";
-	fieldArray4[0].fieldType="textbox";
+	fieldArray4[0].fieldFindType=FieldKeyType.ID;
+	fieldArray4[0].fieldType=FieldType.TEXTBOX;
 	fieldArray4[0].fieldValue="5%";
 
 	fieldArray4[1].fieldPath="form[aprobado]";
-	fieldArray4[1].fieldFindType="id";
-	fieldArray4[1].fieldType="dropdown";
+	fieldArray4[1].fieldFindType=FieldKeyType.ID;
+	fieldArray4[1].fieldType=FieldType.DROPDOWN;
 	fieldArray4[1].fieldValue="Yes";
 
     fieldArray4[2].fieldPath="form[send]";
-	fieldArray4[2].fieldFindType="id";
-	fieldArray4[2].fieldType="button";
+	fieldArray4[2].fieldFindType=FieldKeyType.ID;
+	fieldArray4[2].fieldType=FieldType.BUTTON;
 	fieldArray4[2].fieldValue="";
 
 	FormFiller.formFillElements(fieldArray4);

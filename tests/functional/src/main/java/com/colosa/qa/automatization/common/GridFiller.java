@@ -28,105 +28,59 @@ public class GridFiller{
 		{
 			for(int j = 0; j<fieldData[i].length;j++)
 			{
-				if(fieldData[i][j].fieldPath=="")
+				
+				switch(fieldData[i][j].fieldFindType)
 				{
-					break;
-				}
-				else
-				{
-					if(fieldData[i][j].fieldFindType=="id")
-					{
-						elem = Browser.driver().findElement(By.id(fieldData[i][j].fieldPath));
-					}
-					else
-					{
-						if(fieldData[i][j].fieldFindType=="xpath")
-						{
-							elem = Browser.driver().findElement(By.xpath(fieldData[i][j].fieldPath));
-						}
-						else
-						{
-							if(fieldData[i][j].fieldFindType=="cssSelector")
-							{
-								elem = Browser.driver().findElement(By.cssSelector(fieldData[i][j].fieldPath));
-							}
-							else
-							{
-								if(fieldData[i][j].fieldFindType=="linkText")
-								{
-									elem = Browser.driver().findElement(By.linkText(fieldData[i][j].fieldPath));
-								}
-								else
-								{
-									if(fieldData[i][j].fieldFindType=="partialLinkText")
-									{
-										elem = Browser.driver().findElement(By.partialLinkText(fieldData[i][j].fieldPath));
-									}
-									else
-									{
-										if(fieldData[i][j].fieldFindType=="tagName")
-										{
-											elem = Browser.driver().findElement(By.tagName(fieldData[i][j].fieldPath));
-										}
-										else
-										{
-											throw new Exception("Invalid search prefix");
-										}
-									}
-								}
-							}
-						}
-					}
+
+					case ID: 	elem = Browser.driver().findElement(By.id(fieldData[i][j].fieldPath));
+											break;
+					
+					case XPATH: 	elem = Browser.driver().findElement(By.xpath(fieldData[i][j].fieldPath));
+												break;
+					
+					case CSSSELECTOR:	elem = Browser.driver().findElement(By.cssSelector(fieldData[i][j].fieldPath));
+													break;
+					
+					case LINKTEXT:	elem = Browser.driver().findElement(By.linkText(fieldData[i][j].fieldPath));
+												break;
+					
+					case PARTIALLINKTEXT:	elem = Browser.driver().findElement(By.partialLinkText(fieldData[i][j].fieldPath));
+														break;
+					
+					case TAGNAME: 	elem = Browser.driver().findElement(By.tagName(fieldData[i][j].fieldPath));
+												break;
+					
+					default:	break;
+
 				}
 
-				if(fieldData[i][j].fieldType=="textbox")
+				switch(fieldData[i][j].fieldType)
 				{
-					elem.sendKeys(fieldData[i][j].fieldValue);
+					case TEXTBOX: elem.sendKeys(fieldData[i][j].fieldValue);
+											break;
+
+					case BUTTON: 	elem.click();
+											break;	
+
+					case TEXTAREA: elem.sendKeys(fieldData[i][j].fieldValue);
+											 break;	
+
+					case DROPDOWN: Select droplist = new Select(elem);
+											 droplist.selectByVisibleText(fieldData[i][j].fieldValue);;
+											 break;
+
+					case RADIOBUTTON:	elem.click();
+												break;
+
+					case CHECK: 	elem.click();
+											break;	
+
+					case READONLY:  ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i][j].fieldValue);
+          							break;						
+
+					default: 	break;																																						
 				}
-				else
-				{
-					if(fieldData[i][j].fieldType=="button")
-					{
-						elem.click();
-					}
-					else
-					{
-						if(fieldData[i][j].fieldType=="textarea")
-						{
-							elem.sendKeys(fieldData[i][j].fieldValue);
-						}
-						else
-						{
-							if(fieldData[i][j].fieldType=="dropdown")
-							{
-								Select droplist = new Select(elem);
-								droplist.selectByVisibleText(fieldData[i][j].fieldValue);
-							}
-							else
-							{
-								if(fieldData[i][j].fieldType=="radiobutton")
-								{
-									elem.click();
-								}
-								else
-								{
-									if(fieldData[i][j].fieldType=="check")
-									{
-										elem.click();
-									}
-									else
-									{
-										if(fieldData[i][j].fieldType=="readonly")
-										{
-											((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i][j].fieldValue);
-											
-										}
-									}							
-								}
-							}
-						}
-					}
-				}
+				
 			}			
 		}
 
