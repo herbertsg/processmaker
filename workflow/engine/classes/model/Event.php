@@ -4,8 +4,8 @@
  * @package    workflow.engine.classes.model
  */
 
-require_once 'classes/model/Content.php';
-require_once 'classes/model/om/BaseEvent.php';
+//require_once 'classes/model/Content.php';
+//require_once 'classes/model/om/BaseEvent.php';
 
 
 /**
@@ -19,9 +19,9 @@ require_once 'classes/model/om/BaseEvent.php';
  *  
  */
 
-require_once 'classes/model/AppDelegation.php';
-require_once 'classes/model/AppEvent.php';
-require_once 'classes/model/Triggers.php';
+//require_once 'classes/model/AppDelegation.php';
+//require_once 'classes/model/AppEvent.php';
+//require_once 'classes/model/Triggers.php';
 
  /**
   * @package    workflow.engine.classes.model

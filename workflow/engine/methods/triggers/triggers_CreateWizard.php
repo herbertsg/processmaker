@@ -38,6 +38,7 @@ G::RenderPage('publish', 'raw');
 	
 	var _oVarsPanel_;
 var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol) {
+<<<<<<< HEAD
 	 //sFieldName = document.getElementById('TRI_ANSWER');
 	_oVarsPanel_ = new leimnud.module.panel();
 	_oVarsPanel_.options = {
@@ -69,6 +70,39 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
     scs.evalScript();
   }.extend(this);
   oRPC.make();
+=======
+	 //sFieldName = document.getElementById('TRI_ANSWER');
+	_oVarsPanel_ = new leimnud.module.panel();
+	_oVarsPanel_.options = {
+    limit    : true,
+    size     : {w:600,h:420},
+    position : {x:0,y:0,center:true},
+    title    : '',
+    theme    : 'processmaker',
+    statusBar: false,
+    control  : {drag:false,resize:true,close:true},
+    fx       : {opacity:true,rolled:false,modal:true}
+  };
+  _oVarsPanel_.make();
+  _oVarsPanel_.events = {
+    remove:function() {
+      delete _oVarsPanel_;
+    }.extend(this)
+  };
+  _oVarsPanel_.loader.show();
+  oRPC = new leimnud.module.rpc.xmlhttp({
+    url   : sAjaxServer,
+    method: 'POST',
+    args  : 'sFieldName=' + sFieldName + '&sProcess=' + sProcess + '&sSymbol=' + sSymbol
+  });
+  oRPC.callback = function(oRPC) {
+    _oVarsPanel_.loader.hide();
+    var scs = oRPC.xmlhttp.responseText.extractScript();
+    _oVarsPanel_.addContent(oRPC.xmlhttp.responseText);
+    scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 };
 
 var insertFormVar = function(sFieldName, sValue) {

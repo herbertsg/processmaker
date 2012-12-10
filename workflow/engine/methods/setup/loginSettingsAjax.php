@@ -16,6 +16,24 @@
       print(G::json_encode($result));
       break;
 
+<<<<<<< HEAD
+=======
+switch ($request) {
+    case 'getLangList':
+
+        $Translations = new Translation();
+        $result = new stdClass();
+        $result->rows = Array ();
+
+        $langs = $Translations->getTranslationEnvironments();
+        foreach ($langs as $lang) {
+            $result->rows[] = Array ('LAN_ID' => $lang['LOCALE'],'LAN_NAME' => $lang['LANGUAGE']
+            );
+        }
+
+        print (G::json_encode( $result )) ;
+        break;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     case 'saveSettings':
       $memcache = & PMmemcached::getSingleton(defined('SYS_SYS') ? SYS_SYS : '');
       G::LoadClass('configuration');

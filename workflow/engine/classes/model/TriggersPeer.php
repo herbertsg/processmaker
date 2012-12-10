@@ -24,11 +24,19 @@
  * 
  */
 
+<<<<<<< HEAD
   // include base peer class
   require_once 'classes/model/om/BaseTriggersPeer.php';
 
   // include object class
   include_once 'classes/model/Triggers.php';
+=======
+// include base peer class
+//require_once 'classes/model/om/BaseTriggersPeer.php';
+
+// include object class
+//include_once 'classes/model/Triggers.php';
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 
 /**

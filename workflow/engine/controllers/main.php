@@ -503,8 +503,12 @@ class Main extends Controller
 
     public function getLanguagesList()
     {
+<<<<<<< HEAD
         //translation
         $Translations = G::getModel("Translation");
+=======
+        $Translations = new Translation;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         $translationsTable = $Translations->getTranslationEnvironments();
 
         if (($languagesList = $this->memcache->get('languagesList')) === false) {

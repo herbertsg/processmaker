@@ -55,6 +55,7 @@ try {
             G::LoadSystem('dynaformhandler');
             
             $_DYN_FILENAME = $_SESSION['Current_Dynafom']['Parameters']['FILE'];
+<<<<<<< HEAD
             $sFilter = isset($_POST['filter']) ? $_POST['filter'] : '';
             
             $oJSON = new Services_JSON();
@@ -65,6 +66,18 @@ try {
             $aAvailableFields = $oDynaformHandler->getFieldNames($aFilter);
             
             print($oJSON->encode($aAvailableFields));
+=======
+            $sFilter = isset( $_POST['filter'] ) ? $_POST['filter'] : '';
+
+            //$oJSON = new Services_JSON();
+            $oDynaformHandler = new dynaFormHandler( PATH_DYNAFORM . $_DYN_FILENAME . '.xml' );
+
+            $aFilter = explode( ',', $sFilter );
+
+            $aAvailableFields = $oDynaformHandler->getFieldNames( $aFilter );
+
+            print (Bootstrap::json_encode( $aAvailableFields )) ;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
             break;
         
         case 'showDynavars':

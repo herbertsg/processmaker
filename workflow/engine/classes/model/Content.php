@@ -24,7 +24,7 @@
  * 
  */
 
-require_once 'classes/model/om/BaseContent.php';
+//require_once 'classes/model/om/BaseContent.php';
 
 /**
  * Skeleton subclass for representing a row from the 'CONTENT' table.
@@ -298,8 +298,13 @@ class Content extends BaseContent {
         $this->rowsClustered = 0;
 
         //Creating table CONTENT_BACKUP
+<<<<<<< HEAD
         $oConnection = Propel::getConnection('workflow');
         $oStatement  = $oConnection->prepareStatement("CREATE TABLE IF NOT EXISTS `CONTENT_BACKUP` (
+=======
+        $connection = Propel::getConnection( 'workflow' );
+        $oStatement = $connection->prepareStatement( "CREATE TABLE IF NOT EXISTS `CONTENT_BACKUP` (
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
             `CON_CATEGORY` VARCHAR(30) default '' NOT NULL,
             `CON_PARENT` VARCHAR(32) default '' NOT NULL,
             `CON_ID` VARCHAR(100) default '' NOT NULL,
@@ -309,11 +314,22 @@ class Content extends BaseContent {
         )Engine=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Table for add content';");
         $oStatement->executeQuery();
 
+<<<<<<< HEAD
         $con = Propel::getConnection('workflow');
         $sql = " SELECT DISTINCT CON_LANG
                 FROM CONTENT ";
         $stmt = $con->createStatement();
         $rs = $stmt->executeQuery($sql, ResultSet::FETCHMODE_ASSOC);
+=======
+        //set interactive timeout
+        $oStatement = $connection->prepareStatement( "set global interactive_timeout = 100;" );
+        $oStatement->executeQuery();
+
+        $sql = " SELECT DISTINCT CON_LANG
+                FROM CONTENT ";
+        $stmt = $connection->createStatement();
+        $rs = $stmt->executeQuery( $sql, ResultSet::FETCHMODE_ASSOC );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         while ($rs->next()) {
             $row = $rs->getRow();
             $language = $row['CON_LANG'];
@@ -330,6 +346,7 @@ class Content extends BaseContent {
         $workSpace = new workspaceTools($workSpace);
         $workSpace->getDBInfo();
 
+<<<<<<< HEAD
         $link = mysql_pconnect($workSpace->dbHost, $workSpace->dbUser, $workSpace->dbPass)
         or die ("Could not connect");
 
@@ -344,6 +361,21 @@ class Content extends BaseContent {
             if ($sw['CON_ID'] == $row['CON_ID'] &&
                 $sw['CON_CATEGORY'] == $row['CON_CATEGORY'] &&
                 $sw['CON_PARENT'] == $row['CON_PARENT']) {
+=======
+        $link = mysql_pconnect( $workSpace->dbHost, $workSpace->dbUser, $workSpace->dbPass, MYSQL_CLIENT_INTERACTIVE ) or die( "Could not connect" );
+
+        mysql_select_db( $workSpace->dbName, $link );
+        mysql_query( "SET NAMES 'utf8';" );
+        mysql_query( "SET FOREIGN_KEY_CHECKS=0;" );
+        mysql_query( 'SET OPTION SQL_BIG_SELECTS=1' );
+        $result = mysql_unbuffered_query( $sql, $link );
+        $list = array ();
+        $default = array ();
+        $sw = array ('CON_ID' => '','CON_CATEGORY' => '','CON_PARENT' => ''
+        );
+        while ($row = mysql_fetch_assoc( $result )) {
+            if ($sw['CON_ID'] == $row['CON_ID'] && $sw['CON_CATEGORY'] == $row['CON_CATEGORY'] && $sw['CON_PARENT'] == $row['CON_PARENT']) {
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
                 $list[] = $row;
             } else {
                 $this->rowsClustered++;
@@ -376,8 +408,12 @@ class Content extends BaseContent {
         mysql_free_result($result);
         $total = $this->rowsProcessed + $this->rowsInserted;
 
+<<<<<<< HEAD
         $connection = Propel::getConnection('workflow');
         $statement  = $connection->prepareStatement("INSERT INTO CONTENT
+=======
+        $statement = $connection->prepareStatement( "INSERT INTO CONTENT
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
             SELECT CON_CATEGORY, CON_PARENT, CON_ID , CON_LANG, CON_VALUE
             FROM CONTENT_BACKUP");
         $statement->executeQuery();

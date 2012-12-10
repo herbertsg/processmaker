@@ -158,6 +158,7 @@
     $G_PUBLISH->AddContent('view', 'cases/showDebugFrameBreaker');
     G::RenderPage('publish', 'blank');
     exit();
+<<<<<<< HEAD
   }
   #end trigger debug session.......
 
@@ -211,6 +212,62 @@
 
       $oHeadPublisher =& headPublisher::getSingleton();
       $oHeadPublisher->addScriptCode("
+=======
+}
+#end trigger debug session.......
+
+
+//$oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'casesListExtJs');
+
+
+//Save data - Start
+$oCase->updateCase( $_SESSION['APPLICATION'], $Fields );
+//Save data - End
+
+
+//Obtain previous and next step - Start
+try {
+    $oCase = new Cases();
+    $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
+    $aPreviousStep = $oCase->getPreviousStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
+} catch (Exception $e) {
+}
+//Obtain previous and next step - End
+
+
+try {
+    //Add content content step - Start
+    $oApp = ApplicationPeer::retrieveByPK( $_SESSION['APPLICATION'] );
+    $array['APP_NUMBER'] = $APP_NUMBER;
+    $sTitleCase = $oApp->getAppTitle();
+    $array['APP_TITLE'] = $sTitleCase;
+    $array['CASE'] = G::LoadTranslation( 'ID_CASE' );
+    $array['TITLE'] = G::LoadTranslation( 'ID_TITLE' );
+
+    $noShowTitle = 0;
+    if (isset( $oProcessFieds['PRO_SHOW_MESSAGE'] )) {
+        $noShowTitle = $oProcessFieds['PRO_SHOW_MESSAGE'];
+    }
+
+    switch ($_GET['TYPE']) {
+        case 'DYNAFORM':
+            if ($noShowTitle == 0) {
+                $G_PUBLISH->AddContent( 'smarty', 'cases/cases_title', '', '', $array );
+            }
+            if (! $aPreviousStep) {
+                $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+            } else {
+                $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
+                $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation( "ID_PREVIOUS_STEP" );
+            }
+            $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
+            $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = G::loadTranslation( 'ID_NEXT_STEP' );
+            $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PHPSESSID'] = @session_id();
+            $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['DYNUIDPRINT'] = $_GET['UID'];
+
+            $oHeadPublisher = & headPublisher::getSingleton();
+            $oHeadPublisher->addScriptCode( "
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
       if (typeof parent != 'undefined') {
         if (parent.setNode) {
           parent.setNode('".$_GET['UID']."');
@@ -425,6 +482,7 @@
                 $oAppDocument = new AppDocument();
                 $aFields['APP_DOC_UID']=$sDocUID = $oAppDocument->create($aFields);
 
+<<<<<<< HEAD
             }
           }
 
@@ -559,6 +617,116 @@
                         //$oAppDocument->update($aFields);
                       unlink ( $pathOutput . $sFilename. '.pdf' );
                     }
+=======
+                    $oHeadPublisher->addScriptCode( "documentName='{$titleDocument}';" );
+                    break;
+                case 'VIEW':
+                    //require_once 'classes/model/AppDocument.php';
+                    //require_once 'classes/model/Users.php';
+                    $oAppDocument = new AppDocument();
+                    $oAppDocument->Fields = $oAppDocument->load( $_GET['DOC'], $_GET['VERSION'] );
+                    $Fields['POSITION'] = $_SESSION['STEP_POSITION'];
+                    $oUser = new Users();
+                    $aUser = $oUser->load( $oAppDocument->Fields['USR_UID'] );
+                    $Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+                    switch ($Fields['INP_DOC_FORM_NEEDED']) {
+                        case 'REAL':
+                            $sXmlForm = 'cases/cases_ViewInputDocument2';
+                            break;
+                        case 'VIRTUAL':
+                            $sXmlForm = 'cases/cases_ViewInputDocument1';
+                            break;
+                        case 'VREAL':
+                            $sXmlForm = 'cases/cases_ViewInputDocument3';
+                            break;
+                    }
+                    $oAppDocument->Fields['VIEW'] = G::LoadTranslation( 'ID_OPEN' );
+                    $oAppDocument->Fields['FILE'] = 'cases_ShowDocument?a=' . $_GET['DOC'] . '&r=' . rand();
+                    $G_PUBLISH->AddContent( 'xmlform', 'xmlform', $sXmlForm, '', G::array_merges( $Fields, $oAppDocument->Fields ), '' );
+                    break;
+            }
+            break;
+        case 'OUTPUT_DOCUMENT':
+            //$G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
+
+            //require_once 'classes/model/OutputDocument.php';
+            $oOutputDocument = new OutputDocument();
+            $aOD = $oOutputDocument->load( $_GET['UID'] );
+            if (! $aPreviousStep) {
+                $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+            } else {
+                $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
+                $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation( "ID_PREVIOUS_STEP" );
+            }
+            $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
+            $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = G::loadTranslation( "ID_NEXT_STEP" );
+            switch ($_GET['ACTION']) {
+                case 'GENERATE':
+                    //START: If there is a Break Step registered from Plugin Similar as a Trigger debug
+                    $oPluginRegistry = & PMPluginRegistry::getSingleton();
+                    if ($oPluginRegistry->existsTrigger( PM_UPLOAD_DOCUMENT_BEFORE )) {
+                        //If a Plugin has registered a Break Page Evaluator
+                        $oPluginRegistry->executeTriggers( PM_UPLOAD_DOCUMENT_BEFORE, array ('USR_UID' => $_SESSION['USER_LOGGED']) );
+                    }
+                    //END: If there is a Break Step registered from Plugin
+
+                    $sFilenameOriginal = $sFilename = preg_replace( '[^A-Za-z0-9_]', '_', G::replaceDataField( $aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA'] ) );
+                    //require_once 'classes/model/AppFolder.php';
+                    //require_once 'classes/model/AppDocument.php';
+
+                    //Get the Custom Folder ID (create if necessary)
+                    $oFolder = new AppFolder();
+                    $folderId = $oFolder->createFromPath( $aOD['OUT_DOC_DESTINATION_PATH'] );
+
+                    //Tags
+                    $fileTags = $oFolder->parseTags( $aOD['OUT_DOC_TAGS'] );
+
+                    //Get last Document Version and apply versioning if is enabled
+
+
+                    $oAppDocument = new AppDocument();
+                    $lastDocVersion = $oAppDocument->getLastDocVersion( $_GET['UID'], $_SESSION['APPLICATION'] );
+
+                    //if(($aOD['OUT_DOC_VERSIONING'])||($lastDocVersion==0)){
+                    //  $lastDocVersion++;
+                    //}
+
+                    $oCriteria = new Criteria( 'workflow' );
+                    $oCriteria->add( AppDocumentPeer::APP_UID, $_SESSION['APPLICATION'] );
+                    //$oCriteria->add(AppDocumentPeer::DEL_INDEX,    $_SESSION['INDEX']);
+                    $oCriteria->add( AppDocumentPeer::DOC_UID, $_GET['UID'] );
+                    $oCriteria->add( AppDocumentPeer::DOC_VERSION, $lastDocVersion );
+                    $oCriteria->add( AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT' );
+                    $oDataset = AppDocumentPeer::doSelectRS( $oCriteria );
+                    $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
+                    $oDataset->next();
+                    if (($aOD['OUT_DOC_VERSIONING']) && ($lastDocVersion != 0)) {
+                        //Create new Version of current output
+                        $lastDocVersion ++;
+                        if ($aRow = $oDataset->getRow()) {
+                            $aFields = array ('APP_DOC_UID' => $aRow['APP_DOC_UID'],'APP_UID' => $_SESSION['APPLICATION'],'DEL_INDEX' => $_SESSION['INDEX'],'DOC_UID' => $_GET['UID'],'DOC_VERSION' => $lastDocVersion + 1,'USR_UID' => $_SESSION['USER_LOGGED'],'APP_DOC_TYPE' => 'OUTPUT','APP_DOC_CREATE_DATE' => date( 'Y-m-d H:i:s' ),'APP_DOC_FILENAME' => $sFilename,'FOLDER_UID' => $folderId,'APP_DOC_TAGS' => $fileTags
+                            );
+                            $oAppDocument = new AppDocument();
+                            $oAppDocument->create( $aFields );
+                            $sDocUID = $aRow['APP_DOC_UID'];
+                        }
+                    } else {
+                        //No versioning so Update a current Output or Create new if no exist
+                        if ($aRow = $oDataset->getRow()) {
+                            //Update
+                            $aFields = array ('APP_DOC_UID' => $aRow['APP_DOC_UID'],'APP_UID' => $_SESSION['APPLICATION'],'DEL_INDEX' => $_SESSION['INDEX'],'DOC_UID' => $_GET['UID'],'DOC_VERSION' => $lastDocVersion,'USR_UID' => $_SESSION['USER_LOGGED'],'APP_DOC_TYPE' => 'OUTPUT','APP_DOC_CREATE_DATE' => date( 'Y-m-d H:i:s' ),'APP_DOC_FILENAME' => $sFilename,'FOLDER_UID' => $folderId,'APP_DOC_TAGS' => $fileTags );
+                            $oAppDocument = new AppDocument();
+                            $oAppDocument->update( $aFields );
+                            $sDocUID = $aRow['APP_DOC_UID'];
+                        } else {
+                            //create
+                            if ($lastDocVersion == 0) {
+                                $lastDocVersion ++;
+                            }
+                            $aFields = array ('APP_UID' => $_SESSION['APPLICATION'],'DEL_INDEX' => $_SESSION['INDEX'],'DOC_UID' => $_GET['UID'],'DOC_VERSION' => $lastDocVersion,'USR_UID' => $_SESSION['USER_LOGGED'],'APP_DOC_TYPE' => 'OUTPUT','APP_DOC_CREATE_DATE' => date( 'Y-m-d H:i:s' ),'APP_DOC_FILENAME' => $sFilename,'FOLDER_UID' => $folderId,'APP_DOC_TAGS' => $fileTags);
+                            $oAppDocument = new AppDocument();
+                            $aFields['APP_DOC_UID'] = $sDocUID = $oAppDocument->create( $aFields );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 
 
@@ -596,6 +764,7 @@
                     if($uploadReturn){//Only delete if the file was saved correctly
                       unlink ( $pathOutput . $sFilename. '.pdf' );
                     }
+<<<<<<< HEAD
                 break;
                 case "DOC":
                     $documentData = new uploadDocumentData (
@@ -612,6 +781,19 @@
                     $uploadReturn=$oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
                     if($uploadReturn){//Only delete if the file was saved correctly
                       unlink ( $pathOutput . $sFilename. '.doc' );
+=======
+                    //require_once 'classes/model/AppDocument.php';
+                    $oAppDocument = new AppDocument();
+                    $lastVersion = $oAppDocument->getLastAppDocVersion( $_GET['DOC'], $_SESSION['APPLICATION'] );
+                    $aFields = $oAppDocument->load( $_GET['DOC'], $lastVersion );
+                    $listing = false;
+                    $oPluginRegistry = & PMPluginRegistry::getSingleton();
+                    if ($oPluginRegistry->existsTrigger( PM_CASE_DOCUMENT_LIST )) {
+                        $folderData = new folderData( null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
+                        $folderData->PMType = "OUTPUT";
+                        $folderData->returnList = true;
+                        $listing = $oPluginRegistry->executeTriggers( PM_CASE_DOCUMENT_LIST, $folderData );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
                     }
                 break;
             }
@@ -682,6 +864,12 @@
           if($aGields['OUT_DOC_GENERATE']=='PDF')
               $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument3', '', G::array_merges($aOD, $aFields), '');
 
+<<<<<<< HEAD
+=======
+                    //require_once 'classes/model/OutputDocument.php';
+                    $oOutputDocument = new OutputDocument();
+                    $aGields = $oOutputDocument->load( $aFields['DOC_UID'] );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
           break;
         }

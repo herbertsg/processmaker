@@ -24,10 +24,10 @@
  *
  */
 
-require_once 'classes/model/om/BaseUsers.php';
-require_once 'classes/model/IsoCountry.php';
-require_once 'classes/model/IsoSubdivision.php';
-require_once 'classes/model/IsoLocation.php';
+//require_once 'classes/model/om/BaseUsers.php';
+//require_once 'classes/model/IsoCountry.php';
+//require_once 'classes/model/IsoSubdivision.php';
+//require_once 'classes/model/IsoLocation.php';
 
 /**
  * Skeleton subclass for representing a row from the 'USERS' table.
@@ -137,6 +137,7 @@ public function userExists($UsrUid)
     public function loadDetailed($UsrUid)
     {
         try {
+<<<<<<< HEAD
             $result = array();
             $oUser = UsersPeer::retrieveByPK($UsrUid);
 
@@ -156,6 +157,23 @@ public function userExists($UsrUid)
                 $aFields['USR_COUNTRY_NAME']  = $aIsoCountry['IC_NAME'];
                 $aFields['USR_CITY_NAME']     = $aIsoSubdivision['IS_NAME'];
                 $aFields['USR_LOCATION_NAME'] = $aIsoLocation['IL_NAME'];
+=======
+            $result = array ();
+            $oUser = UsersPeer::retrieveByPK( $UsrUid );
+
+            if (! is_null( $oUser )) {
+                $aFields = $oUser->toArray( BasePeer::TYPE_FIELDNAME );
+                $this->fromArray( $aFields, BasePeer::TYPE_FIELDNAME );
+                $this->setNew( false );
+
+                $aIsoCountry = IsoCountry::findById( $aFields['USR_COUNTRY'] );
+                $aIsoSubdivision = IsoSubdivision::findById( $aFields['USR_COUNTRY'], $aFields['USR_CITY'] );
+                $aIsoLocation = IsoLocation::findById( $aFields['USR_COUNTRY'], $aFields['USR_CITY'], $aFields['USR_LOCATION'] );
+
+                $aFields["USR_COUNTRY_NAME"]  = (!empty($aIsoCountry["IC_NAME"]))? $aIsoCountry["IC_NAME"] : "";
+                $aFields["USR_CITY_NAME"]     = (!empty($aIsoSubdivision["IS_NAME"]))? $aIsoSubdivision["IS_NAME"] : "";
+                $aFields["USR_LOCATION_NAME"] = (!empty($aIsoLocation["IL_NAME"]))? $aIsoLocation["IL_NAME"] : "";
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
                 $result = $aFields;
 

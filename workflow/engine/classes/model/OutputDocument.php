@@ -24,8 +24,8 @@
  *
  */
 
-require_once ("classes/model/om/BaseOutputDocument.php");
-require_once ("classes/model/Content.php");
+//require_once ("classes/model/om/BaseOutputDocument.php");
+//require_once ("classes/model/Content.php");
 
 /**
  * Skeleton subclass for representing a row from the 'OUTPUT_DOCUMENT' table.
@@ -108,6 +108,7 @@ class OutputDocument extends BaseOutputDocument
             if (!is_null($oOutputDocument)) {
                 $aFields = $oOutputDocument->toArray(BasePeer::TYPE_FIELDNAME);
                 $aFields['OUT_DOC_TITLE']       = $oOutputDocument->getOutDocTitle();
+                $aFields['PRO_UID']             = $oOutputDocument->getProUid();
                 $aFields['OUT_DOC_DESCRIPTION'] = $oOutputDocument->getOutDocDescription();
                 $aFields['OUT_DOC_FILENAME']    = $oOutputDocument->getOutDocFilename();
                 $aFields['OUT_DOC_TEMPLATE']    = $oOutputDocument->getOutDocTemplate();

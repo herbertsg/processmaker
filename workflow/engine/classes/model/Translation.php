@@ -24,7 +24,7 @@
  *
  */
 
-require_once 'classes/model/om/BaseTranslation.php';
+//require_once 'classes/model/om/BaseTranslation.php';
 
 
 /**
@@ -159,6 +159,7 @@ class Translation extends BaseTranslation {
         $translationJS[ $row->getTrnId() ] = $row->getTrnValue();
       }
     }
+<<<<<<< HEAD
 	
     try {
       
@@ -187,6 +188,66 @@ class Translation extends BaseTranslation {
       return $res;    
     } catch( Exception $e ) {
       echo $e->getMessage();
+=======
+
+    /* Load strings from a Database .
+     * @author Fernando Ontiveros <fernando@colosa.com>
+     * @parameter $languageId   (es|en|...).
+    */
+    public function generateFileTranslation ($languageId = '')
+    {
+        $translation = Array ();
+        $translationJS = Array ();
+
+        if ($languageId === '') {
+            $languageId = defined( 'SYS_LANG' ) ? SYS_LANG : 'en';
+        }
+        $c = new Criteria();
+        $c->add( TranslationPeer::TRN_LANG, $languageId );
+        $c->addAscendingOrderByColumn( 'TRN_CATEGORY' );
+        $c->addAscendingOrderByColumn( 'TRN_ID' );
+        $tranlations = TranslationPeer::doSelect( $c );
+
+        $cacheFile = PATH_LANGUAGECONT . "translation." . $languageId;
+        $cacheFileJS = PATH_CORE . 'js' . PATH_SEP . 'labels' . PATH_SEP . $languageId . ".js";
+
+        foreach ($tranlations as $key => $row) {
+            if ($row->getTrnCategory() === 'LABEL') {
+                $translation[$row->getTrnId()] = $row->getTrnValue();
+            }
+            if ($row->getTrnCategory() === 'JAVASCRIPT') {
+                $translationJS[$row->getTrnId()] = $row->getTrnValue();
+            }
+        }
+
+        try {
+
+            if (! is_dir( dirname( $cacheFile ) )) {
+                G::mk_dir( dirname( $cacheFile ) );
+            }
+            if (! is_dir( dirname( $cacheFileJS ) )) {
+                G::mk_dir( dirname( $cacheFileJS ) );
+            }
+            $f = fopen( $cacheFile, 'w+' );
+            fwrite( $f, "<?php\n" );
+            fwrite( $f, '$translation =' . 'unserialize(\'' . addcslashes( serialize( $translation ), '\\\'' ) . "');\n" );
+            fwrite( $f, "?>" );
+            fclose( $f );
+
+            //$json = new Services_JSON(); DEPRECATED
+            $f = fopen( $cacheFileJS, 'w' );
+            fwrite( $f, "var G_STRINGS =" . Bootstrap::json_encode( $translationJS ) . ";\n" );
+            fclose( $f );
+
+            $res['cacheFile'] = $cacheFile;
+            $res['cacheFileJS'] = $cacheFileJS;
+            $res['rows'] = count( $translation );
+            $res['rowsJS'] = count( $translationJS );
+            return $res;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
   }
 

@@ -53,6 +53,7 @@ if($userData['USR_EMAIL'] != '' && $userData['USR_EMAIL'] === $data['USR_EMAIL']
   <a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
   </tr></tbody></table>";
 
+<<<<<<< HEAD
   G::LoadClass('spool');
   $oSpool = new spoolRun();
 
@@ -65,6 +66,36 @@ if($userData['USR_EMAIL'] != '' && $userData['USR_EMAIL'] === $data['USR_EMAIL']
     'SMTPAuth'      => $aSetup['MESS_RAUTH'],
     'SMTPSecure'    => $aSetup['SMTPSecure']
   ));
+=======
+    G::LoadClass('spool');
+    $oSpool = new spoolRun();
+    if ($aSetup['MESS_RAUTH'] == false || (is_string($aSetup['MESS_RAUTH']) && $aSetup['MESS_RAUTH'] == 'false')) {
+        $aSetup['MESS_RAUTH'] = 0;
+    } else {
+        $aSetup['MESS_RAUTH'] = 1;
+    }
+    $oSpool->setConfig( array(
+        'MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
+        'MESS_SERVER'   => $aSetup['MESS_SERVER'],
+        'MESS_PORT'     => $aSetup['MESS_PORT'],
+        'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
+        'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
+        'SMTPAuth'      => $aSetup['MESS_RAUTH'],
+        'SMTPSecure'    => $aSetup['SMTPSecure']
+    ));
+
+    $passwd = $oSpool->config['MESS_PASSWORD'];
+    $passwdDec = G::decrypt($passwd,'EMAILENCRYPT');
+    $auxPass = explode('hash:', $passwdDec);
+    if (count($auxPass) > 1) {
+        if (count($auxPass) == 2) {
+            $passwd = $auxPass[1];
+        } else {
+            array_shift($auxPass);
+            $passwd = implode('', $auxPass);
+        }
+    }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
   $passwd = $oSpool->config['MESS_PASSWORD'];
   $passwdDec = G::decrypt($passwd,'EMAILENCRYPT');

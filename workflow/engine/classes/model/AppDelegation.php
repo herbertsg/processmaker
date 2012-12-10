@@ -24,11 +24,19 @@
  *
  */
 
+<<<<<<< HEAD
 require_once 'classes/model/om/BaseAppDelegation.php';
 require_once ( "classes/model/HolidayPeer.php" );
 require_once ( "classes/model/TaskPeer.php" );
 require_once ( "classes/model/Task.php" );
 G::LoadClass("dates");
+=======
+//require_once 'classes/model/om/BaseAppDelegation.php';
+//require_once ("classes/model/HolidayPeer.php");
+//require_once ("classes/model/TaskPeer.php");
+//require_once ("classes/model/Task.php");
+//G::LoadClass( "dates" );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 /**
  * Skeleton subclass for representing a row from the 'APP_DELEGATION' table.

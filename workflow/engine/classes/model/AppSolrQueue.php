@@ -1,7 +1,7 @@
 <?php
 
-require_once 'classes/model/om/BaseAppSolrQueue.php';
-require_once 'classes/entities/AppSolrQueue.php';
+//require_once 'classes/model/om/BaseAppSolrQueue.php';
+//require_once 'classes/entities/AppSolrQueue.php';
 
 
 /**

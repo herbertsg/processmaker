@@ -4,8 +4,8 @@
  * @package    workflow.engine.classes.model
  */
 
-require_once 'classes/model/om/BaseAppFolder.php';
-require_once 'classes/model/Application.php';
+//require_once 'classes/model/om/BaseAppFolder.php';
+//require_once 'classes/model/Application.php';
 
 /**
  * Skeleton subclass for representing a row from the 'APP_FOLDER' table.
@@ -21,6 +21,7 @@ require_once 'classes/model/Application.php';
  * @author hugo loza
  * @package    workflow.engine.classes.model
  */
+<<<<<<< HEAD
 class AppFolder extends BaseAppFolder {
   /**
    * @param string $folderName
@@ -68,6 +69,21 @@ class AppFolder extends BaseAppFolder {
         $validationFailuresArray = $tr->getValidationFailures ();
         foreach ( $validationFailuresArray as $objValidationFailure ) {
           $msg .= $objValidationFailure->getMessage () . "<br/>";
+=======
+class AppFolder extends BaseAppFolder
+{
+    /**
+     *
+     * @param string $folderName
+     * @param strin(32) $folderParent
+     * @return Ambigous <>|number
+     */
+    public function createFolder ($folderName, $folderParent = "/", $action = "createifnotexists")
+    {
+        $validActions = array ("createifnotexists","create","update");
+        if (! in_array( $action, $validActions )) {
+            $action = "createifnotexists";
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         }
         $response['success']=false;
 
@@ -104,12 +120,73 @@ class AppFolder extends BaseAppFolder {
     return $folderRoot != "/" ? $folderRoot : "";
   }
 
+<<<<<<< HEAD
   /**
    * @param string $fileTags
    * @param string(32) $sessionID Application ID
    * @return string
    */
   function parseTags($fileTags, $sessionID = "") {
+=======
+    /**
+     * Update the application document registry
+     *
+     * @param array $aData
+     * @return string
+     *
+     */
+    public function update ($aData)
+    {
+        $oConnection = Propel::getConnection( AppDocumentPeer::DATABASE_NAME );
+        try {
+            $oAppFolder = AppFolderPeer::retrieveByPK( $aData['FOLDER_UID'] );
+            if (! is_null( $oAppFolder )) {
+                $oAppFolder->fromArray( $aData, BasePeer::TYPE_FIELDNAME );
+                if ($oAppFolder->validate()) {
+                    $oConnection->begin();
+                    if (isset( $aData['FOLDER_NAME'] )) {
+                        $oAppFolder->setFolderName( $aData['FOLDER_NAME'] );
+                    }
+                    if (isset( $aData['FOLDER_UID'] )) {
+                        $oAppFolder->setFolderUid( $aData['FOLDER_UID'] );
+                    }
+                    if (isset( $aData['FOLDER_UPDATE_DATE'] )) {
+                        $oAppFolder->setFolderUpdateDate( $aData['FOLDER_UPDATE_DATE'] );
+                    }
+                    $iResult = $oAppFolder->save();
+                    $oConnection->commit();
+                    return $iResult;
+                } else {
+                    $sMessage = '';
+                    $aValidationFailures = $oAppFolder->getValidationFailures();
+                    foreach ($aValidationFailures as $oValidationFailure) {
+                        $sMessage .= $oValidationFailure->getMessage() . '<br />';
+                    }
+                    throw (new Exception( 'The registry cannot be updated!<br />' . $sMessage ));
+                }
+            } else {
+                throw (new Exception( 'This row doesn\'t exist!' ));
+            }
+        } catch (Exception $oError) {
+            $oConnection->rollback();
+            throw ($oError);
+        }
+    }
+
+
+    /**
+     *
+     * @param string $folderPath
+     * @param strin(32) $sessionID
+     * @return string Last Folder ID generated
+     */
+    public function createFromPath ($folderPath, $sessionID = "")
+    {
+        if ($sessionID == "") {
+            $sessionID = $_SESSION['APPLICATION'];
+            //Get current Application Fields
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     if ($sessionID == "")
     $sessionID = $_SESSION ['APPLICATION'];
@@ -245,6 +322,7 @@ if($limit != 0){
 
         $rs2 = AppDocumentPeer::doSelectRS($criteria);
 
+<<<<<<< HEAD
         $rs2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $data = array();
         while ($rs2->next()) {
@@ -252,6 +330,67 @@ if($limit != 0){
             $data[] = $row['APP_UID'];
         }
         $oCriteria->add ( AppDocumentPeer::APP_UID, $data, CRITERIA::IN );
+=======
+        $numRecTotal = AppDocumentPeer::doCount($oCriteria);
+
+        $auxCriteria = clone $oCriteria;
+        $auxCriteria->addJoin(AppDocumentPeer::DOC_UID, OutputDocumentPeer::OUT_DOC_UID);
+        $auxCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+        $auxCriteria->add(OutputDocumentPeer::OUT_DOC_UID, '-1', Criteria::NOT_EQUAL);
+        $auxCriteria->add(OutputDocumentPeer::OUT_DOC_GENERATE, 'BOTH');
+        $numRecTotal += AppDocumentPeer::doCount($auxCriteria);
+
+        $oCase->verifyTable();
+
+        $oCriteria->addAscendingOrderByColumn( AppDocumentPeer::APP_DOC_INDEX );
+        $oCriteria->addDescendingOrderByColumn( AppDocumentPeer::DOC_VERSION );
+
+        $response['documents'] = array ();
+
+        $oCriteria->setLimit( $limit );
+        $oCriteria->setOffset( $start );
+
+        $rs = AppDocumentPeer::doSelectRS( $oCriteria );
+        $rs->setFetchmode( ResultSet::FETCHMODE_ASSOC );
+        $rs->next();
+        $filesResult = array ();
+        while (is_array( $row = $rs->getRow() )) {
+            //**** start get Doc Info
+            $oApp = new Application();
+            if (($oApp->exists( $row['APP_UID'] )) || ($row['APP_UID'] == "00000000000000000000000000000000")) {
+                //$completeInfo = array("APP_DOC_FILENAME" => $row ["APP_DOC_UID"],"APP_DOC_UID"=>$row ['APP_UID']);
+                $completeInfo = $this->getCompleteDocumentInfo( $row['APP_UID'], $row['APP_DOC_UID'], $row['DOC_VERSION'], $row['DOC_UID'], $row['USR_UID'] );
+                $oAppDocument = new AppDocument();
+                $lastVersion = $oAppDocument->getLastAppDocVersion( $row['APP_DOC_UID'], $row['APP_UID'] );
+                //$filesResult [] = $completeInfo;
+                if ($completeInfo['APP_DOC_STATUS'] != "DELETED") {
+                    if ((in_array( $row['APP_DOC_UID'], $completeInfo['INPUT_DOCUMENTS'] )) || (in_array( $row['APP_DOC_UID'], $completeInfo['OUTPUT_DOCUMENTS'] )) || (in_array( $completeInfo['USR_UID'], array ($_SESSION['USER_LOGGED'],'-1') ))) {
+                        if (count( $docIdFilter ) > 0) {
+                            if (in_array( $row['APP_DOC_UID'], $docIdFilter )) {
+                                $response['documents'][] = $completeInfo;
+                            }
+                        } elseif ($lastVersion == $row['DOC_VERSION']) {
+                            //Only Last Document version
+                            if ($searchType == "ALL") {
+                                // If search in name of docs is active then filter
+                                if ((stripos( $completeInfo['APP_DOC_FILENAME'], $keyword ) !== false) || (stripos( $completeInfo['APP_DOC_TAGS'], $keyword ) !== false)) {
+                                    $response['documents'][] = $completeInfo;
+                                }
+                            } else {
+                                //No search filter active
+                                $response['documents'][] = $completeInfo;
+                            }
+                        }
+                    }
+                }
+            }
+            $rs->next();
+        }
+
+        $response["totalDocumentsCount"] = $numRecTotal;
+
+        return $response;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
 
     $oCase->verifyTable ();

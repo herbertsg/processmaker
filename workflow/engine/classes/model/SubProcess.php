@@ -4,7 +4,7 @@
  * @package    workflow.engine.classes.model
  */
 
-require_once 'classes/model/om/BaseSubProcess.php';
+//require_once 'classes/model/om/BaseSubProcess.php';
 
 
 /**

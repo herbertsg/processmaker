@@ -23,6 +23,7 @@
  *
  */
 
+<<<<<<< HEAD
  /**
   * @author Erik Amaru Ortiz <erik@colosa.com>
   * @date Jan 3th, 2010
@@ -35,6 +36,15 @@ require_once 'classes/model/AppDelay.php';
 require_once 'classes/model/Process.php';
 require_once 'classes/model/Task.php';
 G::LoadClass('case');
+=======
+//require_once 'classes/model/Application.php';
+//require_once 'classes/model/Users.php';
+//require_once 'classes/model/AppThread.php';
+//require_once 'classes/model/AppDelay.php';
+//require_once 'classes/model/Process.php';
+//require_once 'classes/model/Task.php';
+G::LoadClass( 'case' );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 $action = $_REQUEST['action'];
 unset($_REQUEST['action']);

@@ -15,8 +15,14 @@ try {
             break;
     }
 
+<<<<<<< HEAD
     $oJSON = new Services_JSON();
     $aData = get_object_vars($oJSON->decode($_POST['oData']));
+=======
+    //$oJSON = new Services_JSON();
+    $aData = get_object_vars( G::json_decode( $_POST['oData'] ));
+    //$aData = get_object_vars( $oJSON->decode( $_POST['oData'] ) );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     if (isset($_POST['function'])) {
         $sAction = $_POST['function'];

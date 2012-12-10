@@ -23,6 +23,7 @@
  * 
  */
 try {
+<<<<<<< HEAD
 	global $RBAC;
   switch ($RBAC->userCanAccess('PM_FACTORY')) {
   	case -2:
@@ -69,6 +70,33 @@ try {
 	    $oDataset1->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 	    $oDataset1->next();
 	    $aRow1 = $oDataset1->getRow();
+=======
+    global $RBAC;
+    switch ($RBAC->userCanAccess( 'PM_FACTORY' )) {
+        case - 2:
+            G::SendTemporalMessage( 'ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels' );
+            G::header( 'location: ../login/login' );
+            die();
+            break;
+        case - 1:
+            G::SendTemporalMessage( 'ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels' );
+            G::header( 'location: ../login/login' );
+            die();
+            break;
+    }
+
+    $sfunction = '';
+    if (isset( $_POST['function'] )) {
+        $sfunction = $_POST['function'];
+    } elseif (isset( $_POST['functions'] )){
+        $sfunction = $_POST['functions'];
+    } 
+    // Bootstrap::mylog("post:".$_POST['function']);
+    switch ($sfunction) {
+        case 'lookForNameInput':
+            //require_once ('classes/model/Content.php');
+            //require_once ("classes/model/InputDocument.php");
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 	    if($aRow1['INPUTS'])$flag=false;
 	  }
@@ -94,6 +122,7 @@ try {
                 $oInputDocument->update($aData);
           }
 
+<<<<<<< HEAD
           //refresh dbarray with the last change in inputDocument
           $oMap = new processMap();
           $oCriteria = $oMap->getInputDocumentsCriteria($aData['PRO_UID']);
@@ -102,6 +131,39 @@ try {
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
+=======
+                if ($aRow1['INPUTS']) {
+                    $flag = false;
+                }
+            }
+            print $flag;
+            break;
+        default:
+            //require_once 'classes/model/InputDocument.php';
+            G::LoadClass( 'processMap' );
+
+            $oInputDocument = new InputDocument();
+            if (isset( $_POST['form'] )) {
+                $aData = $_POST['form'];
+            } else {
+                $aData = $_POST;
+            }
+
+            if ($aData['INP_DOC_UID'] == '') {
+                unset( $aData['INP_DOC_UID'] );
+                $oInputDocument->create( $aData );
+            } else {
+                $oInputDocument->update( $aData );
+            }
+
+            //refresh dbarray with the last change in inputDocument
+            $oMap = new processMap();
+            $oCriteria = $oMap->getInputDocumentsCriteria( $aData['PRO_UID'] );
+            break;
+    }
+} catch (Exception $oException) {
+    die( $oException->getMessage() );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 }
 
 ?>

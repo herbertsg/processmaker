@@ -28,9 +28,13 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   require_once('classes/model/Dynaform.php');
   require_once('classes/model/Content.php');
 
+<<<<<<< HEAD
   $oJSON = new Services_JSON();
 
   if( isset($_POST['function']) )
+=======
+if (isset( $_POST['function'] )) {
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     $sfunction = $_POST['function'];
   else if( isset($_POST['functions']) )
     $sfunction = $_POST['functions'];

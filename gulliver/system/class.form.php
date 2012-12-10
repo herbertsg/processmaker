@@ -228,10 +228,99 @@ class Form extends XmlForm
         }
       }
     }
+<<<<<<< HEAD
     foreach ($newValues as $k => $v) {
       if (strpos($k,'SYS_GRID_AGGREGATE_') !== false) {
         $this->values[$k] = $newValues[$k];
       }
+=======
+
+    /**
+     * Function setValues
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param array $newValues
+     * @return string
+     */
+    public function setValues ($newValues = array())
+    {
+        if (! is_array( $newValues )) {
+            return;
+        }
+        foreach ($this->fields as $k => $v) {
+            if (array_key_exists( $k, $newValues )) {
+                if (is_array( $newValues[$k] )) {
+                    $this->values[$k] = array ();
+                    foreach ($newValues[$k] as $j => $item) {
+                        if ($this->fields[$k]->validateValue( $newValues[$k][$j], $this )) {
+                            $this->values[$k][$j] = $newValues[$k][$j];
+
+                            switch ($this->fields[$k]->type) {
+                                case "link":
+                                    if (isset($newValues[$k . "_label"][$j])) {
+                                        $this->values[$k . "_label"][$j] = $newValues[$k . "_label"][$j];
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                    if ((sizeof( $this->values[$k] ) === 1) && ($v->type !== 'grid') && isset( $this->values[$k][0] )) {
+                        $this->values[$k] = $this->values[$k][0];
+                    }
+                    if (sizeof( $this->values[$k] ) === 0) {
+                        $this->values[$k] = '';
+                    }
+                } else {
+                    if ($this->fields[$k]->validateValue( $newValues[$k], $this )) {
+                        $this->values[$k] = $newValues[$k];
+
+                        switch ($this->fields[$k]->type) {
+                            case "link":
+                                if (isset($newValues[$k . "_label"])) {
+                                    $this->values[$k . "_label"] = $newValues[$k . "_label"];
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($newValues as $k => $v) {
+            if (strpos( $k, 'SYS_GRID_AGGREGATE_' ) !== false) {
+                $this->values[$k] = $newValues[$k];
+            }
+        }
+        foreach ($this->fields as $k => $v) {
+            if (is_object( $this->fields[$k] ) && get_class( $this->fields[$k] ) != '__PHP_Incomplete_Class') {
+                $this->fields[$k]->owner = & $this;
+            }
+        }
+        if (isset( $this->labelWidth )) {
+            $nMaxPorcent = 1024;
+            $nWidth = stripos( $this->width, '%' );
+            if ($nWidth > 0) {
+                $sStrFind = $this->width;
+                $result = substr( $sStrFind, 0, strpos( $sStrFind, '%' ) );
+                $nWidth = (int) (($nMaxPorcent / 100) * $result);
+            } else {
+                $nWidth = (int) $this->width;
+                $nMaxPorcent = $nWidth;
+            }
+            $nLabelWidth = stripos( $this->labelWidth, '%' );
+            if ($nLabelWidth > 0) {
+                $sStrFind = $this->labelWidth;
+                $result = substr( $sStrFind, 0, strpos( $sStrFind, '%' ) );
+                $nLabelWidth = (int) (($nWidth / 100) * $result);
+            } else {
+                $nLabelWidth = (int) $this->labelWidth;
+            }
+            // krumo($nWidth,$nLabelWidth);
+            if (($nWidth - $nLabelWidth) > 0) {
+                $this->fieldContentWidth = (int) ($nWidth - $nLabelWidth);
+            }
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
     foreach($this->fields as $k => $v){
       if(is_object($this->fields[$k]) && get_class($this->fields[$k])!='__PHP_Incomplete_Class'){
@@ -327,7 +416,44 @@ class Form extends XmlForm
                       continue;
                     }
 
+<<<<<<< HEAD
                     $values[$k] .= (($i != 0)? "|" : null) . $value;
+=======
+    /**
+     * Function that validates the values retrieved in an Array:
+     * ex $_POST['form']
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param array $newValues
+     * @return array
+     */
+    public function validateArray ($newValues)
+    {
+        $values = array ();
+        foreach ($this->fields as $k => $v) {
+            if (($v->type != 'submit')) {
+                if ($v->type != 'file') {
+                    if (array_key_exists( $k, $newValues )) {
+                        switch ($v->type) {
+                            case 'radiogroup':
+                                $values[$k] = $newValues[$k];
+                                $values[$k . "_label"] = $newValues[$k . "_label"] = $v->options[$newValues[$k]];
+                                break;
+                            case 'suggest':
+                                $values[$k] = $newValues[$k];
+                                $values[$k . "_label"] = $newValues[$k . "_label"];
+                                break;
+                            case 'checkgroup':
+                            case 'listbox':
+                                if (is_array( $newValues[$k] )) {
+                                    $values[$k] = $values[$k . "_label"] = null;
+                                    foreach ($newValues[$k] as $i => $value) {
+                                        //if $value is empty continue with the next loop, because this is a not selected/checked item
+                                        if (trim( $value ) == '') {
+                                            continue;
+                                        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
                     if (isset($v->options[$value])){
                         $values[$k . "_label"] .= (($i != 0)? "|" : null) . $v->options[$value];
@@ -425,9 +551,90 @@ class Form extends XmlForm
                                                 //the following line has the correct values because the query return an associative array. Related 7945 bug
                                                 list($rowId, $rowContent) = explode(",", implode(",", $rs->getRow()));
 
+<<<<<<< HEAD
                                                 if ($vv == $rowId) {
                                                     $values[$k][$j][$kk . "_label"] = $newValues[$k][$j][$kk. "_label"] = $rowContent;
                                                     break;
+=======
+                                    //we do the query to the external connection and we've got the label
+                                    $con = Propel::getConnection( $this->fields[$k]->sqlConnection != "" ? $this->fields[$k]->sqlConnection : "workflow" );
+                                    $stmt = $con->prepareStatement( $query );
+                                    $rs = $stmt->executeQuery( ResultSet::FETCHMODE_NUM );
+                                    while ($rs->next()) {
+                                        list ($rowId, $rowContent) = $rs->getRow();
+                                        if ($newValues[$k] == $rowId) {
+                                            $values[$k . "_label"] = $rowContent;
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            case "link":
+                                $values[$k] = $newValues[$k];
+                                $values[$k . "_label"] = $newValues[$k . "_label"];
+                                break;
+                            case 'grid':
+                                foreach ($newValues[$k] as $j => $item) {
+                                    if (is_array( $item )) {
+                                        $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+                                        foreach ($item as $kk => $vv) {
+                                            if ($this->fields[$k]->fields[$kk]->type != "file") {
+                                                switch ($this->fields[$k]->fields[$kk]->type) {
+                                                    case "dropdown":
+                                                        //We need to know which fields are dropdowns
+                                                        $values[$k][$j] = $newValues[$k][$j];
+
+                                                        if ($this->fields[$k]->validateValue( $newValues[$k][$j], $this )) {
+                                                            //If the dropdown has otions
+                                                            if (isset( $this->fields[$k]->fields[$kk]->options[$vv] )) {
+                                                                $values[$k][$j][$kk . "_label"] = $newValues[$k][$j][$kk . "_label"] = $this->fields[$k]->fields[$kk]->options[$vv];
+                                                            } else {
+                                                                //If hasn't options try execute a sql sentence
+                                                                $query = G::replaceDataField( $this->fields[$k]->fields[$kk]->sql, $values[$k][$j] );
+                                                                $con = Propel::getConnection( (! empty( $this->fields[$k]->fields[$kk]->sqlConnection )) ? $this->fields[$k]->fields[$kk]->sqlConnection : "workflow" );
+                                                                $stmt = $con->prepareStatement( $query );
+
+                                                                //Execute just if a query was set, it should be not empty
+                                                                if (trim( $query ) == "") {
+                                                                    //if it is  empty string skip it
+                                                                    continue;
+                                                                }
+
+                                                                $rs = $stmt->executeQuery( ResultSet::FETCHMODE_NUM );
+
+                                                                while ($rs->next()) {
+                                                                    //From the query executed we only need certain elements
+                                                                    //note added by krlos pacha carlos[at]colosa[dot]com
+                                                                    //the following line has the correct values because the query return an associative array. Related 7945 bug
+                                                                    list ($rowId, $rowContent) = explode( ",", implode( ",", $rs->getRow() ) );
+
+                                                                    if ($vv == $rowId) {
+                                                                        $values[$k][$j][$kk . "_label"] = $newValues[$k][$j][$kk . "_label"] = $rowContent;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        break;
+                                                    case "link":
+                                                        $values[$k][$j] = $newValues[$k][$j];
+                                                        $values[$k][$j][$kk . "_label"] = $newValues[$k][$j][$kk . "_label"];
+                                                        break;
+                                                    default:
+                                                        //If there are no dropdowns previously setted and the evaluated field is not a dropdown
+                                                        //only then rewritte the $values
+                                                        $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+                                                        break;
+                                                }
+                                            } else {
+                                                if (isset( $_FILES["form"]["name"][$k][$j][$kk] )) {
+                                                    $values[$k][$j][$kk] = $_FILES["form"]["name"][$k][$j][$kk];
+                                                }
+
+                                                if (isset( $this->fields[$k]->fields[$kk]->input ) && ! empty( $this->fields[$k]->fields[$kk]->input )) {
+                                                    //$_POST["INPUTS"][$k][$j][$kk] = $this->fields[$k]->fields[$kk]->input;
+                                                    $_POST["INPUTS"][$k][$kk] = $this->fields[$k]->fields[$kk]->input;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
                                                 }
                                             }
                                         }

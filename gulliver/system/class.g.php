@@ -30,6 +30,7 @@
 
 class G
 {
+<<<<<<< HEAD
 
   /**
    * is_https
@@ -930,6 +931,193 @@ class G
       $args = self::parseRestUri($aRequestUri);
     } else {
       $args = self::parseNormalUri($aRequestUri);
+=======
+    public $sessionVar = array(); //SESSION temporary array store.
+
+    /**
+     * is_https
+     * @return void
+    */
+    public function is_https()
+    {
+        if (isset($_SERVER['HTTPS'])) {
+            if ($_SERVER['HTTPS']=='on') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Fill array values (recursive)
+     * @access public
+     * @param Array $arr
+     * @param Void $value
+     * @param Boolean $recursive
+     * @return Array
+     */
+    public function array_fill_value ($arr = Array(), $value = '', $recursive = false)
+    {
+        if (is_array( $arr )) {
+            foreach ($arr as $key => $val) {
+                if (is_array( $arr[$key] )) {
+                    $arr[$key] = ($recursive === true) ? G::array_fill_value( $arr[$key], $value, true ) : $val;
+                } else {
+                    $arr[$key] = $value;
+                }
+            }
+        } else {
+            $arr = Array ();
+        }
+        return $arr;
+    }
+
+    /**
+     * Generate Password Random
+     * @access public
+     * @param  Int
+     * @return String
+     */
+    public function generate_password($length = 8)
+    {
+        $password = "";
+        $possible = "0123456789bcdfghjkmnpqrstvwxyz";
+        $i        = 0;
+        while ($i<$length) {
+            $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+            if (!strstr($password, $char)) {
+                $password .= $char;
+                $i++;
+            }
+        }
+        return $password;
+    }
+
+    /**
+     * Array concat
+     * array_concat(ArrayToConcat,ArrayOriginal);
+     *
+     * @access public
+     * @param Array
+     * @return Array
+     */
+    public function array_concat ()
+    {
+        $nums = func_num_args();
+        $vars = func_get_args();
+        $ret = Array ();
+        for ($i = 0; $i < $nums; $i ++) {
+            if (is_array( $vars[$i] )) {
+                foreach ($vars[$i] as $key => $value) {
+                    $ret[$key] = $value;
+                }
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * Compare Variables
+     * var_compare(value,[var1,var2,varN]);
+     * @access public
+     * @param  void $value
+     * @param  void $var1-N
+     * @return Boolean
+     */
+    public function var_compare ($value = true)
+    {
+        $nums = func_num_args();
+        if ($nums < 2) {
+              return true;
+        }
+        $vars = func_get_args();
+        $ret = Array ();
+        for ($i = 1; $i < $nums; $i ++) {
+            if ($vars[$i] !== $value) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Emulate variable selector
+     * @access public
+     * @param  void
+     * @return void
+     */
+    public function var_probe ()
+    {
+        //return (!$variable)?
+        $nums = func_num_args();
+        $vars = func_get_args();
+        for ($i = 0; $i < $nums; $i ++) {
+            if ($vars[$i]) {
+                return $vars[$i];
+            }
+        }
+        return 1;
+    }
+
+    /**
+     * Get the current version of gulliver classes
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @return string
+     */
+    public function &getVersion ()
+    {
+        //majorVersion.minorVersion-SvnRevision
+        return '3.0-1';
+    }
+
+    /**
+     * getIpAddress
+     * @return string $ip
+     */
+    public function getIpAddress ()
+    {
+        if (getenv( 'HTTP_CLIENT_IP' )) {
+            $ip = getenv( 'HTTP_CLIENT_IP' );
+        } elseif (getenv( 'HTTP_X_FORWARDED_FOR' )) {
+            $ip = getenv( 'HTTP_X_FORWARDED_FOR' );
+        } else {
+            $ip = getenv( 'REMOTE_ADDR' );
+        }
+        return $ip;
+    }
+
+    /**
+     * getMacAddress
+     *
+     * @return string $mac
+    */
+    public function getMacAddress ()
+    {
+        if (strstr( getenv( 'OS' ), 'Windows' )) {
+            $ipconfig = `ipconfig /all`;
+            preg_match( '/[\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}/i', $ipconfig, $mac );
+        } else {
+            $ifconfig = `/sbin/ifconfig`;
+            preg_match( '/[\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}[\:-][\dA-Z]{2,2}/i', $ifconfig, $mac );
+        }
+        return isset( $mac[0] ) ? $mac[0] : '00:00:00:00:00:00';
+    }
+
+    /**
+     * microtime_float
+     *
+     * @return array_sum(explode(' ',microtime()))
+     */
+    /*public static*/
+    public function microtime_float ()
+    {
+        return array_sum( explode( ' ', microtime() ) );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
 
     define("SYS_LANG", $args['SYS_LANG']);
@@ -993,11 +1181,2511 @@ class G
     unset($toparse);
     array_shift($uriVars);
 
+<<<<<<< HEAD
     $args = array();
     $args['SYS_LANG'] = array_shift($uriVars);
     $args['SYS_SKIN'] = array_shift($uriVars);
     $args['SYS_COLLECTION'] = array_shift($uriVars);
     $args['SYS_TARGET']     = array_shift($uriVars);
+=======
+    /**
+     * Render Page
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param object $objContent
+     * @param string $strTemplate
+     * @param string $strSkin
+     * @return void
+     */
+    public function RenderPage ($strTemplate = "default", $strSkin = SYS_SKIN, $objContent = null, $layout = '')
+    {
+        global $G_CONTENT;
+        global $G_TEMPLATE;
+        global $G_SKIN;
+        global $G_PUBLISH;
+
+        $G_CONTENT = $objContent;
+        $G_TEMPLATE = $strTemplate;
+        $G_SKIN = $strSkin;
+
+        try {
+            $file = G::ExpandPath( 'skinEngine' ) . 'skinEngine.php';
+            include $file;
+            $skinEngine = new SkinEngine( $G_TEMPLATE, $G_SKIN, $G_CONTENT );
+            $skinEngine->setLayout( $layout );
+            $skinEngine->dispatch();
+        } catch (Exception $e) {
+            global $G_PUBLISH;
+            if (is_null( $G_PUBLISH )) {
+                $G_PUBLISH = new Publisher();
+            }
+            if (count( $G_PUBLISH->Parts ) == 1) {
+                array_shift( $G_PUBLISH->Parts );
+            }
+            global $oHeadPublisher;
+            $leimnudInitString = $oHeadPublisher->leimnudInitString;
+            $oHeadPublisher->clearScripts();
+            $oHeadPublisher->leimnudInitString = $leimnudInitString;
+            $oHeadPublisher->addScriptFile( '/js/maborak/core/maborak.js' );
+            $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'login/showMessage', null, array ('MESSAGE' => $e->getMessage()
+            ) );
+            if (class_exists( 'SkinEngine' )) {
+                $skinEngine = new SkinEngine( 'publish', 'blank', '' );
+                $skinEngine->dispatch();
+            } else {
+                die( $e->getMessage() );
+            }
+        }
+    }
+
+    /**
+     * Load a skin
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $strSkinName
+     * @return void
+     */
+    public function LoadSkin ($strSkinName)
+    {
+        //print $strSkinName;
+        //now, we are using the skin, a skin is a file in engine/skin directory
+        $file = G::ExpandPath( "skins" ) . $strSkinName . ".php";
+        //G::pr($file);
+        if (file_exists( $file )) {
+            require_once ($file);
+            return;
+        } else {
+            if (file_exists( PATH_HTML . 'errors/error703.php' )) {
+                header( 'location: /errors/error703.php' );
+                die();
+            } else {
+                $text = "The Skin $file does not exist, please review the Skin Definition";
+                throw (new Exception( $text ));
+            }
+        }
+
+    }
+
+    /**
+     * Include javascript files
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $strInclude
+     * @return void
+     */
+    public function LoadInclude ($strInclude)
+    {
+        $incfile = G::ExpandPath( "includes" ) . 'inc.' . $strInclude . '.php';
+        if (! file_exists( $incfile )) {
+            $incfile = PATH_GULLIVER_HOME . 'includes' . PATH_SEP . 'inc.' . $strInclude . '.php';
+        }
+
+        if (file_exists( $incfile )) {
+            require_once ($incfile);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Include all model files
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $strInclude
+     * @return void
+     */
+    public function LoadAllModelClasses ()
+    {
+        $baseDir = PATH_CORE . 'classes' . PATH_SEP . 'model';
+        if ($handle = opendir( $baseDir )) {
+            while (false !== ($file = readdir( $handle ))) {
+                if (strpos( $file, '.php', 1 ) && ! strpos( $file, 'Peer.php', 1 )) {
+                    require_once ($baseDir . PATH_SEP . $file);
+                }
+            }
+        }
+    }
+
+    /**
+     * Include all model plugin files
+     *
+     * LoadAllPluginModelClasses
+     *
+     * @author Hugo Loza <hugo@colosa.com>
+     * @access public
+     * @return void
+     */
+    public function LoadAllPluginModelClasses ()
+    {
+        //Get the current Include path, where the plugins directories should be
+        if (! defined( 'PATH_SEPARATOR' )) {
+            define( 'PATH_SEPARATOR', (substr( PHP_OS, 0, 3 ) == 'WIN') ? ';' : ':' );
+        }
+        $path = explode( PATH_SEPARATOR, get_include_path() );
+
+        foreach ($path as $possiblePath) {
+            if (strstr( $possiblePath, "plugins" )) {
+                $baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';
+                if (file_exists( $baseDir )) {
+                    if ($handle = opendir( $baseDir )) {
+                        while (false !== ($file = readdir( $handle ))) {
+                            if (strpos( $file, '.php', 1 ) && ! strpos( $file, 'Peer.php', 1 )) {
+                                require_once ($baseDir . PATH_SEP . $file);
+                            }
+                        }
+                    }
+                    //Include also the extendGulliverClass that could have some new definitions for fields
+                    if (file_exists( $possiblePath . 'classes' . PATH_SEP . 'class.extendGulliver.php' )) {
+                        include_once $possiblePath . 'classes' . PATH_SEP . 'class.extendGulliver.php';
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Load a template
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $strTemplateName
+     * @return void
+     */
+    public function LoadTemplate ($strTemplateName)
+    {
+        if ($strTemplateName == '') {
+            return;
+        }
+
+        $temp = $strTemplateName . ".php";
+        $file = G::ExpandPath( 'templates' ) . $temp;
+        // Check if its a user template
+        if (file_exists( $file )) {
+            //require_once( $file );
+            include ($file);
+        } else {
+            // Try to get the global system template
+            $file = PATH_TEMPLATE . PATH_SEP . $temp;
+            //require_once( $file );
+            if (file_exists( $file )) {
+                include ($file);
+            }
+        }
+    }
+
+    /**
+     * public function LoadClassRBAC
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param eter string strClass
+     * @return string
+     */
+    public function LoadClassRBAC ($strClass)
+    {
+        $classfile = PATH_RBAC . "class.$strClass" . '.php';
+        require_once ($classfile);
+    }
+
+    /**
+     * If the class is not defined by the aplication, it
+     * attempt to load the class from gulliver.system
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>, David S. Callizaya
+     * @access public
+     * @param string $strClass
+     * @return void
+     */
+    public function LoadClass ($strClass)
+    {
+        $classfile = G::ExpandPath( "classes" ) . 'class.' . $strClass . '.php';
+        if (! file_exists( $classfile )) {
+            if (file_exists( PATH_GULLIVER . 'class.' . $strClass . '.php' )) {
+                return require_once (PATH_GULLIVER . 'class.' . $strClass . '.php');
+            } else {
+                return false;
+            }
+        } else {
+            return require_once ($classfile);
+        }
+    }
+
+    /**
+     * Loads a Class.
+     * If the class is not defined by the aplication, it
+     * attempt to load the class from gulliver.system
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>, David S. Callizaya
+     * @access public
+     * @param string $strClass
+     * @return void
+     */
+    public function LoadThirdParty ($sPath, $sFile)
+    {
+        $classfile = PATH_THIRDPARTY . $sPath . '/' . $sFile . ((substr( $sFile, 0, - 4 ) !== '.php') ? '.php' : '');
+        return require_once ($classfile);
+    }
+
+    /**
+     * Encrypt URL
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $urlLink
+     * @return string
+     */
+    public function encryptlink ($url)
+    {
+        if (defined( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes') {
+            return urlencode( G::encrypt( $url, URL_KEY ) );
+        } else {
+            return $url;
+        }
+    }
+
+    /**
+     * Parsing the URI
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $urlLink
+     * @return string
+     */
+    static public function parseURI ($uri, $isRestRequest = false)
+    {
+        //*** process the $_POST with magic_quotes enabled
+        // The magic_quotes_gpc feature has been DEPRECATED as of PHP 5.3.0.
+        if (get_magic_quotes_gpc() === 1) {
+            $_POST = G::strip_slashes( $_POST );
+        }
+
+        $aRequestUri = explode( '/', $uri );
+        if ($isRestRequest) {
+            $args = self::parseRestUri( $aRequestUri );
+        } else {
+            $args = self::parseNormalUri( $aRequestUri );
+        }
+
+        define( "SYS_LANG", $args['SYS_LANG'] );
+        define( "SYS_SKIN", $args['SYS_SKIN'] );
+        define( 'SYS_COLLECTION', $args['SYS_COLLECTION'] );
+        define( 'SYS_TARGET', $args['SYS_TARGET'] );
+
+        if ($args['SYS_COLLECTION'] == 'js2') {
+            print "ERROR";
+            die();
+        }
+    }
+
+    public function parseNormalUri ($aRequestUri)
+    {
+        if (substr( $aRequestUri[1], 0, 3 ) == 'sys') {
+            define( 'SYS_TEMP', substr( $aRequestUri[1], 3 ) );
+        } else {
+            define( "ENABLE_ENCRYPT", 'yes' );
+            define( 'SYS_TEMP', $aRequestUri[1] );
+            $plain = '/sys' . SYS_TEMP;
+
+            for ($i = 2; $i < count( $aRequestUri ); $i ++) {
+                $decoded = G::decrypt( urldecode( $aRequestUri[$i] ), URL_KEY );
+                if ($decoded == 'sWì›') {
+                    $decoded = $VARS[$i]; //this is for the string  "../"
+                }
+                $plain .= '/' . $decoded;
+            }
+            $_SERVER["REQUEST_URI"] = $plain;
+        }
+
+        $work = explode( '?', $_SERVER["REQUEST_URI"] );
+
+        if (count( $work ) > 1) {
+            define( 'SYS_CURRENT_PARMS', $work[1] );
+        } else {
+            define( 'SYS_CURRENT_PARMS', '' );
+        }
+
+        define( 'SYS_CURRENT_URI', $work[0] );
+
+        if (! defined( 'SYS_CURRENT_PARMS' )) {
+            define( 'SYS_CURRENT_PARMS', $work[1] );
+        }
+
+        $preArray = explode( '&', SYS_CURRENT_PARMS );
+        $buffer = explode( '.', $work[0] );
+
+        if (count( $buffer ) == 1) {
+            $buffer[1] = '';
+        }
+
+        //request type
+        define( 'REQUEST_TYPE', ($buffer[1] != "" ? $buffer[1] : 'html') );
+
+        $toparse = substr( $buffer[0], 1, strlen( $buffer[0] ) - 1 );
+        $uriVars = explode( '/', $toparse );
+
+        unset( $work );
+        unset( $buffer );
+        unset( $toparse );
+        array_shift( $uriVars );
+
+        $args = array ();
+        $args['SYS_LANG'] = array_shift( $uriVars );
+        $args['SYS_SKIN'] = array_shift( $uriVars );
+        $args['SYS_COLLECTION'] = array_shift( $uriVars );
+        $args['SYS_TARGET'] = array_shift( $uriVars );
+
+        //to enable more than 2 directories...in the methods structure
+        while (count( $uriVars ) > 0) {
+            $args['SYS_TARGET'] .= '/' . array_shift( $uriVars );
+        }
+
+        /* Fix to prevent use uxs skin outside siplified interface,
+        because that skin is not compatible with others interfaces*/
+        if ($args['SYS_SKIN'] == 'uxs' && $args['SYS_COLLECTION'] != 'home' && $args['SYS_COLLECTION'] != 'cases') {
+            $config = System::getSystemConfiguration();
+            $args['SYS_SKIN'] = $config['default_skin'];
+        }
+
+        return $args;
+    }
+
+    public function parseRestUri ($requestUri)
+    {
+        $args = array ();
+        //$args['SYS_TEMP'] = $requestUri[1];
+        define( 'SYS_TEMP', $requestUri[2] );
+        $restUri = '';
+
+        for ($i = 3; $i < count( $requestUri ); $i ++) {
+            $restUri .= '/' . $requestUri[$i];
+        }
+
+        $args['SYS_LANG'] = 'en'; // TODO, this can be set from http header
+        $args['SYS_SKIN'] = '';
+        $args['SYS_COLLECTION'] = '';
+        $args['SYS_TARGET'] = $restUri;
+
+        return $args;
+    }
+
+    public function strip_slashes ($vVar)
+    {
+        if (is_array( $vVar )) {
+            foreach ($vVar as $sKey => $vValue) {
+                if (is_array( $vValue )) {
+                    G::strip_slashes( $vVar[$sKey] );
+                } else {
+                    $vVar[$sKey] = stripslashes( $vVar[$sKey] );
+                }
+            }
+        } else {
+            $vVar = stripslashes( $vVar );
+        }
+
+        return $vVar;
+    }
+
+    /**
+     * function to calculate the time used to render a page
+     */
+    public function logTimeByPage ()
+    {
+        if (! defined( PATH_DATA )) {
+            return false;
+        }
+
+        $serverAddr = $_SERVER['SERVER_ADDR'];
+        global $startingTime;
+        $endTime = microtime( true );
+        $time = $endTime - $startingTime;
+        $fpt = fopen( PATH_DATA . 'log/time.log', 'a' );
+        fwrite( $fpt, sprintf( "%s.%03d %15s %s %5.3f %s\n", date( 'Y-m-d H:i:s' ), $time, getenv( 'REMOTE_ADDR' ), substr( $serverAddr, - 4 ), $time, $_SERVER['REQUEST_URI'] ) );
+        fclose( $fpt );
+    }
+
+    /**
+     * streaming a big JS file with small js files
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $file
+     * @return string
+     */
+    public function streamCSSBigFile ($filename)
+    {
+        header( 'Content-Type: text/css' );
+
+        //First get Skin info
+        $filenameParts = explode( "-", $filename );
+        $skinName = $filenameParts[0];
+        $skinVariant = "skin";
+
+        if (isset( $filenameParts[1] )) {
+            $skinVariant = strtolower( $filenameParts[1] );
+        }
+
+        $configurationFile = '';
+        if ($skinName == "jscolors") {
+            $skinName = "classic";
+        }
+        if ($skinName == "xmlcolors") {
+            $skinName = "classic";
+        }
+        if ($skinName == "classic") {
+            $configurationFile = G::ExpandPath( "skinEngine" ) . 'base' . PATH_SEP . 'config.xml';
+        } else {
+            $configurationFile = PATH_CUSTOM_SKINS . $skinName . PATH_SEP . 'config.xml';
+
+            if (! is_file( $configurationFile )) {
+                $configurationFile = G::ExpandPath( "skinEngine" ) . $skinName . PATH_SEP . 'config.xml';
+            }
+        }
+
+        //Read Configuration File
+        $xmlConfiguration = file_get_contents( $configurationFile );
+        $xmlConfigurationObj = G::xmlParser( $xmlConfiguration );
+        $baseSkinDirectory = dirname( $configurationFile );
+        $directorySize = G::getDirectorySize( $baseSkinDirectory );
+        $mtime = $directorySize['maxmtime'];
+
+        $outputHeader = "/* Autogenerated CSS file by gulliver framework \n";
+        $outputHeader .= "   Skin: $filename\n";
+        $outputHeader .= "   Configuration: $configurationFile\n";
+        $mtimeNow = date( 'U' );
+        $gmt_mtimeNow = gmdate( "D, d M Y H:i:s", $mtimeNow ) . " GMT";
+        $outputHeader .= "   Date: $gmt_mtimeNow*/\n";
+        $output = "";
+        //Base files
+        switch (strtolower( $skinVariant )) {
+            case "extjs":
+                //Base
+                $baseCSSPath = PATH_SKIN_ENGINE . "base" . PATH_SEP . "baseCss" . PATH_SEP;
+                $output .= file_get_contents( $baseCSSPath . 'ext-all-notheme.css' );
+
+                //Classic Skin
+                $extJsSkin = 'xtheme-gray';
+                break;
+            default:
+                break;
+        }
+
+        //Get Browser Info
+        $infoBrowser = G::browser_detection( 'full_assoc' );
+        $browserName = $infoBrowser['browser_working'];
+        if (isset( $infoBrowser[$browserName . '_data'] )) {
+            if ($infoBrowser[$browserName . '_data'][0] != "") {
+                $browserName = $infoBrowser[$browserName . '_data'][0];
+            }
+        }
+
+        //Read Configuration File
+        $xmlConfiguration = file_get_contents ( $configurationFile );
+        $xmlConfigurationObj = G::xmlParser($xmlConfiguration);
+
+        $skinFilesArray = $xmlConfigurationObj->result['skinConfiguration']['__CONTENT__']['cssFiles']['__CONTENT__'][$skinVariant]['__CONTENT__']['cssFile'] ;
+        foreach ($skinFilesArray as $keyFile => $cssFileInfo) {
+            $enabledBrowsers  = explode(",", $cssFileInfo['__ATTRIBUTES__']['enabledBrowsers']);
+            $disabledBrowsers = explode(",", $cssFileInfo['__ATTRIBUTES__']['disabledBrowsers']);
+
+            if (((in_array($browserName, $enabledBrowsers)) || (in_array('ALL', $enabledBrowsers)))&&(!(in_array($browserName, $disabledBrowsers)))) {
+                if ($cssFileInfo['__ATTRIBUTES__']['file'] == 'rtl.css') {
+                    G::LoadClass('serverConfiguration');
+                    $oServerConf =& serverConf::getSingleton();
+                    if (!(defined('SYS_LANG'))) {
+                        if (isset($_SERVER['HTTP_REFERER'])) {
+                            $syss = explode('://', $_SERVER['HTTP_REFERER']);
+                            $sysObjets =  explode('/', $syss['1']);
+                            $sysLang = $sysObjets['2'];
+                        } else {
+                            $sysLang = 'en';
+                        }
+                    } else {
+                        $sysLang = SYS_LANG;
+                    }
+                    if ($oServerConf->isRtl($sysLang)) {
+                        $output .= file_get_contents ( $baseSkinDirectory . PATH_SEP.'css'.PATH_SEP.$cssFileInfo['__ATTRIBUTES__']['file'] );
+                    }
+                } else {
+                    $output .= file_get_contents ( $baseSkinDirectory . PATH_SEP.'css'.PATH_SEP.$cssFileInfo['__ATTRIBUTES__']['file'] );
+                }
+            }
+        }
+
+        //Remove comments..
+        $regex = array ("`^([\t\s]+)`ism" => '',"`^\/\*(.+?)\*\/`ism" => "","`([\n\A;]+)\/\*(.+?)\*\/`ism" => "$1","`([\n\A;\s]+)//(.+?)[\n\r]`ism" => "$1\n","`(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+`ism" => "\n" );
+        $output = preg_replace( array_keys( $regex ), $regex, $output );
+        $output = $outputHeader . $output;
+
+        return $output;
+    }
+
+    /**
+     * streaming the translation.<lang>.js file
+     * take the WEB-INF/translation.<lang> file and append it to file js/widgets/lang/<lang>.js file
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $file
+     * @param boolean $download
+     * @param string $downloadFileName
+     * @return string
+     */
+    public function streamJSTranslationFile ($filename, $locale = 'en')
+    {
+        $defaultTranslations = Array ();
+        $foreignTranslations = Array ();
+
+        //if the default translations table doesn't exist we can't proceed
+        if (! is_file( PATH_LANGUAGECONT . 'translation.en' )) {
+            return ;
+        }
+        //load the translations table
+        require_once (PATH_LANGUAGECONT . 'translation.en');
+        $defaultTranslations = $translation;
+
+        //if some foreign language was requested and its translation file exists
+        if ($locale != 'en' && file_exists( PATH_LANGUAGECONT . 'translation.' . $locale )) {
+            require_once (PATH_LANGUAGECONT . 'translation.' . $locale); //load the foreign translations table
+            $foreignTranslations = $translation;
+        }
+
+        if (defined( "SHOW_UNTRANSLATED_AS_TAG" ) && SHOW_UNTRANSLATED_AS_TAG != 0) {
+            $translation = $foreignTranslations;
+        } else {
+            $translation = array_merge( $defaultTranslations, $foreignTranslations );
+        }
+
+        $calendarJs = '';
+        $calendarJsFile = PATH_GULLIVER_HOME . "js/widgets/js-calendar/lang/" . $locale .".js";
+        if (! file_exists($calendarJsFile)) {
+            $calendarJsFile = PATH_GULLIVER_HOME . "js/widgets/js-calendar/lang/en.js";
+        }
+        $calendarJs = file_get_contents($calendarJsFile) . "\n";
+
+        return $calendarJs . 'var TRANSLATIONS = ' . G::json_encode( $translation ) . ';' ;
+    }
+
+    /**
+     * streaming a file
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $file
+     * @param boolean $download
+     * @param string $downloadFileName
+     * @return string
+     */
+    public function streamFile ($file, $download = false, $downloadFileName = '')
+    {
+        require_once (PATH_THIRDPARTY . 'jsmin/jsmin.php');
+        $folderarray = explode( '/', $file );
+        $typearray = explode( '.', basename( $file ) );
+        $typefile = $typearray[count( $typearray ) - 1];
+        $filename = $file;
+
+        //trick to generate the translation.language.js file , merging two files
+        if (strtolower( $typefile ) == 'js' && $typearray[0] == 'translation') {
+            G::sendHeaders( $filename, 'text/javascript', $download, $downloadFileName );
+            $output = G::streamJSTranslationFile( $filename, $typearray[1] );
+            print $output;
+            return;
+        }
+
+        //trick to generate the big css file for ext style .
+        if (strtolower( $typefile ) == 'css' && $folderarray[count( $folderarray ) - 2] == 'css') {
+            G::sendHeaders( $filename, 'text/css', $download, $downloadFileName );
+            $output = G::streamCSSBigFile( $typearray[0] );
+            print $output;
+            return;
+        }
+
+        if (file_exists( $filename )) {
+            switch (strtolower( $typefile )) {
+                case 'swf':
+                    G::sendHeaders( $filename, 'application/x-shockwave-flash', $download, $downloadFileName );
+                    break;
+                case 'js':
+                    G::sendHeaders( $filename, 'text/javascript', $download, $downloadFileName );
+                    break;
+                case 'htm':
+                case 'html':
+                    G::sendHeaders( $filename, 'text/html', $download, $downloadFileName );
+                    break;
+                case 'htc':
+                    G::sendHeaders( $filename, 'text/plain', $download, $downloadFileName );
+                    break;
+                case 'json':
+                    G::sendHeaders( $filename, 'text/plain', $download, $downloadFileName );
+                    break;
+                case 'gif':
+                    G::sendHeaders( $filename, 'image/gif', $download, $downloadFileName );
+                    break;
+                case 'png':
+                    G::sendHeaders( $filename, 'image/png', $download, $downloadFileName );
+                    break;
+                case 'jpg':
+                    G::sendHeaders( $filename, 'image/jpg', $download, $downloadFileName );
+                    break;
+                case 'css':
+                    G::sendHeaders( $filename, 'text/css', $download, $downloadFileName );
+                    break;
+                case 'xml':
+                    G::sendHeaders( $filename, 'text/xml', $download, $downloadFileName );
+                    break;
+                case 'txt':
+                    G::sendHeaders( $filename, 'text/html', $download, $downloadFileName );
+                    break;
+                case 'doc':
+                case 'pdf':
+                case 'pm':
+                case 'po':
+                    G::sendHeaders( $filename, 'application/octet-stream', $download, $downloadFileName );
+                    break;
+                case 'php':
+                    if ($download) {
+                        G::sendHeaders( $filename, 'text/plain', $download, $downloadFileName );
+                    } else {
+                        require_once ($filename);
+                        return;
+                    }
+                    break;
+                case 'tar':
+                    G::sendHeaders( $filename, 'application/x-tar', $download, $downloadFileName );
+                    break;
+                default:
+                    //throw new Exception ( "Unknown type of file '$file'. " );
+                    G::sendHeaders( $filename, 'application/octet-stream', $download, $downloadFileName );
+                    break;
+            }
+        } else {
+            if (strpos( $file, 'gulliver' ) !== false) {
+                list ($path, $filename) = explode( 'gulliver', $file );
+            }
+
+            $_SESSION['phpFileNotFound'] = $file;
+            G::header( "location: /errors/error404.php?l=" . $_SERVER['REQUEST_URI'] );
+        }
+
+        if ( substr($filename,-10) == "ext-all.js" ) {
+            $filename = PATH_GULLIVER_HOME . 'js/ext/min/ext-all.js';
+        }
+        @readfile( $filename );
+    }
+
+    /**
+     * sendHeaders
+     *
+     * @param string $filename
+     * @param string $contentType default value ''
+     * @param boolean $download default value false
+     * @param string $downloadFileName default value ''
+     *
+     * @return void
+     */
+    public function sendHeaders ($filename, $contentType = '', $download = false, $downloadFileName = '')
+    {
+        if ($download) {
+            if ($downloadFileName == '') {
+                $aAux = explode( '/', $filename );
+                $downloadFileName = $aAux[count( $aAux ) - 1];
+            }
+            header( 'Content-Disposition: attachment; filename="' . $downloadFileName . '"' );
+        }
+        header( 'Content-Type: ' . $contentType );
+
+        //if userAgent (BROWSER) is MSIE we need special headers to avoid MSIE behaivor.
+        $userAgent = strtolower( $_SERVER['HTTP_USER_AGENT'] );
+        if (preg_match( "/msie/i", $userAgent )) {
+            //if ( ereg("msie", $userAgent)) {
+            header( 'Pragma: cache' );
+
+            if (file_exists( $filename )) {
+                $mtime = filemtime( $filename );
+            } else {
+                $mtime = date( 'U' );
+            }
+            $gmt_mtime = gmdate( "D, d M Y H:i:s", $mtime ) . " GMT";
+            header( 'ETag: "' . md5( $mtime . $filename ) . '"' );
+            header( "Last-Modified: " . $gmt_mtime );
+            header( 'Cache-Control: public' );
+            header( "Expires: " . gmdate( "D, d M Y H:i:s", time() + 60 * 10 ) . " GMT" ); //ten minutes
+            return;
+        }
+
+        if (! $download) {
+
+            header( 'Pragma: cache' );
+
+            if (file_exists( $filename )) {
+                $mtime = filemtime( $filename );
+            } else {
+                $mtime = date( 'U' );
+            }
+            $gmt_mtime = gmdate( "D, d M Y H:i:s", $mtime ) . " GMT";
+            header( 'ETag: "' . md5( $mtime . $filename ) . '"' );
+            header( "Last-Modified: " . $gmt_mtime );
+            header( 'Cache-Control: public' );
+            header( "Expires: " . gmdate( "D, d M Y H:i:s", time() + 90 * 60 * 60 * 24 ) . " GMT" );
+            if (isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] )) {
+                if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mtime) {
+                    header( 'HTTP/1.1 304 Not Modified' );
+                    exit();
+                }
+            }
+
+            if (isset( $_SERVER['HTTP_IF_NONE_MATCH'] )) {
+                if (str_replace( '"', '', stripslashes( $_SERVER['HTTP_IF_NONE_MATCH'] ) ) == md5( $mtime . $filename )) {
+                    header( "HTTP/1.1 304 Not Modified" );
+                    exit();
+                }
+            }
+        }
+    }
+
+    /**
+     * Transform a public URL into a local path.
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param string $url
+     * @param string $corvertionTable
+     * @param string $realPath = local path
+     * @return boolean
+     */
+    public function virtualURI ($url, $convertionTable, &$realPath)
+    {
+        foreach ($convertionTable as $urlPattern => $localPath) {
+            //      $urlPattern = addcslashes( $urlPattern , '/');
+            $urlPattern = addcslashes( $urlPattern, './' );
+            $urlPattern = '/^' . str_replace( array ('*','?'
+            ), array ('.*','.?'
+            ), $urlPattern ) . '$/';
+            if (preg_match( $urlPattern, $url, $match )) {
+                if ($localPath === false) {
+                    $realPath = $url;
+                    return false;
+                }
+                if ($localPath != 'jsMethod') {
+                    $realPath = $localPath . $match[1];
+                } else {
+                    $realPath = $localPath;
+                }
+                return true;
+            }
+        }
+        $realPath = $url;
+        return false;
+    }
+
+    /**
+     * Create an encrypted unique identifier based on $id and the selected scope id.
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param string $scope
+     * @param string $id
+     * @return string
+     */
+    public function createUID ($scope, $id)
+    {
+        $e = $scope . $id;
+        $e = G::encrypt( $e, URL_KEY );
+        $e = str_replace( array ('+','/','='
+        ), array ('__','_','___'
+        ), base64_encode( $e ) );
+        return $e;
+    }
+
+    /**
+     * (Create an encrypted unique identificator based on $id and the selected scope id.) ^-1
+     * getUIDName
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param string $id
+     * @param string $scope
+     * @return string
+     */
+    public function getUIDName ($uid, $scope = '')
+    {
+        $e = str_replace( array ('=','+','/'
+        ), array ('___','__','_'
+        ), $uid );
+        $e = base64_decode( $e );
+        $e = G::decrypt( $e, URL_KEY );
+        $e = substr( $e, strlen( $scope ) );
+        return $e;
+    }
+
+    /* formatNumber
+     *
+     * @author David Callizaya <calidavidx21@yahoo.com.ar>
+     * @param  int/string $num
+     * @return string number
+    */
+    public function formatNumber ($num, $language = 'latin')
+    {
+        switch ($language) {
+            default:
+                $snum = $num;
+        }
+        return $snum;
+    }
+
+    /* Returns a date formatted according to the given format string
+     * @author David Callizaya <calidavidx21@hotmail.com>
+     * @param string $format     The format of the outputted date string
+     * @param string $datetime   Date in the format YYYY-MM-DD HH:MM:SS
+    */
+    public function formatDate ($datetime, $format = 'Y-m-d', $lang = '')
+    {
+        if ($lang === '') {
+            $lang = defined( SYS_LANG ) ? SYS_LANG : 'en';
+        }
+        $aux = explode( ' ', $datetime ); //para dividir la fecha del dia
+        $date = explode( '-', isset( $aux[0] ) ? $aux[0] : '00-00-00' ); //para obtener los dias, el mes, y el año.
+        $time = explode( ':', isset( $aux[1] ) ? $aux[1] : '00:00:00' ); //para obtener las horas, minutos, segundos.
+        $date[0] = (int) ((isset( $date[0] )) ? $date[0] : '0');
+        $date[1] = (int) ((isset( $date[1] )) ? $date[1] : '0');
+        $date[2] = (int) ((isset( $date[2] )) ? $date[2] : '0');
+        $time[0] = (int) ((isset( $time[0] )) ? $time[0] : '0');
+        $time[1] = (int) ((isset( $time[1] )) ? $time[1] : '0');
+        $time[2] = (int) ((isset( $time[2] )) ? $time[2] : '0');
+        // Spanish months
+        $ARR_MONTHS['es'] = array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+        );
+        // English months
+        $ARR_MONTHS['en'] = array ("January","February","March","April","May","June","July","August","September","October","November","December"
+        );
+
+        // Spanish days
+        $ARR_WEEKDAYS['es'] = array ("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"
+        );
+        // English days
+        $ARR_WEEKDAYS['en'] = array ("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+        );
+
+        if ($lang == 'fa') {
+            $number = 'persian';
+        } else {
+            $number = 'latin';
+        }
+        $d = '0' . $date[2];
+        $d = G::formatNumber( substr( $d, strlen( $d ) - 2, 2 ), $number );
+        $j = G::formatNumber( $date[2], $number );
+        $F = isset( $ARR_MONTHS[$lang][$date[1] - 1] ) ? $ARR_MONTHS[$lang][$date[1] - 1] : '';
+        $m = '0' . $date[1];
+        $m = G::formatNumber( substr( $m, strlen( $m ) - 2, 2 ), $number );
+        $n = G::formatNumber( $date[1], $number );
+        $y = G::formatNumber( substr( $date[0], strlen( $date[0] ) - 2, 2 ), $number );
+        $Y = '0000' . $date[0];
+        $Y = G::formatNumber( substr( $Y, strlen( $Y ) - 4, 4 ), $number );
+        $g = ($time[0] % 12);
+        if ($g === 0) {
+            $g = 12;
+        }
+        $G = $time[0];
+        $h = '0' . $g;
+        $h = G::formatNumber( substr( $h, strlen( $h ) - 2, 2 ), $number );
+        $H = '0' . $G;
+        $H = G::formatNumber( substr( $H, strlen( $H ) - 2, 2 ), $number );
+        $i = '0' . $time[1];
+        $i = G::formatNumber( substr( $i, strlen( $i ) - 2, 2 ), $number );
+        $s = '0' . $time[2];
+        $s = G::formatNumber( substr( $s, strlen( $s ) - 2, 2 ), $number );
+        $names = array ('d','j','F','m','n','y','Y','g','G','h','H','i','s'
+        );
+        $values = array ($d,$j,$F,$m,$n,$y,$Y,$g,$G,$h,$H,$i,$s
+        );
+        $_formatedDate = str_replace( $names, $values, $format );
+        return $_formatedDate;
+    }
+
+    /**
+     * getformatedDate
+     *
+     * @param date $date
+     * @param string $format default value 'yyyy-mm-dd',
+     * @param string $lang default value ''
+     *
+     * @return string $ret
+     */
+    public function getformatedDate ($date, $format = 'yyyy-mm-dd', $lang = '')
+    {
+        /**
+         * ******************************************************************************************************
+         * if the year is 2008 and the format is yy then -> 08
+         * if the year is 2008 and the format is yyyy then -> 2008
+         *
+         * if the month is 05 and the format is mm then -> 05
+         * if the month is 05 and the format is m and the month is less than 10 then -> 5 else digit normal
+         * if the month is 05 and the format is MM or M then -> May
+         *
+         * if the day is 5 and the format is dd then -> 05
+         * if the day is 5 and the format is d and the day is less than 10 then -> 5 else digit normal
+         * if the day is 5 and the format is DD or D then -> five
+         * *******************************************************************************************************
+         */
+
+        //scape the literal
+        switch ($lang) {
+            case 'es':
+                $format = str_replace( ' de ', '[of]', $format );
+                break;
+        }
+
+        //first we must formatted the string
+        $format = str_replace( 'yyyy', '{YEAR}', $format );
+        $format = str_replace( 'yy', '{year}', $format );
+
+        $format = str_replace( 'mm', '{YONTH}', $format );
+        $format = str_replace( 'm', '{month}', $format );
+        $format = str_replace( 'M', '{XONTH}', $format );
+
+        $format = str_replace( 'dd', '{DAY}', $format );
+        $format = str_replace( 'd', '{day}', $format );
+
+        $format = str_replace( 'h', '{h}', $format );
+        $format = str_replace( 'i', '{i}', $format );
+        $format = str_replace( 's', '{s}', $format );
+
+        if ($lang === '') {
+            $lang = defined( SYS_LANG ) ? SYS_LANG : 'en';
+        }
+        $aux = explode( ' ', $date ); //para dividir la fecha del dia
+        $date = explode( '-', isset( $aux[0] ) ? $aux[0] : '00-00-00' ); //para obtener los dias, el mes, y el año.
+        $time = explode( ':', isset( $aux[1] ) ? $aux[1] : '00:00:00' ); //para obtener las horas, minutos, segundos.
+
+
+        $year = (int) ((isset( $date[0] )) ? $date[0] : '0'); //year
+        $month = (int) ((isset( $date[1] )) ? $date[1] : '0'); //month
+        $day = (int) ((isset( $date[2] )) ? $date[2] : '0'); //day
+
+
+        $h = isset( $time[0] ) ? $time[0] : '00'; //hour
+        $i = isset( $time[1] ) ? $time[1] : '00'; //minute
+        $s = isset( $time[2] ) ? $time[2] : '00'; //second
+
+
+        $MONTHS = Array ();
+        for ($i = 1; $i <= 12; $i ++) {
+            $MONTHS[$i] = G::LoadTranslation( "ID_MONTH_$i", $lang );
+        }
+
+        $d = (int) $day;
+        $dd = G::complete_field( $day, 2, 1 );
+
+        //missing D
+
+
+        $M = $MONTHS[$month];
+        $m = (int) $month;
+        $mm = G::complete_field( $month, 2, 1 );
+
+        $yy = substr( $year, strlen( $year ) - 2, 2 );
+        $yyyy = $year;
+
+        $names = array ('{day}','{DAY}','{month}','{YONTH}','{XONTH}','{year}','{YEAR}','{h}','{i}','{s}'
+        );
+        $values = array ($d,$dd,$m,$mm,$M,$yy,$yyyy,$h,$i,$s
+        );
+
+        $ret = str_replace( $names, $values, $format );
+
+        //recovering the original literal
+        switch ($lang) {
+            case 'es':
+                $ret = str_replace( '[of]', ' de ', $ret );
+                break;
+        }
+
+        return $ret;
+    }
+
+    /**
+     * By <erik@colosa.com>
+     * Here's a little wrapper for array_diff - I found myself needing
+     * to iterate through the edited array, and I didn't need to original keys for anything.
+     */
+    public function arrayDiff ($array1, $array2)
+    {
+        if (! is_array( $array1 )) {
+            $array1 = (array) $array1;
+        }
+
+        if (! is_array( $array2 )) {
+            $array2 = (array) $array2;
+        }
+
+        // This wrapper for array_diff rekeys the array returned
+        $valid_array = array_diff( $array1, $array2 );
+
+        // reinstantiate $array1 variable
+        $array1 = array ();
+
+        // loop through the validated array and move elements to $array1
+        // this is necessary because the array_diff function returns arrays that retain their original keys
+        foreach ($valid_array as $valid) {
+            $array1[] = $valid;
+        }
+        return $array1;
+    }
+
+    /**
+     *
+     * @author Erik Amaru Ortiz <erik@colosa.com>
+     * @name complete_field($string, $lenght, $type={1:number/2:string/3:float})
+     */
+    public function complete_field ($campo, $long, $tipo)
+    {
+        $campo = trim( $campo );
+        switch ($tipo) {
+            case 1: //number
+                $long = $long - strlen( $campo );
+                for ($i = 1; $i <= $long; $i ++) {
+                    $campo = "0" . $campo;
+                }
+                break;
+            case 2: //string
+                $long = $long - strlen( $campo );
+                for ($i = 1; $i <= $long; $i ++) {
+                    $campo = " " . $campo;
+                }
+                break;
+            case 3: //float
+                if ($campo != "0") {
+                    $vals = explode( ".", $long );
+                    $ints = $vals[0];
+
+                    $decs = $vals[1];
+
+                    $valscampo = explode( ".", $campo );
+
+                    $intscampo = $valscampo[0];
+                    $decscampo = $valscampo[1];
+
+                    $ints = $ints - strlen( $intscampo );
+
+                    for ($i = 1; $i <= $ints; $i ++) {
+                        $intscampo = "0" . $intscampo;
+                    }
+
+                    //los decimales pueden ser 0 uno o dos
+                    $decs = $decs - strlen( $decscampo );
+                    for ($i = 1; $i <= $decs; $i ++) {
+                        $decscampo = $decscampo . "0";
+                    }
+
+                    $campo = $intscampo . "." . $decscampo;
+                } else {
+                    $vals = explode( ".", $long );
+                    $ints = $vals[0];
+                    $decs = $vals[1];
+
+                    $campo = "";
+                    for ($i = 1; $i <= $ints; $i ++) {
+                        $campo = "0" . $campo;
+                    }
+                    $campod = "";
+                    for ($i = 1; $i <= $decs; $i ++) {
+                        $campod = "0" . $campod;
+                    }
+
+                    $campo = $campo . "." . $campod;
+                }
+                break;
+        }
+        return $campo;
+    }
+
+    /* Escapes special characters in a string for use in a SQL statement
+     * @author David Callizaya <calidavidx21@hotmail.com>
+     * @param string $sqlString  The string to be escaped
+     * @param string $DBEngine   Target DBMS
+    */
+    public function sqlEscape ($sqlString, $DBEngine = DB_ADAPTER)
+    {
+        $DBEngine = DB_ADAPTER;
+        switch ($DBEngine) {
+            case 'mysql':
+                $con = Propel::getConnection( 'workflow' );
+                return mysql_real_escape_string( stripslashes( $sqlString ), $con->getResource() );
+                break;
+            case 'myxml':
+                $sqlString = str_replace( '"', '""', $sqlString );
+                return str_replace( "'", "''", $sqlString );
+                break;
+            default:
+                return addslashes( stripslashes( $sqlString ) );
+                break;
+        }
+    }
+
+    /**
+     * Function MySQLSintaxis
+     *
+     * @access public
+     * @return Boolean
+     *
+     */
+    public function MySQLSintaxis ()
+    {
+        $DBEngine = DB_ADAPTER;
+        switch ($DBEngine) {
+            case 'mysql':
+                return true;
+                break;
+            case 'mssql':
+            default:
+                return false;
+                break;
+        }
+    }
+
+    /* Returns a sql string with @@parameters replaced with its values defined
+     * in array $result using the next notation:
+     * NOTATION:
+     *     @@  Quoted parameter acording to the SYSTEM's Database
+     *     @Q  Double quoted parameter \\  \"
+     *     @q  Single quoted parameter \\  \'
+     *     @%  URL string
+     *     @#  Non-quoted parameter
+     *     @!  Evaluate string : Replace the parameters in value and then in the sql string
+     *     @fn()  Evaluate string with the function "fn"
+     * @author David Callizaya <calidavidx21@hotmail.com>
+     */
+    public function replaceDataField ($sqlString, $result, $DBEngine = 'mysql')
+    {
+        if (! is_array( $result )) {
+            $result = array ();
+        }
+        $result = $result + G::getSystemConstants();
+        $__textoEval = "";
+        $u = 0;
+        //$count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+        $count = preg_match_all( '/\@(?:([\@\%\#\=\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/', $sqlString, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
+        if ($count) {
+            for ($r = 0; $r < $count; $r ++) {
+                if (! isset( $result[$match[2][$r][0]] )) {
+                    $result[$match[2][$r][0]] = '';
+                }
+                if (! is_array( $result[$match[2][$r][0]] )) {
+                    $__textoEval .= substr( $sqlString, $u, $match[0][$r][1] - $u );
+                    $u = $match[0][$r][1] + strlen( $match[0][$r][0] );
+                    //Mysql quotes scape
+                    if (($match[1][$r][0] == '@') && (isset( $result[$match[2][$r][0]] ))) {
+                        $__textoEval .= "\"" . G::sqlEscape( $result[$match[2][$r][0]], $DBEngine ) . "\"";
+                        continue;
+                    }
+                    //URL encode
+                    if (($match[1][$r][0]=='%')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.=urlencode($result[$match[2][$r][0]]);
+                        continue;
+                    }
+                    //Double quoted parameter
+                    if (($match[1][$r][0]=='Q')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.='"'.addcslashes($result[$match[2][$r][0]],'\\"').'"';
+                        continue;
+                    }
+                    //Single quoted parameter
+                    if (($match[1][$r][0]=='q')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.="'".addcslashes($result[$match[2][$r][0]],'\\\'')."'";
+                        continue;
+                    }
+                    //Substring (Sub replaceDataField)
+                    if (($match[1][$r][0]=='!')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.=G::replaceDataField($result[$match[2][$r][0]],$result);
+                        continue;
+                    }
+                    //Call function
+                    if (($match[1][$r][0]==='')&&($match[2][$r][0]==='')&&($match[3][$r][0]!=='')) {
+                        eval('$strAux = ' . $match[3][$r][0] . '(\'' . addcslashes(G::replaceDataField(stripslashes($match[4][$r][0]),$result),'\\\'') . '\');');
+
+                        if ($match[3][$r][0] == "G::LoadTranslation") {
+                            $arraySearch  = array("'");
+                            $arrayReplace = array("\\'");
+                            $strAux = str_replace($arraySearch, $arrayReplace, $strAux);
+                        }
+
+                        $__textoEval .= $strAux;
+                        continue;
+                    }
+                    //Non-quoted
+                    if (($match[1][$r][0]=='#')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.=G::replaceDataField($result[$match[2][$r][0]],$result);
+                        continue;
+                    }
+                    //Non-quoted =
+                    if (($match[1][$r][0]=='=')&&(isset($result[$match[2][$r][0]]))) {
+                        $__textoEval.=G::replaceDataField($result[$match[2][$r][0]],$result);
+                        continue;
+                    }
+                }
+            }
+        }
+        $__textoEval.=substr($sqlString,$u);
+        return $__textoEval;
+    }
+
+    /**
+    * Replace Grid Values
+    * The tag @>GRID-NAME to open the grid and @<GRID-NAME to close the grid,
+    *
+    * @param type String $sContent
+    * @param type Array $aFields
+    * @return type String
+    */
+    public function replaceDataGridField($sContent, $aFields)
+    {
+        $nrt           = array("\n",    "\r",    "\t");
+        $nrthtml       = array("(n /)", "(r /)", "(t /)");
+        $sContent      = G::unhtmlentities($sContent);
+        $strContentAux = str_replace($nrt, $nrthtml, $sContent);
+        $iOcurrences   = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $strContentAux, $arrayMatch1, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+
+        if ($iOcurrences) {
+            $arrayGrid = array();
+            for ($i = 0; $i <= $iOcurrences - 1; $i++) {
+                $arrayGrid[] = $arrayMatch1[2][$i][0];
+            }
+
+            $arrayGrid = array_unique($arrayGrid);
+
+            foreach ($arrayGrid as $index => $value) {
+                $grdName        = $value;
+                $strContentAux1 = $strContentAux;
+                $strContentAux  = null;
+                $ereg           = "/^(.*)@>" . $grdName . "(.*)@<" . $grdName . "(.*)$/";
+
+                while (preg_match($ereg, $strContentAux1, $arrayMatch2)) {
+                    $strData = null;
+
+                    if (isset($aFields[$grdName]) && is_array($aFields[$grdName])) {
+                        foreach ($aFields[$grdName] as $aRow) {
+                            foreach ($aRow as $sKey => $vValue) {
+                                if (!is_array($vValue)) {
+                                    $aRow[$sKey] = nl2br($aRow[$sKey]);
+                                }
+                            }
+                            $strData = $strData . G::replaceDataField($arrayMatch2[2], $aRow);
+                        }
+                    }
+                    $strContentAux1 = $arrayMatch2[1];
+                    $strContentAux  = $strData . $arrayMatch2[3] . $strContentAux;
+                }
+                $strContentAux = $strContentAux1 . $strContentAux;
+            }
+        }
+        $strContentAux = str_replace($nrthtml, $nrt, $strContentAux);
+        $sContent      = $strContentAux;
+
+        foreach ($aFields as $sKey => $vValue) {
+            if (!is_array($vValue)) {
+                $aFields[$sKey] = nl2br($aFields[$sKey]);
+            }
+        }
+        $sContent = G::replaceDataField($sContent, $aFields);
+
+        return $sContent;
+    }
+
+    /* Load strings from a XMLFile.
+     * @author David Callizaya <davidsantos@colosa.com>
+     * @parameter $languageFile An xml language file.
+     * @parameter $languageId   (es|en|...).
+     * @parameter $forceParse   Force to read and parse the xml file.
+     */
+    public function loadLanguageFile ($filename, $languageId = '', $forceParse = false)
+    {
+        global $arrayXmlMessages;
+        if ($languageId === '') {
+            $languageId = defined( 'SYS_LANG' ) ? SYS_LANG : 'en';
+        }
+        $languageFile = basename( $filename, '.xml' );
+        $cacheFile = substr( $filename, 0, - 3 ) . $languageId;
+        if (($forceParse) || (! file_exists( $cacheFile )) || (filemtime( $filename ) > filemtime( $cacheFile ))) {
+            $languageDocument = new Xml_document();
+            $languageDocument->parseXmlFile( $filename );
+            if (! is_array( $arrayXmlMessages )) {
+                $arrayXmlMessages = array ();
+            }
+            $arrayXmlMessages[$languageFile] = array ();
+            for ($r = 0; $r < sizeof( $languageDocument->children[0]->children ); $r ++) {
+                $n = $languageDocument->children[0]->children[$r]->findNode( $languageId );
+                if ($n) {
+                    $k = $languageDocument->children[0]->children[$r]->name;
+                    $arrayXmlMessages[$languageFile][$k] = $n->value;
+                }
+            }
+            $f = fopen( $cacheFile, 'w' );
+            fwrite( $f, "<?php\n" );
+            fwrite( $f, '$arrayXmlMessages[\'' . $languageFile . '\']=' . 'unserialize(\'' . addcslashes( serialize( $arrayXmlMessages[$languageFile] ), '\\\'' ) . "');\n" );
+            fwrite( $f, "?>" );
+            fclose( $f );
+        } else {
+            require ($cacheFile);
+        }
+    }
+
+    /* Funcion auxiliar Temporal:
+     *   Registra en la base de datos los labels xml usados en el sistema
+     * @author David Callizaya <calidavidx21@hotmail.com>
+     */
+    public function registerLabel ($id, $label)
+    {
+        return 1;
+        $dbc = new DBConnection();
+        $ses = new DBSession( $dbc );
+        $ses->Execute( G::replaceDataField(
+            'REPLACE INTO `TRANSLATION` (`TRN_CATEGORY`, `TRN_ID`, `TRN_LANG`, `TRN_VALUE`) VALUES
+        ("LABEL", @@ID, "' . SYS_LANG . '", @@LABEL);', array ('ID' => $id,'LABEL' => ($label !== null ? $label : '')
+        ) ) );
+    }
+
+    /**
+     * Function LoadMenuXml
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param eter string msgID
+     * @return string
+     */
+    public function LoadMenuXml ($msgID)
+    {
+        global $arrayXmlMessages;
+        if (! isset( $arrayXmlMessages['menus'] )) {
+            G::loadLanguageFile( G::ExpandPath( 'content' ) . 'languages/menus.xml' );
+        }
+        G::registerLabel( $msgID, $arrayXmlMessages['menus'][$msgID] );
+        return $arrayXmlMessages['menus'][$msgID];
+    }
+
+    /**
+     * Function SendMessageXml
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param eter string msgID
+     * @param eter string strType
+     * @param eter string file
+     * @return string
+     */
+    public function SendMessageXml ($msgID, $strType, $file = "labels")
+    {
+        global $arrayXmlMessages;
+        if (! isset( $arrayXmlMessages[$file] )) {
+            G::loadLanguageFile( G::ExpandPath( 'content' ) . 'languages/' . $file . '.xml' );
+        }
+        $_SESSION['G_MESSAGE_TYPE'] = $strType;
+        G::registerLabel( $msgID, $arrayXmlMessages[$file][$msgID] );
+        $_SESSION['G_MESSAGE'] = nl2br( $arrayXmlMessages[$file][$msgID] );
+    }
+
+    /**
+     * SendTemporalMessage
+     *
+     * @param string $msgID
+     * @param string $strType
+     * @param string $sType default value 'LABEL'
+     * @param date $time default value null
+     * @param integer $width default value null
+     * @param string $customLabels default value null
+     *
+     * @return void
+     */
+    public function SendTemporalMessage ($msgID, $strType, $sType = 'LABEL', $time = null, $width = null, $customLabels = null)
+    {
+        if (isset( $width )) {
+            $_SESSION['G_MESSAGE_WIDTH'] = $width;
+        }
+        if (isset( $time )) {
+            $_SESSION['G_MESSAGE_TIME'] = $time;
+        }
+        switch (strtolower( $sType )) {
+            case 'label':
+            case 'labels':
+                $_SESSION['G_MESSAGE_TYPE'] = $strType;
+                $_SESSION['G_MESSAGE'] = nl2br( G::LoadTranslation( $msgID ) );
+                break;
+            case 'string':
+                $_SESSION['G_MESSAGE_TYPE'] = $strType;
+                $_SESSION['G_MESSAGE'] = nl2br( $msgID );
+                break;
+        }
+        if ($customLabels != null) {
+            $message = $_SESSION['G_MESSAGE'];
+            foreach ($customLabels as $key => $val) {
+                $message = str_replace( '{' . nl2br( $key ) . '}', nl2br( $val ), $message );
+            }
+            $_SESSION['G_MESSAGE'] = $message;
+        }
+    }
+
+    /**
+     * SendMessage
+     *
+     * @param string $msgID
+     * @param string $strType
+     * @param string $file default value "labels"
+     *
+     * @return void
+     */
+    public function SendMessage ($msgID, $strType, $file = "labels")
+    {
+        global $arrayXmlMessages;
+        $_SESSION['G_MESSAGE_TYPE'] = $strType;
+        $_SESSION['G_MESSAGE'] = nl2br( G::LoadTranslation( $msgID ) );
+    }
+
+    /**
+     * SendMessageText
+     * Just put the $text in the message text
+     *
+     * @param string $text
+     * @param string $strType
+     *
+     * @return void
+     */
+    public function SendMessageText ($text, $strType)
+    {
+        global $arrayXmlMessages;
+        $_SESSION['G_MESSAGE_TYPE'] = $strType;
+        $_SESSION['G_MESSAGE'] = nl2br( $text );
+    }
+
+    /**
+     * Render message from XML file
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $msgID
+     * @return void
+     */
+    public function LoadMessage ($msgID, $file = "messages")
+    {
+        global $_SESSION;
+        global $arrayXmlMessages;
+
+        if (! is_array( $arrayXmlMessages )) {
+            $arrayXmlMessages = G::LoadArrayFile( G::ExpandPath( 'content' ) . $file . "." . SYS_LANG );
+        }
+        $aux = $arrayXmlMessages[$msgID];
+        $msg = "";
+        for ($i = 0; $i < strlen( $aux ); $i ++) {
+            if ($aux[$i] == "$") {
+                $token = "";
+                $i ++;
+                while ($i < strlen( $aux ) && $aux[$i] != " " && $aux[$i] != "." && $aux[$i] != "'" && $aux[$i] != '"') {
+                    $token .= $aux[$i ++];
+                }
+                eval( "\$msg.= \$_SESSION['" . $token . "'] ; " );
+                $msg .= $aux[$i];
+            } else {
+                $msg = $msg . $aux[$i];
+            }
+        }
+        return $msg;
+    }
+
+    /**
+     * Function LoadXmlLabel
+     * deprecated
+     */
+    public function LoadXmlLabel ($msgID, $file = 'labels')
+    {
+        return 'xxxxxx';
+    }
+
+    /**
+     * Function LoadMessageXml
+     *
+     * @author David S. Callizaya S. <davidsantos@colosa.com>
+     * @access public
+     * @param eter string msgID
+     * @param eter string file
+     * @return string
+     */
+    public function LoadMessageXml ($msgID, $file = 'labels')
+    {
+        global $arrayXmlMessages;
+        if (! isset( $arrayXmlMessages[$file] )) {
+            G::loadLanguageFile( G::ExpandPath( 'content' ) . 'languages/' . $file . '.xml' );
+        }
+        if (isset( $arrayXmlMessages[$file][$msgID] )) {
+            G::registerLabel( $msgID, $arrayXmlMessages[$file][$msgID] );
+            return $arrayXmlMessages[$file][$msgID];
+        } else {
+            G::registerLabel( $msgID, '' );
+            return null;
+        }
+    }
+
+    /**
+     * Function LoadTranslationObject
+     * It generates a global Translation variable that will be used in all the system.
+     * this script check the file translation in folder shared/META-INF/
+     *
+     * deprecated
+     *
+     * @access public
+     * @param string lang
+     * @return void
+     */
+    public function LoadTranslationObject ($lang = SYS_LANG)
+    {
+        $defaultTranslations = Array ();
+        $foreignTranslations = Array ();
+
+        //if the default translations table doesn't exist we can't proceed
+        if (! is_file( PATH_LANGUAGECONT . 'translation.en' )) {
+            return null;
+        }
+        //load the translations table
+        require_once (PATH_LANGUAGECONT . 'translation.en');
+        $defaultTranslations = $translation;
+
+        //if some foreign language was requested and its translation file exists
+        if ($lang != 'en' && file_exists( PATH_LANGUAGECONT . 'translation.' . $lang )) {
+            require_once (PATH_LANGUAGECONT . 'translation.' . $lang); //load the foreign translations table
+            $foreignTranslations = $translation;
+        }
+
+        global $translation;
+        if (defined( "SHOW_UNTRANSLATED_AS_TAG" ) && SHOW_UNTRANSLATED_AS_TAG != 0) {
+            $translation = $foreignTranslations;
+        } else {
+            $translation = array_merge( $defaultTranslations, $foreignTranslations );
+        }
+        return true;
+    }
+
+    /**
+     * Function LoadTranslation
+     *
+     * @author Aldo Mauricio Veliz Valenzuela. <mauricio@colosa.com>
+     * @access public
+     * @param eter string msgID
+     * @param eter string file
+     * @param eter array data // erik: associative array within data input to replace for formatted string i.e "any messsage {replaced_label} that contains a replace label"
+     * @return string
+     */
+    public function LoadTranslation ($msgID, $lang = SYS_LANG, $data = null)
+    {
+        global $translation;
+
+        // if the second parameter $lang is an array does mean it was especified to use as data
+        if (is_array( $lang )) {
+            $data = $lang;
+            $lang = SYS_LANG;
+        }
+
+        if (isset( $translation[$msgID] )) {
+            $translationString = preg_replace( "[\n|\r|\n\r]", ' ', $translation[$msgID] );
+
+            if (isset( $data ) && is_array( $data )) {
+                foreach ($data as $label => $value) {
+                    $translationString = str_replace( '{' . $label . '}', $value, $translationString );
+                }
+            }
+
+            return $translationString;
+        } else {
+            if (defined( "UNTRANSLATED_MARK" )) {
+                $untranslatedMark = strip_tags( UNTRANSLATED_MARK );
+            } else {
+                $untranslatedMark = "**";
+            }
+            return $untranslatedMark . $msgID . $untranslatedMark;
+        }
+
+    }
+
+    /**
+     * Function getTranslations
+     *
+     * @author Erik Amaru O. <erik@colosa.com>
+     * @access public
+     * @param eter array msgIDs
+     * @param eter string file
+     * @return string
+     */
+    public function getTranslations ($msgIDs, $lang = SYS_LANG)
+    {
+        if (! is_array( $msgIDs )) {
+            return null;
+        }
+        $translations = Array ();
+        foreach ($msgIDs as $mID) {
+            $translations[$mID] = self::LoadTranslation( $mID, $lang );
+        }
+
+        return $translations;
+    }
+
+    /**
+     * Load an array File Content
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $strFile
+     * @return void
+     */
+    public function LoadArrayFile ($strFile = '')
+    {
+        $res = null;
+        if ($strFile != '') {
+            $src = file( $strFile );
+            if (is_array( $src )) {
+                foreach ($src as $key => $val) {
+                    $res[$key] = trim( $val );
+                }
+            }
+        }
+        unset( $src );
+        return $res;
+    }
+
+    /**
+     * Expand an uri based in the current URI
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $methodPage the method directory and the page
+     * @return the expanded uri, later, will encryt the uri...
+     */
+    public function expandUri ($methodPage)
+    {
+        $uri = explode( '/', getenv( 'REQUEST_URI' ) );
+        $sw = 0;
+        $newUri = '';
+        if (! defined( 'SYS_SKIN' )) {
+            for ($i = 0; $i < count( $uri ); $i ++) {
+                if ($sw == 0) {
+                    $newUri .= $uri[$i] . PATH_SEP;
+                }
+                if ($uri[$i] == SYS_SKIN) {
+                    $sw = 1;
+                }
+            }
+        } else {
+            for ($i = 0; $i < 4; $i ++) {
+                if ($sw == 0) {
+                    $newUri .= $uri[$i] . PATH_SEP;
+                }
+                if ($uri[$i] == SYS_SKIN) {
+                    $sw = 1;
+                }
+            }
+        }
+        $newUri .= $methodPage;
+        return $newUri;
+    }
+
+    /**
+     * Forces login for generic applications
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $userid
+     * @param string $permission
+     * @param string $urlNoAccess
+     * @return void
+     */
+    public function genericForceLogin ($permission, $urlNoAccess, $urlLogin = 'login/login')
+    {
+        global $RBAC;
+
+        //the session is expired, go to login page,
+        //the login page is login/login.html
+        if (! isset( $_SESSION )) {
+            header( 'location: ' . G::expandUri( $urlLogin ) );
+            die();
+        }
+
+        //$permission is an array, we'll verify all permission to allow access.
+        if (is_array( $permission )) {
+            $aux = $permission;
+        } else {
+            $aux[0] = $permission;
+        }
+        $sw = 0;
+        for ($i = 0; $i < count( $aux ); $i ++) {
+            $res = $RBAC->userCanAccess( $aux[$i] );
+            if ($res == 1) {
+                $sw = 1;
+            }
+        }
+
+        //you don't have access to this page
+        if ($sw == 0) {
+            header( 'location: ' . G::expandUri( $urlNoAccess ) );
+            die();
+        }
+    }
+
+    /**
+     * capitalize
+     *
+     * @param string $string
+     *
+     * @return string $string
+     */
+    public function capitalize ($string)
+    {
+        return ucfirst( $string );
+    }
+
+    /**
+     * toUpper
+     *
+     * @param string $sText
+     *
+     * @return string strtoupper($sText)
+     */
+    public function toUpper ($sText)
+    {
+        return strtoupper( $sText );
+    }
+
+    /**
+     * toLower
+     *
+     * @param string $sText
+     * @return string strtolower($sText)
+     */
+    public function toLower ($sText)
+    {
+        return strtolower( $sText );
+    }
+
+    /**
+     * http_build_query
+     *
+     * @param string $formdata,
+     * @param string $numeric_prefix default value null,
+     * @param string $key default value null
+     *
+     * @return array $res
+     */
+    public function http_build_query ($formdata, $numeric_prefix = null, $key = null)
+    {
+        $res = array ();
+        foreach ((array) $formdata as $k => $v) {
+            $tmp_key = rawurlencode( is_int( $k ) ? $numeric_prefix . $k : $k );
+            if ($key) {
+                $tmp_key = $key . '[' . $tmp_key . ']';
+            }
+            if (is_array( $v ) || is_object( $v )) {
+                $res[] = G::http_build_query( $v, null /* or $numeric_prefix if you want to add numeric_prefix to all indexes in array*/, $tmp_key );
+            } else {
+                $res[] = $tmp_key . "=" . rawurlencode( $v );
+            }
+            /*
+            If you want, you can write this as one string:
+            $res[] = ( ( is_array($v) || is_object($v) ) ? G::http_build_query($v, null, $tmp_key) : $tmp_key."=".urlencode($v) );
+            */
+        }
+        $separator = ini_get( 'arg_separator.output' );
+        return implode( $separator, $res );
+    }
+
+    /**
+     * Redirect URL
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $parameter
+     * @return string
+     */
+    public function header ($parameter)
+    {
+        if (defined( 'ENABLE_ENCRYPT' ) && (ENABLE_ENCRYPT == 'yes') && (substr( $parameter, 0, 9 ) == 'location:')) {
+            $url = G::encryptUrl( substr( $parameter, 10 ), URL_KEY );
+            header( 'location:' . $url );
+        } else {
+            header( $parameter );
+        }
+        return;
+    }
+
+    /**
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $permission
+     * @param string $urlNoAccess
+     * @return void
+     */
+    public function forceLogin ($permission = "", $urlNoAccess = "")
+    {
+        global $RBAC;
+
+        if (isset( $_SESSION['USER_LOGGED'] ) && $_SESSION['USER_LOGGED'] == '') {
+            $sys = (ENABLE_ENCRYPT == 'yes' ? SYS_SYS : "sys" . SYS_SYS);
+            $lang = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_LANG ), URL_KEY ) : SYS_LANG);
+            $skin = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_SKIN ), URL_KEY ) : SYS_SKIN);
+            $login = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( 'login' ), URL_KEY ) : 'login');
+            $loginhtml = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( 'login.html' ), URL_KEY ) : 'login.html');
+            $direction = "/$sys/$lang/$skin/$login/$loginhtml";
+            die();
+        }
+
+        $Connection = new DBConnection();
+        $ses = new DBSession( $Connection );
+        $stQry = "SELECT LOG_STATUS FROM LOGIN WHERE LOG_SID = '" . session_id() . "'";
+        $dset = $ses->Execute( $stQry );
+        $row = $dset->read();
+        $sessionPc = defined( 'SESSION_PC' ) ? SESSION_PC : '';
+        $sessionBrowser = defined( 'SESSION_BROWSER' ) ? SESSION_BROWSER : '';
+        if (($sessionPc == "1") or ($sessionBrowser == "1")) {
+            if ($row['LOG_STATUS'] == 'X') {
+                $sys = (ENABLE_ENCRYPT == 'yes' ? SYS_SYS : "sys" . SYS_SYS);
+                $lang = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_LANG ), URL_KEY ) : SYS_LANG);
+                $skin = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_SKIN ), URL_KEY ) : SYS_SKIN);
+                $login = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( 'login' ), URL_KEY ) : 'login');
+                $loginhtml = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( 'login.html' ), URL_KEY ) : 'login.html');
+                $direction = "/$sys/$lang/$skin/$login/$loginhtml";
+                G::SendMessageXml( 'ID_CLOSE_SESSION', "warning" );
+                header( "location: $direction" );
+                die();
+                return;
+            }
+        }
+        if (defined( 'SIN_COMPATIBILIDAD_RBAC' ) and SIN_COMPATIBILIDAD_RBAC == 1) {
+            return;
+        }
+
+        if ($permission == "") {
+            return;
+        }
+
+        if (is_array( $permission )) {
+            $aux = $permission;
+        } else {
+            $aux[0] = $permission;
+        }
+
+        $sw = 0;
+        for ($i = 0; $i < count( $aux ); $i ++) {
+            $res = $RBAC->userCanAccess( $aux[$i] );
+            if ($res == 1) {
+                $sw = 1;
+            }
+        }
+
+        if ($sw == 0 && $urlNoAccess != "") {
+            $aux = explode( '/', $urlNoAccess );
+            $sys = (ENABLE_ENCRYPT == 'yes' ? SYS_SYS : "/sys" . SYS_LANG);
+            $lang = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_LANG ), URL_KEY ) : SYS_LANG);
+            $skin = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( SYS_SKIN ), URL_KEY ) : SYS_SKIN);
+            $login = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( $aux[0] ), URL_KEY ) : $aux[0]);
+            $loginhtml = (ENABLE_ENCRYPT == 'yes' ? G::encrypt( urldecode( $aux[1] ), URL_KEY ) : $aux[1]);
+
+            //header ("location: /$sys/$lang/$skin/$login/$loginhtml");
+            header( "location: /fluid/mNE/o9A/mNGm1aLiop3V4qU/dtij4J°gmaLPwKDU3qNn2qXanw" );
+            die();
+        }
+
+        if ($sw == 0) {
+            header( "location: /fluid/mNE/o9A/mNGm1aLiop3V4qU/dtij4J°gmaLPwKDU3qNn2qXanw" );
+            die();
+        }
+    }
+
+    /**
+     * Add slashes to a string
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $val_old
+     * @return string
+     */
+    public function add_slashes ($val_old)
+    {
+
+        if (! is_string( $val_old )) {
+            $val_old = "$val_old";
+        }
+
+        $tamano_cadena = strlen( $val_old );
+        $contador_cadena = 0;
+        $new_val = "";
+
+        for ($contador_cadena = 0; $contador_cadena < $tamano_cadena; $contador_cadena ++) {
+            $car = $val_old[$contador_cadena];
+
+            if ($car != chr( 34 ) && $car != chr( 39 ) && $car != chr( 92 )) {
+                $new_val .= $car;
+            } else {
+                if ($car2 != chr( 92 )) {
+                    //print " xmlvar: $new_val -- $car -- $car2 <br>";
+                    $new_val .= chr( 92 ) . $car;
+                } else {
+                    $new_val .= $car;
+                }
+            }
+        }
+        return $new_val;
+    }
+
+    /**
+     * Upload a file and then copy to path+ nameToSave
+     *
+     * @author Mauricio Veliz <mauricio@colosa.com>
+     * @access public
+     * @param string $file
+     * @param string $path
+     * @param string $nameToSave
+     * @param integer $permission
+     * @return void
+     */
+    public function uploadFile ($file, $path, $nameToSave, $permission = 0666)
+    {
+        try {
+            if ($file == '') {
+                throw new Exception( 'The filename is empty!' );
+            }
+            if (filesize( $file ) > ((((ini_get( 'upload_max_filesize' ) + 0)) * 1024) * 1024)) {
+                throw new Exception( 'The size of upload file exceeds the allowed by the server!' );
+            }
+            $oldumask = umask( 0 );
+            if (! is_dir( $path )) {
+                G::verifyPath( $path, true );
+            }
+            move_uploaded_file( $file, $path . "/" . $nameToSave );
+            chmod( $path . "/" . $nameToSave, $permission );
+            umask( $oldumask );
+        } catch (Exception $oException) {
+            throw $oException;
+        }
+    }
+
+    /**
+     * resizeImage
+     *
+     * @param string $path,
+     * @param string $resWidth
+     * @param string $resHeight
+     * @param string $saveTo default value null
+     *
+     * @return void
+     */
+    public function resizeImage ($path, $resWidth, $resHeight, $saveTo = null)
+    {
+        $imageInfo = @getimagesize( $path );
+
+        if (! $imageInfo) {
+            throw new Exception( "Could not get image information" );
+        }
+        list ($width, $height) = $imageInfo;
+        $percentHeight = $resHeight / $height;
+        $percentWidth = $resWidth / $width;
+        $percent = ($percentWidth < $percentHeight) ? $percentWidth : $percentHeight;
+        $resWidth = $width * $percent;
+        $resHeight = $height * $percent;
+
+        // Resample
+        $image_p = imagecreatetruecolor( $resWidth, $resHeight );
+        imagealphablending( $image_p, false );
+        imagesavealpha( $image_p, true );
+
+        $background = imagecolorallocate( $image_p, 0, 0, 0 );
+        ImageColorTransparent( $image_p, $background ); // make the new temp image all transparent
+
+
+        //Assume 3 channels if we can't find that information
+        if (! array_key_exists( "channels", $imageInfo )) {
+            $imageInfo["channels"] = 3;
+        }
+        $memoryNeeded = Round( ($imageInfo[0] * $imageInfo[1] * $imageInfo['bits'] * $imageInfo['channels'] + Pow( 2, 16 )) * 1.95 ) / (1024 * 1024);
+        if ($memoryNeeded < 80) {
+            $memoryNeeded = 80;
+        }
+        ini_set( 'memory_limit', intval( $memoryNeeded ) . 'M' );
+
+        $functions = array (IMAGETYPE_GIF => array ('imagecreatefromgif','imagegif'
+        ),IMAGETYPE_JPEG => array ('imagecreatefromjpeg','imagejpeg'),IMAGETYPE_PNG => array ('imagecreatefrompng','imagepng'));
+
+        if (! array_key_exists( $imageInfo[2], $functions )) {
+            throw new Exception( "Image format not supported" );
+        }
+        list ($inputFn, $outputFn) = $functions[$imageInfo[2]];
+
+        $image = $inputFn( $path );
+        imagecopyresampled( $image_p, $image, 0, 0, 0, 0, $resWidth, $resHeight, $width, $height );
+        $outputFn( $image_p, $saveTo );
+
+        chmod( $saveTo, 0666 );
+    }
+
+    /**
+     * Merge 2 arrays
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @return array
+     */
+    public function array_merges ()
+    {
+        $array = array ();
+        $arrays = & func_get_args();
+        foreach ($arrays as $array_i) {
+            if (is_array( $array_i )) {
+                G::array_merge_2( $array, $array_i );
+            }
+        }
+        return $array;
+    }
+
+    /**
+     * Merge 2 arrays
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @param string $array
+     * @param string $array_i
+     * @return array
+     */
+    public function array_merge_2 (&$array, &$array_i)
+    {
+        foreach ($array_i as $k => $v) {
+            if (is_array( $v )) {
+                if (! isset( $array[$k] )) {
+                    $array[$k] = array ();
+                }
+                G::array_merge_2( $array[$k], $v );
+            } else {
+                if (isset( $array[$k] ) && is_array( $array[$k] )) {
+                    $array[$k][0] = $v;
+                } else {
+                    if (isset( $array ) && ! is_array( $array )) {
+                        $temp = $array;
+                        $array = array();
+                        $array[0] = $temp;
+                    }
+                    $array[$k] = $v;
+                }
+            }
+        }
+    }
+
+    /**
+     * Generate random number
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @return int
+     */
+    public function generateUniqueID ()
+    {
+        do {
+            $sUID = str_replace( '.', '0', uniqid( rand( 0, 999999999 ), true ) );
+        } while (strlen( $sUID ) != 32);
+        return $sUID;
+        //return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
+    }
+
+    /**
+     * Generate a numeric or alphanumeric code
+     *
+     * @author Julio Cesar Laura Avendaힼjuliocesar@colosa.com>
+     * @access public
+     * @return string
+     */
+    public function generateCode ($iDigits = 4, $sType = 'NUMERIC')
+    {
+        if (($iDigits < 4) || ($iDigits > 50)) {
+            $iDigits = 4;
+        }
+        if (($sType != 'NUMERIC') && ($sType != 'ALPHA') && ($sType != 'ALPHANUMERIC')) {
+            $sType = 'NUMERIC';
+        }
+        $aValidCharacters = array ('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+        );
+        switch ($sType) {
+            case 'NUMERIC':
+                $iMin = 0;
+                $iMax = 9;
+                break;
+            case 'ALPHA':
+                $iMin = 10;
+                $iMax = 35;
+                break;
+            case 'ALPHANUMERIC':
+                $iMin = 0;
+                $iMax = 35;
+                break;
+        }
+        $sCode = '';
+        for ($i = 0; $i < $iDigits; $i ++) {
+            $sCode .= $aValidCharacters[rand( $iMin, $iMax )];
+        }
+        return $sCode;
+    }
+
+    /**
+     * Verify if the input string is a valid UID
+     *
+     * @author David Callizaya <davidsantos@colosa.com>
+     * @access public
+     * @return int
+     */
+    public function verifyUniqueID ($uid)
+    {
+        return (bool) preg_match( '/^[0-9A-Za-z]{14,}/', $uid );
+    }
+
+    /**
+     * is_utf8
+     *
+     * @param string $string
+     *
+     * @return string utf8_encode()
+     */
+    public function is_utf8 ($string)
+    {
+        if (is_array( $string )) {
+            $enc = implode( '', $string );
+            return @! ((ord( $enc[0] ) != 239) && (ord( $enc[1] ) != 187) && (ord( $enc[2] ) != 191));
+        } else {
+            return (utf8_encode( utf8_decode( $string ) ) == $string);
+        }
+    }
+
+
+    /**
+     * Return date in Y-m-d format
+     *
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     * @access public
+     * @return void
+     */
+    public function CurDate($sFormat = '')
+    {
+        $sFormat = ($sFormat != '')? $sFormat : 'Y-m-d H:i:s';
+
+        return date($sFormat);
+    }
+
+    /**
+     * Return the System defined constants and Application variables
+     *   Constants: SYS_*
+     *   Sessions : USER_* , URS_*
+     */
+    public function getSystemConstants($params = null)
+    {
+        $t1 = G::microtime_float();
+        $sysCon = array();
+
+        if (defined("SYS_LANG")) {
+            $sysCon["SYS_LANG"] = SYS_LANG;
+        }
+
+        if (defined("SYS_SKIN")) {
+            $sysCon["SYS_SKIN"] = SYS_SKIN;
+        }
+
+        if (defined("SYS_SYS")) {
+            $sysCon["SYS_SYS"] = SYS_SYS;
+        }
+
+        $sysCon["APPLICATION"]  = (isset($_SESSION["APPLICATION"]))?  $_SESSION["APPLICATION"]  : "";
+        $sysCon["PROCESS"]      = (isset($_SESSION["PROCESS"]))?      $_SESSION["PROCESS"]      : "";
+        $sysCon["TASK"]         = (isset($_SESSION["TASK"]))?         $_SESSION["TASK"]         : "";
+        $sysCon["INDEX"]        = (isset($_SESSION["INDEX"]))?        $_SESSION["INDEX"]        : "";
+        $sysCon["USER_LOGGED"]  = (isset($_SESSION["USER_LOGGED"]))?  $_SESSION["USER_LOGGED"]  : "";
+        $sysCon["USR_USERNAME"] = (isset($_SESSION["USR_USERNAME"]))? $_SESSION["USR_USERNAME"] : "";
+
+        //###############################################################################################
+        // Added for compatibility betweek aplication called from web Entry that uses just WS functions
+        //###############################################################################################
+
+        if ($params != null) {
+            if (isset($params->option)) {
+                switch ($params->option) {
+                    case "STORED SESSION":
+                        if (isset($params->SID)) {
+                            G::LoadClass("sessions");
+
+                            $oSessions = new Sessions($params->SID);
+                            $sysCon = array_merge($sysCon, $oSessions->getGlobals());
+                        }
+                        break;
+                }
+            }
+
+            if (isset($params->appData) && is_array($params->appData)) {
+                $sysCon["APPLICATION"] = $params->appData["APPLICATION"];
+                $sysCon["PROCESS"]     = $params->appData["PROCESS"];
+                $sysCon["TASK"]        = $params->appData["TASK"];
+                $sysCon["INDEX"]       = $params->appData["INDEX"];
+
+                if (empty($sysCon["USER_LOGGED"])) {
+                    $sysCon["USER_LOGGED"]  = $params->appData["USER_LOGGED"];
+                    $sysCon["USR_USERNAME"] = $params->appData["USR_USERNAME"];
+                }
+            }
+        }
+
+        return $sysCon;
+    }
+
+    /*
+     * Return the Friendly Title for a string, capitalize every word and remove spaces
+     *   param : text string
+     */
+    public function capitalizeWords($text)
+    {
+        return ucwords($text);
+    }
+
+    /**
+     * unhtmlentities
+     *
+     * @param string $string
+     *
+     * @return string substring
+     */
+    public function unhtmlentities ($string)
+    {
+        $trans_tbl = get_html_translation_table( HTML_ENTITIES );
+        foreach ($trans_tbl as $k => $v) {
+            $ttr[$v] = utf8_encode( $k );
+        }
+        return strtr( $string, $ttr );
+    }
+
+    /**
+     * ************************************* init **********************************************
+     * Xml parse collection functions
+     * Returns a associative array within the xml structure and data
+     *
+     * @author Erik Amaru Ortiz <erik@colosa.com>
+     */
+    public function xmlParser (&$string)
+    {
+        $parser = xml_parser_create();
+        xml_parser_set_option( $parser, XML_OPTION_CASE_FOLDING, 0 );
+        xml_parse_into_struct( $parser, $string, $vals, $index );
+
+        $mnary = array ();
+        $ary = &$mnary;
+        foreach ($vals as $r) {
+            $t = $r['tag'];
+            if ($r['type'] == 'open') {
+                if (isset( $ary[$t] )) {
+                    if (isset( $ary[$t][0] )) {
+                        $ary[$t][] = array ();
+                    } else {
+                        $ary[$t] = array ($ary[$t],array () );
+                    }
+                    $cv = &$ary[$t][count( $ary[$t] ) - 1];
+                } else {
+                    $cv = &$ary[$t];
+                }
+                if (isset( $r['attributes'] )) {
+                    foreach ($r['attributes'] as $k => $v) {
+                        $cv['__ATTRIBUTES__'][$k] = $v;
+                    }
+                }
+                // note by gustavo cruz gustavo[at]colosa[dot]com
+                // minor adjustments to validate if an open node have a value attribute.
+                // for example a dropdown has many childs, but also can have a value attribute.
+                if (isset( $r['value'] ) && trim( $r['value'] ) != '') {
+                    $cv['__VALUE__'] = $r['value'];
+                }
+                // end added code
+                $cv['__CONTENT__'] = array ();
+                $cv['__CONTENT__']['_p'] = &$ary;
+                $ary = &$cv['__CONTENT__'];
+
+            } elseif ($r['type'] == 'complete') {
+                if (isset( $ary[$t] )) {
+                    if (isset( $ary[$t][0] )) {
+                        $ary[$t][] = array ();
+                    } else {
+                        $ary[$t] = array ($ary[$t],array ());
+                    }
+                    $cv = &$ary[$t][count( $ary[$t] ) - 1];
+                } else {
+                    $cv = &$ary[$t];
+                }
+                if (isset( $r['attributes'] )) {
+                    foreach ($r['attributes'] as $k => $v) {
+                        $cv['__ATTRIBUTES__'][$k] = $v;
+                    }
+                }
+                $cv['__VALUE__'] = (isset( $r['value'] ) ? $r['value'] : '');
+
+            } elseif ($r['type'] == 'close') {
+                $ary = &$ary['_p'];
+            }
+        }
+
+        self::_del_p( $mnary );
+
+        $obj_resp->code = xml_get_error_code( $parser );
+        $obj_resp->message = xml_error_string( $obj_resp->code );
+        $obj_resp->result = $mnary;
+        xml_parser_free( $parser );
+
+        return $obj_resp;
+    }
+
+    /**
+     * _del_p
+     *
+     * @param string &$ary
+     *
+     * @return void
+     */
+    // _Internal: Remove recursion in result array
+    public function _del_p (&$ary)
+    {
+        foreach ($ary as $k => $v) {
+            if ($k === '_p') {
+                unset( $ary[$k] );
+            } elseif (is_array( $ary[$k] )) {
+                self::_del_p( $ary[$k] );
+            }
+        }
+    }
+
+    /**
+     * ary2xml
+     *
+     * Array to XML
+     *
+     * @param string $cary
+     * @param string $d=0
+     * @param string $forcetag default value ''
+     *
+     * @return void
+     */
+    // Array to XML
+    public function ary2xml ($cary, $d = 0, $forcetag = '')
+    {
+        $res = array ();
+        foreach ($cary as $tag => $r) {
+            if (isset( $r[0] )) {
+                $res[] = self::ary2xml( $r, $d, $tag );
+            } else {
+                if ($forcetag) {
+                    $tag = $forcetag;
+                }
+                $sp = str_repeat( "\t", $d );
+                $res[] = "$sp<$tag";
+                if (isset( $r['_a'] )) {
+                    foreach ($r['_a'] as $at => $av) {
+                        $res[] = " $at=\"$av\"";
+                    }
+                }
+                $res[] = ">" . ((isset( $r['_c'] )) ? "\n" : '');
+                if (isset( $r['_c'] )) {
+                    $res[] = ary2xml( $r['_c'], $d + 1 );
+                } elseif (isset( $r['_v'] )) {
+                    $res[] = $r['_v'];
+                }
+                $res[] = (isset( $r['_c'] ) ? $sp : '') . "</$tag>\n";
+            }
+
+        }
+        return implode( '', $res );
+    }
+
+    /**
+     * ins2ary
+     *
+     * Insert element into array
+     *
+     * @param string &$ary
+     * @param string $element
+     * @param string $pos
+     *
+     * @return void
+     */
+    // Insert element into array
+    public function ins2ary (&$ary, $element, $pos)
+    {
+        $ar1 = array_slice( $ary, 0, $pos );
+        $ar1[] = $element;
+        $ary = array_merge( $ar1, array_slice( $ary, $pos ) );
+    }
+
+    /*
+    * Xml parse collection functions
+    **/
+
+    /**
+     * evalJScript
+     *
+     * @param string $c
+     *
+     * @return void
+     */
+    public function evalJScript ($c)
+    {
+        print ("<script language=\"javascript\">{$c}</script>") ;
+    }
+
+    /**
+     * Inflects a string with accented characters and other characteres not suitable for file names, by defaul replace with undescore
+     *
+     * @author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gamil.com>
+     * @param (string) string to convert
+     * @param (string) character for replace
+     * @param (array) additional characteres map
+     *
+     */
+    public function inflect ($string, $replacement = '_', $map = array())
+    {
+        if (is_array( $replacement )) {
+            $map = $replacement;
+            $replacement = '_';
+        }
+
+        $quotedReplacement = preg_quote( $replacement, '/' );
+
+        $default = array ('/à|á|å|â/' => 'a','/è|é|ê|ẽ|ë/' => 'e','/ì|í|î/' => 'i','/ò|ó|ô|ø/' => 'o','/ù|ú|ů|û/' => 'u','/ç/' => 'c','/ñ/' => 'n','/ä|æ/' => 'ae','/ö/' => 'oe','/ü/' => 'ue','/Ä/' => 'Ae','/Ü/' => 'Ue','/Ö/' => 'Oe','/ß/' => 'ss','/\.|\,|\:|\-|\\|\//' => " ",'/\\s+/' => $replacement
+        );
+
+        $map = array_merge( $default, $map );
+        return preg_replace( array_keys( $map ), array_values( $map ), $string );
+    }
+
+    /**
+     * pr
+     *
+     * @param string $var
+     *
+     * @return void
+     */
+    public function pr ($var)
+    {
+        print ("<pre>") ;
+        print_r( $var );
+        print ("</pre>") ;
+    }
+
+    /**
+     * dump
+     *
+     * @param string $var
+     *
+     * @return void
+     */
+    public function dump ($var)
+    {
+        print ("<pre>") ;
+        var_dump( $var );
+        print ("</pre>") ;
+    }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     //to enable more than 2 directories...in the methods structure
     while (count($uriVars) > 0) {
@@ -1812,8 +4500,22 @@ $output = $outputHeader.$output;
       $MONTHS[$i] =   G::LoadTranslation("ID_MONTH_$i", $lang);
     }
 
+<<<<<<< HEAD
     $d  = (int)$day;
     $dd = G::complete_field($day, 2, 1);
+=======
+    /**
+     * Validate and emai address in complete forms,
+     *
+     * @author Erik A.O. <erik@colosa.com>
+     * i.e. if the param. is 'erik a.o. <erik@colosa.com>'
+     *      -> returns a object within $o->email => erik@colosa.com and $o->name => erik A.O. in other case returns false
+     *
+     */
+    public function emailAddress($sEmail)
+    {
+        $o = new stdClass();
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     //missing D
 
@@ -1836,6 +4538,7 @@ $output = $outputHeader.$output;
         break;
     }
 
+<<<<<<< HEAD
     return $ret;
   }
 
@@ -1851,6 +4554,38 @@ $output = $outputHeader.$output;
 
     if (!is_array($array2)) {
         $array2 = (array) $array2;
+=======
+    /**
+     * JSON encode
+     *
+     * @author Erik A.O. <erik@colosa.com>
+     */
+    public function json_encode($Json)
+    {
+        if ( function_exists('json_encode') ) {
+            return json_encode($Json);
+        } else {
+            G::LoadThirdParty('pear/json', 'class.json');
+            $oJSON = new Services_JSON();
+            return $oJSON->encode($Json);
+        }
+    }
+
+    /**
+      * JSON decode
+      *
+      * @author Erik A.O. <erik@colosa.com>
+     */
+    public function json_decode($Json)
+    {
+        if (function_exists('json_decode')) {
+            return json_decode($Json);
+        } else {
+            G::LoadThirdParty('pear/json', 'class.json');
+            $oJSON = new Services_JSON();
+            return $oJSON->decode($Json);
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
 
     // This wrapper for array_diff rekeys the array returned
@@ -1876,10 +4611,26 @@ $output = $outputHeader.$output;
     $campo = trim($campo);
     switch($tipo)
     {
+<<<<<<< HEAD
       case 1: //number
         $long = $long-strlen($campo);
         for($i=1; $i<=$long; $i++) {
           $campo = "0".$campo;
+=======
+        // require_once "classes/class.pmFunctions.php";
+        G::LoadClass("pmFunctions");
+        G::LoadThirdParty('phpmailer', 'class.phpmailer');
+        $setup = getEmailConfiguration();
+        if ($setup['MESS_RAUTH'] == false || (is_string($setup['MESS_RAUTH']) && $setup['MESS_RAUTH'] == 'false')) {
+            $setup['MESS_RAUTH'] = 0;
+        } else {
+            $setup['MESS_RAUTH'] = 1;
+        }
+
+        if (count($setup) == 0 || !isset($setup['MESS_ENGINE']) || !isset($setup['MESS_SERVER'])
+            || !isset($setup['MESS_ENABLED']) || !isset($setup['MESS_RAUTH']) || $setup['MESS_SERVER'] == '') {
+            return G::LoadTranslation('ID_EMAIL_ENGINE_IS_NOT_CONFIGURED');
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         }
         break;
 
@@ -2115,6 +4866,7 @@ $output = $outputHeader.$output;
     }
 
 
+<<<<<<< HEAD
   /* Load strings from a XMLFile.
    * @author David Callizaya <davidsantos@colosa.com>
    * @parameter $languageFile An xml language file.
@@ -2528,6 +5280,13 @@ $output = $outputHeader.$output;
       die;
     }
   }
+=======
+    //public function getModel($model)
+    //{
+    //    require_once "classes/model/$model.php";
+    //    return new $model();
+    //}
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     /**
      * capitalize
@@ -5429,6 +8188,90 @@ function getDirectorySize($path,$maxmtime=0)
         );
 
         return $reservedWordsSql;
+    }
+
+    /**
+     * Save the $_SESSION variables into $sessionVar array, to unset them temporary.
+     *
+     */
+    public function sessionVarSave()
+    {
+        //Unset any variable
+        $this->sessionVar = array();
+
+        if (isset($_SESSION["APPLICATION"])) {
+            $this->sessionVar["APPLICATION"] = $_SESSION["APPLICATION"];
+        }
+
+        if (isset($_SESSION["INDEX"])) {
+            $this->sessionVar["INDEX"] = $_SESSION["INDEX"];
+        }
+
+        if (isset($_SESSION["PROCESS"])) {
+            $this->sessionVar["PROCESS"] = $_SESSION["PROCESS"];
+        }
+
+        if (isset($_SESSION["TASK"])) {
+            $this->sessionVar["TASK"] = $_SESSION["TASK"];
+        }
+
+        if (isset($_SESSION["USER_LOGGED"])) {
+            $this->sessionVar["USER_LOGGED"] = $_SESSION["USER_LOGGED"];
+        }
+
+        if (isset($_SESSION["USR_USERNAME"])) {
+            $this->sessionVar["USR_USERNAME"] = $_SESSION["USR_USERNAME"];
+        }
+
+        if (isset($_SESSION["STEP_POSITION"])) {
+            $this->sessionVar["STEP_POSITION"] = $_SESSION["STEP_POSITION"];
+        }
+    }
+
+    /**
+     * Restore the session variables with values of $sessionVar array, if this is set.
+     *
+     */
+    public function sessionVarRestore()
+    {
+        if (count($this->sessionVar) > 0) {
+            //Restore original values
+            unset($_SESSION["APPLICATION"]);
+            unset($_SESSION["INDEX"]);
+            unset($_SESSION["PROCESS"]);
+            unset($_SESSION["TASK"]);
+            unset($_SESSION["USER_LOGGED"]);
+            unset($_SESSION["USR_USERNAME"]);
+            unset($_SESSION["STEP_POSITION"]);
+
+            if (isset($this->sessionVar["APPLICATION"])) {
+                $_SESSION["APPLICATION"] = $this->sessionVar["APPLICATION"];
+            }
+
+            if (isset($this->sessionVar["INDEX"])) {
+                $_SESSION["INDEX"] = $this->sessionVar["INDEX"];
+            }
+
+            if (isset($this->sessionVar["PROCESS"])) {
+                $_SESSION["PROCESS"] = $this->sessionVar["PROCESS"];
+            }
+
+            if (isset($this->sessionVar["TASK"])) {
+                $_SESSION["TASK"] = $this->sessionVar["TASK"];
+            }
+
+            if (isset($this->sessionVar["USER_LOGGED"])) {
+                $_SESSION["USER_LOGGED"] = $this->sessionVar["USER_LOGGED"];
+            }
+
+            if (isset($this->sessionVar["USR_USERNAME"])) {
+                $_SESSION["USR_USERNAME"] = $this->sessionVar["USR_USERNAME"];
+            }
+
+            if (isset($this->sessionVar["STEP_POSITION"])) {
+                $_SESSION["STEP_POSITION"] = $this->sessionVar["STEP_POSITION"];
+            }
+        }
     }
 }
 

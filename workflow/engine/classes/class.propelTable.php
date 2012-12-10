@@ -325,9 +325,20 @@ class propelTable
                 $this->tpl->newBlock( "headers" );
                 $sortOrder = (((isset( $this->aOrder[$this->fields[$r]['Name']] )) && ($this->aOrder[$this->fields[$r]['Name']] === 'ASC')) ? 'DESC' : 'ASC');
                 $sortOrder = (((isset( $this->aOrder[$this->fields[$r]['Name']] )) && ($this->aOrder[$this->fields[$r]['Name']] === 'DESC')) ? '' : $sortOrder);
+<<<<<<< HEAD
                 $this->style[$r]['href'] = $this->ownerPage . '?order=' . ($sortOrder !== '' ? (G::createUID( '', $this->fields[$r]['Name'] ) . '=' . $sortOrder) : '') . '&page=' . $this->currentPage;
                 $this->style[$r]['onsort'] = $this->id . '.doSort("' . G::createUID( '', $this->fields[$r]['Name'] ) . '" , "' . $sortOrder . '");return false;';
                 if (isset( $this->style[$r]['href'] ))
+=======
+                if ($this->style[$r]['titleVisibility'] != '0') {
+                    $this->style[$r]['href'] = $this->ownerPage . '?order=' . ($sortOrder !== '' ? (G::createUID( '', $this->fields[$r]['Name'] ) . '=' . $sortOrder) : '') . '&page=' . $this->currentPage;
+                    $this->style[$r]['onsort'] = $this->id . '.doSort("' . G::createUID( '', $this->fields[$r]['Name'] ) . '" , "' . $sortOrder . '");return false;';
+                } else {
+                    $this->style[$r]['href'] = '#';
+                    $this->style[$r]['onsort'] = 'return false;';
+                }
+                if (isset( $this->style[$r]['href'] )) {
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
                     $this->tpl->assign( "href", $this->style[$r]['href'] );
                 if (isset( $this->style[$r]['onsort'] ))
                     $this->tpl->assign( "onsort", htmlentities( $this->style[$r]['onsort'], ENT_QUOTES, 'UTF-8' ) );
@@ -469,7 +480,11 @@ class propelTable
                 }
             }
             //Hidden titles
+<<<<<<< HEAD
             if (! (strpos( '  linknew button endgrid2 ', ' ' . $this->fields[$r]['Type'] . ' ' ) === FALSE)) {
+=======
+            if (! (strpos( '  linknew button link endgrid2 ', ' ' . $this->fields[$r]['Type'] . ' ' ) === false)) {
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
                 $this->style[$r]['titleVisibility'] = '0';
             }
             //Align titles

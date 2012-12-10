@@ -31,8 +31,14 @@ global $_DBArray;
 if (!isset($_DBArray)) {
   $_DBArray = array();
 }
+<<<<<<< HEAD
 G::LoadClass('dynaformEditor');
 $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
+=======
+
+G::LoadClass( 'dynaformEditor' );
+$oDynaformEditorAjax = new dynaformEditorAjax( $_POST );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 //if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 //

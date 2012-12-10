@@ -23,6 +23,7 @@
  * 
  */
 
+<<<<<<< HEAD
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 /*NEXT LINE: Runs any configuration defined to be executed before dependent fields recalc*/
 if (isset($_SESSION['CURRENT_PAGE_INITILIZATION'])) eval($_SESSION['CURRENT_PAGE_INITILIZATION']);
@@ -32,6 +33,21 @@ $json=new Services_JSON();
 $G_FORM=new form(G::getUIDName(urlDecode($_POST['form'])));
 $G_FORM->id=urlDecode($_POST['form']);
 $G_FORM->values=$_SESSION[$G_FORM->id];
+=======
+if (($RBAC_Response = $RBAC->userCanAccess( "PM_FACTORY" )) != 1) {
+    return $RBAC_Response;
+}
+    /*NEXT LINE: Runs any configuration defined to be executed before dependent fields recalc*/
+if (isset( $_SESSION['CURRENT_PAGE_INITILIZATION'] )) {
+    eval( $_SESSION['CURRENT_PAGE_INITILIZATION'] );
+}
+    //G::LoadSystem('json');
+//require_once (PATH_THIRDPARTY . 'pear/json/class.json.php');
+//$json = new Services_JSON();
+$G_FORM = new form( G::getUIDName( urlDecode( $_POST['form'] ) ) );
+$G_FORM->id = urlDecode( $_POST['form'] );
+$G_FORM->values = $_SESSION[$G_FORM->id];
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 G::LoadClass('xmlDb');
 $file = G::decrypt( $G_FORM->values['PME_A'] , URL_KEY );
@@ -41,7 +57,11 @@ define('DB_XMLDB_PASS','');
 define('DB_XMLDB_NAME','');
 define('DB_XMLDB_TYPE','myxml');
 
+<<<<<<< HEAD
 $newValues=($json->decode(urlDecode(stripslashes($_POST['fields']))));
+=======
+$newValues = (Bootstrap::json_decode( urlDecode( stripslashes( $_POST['fields'] ) ) ));
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 //Resolve dependencies
 //Returns an array ($dependentFields) with the names of the fields
 //that depends of fields passed through AJAX ($_GET/$_POST)
@@ -78,7 +98,11 @@ foreach($dependentFields as $d) {
 	$sendContent[$r]->value=$G_FORM->values[$d];
 	$r++;
 }
+<<<<<<< HEAD
 echo($json->encode($sendContent));
+=======
+echo (Bootstrap::json_encode( $sendContent ));
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 function toJSArray($array)
 {

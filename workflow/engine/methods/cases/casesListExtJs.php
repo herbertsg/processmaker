@@ -27,8 +27,30 @@
     $generalConfCasesList = array();
   }
 
+<<<<<<< HEAD
   // reassign header configuration
   $confReassignList = getReassignList();
+=======
+G::LoadClass( "BasePeer" );
+G::LoadClass( 'configuration' );
+//require_once ("classes/model/Fields.php");
+//require_once ("classes/model/AppCacheView.php");
+//require_once ("classes/model/Process.php");
+//require_once ("classes/model/Users.php");
+
+$oHeadPublisher = & headPublisher::getSingleton();
+// oHeadPublisher->setExtSkin( 'xtheme-blue');
+//get the configuration for this action
+$conf = new Configurations();
+try {
+    // the setup for search is the same as the Sent (participated)
+    $confCasesList = $conf->getConfiguration( 'casesList', ($action == 'search' || $action == 'simple_search') ? 'search' : $action );
+    $generalConfCasesList = $conf->getConfiguration( 'ENVIRONMENT_SETTINGS', '' );
+} catch (Exception $e) {
+    $confCasesList = array ();
+    $generalConfCasesList = array ();
+}
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
   // evaluates an action and the configuration for the list that will be rendered
   $config       = getAdditionalFields($action, (class_exists('enterprisePlugin') ? $confCasesList : array()));

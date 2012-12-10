@@ -55,7 +55,11 @@ foreach($aTriggersList as $i=>$v){
   $aTriggersList[$i]['TRI_TITLE'] = (strlen($aTriggersList[$i]['TRI_TITLE'])>32)? substr($aTriggersList[$i]['TRI_TITLE'], 0, 32).'...': $aTriggersList[$i]['TRI_TITLE'];
 }
 
+<<<<<<< HEAD
 $aTriggersList = array_merge(Array($aTriggersFileds), $aTriggersList);
+=======
+$aTriggersList = array_merge( $aTriggersFileds, $aTriggersList );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 $_DBArray['tasks'] = $aTasks;
 $_DBArray['TMP_TRIGGERS'] = $aTriggersList;

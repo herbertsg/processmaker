@@ -178,6 +178,20 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the [out_doc_report_generator] column value.
+     * 
+     * @return     string
+     */
+    public function getOutDocReportGenerator()
+    {
+
+        return $this->out_doc_report_generator;
+    }
+
+    /**
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
      * Get the [out_doc_landscape] column value.
      * 
      * @return     int
@@ -409,6 +423,31 @@ abstract class BaseOutputDocument extends BaseObject implements Persistent
     } // setProUid()
 
     /**
+<<<<<<< HEAD
+=======
+     * Set the value of [out_doc_report_generator] column.
+     * 
+     * @param      string $v new value
+     * @return     void
+     */
+    public function setOutDocReportGenerator($v)
+    {
+
+        // Since the native PHP type for this column is string,
+        // we will cast the input to a string (if it is not).
+        if ($v !== null && !is_string($v)) {
+            $v = (string) $v;
+        }
+
+        if ($this->out_doc_report_generator !== $v || $v === 'HTML2PDF') {
+            $this->out_doc_report_generator = $v;
+            $this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_REPORT_GENERATOR;
+        }
+
+    } // setOutDocReportGenerator()
+
+    /**
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
      * Set the value of [out_doc_landscape] column.
      * 
      * @param      int $v new value

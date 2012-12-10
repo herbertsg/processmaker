@@ -24,8 +24,13 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+<<<<<<< HEAD
 
 G::LoadClass( 'xmlDb' );
+=======
+//G::LoadClass('xmlDb');
+//G::LoadSystem('dynaformhandler');
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 /**
  * Dynaform Field - DynaformField class

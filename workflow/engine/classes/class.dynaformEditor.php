@@ -165,6 +165,7 @@ class dynaformEditor extends WebResource
             $sName = 'dynaformEditor';
             $G_PUBLISH->publisherId = $sName;
             $oHeadPublisher = & headPublisher::getSingleton();
+<<<<<<< HEAD
             $labesTrans = G::getTranslations( Array ('ID_FIELD_DYNAFORM_TEXT','ID_FIELD_DYNAFORM_CURRENCY','ID_FIELD_DYNAFORM_PERCENTAGE','ID_FIELD_DYNAFORM_PASSWORD','ID_FIELD_DYNAFORM_SUGGEST','ID_FIELD_DYNAFORM_TEXTAREA','ID_FIELD_DYNAFORM_TITLE','ID_FIELD_DYNAFORM_SUBTITLE','ID_FIELD_DYNAFORM_BUTTON','ID_FIELD_DYNAFORM_SUBMIT','ID_FIELD_DYNAFORM_RESET','ID_FIELD_DYNAFORM_DROPDOWN','ID_FIELD_DYNAFORM_YESNO','ID_FIELD_DYNAFORM_LISTBOX','ID_FIELD_DYNAFORM_CHECKBOX','ID_FIELD_DYNAFORM_CHECKGROUP','ID_FIELD_DYNAFORM_RADIOGROUP','DATE_LABEL','ID_FIELD_DYNAFORM_HIDDEN','ID_FIELD_DYNAFORM_LINK','ID_FIELD_DYNAFORM_LINK','ID_FIELD_DYNAFORM_FILE','ID_FIELD_DYNAFORM_JAVASCRIPT','ID_FIELD_DYNAFORM_GRID','ID_INDEX'
             ) );
             $oHeadPublisher->addScriptCode( "var TRANSLATIONS = " . G::json_encode( $labesTrans ) . ";" );
@@ -172,6 +173,15 @@ class dynaformEditor extends WebResource
             $G_PUBLISH->AddContent( 'blank' );
             $this->panelConf['title'] = $this->title;
             $G_PUBLISH->AddContent( 'panel-init', 'mainPanel', $this->panelConf );
+=======
+            $labesTrans = G::getTranslations(Array('ID_FIELD_DYNAFORM_TEXT', 'ID_FIELD_DYNAFORM_CURRENCY', 'ID_FIELD_DYNAFORM_PERCENTAGE', 'ID_FIELD_DYNAFORM_PASSWORD', 'ID_FIELD_DYNAFORM_SUGGEST', 'ID_FIELD_DYNAFORM_TEXTAREA', 'ID_FIELD_DYNAFORM_TITLE', 'ID_FIELD_DYNAFORM_SUBTITLE', 'ID_FIELD_DYNAFORM_BUTTON', 'ID_FIELD_DYNAFORM_SUBMIT', 'ID_FIELD_DYNAFORM_RESET', 'ID_FIELD_DYNAFORM_DROPDOWN', 'ID_FIELD_DYNAFORM_YESNO', 'ID_FIELD_DYNAFORM_LISTBOX', 'ID_FIELD_DYNAFORM_CHECKBOX', 'ID_FIELD_DYNAFORM_CHECKGROUP', 'ID_FIELD_DYNAFORM_RADIOGROUP', 'DATE_LABEL', 'ID_FIELD_DYNAFORM_HIDDEN', 'ID_FIELD_DYNAFORM_LINK', 'ID_FIELD_DYNAFORM_LINK', 'ID_FIELD_DYNAFORM_FILE', 'ID_FIELD_DYNAFORM_JAVASCRIPT', 'ID_FIELD_DYNAFORM_GRID', 'ID_INDEX'
+                    ));
+            $oHeadPublisher->addScriptCode("var TRANSLATIONS = " . G::json_encode($labesTrans) . ";");
+            $oHeadPublisher->setTitle(G::LoadTranslation('ID_DYNAFORM_EDITOR') . ' - ' . $Properties['DYN_TITLE']);
+            $G_PUBLISH->AddContent('blank');
+            $this->panelConf['title'] = '';
+            $G_PUBLISH->AddContent('panel-init', 'mainPanel', $this->panelConf);
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
             if ($Properties['DYN_TYPE'] == 'xmlform') {
                 $G_PUBLISH->AddContent( 'xmlform', 'toolbar', 'dynaforms/fields_Toolbar', 'display:none', $Parameters, '', '' );
             } else {
@@ -217,9 +227,16 @@ class dynaformEditor extends WebResource
         $G_PUBLISH->AddContent( 'panel-tab', G::LoadTranslation( "ID_JAVASCRIPTS" ), $sName . '[7]', 'dynaformEditor.changeToJavascripts', 'dynaformEditor.saveCurrentView' );
         $G_PUBLISH->AddContent( 'panel-tab', G::LoadTranslation( "ID_PROPERTIES" ), $sName . '[8]', 'dynaformEditor.changeToProperties', 'dynaformEditor.saveCurrentView' );
         //for showHide tab option @Neyek
+<<<<<<< HEAD
         $G_PUBLISH->AddContent( 'panel-tab', G::LoadTranslation( "ID_CONDITIONS_EDITOR" ), $sName . '[9]', 'dynaformEditor.changeToShowHide', 'dynaformEditor.saveShowHide' );
         $G_PUBLISH->AddContent( 'panel-close' );
         $oHeadPublisher->addScriptFile( '/jscore/dynaformEditor/core/dynaformEditor.js' );
+=======
+        $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_CONDITIONS_EDITOR"), $sName . '[9]', 'dynaformEditor.changeToShowHide', 'dynaformEditor.saveShowHide');
+        $G_PUBLISH->AddContent('panel-close');
+        $oHeadPublisher->addScriptFile("/js/maborak/core/maborak.loader.js",2);
+        $oHeadPublisher->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         //$oHeadPublisher->addScriptFile('/js/dveditor/core/dveditor.js');
         //$oHeadPublisher->addScriptFile('/codepress/codepress.js',1);
         $oHeadPublisher->addScriptFile( '/js/codemirror/js/codemirror.js', 1 );

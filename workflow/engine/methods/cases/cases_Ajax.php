@@ -148,7 +148,7 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case 'showProcessInformation':
-        require_once 'classes/model/Process.php';
+        //require_once 'classes/model/Process.php';
         $oProcess = new Process();
         $aFields = $oProcess->load($_SESSION['PROCESS']);
         require_once 'classes/model/Users.php';
@@ -173,14 +173,14 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case 'showDynaformListHistory':
-        require_once 'classes/model/AppHistory.php';
+        //require_once 'classes/model/AppHistory.php';
         $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('view', 'cases/cases_DynaformHistory');
         G::RenderPage('publish', 'raw');
         break;
     case 'showTaskInformation':
-        require_once 'classes/model/AppDelegation.php';
-        require_once 'classes/model/Task.php';
+        //require_once 'classes/model/AppDelegation.php';
+        //require_once 'classes/model/Task.php';
         $oTask = new Task();
         $aFields = $oTask->load($_SESSION['TASK']);
         $oCriteria = new Criteria('workflow');
@@ -216,9 +216,9 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case 'showTaskDetails':
-        require_once 'classes/model/AppDelegation.php';
-        require_once 'classes/model/Task.php';
-        require_once 'classes/model/Users.php';
+        //require_once 'classes/model/AppDelegation.php';
+        //require_once 'classes/model/Task.php';
+        //require_once 'classes/model/Users.php';
         $oTask = new Task();
         $aRow = $oTask->load($_POST['sTaskUID']);
         $sTitle = $aRow['TAS_TITLE'];
@@ -463,12 +463,21 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
             }
         }
 
+<<<<<<< HEAD
         require_once 'classes/model/Users.php';
         $c = new Criteria('workflow');
         $c->addSelectColumn(UsersPeer::USR_UID);
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $c->addSelectColumn(UsersPeer::USR_LASTNAME);
         $c->add(UsersPeer::USR_UID, $row, Criteria::IN);
+=======
+        //require_once 'classes/model/Users.php';
+        $c = new Criteria( 'workflow' );
+        $c->addSelectColumn( UsersPeer::USR_UID );
+        $c->addSelectColumn( UsersPeer::USR_FIRSTNAME );
+        $c->addSelectColumn( UsersPeer::USR_LASTNAME );
+        $c->add( UsersPeer::USR_UID, $row, Criteria::IN );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
         global $G_PUBLISH;
         $G_PUBLISH = new Publisher();
@@ -503,10 +512,10 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case 'showUploadedDocument':
-        require_once 'classes/model/AppDocument.php';
-        require_once 'classes/model/AppDelegation.php';
-        require_once 'classes/model/InputDocument.php';
-        require_once 'classes/model/Users.php';
+        //require_once 'classes/model/AppDocument.php';
+        //require_once 'classes/model/AppDelegation.php';
+        //require_once 'classes/model/InputDocument.php';
+        //require_once 'classes/model/Users.php';
         $oAppDocument = new AppDocument();
         $oAppDocument->Fields = $oAppDocument->load($_POST['APP_DOC_UID']);
         $oInputDocument = new InputDocument();
@@ -608,7 +617,11 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         $r->data = $aProcesses;
         $r->totalCount = $totalCount;
 
+<<<<<<< HEAD
         echo G::json_encode($r);
+=======
+        echo Bootstrap::json_encode( $r );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         break;
     case 'generateDocumentGrid_Ajax':
 
@@ -669,11 +682,15 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         $r->totalCount = $totalCount;
         $r->dataFormat = $dateFormat;
 
+<<<<<<< HEAD
         echo G::json_encode($r);
+=======
+        echo Bootstrap::json_encode( $r );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         break;
     case 'showGeneratedDocument':
-        require_once 'classes/model/AppDocument.php';
-        require_once 'classes/model/AppDelegation.php';
+        //require_once 'classes/model/AppDocument.php';
+        //require_once 'classes/model/AppDelegation.php';
         $oAppDocument = new AppDocument();
         $aFields = $oAppDocument->load($_POST['APP_DOC_UID']);
         require_once 'classes/model/OutputDocument.php';
@@ -765,12 +782,21 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
                 $aAdhocUsers[] = $aUser['USR_UID'];
             }
         }
+<<<<<<< HEAD
         require_once 'classes/model/Users.php';
         $oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(UsersPeer::USR_UID);
         $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
         $oCriteria->add(UsersPeer::USR_UID, $aAdhocUsers, Criteria::IN);
+=======
+        //require_once 'classes/model/Users.php';
+        $oCriteria = new Criteria( 'workflow' );
+        $oCriteria->addSelectColumn( UsersPeer::USR_UID );
+        $oCriteria->addSelectColumn( UsersPeer::USR_FIRSTNAME );
+        $oCriteria->addSelectColumn( UsersPeer::USR_LASTNAME );
+        $oCriteria->add( UsersPeer::USR_UID, $aAdhocUsers, Criteria::IN );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
         global $G_PUBLISH;
         $G_PUBLISH = new Publisher();
@@ -795,7 +821,7 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case 'deleteUploadedDocument':
-        require_once 'classes/model/AppDocument.php';
+        //require_once 'classes/model/AppDocument.php';
         $oAppDocument = new AppDocument();
         $oAppDocument->remove($_POST['DOC']);
         $oCase = new Cases();
@@ -805,7 +831,7 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
                                                     $_SESSION['USER_LOGGED']);
         break;
     case 'deleteGeneratedDocument':
-        require_once 'classes/model/AppDocument.php';
+        //require_once 'classes/model/AppDocument.php';
         $oAppDocument = new AppDocument();
         $oAppDocument->remove($_POST['DOC']);
         $oCase = new Cases();
@@ -816,8 +842,13 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         break;
     /* @Author Erik Amaru Ortiz <erik@colosa.com> */
     case 'resendMessage':
+<<<<<<< HEAD
         require_once 'classes/model/Configuration.php';
         G::LoadClass('spool');
+=======
+        //require_once 'classes/model/Configuration.php';
+        G::LoadClass( 'spool' );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
         $oCase = new Cases();
         $data = $oCase->getHistoryMessagesTrackerView($_POST['APP_UID'], $_POST['APP_MSG_UID']);
@@ -845,6 +876,7 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         }
 
         $oSpool = new spoolRun();
+<<<<<<< HEAD
         $oSpool->setConfig(array(
             'MESS_ENGINE'    =>    $aConfiguration['MESS_ENGINE'],
             'MESS_SERVER'    =>    $aConfiguration['MESS_SERVER'],
@@ -853,6 +885,16 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
             'MESS_PASSWORD'    =>    $aConfiguration['MESS_PASSWORD'],
             'SMTPAuth'        =>    $aConfiguration['MESS_RAUTH']
         ));
+=======
+        if ($aConfiguration['MESS_RAUTH'] == false || (is_string($aConfiguration['MESS_RAUTH']) && $aConfiguration['MESS_RAUTH'] == 'false')) {
+            $aConfiguration['MESS_RAUTH'] = 0;
+        } else {
+            $aConfiguration['MESS_RAUTH'] = 1;
+        }
+
+        $oSpool->setConfig( array ('MESS_ENGINE' => $aConfiguration['MESS_ENGINE'],'MESS_SERVER' => $aConfiguration['MESS_SERVER'],'MESS_PORT' => $aConfiguration['MESS_PORT'],'MESS_ACCOUNT' => $aConfiguration['MESS_ACCOUNT'],'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],'SMTPAuth' => $aConfiguration['MESS_RAUTH']
+        ) );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         $passwd = $oSpool->config['MESS_PASSWORD'];
         $passwdDec = G::decrypt($passwd,'EMAILENCRYPT');
         $auxPass = explode('hash:', $passwdDec);
@@ -990,7 +1032,12 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
             }
             //G::pr($aCases);
 
+<<<<<<< HEAD
             require_once 'classes/model/Users.php';
+=======
+
+            //require_once 'classes/model/Users.php';
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
             $oUser = new Users();
             $sText = '';
             foreach ($aCases as $aCase) {
@@ -1048,6 +1095,7 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
         G::RenderPage('publish', 'raw');
         break;
     case "getCountCasesFolder":
+<<<<<<< HEAD
         $json = new Services_JSON();
         $aTypes = Array('to_do', 'draft', 'cancelled', 'sent', 'paused', 'completed','selfservice',
                         'to_revise','to_reassign');
@@ -1056,17 +1104,29 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
                             'selfservice'=>'CASES_SELFSERVICE','to_revise'=>'CASES_TO_REVISE',
                             'to_reassign'=>'CASES_TO_REASSIGN');
 
+=======
+        //$json = new Services_JSON();
+        $aTypes = Array ('to_do','draft','cancelled','sent','paused','completed','selfservice','to_revise','to_reassign');
+        $aTypesID = Array ('to_do' => 'CASES_INBOX','draft' => 'CASES_DRAFT','cancelled' => 'CASES_CANCELLED','sent' => 'CASES_SENT','paused' => 'CASES_PAUSED','completed' => 'CASES_COMPLETED','selfservice' => 'CASES_SELFSERVICE','to_revise' => 'CASES_TO_REVISE','to_reassign' => 'CASES_TO_REASSIGN');
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
         if (!isset($_POST['A'])) {
             $oCases = new Cases();
+<<<<<<< HEAD
             $aCount = $oCases->getAllConditionCasesCount($aTypes, true);
             echo $json->encode($aCount);
         } else {
             echo $json->encode($aTypesID);
+=======
+            $aCount = $oCases->getAllConditionCasesCount( $aTypes, true );
+            echo Bootstrap::json_encode( $aCount );
+        } else {
+            echo Bootstrap::json_encode( $aTypesID );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         }
         break;
     case "previusJump":
-        require_once 'classes/model/Application.php';
+        //require_once 'classes/model/Application.php';
 
         $oCriteria = new Criteria('workflow');
         $response  = array( "success" => true );
@@ -1083,7 +1143,11 @@ switch (($_POST['action'])?$_POST['action']:$_REQUEST['action']) {
             $response['exists'] = false;
         }
 
+<<<<<<< HEAD
         echo G::json_encode($response);
+=======
+        echo Bootstrap::json_encode( $response );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         break;
     default:
         echo 'default';

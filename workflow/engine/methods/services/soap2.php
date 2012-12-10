@@ -863,7 +863,31 @@ function updateUser($params)
     return $result;
 }
 
+<<<<<<< HEAD
 function CreateGroup($params)
+=======
+function informationUser($params)
+{
+    $result = isValidSession($params->sessionId);
+
+    if ($result->status_code != 0) {
+        return $result;
+    }
+
+    if (ifPermission($params->sessionId, "PM_USERS") == 0) {
+        $result = new wsResponse(2, "You do not have privileges");
+
+        return $result;
+    }
+
+    $ws = new wsBase();
+    $result = $ws->informationUser($params->userUid);
+
+    return $result;
+}
+
+function CreateGroup ($params)
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 {
     $vsResult = isValidSession($params->sessionId);
 
@@ -1170,11 +1194,43 @@ function unpauseCase($params)
     return $result;
 }
 
+<<<<<<< HEAD
 
 
 
 
 $server = new SoapServer($wsdl);
+=======
+function addCaseNote($params)
+{
+    $result = isValidSession($params->sessionId);
+
+    if ($result->status_code != 0) {
+        return $result;
+    }
+
+    if (ifPermission($params->sessionId, "PM_CASES") == 0) {
+        $result = new wsResponse(2, "You do not have privileges");
+
+        return $result;
+    }
+
+    $ws = new wsBase();
+    $result = $ws->addCaseNote(
+        $params->caseUid,
+        $params->processUid,
+        $params->taskUid,
+        $params->userUid,
+        $params->note,
+        (isset($params->sendMail))? $params->sendMail : 1
+    );
+
+    return $result;
+}
+
+$server = new SoapServer($wsdl);
+
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 $server->addFunction("Login");
 $server->addFunction("ProcessList");
 $server->addFunction("CaseList");
@@ -1203,6 +1259,10 @@ $server->addFunction("CreateGroup");
 $server->addFunction("CreateDepartment");
 $server->addFunction("CreateUser");
 $server->addFunction("updateUser");
+<<<<<<< HEAD
+=======
+$server->addFunction("informationUser");
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 $server->addFunction("getCaseInfo");
 $server->addFunction("TaskList");
 $server->addFunction("TaskCase");
@@ -1215,5 +1275,9 @@ $server->addFunction("deleteCase");
 $server->addFunction("cancelCase");
 $server->addFunction("pauseCase");
 $server->addFunction("unpauseCase");
+<<<<<<< HEAD
+=======
+$server->addFunction("addCaseNote");
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 $server->handle();
 

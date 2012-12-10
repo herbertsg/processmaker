@@ -1,6 +1,6 @@
 <?php
 
-require_once 'classes/model/om/BaseAppNotes.php';
+//require_once 'classes/model/om/BaseAppNotes.php';
 
 /**
  * Skeleton subclass for representing a row from the 'APP_NOTES' table.
@@ -223,6 +223,7 @@ class AppNotes extends BaseAppNotes {
           throw new Exception("Template file '$fileTemplate' does not exist.");
         }
 
+<<<<<<< HEAD
         $sBody = G::replaceDataField(file_get_contents($fileTemplate), $aFields);
       } else {*/
         $sBody = nl2br(G::replaceDataField($configNoteNotification['body'], $aFields));
@@ -265,6 +266,21 @@ class AppNotes extends BaseAppNotes {
           if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
             $oSpool->sendMail();
           }
+=======
+                $sTo = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
+                $oSpool = new spoolRun();
+                if ($aConfiguration['MESS_RAUTH'] == false || (is_string($aConfiguration['MESS_RAUTH']) && $aConfiguration['MESS_RAUTH'] == 'false')) {
+                    $aConfiguration['MESS_RAUTH'] = 0;
+                } else {
+                    $aConfiguration['MESS_RAUTH'] = 1;
+                }
+
+                $oSpool->setConfig( array ('MESS_ENGINE' => $aConfiguration['MESS_ENGINE'],'MESS_SERVER' => $aConfiguration['MESS_SERVER'],'MESS_PORT' => $aConfiguration['MESS_PORT'],'MESS_ACCOUNT' => $aConfiguration['MESS_ACCOUNT'],'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],'SMTPAuth' => $aConfiguration['MESS_RAUTH'] == '1' ? true : false,'SMTPSecure' => isset( $aConfiguration['SMTPSecure'] ) ? $aConfiguration['SMTPSecure'] : '') );
+                $oSpool->create( array ('msg_uid' => '','app_uid' => $appUid,'del_index' => 1,'app_msg_type' => 'DERIVATION','app_msg_subject' => $sSubject,'app_msg_from' => $sFrom,'app_msg_to' => $sTo,'app_msg_body' => $sBody,'app_msg_cc' => '','app_msg_bcc' => '','app_msg_attach' => '','app_msg_template' => '','app_msg_status' => 'pending') );
+                if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
+                    $oSpool->sendMail();
+                }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
         }
 
@@ -273,5 +289,33 @@ class AppNotes extends BaseAppNotes {
     } catch (Exception $oException) {
       throw $oException;
     }
+<<<<<<< HEAD
   }
+=======
+
+    public function addCaseNote($applicationUid, $userUid, $note, $sendMail)
+    {
+        $response = $this->postNewNote($applicationUid, $userUid, $note, false);
+
+        if ($sendMail == 1) {
+            G::LoadClass("case");
+
+            $case = new Cases();
+
+            $p = $case->getUsersParticipatedInCase($applicationUid);
+            $noteRecipientsList = array();
+
+            foreach ($p["array"] as $key => $userParticipated) {
+                $noteRecipientsList[] = $key;
+            }
+
+            $noteRecipients = implode(",", $noteRecipientsList);
+            $note = stripslashes($note);
+
+            $this->sendNoteNotification($applicationUid, $userUid, $note, $noteRecipients);
+        }
+
+        return $response;
+    }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 }

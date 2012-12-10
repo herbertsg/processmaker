@@ -86,8 +86,8 @@ class spoolRun
         $this->ExceptionCode['WARNING'] = 2;
         $this->ExceptionCode['NOTICE'] = 3;
 
-        $this->longMailEreg = '/(.*)(<([\w\-\.]+@[\w\-_\.]+\.\w{2,3})+>)/';
-        $this->mailEreg = '/^([\w\-_\.]+@[\w\-_\.]+\.\w{2,3}+)$/';
+        $this->longMailEreg = '/(.*)(<([\w\-\.]+@[\w\-_\.]+\.\w{2,5})+>)/';
+        $this->mailEreg = '/^([\w\-_\.]+@[\w\-_\.]+\.\w{2,5}+)$/';
     }
 
     /**
@@ -138,6 +138,14 @@ class spoolRun
      */
     public function create ($aData)
     {
+<<<<<<< HEAD
+=======
+        if (is_array($aData['app_msg_attach'])) {
+            $attachment = implode(",", $aData['app_msg_attach']);
+            $aData['app_msg_attach'] = $attachment;
+        }
+        $aData['app_msg_show_message'] = (isset($aData['app_msg_show_message'])) ? $aData['app_msg_show_message'] : 1;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         $sUID = $this->db_insert( $aData );
 
         $aData['app_msg_date'] = isset( $aData['app_msg_date'] ) ? $aData['app_msg_date'] : '';
@@ -299,7 +307,7 @@ class spoolRun
                     $this->fileData['envelope_to'][] = "$val";
                 }
             }
-        } else if ($text != '') {
+        } elseif ($text != '') {
             $this->fileData['envelope_to'][] = "$text";
         } else {
             $this->fileData['envelope_to'] = Array ();
@@ -314,7 +322,7 @@ class spoolRun
                     $this->fileData['envelope_cc'][] = "$valcc";
                 }
             }
-        } else if ($textcc != '') {
+        } elseif ($textcc != '') {
             $this->fileData['envelope_cc'][] = "$textcc";
         } else {
             $this->fileData['envelope_cc'] = Array ();
@@ -329,7 +337,7 @@ class spoolRun
                     $this->fileData['envelope_bcc'][] = "$valbcc";
                 }
             }
-        } else if ($textbcc != '') {
+        } elseif ($textbcc != '') {
             $this->fileData['envelope_bcc'][] = "$textbcc";
         } else {
             $this->fileData['envelope_bcc'] = Array ();
@@ -541,6 +549,11 @@ class spoolRun
 
         if ($aConfiguration["MESS_ENABLED"] == "1") {
             require_once ("classes/model/AppMessage.php");
+            if ($aConfiguration['MESS_RAUTH'] == false || (is_string($aConfiguration['MESS_RAUTH']) && $aConfiguration['MESS_RAUTH'] == 'false')) {
+                $aConfiguration['MESS_RAUTH'] = 0;
+            } else {
+                $aConfiguration['MESS_RAUTH'] = 1;
+            }
 
             $this->setConfig( array ("MESS_ENGINE" => $aConfiguration["MESS_ENGINE"],"MESS_SERVER" => $aConfiguration["MESS_SERVER"],"MESS_PORT" => $aConfiguration["MESS_PORT"],"MESS_ACCOUNT" => $aConfiguration["MESS_ACCOUNT"],"MESS_PASSWORD" => $aConfiguration["MESS_PASSWORD"],"SMTPAuth" => $aConfiguration["MESS_RAUTH"],"SMTPSecure" => $aConfiguration["SMTPSecure"]
             ) );

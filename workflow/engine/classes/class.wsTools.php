@@ -304,6 +304,7 @@ class workspaceTools {
         $regenerateContent->regenerateContent($arrayLang, $workSpace);
     }
 
+<<<<<<< HEAD
   /**
    * Upgrade this workspace translations from all avaliable languages.
    *
@@ -325,6 +326,33 @@ class workspaceTools {
         CLI::logging("Updating XML form translations with $poName\n");
         Language::import($poFile, true, false);
       }
+=======
+    /**
+     * Upgrade this workspace translations from all avaliable languages.
+     *
+     * @param bool $first if updating a series of workspace, true if the first
+     */
+    public function upgradeTranslation ($first = true)
+    {
+        $this->initPropel( true );
+        require_once ('classes/model/Language.php');
+        G::LoadThirdParty( 'pear/json', 'class.json' );
+        foreach (System::listPoFiles() as $poFile) {
+            $poName = basename( $poFile );
+            $names = explode( ".", basename( $poFile ) );
+            $extension = array_pop( $names );
+            $langid = array_pop( $names );
+            if (strcasecmp( $langid, "en" ) == 0) {
+                CLI::logging( "Updating database translations with $poName\n" );
+                Language::import( $poFile, false, true );
+            } elseif ($first) {
+                CLI::logging( "Updating XML form translations with $poName\n" );
+                Language::import( $poFile, true, false );
+                CLI::logging( "Updating database translations with $poName\n" );
+                Language::import( $poFile, false, true );
+            }
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
   }
 

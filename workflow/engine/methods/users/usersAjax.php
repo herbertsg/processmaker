@@ -486,12 +486,19 @@ switch($_POST['action'])
     if ($aFields['PREF_DEFAULT_CASES_MENUSELECTED'] != ''){
       foreach($oMenu->Id as $i => $item){
 
+<<<<<<< HEAD
         if ($aFields['PREF_DEFAULT_CASES_MENUSELECTED'] == $item)
           $casesMenuSelected =$oMenu->Labels[$i];
       }
     }
 
     $aFields['CASES_MENUSELECTED_NAME'] = $casesMenuSelected;
+=======
+        $aFields['CASES_MENUSELECTED_NAME'] = $casesMenuSelected;
+
+        $result->success = true;
+        $result->user = $aFields;
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
     $aFields['USR_COUNTRY_NAME']  = (!empty($aFields['USR_COUNTRY_NAME']))?  $aFields['USR_COUNTRY_NAME'] : '';
     $aFields['USR_CITY_NAME']     = (!empty($aFields['USR_CITY_NAME']))?     $aFields['USR_CITY_NAME'] : '';

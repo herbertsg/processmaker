@@ -47,10 +47,16 @@ G::LoadClass('case');
 $oAppDocument = new AppDocument();
 $oAppDocument->remove($_GET['DOC']);
 $oCase = new Cases();
+<<<<<<< HEAD
 $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'cases_List');
 if ($_GET['TYPE'] == 'INPUT')
 {
   $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
+=======
+$oCase->thisIsTheCurrentUser( $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'casesListExtJs' );
+if ($_GET['TYPE'] == 'INPUT') {
+    $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1 );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 }
 if ($_GET['TYPE'] == 'OUTPUT')
 {

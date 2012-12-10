@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 /**
  * patterns_Ajax.php
@@ -43,6 +44,53 @@ switch ($aData['action']) {
 	  switch ($aData['ROU_TYPE']) {
 	  	case 'SEQUENTIAL':
                 case 'SEC-JOIN':
+=======
+<?php
+/**
+ * patterns_Ajax.php
+ *
+ * ProcessMaker Open Source Edition
+ * Copyright (C) 2004 - 2008 Colosa Inc.23
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
+ * Coral Gables, FL, 33134, USA, or email info@colosa.com.
+ */
+G::LoadInclude( 'ajax' );
+//$oJSON = new Services_JSON();
+if (isset( $_POST['mode'] ) && $_POST['mode'] != '') {
+    $aData = $_POST;
+} else {
+    $aData = $_POST['form'];
+}
+
+G::LoadClass( 'tasks' );
+$oTasks = new Tasks();
+$rou_id = 0;
+switch ($aData['action']) {
+    case 'savePattern':
+        //if ($aData['ROU_TYPE'] != $aData['ROU_TYPE_OLD'])
+        //{
+        $oTasks->deleteAllRoutesOfTask( $aData['PROCESS'], $aData['TASK'] );
+        //}
+        require_once 'classes/model/Route.php';
+        $oRoute = new Route();
+        switch ($aData['ROU_TYPE']) {
+            case 'SEQUENTIAL':
+            case 'SEC-JOIN':
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
         /*if ($aData['ROU_UID'] != '')
         {
 	  	    $aFields['ROU_UID'] = $aData['ROU_UID'];

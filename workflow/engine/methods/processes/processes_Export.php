@@ -23,6 +23,10 @@
  *
  */
 
+<<<<<<< HEAD
+=======
+//G::LoadThirdParty( 'pear/json', 'class.json' );
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
 G::LoadThirdParty('pear/json','class.json');
 
@@ -62,10 +66,43 @@ try {
   $pathLength = strlen(PATH_DATA ."sites".PATH_SEP.SYS_SYS.PATH_SEP."files".PATH_SEP."output".PATH_SEP);
   $length = strlen($Fields['PRO_TITLE']) + $pathLength;
 
+<<<<<<< HEAD
   foreach($Fields as $key => $value)
   {
     if ($key == 'PRO_TITLE') {
       $Fields[$key] = myTruncate($value, 65, ' ', '...');
+=======
+    //$oJSON = new Services_JSON();
+    $stdObj = Bootstrap::json_decode( $_POST['data'] );
+    if (isset( $stdObj->pro_uid ))
+        $sProUid = $stdObj->pro_uid;
+    else
+        throw (new Exception( 'the process uid is not defined!.' ));
+
+        /* Includes */
+    G::LoadClass( 'processes' );
+    $oProcess = new Processes();
+    $proFields = $oProcess->serializeProcess( $sProUid );
+    $Fields = $oProcess->saveSerializedProcess( $proFields );
+    $pathLength = strlen( PATH_DATA . "sites" . PATH_SEP . SYS_SYS . PATH_SEP . "files" . PATH_SEP . "output" . PATH_SEP );
+    $length = strlen( $Fields['PRO_TITLE'] ) + $pathLength;
+
+    foreach ($Fields as $key => $value) {
+        if ($key == 'PRO_TITLE') {
+            $Fields[$key] = myTruncate( $value, 65, ' ', '...' );
+        }
+        if ($key == 'FILENAME') {
+            $Fields[$key] = myTruncate( $value, 60, '_', '...pm' );
+        }
+        if (($length) >= 250) {
+            if ($key == 'FILENAME_LINK') {
+                list ($file, $rest) = explode( 'p=', $value );
+                list ($filenameLink, $rest) = explode( '&', $rest );
+                $Fields[$key] = myTruncate( $filenameLink, 250 - $pathLength, '_', '' );
+                $Fields[$key] = $file . "p=" . $Fields[$key] . '&' . $rest;
+            }
+        }
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
     if ($key == 'FILENAME') {
       $Fields[$key] = myTruncate($value, 60, '_', '...pm');

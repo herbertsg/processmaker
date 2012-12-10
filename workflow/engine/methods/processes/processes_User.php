@@ -23,6 +23,7 @@
  * 
  */
 
+<<<<<<< HEAD
  /**
   * @Description This is a callback for the View of all groups from a determinated user
   * @author Everth S. Berrios Morales <everth@colosa.com>
@@ -37,6 +38,23 @@ try {
     $sProUid = $stdObj->pro_uid;
   else
     throw ( new Exception ( 'the process uid is not defined!.' ) );
+=======
+/**
+ * ription This is a callback for the View of all groups from a determinated user
+ *
+ * @author Everth S. Berrios Morales <everth@colosa.com>
+ * @Date 16/05/2008
+ * @LastModification none
+ */
+//G::LoadThirdParty( 'pear/json', 'class.json' );
+try {
+    //$oJSON = new Services_JSON();
+    $stdObj = Bootstrap::json_decode( stripslashes( $_POST['data'] ) );
+    if (isset( $stdObj->pro_uid ))
+        $sProUid = $stdObj->pro_uid;
+    else
+        throw (new Exception( 'the process uid is not defined!.' ));
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
 
   G::LoadClass('processMap');
   $oProcessMap = new ProcessMap();

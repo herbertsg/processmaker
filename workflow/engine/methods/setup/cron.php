@@ -5,11 +5,15 @@ G::LoadClass("configuration");
 
 global $RBAC;
 
+<<<<<<< HEAD
 
 
 
 
 if ($RBAC->userCanAccess("PM_SETUP_ADVANCE") != 1) {
+=======
+if ($RBAC->userCanAccess("PM_SETUP") != 1) {
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     G::SendTemporalMessage("ID_USER_HAVENT_RIGHTS_PAGE", "error", "labels");
     exit(0);
 }

@@ -59,6 +59,7 @@
 				G::header("location: "."/sys".SYS_SYS.$backUrlObj[1]);
 				die;
     }
+<<<<<<< HEAD
     
         
     $docUid=$_POST['form']['DOC_UID'];
@@ -228,6 +229,141 @@
         }
       //end plugin
       }
+=======
+    G::SendMessageText( $message, "ERROR" );
+    $backUrlObj = explode( "sys" . SYS_SYS, $_SERVER['HTTP_REFERER'] );
+    G::header( "location: " . "/sys" . SYS_SYS . $backUrlObj[1] );
+    die();
+}
+
+G::LoadClass("case");
+
+$inputDocumentUid = $_GET["UID"]; //$_POST["form"]["DOC_UID"]
+$appDocUid = $_POST["form"]["APP_DOC_UID"];
+$docVersion = intval($_POST["form"]["docVersion"]);
+$appDocType = $_POST["form"]["APP_DOC_TYPE"];
+$appDocComment = (isset($_POST["form"]["APP_DOC_COMMENT"]))? $_POST["form"]["APP_DOC_COMMENT"] : "";
+$actionType = $_POST["form"]["actionType"];
+
+$case = new Cases();
+$case->thisIsTheCurrentUser($_SESSION["APPLICATION"], $_SESSION["INDEX"], $_SESSION["USER_LOGGED"], "REDIRECT", "casesListExtJs");
+
+//Load the fields
+$arrayField = $case->loadCase($_SESSION["APPLICATION"]);
+$arrayField["APP_DATA"] = array_merge($arrayField["APP_DATA"], G::getSystemConstants());
+
+//Triggers
+$arrayTrigger = $case->loadTriggers($_SESSION["TASK"], "INPUT_DOCUMENT", $inputDocumentUid, "AFTER");
+
+//Trigger debug routines
+//Cleaning debug variables
+$_SESSION["TRIGGER_DEBUG"]["ERRORS"] = array();
+$_SESSION["TRIGGER_DEBUG"]["DATA"] = array();
+$_SESSION["TRIGGER_DEBUG"]["TRIGGERS_NAMES"] = array();
+$_SESSION["TRIGGER_DEBUG"]["TRIGGERS_VALUES"] = array();
+
+$_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] = count($arrayTrigger);
+$_SESSION["TRIGGER_DEBUG"]["TIME"] = "AFTER";
+
+if ($_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] > 0) {
+    $_SESSION["TRIGGER_DEBUG"]["TRIGGERS_NAMES"] = $case->getTriggerNames($arrayTrigger);
+    $_SESSION["TRIGGER_DEBUG"]["TRIGGERS_VALUES"] = $arrayTrigger;
+}
+
+if ($_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] > 0) {
+    //Trigger - Execute after - Start
+    $arrayField["APP_DATA"] = $case->executeTriggers(
+        $_SESSION["TASK"],
+        "INPUT_DOCUMENT",
+        $inputDocumentUid,
+        "AFTER",
+        $arrayField["APP_DATA"]
+    );
+    //Trigger - Execute after - End
+}
+
+//Save data
+$arrayData = array();
+$arrayData["APP_NUMBER"] = $arrayField["APP_NUMBER"];
+$arrayData["APP_PROC_STATUS"] = $arrayField["APP_PROC_STATUS"];
+$arrayData["APP_DATA"]  = $arrayField["APP_DATA"];
+$arrayData["DEL_INDEX"] = $_SESSION["INDEX"];
+$arrayData["TAS_UID"]   = $_SESSION["TASK"];
+
+$case->updateCase($_SESSION["APPLICATION"], $arrayData);
+
+//Add Input Document
+if (isset($_FILES) && isset($_FILES["form"]) && count($_FILES["form"]) > 0) {
+    $appDocUid = $case->addInputDocument(
+        $inputDocumentUid,
+        $appDocUid,
+        $docVersion,
+        $appDocType,
+        $appDocComment,
+        $actionType,
+        $_SESSION["APPLICATION"],
+        $_SESSION["INDEX"],
+        $_SESSION["TASK"],
+        $_SESSION["USER_LOGGED"],
+        "xmlform",
+        $_FILES["form"]["name"]["APP_DOC_FILENAME"],
+        $_FILES["form"]["error"]["APP_DOC_FILENAME"],
+        $_FILES["form"]["tmp_name"]["APP_DOC_FILENAME"]
+    );
+}
+
+//go to the next step
+//if (!isset($_POST['form']['MORE'])) {
+if (false) {
+    $aNextStep = $case->getNextStep($_SESSION["PROCESS"], $_SESSION["APPLICATION"], $_SESSION["INDEX"], $_SESSION["STEP_POSITION"]);
+    $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+
+    if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+        $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+        G::header( 'location: ' . $aNextStep['PAGE'] . '&breakpoint=triggerdebug' );
+        die();
+    }
+
+    G::header( 'location: ' . $aNextStep['PAGE'] );
+    die();
+} else {
+    if (isset( $_SERVER['HTTP_REFERER'] )) {
+        if ($_SERVER['HTTP_REFERER'] != '') {
+
+            if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+                $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $_SERVER['HTTP_REFERER'];
+                G::header( 'location: ' . $_SERVER['HTTP_REFERER'] . '&breakpoint=triggerdebug' );
+                die();
+            }
+
+            G::header( 'location: ' . $_SERVER['HTTP_REFERER'] );
+            die();
+        } else {
+            $aNextStep = $case->getNextStep($_SESSION["PROCESS"], $_SESSION["APPLICATION"], $_SESSION["INDEX"], $_SESSION["STEP_POSITION"] - 1);
+            $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+
+            if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+                $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+                G::header( 'location: ' . $aNextStep['PAGE'] . '&breakpoint=triggerdebug' );
+                die();
+            }
+
+            G::header( 'location: ' . $aNextStep['PAGE'] );
+            die();
+        }
+    } else {
+        $aNextStep = $case->getNextStep($_SESSION["PROCESS"], $_SESSION["APPLICATION"], $_SESSION["INDEX"], $_SESSION["STEP_POSITION"] - 1);
+        $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+
+        if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+            $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+            G::header( 'location: ' . $aNextStep['PAGE'] . '&breakpoint=triggerdebug' );
+            die();
+        }
+
+        G::header( 'location: ' . $aNextStep['PAGE'] );
+        die();
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
     }
 
 	//go to the next step

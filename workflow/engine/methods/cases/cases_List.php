@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 /**
  * cases_List.php
  *
@@ -185,3 +186,7 @@ if(parent.refreshCountFolders) parent.refreshCountFolders();
 </script>
 
 
+=======
+G::header('Location: ../cases/casesListExtJs');
+die();
+>>>>>>> 79571ecb297f77ed25458b108c90a25d41b53897
