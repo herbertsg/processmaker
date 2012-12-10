@@ -26,23 +26,23 @@ public class TestEventIntermediate{
     fieldArray[3]=new FormFieldData();
 
     fieldArray[0].fieldPath="form[nombre]";
-    fieldArray[0].fieldFindType="id";
-    fieldArray[0].fieldType="textbox";
+    fieldArray[0].fieldFindType=FieldKeyType.ID;
+    fieldArray[0].fieldType=FieldType.TEXTBOX;
     fieldArray[0].fieldValue="rodrigo ivan";
 
     fieldArray[1].fieldPath="form[edad]";
-    fieldArray[1].fieldFindType="id";
-    fieldArray[1].fieldType="textbox";
+    fieldArray[1].fieldFindType=FieldKeyType.ID;
+    fieldArray[1].fieldType=FieldType.TEXTBOX;
     fieldArray[1].fieldValue="24";
 
     fieldArray[2].fieldPath="form[departamento]";
-    fieldArray[2].fieldFindType="id";
-    fieldArray[2].fieldType="dropdown";
+    fieldArray[2].fieldFindType=FieldKeyType.ID;
+    fieldArray[2].fieldType=FieldType.DROPDOWN;
     fieldArray[2].fieldValue="La Paz";
 
     fieldArray[3].fieldPath="form[guardar]";
-    fieldArray[3].fieldFindType="id";
-    fieldArray[3].fieldType="button";
+    fieldArray[3].fieldFindType=FieldKeyType.ID;
+    fieldArray[3].fieldType=FieldType.BUTTON;
     fieldArray[3].fieldValue="";
 
     Assert.assertTrue(FormFiller.formFillElements(fieldArray));
@@ -60,13 +60,13 @@ public void openTask2(int casenumber) throws Exception{
     fieldArray2[1]=new FormFieldData();
     
     fieldArray2[0].fieldPath="form[estadocivil]";
-    fieldArray2[0].fieldFindType="id";
-    fieldArray2[0].fieldType="dropdown";
+    fieldArray2[0].fieldFindType=FieldKeyType.ID;
+    fieldArray2[0].fieldType=FieldType.DROPDOWN;
     fieldArray2[0].fieldValue="soltero";
 
     fieldArray2[1].fieldPath="form[send]";
-    fieldArray2[1].fieldFindType="id";
-    fieldArray2[1].fieldType="button";
+    fieldArray2[1].fieldFindType=FieldKeyType.ID;
+    fieldArray2[1].fieldType=FieldType.BUTTON;
     fieldArray2[1].fieldValue="";
 
      Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
@@ -83,8 +83,8 @@ public void openTask3(int casenumber) throws Exception{
 	 fieldArray3[0]=new FormFieldData();
 
 	 fieldArray3[0].fieldPath="form[send]";
-	 fieldArray3[0].fieldFindType="id";
-	 fieldArray3[0].fieldType="button";
+	 fieldArray3[0].fieldFindType=FieldKeyType.ID;
+	 fieldArray3[0].fieldType=FieldType.BUTTON;
 	 fieldArray3[0].fieldValue="";
 
 	  Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
@@ -102,13 +102,13 @@ public void openTask4(int casenumber) throws Exception{
      fieldArray4[1]=new FormFieldData();
 
 	 fieldArray4[0].fieldPath="form[profesion][ingeniero]";
-	 fieldArray4[0].fieldFindType="id";
-	 fieldArray4[0].fieldType="radiobutton";
+	 fieldArray4[0].fieldFindType=FieldKeyType.ID;
+	 fieldArray4[0].fieldType=FieldType.RADIOBUTTON;
 	 fieldArray4[0].fieldValue="";
 
 	 fieldArray4[1].fieldPath="form[send]";
-	 fieldArray4[1].fieldFindType="id";
-	 fieldArray4[1].fieldType="button";
+	 fieldArray4[1].fieldFindType=FieldKeyType.ID;
+	 fieldArray4[1].fieldType=FieldType.BUTTON;
 	 fieldArray4[1].fieldValue="";
 
 	  Assert.assertTrue(FormFiller.formFillElements(fieldArray4));

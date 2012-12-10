@@ -7,6 +7,7 @@ public enum FieldType{
 	TEXTAREA,
 	DROPDOWN,
 	RADIOBUTTON,
-	CHECK;
+	CHECK,
+	READONLY;
 
 }

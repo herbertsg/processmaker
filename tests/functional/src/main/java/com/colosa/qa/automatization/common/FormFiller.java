@@ -17,7 +17,6 @@ import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.openqa.selenium.JavascriptExecutor;
-import com.colosa.qa.automatization.common.*;
 
 
 

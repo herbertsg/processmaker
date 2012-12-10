@@ -27,23 +27,23 @@ public class TestEventSingleTask{
     fieldArray[3]=new FormFieldData();
 
     fieldArray[0].fieldPath="form[nombre]";
-    fieldArray[0].fieldFindType="id";
-    fieldArray[0].fieldType="textbox";
+    fieldArray[0].fieldFindType=FieldKeyType.ID;
+    fieldArray[0].fieldType=FieldType.TEXTBOX;
     fieldArray[0].fieldValue="rodrigo ivan";
 
     fieldArray[1].fieldPath="form[apellido]";
-    fieldArray[1].fieldFindType="id";
-    fieldArray[1].fieldType="textbox";
+    fieldArray[1].fieldFindType=FieldKeyType.ID;
+    fieldArray[1].fieldType=FieldType.TEXTBOX;
     fieldArray[1].fieldValue="lea plaza chavez";
 
     fieldArray[2].fieldPath="form[pais]";
-    fieldArray[2].fieldFindType="id";
-    fieldArray[2].fieldType="dropdown";
+    fieldArray[2].fieldFindType=FieldKeyType.ID;
+    fieldArray[2].fieldType=FieldType.DROPDOWN;
     fieldArray[2].fieldValue="bolivia";
 
     fieldArray[3].fieldPath="form[guardar]";
-    fieldArray[3].fieldFindType="id";
-    fieldArray[3].fieldType="button";
+    fieldArray[3].fieldFindType=FieldKeyType.ID;
+    fieldArray[3].fieldType=FieldType.BUTTON;
     fieldArray[3].fieldValue="";
 
     Assert.assertTrue(FormFiller.formFillElements(fieldArray));
@@ -65,13 +65,13 @@ public class TestEventSingleTask{
 		fieldArray2[1]=new FormFieldData();
 
 		fieldArray2[0].fieldPath="form[tipocuenta][ahorro]";
-		fieldArray2[0].fieldFindType="id";
-		fieldArray2[0].fieldType="radiobutton";
+		fieldArray2[0].fieldFindType=FieldKeyType.ID;
+		fieldArray2[0].fieldType=FieldType.RADIOBUTTON;
 		fieldArray2[0].fieldValue="";
 
 		fieldArray2[1].fieldPath="form[send]";
-		fieldArray2[1].fieldFindType="id";
-		fieldArray2[1].fieldType="button";
+		fieldArray2[1].fieldFindType=FieldKeyType.ID;
+		fieldArray2[1].fieldType=FieldType.BUTTON;
 		fieldArray2[1].fieldValue="";
 
      Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
@@ -93,13 +93,13 @@ public class TestEventSingleTask{
 		fieldArray3[1]=new FormFieldData();
 
 		fieldArray3[0].fieldPath="form[aprobado]";
-		fieldArray3[0].fieldFindType="id";
-		fieldArray3[0].fieldType="dropdown";
+		fieldArray3[0].fieldFindType=FieldKeyType.ID;
+		fieldArray3[0].fieldType=FieldType.DROPDOWN;
 		fieldArray3[0].fieldValue="Yes";
 
 		fieldArray3[1].fieldPath="form[send]";
-		fieldArray3[1].fieldFindType="id";
-		fieldArray3[1].fieldType="button";
+		fieldArray3[1].fieldFindType=FieldKeyType.ID;
+		fieldArray3[1].fieldType=FieldType.BUTTON;
 		fieldArray3[1].fieldValue="";
 
      Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
