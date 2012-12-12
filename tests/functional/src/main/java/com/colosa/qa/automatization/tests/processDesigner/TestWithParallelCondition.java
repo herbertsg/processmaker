@@ -19,7 +19,7 @@ public class TestWithParallelCondition{
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goDesigner();		
-		Pages.ProcessList().newProcess("Prueba 17","");
+		Pages.ProcessList().newProcess("Test Process with Parallel Condition" + new java.util.Date().toString(),"Test Process with Parallel Condition");
 		Assert.assertTrue(Pages.Designer().createTask());
 		Pages.Designer().moveTask("Task 1", -100, -300);
 		Assert.assertTrue(Pages.Designer().createTask());

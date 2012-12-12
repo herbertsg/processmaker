@@ -87,11 +87,8 @@ public class TestDerivationByEvaluation{
 			Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 			Pages.Main().logout();
 		}
-	}
-
-	@Test
-	public void openAndContinueCase() throws FileNotFoundException, IOException, Exception{
-		if(aprove=="No"){
+	
+		else if(aprove=="No"){
 			Pages.Login().gotoUrl();
 			Pages.Login().loginUser("ronald", "sample", "");
 			Pages.Main().goHome();

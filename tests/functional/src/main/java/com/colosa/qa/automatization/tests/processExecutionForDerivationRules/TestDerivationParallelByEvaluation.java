@@ -133,21 +133,21 @@ public class TestDerivationParallelByEvaluation{
 	@Test
 	public void openAndEndCase() throws FileNotFoundException, IOException, Exception{
 
-		if(aprove=="No"){
-			Pages.Login().gotoUrl();
-			Pages.Login().loginUser("admin", "admin", "");
-			Pages.Main().goHome();
-			Pages.Home().openCase(caseNum);
-			FormFieldData[] arrayData = new FormFieldData[1];
-			arrayData[0] = new FormFieldData();
-			arrayData[0].fieldPath = "form[continuar]";
-			arrayData[0].fieldFindType = FieldKeyType.ID;
-			arrayData[0].fieldType = FieldType.BUTTON;
-			arrayData[0].fieldValue = "";
-			Pages.InputDocProcess().openCaseFrame();
-			Assert.assertTrue(FormFiller.formFillElements(arrayData));
-			Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-			Pages.Main().logout();
-		}	
+		
+		Pages.Login().gotoUrl();
+		Pages.Login().loginUser("admin", "admin", "");
+		Pages.Main().goHome();
+		Pages.Home().openCase(caseNum);
+		FormFieldData[] arrayData = new FormFieldData[1];
+		arrayData[0] = new FormFieldData();
+		arrayData[0].fieldPath = "form[continuar]";
+		arrayData[0].fieldFindType = FieldKeyType.ID;
+		arrayData[0].fieldType = FieldType.BUTTON;
+		arrayData[0].fieldValue = "";
+		Pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(arrayData));
+		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.Main().logout();
+	
 	}
 }
