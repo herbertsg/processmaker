@@ -21,11 +21,11 @@ public class TestEmploymentApplicationProcess{
 	public void openAndRunProcess()  throws FileNotFoundException, IOException, Exception{
 
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "workflow");
+		Pages.Login().loginUser("hector", "sample", "workflow");
 		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Employment Application Process - v0.2 (Candidate CV uploading)");
+		caseNum = Pages.Home().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
 
-		FormFieldData[] arrayData = new FormFieldData[17];
+		FormFieldData[] arrayData = new FormFieldData[23];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
 		arrayData[2] = new FormFieldData();
@@ -43,6 +43,12 @@ public class TestEmploymentApplicationProcess{
 		arrayData[14] = new FormFieldData();
 		arrayData[15] = new FormFieldData();
 		arrayData[16] = new FormFieldData();
+		arrayData[17] = new FormFieldData();
+		arrayData[18] = new FormFieldData();
+		arrayData[19] = new FormFieldData();
+		arrayData[20] = new FormFieldData();
+		arrayData[21] = new FormFieldData();
+		arrayData[22] = new FormFieldData();
 
 		arrayData[0].fieldPath = "form[candidate_firstname]";
 		arrayData[0].fieldFindType = FieldKeyType.ID;
@@ -58,7 +64,7 @@ public class TestEmploymentApplicationProcess{
 		arrayData[2].fieldValue = "24";
 		arrayData[3].fieldPath = "form[candidate_birthdate]";
 		arrayData[3].fieldFindType = FieldKeyType.ID;
-		arrayData[3].fieldType = FieldType.TEXTBOX;
+		arrayData[3].fieldType = FieldType.READONLY;
 		arrayData[3].fieldValue = "1987-12-29";
 		arrayData[4].fieldPath = "form[candidate_birthcountry]";
 		arrayData[4].fieldFindType = FieldKeyType.ID;
@@ -86,7 +92,7 @@ public class TestEmploymentApplicationProcess{
 		arrayData[9].fieldValue = "Yes";
 		arrayData[10].fieldPath = "form[candidate_highschool_graduation_date]";
 		arrayData[10].fieldFindType = FieldKeyType.ID;
-		arrayData[10].fieldType = FieldType.TEXTBOX;
+		arrayData[10].fieldType = FieldType.READONLY;
 		arrayData[10].fieldValue = "2004-12-12";
 		arrayData[11].fieldPath = "form[candidate_highschool_name]";
 		arrayData[11].fieldFindType = FieldKeyType.ID;
@@ -106,12 +112,36 @@ public class TestEmploymentApplicationProcess{
 		arrayData[14].fieldValue = "Bachellor degree";
 		arrayData[15].fieldPath = "form[candidate_college_graduation_date]";
 		arrayData[15].fieldFindType = FieldKeyType.ID;
-		arrayData[15].fieldType = FieldType.TEXTBOX;
+		arrayData[15].fieldType = FieldType.READONLY;
 		arrayData[15].fieldValue = "2012-12-12";
 		arrayData[16].fieldPath = "form[_candidate_profession_]";
 		arrayData[16].fieldFindType = FieldKeyType.ID;
 		arrayData[16].fieldType = FieldType.TEXTBOX;
 		arrayData[16].fieldValue = "Systems Engineering";
+		arrayData[17].fieldPath = "form[candidate_currently_employed]";
+		arrayData[17].fieldFindType = FieldKeyType.ID;
+		arrayData[17].fieldType = FieldType.DROPDOWN;
+		arrayData[17].fieldValue = "Yes";
+		arrayData[18].fieldPath = "form[candidate_job_title]";
+		arrayData[18].fieldFindType = FieldKeyType.ID;
+		arrayData[18].fieldType = FieldType.TEXTBOX;
+		arrayData[18].fieldValue = "Developer";
+		arrayData[19].fieldPath = "form[candidate_current_yearly_salary]";
+		arrayData[19].fieldFindType = FieldKeyType.ID;
+		arrayData[19].fieldType = FieldType.TEXTBOX;
+		arrayData[19].fieldValue = "2346";
+		arrayData[20].fieldPath = "form[candidate_responsibilities]";
+		arrayData[20].fieldFindType = FieldKeyType.ID;
+		arrayData[20].fieldType = FieldType.TEXTBOX;
+		arrayData[20].fieldValue = "Development";
+		arrayData[21].fieldPath = "form[candidate_manager_contact_info]";
+		arrayData[21].fieldFindType = FieldKeyType.ID;
+		arrayData[21].fieldType = FieldType.TEXTBOX;
+		arrayData[21].fieldValue = "prueba@prueba.com";
+		arrayData[22].fieldPath = "form[candidate_reason_for_leaving]";
+		arrayData[22].fieldFindType = FieldKeyType.ID;
+		arrayData[22].fieldType = FieldType.TEXTBOX;
+		arrayData[22].fieldValue = "Disclaimer";
 
 		FormFieldData[][] gridData = new FormFieldData[addJob][7];
 
@@ -130,31 +160,31 @@ public class TestEmploymentApplicationProcess{
 		for(int rows = 0; rows<gridData.length;rows++)
 		{
 			count = rows + 1;
-			gridData[rows][0].fieldPath = "form[_work_experience_grid]["+count+"][_work_experience_start_date]";
+			gridData[rows][0].fieldPath = "form[work_experience_grid]["+count+"][work_experience_start_date]";
 			gridData[rows][0].fieldFindType = FieldKeyType.ID;
 			gridData[rows][0].fieldType = FieldType.TEXTBOX;
 			gridData[rows][0].fieldValue = "2008-02-29";
-			gridData[rows][1].fieldPath = "form[_work_experience_grid]["+count+"][_work_experience_ending_date]";
+			gridData[rows][1].fieldPath = "form[work_experience_grid]["+count+"][work_experience_ending_date]";
 			gridData[rows][1].fieldFindType = FieldKeyType.ID;
 			gridData[rows][1].fieldType = FieldType.TEXTBOX;
 			gridData[rows][1].fieldValue = "2009-02-28";
-			gridData[rows][2].fieldPath = "form[_work_experience_grid]["+count+"][_work_experience_company_name]";
+			gridData[rows][2].fieldPath = "form[work_experience_grid]["+count+"][work_experience_company_name]";
 			gridData[rows][2].fieldFindType = FieldKeyType.ID;
 			gridData[rows][2].fieldType = FieldType.TEXTBOX;
 			gridData[rows][2].fieldValue = "Empresa A";
-			gridData[rows][3].fieldPath = "form[_work_experience_grid]["+count+"][_work_experience_department]";
+			gridData[rows][3].fieldPath = "form[work_experience_grid]["+count+"][work_experience_department]";
 			gridData[rows][3].fieldFindType = FieldKeyType.ID;
 			gridData[rows][3].fieldType = FieldType.TEXTBOX;
 			gridData[rows][3].fieldValue = "Department B";
-			gridData[rows][4].fieldPath = "form[_work_experience_grid]["+count+"][work_experience_position]";
+			gridData[rows][4].fieldPath = "form[work_experience_grid]["+count+"][work_experience_position]";
 			gridData[rows][4].fieldFindType = FieldKeyType.ID;
 			gridData[rows][4].fieldType = FieldType.TEXTBOX;
 			gridData[rows][4].fieldValue = "Position C";
-			gridData[rows][5].fieldPath = "form[_work_experience_grid]["+count+"][work_experience_responsabilities]";
+			gridData[rows][5].fieldPath = "form[work_experience_grid]["+count+"][work_experience_responsabilities]";
 			gridData[rows][5].fieldFindType = FieldKeyType.ID;
 			gridData[rows][5].fieldType = FieldType.TEXTAREA;
 			gridData[rows][5].fieldValue = "Prueba...";
-			gridData[rows][6].fieldPath = "form[_work_experience_grid]["+count+"][_work_experience_leave_reason]";
+			gridData[rows][6].fieldPath = "form[work_experience_grid]["+count+"][work_experience_leave_reason]";
 			gridData[rows][6].fieldFindType = FieldKeyType.ID;
 			gridData[rows][6].fieldType = FieldType.DROPDOWN;
 			gridData[rows][6].fieldValue = "Left for other job";
@@ -177,27 +207,27 @@ public class TestEmploymentApplicationProcess{
 		{
 			count2 = rows + 1;
 
-			gridData2[rows][0].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_type]";
+			gridData2[rows][0].fieldPath = "form[work_reference]["+count2+"][reference_type]";
 			gridData2[rows][0].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][0].fieldType = FieldType.DROPDOWN;
 			gridData2[rows][0].fieldValue = "Work";
-			gridData2[rows][1].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_name]";
+			gridData2[rows][1].fieldPath = "form[work_reference]["+count2+"][reference_name]";
 			gridData2[rows][1].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][1].fieldType = FieldType.TEXTBOX;
 			gridData2[rows][1].fieldValue = "Prueba";
-			gridData2[rows][2].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_company]";
+			gridData2[rows][2].fieldPath = "form[work_reference]["+count2+"][reference_company]";
 			gridData2[rows][2].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][2].fieldType = FieldType.TEXTBOX;
 			gridData2[rows][2].fieldValue = "Empresa A";
-			gridData2[rows][3].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_relation]";
+			gridData2[rows][3].fieldPath = "form[work_reference]["+count2+"][reference_relation]";
 			gridData2[rows][3].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][3].fieldType = FieldType.TEXTBOX;
 			gridData2[rows][3].fieldValue = "Director";
-			gridData2[rows][4].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_phone_number]";
+			gridData2[rows][4].fieldPath = "form[work_reference]["+count2+"][reference_phone_number]";
 			gridData2[rows][4].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][4].fieldType = FieldType.TEXTBOX;
 			gridData2[rows][4].fieldValue = "222222222";
-			gridData2[rows][5].fieldPath = "form[_work_and_personal_references_grid]["+count2+"][_reference_email]";
+			gridData2[rows][5].fieldPath = "form[work_reference]["+count2+"][reference_email]";
 			gridData2[rows][5].fieldFindType = FieldKeyType.ID;
 			gridData2[rows][5].fieldType = FieldType.TEXTAREA;
 			gridData2[rows][5].fieldValue = "consulta@empresa.com";
@@ -211,7 +241,7 @@ public class TestEmploymentApplicationProcess{
 		arrayData2[0].fieldPath = "form[_cv_file]";
 		arrayData2[0].fieldFindType = FieldKeyType.ID;
 		arrayData2[0].fieldType = FieldType.TEXTBOX;
-		arrayData2[0].fieldValue = "/home/ernesto/Downloads/_1.pdf";
+		arrayData2[0].fieldValue = "";
 		arrayData2[1].fieldPath = "form[_submit_button_1]";
 		arrayData2[1].fieldFindType = FieldKeyType.ID;
 		arrayData2[1].fieldType = FieldType.BUTTON;
@@ -221,12 +251,12 @@ public class TestEmploymentApplicationProcess{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		WebElement btnLink=null;
 		WebElement btnLink2 =null;
-		btnLink = Browser.driver().findElement(By.id("form[_work_experience_grid][addLink]"));
+		btnLink = Browser.driver().findElement(By.id("form[work_experience_grid][addLink]"));
 		for(int rows = 1;rows<addJob;rows++)
 		{
 			btnLink.click();
 		}
-		btnLink2 = Browser.driver().findElement(By.id("form[_work_and_personal_references_grid][addLink]"));
+		btnLink2 = Browser.driver().findElement(By.id("form[work_reference][addLink]"));
 		for(int rows = 1;rows<addJob;rows++)
 		{
 			btnLink2.click();
@@ -238,7 +268,7 @@ public class TestEmploymentApplicationProcess{
 		Pages.Main().logout();
 	}
 	
-	@Test
+	/*@Test
 	public void continueProcess() throws FileNotFoundException, IOException, Exception{
 
 		Pages.Login().gotoUrl();
@@ -261,6 +291,6 @@ public class TestEmploymentApplicationProcess{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
-	}
+	}*/
 
 }

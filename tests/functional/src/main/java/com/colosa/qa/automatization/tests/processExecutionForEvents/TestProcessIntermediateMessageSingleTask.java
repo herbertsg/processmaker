@@ -43,7 +43,7 @@ public class TestProcessIntermediateMessageSingleTask{
 		arrayData[2].fieldValue = "12323";
 		arrayData[3].fieldPath = "form[fecha]";
 		arrayData[3].fieldFindType = FieldKeyType.ID;
-		arrayData[3].fieldType = FieldType.TEXTBOX;
+		arrayData[3].fieldType = FieldType.READONLY;
 		arrayData[3].fieldValue = "2012-12-04";
 		arrayData[4].fieldPath = "form[guardar]";
 		arrayData[4].fieldFindType = FieldKeyType.ID;
@@ -65,7 +65,7 @@ public class TestProcessIntermediateMessageSingleTask{
 		Pages.Main().goHome();
 		Pages.Main().goAdmin();		
 		Pages.Admin().goToLogs();
-		eventStatus = Pages.Admin().eventStatus(caseNum);
+		eventStatus = Pages.Admin().eventStatus(caseNum);		
 		Assert.assertEquals("CLOSE", eventStatus);
 		Pages.Main().goHome();
 		Pages.Home().openCase(caseNum);
