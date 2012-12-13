@@ -81,14 +81,14 @@ public class TestProcessIntermediateMessageMultipleTask{
 		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().openCase(caseNum);
-		FormFieldData[] arrayData2 = new FormFieldData[1];
-		arrayData2[0] = new FormFieldData();
-		arrayData2[0].fieldPath = "form[guardar]";
-		arrayData2[0].fieldFindType = FieldKeyType.ID;
-		arrayData2[0].fieldType = FieldType.BUTTON;
-		arrayData2[0].fieldValue = "";
+		FormFieldData[] arrayData3 = new FormFieldData[1];
+		arrayData3[0] = new FormFieldData();
+		arrayData3[0].fieldPath = "form[guardar]";
+		arrayData3[0].fieldFindType = FieldKeyType.ID;
+		arrayData3[0].fieldType = FieldType.BUTTON;
+		arrayData3[0].fieldValue = "";
 		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
+		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 	/*}

@@ -177,7 +177,7 @@ public class TestNewHireRequest{
 
 		Pages.Home().openCase(caseNum);
 
-		FormFieldData[] arrayData = new FormFieldData[3];
+		FormFieldData[] arrayData6 = new FormFieldData[3];
 		arrayData6[0] = new FormFieldData();
 		arrayData6[1] = new FormFieldData();
 		arrayData6[2] = new FormFieldData();
