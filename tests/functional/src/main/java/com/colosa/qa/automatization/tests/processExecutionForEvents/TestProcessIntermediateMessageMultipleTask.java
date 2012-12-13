@@ -48,10 +48,10 @@ public class TestProcessIntermediateMessageMultipleTask{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 
-	}
+	/*}
 
 	@Test
-	public void continueCase() throws FileNotFoundException, IOException, Exception{
+	public void continueCase() throws FileNotFoundException, IOException, Exception{*/
 		String eventStatus= "";
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("hector", "sample", "");
@@ -72,10 +72,10 @@ public class TestProcessIntermediateMessageMultipleTask{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
-	}
+	/*}
 
 	@Test
-	public void continueCase2() throws FileNotFoundException, IOException, Exception{
+	public void continueCase2() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
@@ -91,11 +91,11 @@ public class TestProcessIntermediateMessageMultipleTask{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
-	}
+	/*}
 
 
 	@Test
-	public void continueCase3() throws FileNotFoundException, IOException, Exception{
+	public void continueCase3() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("ronald", "sample", "");
