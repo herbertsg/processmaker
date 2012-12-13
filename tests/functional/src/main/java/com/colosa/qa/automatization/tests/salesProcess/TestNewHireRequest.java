@@ -65,10 +65,10 @@ public class TestNewHireRequest{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 
-	}
+/*	}
 
 	@Test
-	public void reviewRequest() throws FileNotFoundException, IOException, Exception{
+	public void reviewRequest() throws FileNotFoundException, IOException, Exception{*/
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("pablo", "sample", "");
 		Pages.Main().goHome();
@@ -89,9 +89,9 @@ public class TestNewHireRequest{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
-	}
+	/*}
 	@Test
-	public void budgetApproval() throws FileNotFoundException, IOException, Exception{
+	public void budgetApproval() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("iver", "sample", "");
@@ -120,10 +120,10 @@ public class TestNewHireRequest{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 
-	}
+	/*}
 
 	@Test
-	public void positionPublication() throws FileNotFoundException, IOException, Exception{
+	public void positionPublication() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("pablo", "sample", "");
@@ -170,10 +170,10 @@ public class TestNewHireRequest{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());		
-	}
+	/*}
 
 	@Test
-	public void endPositionPublication() throws FileNotFoundException, IOException, Exception{
+	public void endPositionPublication() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Home().openCase(caseNum);
 
