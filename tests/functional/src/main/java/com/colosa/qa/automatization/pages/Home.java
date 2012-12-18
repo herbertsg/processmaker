@@ -211,8 +211,9 @@ public class Home extends Main{
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
-			throw new Exception("Case # "+Integer.toString(numCase)+" not exist in Inbox folder");
-		return true;
+			return false;
+		else
+			return true;
 	}
 
 }
