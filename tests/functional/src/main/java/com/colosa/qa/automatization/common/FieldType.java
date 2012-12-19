@@ -8,6 +8,7 @@ public enum FieldType{
 	DROPDOWN,
 	RADIOBUTTON,
 	CHECK,
-	READONLY;
+	READONLY,
+	SUGGEST;
 
 }

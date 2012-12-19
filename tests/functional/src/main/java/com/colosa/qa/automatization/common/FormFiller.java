@@ -13,6 +13,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
+import java.util.List;
 import java.net.URL;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class FormFiller{
 			switch(fieldData[i].fieldFindType)
 			{
 
-				case ID: 	elem = Browser.driver().findElement(By.id(fieldData[i].fieldPath));
+				case ID: 		elem = Browser.driver().findElement(By.id(fieldData[i].fieldPath));
 										break;
 				
 				case XPATH: 	elem = Browser.driver().findElement(By.xpath(fieldData[i].fieldPath));
@@ -65,7 +66,7 @@ public class FormFiller{
 										 break;	
 
 				case DROPDOWN: Select droplist = new Select(elem);
-										 droplist.selectByVisibleText(fieldData[i].fieldValue);;
+										 droplist.selectByVisibleText(fieldData[i].fieldValue);
 										 break;
 
 				case RADIOBUTTON:	elem.click();
@@ -76,6 +77,38 @@ public class FormFiller{
 										
 				case READONLY:  ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i].fieldValue);
           						break;
+
+          		case SUGGEST: 	String cadIns = fieldData[i].fieldValue;
+          						char c;
+          						WebElement elem2 = null;
+          						WebElement sugElem = null;
+          						List<WebElement> listEl;          			
+          						for(int lon=0;lon<cadIns.length();lon++)	
+          						{
+          							c = cadIns.charAt(0);
+      								elem.sendKeys(Character.toString(c));
+      								Browser.waitForElement(By.xpath("//div[1]/ul/li"),5);      								
+  									elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+      								listEl = elem2.findElements(By.xpath("a"));
+      								for(WebElement we2:listEl)
+      								{
+      									if(we2.findElement(By.xpath("span[3]")).getText().equals(fieldData[i].fieldValue))
+      									{
+      										sugElem = we2;
+      										we2.click();
+      										break;
+      									}      									
+      								}
+
+	      							if(sugElem!=null)
+	      							{
+	      								break;
+	      							}
+          							cadIns = cadIns.substring(1, cadIns.length());
+
+          						}
+          						Thread.sleep(1000);
+          						break;		
          
 				default: 	break;																																						
 			}
