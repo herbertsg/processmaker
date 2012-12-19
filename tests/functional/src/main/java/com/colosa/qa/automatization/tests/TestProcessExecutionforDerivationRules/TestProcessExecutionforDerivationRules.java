@@ -18,7 +18,7 @@ public class TestProcessExecutionforDerivationRules{
 
 		//Open process
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "wsqa");
 		Pages.Main().goHome();
 		Pages.Home().gotoNewCase();	
 		int caseNumber = Pages.Home().startCase("Pruebas Integrales - Derivation rules (Task 1)");	
@@ -59,7 +59,7 @@ public class TestProcessExecutionforDerivationRules{
 		Pages.Main().logout();
 		//Open the task with a user of assigned group through the Trigger.
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("juan", "sample", "workflow");
+		Pages.Login().loginUser("juan", "sample", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoUnassigned();	
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNumber));		
@@ -84,7 +84,7 @@ public class TestProcessExecutionforDerivationRules{
 		Pages.Main().logout();
 		//Open the task with a user of the some group assign with Sekfservice.
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("jason", "sample", "workflow");
+		Pages.Login().loginUser("jason", "sample", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoUnassigned();	
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNumber));		
@@ -116,13 +116,13 @@ public class TestProcessExecutionforDerivationRules{
 		Pages.Main().logout();
 		//Check if the case does not exist in other groups
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("juan", "sample", "workflow");
+		Pages.Login().loginUser("juan", "sample", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoUnassigned();	
 		Assert.assertFalse("The case exist in Unassigned", Pages.Home().existCase(caseNumber));		
 		//Open the task and execute the rule derivate by value.
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoInbox();;	
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNumber));		

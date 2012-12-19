@@ -57,4 +57,10 @@ public class InputDocProcess extends Page{
 		
 	 }
 
+	public void switchToDefault() throws Exception{
+
+		Browser.driver().switchTo().defaultContent();
+		
+	 }
+
 }
