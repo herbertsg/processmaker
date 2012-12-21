@@ -90,4 +90,10 @@ public class Pages{
 
 		return taskProperties;
 	}
+
+	public static DynaformExecution DynaformExecution() throws Exception{
+		DynaformExecution dynaformExecution = new DynaformExecution();
+
+		return dynaformExecution;
+	}
 }

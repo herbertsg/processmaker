@@ -112,14 +112,18 @@ public class Browser {
 		String key = str;
 		if(str==null)
 			throw new Exception("The the search criteria must be specified");
-		str = ConfigurationSettings.getInstance().getSetting(str);
-		if(str == null)
-			throw new Exception("There's no value for the key: "+key);
 
-		str = String.format(str, args);
+		if(str.lastIndexOf("___")==-1) {
+			str = ConfigurationSettings.getInstance().getSetting(str);
 
-		if(str.lastIndexOf("___")==-1)
-			throw new Exception("The search prefix to find the element must be specified");
+			if(str == null)
+				throw new Exception("There's no value for the key: "+key);
+
+			str = String.format(str, args);
+
+			if(str.lastIndexOf("___")==-1)
+				throw new Exception("The search prefix to find the element must be specified");
+		}
 
 		String[] criteria = str.split("___", 2);		
 		
@@ -141,7 +145,6 @@ public class Browser {
 			by = By.xpath(criteria[1]);
 		else
 			throw new Exception("Invalid search prefix");
-
 		return by;
 	}	
 
