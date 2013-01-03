@@ -36,7 +36,7 @@ public class TestPMFNewCaseTest{
         int numberNewCase = Pages.Home().startCase("Testeo de funciones PMFNewCase (Creador de casos)");
         
         // switch to frame the dynaform
-        Pages.DynaformExecution().intoDynaform();
+        //Pages.DynaformExecution().intoDynaform();
         
         // get count value of field UID_CASE
         int countIdCase = Pages.DynaformExecution().getFieldProperty("UID_CASE","value").length();
@@ -50,7 +50,7 @@ public class TestPMFNewCaseTest{
         
         // out of frame of dynaform
         Pages.DynaformExecution().outDynaform();
-
+        
         // go submenu draft
         Pages.Home().gotoDraft();
 
@@ -58,7 +58,7 @@ public class TestPMFNewCaseTest{
         Pages.Home().openCase(Integer.parseInt(numberCaseGenerated));
 
         // switch to frame the dynaform
-        Pages.DynaformExecution().intoDynaform();
+        //Pages.DynaformExecution().intoDynaform();
 
         // get value of case generated in field NUM_CASE
         String fieldNOMBRE = Pages.DynaformExecution().getFieldProperty("NOMBRE","value");

@@ -96,4 +96,12 @@ public class Pages{
 
 		return dynaformExecution;
 	}
+
+	public static DebugExecution DebugExecution() throws Exception{
+		DebugExecution debugExecution = new DebugExecution();
+
+		return debugExecution;
+	}
+
+
 }

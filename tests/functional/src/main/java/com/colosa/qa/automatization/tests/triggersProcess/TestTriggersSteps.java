@@ -31,94 +31,67 @@ public class TestTriggersSteps{
 
         // go tab home
         Pages.Main().goHome();
-        
+
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         int numberNewCase = Pages.Home().startCase("Testeo de triggers en pasos (Tarea inicial)");
+        
+        // switch to frame the dynaform
+        //Pages.DynaformExecution().intoDynaform();
+        
+        Boolean debugActive = Pages.DebugExecution().verifyDebug();
+        
+        Assert.assertEquals("The Debug is inactive", debugActive, true);
 
-        // switch to frame the debug the case
-        Pages.DynaformExecution().intoDebug();
+        Pages.DebugExecution().goTabVariables();
 
-        // click in buuton "All" in variables of debug
-        WebElement buttonDebugFieldsAll = Pages.DynaformExecution().getObject("//*[@id='ext-gen75']");
-        //buttonDebugFieldsAll.click();
-
-        // verify if the field APELLIDO is validate
-        Assert.assertEquals("The debug is desactive", buttonDebugFieldsAll.getAttribute("innerHTML"), "All");
-        // case was create with field APELLIDO correctly
-
-        // get the value of field VARIABLE after the form
-        String valueVARIABLE = Pages.DynaformExecution().searchValueVariableDebug("VARIABLE");
+        String valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
 
         // verify if the field VARIABLE is validate
-        Assert.assertEquals("The debug is desactive", valueVARIABLE, "ANTES DE FORM");
+        Assert.assertEquals("The trigger after form not work", valueVARIABLE, "ANTES DE FORM");
         // trigger after the form working
-         
-        // switch to frame of dynaform
-        //Pages.DynaformExecution().intoDynaform();
-
-        //WebElement buttonSubmit Pages.DynaformExecution().getField("SUBMIT");
-
-        /*
-        // get count value of field UID_CASE
-        int countIdCase = Pages.DynaformExecution().getFieldProperty("UID_CASE","value").length();
-
-        // get number of case generated in field NUM_CASE
-        String numberCaseGenerated = Pages.DynaformExecution().getFieldProperty("NUM_CASE","value");
-
-        // verify if the code is validate
-        Assert.assertTrue("No case has created ", (countIdCase == 32) );
-        // case was create correctly
         
-        // out of frame of dynaform
-        Pages.DynaformExecution().outDynaform();
+        // get button submit
+        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("SUBMIT");
 
-        // go submenu draft
-        Pages.Home().gotoDraft();
+        // click to button submit
+        buttonSUBMIT.click();
 
-        // open the case generated
-        Pages.Home().openCase(Integer.parseInt(numberCaseGenerated));
-
-        // switch to frame the dynaform
-        Pages.DynaformExecution().intoDynaform();
-
-        // get value of case generated in field NUM_CASE
-        String fieldNOMBRE = Pages.DynaformExecution().getFieldProperty("NOMBRE","value");
-
-        // get value of case generated in field APELLIDO
-        String fieldAPELLIDO = Pages.DynaformExecution().getFieldProperty("APELLIDO","value");
-
-        // get value of case generated in field CELULAR
-        String fieldCELULAR = Pages.DynaformExecution().getFieldProperty("CELULAR","value");
-
-        // get value of case generated in field OBSERVACIONES
-        String fieldOBSERVACIONES = Pages.DynaformExecution().getFieldProperty("OBSERVACIONES","value");
-
-
-        // verify if the field NOMBRE is validate
-        Assert.assertEquals("No case has created with field NOMBRE ", fieldNOMBRE, "BRAYAN");
-        // case was create with field NOMBRE correctly
+        // get the value of field VARIABLE after the form
+        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
         
-        // verify if the field APELLIDO is validate
-        Assert.assertEquals("No case has created with field APELLIDO ", fieldAPELLIDO, "PEREYRA");
-        // case was create with field APELLIDO correctly
+        // verify if the field VARIABLE is validate
+        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "DESPUES DE FORM");
+        // trigger after the form working
         
-        // verify if the field CELULAR is validate
-        Assert.assertEquals("No case has created with field CELULAR ", fieldCELULAR, "70622818");
-        // case was create with field CELULAR correctly
-         
-        // verify if the field OBSERVACIONES is validate
-        Assert.assertEquals("No case has created with field OBSERVACIONES ", fieldOBSERVACIONES, "ESTA ES UNA CREACION DE CASOS VIA TRIGGER");
-        // case was create with field OBSERVACIONES correctly
-        */
+        // get button continue
+        WebElement buttonContinue = Pages.DynaformExecution().getObject("//*[@id='publisherContent[2]']/div/input");
+
+        // click to button continue
+        buttonContinue.click();
+
+        // get the value of field VARIABLE after the form
+        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        
+        // verify if the field VARIABLE is validate
+        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "ANTES DE ASIGNAR");
+        // trigger after the form working
+        
+        // get button continue
+        WebElement buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+
+        // click to button continue
+        buttonContinueSubmit.click();
+
+        // get the value of field VARIABLE after the form
+        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        
+        // verify if the field VARIABLE is validate
+        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "DESPUES DE DERIVAR");
+        // trigger after the form working
     }
 
     @After
     public void cleanup(){
-        //Browser.close();
+        Browser.close();
     }
-//*[@id="ext-gen70"]/div[11]/table/tbody/tr/td[1]/div
-//*[@id="ext-gen70"]/div[11]/table/tbody/tr/td[2]/div
-//
-//*[@id="ext-gen75"]
-
 }
