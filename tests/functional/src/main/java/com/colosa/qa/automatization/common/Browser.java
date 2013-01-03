@@ -126,7 +126,8 @@ public class Browser {
 		}
 
 		String[] criteria = str.split("___", 2);		
-		
+
+		System.out.println("searching element: criteria: "+ criteria[0] + " value:" + criteria[1]);
 		if(criteria[0].equals("id"))
 			by = By.id(criteria[1]);
 		else if(criteria[0].equals("cssSelector"))

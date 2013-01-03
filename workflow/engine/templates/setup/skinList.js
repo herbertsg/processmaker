@@ -524,14 +524,18 @@ newSkin = function(){
               PMExt.notify(_('ID_SKINS'),_('ID_SKIN_SUCCESS_CREATE'));
             },
             failure: function(form, action) {
-              Ext.getCmp("newDialog").destroy();
-
-              if( !action.result ) {
-                Ext.MessageBox.alert("error", action.response.responseText);
+              if (typeof(action.failureType) != 'undefined') {
+                Ext.MessageBox.alert("error", _('ID_REQUIRED_FIELDS_ERROR'));
+                newDialog.getEl().unmask();
                 return;
+              } else {
+                Ext.getCmp("newDialog").destroy();
+                if( !action.result ) {
+                  Ext.MessageBox.alert("error", action.response.responseText);
+                  return;
+                }
+                Ext.MessageBox.alert("error", action.result.error);
               }
-              Ext.MessageBox.alert("error", action.result.error);
-
             },
             scope: Ext.getCmp("newform"),
             // add some vars to the request, similar to hidden fields
@@ -811,6 +815,10 @@ function changeSkin(newSkin,currentSkin){
             } else {
               newLocation = currentLocation.replace("/" + currentSkin + "/", "/" + newSkin + "/setup/");
             }
+          }
+          var point = newLocation.indexOf('s=SKINS');
+          if (point == -1) {
+            newLocation = newLocation +"?s=SKINS";
           }
           top.location.href = newLocation;
         }
