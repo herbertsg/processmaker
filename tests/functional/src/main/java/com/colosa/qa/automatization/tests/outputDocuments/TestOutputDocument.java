@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import org.openqa.selenium.WebDriver;
 import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
 
