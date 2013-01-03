@@ -15,7 +15,7 @@ public class SubprocessesTest{
 	protected static int caseNum;
 	protected static String name = "Ernesto";
 	protected static String lastName = "Vega";
-	protected static String salary = "23564";
+	protected static String salary = "23,564.00";
 	protected static String desc = "Prueba.....";
 
 	@Test

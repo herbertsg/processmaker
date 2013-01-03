@@ -46,3 +46,14 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/triggersProcess/*.java
 
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/dependentFields/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/subprocessesTest/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/suggestFields/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/suggestDependentFields/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/gridFunctions/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/gridFunctionsBetweenColumns/*.java
+
