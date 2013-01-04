@@ -17,11 +17,22 @@ public class TestDependentFields{
 	protected static String country = "Bolivia";
 	protected static String state = "Chuquisaca";
 	protected static String location = "Sucre";
+	protected static String state1 = "La Paz";
+	protected static String location1 = "Apolo";
+
+	protected static String country2 = "Argentina";
+	protected static String state2 = "Jujuy";
+	protected static String location2 = "San Pedro";
+	protected static String state22 = "Chubut";
+	protected static String location22 = "Trelew";
 
 	protected static String userName = "amy";
 	protected static String completeName = "Amy Connelly";
 	protected static String userDepartment = "Administrative Division";
 
+	protected static String userName1 = "admin";
+	protected static String completeName1 = "Administrator";
+	protected static String userDepartment1 = "";
 	@Test
 	public void testDependentFieldsCase() throws FileNotFoundException, IOException, Exception{
 
@@ -55,6 +66,35 @@ public class TestDependentFields{
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
 		
+		//change values in fields
+		Pages.DynaformExecution().setFieldValue("state", state1, FieldType.DROPDOWN);
+		Pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("location"), location1);
+
+		//change fields in suggest
+		Pages.DynaformExecution().setFieldValue("suggest_country_label", country2, FieldType.SUGGEST);
+		Pages.DynaformExecution().sleep(1000);
+		Pages.DynaformExecution().setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
+		Pages.DynaformExecution().sleep(1000);
+		Pages.DynaformExecution().setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
+		Pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state"), state2);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location2);
+		Pages.DynaformExecution().setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
+		Pages.DynaformExecution().sleep(1000);
+		Pages.DynaformExecution().setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
+		Pages.DynaformExecution().sleep(1000);		
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state22);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location22);
+
+		//change fields in textbox
+		Pages.DynaformExecution().setFieldValue("username", userName1, FieldType.TEXTBOX);
+		//send tab to activate dependent fields
+		Pages.DynaformExecution().sendTab("username");
+		Pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
+		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
+
 		Pages.DynaformExecution().outDynaform();
 
 		Pages.Main().logout();
