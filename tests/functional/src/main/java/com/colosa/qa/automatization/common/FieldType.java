@@ -9,6 +9,7 @@ public enum FieldType{
 	RADIOBUTTON,
 	CHECK,
 	READONLY,
-	SUGGEST;
+	SUGGEST,
+	HIDDEN;
 
 }

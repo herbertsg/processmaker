@@ -48,6 +48,53 @@ public class DynaformExecution extends Page {
         Browser.driver().switchTo().defaultContent();
     }
 
+    public FieldType detectFieldType(WebElement element) throws Exception{
+        //try to get field type using tagname
+        String elementTagName = element.getTagName();
+
+        switch(elementTagName){
+            case "select": //Dropdown, yesno (no way to differentiate)
+                return FieldType.DROPDOWN;
+            case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
+                        // suggest (type=hidden), 
+                String typeAttribute = element.getAttribute("type");
+                if(typeAttribute.equals("hidden")){
+                    //this can be a suggest field, find previous simbling
+                    //if suggest a label element is present
+                    String idElementAttribute = element.getAttribute("id");
+                    //get sub_string
+                    String elementId;
+                    elementId = idElementAttribute.substring(idElementAttribute.indexOf('['),idElementAttribute.lastIndexOf(']'));
+                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("form[" + elementId + "_label]");
+                    if(suggestElementExists){
+                        return FieldType.SUGGEST;
+                    }
+
+                    //else return hidden field
+                    return FieldType.HIDDEN;
+                }
+                if(typeAttribute.equals("text")){
+                    //text field
+                    return FieldType.TEXTBOX;
+                }
+                if(typeAttribute.equals("password")){
+                    return FieldType.TEXTBOX;
+                }
+                if(typeAttribute.equals("radio")){
+                    return FieldType.RADIOBUTTON;
+                }
+                if(typeAttribute.equals("checkbox")){
+                    return FieldType.CHECK;   
+                }
+            break;
+            case "textarea":
+                return FieldType.TEXTAREA;
+            default:
+                return null;
+        }
+        return null;
+    }
+
     // get field of dynaform
     public WebElement getField(String nameField) throws Exception{
         intoDynaform();
@@ -154,7 +201,7 @@ public class DynaformExecution extends Page {
         WebElement element = Browser.getElement(str);
         
         Select droplist = new Select(element);
-        
+        //verify if the dropdown is filled
         return droplist.getFirstSelectedOption().getText();
     }
 

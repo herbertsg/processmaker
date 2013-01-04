@@ -34,7 +34,7 @@ public class TestDependentFields{
 
 		Pages.DynaformExecution().setFieldValue("country", country, FieldType.DROPDOWN);
 
-		//sleep two seconds to wait ajax result
+		//sleep one second to wait ajax result
 		Pages.DynaformExecution().sleep(1000);
 
 		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("state"), state);
@@ -43,23 +43,16 @@ public class TestDependentFields{
 		Pages.DynaformExecution().setFieldValue("suggest_country_label", country, FieldType.SUGGEST);
 		Pages.DynaformExecution().sleep(1000);
 		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
-		//Assert.assertEquals(DynaformExecution.getFieldValue("suggest_location"), location);
+		//Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
 		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state);
-		//Assert.assertEquals(DynaformExecution.getFieldValue("suggest_location2"), location);
+		//Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
 
 		Pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
 		//send tab to activate dependent fields
 		Pages.DynaformExecution().sendTab("username");
 		Pages.DynaformExecution().sleep(1000);
-		/*String completeName = Pages.DynaformExecution().getFieldValue("userCompleteName");
-		System.out.printf("CompleteName: %s \n", completeName); */
 
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
-		/*
-		String department = Pages.DynaformExecution().getFieldValue("userDepartment");
-		System.out.printf("User Department: %s \n", department);
-		department = Pages.DynaformExecution().getFieldValue("userDepartment");
-		System.out.printf("User Department: %s \n", department);		*/
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
 		
 		Pages.DynaformExecution().outDynaform();

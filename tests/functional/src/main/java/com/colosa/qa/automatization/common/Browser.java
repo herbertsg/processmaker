@@ -125,9 +125,18 @@ public class Browser {
 				throw new Exception("The search prefix to find the element must be specified");
 		}
 
-		String[] criteria = str.split("___", 2);		
+		by = Browser.getBySearchCriteriaUsingCriteria(str);
+
+		return by;
+	}	
+
+	public static By getBySearchCriteriaUsingCriteria(String searchCriteria) throws Exception{
+		By by = null;
+
+		String[] criteria = searchCriteria.split("___", 2);		
 
 		System.out.println("searching element: criteria: "+ criteria[0] + " value:" + criteria[1]);
+
 		if(criteria[0].equals("id"))
 			by = By.id(criteria[1]);
 		else if(criteria[0].equals("cssSelector"))
@@ -146,7 +155,7 @@ public class Browser {
 			by = By.xpath(criteria[1]);
 		else
 			throw new Exception("Invalid search prefix");
-		return by;
+		return by;		
 	}	
 
 	public static WebElement getElement(String str) throws Exception{
@@ -236,6 +245,14 @@ public class Browser {
 		return Browser.elementExists(key, 1);
 	}
 
+	public static Boolean elementExistsSearchCriteria(String searchCriteria, int ocurrences) throws Exception{
+		return (Browser.findElements(Browser.getBySearchCriteriaUsingCriteria(searchCriteria)).size()) == ocurrences;
+	}
+
+	public static Boolean elementExistsSearchCriteria(String searchCriteria) throws Exception{
+		return Browser.elementExistsSearchCriteria(searchCriteria, 1);
+	}
+
 	public static boolean waitForElement(By elementLocator, long timeoutSeconds) throws Exception{
         
         final By elem = elementLocator;
@@ -259,4 +276,9 @@ public class Browser {
 		wait.until(ExpectedConditions.presenceOfElementLocated(Browser.getBySearchCriteria(key)));
      }     
 
+     public static List<WebElement> getPreviousSimblingElements(WebElement currentElement){
+		List<WebElement> resultElements = currentElement.findElements(By.xpath("preceding-sibling"));
+		
+		return resultElements;
+     }
 }
