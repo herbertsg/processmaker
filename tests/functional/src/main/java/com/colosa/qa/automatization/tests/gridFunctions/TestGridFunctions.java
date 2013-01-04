@@ -80,10 +80,10 @@ public class TestGridFunctions{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 	
-	}
+	/*}
 
 	@Test
-	public void continueTestCase() throws FileNotFoundException, IOException, Exception{
+	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("iver", "sample", "");
