@@ -49,50 +49,71 @@ public class DynaformExecution extends Page {
     }
 
     public FieldType detectFieldType(WebElement element) throws Exception{
+        FieldType elementFieldType = null;
+
+        System.out.println("Detect element type");
+
         //try to get field type using tagname
         String elementTagName = element.getTagName();
 
         switch(elementTagName){
             case "select": //Dropdown, yesno (no way to differentiate)
-                return FieldType.DROPDOWN;
+                System.out.println("Element Type: DropDown");
+                elementFieldType = FieldType.DROPDOWN;
+                break;
             case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
                         // suggest (type=hidden), 
+                System.out.println("HTML tag: input");
                 String typeAttribute = element.getAttribute("type");
+                System.out.println("HTML type: " + typeAttribute);
                 if(typeAttribute.equals("hidden")){
                     //this can be a suggest field, find previous simbling
                     //if suggest a label element is present
                     String idElementAttribute = element.getAttribute("id");
+                    System.out.println("HTML id: " + idElementAttribute);
                     //get sub_string
                     String elementId;
-                    elementId = idElementAttribute.substring(idElementAttribute.indexOf('['),idElementAttribute.lastIndexOf(']'));
-                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("form[" + elementId + "_label]");
-                    if(suggestElementExists){
-                        return FieldType.SUGGEST;
-                    }
+                    elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
+                    System.out.println("HTML element id: " + elementId);
+                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id___form[" + elementId + "_label]");
 
-                    //else return hidden field
-                    return FieldType.HIDDEN;
+                    if(suggestElementExists){
+                        System.out.println("Element Type: SUGGEST");
+                        elementFieldType = FieldType.SUGGEST;
+                    }
+                    else {
+                        //else return hidden field
+                        System.out.println("Element Type: HIDDEN");
+                        elementFieldType = FieldType.HIDDEN;
+                    }
                 }
                 if(typeAttribute.equals("text")){
                     //text field
-                    return FieldType.TEXTBOX;
+                    System.out.println("Element Type: TEXTBOX");
+                    elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("password")){
-                    return FieldType.TEXTBOX;
+                    System.out.println("Element Type: TEXTBOX");
+                    elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("radio")){
-                    return FieldType.RADIOBUTTON;
+                    System.out.println("Element Type: RADIOBUTTON");
+                    elementFieldType = FieldType.RADIOBUTTON;
                 }
                 if(typeAttribute.equals("checkbox")){
-                    return FieldType.CHECK;   
+                    System.out.println("Element Type: CHECK");
+                    elementFieldType = FieldType.CHECK;
                 }
-            break;
+                break;
             case "textarea":
-                return FieldType.TEXTAREA;
+                System.out.println("Element Type: TEXTAREA");
+                elementFieldType = FieldType.TEXTAREA;
             default:
-                return null;
+                elementFieldType = null;
         }
-        return null;
+
+
+        return elementFieldType;
     }
 
     // get field of dynaform
@@ -101,12 +122,37 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", nameField);
+
+        System.out.println("element to search for: " + str);
+
         return Browser.getElement(str);
     }
+
+    public void setFieldValue(String fieldName, String value) throws Exception{
+        String str = "";
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(fieldName);
+
+        System.out.println("element : " + element.getAttribute("value"));
+
+        fieldType = this.detectFieldType(element);
+
+        this.setFieldValue(fieldName, value, fieldType);
+
+        return;
+    }
+
 
     public void setFieldValue(String fieldName, String value, FieldType fieldType) throws Exception{
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+
+        if(fieldType == FieldType.SUGGEST){
+           fieldName = fieldName + "_label"; 
+        }
+
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         System.out.println("element to search for: " + str);
@@ -118,14 +164,18 @@ public class DynaformExecution extends Page {
 
         switch(fieldType)
         {
-            case TEXTBOX: element.sendKeys(value);
-                                    break;
+            case TEXTBOX: 
+                this.clear(element);
+                element.sendKeys(value);
+                break;
 
             case BUTTON:    element.click();
                                     break;  
 
-            case TEXTAREA: element.sendKeys(value);
-                                     break; 
+            case TEXTAREA: 
+                this.clear(element);
+                element.sendKeys(value);
+                break; 
 
             case DROPDOWN: 
                 Select droplist = new Select(element);
@@ -141,42 +191,64 @@ public class DynaformExecution extends Page {
             case READONLY:  ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
                             break;
 
-            case SUGGEST:   String cadIns = value;
-                            char c;
-                            WebElement elem2 = null;
-                            WebElement sugElem = null;
-                            List<WebElement> listEl;                    
-                            for(int lon=0;lon<cadIns.length();lon++)    
-                            {
-                                c = cadIns.charAt(0);
-                                element.sendKeys(Character.toString(c));
-                                try {
-                                    Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
-                                } catch(Exception ex){
-                                    //element not found
-                                    cadIns = cadIns.substring(1, cadIns.length());
-                                    continue;
-                                }
-                                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
-                                listEl = elem2.findElements(By.xpath("a"));
-                                for(WebElement we2:listEl)
-                                {
-                                    if(we2.findElement(By.xpath("span[3]")).getText().equals(value))
-                                    {
-                                        sugElem = we2;
-                                        we2.click();
-                                        break;
-                                    }                                       
-                                }
+            case SUGGEST:   //using label textbox
+                WebElement elem2 = null;
+                List<WebElement> listEl;
+                //WebElement sugElem = null;
+                this.clear(element);
 
-                                if(sugElem!=null)
-                                {
-                                    break;
-                                }
-                                cadIns = cadIns.substring(1, cadIns.length());
-                            }
-                            //Thread.sleep(1000);
-                            break;      
+                element.sendKeys(value);
+                
+                Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
+                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                listEl = elem2.findElements(By.xpath("a"));
+                for(WebElement we2:listEl)
+                {
+                    if(we2.findElement(By.xpath("span[3]")).getText().equals(value))
+                    {
+                        //sugElem = we2;
+                        we2.click();
+                        break;
+                    }
+                }                
+                /*
+                String cadIns = value;
+                char c;
+                WebElement elem2 = null;
+                WebElement sugElem = null;
+                List<WebElement> listEl;                    
+                for(int lon=0;lon<cadIns.length();lon++)    
+                {
+                    c = cadIns.charAt(0);
+                    element.sendKeys(Character.toString(c));
+                    try {
+                        Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
+                    } catch(Exception ex){
+                        //element not found
+                        cadIns = cadIns.substring(1, cadIns.length());
+                        continue;
+                    }
+                    elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                    listEl = elem2.findElements(By.xpath("a"));
+                    for(WebElement we2:listEl)
+                    {
+                        if(we2.findElement(By.xpath("span[3]")).getText().equals(value))
+                        {
+                            sugElem = we2;
+                            we2.click();
+                            break;
+                        }                                       
+                    }
+
+                    if(sugElem!=null)
+                    {
+                        break;
+                    }
+                    cadIns = cadIns.substring(1, cadIns.length());
+                }
+                //Thread.sleep(1000);
+                */
+                break;      
      
             default:    break;                                                                                                                                                      
         }
@@ -245,5 +317,20 @@ public class DynaformExecution extends Page {
         WebElement element = Browser.getElement(str);
         element.sendKeys(Keys.TAB);
      }     
+
+     public void clear(WebElement element) throws Exception {
+        element.clear();
+     }
+
+     public void clear(String fieldName) throws Exception {
+        
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        WebElement element = Browser.getElement(str);
+
+        this.clear(element);
+     }
 
 }

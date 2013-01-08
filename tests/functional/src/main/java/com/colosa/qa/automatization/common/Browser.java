@@ -133,9 +133,17 @@ public class Browser {
 	public static By getBySearchCriteriaUsingCriteria(String searchCriteria) throws Exception{
 		By by = null;
 
+		System.out.println("searching element using criteria => "+ searchCriteria);
+
+		if(searchCriteria==null)
+			throw new Exception("The the search criteria must be specified");
+
+		if(searchCriteria.lastIndexOf("___")==-1)
+			throw new Exception("The search prefix to find the element must be specified");
+
 		String[] criteria = searchCriteria.split("___", 2);		
 
-		System.out.println("searching element: criteria: "+ criteria[0] + " value:" + criteria[1]);
+		System.out.println("searching element => criteria: "+ criteria[0] + " value:" + criteria[1]);
 
 		if(criteria[0].equals("id"))
 			by = By.id(criteria[1]);
@@ -157,6 +165,10 @@ public class Browser {
 			throw new Exception("Invalid search prefix");
 		return by;		
 	}	
+
+	public static WebElement getParent() throws Exception{
+		return Browser.findElement(Browser.getBySearchCriteriaUsingCriteria("xpath___.."));	
+	}
 
 	public static WebElement getElement(String str) throws Exception{
 		return Browser.findElement(Browser.getBySearchCriteria(str));	
