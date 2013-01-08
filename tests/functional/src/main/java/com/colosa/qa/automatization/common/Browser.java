@@ -166,8 +166,8 @@ public class Browser {
 		return by;		
 	}	
 
-	public static WebElement getParent() throws Exception{
-		return Browser.findElement(Browser.getBySearchCriteriaUsingCriteria("xpath___.."));	
+	public static WebElement getParent(WebElement element) throws Exception{		
+		return element.findElement(By.xpath(".."));
 	}
 
 	public static WebElement getElement(String str) throws Exception{
