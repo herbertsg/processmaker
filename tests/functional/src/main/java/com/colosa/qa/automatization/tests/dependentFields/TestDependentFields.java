@@ -107,6 +107,17 @@ public class TestDependentFields{
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
 
+		//test other dependent fields
+		Pages.DynaformExecution().setFieldValue("userName2", userName1); //admin
+		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
+		String listBoxValue = Pages.DynaformExecution().getFieldValue("listBoxField");
+		System.out.println("ListBox value:" + listBoxValue);
+		//Assert.assertFalse(Pages.DynaformExecution().getFieldValue("listBoxField").equals("")); //at least one login
+		String totalLogins = Pages.DynaformExecution().getFieldValue("hiddenField");
+		System.out.println("Total logins:" + totalLogins);
+		//Assert.assertEquals(Pages.DynaformExecution().getFieldValue("hiddenField"), //completeName1);
+
+
 		Pages.DynaformExecution().outDynaform();
 
 		Pages.Main().logout();
