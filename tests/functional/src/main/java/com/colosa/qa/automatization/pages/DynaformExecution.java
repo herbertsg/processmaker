@@ -51,15 +51,16 @@ public class DynaformExecution extends Page {
     public FieldType detectFieldType(WebElement element) throws Exception{
         FieldType elementFieldType = null;
 
-        System.out.println("Detect element type");
+        System.out.println("detectFieldType:");
 
         //try to get field type using tagname
         String elementTagName = element.getTagName();
+        System.out.println(" element tagName:" + elementTagName);
 
         switch(elementTagName){
             case "select": 
                 String multipleAttribute = element.getAttribute("multiple");
-                if(multipleAttribute.equals("multiple")){ //listbox
+                if(multipleAttribute != null && multipleAttribute.equals("multiple")){ //listbox
                     System.out.println("Element Type: ListBox");
                     elementFieldType = FieldType.LISTBOX;
                 }
@@ -346,6 +347,8 @@ public class DynaformExecution extends Page {
     }
 
     public String getFieldText(String fieldName) throws Exception{
+        System.out.println("getFieldText: " + fieldName);
+
         FieldType fieldType;
         String elementText = "";
 
@@ -382,6 +385,8 @@ public class DynaformExecution extends Page {
             default:    
                 break;                                                                                                                                                      
         }
+
+        System.out.println(" field text: " + elementText);
 
         return elementText;        
     }

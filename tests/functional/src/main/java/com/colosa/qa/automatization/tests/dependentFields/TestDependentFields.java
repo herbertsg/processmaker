@@ -50,8 +50,8 @@ public class TestDependentFields{
 		//sleep one second to wait ajax result
 		Pages.DynaformExecution().sleep(1000);
 
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("state"), state);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("location"), location);
+		Assert.assertEquals(Pages.DynaformExecution().getFieldText("state"), state);
+		Assert.assertEquals(Pages.DynaformExecution().getFieldText("location"), location);
 
 		//Pages.DynaformExecution().setFieldValue("suggest_country", country, FieldType.SUGGEST);
 		Pages.DynaformExecution().setFieldValue("suggest_country", country);
