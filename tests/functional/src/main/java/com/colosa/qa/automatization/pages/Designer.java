@@ -457,5 +457,39 @@ public class Designer{
 
 	}
 
+	public void activeDebug(Boolean flagActiveDebug) throws Exception{
+
+		Actions action = new Actions(Browser.driver());
+		Browser.waitForElement(By.className("processmap_title___processmaker"),15);
+		WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
+		action.contextClick(gridPanel).perform();
+
+		WebElement divContainer = Browser.driver().findElement(By.className("app_menuRight_container___processmaker"));
+		WebElement optionElement = divContainer.findElement(By.xpath("div[1]"));
+		optionElement.click();
+
+		WebElement checkDebug = Browser.driver().findElement(By.id("form[PRO_DEBUG]"));
+		WebElement submitButton = Browser.driver().findElement(By.id("form[SUBMIT]"));
+
+		Boolean checkedDebug = true;
+		if (checkDebug.getAttribute("checked") == null) {
+			checkedDebug = false;
+		}
+
+		if ( (!checkedDebug) && (flagActiveDebug) ) {
+			checkDebug.click();
+			submitButton.click();
+			System.out.println("Debug active :)");
+		} else if ( (checkedDebug) && (flagActiveDebug) ) {
+			System.out.println("Debug active :|");
+		} else if ( (!checkedDebug) && (!flagActiveDebug) ) {
+			System.out.println("Debug desactive :|");
+		} else if ( (checkedDebug) && (!flagActiveDebug) ) {
+			checkDebug.click();
+			submitButton.click();
+			System.out.println("Debug desactive :)");
+		}
+	}
+
 
 }

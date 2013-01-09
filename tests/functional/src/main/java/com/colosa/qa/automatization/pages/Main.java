@@ -39,6 +39,7 @@ public class Main extends Page{
 	}*/
 
 	public void goHome() throws FileNotFoundException, IOException, Exception{
+		Browser.driver().switchTo().defaultContent();
 		this.weSectionButton = Browser.getElement("main.WebElement.HomeMenu");
 		
 		this.weSectionButton.click();
@@ -46,18 +47,21 @@ public class Main extends Page{
 	}
 
 	public void goDesigner() throws FileNotFoundException, IOException, Exception{
-		this.weSectionButton = Browser.getElement("main.WebElement.DesignerMenu");
+		Browser.driver().switchTo().defaultContent();
+		this.weSectionButton = Browser.driver().findElement(By.id("PROCESSES"));
 		
 		this.weSectionButton.click();
 	}
 
 	public void goDashboards() throws FileNotFoundException, IOException, Exception{
+		Browser.driver().switchTo().defaultContent();
 		this.weSectionButton = Browser.getElement("main.WebElement.DashboardMenu");
 
 		this.weSectionButton.click();
 	}
 
 	public void goAdmin() throws FileNotFoundException, IOException, Exception{
+		Browser.driver().switchTo().defaultContent();
 		this.weSectionButton = Browser.getElement("main.WebElement.AdminMenu");
 		
 		this.weSectionButton.click();
