@@ -61,63 +61,63 @@ public class DynaformExecution extends Page {
             case "select": 
                 String multipleAttribute = element.getAttribute("multiple");
                 if(multipleAttribute != null && multipleAttribute.equals("multiple")){ //listbox
-                    System.out.println("Element Type: ListBox");
+                    System.out.println(" Element Type: ListBox");
                     elementFieldType = FieldType.LISTBOX;
                 }
                 else { //Dropdown, yesno (no way to differentiate)
-                    System.out.println("Element Type: DropDown");
+                    System.out.println(" Element Type: DropDown");
                     elementFieldType = FieldType.DROPDOWN;
                 }
                 break;
             case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
                         // suggest (type=hidden), 
-                System.out.println("HTML tag: input");
+                System.out.println(" HTML tag: input");
                 String typeAttribute = element.getAttribute("type");
-                System.out.println("HTML type: " + typeAttribute);
+                System.out.println(" HTML type: " + typeAttribute);
                 if(typeAttribute.equals("hidden")){
                     //this can be a suggest field, find previous simbling
                     //if suggest a label element is present
                     String idElementAttribute = element.getAttribute("id");
-                    System.out.println("HTML id: " + idElementAttribute);
+                    System.out.println(" HTML id: " + idElementAttribute);
                     //get sub_string
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                    System.out.println("HTML element id: " + elementId);
+                    System.out.println(" HTML element id: " + elementId);
                     Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id___form[" + elementId + "_label]");
 
                     if(suggestElementExists){
-                        System.out.println("Element Type: SUGGEST");
+                        System.out.println(" Element Type: SUGGEST");
                         elementFieldType = FieldType.SUGGEST;
                     }
                     else {
                         //else return hidden field
-                        System.out.println("Element Type: HIDDEN");
+                        System.out.println(" Element Type: HIDDEN");
                         elementFieldType = FieldType.HIDDEN;
                     }
                 }
                 if(typeAttribute.equals("text")){ // textbox, currency, percentage, 
                     //text field
-                    System.out.println("Element Type: TEXTBOX");
+                    System.out.println(" Element Type: TEXTBOX");
                     elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("password")){ //password
-                    System.out.println("Element Type: TEXTBOX");
+                    System.out.println(" Element Type: TEXTBOX");
                     elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("radio")){
-                    System.out.println("Element Type: RADIOBUTTON");
+                    System.out.println(" Element Type: RADIOBUTTON");
                     elementFieldType = FieldType.RADIOBUTTON;
                 }
                 if(typeAttribute.equals("checkbox")){
-                    System.out.println("Element Type: CHECK");
+                    System.out.println(" Element Type: CHECK");
                     elementFieldType = FieldType.CHECK;
                 }
                 if(typeAttribute.equals("button") || typeAttribute.equals("submit") || typeAttribute.equals("reset")){
-                    System.out.println("Element Type: BUTTON");
+                    System.out.println(" Element Type: BUTTON");
                     elementFieldType = FieldType.BUTTON;
                 } 
                 if(typeAttribute.equals("file")){
-                    System.out.println("Element Type: FILE");
+                    System.out.println(" Element Type: FILE");
                     elementFieldType = FieldType.FILE;
                 } 
                 if(typeAttribute.equals("")){ //datepicker ???
@@ -130,15 +130,15 @@ public class DynaformExecution extends Page {
                 }
                 break;
             case "textarea":
-                System.out.println("Element Type: TEXTAREA");
+                System.out.println(" Element Type: TEXTAREA");
                 elementFieldType = FieldType.TEXTAREA;
                 break;
             case "span": //title, subtitle
-                System.out.println("Element Type: TITLE");
+                System.out.println(" Element Type: TITLE");
                 elementFieldType = FieldType.TITLE;                
                 break;
             case "a": //link
-                System.out.println("Element Type: LINK");
+                System.out.println(" Element Type: LINK");
                 elementFieldType = FieldType.LINK;                 
                 break;
             default:
@@ -151,16 +151,34 @@ public class DynaformExecution extends Page {
     }
 
     // get field of dynaform
-    public WebElement getField(String nameField) throws Exception{
+    public WebElement getField(String fieldName) throws Exception{
+        System.out.println("getField: " + fieldName);
+
         intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
-        str = str.replace("replaceNameFieldDynaform", nameField);
+        str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        System.out.println("element to search for: " + str);
+        System.out.println(" Element to search for: " + str);
 
         return Browser.getElement(str);
     }
+
+    public void setGridFieldValue(String gridName, int row, String fieldName, String value) throws Exception{
+        System.out.println("setGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "] = " + value);
+
+        String gridFieldName = gridName + "][" + row + "][" + fieldName;
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(gridFieldName);
+
+        fieldType = this.detectFieldType(element);
+
+        this.setFieldValue(element, value, fieldType);
+
+        return;
+    }    
 
     public void setFieldValue(String fieldName, String value) throws Exception{
         String str = "";
@@ -173,28 +191,29 @@ public class DynaformExecution extends Page {
 
         fieldType = this.detectFieldType(element);
 
-        this.setFieldValue(fieldName, value, fieldType);
+        this.setFieldValue(element, value, fieldType);
 
         return;
     }
 
-
     public void setFieldValue(String fieldName, String value, FieldType fieldType) throws Exception{
+        System.out.println("setFieldValue (String fieldName): ");
+
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
 
-        if(fieldType == FieldType.SUGGEST){
-           fieldName = fieldName + "_label"; 
-        }
-
         str = str.replace("replaceNameFieldDynaform", fieldName);
-
-        System.out.println("element to search for: " + str);
 
         //search element
         WebElement element = Browser.getElement(str);
 
-        System.out.println("element : "+element.getAttribute("value"));
+        this.setFieldValue(element, value, fieldType);
+
+        return;
+    }
+
+    public void setFieldValue(WebElement element, String value, FieldType fieldType) throws Exception{
+        System.out.println("setFieldValue (WebElement): ");
 
         switch(fieldType)
         {
@@ -237,9 +256,19 @@ public class DynaformExecution extends Page {
                 WebElement elem2 = null;
                 List<WebElement> listEl;
                 //WebElement sugElem = null;
-                this.clear(element);
+                //get the label element
+                
+                //if suggest a label element is used to select option
+                String idElementAttribute = element.getAttribute("id");
+                String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
+                System.out.println(" HTML element id: " + elementId);
 
-                element.sendKeys(value);
+                //get label element 
+                WebElement labelElement = this.getField(elementId + "_label");                
+
+                this.clear(labelElement);
+
+                labelElement.sendKeys(value);
                 
                 Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
                 elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
@@ -296,7 +325,7 @@ public class DynaformExecution extends Page {
         }
 
         return;
-    } 
+    }     
 
     public String getFieldValue(String fieldName) throws Exception{
         System.out.println("getFieldValue: " + fieldName);
@@ -341,6 +370,50 @@ public class DynaformExecution extends Page {
 
         return elementValue;
     }
+
+    public String getGridFieldValue(String gridName, int row, String fieldName) throws Exception{
+        System.out.println("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
+
+        String elementValue = "";
+        String gridFieldName = gridName + "][" + row + "][" + fieldName;
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(gridFieldName);
+
+        fieldType = this.detectFieldType(element);
+
+        switch(fieldType)
+        {
+            case TEXTBOX:
+                elementValue = element.getAttribute("value");
+                break; 
+            case TEXTAREA:
+                elementValue = element.getAttribute("value");
+                break; 
+            case DROPDOWN:
+            case LISTBOX:
+                Select selectList = new Select(element);
+                elementValue = selectList.getFirstSelectedOption().getAttribute("value");
+                break;
+            case DATEPICKER:
+                elementValue = element.getAttribute("value");
+                break;
+            case SUGGEST:   //get value attribute of field
+                elementValue = element.getAttribute("value");
+                break;      
+            case HIDDEN: // get value
+                elementValue = element.getAttribute("value");
+                break;            
+            default:    
+                break;                                                                                                                                                      
+        }
+
+        System.out.println(" field value:" + elementValue);
+
+        return elementValue;
+    }
+
 
     public String getDropdownFieldText(String fieldName) throws Exception{
         String str = "";
@@ -397,6 +470,62 @@ public class DynaformExecution extends Page {
         System.out.println(" field text: " + elementText);
 
         return elementText;        
+    }
+
+    public String getGridFieldText(String gridName, int row, String fieldName) throws Exception{
+        System.out.println("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
+
+        String elementText = "";
+        String gridFieldName = gridName + "][" + row + "][" + fieldName;
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(gridFieldName);
+
+        fieldType = this.detectFieldType(element);
+
+        switch(fieldType)
+        {
+            case TEXTBOX:
+                elementText = element.getText();
+                break; 
+            case TEXTAREA:
+                elementText = element.getText();
+                break; 
+            case DROPDOWN:
+            case LISTBOX:
+                Select selectList = new Select(element);
+                elementText = selectList.getFirstSelectedOption().getText();
+                break;
+            case DATEPICKER:
+                elementText = element.getText();
+                break;
+            case SUGGEST:   //get text of label attribute of field ????
+                elementText = element.getText();
+                break;      
+            case HIDDEN: // get value
+                elementText = element.getText();
+                break;            
+            default:    
+                break;                                                                                                                                                      
+        }
+
+        System.out.println(" field text:" + elementText);
+
+        return elementText;
+    }
+
+    public int gridAddNewRow(String gridName) throws Exception{
+        //return the total number of rows
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridNewRowLink");
+        str = str.replace("REPLACE_GRIDNAME", gridName);
+
+        WebElement element = Browser.getElement(str);
+
+        element.click();
+
+        return 0;
     }
 
     public int getFieldCount(String fieldName) throws Exception{
