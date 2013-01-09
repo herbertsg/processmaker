@@ -132,14 +132,18 @@ public class DynaformExecution extends Page {
             case "textarea":
                 System.out.println("Element Type: TEXTAREA");
                 elementFieldType = FieldType.TEXTAREA;
+                break;
             case "span": //title, subtitle
                 System.out.println("Element Type: TITLE");
                 elementFieldType = FieldType.TITLE;                
+                break;
             case "a": //link
                 System.out.println("Element Type: LINK");
                 elementFieldType = FieldType.LINK;                 
+                break;
             default:
                 elementFieldType = null;
+                break;
         }
 
 
@@ -295,6 +299,8 @@ public class DynaformExecution extends Page {
     } 
 
     public String getFieldValue(String fieldName) throws Exception{
+        System.out.println("getFieldValue: " + fieldName);
+
         FieldType fieldType;
         String elementValue = "";
 
@@ -330,6 +336,8 @@ public class DynaformExecution extends Page {
             default:    
                 break;                                                                                                                                                      
         }
+        
+        System.out.println(" field value:" + elementValue);
 
         return elementValue;
     }
@@ -390,6 +398,44 @@ public class DynaformExecution extends Page {
 
         return elementText;        
     }
+
+    public int getFieldCount(String fieldName) throws Exception{
+        System.out.println("getFieldCount: " + fieldName);
+
+        FieldType fieldType;
+        int elementCount = 0;
+
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        WebElement element = Browser.getElement(str);
+        
+        fieldType = this.detectFieldType(element);
+
+        switch(fieldType)
+        {
+            case TEXTBOX:
+            case TEXTAREA:
+            case DATEPICKER:
+            case SUGGEST:
+            case HIDDEN:
+                elementCount = 1;
+                break; 
+            case DROPDOWN:
+            case LISTBOX:
+                Select selectList = new Select(element);
+                elementCount = selectList.getOptions().size();
+                break;
+            default: 
+                elementCount = 0;   
+                break;                                                                                                                                                      
+        }
+
+        System.out.println(" field count: " + elementCount);
+
+        return elementCount;        
+    }    
 
     // get property of field
     public String getFieldProperty(String nameField, String property) throws Exception{
