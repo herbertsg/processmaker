@@ -30,6 +30,11 @@ public class TestExternalStep{
         Pages.Login().loginUser("admin","admin","cochalo");
 
         // go tab home
+        Pages.Main().goAdmin();
+
+        Pages.Admin().activePlugin("external", true);
+        
+        // go tab home
         Pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
@@ -51,19 +56,43 @@ public class TestExternalStep{
         fieldArray[1].fieldType=FieldType.TEXTBOX;
         fieldArray[1].fieldValue="PEREYRA";
         FormFiller.formFillElements(fieldArray);
+
+        // get button submit
+        WebElement linkSiguiente = Pages.DynaformExecution().getField("SIGUIENTE");
         
+        // click to button submit
+        linkSiguiente.click();
+        
+        Pages.DynaformExecution().intoDynaform();
+
+        fieldArray[0]=new FormFieldData();
+        fieldArray[1]=new FormFieldData();
+        
+        fieldArray[0].fieldPath="form[NONBRE]";
+        fieldArray[0].fieldFindType=FieldKeyType.ID;
+        fieldArray[0].fieldType=FieldType.TEXTBOX;
+        fieldArray[0].fieldValue="BRAYAN";
+      
+        fieldArray[1].fieldPath="form[APELLIDO]";
+        fieldArray[1].fieldFindType=FieldKeyType.ID;
+        fieldArray[1].fieldType=FieldType.TEXTBOX;
+        fieldArray[1].fieldValue="PEREYRA";
+        FormFiller.formFillElements(fieldArray);
+
         // get button submit
         WebElement buttonSUBMIT = Pages.DynaformExecution().getField("SUBMIT");
 
         // click to button submit
         buttonSUBMIT.click();
 
+        Pages.DynaformExecution().intoDynaform();
+
         // get value of case generated in field NUM_CASE
         String fieldNOMBRE = Pages.DynaformExecution().getFieldProperty("NONBRE","value");
-
+        
         // get value of case generated in field APELLIDO
         String fieldAPELLIDO = Pages.DynaformExecution().getFieldProperty("APELLIDO","value");
-
+        
         // verify if the field NOMBRE is validate
         Assert.assertEquals("No case has created with field NOMBRE ", fieldNOMBRE, "BRAYAN");
         // case was create with field NOMBRE correctly
@@ -71,6 +100,9 @@ public class TestExternalStep{
         // verify if the field APELLIDO is validate
         Assert.assertEquals("No case has created with field APELLIDO ", fieldAPELLIDO, "PEREYRA");
         // case was create with field APELLIDO correctly
+        
+        Pages.Main().goAdmin();
+        Pages.Admin().activePlugin("external", false);
     }
 
     @After
