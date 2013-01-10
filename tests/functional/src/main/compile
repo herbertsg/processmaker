@@ -60,3 +60,5 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/PMFields/*.java
 
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/testFieldModeView/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/javascriptExecution/*.java
