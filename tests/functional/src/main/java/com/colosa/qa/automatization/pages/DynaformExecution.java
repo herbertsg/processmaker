@@ -1,6 +1,8 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
+//import java.util.List;
+//import java.lang.Boolean;
+import java.util.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
@@ -96,9 +98,18 @@ public class DynaformExecution extends Page {
                     }
                 }
                 if(typeAttribute.equals("text")){ // textbox, currency, percentage, 
-                    //text field
-                    System.out.println(" Element Type: TEXTBOX");
-                    elementFieldType = FieldType.TEXTBOX;
+                   //datepicker??????
+                    String readonlyAttribute = element.getAttribute("readonly");
+                    System.out.println(" HTML readonly Attribute: " + readonlyAttribute);
+                    if(readonlyAttribute != null && readonlyAttribute.equals("true"))
+                    {
+                        System.out.println(" Element Type: DATEPICKER");
+                        elementFieldType = FieldType.DATEPICKER;
+                    }else{
+                        //text field
+                        System.out.println(" Element Type: TEXTBOX");
+                        elementFieldType = FieldType.TEXTBOX;                        
+                    }
                 }
                 if(typeAttribute.equals("password")){ //password
                     System.out.println(" Element Type: TEXTBOX");
@@ -145,8 +156,6 @@ public class DynaformExecution extends Page {
                 elementFieldType = null;
                 break;
         }
-
-
         return elementFieldType;
     }
 
@@ -221,7 +230,7 @@ public class DynaformExecution extends Page {
                 element.click();
                 break;
             case FILE:
-                this.clear(element);
+                //this.clear(element);
                 element.sendKeys(value);
                 break;
             case TEXTBOX:
@@ -319,8 +328,11 @@ public class DynaformExecution extends Page {
                 }
                 //Thread.sleep(1000);
                 */
-                break;      
-            //case HIDDEN: //??? can't set values
+                break;  
+            /*    
+            case HIDDEN: //??? can't set values
+                this.clear(element);
+                element.sendKeys(value); */
             default:    break;                                                                                                                                                      
         }
 
@@ -361,7 +373,10 @@ public class DynaformExecution extends Page {
                 break;      
             case HIDDEN: // get value
                 elementValue = element.getAttribute("value");
-                break;            
+                break;
+            case CHECK:
+                elementValue = new Boolean(element.isSelected()).toString();
+                break;        
             default:    
                 break;                                                                                                                                                      
         }
@@ -401,7 +416,10 @@ public class DynaformExecution extends Page {
                 break;
             case SUGGEST:   //get value attribute of field
                 elementValue = element.getAttribute("value");
-                break;      
+                break;
+            case CHECK:
+                elementValue = new Boolean(element.isSelected()).toString();
+                break; 
             case HIDDEN: // get value
                 elementValue = element.getAttribute("value");
                 break;            
@@ -458,11 +476,22 @@ public class DynaformExecution extends Page {
                 elementText = element.getText();
                 break;
             case SUGGEST:   //get text of label attribute of field ????
-                elementText = element.getText();
-                break;      
+                //if suggest a label element is used to select option
+                String idElementAttribute = element.getAttribute("id");
+                String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
+                System.out.println(" HTML element id: " + elementId);
+
+                //get label element 
+                WebElement labelElement = this.getField(elementId + "_label");
+
+                elementText = labelElement.getAttribute("value");
+                break;
             case HIDDEN: // get value
                 elementText = element.getText();
-                break;            
+                break;
+            case CHECK: //?????
+                elementText = new Boolean(element.isSelected()).toString();
+                break; 
             default:    
                 break;                                                                                                                                                      
         }
@@ -505,7 +534,10 @@ public class DynaformExecution extends Page {
                 break;      
             case HIDDEN: // get value
                 elementText = element.getText();
-                break;            
+                break;
+            case CHECK: //?????
+                elementText = new Boolean(element.isSelected()).toString();
+                break; 
             default:    
                 break;                                                                                                                                                      
         }
