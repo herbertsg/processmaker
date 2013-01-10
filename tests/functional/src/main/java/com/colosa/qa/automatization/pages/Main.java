@@ -48,7 +48,7 @@ public class Main extends Page{
 
     public void goDesigner() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.DesignerMenu");
+        this.weSectionButton = Browser.driver().findElement(By.id("PROCESSES"));
         
         this.weSectionButton.click();
     }

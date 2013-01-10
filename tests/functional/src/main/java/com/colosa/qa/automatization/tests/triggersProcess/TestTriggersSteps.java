@@ -29,38 +29,37 @@ public class TestTriggersSteps{
         Pages.Login().gotoUrl();
         Pages.Login().loginUser("admin","admin","cochalo");
 
+        Pages.Main().goDesigner();
+        Pages.ProcessList().openProcess("Process Debug");
+        Pages.Designer().activeDebug(true);
+
         // go tab home
         Pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Testeo de triggers en pasos (Tarea inicial)");
+        int numberNewCase = Pages.Home().startCase("Process Debug (Task 1)");
         
         // switch to frame the dynaform
         //Pages.DynaformExecution().intoDynaform();
-        
-        Boolean debugActive = Pages.DebugExecution().verifyDebug();
-        
-        Assert.assertEquals("The Debug is inactive", debugActive, true);
-
         Pages.DebugExecution().goTabVariables();
 
-        String valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        String beforeDynaform = Pages.DebugExecution().getValue("BEFORE_DYNAFORM");
 
-        // verify if the field VARIABLE is validate
-        Assert.assertEquals("The trigger after form not work", valueVARIABLE, "ANTES DE FORM");
+        // verify if the field BEFORE_DYNAFORM is validate
+        Assert.assertEquals("The trigger beforeDynaform form not work", beforeDynaform, "BEFORE_DYNAFORM");
         // trigger after the form working
         
         // get button submit
-        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("SUBMIT");
+        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("Submit");
 
         // click to button submit
         buttonSUBMIT.click();
 
-        // get the value of field VARIABLE after the form
-        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        // get the value of field AFTER_DYNAFORM after the form
+        String afterDynaform = Pages.DebugExecution().getValue("AFTER_DYNAFORM");
         
-        // verify if the field VARIABLE is validate
-        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "DESPUES DE FORM");
+        // verify if the field AFTER_DYNAFORM is validate
+        Assert.assertEquals("The trigger afterDynaform form not work", afterDynaform, "AFTER_DYNAFORM");
         // trigger after the form working
         
         // get button continue
@@ -69,11 +68,11 @@ public class TestTriggersSteps{
         // click to button continue
         buttonContinue.click();
 
-        // get the value of field VARIABLE after the form
-        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        // get the value of field BEFORE_ASSIGNMENT after the form
+        String beforeAssignment = Pages.DebugExecution().getValue("BEFORE_ASSIGNMENT");
         
         // verify if the field VARIABLE is validate
-        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "ANTES DE ASIGNAR");
+        Assert.assertEquals("The trigger beforeAssignment form not work", beforeAssignment, "BEFORE_ASSIGNMENT");
         // trigger after the form working
         
         // get button continue
@@ -82,16 +81,33 @@ public class TestTriggersSteps{
         // click to button continue
         buttonContinueSubmit.click();
 
-        // get the value of field VARIABLE after the form
-        valueVARIABLE = Pages.DebugExecution().getValue("VARIABLE");
+        // get the value of field AFTER_ROUTING after the form
+        String afterRouting = Pages.DebugExecution().getValue("AFTER_ROUTING");
         
         // verify if the field VARIABLE is validate
-        Assert.assertEquals("The trigger before form not work", valueVARIABLE, "DESPUES DE DERIVAR");
+        Assert.assertEquals("The trigger afterRouting form not work", afterRouting, "AFTER_ROUTING");
         // trigger after the form working
+        
+        // get the value of field BEFORE_ROUTING after the form
+        String beforeRouting = Pages.DebugExecution().getValue("BEFORE_ROUTING");
+        
+        // verify if the field VARIABLE is validate
+        Assert.assertEquals("The trigger beforeRouting form not work", beforeRouting, "BEFORE_ROUTING");
+        // trigger after the form working
+        
+        // get button continue
+        buttonContinue = Pages.DynaformExecution().getObject("//*[@id='publisherContent[2]']/div/input");
+
+        // click to button continue
+        buttonContinue.click(); 
+        
+        Pages.Main().goDesigner();
+        Pages.ProcessList().openProcess("Process Debug");
+        Pages.Designer().activeDebug(false);
     }
 
     @After
     public void cleanup(){
-        Browser.close();
+        //Browser.close();
     }
 }
