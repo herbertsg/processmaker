@@ -1,6 +1,6 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
+import java.util.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import com.colosa.qa.automatization.common.Browser;
@@ -16,7 +16,7 @@ public class Admin extends Main{
     public static void goToLogs() throws Exception{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel']/div[1]/div[2]/ul/li[@id='west-panel__logs']/a[2]"));
+        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__logs']/a[2]"));
         we.click();
         //Browser.driver().switchTo().defaultContent();
     }
@@ -25,6 +25,11 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
         WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__plugins']/a[2]"));
+        we.click();
+    }
+
+    public static void showCaseScheduler() throws Exception{
+        WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[2]"));
         we.click();
     }
 
@@ -83,6 +88,21 @@ public class Admin extends Main{
         if(row==null)
             throw new Exception("Case # "+Integer.toString(numCase)+" not found in Event Logs");
         status = row.findElement(By.xpath("table/tbody/tr/td[13]/div")).getText().trim();
+        Browser.driver().switchTo().defaultContent();
+        return status;
+    }
+
+    public static String lastCreateCaseStatus() throws Exception{
+        List<WebElement> rows = new ArrayList<WebElement>();
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        Browser.driver().switchTo().frame("setup-frame");
+        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
+        String status;
+        rows = grid.getRows();
+        if(rows==null)
+            throw new Exception("The case Scheduler log is Empty");
+        status = rows.get(0).findElement(By.xpath("table/tbody/tr/td[6]/div")).getText().trim();
         Browser.driver().switchTo().defaultContent();
         return status;
     }
