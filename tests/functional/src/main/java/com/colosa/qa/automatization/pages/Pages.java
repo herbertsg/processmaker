@@ -103,5 +103,11 @@ public class Pages{
 		return debugExecution;
 	}
 
+	public static CronExecute CronExecute() throws Exception{
+		CronExecute cronExecute = new CronExecute();
+
+		return cronExecute;
+	}
+
 
 }
