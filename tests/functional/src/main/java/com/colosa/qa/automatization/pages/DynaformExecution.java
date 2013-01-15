@@ -201,6 +201,7 @@ public class DynaformExecution extends Page {
     }    
 
     public void setFieldValue(String fieldName, String value) throws Exception{
+        intoDynaform();
         String str = "";
         FieldType fieldType;
 

@@ -40,7 +40,7 @@ public class Main extends Page{
 
     public void goHome() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.HomeMenu");
+        this.weSectionButton = Browser.driver().findElement(By.id("CASES"));
         
         this.weSectionButton.click();
             
