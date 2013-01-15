@@ -27,12 +27,46 @@ public class Admin extends Main{
         WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__plugins']/a[2]"));
         we.click();
     }
-
+   
+    public static void goToUsers() throws Exception{
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__users']/a[2]"));
+        we.click();
+    }
+   
     public static void showCaseScheduler() throws Exception{
         WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[2]"));
         we.click();
     }
-
+    
+    public int countRoles() throws Exception{
+        goToUsers();
+        Thread.sleep(3000);
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        
+        WebElement divRoles = Browser.driver().findElement(By.id("users"));
+        WebElement liRoles = divRoles.findElement(By.xpath("div/div/ul/div/li[4]/div"));
+        liRoles.click();
+        
+        Browser.driver().switchTo().frame("setup-frame");
+        
+        WebElement divFils = Browser.driver().findElement(By.className("x-grid3-body"));
+        List<WebElement> divsGrid = divFils.findElements(By.tagName("div"));
+        
+        Integer count = 0;
+        
+        for(WebElement divs:divsGrid)
+        {
+            if ( (divs.getAttribute("class").indexOf ("x-grid3-row") > -1) ) {
+				       	count = count+1;
+				    }
+				}
+				return count;
+        //System.out.println("LAS FILAS  "+count);
+    }
+    
     public static void activePlugin(String namePlugin, Boolean flagActive) throws Exception{
         goToPlugins();
         Thread.sleep(3000);
