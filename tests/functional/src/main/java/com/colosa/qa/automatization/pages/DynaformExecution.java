@@ -348,9 +348,10 @@ public class DynaformExecution extends Page {
         }
 
         return;
-    }     
+    }
 
     public String getFieldValue(String fieldName) throws Exception{
+        intoDynaform();
         System.out.println("getFieldValue: " + fieldName);
 
         FieldType fieldType;
