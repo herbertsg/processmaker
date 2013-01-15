@@ -18,7 +18,6 @@ public class TestCaseScheduler{
 
 	@Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
-
 		//Init case
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
@@ -30,17 +29,21 @@ public class TestCaseScheduler{
 		String[] toArray = caseStatus.split(" ");
 		int lastCaseNum = Integer.parseInt(toArray[1]);
 		int currentCaseNum = lastCaseNum + 1;
-		// here run cron
+		Pages.DynaformExecution().sleep(20000);
+		Pages.CronExecute().execute();
 		System.out.println("run cron.php");
 		Pages.DynaformExecution().sleep(20000);
-		Pages.InputDocProcess().switchToDefault();
+		Pages.Login().gotoUrl();
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Main().goAdmin();		
 		Pages.Admin().goToLogs();
 		Pages.Admin().showCaseScheduler();
 		caseStatus = Pages.Admin().lastCreateCaseStatus();
 		Assert.assertEquals("Case " + Integer.toString(currentCaseNum) + " Started successfully", caseStatus);
+		Pages.DynaformExecution().sleep(20000);
 		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
 }
