@@ -67,6 +67,7 @@ public class TestHideShowCaseTitle{
         // trigger after the form working
     }
 
+
     @After
     public void cleanup(){
         Browser.close();
