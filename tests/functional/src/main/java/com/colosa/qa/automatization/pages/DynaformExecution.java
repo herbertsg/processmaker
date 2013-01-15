@@ -173,6 +173,17 @@ public class DynaformExecution extends Page {
         return Browser.getElement(str);
     }
 
+    public Boolean activeCaseTitle() throws Exception {
+        intoDynaform();
+        List<WebElement> trCaseTitle = Browser.driver().findElements(By.className("userGroupTitle"));
+
+        for(WebElement trTitle:trCaseTitle)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void setGridFieldValue(String gridName, int row, String fieldName, String value) throws Exception{
         System.out.println("setGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "] = " + value);
 
@@ -642,6 +653,5 @@ public class DynaformExecution extends Page {
         WebElement element = Browser.getElement(str);
 
         this.clear(element);
-     }
-
+    }
 }

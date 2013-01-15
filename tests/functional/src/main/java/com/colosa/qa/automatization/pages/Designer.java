@@ -491,5 +491,39 @@ public class Designer{
         }
     }
 
+    public void showTitleCase(Boolean flagShowTitle) throws Exception{
+
+        Actions action = new Actions(Browser.driver());
+        Browser.waitForElement(By.className("processmap_title___processmaker"),15);
+        WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
+        action.contextClick(gridPanel).perform();
+
+        WebElement divContainer = Browser.driver().findElement(By.className("app_menuRight_container___processmaker"));
+        WebElement optionElement = divContainer.findElement(By.xpath("div[1]"));
+        optionElement.click();
+
+        WebElement checkShowTitle = Browser.driver().findElement(By.id("form[PRO_SHOW_MESSAGE]"));
+        WebElement submitButton = Browser.driver().findElement(By.id("form[SUBMIT]"));
+
+        Boolean checkedHide = true;
+        if (checkShowTitle.getAttribute("checked") == null) {
+            checkedHide = false;
+        }
+
+        if ( (checkedHide) && (flagShowTitle) ) {
+            checkShowTitle.click();
+            submitButton.click();
+            System.out.println("Show title :)");
+        } else if ( (!checkedHide) && (flagShowTitle) ) {
+            System.out.println("Show title :|");
+        } else if ( (checkedHide) && (!flagShowTitle) ) {
+            System.out.println("Hide title :|");
+        } else if ( (!checkedHide) && (!flagShowTitle) ) {
+            checkShowTitle.click();
+            submitButton.click();
+            System.out.println("Hide title :)");
+        }
+    }
+
 
 }
