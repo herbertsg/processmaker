@@ -109,5 +109,10 @@ public class Pages{
 		return cronExecute;
 	}
 
+	public static WebEntry WebEntry() throws Exception{
+		WebEntry webEntry = new WebEntry();
+
+		return webEntry;
+	}
 
 }
