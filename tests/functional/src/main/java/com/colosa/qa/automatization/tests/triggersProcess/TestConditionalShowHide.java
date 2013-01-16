@@ -54,11 +54,8 @@ public class TestConditionalShowHide{
         Pages.Home().gotoInbox();
         Pages.Home().openCase(numberNewCase);
 
-        // get button submit
-        buttonSUBMIT = Pages.DynaformExecution().getField("send");
-
         // click to button submit
-        buttonSUBMIT.click();
+        Pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
         buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
@@ -82,11 +79,8 @@ public class TestConditionalShowHide{
 
         Pages.DynaformExecution().setFieldValue("salario", "1000");
 
-        // get button submit
-        buttonSUBMIT = Pages.DynaformExecution().getField("send");
-
         // click to button submit
-        buttonSUBMIT.click();
+        Pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
         buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
@@ -97,11 +91,8 @@ public class TestConditionalShowHide{
         Pages.Home().gotoInbox();
         Pages.Home().openCase(numberNewCase);
 
-        // get button submit
-        buttonSUBMIT = Pages.DynaformExecution().getField("send");
-
         // click to button submit
-        buttonSUBMIT.click();
+        Pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
         buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
