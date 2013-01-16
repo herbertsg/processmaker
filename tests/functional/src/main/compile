@@ -64,3 +64,7 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/javascriptExecution/*.java
 
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/pmStringFunctions/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/testPMFUserList/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/testPMFGroupList/*.java
