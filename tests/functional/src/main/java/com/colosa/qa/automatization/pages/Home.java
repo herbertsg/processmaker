@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 
+
 public class Home extends Main{
 
 	public Home() throws Exception{
@@ -204,12 +205,53 @@ public class Home extends Main{
         action.perform();
 	}
 
+	public void selectCase(int numCase)throws Exception{
+		ExtJSGrid grid;
+		Actions action = new Actions(Browser.driver());
+		Browser.driver().switchTo().defaultContent();		
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+		if(row==null)
+			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
+		action.click(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
+  }
+  
+  public void pauseCase(int numCase)throws Exception{
+		
+		Actions action = new Actions(Browser.driver());
+		Browser.driver().switchTo().defaultContent();		
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		
+		Thread.sleep(3000);
+		WebElement actionPanel = Browser.driver().findElement(By.xpath("//*[@id='navPanel']"));
+		WebElement actionMenu = actionPanel.findElement(By.xpath("//*[@id='actionMenu']"));
+		WebElement bAction = actionMenu.findElement(By.tagName("button"));
+		bAction.click(); 
+		
+		Thread.sleep(3000);
+		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[6]"));
+		WebElement pCase = pauseCase.findElement(By.tagName("span"));
+		pCase.click(); 
+		
+		Thread.sleep(3000);
+		WebElement pauseForm = Browser.driver().findElement(By.id("unpauseFrm"));
+		WebElement pauseButton = pauseForm.findElement(By.id("submitPauseCase"));
+		WebElement pauseClick = pauseButton.findElement(By.tagName("button"));
+		
+		pauseClick.click();
+		Thread.sleep(3000);
+  }
+	
 	public boolean existCase(int numCase)throws Exception{
 		ExtJSGrid grid;
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+		
 		if(row==null)
 			return false;
 		else

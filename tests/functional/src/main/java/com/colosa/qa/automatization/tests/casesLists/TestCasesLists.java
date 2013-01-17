@@ -66,6 +66,7 @@ public class TestCasesLists{
 		        		
     		Pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(casenumber));
+		    
 		    Pages.Home().openCase(casenumber);
 		    Pages.DynaformExecution().intoDynaform();
 		    
@@ -88,6 +89,24 @@ public class TestCasesLists{
 		    
 		    Pages.Home().gotoUnassigned();
 		    Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(casenumber));
+		    Pages.Home().openCase(casenumber);
+		    Pages.DynaformExecution().intoDynaform();
+		    
+		    FormFieldData[] fieldArray4=new FormFieldData[1];
+		    fieldArray4[0]=new FormFieldData();
+		    
+		    fieldArray4[0].fieldPath="form[BTN_CATCH]";
+		    fieldArray4[0].fieldFindType=FieldKeyType.ID;
+		    fieldArray4[0].fieldType=FieldType.BUTTON;
+		    fieldArray4[0].fieldValue="";
+		    
+		    FormFiller.formFillElements(fieldArray4);
+		    Pages.DynaformExecution().intoDynaform();
+		    Pages.Home().pauseCase(casenumber);
+		    
+		    Pages.DynaformExecution().outDynaform();  
+		    Pages.Home().gotoPaused();
+		    Assert.assertTrue("The case does not exist in Paused", Pages.Home().existCase(casenumber));
 		}
 
     @After
