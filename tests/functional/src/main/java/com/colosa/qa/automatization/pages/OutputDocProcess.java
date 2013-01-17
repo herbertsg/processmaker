@@ -1,5 +1,14 @@
 package com.colosa.qa.automatization.pages;
 
+import java.io.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
+import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
+import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
+
+
 import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +17,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import com.colosa.qa.automatization.common.*;
 import com.colosa.qa.automatization.common.extJs.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+
 
 public class OutputDocProcess extends Page{
 
@@ -50,5 +59,29 @@ public class OutputDocProcess extends Page{
 		Browser.getElement("inputDocProcess.webelement.continue").click();
 
 	}
+
+
+	public String checkPdfSecurity(String fileName, String passwordFile) throws Exception{
+		String password = passwordFile; 
+		String result = "";
+		try {
+			PdfReader reader = new PdfReader(fileName ,password.getBytes());
+			int n = reader.getNumberOfPages();
+        	PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+        	TextExtractionStrategy strategy;
+           	strategy = parser.processContent(1, new SimpleTextExtractionStrategy());
+           	result = strategy.getResultantText();
+        	reader.close();
+      		File fileDel = new File(fileName);
+			//fileDel.delete();
+
+		} catch (Exception de) {
+			result = de.getMessage();
+		}
+
+		return result;
+
+	}
+
 
 }

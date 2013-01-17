@@ -39,6 +39,11 @@ public class Admin extends Main{
         WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[2]"));
         we.click();
     }
+
+    public static void showEmailLogs() throws Exception{
+        WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[4]"));
+        we.click();
+    }
     
     public int countRoles() throws Exception{
         goToUsers();
@@ -137,6 +142,21 @@ public class Admin extends Main{
         if(rows==null)
             throw new Exception("The case Scheduler log is Empty");
         status = rows.get(0).findElement(By.xpath("table/tbody/tr/td[6]/div")).getText().trim();
+        Browser.driver().switchTo().defaultContent();
+        return status;
+    }
+
+    public static String emailStatus(Integer numCase) throws Exception{
+
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        Browser.driver().switchTo().frame("setup-frame");
+        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("emailsGrid")), Browser.driver());
+        String status;
+        WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+        if(row==null)
+            throw new Exception("Case # "+Integer.toString(numCase)+" not found in Email Logs");
+        status = row.findElement(By.xpath("table/tbody/tr/td[16]/div")).getText().trim();
         Browser.driver().switchTo().defaultContent();
         return status;
     }
