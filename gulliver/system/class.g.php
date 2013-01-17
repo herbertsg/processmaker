@@ -1372,11 +1372,16 @@ class G
         //scape the literal
         switch ($lang) {
             case 'es':
+                $format = str_replace( ' del ', '[ofl]', $format );
                 $format = str_replace( ' de ', '[of]', $format );
                 break;
         }
 
         //first we must formatted the string
+        $format = str_replace( 'h', '{h}', $format );
+        $format = str_replace( 'i', '{i}', $format );
+        $format = str_replace( 's', '{s}', $format );
+
         $format = str_replace( 'yyyy', '{YEAR}', $format );
         $format = str_replace( 'yy', '{year}', $format );
 
@@ -1386,10 +1391,6 @@ class G
 
         $format = str_replace( 'dd', '{DAY}', $format );
         $format = str_replace( 'd', '{day}', $format );
-
-        $format = str_replace( 'h', '{h}', $format );
-        $format = str_replace( 'i', '{i}', $format );
-        $format = str_replace( 's', '{s}', $format );
 
         if ($lang === '') {
             $lang = defined( SYS_LANG ) ? SYS_LANG : 'en';
@@ -1437,6 +1438,7 @@ class G
         //recovering the original literal
         switch ($lang) {
             case 'es':
+                $ret = str_replace( '[ofl]', ' del ', $ret );
                 $ret = str_replace( '[of]', ' de ', $ret );
                 break;
         }
@@ -1679,14 +1681,17 @@ class G
     */
     public function replaceDataGridField($sContent, $aFields)
     {
-        $nrt           = array("\n",    "\r",    "\t");
-        $nrthtml       = array("(n /)", "(r /)", "(t /)");
-        $sContent      = G::unhtmlentities($sContent);
+        $nrt     = array("\n",    "\r",    "\t");
+        $nrthtml = array("(n /)", "(r /)", "(t /)");
+
+        $sContent = G::unhtmlentities($sContent);
         $strContentAux = str_replace($nrt, $nrthtml, $sContent);
-        $iOcurrences   = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $strContentAux, $arrayMatch1, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+
+        $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $strContentAux, $arrayMatch1, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
 
         if ($iOcurrences) {
             $arrayGrid = array();
+
             for ($i = 0; $i <= $iOcurrences - 1; $i++) {
                 $arrayGrid[] = $arrayMatch1[2][$i][0];
             }
@@ -1694,10 +1699,12 @@ class G
             $arrayGrid = array_unique($arrayGrid);
 
             foreach ($arrayGrid as $index => $value) {
-                $grdName        = $value;
+                $grdName = $value;
+
                 $strContentAux1 = $strContentAux;
                 $strContentAux  = null;
-                $ereg           = "/^(.*)@>" . $grdName . "(.*)@<" . $grdName . "(.*)$/";
+
+                $ereg = "/^(.*)@>" . $grdName . "(.*)@<" . $grdName . "(.*)$/";
 
                 while (preg_match($ereg, $strContentAux1, $arrayMatch2)) {
                     $strData = null;
@@ -1709,23 +1716,29 @@ class G
                                     $aRow[$sKey] = nl2br($aRow[$sKey]);
                                 }
                             }
+
                             $strData = $strData . G::replaceDataField($arrayMatch2[2], $aRow);
                         }
                     }
+
                     $strContentAux1 = $arrayMatch2[1];
                     $strContentAux  = $strData . $arrayMatch2[3] . $strContentAux;
                 }
+
                 $strContentAux = $strContentAux1 . $strContentAux;
             }
         }
+
         $strContentAux = str_replace($nrthtml, $nrt, $strContentAux);
-        $sContent      = $strContentAux;
+
+        $sContent = $strContentAux;
 
         foreach ($aFields as $sKey => $vValue) {
             if (!is_array($vValue)) {
                 $aFields[$sKey] = nl2br($aFields[$sKey]);
             }
         }
+
         $sContent = G::replaceDataField($sContent, $aFields);
 
         return $sContent;
@@ -2678,7 +2691,7 @@ class G
      */
     public function capitalizeWords($text)
     {
-        return ucwords($text);
+        return mb_convert_case($text, MB_CASE_TITLE, 'UTF-8');
     }
 
     /**
