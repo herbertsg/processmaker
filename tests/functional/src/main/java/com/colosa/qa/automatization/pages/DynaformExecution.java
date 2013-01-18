@@ -269,7 +269,7 @@ public class DynaformExecution extends Page {
     public WebElement getField(String fieldName) throws Exception{
         System.out.println("getField: " + fieldName);
 
-        intoDynaform();
+       // intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
@@ -332,7 +332,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValue(String fieldName, String value) throws Exception{
-        intoDynaform();
+       // intoDynaform();
         String str = "";
         FieldType fieldType;
 

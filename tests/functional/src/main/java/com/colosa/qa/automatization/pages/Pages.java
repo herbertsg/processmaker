@@ -115,4 +115,10 @@ public class Pages{
 		return webEntry;
 	}
 
+	public static CaseTracker CaseTracker() throws Exception{
+		CaseTracker caseTracker = new CaseTracker();
+
+		return caseTracker;
+	}
+
 }

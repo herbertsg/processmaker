@@ -226,6 +226,55 @@ public class Designer{
 		return designPanel.findElement(By.xpath("div[@class='processmap_task___processmaker'][div[1]='"+taskName.trim()+"']"));
 	}
 
+	public String getTaskColorStatus(String taskName) throws Exception{
+		String getStyle;
+		WebElement designPanel = Browser.getElement("designer.webElement.designPanel");
+		WebElement task = designPanel.findElement(By.xpath("div[@class='processmap_task___processmaker'][div[1]='"+taskName.trim()+"']"));
+		getStyle = task.getAttribute("style");
+		String[] toArray = getStyle.split(";");
+		String colorStatus = toArray[3];
+		String returnStatus = "";
+		if(colorStatus.equals(" background-color: rgb(0, 102, 51)"))
+		{
+			returnStatus = "Completed Task";
+		}
+		if(colorStatus.equals(" background-color: rgb(255, 0, 0)"))
+		{
+			returnStatus = "Task in Progress";
+		}
+		if(colorStatus.equals(" background-color: rgb(147, 149, 152)"))
+		{
+			returnStatus = "Pending Task / Not Executed";
+		}		
+		return returnStatus;
+
+	}
+
+
+	public String getTaskColorStatusStage(String taskName) throws Exception{
+		String getStyle;
+		WebElement designPanel = Browser.getElement("designer.webElement.designPanelStageMap");
+		WebElement task = designPanel.findElement(By.xpath("div[@class='processmap_task___processmaker'][div[1]='"+taskName.trim()+"']"));
+		getStyle = task.getAttribute("style");
+		String[] toArray = getStyle.split(";");
+		String colorStatus = toArray[3];
+		String returnStatus = "";
+		if(colorStatus.equals(" background-color: rgb(0, 102, 51)"))
+		{
+			returnStatus = "Completed Task";
+		}
+		if(colorStatus.equals(" background-color: rgb(255, 0, 0)"))
+		{
+			returnStatus = "Task in Progress";
+		}
+		if(colorStatus.equals(" background-color: rgb(147, 149, 152)"))
+		{
+			returnStatus = "Pending Task / Not Executed";
+		}		
+		return returnStatus;
+
+	}
+
 	public void taskList() throws Exception{
 		taskNum++;
 		taskPath = "//div[@id='pm_target']/div[1]/div[1]/div[3]/div["+taskNum+"]";
