@@ -50,6 +50,112 @@ public class DynaformExecution extends Page {
         Browser.driver().switchTo().defaultContent();
     }
 
+    public Boolean openCasesNotes() throws Exception {
+        intoPmtrack();
+        Thread.sleep(2000);
+        WebElement tableMenus = Browser.driver().findElement(By.id("caseNotes"));
+        WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
+        buttonInformation.click();
+
+        List<WebElement> windowCaseNotes = Browser.driver().findElements(By.id("caseNotesWindowPanel"));
+        
+        for(WebElement myWindow:windowCaseNotes)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean openInformationDynaforms() throws Exception {
+        intoPmtrack();
+        Thread.sleep(2000);
+        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
+        buttonInformation.click();
+
+        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        
+        for(WebElement menuInfo:menusInfomations)
+        {
+            if ( menuInfo.getAttribute("innerHTML").indexOf ("DynaForms") > -1 ) {
+                menuInfo.click();
+                Thread.sleep(2000);
+                break;
+            }
+        }
+
+        Browser.driver().switchTo().frame("dynaformHistoryFrame");
+
+        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
+        innerDiv = innerDiv.replace("&nbsp;", "");
+        if (innerDiv.length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Boolean openInformationUploaded() throws Exception {
+        intoPmtrack();
+        Thread.sleep(2000);
+        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
+        buttonInformation.click();
+
+        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        
+        for(WebElement menuInfo:menusInfomations)
+        {
+            if ( menuInfo.getAttribute("innerHTML").indexOf ("Uploaded Documents") > -1 ) {
+                menuInfo.click();
+                Thread.sleep(2000);
+                break;
+            }
+        }
+
+        Browser.driver().switchTo().frame("uploadedDocumentsFrame");
+
+        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
+        innerDiv = innerDiv.replace("&nbsp;", "");
+        if (innerDiv.length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Boolean openInformationGenerated() throws Exception {
+        intoPmtrack();
+        Thread.sleep(2000);
+        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
+        buttonInformation.click();
+
+        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        
+        for(WebElement menuInfo:menusInfomations)
+        {
+            if ( menuInfo.getAttribute("innerHTML").indexOf ("Generated Documents") > -1 ) {
+                menuInfo.click();
+                Thread.sleep(2000);
+                break;
+            }
+        }
+
+        Browser.driver().switchTo().frame("generatedDocumentsFrame");
+
+        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
+        innerDiv = innerDiv.replace("&nbsp;", "");
+        if (innerDiv.length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public FieldType detectFieldType(WebElement element) throws Exception{
         FieldType elementFieldType = null;
 

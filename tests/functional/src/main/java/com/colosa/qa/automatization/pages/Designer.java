@@ -525,5 +525,66 @@ public class Designer{
         }
     }
 
+    public void assignedPermission(String userAssigned, String typeAssigned) throws Exception{
 
+        Actions action = new Actions(Browser.driver());
+        Browser.waitForElement(By.className("processmap_title___processmaker"),15);
+        WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
+        action.contextClick(gridPanel).perform();
+
+        WebElement divContainer = Browser.driver().findElement(By.className("app_menuRight_container___processmaker"));
+        WebElement optionElement = divContainer.findElement(By.xpath("div[11]"));
+		optionElement.click();
+
+		WebElement checkShowTitle = Browser.driver().findElement(By.id("form[MNU_ADD]"));
+		checkShowTitle.click();
+
+		WebElement selectGroup = Browser.driver().findElement(By.id("form[GROUP_USER]"));
+        Select selectListGroup = new Select(selectGroup);
+        selectListGroup.selectByVisibleText(userAssigned);
+
+        WebElement selectType = Browser.driver().findElement(By.id("form[OP_OBJ_TYPE]"));
+        Select selectListType = new Select(selectType);
+        selectListType.selectByVisibleText(typeAssigned);
+        
+		WebElement buttonCreate = Browser.driver().findElement(By.id("form[CREATE]"));
+		buttonCreate.click();
+    }
+
+    public void deleteAllPermission() throws Exception{
+
+        Actions action = new Actions(Browser.driver());
+        Browser.waitForElement(By.className("processmap_title___processmaker"),15);
+        WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
+        action.contextClick(gridPanel).perform();
+
+        WebElement divContainer = Browser.driver().findElement(By.className("app_menuRight_container___processmaker"));
+        WebElement optionElement = divContainer.findElement(By.xpath("div[11]"));
+		optionElement.click();
+		deleteAllPermissionStep();
+    }
+
+    public void deleteAllPermissionStep() throws Exception{
+    	WebElement publisherNew = Browser.driver().findElement(By.xpath("/html/body/div"));
+    	List<WebElement> allA = publisherNew.findElements(By.tagName("a"));
+		for(WebElement aTag:allA)
+        {
+        	if ( (aTag.getAttribute("innerHTML").indexOf ("Delete") > -1 ) ) {
+				aTag.click();
+				Thread.sleep(1000);
+				List<WebElement> panelButtons = Browser.driver().findElements(By.className("panel_statusButtons___processmaker"));
+				for(WebElement buttonAccept:panelButtons)
+		        {
+		        	if ( buttonAccept.getAttribute("innerHTML").indexOf ("Accept") > -1 ) {
+		        		WebElement bAccept = buttonAccept.findElement(By.xpath("input"));
+		        		bAccept.click();
+		        		Thread.sleep(1000);
+		        		deleteAllPermissionStep();
+		        		break;
+		        	}
+		        }
+		        break;
+        	}
+        }
+    }
 }
