@@ -200,6 +200,31 @@ public class DynaformExecution extends Page {
         return;
     }    
 
+    public void setCheckBox(String checkGroup, String checkName) throws Exception{
+        System.out.println("setCheckbox: " + checkGroup + "[" + checkName + "]");
+        String checkFieldName = checkGroup + "][" + checkName;
+        FieldType fieldType;
+
+        WebElement element = this.getField(checkFieldName);
+
+        fieldType = this.detectFieldType(element);
+
+        this.setFieldValue(element, "", fieldType);
+    }   
+
+    public void setRadioButton(String radioGroup, String radioName) throws Exception{
+        System.out.println("setRadioButton: " + radioGroup + "[" + radioName + "]");
+        String radioButtonName = radioGroup + "][" + radioName;
+        FieldType fieldType;
+
+        WebElement element = this.getField(radioButtonName);
+
+        fieldType = this.detectFieldType(element);
+
+        this.setFieldValue(element, "", fieldType);
+
+    }
+
     public void setFieldValue(String fieldName, String value) throws Exception{
         intoDynaform();
         String str = "";
@@ -514,6 +539,33 @@ public class DynaformExecution extends Page {
         return elementText;        
     }
 
+    public void nextStepLinkWithMessage() throws Exception{
+        setFieldValue("DYN_FORWARD", "", FieldType.BUTTON);
+        if(Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[1]")).isDisplayed())
+        {
+            this.btnAceptar();
+        }
+    }
+
+    public void nextStepLink() throws Exception{
+        setFieldValue("DYN_FORWARD", "", FieldType.BUTTON);
+    }
+
+    public void previousStepLink() throws Exception{
+        setFieldValue("DYN_BACKWARD", "", FieldType.BUTTON);
+    }
+
+    public void btnAceptar() throws Exception{
+        WebElement elem = Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[1]"));
+        elem.click();
+
+    }
+
+    public void btnCancelar() throws Exception{
+        WebElement elem = Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[2]"));
+        elem.click();
+    }
+
     public String getGridFieldText(String gridName, int row, String fieldName) throws Exception{
         System.out.println("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
 
@@ -558,6 +610,84 @@ public class DynaformExecution extends Page {
         System.out.println(" field text:" + elementText);
 
         return elementText;
+    }
+
+    public String getRadioButtonSelected(String radioGroup) throws Exception{
+        System.out.println("getRadioButtonSelected: " + radioGroup);
+        String radioGroupName = "form["+ radioGroup + "]";
+        FieldType fieldType;
+
+        List<WebElement> element;
+        String radioSelected = "";
+        element = Browser.driver().findElements(By.name(radioGroupName));
+        System.out.println("Numero de radioButton: "+element.size());        
+        for(WebElement we2:element)
+            if(we2.isSelected())
+            {
+                radioSelected = we2.getAttribute("value");
+            }
+            
+        return radioSelected;
+
+    }
+
+    public List<String> getCheckBoxSelected(String checkGroup) throws Exception{
+
+        System.out.println("getCheckBoxSelected: " + checkGroup);
+        String checkGroupName = "form["+ checkGroup + "][]";
+        FieldType fieldType;
+
+        List<WebElement> element;
+        List<String> checkSelected = new ArrayList<String>();
+        element = Browser.driver().findElements(By.name(checkGroupName));
+        System.out.println("Numero de checkbox: "+element.size());        
+        for(WebElement we2:element)
+            if(we2.isSelected())
+            {
+                checkSelected.add(we2.getAttribute("value"));
+            }
+            
+        return checkSelected;   
+    }
+
+    public int gridCountRows(String gridName) throws Exception{
+
+        String str = "";
+        List<WebElement> wel;
+        int numRow=0;
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridDeleteLink");
+        str = str.replace("REPLACE_GRIDNAME", gridName);
+
+        WebElement elem = Browser.getElement(str);
+        wel = elem.findElements(By.xpath("tbody/tr"));
+        WebElement we = null;
+        for(WebElement we2:wel)
+            numRow++;
+            
+        numRow=numRow-2;    
+        return numRow;
+
+    }
+
+
+    public int gridDeleteRow(String gridName, int numRow) throws Exception{
+
+        String str = "";
+        List<WebElement> wel;
+        WebElement we = null;
+        numRow++;
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridDeleteLink");
+        str = str.replace("REPLACE_GRIDNAME", gridName);
+
+        WebElement elem = Browser.getElement(str);
+        we = elem.findElement(By.xpath("tbody/tr[" + numRow + "]"));
+        we =we.findElement(By.linkText("Delete"));
+        we.click();
+
+        this.btnAceptar();          
+
+        return 0;
+
     }
 
     public int gridAddNewRow(String gridName) throws Exception{
