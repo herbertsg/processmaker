@@ -17,21 +17,12 @@ import java.net.URL;
 
 public class CronExecute{
 
-	public static void execute() throws FileNotFoundException, IOException, Exception{
+	public static void execute(String workspace) throws FileNotFoundException, IOException, Exception{
 
-		String wd = "/opt/processmaker/workflow/engine/bin/cron.php";
+		String url = ConfigurationSettings.getInstance().getSetting("server.url");
+		url = url + "/cron_exec.php?wrkspc=" +workspace ;
 
-		Browser.gotoUrl("http://192.168.11.130/cron_exec.php");
-		
-
-
-		/*Process p = Runtime.getRuntime().exec("ssh root@192.168.11.130");
-		p = Runtime.getRuntime().exec("qatest+-");
-		p = Runtime.getRuntime().exec("php -f /opt/processmaker/workflow/engine/bin/cron.php workflow");
-		p = Runtime.getRuntime().exec("exit");*/
-
-		/*ProcessBuilder pb = new ProcessBuilder("php", "-f", "192.168.11.130/opt/processmaker/workflow/engine/bin/cron.php workflow");
-		Process p = pb.start();*/
+		Browser.gotoUrl(url);
 
 	}
 

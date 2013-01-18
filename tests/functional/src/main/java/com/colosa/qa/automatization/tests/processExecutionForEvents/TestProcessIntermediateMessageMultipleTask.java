@@ -53,6 +53,7 @@ public class TestProcessIntermediateMessageMultipleTask{
 	@Test
 	public void continueCase() throws FileNotFoundException, IOException, Exception{*/
 		String eventStatus= "";
+		Pages.CronExecute().execute("workflow");
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("hector", "sample", "");
 		Pages.Main().goHome();
