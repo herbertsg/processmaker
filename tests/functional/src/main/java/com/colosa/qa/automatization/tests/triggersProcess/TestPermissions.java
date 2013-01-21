@@ -28,7 +28,7 @@ public class TestPermissions{
 
         // login the PM
         Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","cochalo");
+        Pages.Login().loginUser("admin","admin","workflow");
 
         Pages.Main().goDesigner();
         Pages.ProcessList().openProcess("Process Permissions");
@@ -45,8 +45,10 @@ public class TestPermissions{
         // click to button submit
         buttonSUBMIT.click();
 
+        String pathFile = ConfigurationSettings.getInstance().getSetting("permissions.file.upload");
+            
         Pages.DynaformExecution().setFieldValue("MNU_NEW", "click");
-        Pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", "/media/Part1/win/julchus tarea.txt");
+        Pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", pathFile);
         Pages.DynaformExecution().setFieldValue("SAVE", "click");
         Pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "click");
         Pages.DynaformExecution().setFieldValue("NEXT_STEP", "click");

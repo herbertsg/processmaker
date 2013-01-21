@@ -62,7 +62,7 @@ public class Main extends Page{
 
     public void goAdmin() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.AdminMenu");
+        this.weSectionButton = Browser.driver().findElement(By.id("SETUP"));
         
         this.weSectionButton.click();
     }

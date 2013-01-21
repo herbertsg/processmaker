@@ -27,7 +27,7 @@ public class TestHideShowCaseTitle{
     public void runCase() throws Exception {
         // login the PM
         Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","cochalo");
+        Pages.Login().loginUser("admin","admin","workflow");
 
         Pages.Main().goDesigner();
         Pages.ProcessList().openProcess("Process Hide Title and case number");

@@ -27,7 +27,7 @@ public class TestScreenDerivation{
     public void runCase() throws Exception {
         // login the PM
         Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","cochalo");
+        Pages.Login().loginUser("admin","admin","workflow");
 
         // go tab home
         Pages.Main().goHome();

@@ -27,7 +27,7 @@ public class TestTriggersSteps{
     public void runCase() throws Exception {
         // login the PM
         Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","cochalo");
+        Pages.Login().loginUser("admin","admin","workflow");
 
         Pages.Main().goDesigner();
         Pages.ProcessList().openProcess("Process Debug");
@@ -108,6 +108,6 @@ public class TestTriggersSteps{
 
     @After
     public void cleanup(){
-        //Browser.close();
+        Browser.close();
     }
 }

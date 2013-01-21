@@ -26,7 +26,7 @@ public class TestWebEntry{
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.WebEntry().goWebEntry("cochalo" , "51139890850c52522d53dd5003076507");
+        Pages.WebEntry().goWebEntry("workflow" , "51139890850c52522d53dd5003076507");
 
         // set value the field NAME
         Pages.WebEntry().setFieldValue("NAME", "Brayan");
