@@ -45,17 +45,17 @@ public class TestPMFSendMessageTest{
 				fieldArray[0].fieldPath="form[FROM]";
 		    fieldArray[0].fieldFindType=FieldKeyType.ID;
 		    fieldArray[0].fieldType=FieldType.TEXTBOX;
-		    fieldArray[0].fieldValue="norah@colosa.com";
+		    fieldArray[0].fieldValue="qatest@colosa.com";
 		    
 		    fieldArray[1].fieldPath="form[TO]";
 		    fieldArray[1].fieldFindType=FieldKeyType.ID;
 		    fieldArray[1].fieldType=FieldType.TEXTBOX;
-		    fieldArray[1].fieldValue="nmm757@gmail.com";
+		    fieldArray[1].fieldValue="norah@colosa.com";
 		    
 		    fieldArray[2].fieldPath="form[CC]";
 		    fieldArray[2].fieldFindType=FieldKeyType.ID;
 		    fieldArray[2].fieldType=FieldType.TEXTBOX;
-		    fieldArray[2].fieldValue="norah@colosa.com";
+		    fieldArray[2].fieldValue="qatest@colosa.com";
 				
 				fieldArray[3].fieldPath="form[SUBMIT]";
 		    fieldArray[3].fieldFindType=FieldKeyType.ID;
@@ -75,11 +75,19 @@ public class TestPMFSendMessageTest{
 		    fieldArray1[0].fieldFindType=FieldKeyType.ID;
 		    fieldArray1[0].fieldType=FieldType.BUTTON;
 		    fieldArray1[0].fieldValue="";
-				
+								
 				String fieldSEND = Pages.DynaformExecution().getFieldProperty("SEND","value");
 				Assert.assertEquals("Mail not sent", fieldSEND, "1");
+		    
 		    FormFiller.formFillElements(fieldArray1);
 		    Pages.InputDocProcess().continuebtn();
+		    
+		    Pages.Main().goAdmin();		    
+				Pages.Admin().goToLogs();
+				Pages.Admin().showEmailLogs();
+				
+		    String emStatus = Pages.Admin().emailStatus(casenumber);
+		    Assert.assertEquals("Mail not sent", emStatus, "Sent");
     }
 
     @After
