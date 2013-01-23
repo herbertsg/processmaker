@@ -21,7 +21,7 @@ public class CaseTracker{
 
 	public static void goTo() throws FileNotFoundException, IOException, Exception{
 
-		Browser.gotoUrl("http://127.0.0.1:8082/sysworkflow/en/classic/tracker/login");
+		Browser.gotoUrl("http://192.168.11.132/sysworkflow/en/classic/tracker/login");
 
 	}
 

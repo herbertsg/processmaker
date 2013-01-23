@@ -33,7 +33,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 	    //cyclical task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -44,7 +44,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Init case
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -59,7 +59,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Manual task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -70,7 +70,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Init case
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -84,7 +84,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Value based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -95,7 +95,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Init case
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -109,7 +109,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Report to task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
+		Pages.Login().loginUser("zachary", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -120,7 +120,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Init case
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -134,7 +134,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Self service task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
@@ -148,7 +148,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Init case
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -162,7 +162,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Self Service Value Based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
@@ -176,7 +176,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -189,7 +189,7 @@ public class DerivationRulesParallelEvaluation{
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - parallel evaluation (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -201,14 +201,8 @@ public class DerivationRulesParallelEvaluation{
 	    Pages.InputDocProcess().continuebtn();
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
-		//Veryfy if the task is assigned succesfuly
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
-		Pages.Main().goHome();	
-    	Pages.Home().gotoInbox();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+
+
 	}
 
 

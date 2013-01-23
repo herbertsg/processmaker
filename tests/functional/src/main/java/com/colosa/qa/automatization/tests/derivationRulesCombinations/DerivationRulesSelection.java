@@ -34,7 +34,7 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 	    //cyclical task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -52,7 +52,7 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 		//Manual task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -72,7 +72,7 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 		//Value based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -89,7 +89,7 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 		//Report to task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
+		Pages.Login().loginUser("zachary", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -106,13 +106,14 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 		//Self service task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
 		Pages.Home().openCase(caseNum);
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
+		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("send", "");
 		FormFieldData[] fieldArray6 = new FormFieldData[1];
 		fieldArray6[0] = new FormFieldData();
@@ -125,29 +126,22 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 		//Self Service Value Based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
 		Pages.Home().openCase(caseNum);
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		Pages.DynaformExecution().outDynaform();
 		Pages.DynaformExecution().intoDynaform();
-		FormFieldData[] fieldArray7 = new FormFieldData[1];
-		fieldArray7[0] = new FormFieldData();
-		fieldArray7[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
-		fieldArray7[0].fieldFindType = FieldKeyType.XPATH;
-		fieldArray7[0].fieldType = FieldType.BUTTON;
-		fieldArray7[0].fieldValue = "";
-		FormFiller.formFillElements(fieldArray7);
+	    Pages.InputDocProcess().continuebtn();
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Derivation rules - sequential (Init)");
+		caseNum = Pages.Home().startCase("Derivation rules - selection (Init)");
 		Pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray8 = new FormFieldData[1];
 		fieldArray8[0] = new FormFieldData();
@@ -159,9 +153,9 @@ public class DerivationRulesSelection{
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");				
+		Pages.Login().loginUser("admin", "admin", "");				
 		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Derivation rules - sequential (Init)");
+		caseNum = Pages.Home().startCase("Derivation rules - selection (Init)");
 		Pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray9 = new FormFieldData[1];
 		fieldArray9[0] = new FormFieldData();
@@ -170,14 +164,6 @@ public class DerivationRulesSelection{
 		fieldArray9[0].fieldType = FieldType.BUTTON;
 		fieldArray9[0].fieldValue = "";
 		FormFiller.formFillElements(fieldArray9);
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
-		//Veryfy if the task is assigned succesfuly
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
-		Pages.Main().goHome();	
-    	Pages.Home().gotoInbox();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 	}

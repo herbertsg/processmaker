@@ -30,7 +30,7 @@ public class TestCaseScheduler{
 		int lastCaseNum = Integer.parseInt(toArray[1]);
 		int currentCaseNum = lastCaseNum + 1;
 		Pages.DynaformExecution().sleep(20000);
-		Pages.CronExecute().execute();
+		Pages.CronExecute().execute("workflow");
 		System.out.println("run cron.php");
 		Pages.DynaformExecution().sleep(20000);
 		Pages.Login().gotoUrl();

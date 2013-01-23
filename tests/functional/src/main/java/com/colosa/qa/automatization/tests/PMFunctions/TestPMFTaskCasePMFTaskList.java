@@ -32,16 +32,17 @@ public class TestPMFTaskCasePMFTaskList{
 		Pages.Main().logout();
 		//Open report task for check
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");				
+		Pages.Login().loginUser("admin", "admin", "");				
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
 		Pages.Home().openCase(caseNum);
 		Pages.DynaformExecution().intoDynaform();
-		int numListCases = Integer.parseInt(Value.getValue(FieldKeyType.ID, "form[longTasksCases]"));
-		for(int i=1; i<numListCases; i++){
+		//int numListCases = Integer.parseInt(Value.getValue(FieldKeyType.ID, "form[longTasksCases]"));
+		//for(int i=1; i<numListCases; i++){
 			//Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[taskList]["+ i + "][guid]"), Value.getValue(FieldKeyType.ID, "form[tasksQuery][" + i + "][TAS_UID]"));	
-        }
+        //}
+		Pages.DynaformExecution().intoDynaform();        
 		Pages.DynaformExecution().setFieldValue("continue", "");
 		int numTaskList = Integer.parseInt(Value.getValue(FieldKeyType.ID, "form[longTaskList]"));
 		for(int i=1; i<numTaskList; i++){

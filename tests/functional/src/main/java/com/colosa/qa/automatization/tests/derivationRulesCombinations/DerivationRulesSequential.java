@@ -28,7 +28,7 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 	    //cyclical task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -40,7 +40,7 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 		//Manual task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -54,7 +54,7 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 		//Value based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ezequiel", "sample", "workflow");
+		Pages.Login().loginUser("ezequiel", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -65,7 +65,7 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 		//Report to task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
+		Pages.Login().loginUser("zachary", "sample", "");
 		Pages.Main().goHome();	
     	Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -76,20 +76,21 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 		//Self service task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("chris", "sample", "workflow");
+		Pages.Login().loginUser("chris", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
 		Pages.Home().openCase(caseNum);
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
+		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("send", "");
 	    Pages.InputDocProcess().continuebtn();
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		//Self Service Value Based task
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("william", "sample", "workflow");
+		Pages.Login().loginUser("william", "sample", "");
 		Pages.Main().goHome();	
 		Pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
@@ -103,7 +104,7 @@ public class DerivationRulesSequential{
 		Pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - sequential (Init)");
 		Pages.DynaformExecution().intoDynaform();
@@ -111,21 +112,14 @@ public class DerivationRulesSequential{
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");				
+		Pages.Login().loginUser("admin", "admin", "");				
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("Derivation rules - sequential (Init)");
 		Pages.DynaformExecution().intoDynaform();
 	    Pages.InputDocProcess().continuebtn();
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
-		//Veryfy if the task is assigned succesfuly
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "workflow");
-		Pages.Main().goHome();	
-    	Pages.Home().gotoInbox();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+
 	}
 
 

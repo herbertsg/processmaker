@@ -38,7 +38,7 @@ public class TestProcessSupervisor{
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
     	Pages.Home().gotoInbox();	
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
@@ -48,7 +48,7 @@ public class TestProcessSupervisor{
 		Pages.DynaformExecution().setFieldValue("enviar", "");
 		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoReassign();
 		Pages.DynaformExecution().outDynaform();
@@ -76,7 +76,7 @@ public class TestProcessSupervisor{
         FormFiller.formFillElements(fieldArray3);
  		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoDocuments();
 		Pages.Home().goCaseSubFrame();
@@ -96,7 +96,7 @@ public class TestProcessSupervisor{
         FormFiller.formFillElements(fieldArray33);
  		Pages.Main().logout();
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
+		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		caseNum = Pages.Home().startCase("Process Supervisors (Task 1)");
 		Pages.DynaformExecution().intoDynaform();
