@@ -216,6 +216,21 @@ public class Home extends Main{
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
 		action.click(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
+		action.perform();
+  }
+
+	public void selectTasktoAssign(int numCase)throws Exception{
+		ExtJSGrid grid;
+		Actions action = new Actions(Browser.driver());
+		Browser.driver().switchTo().defaultContent();		
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id("reassign-form")), Browser.driver(),45);
+		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
+		if(row==null)
+			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
+		action.click(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
+		action.perform();
   }
   
   public void pauseCase(int numCase)throws Exception{
@@ -256,6 +271,11 @@ public class Home extends Main{
 			return false;
 		else
 			return true;
+	}
+
+	public void goCaseSubFrame()throws Exception{
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
 	}
 
 }
