@@ -42,10 +42,10 @@ public class TestDerivationByValue{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Pages.InputDocProcess().continuebtn();
 		Pages.Main().logout();
-	}
+	/*}
 
 	@Test
-	public void openAndRunCase() throws FileNotFoundException, IOException, Exception{
+	public void openAndRunCase() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
@@ -55,10 +55,10 @@ public class TestDerivationByValue{
 		Pages.InputDocProcess().continuebtn();
 		Pages.Main().logout();
 
-	}
+	/*}
 
 	@Test
-	public void openAndEndCase() throws FileNotFoundException, IOException, Exception{
+	public void openAndEndCase() throws FileNotFoundException, IOException, Exception{*/
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("iver", "sample", "");

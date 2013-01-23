@@ -33,7 +33,7 @@ public class TestConditionalShowHide{
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         int numberNewCase = Pages.Home().startCase("Process Conditional Show Hide (Task 1)");
-
+	Pages.DynaformExecution().intoDynaform();
         Pages.DynaformExecution().setFieldValue("opcion", "opcion A");
         Pages.DynaformExecution().setFieldValue("profesion", "Yes");
         Pages.DynaformExecution().setFieldValue("fecha", "201399");
@@ -55,6 +55,7 @@ public class TestConditionalShowHide{
         Pages.Home().openCase(numberNewCase);
 
         // click to button submit
+	Pages.DynaformExecution().intoDynaform();
         Pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
@@ -70,7 +71,7 @@ public class TestConditionalShowHide{
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         numberNewCase = Pages.Home().startCase("Process Conditional Show Hide (Task 1)");
-
+	Pages.DynaformExecution().intoDynaform();
         Pages.DynaformExecution().setFieldValue("opcion", "opcion B");
         Pages.DynaformExecution().setFieldValue("titulacion][sistemas", "click");
         
@@ -92,6 +93,7 @@ public class TestConditionalShowHide{
         Pages.Home().openCase(numberNewCase);
 
         // click to button submit
+	Pages.DynaformExecution().intoDynaform();
         Pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue

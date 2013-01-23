@@ -69,34 +69,34 @@ public class TestEmployeeOffboarding{
 		Pages.InputDocProcess().continuebtn();
 		Pages.Main().logout();
 
-	}
+//	}
 
-	@Test
-	public void registerOffBoarding() throws FileNotFoundException, IOException, Exception{
+//	@Test
+//	public void registerOffBoarding() throws FileNotFoundException, IOException, Exception{
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("Jacob", "sample", "");
 		Pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
 		Pages.Home().openCase(caseNum);	
-		FormFieldData[] arrayData = new FormFieldData[3];
-		arrayData[0] = new FormFieldData();
-		arrayData[1] = new FormFieldData();
-		arrayData[2] = new FormFieldData();
-		arrayData[0].fieldPath = "form[off_keys]";
-		arrayData[0].fieldFindType = FieldKeyType.ID;
-		arrayData[0].fieldType = FieldType.CHECK;
-		arrayData[0].fieldValue = "";
-		arrayData[1].fieldPath = "form[desk_spec_keys]";
-		arrayData[1].fieldFindType = FieldKeyType.ID;
-		arrayData[1].fieldType = FieldType.CHECK;
-		arrayData[1].fieldValue = "";
-		arrayData[2].fieldPath = "form[Change_Emp_Details_Submit]";
-		arrayData[2].fieldFindType = FieldKeyType.ID;
-		arrayData[2].fieldType = FieldType.BUTTON;
-		arrayData[2].fieldValue = "";
+		FormFieldData[] arrayData8 = new FormFieldData[3];
+		arrayData8[0] = new FormFieldData();
+		arrayData8[1] = new FormFieldData();
+		arrayData8[2] = new FormFieldData();
+		arrayData8[0].fieldPath = "form[off_keys]";
+		arrayData8[0].fieldFindType = FieldKeyType.ID;
+		arrayData8[0].fieldType = FieldType.CHECK;
+		arrayData8[0].fieldValue = "";
+		arrayData8[1].fieldPath = "form[desk_spec_keys]";
+		arrayData8[1].fieldFindType = FieldKeyType.ID;
+		arrayData8[1].fieldType = FieldType.CHECK;
+		arrayData8[1].fieldValue = "";
+		arrayData8[2].fieldPath = "form[Change_Emp_Details_Submit]";
+		arrayData8[2].fieldFindType = FieldKeyType.ID;
+		arrayData8[2].fieldType = FieldType.BUTTON;
+		arrayData8[2].fieldValue = "";
 		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
+		Assert.assertTrue(FormFiller.formFillElements(arrayData8));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 //	}

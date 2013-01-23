@@ -35,6 +35,7 @@ public class TestNotifications{
         int numberNewCase = Pages.Home().startCase("Process Notification Email (Task 1)");
         
         // get button submit
+	Pages.DynaformExecution().intoDynaform();
         WebElement buttonSUBMIT = Pages.DynaformExecution().getField("submit");
 
         // click to button submit
@@ -48,7 +49,7 @@ public class TestNotifications{
 
         Pages.Home().gotoInbox();
         Pages.Home().openCase(numberNewCase);
-
+	Pages.DynaformExecution().intoDynaform();
         String valorEnviado = Pages.DynaformExecution().getFieldValue("ENVIADO");
 
         // verify if the field CELULAR is validate

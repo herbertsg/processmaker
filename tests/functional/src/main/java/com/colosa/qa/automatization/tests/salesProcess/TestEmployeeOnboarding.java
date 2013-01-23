@@ -288,10 +288,10 @@ public class TestEmployeeOnboarding{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
-//	}
+	}
 
-//	@Test
-//	public void dissmisal() throws FileNotFoundException, IOException, Exception{
+	@Test
+	public void dissmisal() throws FileNotFoundException, IOException, Exception{
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("Jacob", "sample", "");

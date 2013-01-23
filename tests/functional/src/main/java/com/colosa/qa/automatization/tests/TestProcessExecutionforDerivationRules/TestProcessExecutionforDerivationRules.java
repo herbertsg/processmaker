@@ -18,7 +18,7 @@ public class TestProcessExecutionforDerivationRules{
 
 		//Open process
 		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "wsqa");
+		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();
 		Pages.Home().gotoNewCase();	
 		int caseNumber = Pages.Home().startCase("Pruebas Integrales - Derivation rules (Task 1)");	

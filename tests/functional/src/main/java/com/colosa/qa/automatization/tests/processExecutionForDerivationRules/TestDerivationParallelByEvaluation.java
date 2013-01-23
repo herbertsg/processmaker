@@ -66,24 +66,24 @@ public class TestDerivationParallelByEvaluation{
 		Pages.Main().logout();
 
 
-	}
+	/*}
 
 	@Test
-	public void openAndRunCase() throws FileNotFoundException, IOException, Exception{
+	public void openAndRunCase() throws FileNotFoundException, IOException, Exception{*/
 
 		if(aprove=="Yes"){
 			Pages.Login().gotoUrl();
 			Pages.Login().loginUser("iver", "sample", "");
 			Pages.Main().goHome();
 			Pages.Home().openCase(caseNum);
-			FormFieldData[] arrayData = new FormFieldData[1];
-			arrayData[0] = new FormFieldData();
-			arrayData[0].fieldPath = "form[continuar]";
-			arrayData[0].fieldFindType = FieldKeyType.ID;
-			arrayData[0].fieldType = FieldType.BUTTON;
-			arrayData[0].fieldValue = "";
+			FormFieldData[] arrayData2 = new FormFieldData[1];
+			arrayData2[0] = new FormFieldData();
+			arrayData2[0].fieldPath = "form[continuar]";
+			arrayData2[0].fieldFindType = FieldKeyType.ID;
+			arrayData2[0].fieldType = FieldType.BUTTON;
+			arrayData2[0].fieldValue = "";
 			Pages.InputDocProcess().openCaseFrame();
-			Assert.assertTrue(FormFiller.formFillElements(arrayData));
+			Assert.assertTrue(FormFiller.formFillElements(arrayData2));
 			Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 			Pages.Main().logout();
 		}
@@ -108,10 +108,10 @@ public class TestDerivationParallelByEvaluation{
 			Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 			Pages.Main().logout();
 		}
-	}
+	/*}
 
 	@Test
-	public void openAndContinueCase() throws FileNotFoundException, IOException, Exception{
+	public void openAndContinueCase() throws FileNotFoundException, IOException, Exception{*/
 		if(aprove=="No"){
 			Pages.Login().gotoUrl();
 			Pages.Login().loginUser("ronald", "sample", "");
@@ -128,24 +128,24 @@ public class TestDerivationParallelByEvaluation{
 			Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 			Pages.Main().logout();
 		}	
-	}
+	/*}
 
 	@Test
-	public void openAndEndCase() throws FileNotFoundException, IOException, Exception{
+	public void openAndEndCase() throws FileNotFoundException, IOException, Exception{*/
 
 		
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().openCase(caseNum);
-		FormFieldData[] arrayData = new FormFieldData[1];
-		arrayData[0] = new FormFieldData();
-		arrayData[0].fieldPath = "form[continuar]";
-		arrayData[0].fieldFindType = FieldKeyType.ID;
-		arrayData[0].fieldType = FieldType.BUTTON;
-		arrayData[0].fieldValue = "";
+		FormFieldData[] arrayData5 = new FormFieldData[1];
+		arrayData5[0] = new FormFieldData();
+		arrayData5[0].fieldPath = "form[continuar]";
+		arrayData5[0].fieldFindType = FieldKeyType.ID;
+		arrayData5[0].fieldType = FieldType.BUTTON;
+		arrayData5[0].fieldValue = "";
 		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
+		Assert.assertTrue(FormFiller.formFillElements(arrayData5));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 	

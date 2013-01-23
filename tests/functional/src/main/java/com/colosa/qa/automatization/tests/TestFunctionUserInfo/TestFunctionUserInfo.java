@@ -41,6 +41,7 @@ public class TestFunctionUserInfo{
 		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][fax]"), Value.getValue(FieldKeyType.ID, "form[fax]"));
 		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][cellular]"), Value.getValue(FieldKeyType.ID, "form[cellular]"));
 		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][birthday]"), Value.getValue(FieldKeyType.ID, "form[birthday]"));
+		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("send", "");
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.InputDocProcess().switchToDefault();

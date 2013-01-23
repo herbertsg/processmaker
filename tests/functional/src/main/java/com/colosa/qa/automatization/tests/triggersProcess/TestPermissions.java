@@ -40,13 +40,14 @@ public class TestPermissions{
         int numberNewCase = Pages.Home().startCase("Process Permissions (Task 1)");
 
         // get button submit
+	Pages.DynaformExecution().intoDynaform();
         WebElement buttonSUBMIT = Pages.DynaformExecution().getField("Submit");
 
         // click to button submit
         buttonSUBMIT.click();
 
         String pathFile = ConfigurationSettings.getInstance().getSetting("permissions.file.upload");
-            
+	Pages.DynaformExecution().intoDynaform();            
         Pages.DynaformExecution().setFieldValue("MNU_NEW", "click");
         Pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", pathFile);
         Pages.DynaformExecution().setFieldValue("SAVE", "click");
