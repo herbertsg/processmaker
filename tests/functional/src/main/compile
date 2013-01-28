@@ -74,3 +74,5 @@ javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/testRadioButton/*.java
 
 javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/pmGridFunctions/*.java
+
+javac -cp .:./resources/libs/*:./resources/selenium-java.jar:./java/:./resources/junit.jar ./java/com/colosa/qa/automatization/tests/testsJavascript/*.java

@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Random;
+
 
 public class TestGridFunctions{
 
@@ -63,11 +65,22 @@ public class TestGridFunctions{
 		{
 			total = total + Double.parseDouble(prec[rowt]);
 		}*/
+		Random rand = new Random();
+		int aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		aleat = rand.nextInt(30);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		
 		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
 		
-
-	
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 	

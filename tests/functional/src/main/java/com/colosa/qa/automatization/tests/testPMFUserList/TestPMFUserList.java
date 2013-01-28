@@ -21,6 +21,8 @@ public class TestPMFUserList{
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();	
 		Pages.Home().startCase("PMF User List (Task 1)");
+		Pages.DynaformExecution().sleep(15000);
+		Browser.close();
 	}
 
 }
