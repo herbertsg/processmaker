@@ -45,7 +45,7 @@ public class ValidateFieldsTest{
     fieldArray[1].fieldPath="form[TEXT_ALPHABETIC]";
     fieldArray[1].fieldFindType=FieldKeyType.ID;
     fieldArray[1].fieldType=FieldType.TEXTBOX;
-    fieldArray[1].fieldValue="784validation89()?¿'/&%$AA";
+    fieldArray[1].fieldValue="784validation89()?¿'/&%$AA BB";
     
     fieldArray[2].fieldPath="form[TEXT_ALPHANUMERIC]";
     fieldArray[2].fieldFindType=FieldKeyType.ID;
