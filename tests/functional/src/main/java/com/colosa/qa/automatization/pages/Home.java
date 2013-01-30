@@ -272,6 +272,21 @@ public class Home extends Main{
 		else
 			return true;
 	}
+	
+	public boolean caseStatus(int numCase, String statusCase)throws Exception{
+		ExtJSGrid grid;
+		Browser.driver().switchTo().frame("casesFrame");
+		Browser.driver().switchTo().frame("casesSubFrame");
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		
+		WebElement row = grid.getRowByColumnsValue("#", "Status", Integer.toString(numCase), statusCase);
+		
+		if(row==null)
+			return false;
+		else
+			return true;
+	}
+	
 
 	public void goCaseSubFrame()throws Exception{
 		Browser.driver().switchTo().frame("casesFrame");

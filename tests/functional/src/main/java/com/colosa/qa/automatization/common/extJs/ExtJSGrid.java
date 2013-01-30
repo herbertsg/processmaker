@@ -139,6 +139,40 @@ public class ExtJSGrid{
 		return null;
 	}
 
+	public WebElement getRowByColumnsValue(String columnName, String otherColumnName, String columnValue, String otherColumnValue) throws Exception{
+		WebElement header = this.grid.findElement(By.xpath("div/div[2]/div/div[1]/div[1]"));
+		List<WebElement> headerFields = header.findElements(By.xpath("div/div/table/thead/tr/td"));
+		int columnNumber = 1;
+		int otherColumnNumber = 1;
+		boolean flag = false;
+		for(WebElement field:headerFields)
+		{
+			if(field.getText().trim().equals(columnName))
+			{
+					flag = true;
+					break;
+			}
+			columnNumber++;			
+		}
+		if(!flag)
+			throw new Exception("No se encontraron columnas en el grid con el nombre \""+columnName+"\" ");
+		flag = false;
+		while(this.currentPage <= this.totalPages)
+		{	
+			headerFields = this.getRows();
+			System.out.println(headerFields.size()+"   "+this.currentPage +" de "+ this.totalPages);
+			for(WebElement row:headerFields)
+				if((row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(columnNumber)+"]/div")).getText().trim().equals(columnValue))	&& (row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(otherColumnNumber)+"]/div")).getText().trim().equals(columnValue)))	
+					return row;																																																																										
+			if(this.currentPage == this.totalPages)
+				break;
+			this.nextPage();
+		}
+		return null;
+	}
+	
+	
+	
 	private int moveToPage(int option){
 		WebDriverWait wait = new WebDriverWait(this.driver, this.timeout);
 		PageStatusChanged statusChanged = new PageStatusChanged();
