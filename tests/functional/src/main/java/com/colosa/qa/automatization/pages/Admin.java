@@ -160,7 +160,4 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         return emailStatus;
     }
-
-
-
 }
