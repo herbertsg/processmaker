@@ -73,4 +73,26 @@ public class InputDocumentList{
 		Browser.driver().switchTo().defaultContent();
 	}
 
+	public boolean fileExists(String fileName) throws Exception{
+		List<WebElement> wel;
+		boolean flag = false;
+		//html/body/table/tbody/tr/td/table/tbody/tr[3]/td/div/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr[2]/td[2]
+		WebElement we = null;
+		wel = Browser.driver().findElements(By.xpath("//table/tbody/tr/td/table/tbody/tr[3]/td/div/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr"));
+		for(WebElement we2:wel)
+		{
+			we = we2.findElement(By.xpath("td[2]"));
+			if(we.getText().equals(fileName))
+			{
+				flag = true;
+				break;
+			}
+		}
+		if(!flag)
+			throw new Exception("file \""+fileName+"\" not found");
+
+		return flag;	
+
+	}
+
 }
