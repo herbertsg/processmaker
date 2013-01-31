@@ -5,21 +5,17 @@ http://duhnnie.net
 last update: 2012-10-23 Hrs. 16:40
 */
 
-package com.colosa.qa.automatization;
+package com.colosa.qa.automatization.tests.common;
+
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.lang.Exception;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import com.colosa.qa.automatization.ExtJS.ExtJSGrid;
 
 public class WebDriverFunctionsPMOS2{
 	

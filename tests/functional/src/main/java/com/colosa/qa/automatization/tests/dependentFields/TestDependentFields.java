@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.dependentFields;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -58,9 +59,9 @@ public class TestDependentFields{
 
 		Pages.DynaformExecution().sleep(1000);
 		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
-		//Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
 		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state);
-		//Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
+		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
 
 		//Pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
 		Pages.DynaformExecution().setFieldValue("username", userName);
@@ -122,5 +123,9 @@ public class TestDependentFields{
 		Pages.Main().logout();
 	}
 
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

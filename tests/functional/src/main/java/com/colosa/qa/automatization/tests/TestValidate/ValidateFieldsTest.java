@@ -40,12 +40,12 @@ public class ValidateFieldsTest{
     fieldArray[0].fieldPath="form[TEXT_ANY]";
     fieldArray[0].fieldFindType=FieldKeyType.ID;
     fieldArray[0].fieldType=FieldType.TEXTBOX;
-    fieldArray[0].fieldValue="validation89()?¿'/&%$@|€";
+    fieldArray[0].fieldValue="validation89()?Â¿'/&%$@|â‚¬";
     
     fieldArray[1].fieldPath="form[TEXT_ALPHABETIC]";
     fieldArray[1].fieldFindType=FieldKeyType.ID;
     fieldArray[1].fieldType=FieldType.TEXTBOX;
-    fieldArray[1].fieldValue="784validation89()?¿'/&%$AA BB";
+    fieldArray[1].fieldValue="784validation89()?Â¿'/&%$AA BB";
     
     fieldArray[2].fieldPath="form[TEXT_ALPHANUMERIC]";
     fieldArray[2].fieldFindType=FieldKeyType.ID;
@@ -131,7 +131,7 @@ public class ValidateFieldsTest{
 		
 	  FormFiller.formFillElements(fieldArray1);
     
-    Assert.assertEquals("Validate Text Any does not exist", "validation89()?¿'/&%$@|€", fieldTEXT_ANY);
+    Assert.assertEquals("Validate Text Any does not exist", "validation89()?Â¿'/&%$@|â‚¬", fieldTEXT_ANY);
     Assert.assertEquals("Validate Text Alphabetic does not exist", "validationAA", fieldTEXT_ALPHABETIC);
     Assert.assertEquals("Validate Text Alphanumeric does not exist", "12validation12302", fieldTEXT_ALPHANUMERIC);
     Assert.assertEquals("Validate Text Integer does not exist", "123456789", fieldTEXT_INTEGER);

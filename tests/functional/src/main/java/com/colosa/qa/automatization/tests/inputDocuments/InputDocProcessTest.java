@@ -1,19 +1,15 @@
-package com.colosa.qa.automatization.inputDocuments;
+package com.colosa.qa.automatization.tests.inputDocuments;
 
-import java.util.List;
-
+import com.colosa.qa.automatization.tests.common.WebDriverFunctionsPMOS2;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Rule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import com.colosa.qa.automatization.*;
+
+import java.util.List;
 
 public class InputDocProcessTest{
 

@@ -1,12 +1,7 @@
 package com.colosa.qa.automatization.tests.testCron;
 
-import org.junit.Assert;
-import org.junit.AfterClass;
+import com.colosa.qa.automatization.pages.Pages;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +13,7 @@ public class TestCron{
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.CronExecute().execute();
+		Pages.CronExecute().execute("workflow");
 	}
 
 }
