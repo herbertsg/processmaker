@@ -160,4 +160,22 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         return emailStatus;
     }
+
+    public static boolean userExists(String userName) throws Exception{
+
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        Browser.driver().switchTo().frame("setup-frame");
+
+        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
+        String emailStatus;
+        WebElement row = grid.getRowByColumnValue("User Name", userName);
+
+        if(row==null)
+            throw new Exception("User "+userName+" not found in Users List");
+        else
+            row.click();
+            return true;   
+
+    }
 }

@@ -205,7 +205,7 @@ public class Home extends Main{
         action.perform();
 	}
 
-	public void selectCase(int numCase)throws Exception{
+	public boolean selectCase(int numCase)throws Exception{
 		ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
 		Browser.driver().switchTo().defaultContent();		
@@ -213,10 +213,15 @@ public class Home extends Main{
 		Browser.driver().switchTo().frame("casesSubFrame");
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
-		if(row==null)
+		if(row==null){
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
-		action.click(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
-		action.perform();
+		}
+		else{
+			action.click(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
+			action.perform();
+			return true;
+		}	
+		
   }
 
 	public void selectTasktoAssign(int numCase)throws Exception{
