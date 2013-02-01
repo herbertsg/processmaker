@@ -298,4 +298,13 @@ public class Home extends Main{
 		Browser.driver().switchTo().frame("casesSubFrame");
 	}
 
+	public boolean isGridPresent(String grd) throws Exception{
+		ExtJSGrid grid = null;
+		grid = new ExtJSGrid(Browser.driver().findElement(By.id(grd)), Browser.driver());
+		if(grid==null)
+			throw new Exception("Grid: "+grd+" not found");
+		else
+			return true;
+	}
+
 }
