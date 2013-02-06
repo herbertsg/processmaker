@@ -74,4 +74,13 @@ public class Main extends Page{
         Browser.getElement("main.WebElement.Logout").click();
     }
 
+    public void profile() throws FileNotFoundException, IOException, Exception{
+        Browser.driver().switchTo().defaultContent();
+        Browser.getElement("main.WebElement.profile").click();
+    }
+
+    public void goToUrl(String url) throws FileNotFoundException, IOException, Exception{
+        Browser.gotoUrl(url);
+    }
+
 }

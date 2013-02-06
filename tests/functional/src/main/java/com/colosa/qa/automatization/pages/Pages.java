@@ -97,6 +97,12 @@ public class Pages{
 		return dynaformExecution;
 	}
 
+	public static Profile Profile() throws Exception{
+		Profile profile = new Profile();
+
+		return profile;
+	}	
+
 	public static DebugExecution DebugExecution() throws Exception{
 		DebugExecution debugExecution = new DebugExecution();
 

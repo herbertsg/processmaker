@@ -25,6 +25,11 @@ public class DynaformExecution extends Page {
     // Pages.Main().goHome();
 
     // into level of debug
+    public void intoFrainMain() throws Exception {
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("frameMain");
+    }
+
     public void intoDebug() throws Exception {
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("casesFrame");
