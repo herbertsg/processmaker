@@ -64,7 +64,7 @@ public class TestPMFNewCaseImpersonate{
 		    
 		    String fieldRESULT = Pages.DynaformExecution().getFieldProperty("RESULT","value");
 		    
-		    Assert.assertEquals("The function does not work properly", "1", fieldRESULT);
+		    Assert.assertEquals("The function does not work", "1", fieldRESULT);
 		    
 		    FormFiller.formFillElements(fieldArray1);
 		    Pages.InputDocProcess().continuebtn();
