@@ -29,6 +29,7 @@ public class TestSetCaseTrackerCode{
 		Pages.Main().goHome();
 		Pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
+		//init Case tracker
 		Pages.Home().openCase(caseNum);
 		Pages.DynaformExecution().intoDynaform();
 		pin = Value.getValue(FieldKeyType.ID, "form[pin]");	
