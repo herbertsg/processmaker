@@ -66,9 +66,9 @@ public class Admin extends Main{
   			WebElement divGridPMT = Browser.driver().findElement(By.id("infoGrid"));
   			WebElement newPMT = divGridPMT.findElement(By.xpath("div[2]/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
   			newPMT.click();
-  			
+  			//html/body/div[13]/ul/li/a
   			Thread.sleep(4000);
-  			WebElement newPMTable = Browser.driver().findElement(By.xpath("html/body/div[9]"));
+  			WebElement newPMTable = Browser.driver().findElement(By.xpath("html/body/div[8]/ul/li"));
   			WebElement newPMTables = newPMTable.findElement(By.tagName("span"));
 				newPMTables.click();
 				
