@@ -252,7 +252,7 @@ public class Home extends Main{
 		bAction.click(); 
 		
 		Thread.sleep(4000);
-		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[5]/ul/li[1]/a"));
+		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[6]"));
 		WebElement pCase = pauseCase.findElement(By.tagName("span"));
 		pCase.click(); 
 		
