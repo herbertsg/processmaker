@@ -71,7 +71,7 @@ public class TestPMTable{
         Pages.Admin().createPMTable();
         
         
-        Assert.assertEquals("Type Field should be defined in Table","0",Pages.Admin().verifyPMTable("TESTTABLE3"));
+        Assert.assertEquals("Type Field should be defined in Table", false,Pages.Admin().verifyPMTable("TESTTABLE3"));
         
         Pages.Admin().newPMTable("TESTTABLE2","description Table2");
         Pages.Admin().addField("ID","ID","VARCHAR","32",false,false,false);
@@ -79,7 +79,7 @@ public class TestPMTable{
         Pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
         Pages.Admin().createPMTable();
         
-        Assert.assertEquals("Does not exist Primary Key field in Table","0",Pages.Admin().verifyPMTable("TESTTABLE2"));
+        Assert.assertEquals("Does not exist Primary Key field in Table", false,Pages.Admin().verifyPMTable("TESTTABLE2"));
         
     }
 /*
