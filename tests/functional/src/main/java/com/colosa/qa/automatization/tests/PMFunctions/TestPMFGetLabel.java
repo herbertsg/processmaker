@@ -18,6 +18,9 @@ public class TestPMFGetLabel{
 	protected static String list = "Valor4";
 	protected static String radio = "Valor5";
 	protected static String check = "Valor2";
+	protected static String	check2 = "Valor4";
+	protected static String check3 = "Valor5";
+	protected static String checkGroup = "";
 
 
 	@Test
@@ -36,13 +39,16 @@ public class TestPMFGetLabel{
 		Pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
 		Pages.DynaformExecution().setFieldValue("List", list);
 		Pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
-		Pages.DynaformExecution().setCheckBoxGroup("check1", check);		
+		Pages.DynaformExecution().setCheckBoxGroup("check1", check);
+		Pages.DynaformExecution().setCheckBoxGroup("check1", check2);
+		Pages.DynaformExecution().setCheckBoxGroup("check1", check3);		
 		Pages.DynaformExecution().setFieldValue("Enviar", "");
+		checkGroup = check + " " + check2 + " " + check3 + " ";
 
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("lstValue"), list);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("rdValue"), radio);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("chkValue"), check);
+		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
 		Pages.DynaformExecution().sleep(15000);
 		Browser.close();
 
