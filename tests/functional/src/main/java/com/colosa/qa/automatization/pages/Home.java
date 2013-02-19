@@ -127,6 +127,11 @@ public class Home extends Main{
 		selectMenuTreePanelOption("Documents/");
 	}
 
+	public static void gotoReports() throws Exception{
+		selectMenuTreePanelOption("Documents/Reports");
+	}
+
+
 	public int startCase(String processName) throws Exception{
 		String[] path = pathToArray(processName);
 		List<WebElement> wel;
