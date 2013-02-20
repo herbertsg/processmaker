@@ -7,6 +7,7 @@ import com.colosa.qa.automatization.common.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.openqa.selenium.support.ui.Select;
 
 public class Admin extends Main{
 
@@ -45,7 +46,116 @@ public class Admin extends Main{
         we.click();
     }
     
-    public int countRoles() throws Exception{
+    public static void goToSettings() throws Exception{
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__settings']/a[2]"));
+        we.click();
+    }
+    public static void newPMTable(String nameTable, String descTable)throws Exception{
+  			goToSettings();
+  			Thread.sleep(3000);
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        WebElement divPMT = Browser.driver().findElement(By.id("settings"));
+  			WebElement PMT = divPMT.findElement(By.xpath("//div/div/ul/div/li[11]"));
+  			PMT.click();
+  			
+  			Thread.sleep(3000);
+  			Browser.driver().switchTo().frame("setup-frame");
+  			WebElement divGridPMT = Browser.driver().findElement(By.id("infoGrid"));
+  			WebElement newPMT = divGridPMT.findElement(By.xpath("div[2]/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
+  			newPMT.click();
+  			//html/body/div[13]/ul/li/a
+  			Thread.sleep(4000);
+  			WebElement newPMTable = Browser.driver().findElement(By.xpath("html/body/div[8]/ul/li"));
+  			WebElement newPMTables = newPMTable.findElement(By.tagName("span"));
+				newPMTables.click();
+				
+				Thread.sleep(4000);
+				WebElement REP_TAB_NAME = Browser.driver().findElement(By.id("REP_TAB_NAME"));
+  			REP_TAB_NAME.sendKeys(nameTable);
+  			
+  			WebElement REP_TAB_DSC = Browser.driver().findElement(By.id("REP_TAB_DSC"));
+  			REP_TAB_DSC.sendKeys(descTable);
+  	}
+  		
+  	public static void addField(String fieldName, String fieldLabel, String fieldType, String fieldSize, Boolean fieldPrimaryKey, Boolean fieldNull, Boolean fieldAutoincrement) throws Exception{		  			
+  			WebElement assignedGrid = Browser.driver().findElement(By.id("assignedGrid"));
+  			WebElement addField = assignedGrid.findElement(By.xpath("div/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
+  			addField.click();
+  			
+  			WebElement addFields = Browser.driver().findElement(By.xpath("/html/body/div[2]"));
+  			
+  			WebElement setName = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/input"));
+  			setName.sendKeys(fieldName);
+  			Thread.sleep(1000);
+  			WebElement setLabel = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/input[2]"));
+  			setLabel.sendKeys(fieldLabel);
+  			Thread.sleep(1000);
+  			WebElement setType = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div[6]/input"));
+  			setType.sendKeys(fieldType);
+  			Thread.sleep(1000);
+  			 
+        WebElement setSize = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/input[3]"));
+  			setSize.sendKeys(fieldSize);
+  			
+  			if(fieldPrimaryKey != false){
+	  			WebElement setPrimaryKey = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div[8]/input"));
+	  			setPrimaryKey.click();
+  		  }
+  		  
+  			if(fieldNull == false){
+	  			WebElement setNull = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div[7]/input"));
+	  			setNull.click();
+  		  }
+  		  
+  		  if(fieldAutoincrement != false){
+	  			WebElement setAutoincrement = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/div[9]/input"));
+	  			setAutoincrement.click();
+  		  }
+  			  			
+  			WebElement updateField = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div[3]/div/div/table/tbody/tr/td/table/tbody/tr[2]/td[2]"));
+  			updateField.click();
+  			Thread.sleep(3000);
+  	}
+  			
+  	public static void createPMTable() throws Exception{		
+  			WebElement createTable = Browser.driver().findElement(By.xpath("/html/body/div[3]"));
+  			WebElement createTableButton = createTable.findElement(By.xpath("div/div/div/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]"));
+  			createTableButton.click();
+  	}
+  	
+  	public Boolean verifyPMTable(String nameTable) throws Exception{		
+  			goToSettings();
+  			Thread.sleep(3000);
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        
+        WebElement divPMT = Browser.driver().findElement(By.id("settings"));
+  			WebElement PMT = divPMT.findElement(By.xpath("//div/div/ul/div/li[11]"));
+  			PMT.click();
+  			
+        Browser.driver().switchTo().frame("setup-frame");
+        
+  			WebElement divFils = Browser.driver().findElement(By.className("x-grid3-body"));
+        List<WebElement> divsRow = divFils.findElements(By.tagName("div"));
+        
+  			Boolean flagExist = false;
+        for(WebElement divs:divsRow)
+        {
+            if ( (divs.getAttribute("class").indexOf ("x-grid3-row") > -1) && 
+                 (divs.getAttribute("innerHTML").indexOf (nameTable) > -1) ) {
+                flagExist = true;
+                break;
+            }
+        }
+  			
+  			return flagExist;
+  	}
+  	
+  	//System.out.println("HTML " + newww.getAttribute("innerHTML"));
+  	public int countRoles() throws Exception{
         goToUsers();
         Thread.sleep(3000);
         Browser.driver().switchTo().defaultContent();
