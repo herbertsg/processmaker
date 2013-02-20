@@ -178,4 +178,28 @@ public class Admin extends Main{
             return true;   
 
     }
+
+    public static void pmSLA() throws Exception{
+        List<WebElement> wel;
+        boolean flag = false;
+        Browser.driver().switchTo().defaultContent();
+        Browser.driver().switchTo().frame("adminFrame");
+        WebElement we = Browser.driver().findElement(By.id("settings"));
+        wel = we.findElements(By.xpath(" div/div/ul/div/li"));
+            for(WebElement we2:wel)
+            {
+                we = we2.findElement(By.xpath("div/a/span"));
+                if(we.getText().equals("SLA"))
+                {
+                    we.click();
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag)
+                throw new Exception("Option not found");
+       
+    }
+
+
 }

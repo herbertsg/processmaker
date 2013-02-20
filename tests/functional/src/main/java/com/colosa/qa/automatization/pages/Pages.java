@@ -127,4 +127,10 @@ public class Pages{
 		return caseTracker;
 	}
 
+	public static PMSLAConfiguration PMSLAConfiguration() throws Exception{
+		PMSLAConfiguration pmslaConfiguration = new PMSLAConfiguration();
+
+		return pmslaConfiguration;
+	}
+
 }
