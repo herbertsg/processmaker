@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -200,4 +201,9 @@ public class TestNewHireRequest{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

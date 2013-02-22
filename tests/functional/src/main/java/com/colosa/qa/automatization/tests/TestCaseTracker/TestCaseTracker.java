@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.TestCaseTracker;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -56,5 +57,10 @@ public class TestCaseTracker{
 
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

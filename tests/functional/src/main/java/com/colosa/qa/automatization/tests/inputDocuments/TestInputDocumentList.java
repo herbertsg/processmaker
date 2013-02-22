@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.inputDocuments;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -24,5 +25,11 @@ public class TestInputDocumentList{
 		//Pages.InputDocumentList().closePopup();
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
 
 }

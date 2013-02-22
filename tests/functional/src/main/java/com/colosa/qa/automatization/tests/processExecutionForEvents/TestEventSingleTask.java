@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processExecutionForEvents;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -121,5 +122,10 @@ public class TestEventSingleTask{
 public void opencase(int casenumber)throws Exception{
 Pages.Home().openCase(casenumber);
 }
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

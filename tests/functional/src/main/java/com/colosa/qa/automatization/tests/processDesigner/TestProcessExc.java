@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processDesigner;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -28,4 +29,9 @@ public class TestProcessExc{
 		Pages.Designer().sequential("Task 1", "Task 2");
 		Pages.Designer().endTask("Task 2");
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

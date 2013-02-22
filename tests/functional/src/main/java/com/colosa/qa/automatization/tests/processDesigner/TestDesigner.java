@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processDesigner;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -46,4 +47,8 @@ public class TestDesigner{
 		Pages.TaskProperties().properties(taskProp);				
 
 	}
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

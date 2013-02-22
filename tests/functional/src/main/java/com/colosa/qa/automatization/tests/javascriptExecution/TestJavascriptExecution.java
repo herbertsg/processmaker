@@ -1,4 +1,4 @@
-package com.colosa.qa.automatization.tests.javascriptExecution;
+﻿package com.colosa.qa.automatization.tests.javascriptExecution;
 
 import org.junit.Assert;
 import org.junit.AfterClass;
@@ -33,5 +33,11 @@ public class TestJavascriptExecution{
 
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
 
 }

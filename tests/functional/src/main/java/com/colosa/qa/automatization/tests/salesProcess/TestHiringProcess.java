@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -164,5 +165,11 @@ public void opencase(int casenumber) throws Exception{
 	Pages.Home().openCase(casenumber);
 
 }
+
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
