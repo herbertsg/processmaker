@@ -1,6 +1,7 @@
-package com.colosa.qa.automatization.tests.gridFunctions;
+﻿package com.colosa.qa.automatization.tests.gridFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -120,5 +121,11 @@ public class TestGridFunctions{
 		Pages.Main().logout();
 
 	}
+
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

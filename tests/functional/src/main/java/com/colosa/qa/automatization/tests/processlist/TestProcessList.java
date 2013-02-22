@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processlist;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -24,5 +25,10 @@ public class TestProcessList{
 		//Pages.ProcessList().exportProcess("Test2");
 		Pages.ProcessList().newProcess("Test Process2", "Proceso de prueba 2");
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

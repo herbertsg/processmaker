@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -129,6 +130,11 @@ public class DerivationRulesParallel{
 		Pages.Main().logout();
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 
 }

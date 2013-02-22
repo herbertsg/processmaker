@@ -135,7 +135,7 @@ public class TestRedirectLogin{
 
     @After
     public void cleanup(){
-       // Browser.close();
+        Browser.close();
     }
 
 }

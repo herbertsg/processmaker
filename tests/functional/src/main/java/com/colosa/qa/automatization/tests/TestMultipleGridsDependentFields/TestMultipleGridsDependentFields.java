@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.TestMultipleGridsDependentFields;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -96,5 +97,11 @@ public class TestMultipleGridsDependentFields{
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.Main().logout();
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
 
 }

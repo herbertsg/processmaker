@@ -19,6 +19,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.8.1</version>
+
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
@@ -42,6 +43,7 @@
   </dependencies>
 
   <build>
+<testSourceDirectory>${basedir}\src\main\java\com\colosa\qa\automatization\tests\PMFunctions</testSourceDirectory>
     <plugins>
   <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -55,6 +57,45 @@
         <target>1.7</target>
     </configuration>
   </plugin>
+
+
+
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+
+    <version>2.13</version>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.maven.surefire</groupId>
+        <artifactId>surefire-junit47</artifactId>
+        <version>2.13</version>
+      </dependency>
+    </dependencies>
+
+            <goals>
+            <goal>            
+               <id>test22</id>
+               <configuration> 
+            <fork>true</fork>
+            <executable>${JAVA_JDK_1_7_JAVAC}</executable>
+            <encoding>UTF-8</encoding>
+        <source>1.7</source>
+        <target>1.7</target>
+                  <includes>
+                     <include>**/Test*.java</include>
+                  </includes>
+              </configuration>
+             </goal>
+
+            </goals> 
+
+
+  </plugin>
+
     </plugins>
+
   </build>
 </project>
+
+

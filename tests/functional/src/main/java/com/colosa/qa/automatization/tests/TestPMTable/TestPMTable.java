@@ -82,10 +82,10 @@ public class TestPMTable{
         Assert.assertEquals("Does not exist Primary Key field in Table", false,Pages.Admin().verifyPMTable("TESTTABLE2"));
         
     }
-/*
+
     @After
     public void cleanup(){
         Browser.close();
     }
-*/    
+    
 }

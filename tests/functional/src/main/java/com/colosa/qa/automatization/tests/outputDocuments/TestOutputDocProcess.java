@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -29,5 +30,10 @@ public class TestOutputDocProcess{
 		Pages.OutputDocProcess().nextbtn();
 		Pages.OutputDocProcess().continuebtn();
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
