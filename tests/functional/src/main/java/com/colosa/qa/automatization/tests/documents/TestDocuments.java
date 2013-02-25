@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.documents;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -24,4 +25,9 @@ public class TestDocuments{
 		
 
 	}
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
 }

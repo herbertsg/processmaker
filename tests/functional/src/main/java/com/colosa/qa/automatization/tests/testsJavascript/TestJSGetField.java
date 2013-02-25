@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.testsJavascript;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -37,5 +38,10 @@ public class TestJSGetField{
 		Browser.close();
 
 	}
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

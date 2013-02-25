@@ -43,8 +43,8 @@ public class Login extends Page{
 	public void loginDefaultUser() throws Exception{		
 		this.initWebElements();
 		this.user.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultUserName"));
-		this.password.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultPassword"));
 		this.workspace.sendKeys(ConfigurationSettings.getInstance().getSetting("login.defaultWorkspace"));
+		
 		this.languageDropDown.selectByVisibleText(ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
 
 		this.submitButton.click();
@@ -57,14 +57,23 @@ public class Login extends Page{
 
 		this.user.sendKeys(userName);
 		this.password.sendKeys(password);
-		this.workspace.sendKeys(workspace);
+		String valueWs = this.workspace.getAttribute("value");
+		if(!valueWs.contains("workflow") )
+		{
+			this.workspace.sendKeys(workspace);
+		}else
+		{
+			this.workspace.sendKeys("");
+		}
 		this.languageDropDown.selectByVisibleText(language);
 
 		this.submitButton.click();
 	}
 
 	public void loginUser(String userName, String password, String workspace) throws Exception{
-		this.loginUser(userName, password, workspace, ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
+
+		this.loginUser(userName, password,  workspace, ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
+
 	}	
 
 	public boolean isUserLogged() throws Exception{

@@ -53,4 +53,9 @@ public class TestPMFSendVariables{
 
 	}
 
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
 }
