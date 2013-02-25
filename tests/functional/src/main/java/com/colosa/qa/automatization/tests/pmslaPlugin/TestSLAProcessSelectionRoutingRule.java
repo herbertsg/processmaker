@@ -53,9 +53,9 @@ public class TestSLAProcessSelectionRoutingRule{
 		Pages.Home().gotoReports();
 
 		Pages.PmslaReport().generateReport("SLA Task with Penality Selection Rule", "All", "All", "All");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
-		Assert.assertEquals(caseInfo[5], "OPEN");
 		Pages.PmslaReport().displayCases("SLA Task with Penality Selection Rule");
+		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		Assert.assertEquals(caseInfo[5], "In progress");
 		Pages.PmslaReport().displayTasks(numCase);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Tipo de Cambio");
 		Assert.assertEquals(taskInfo[5], "OPEN");
