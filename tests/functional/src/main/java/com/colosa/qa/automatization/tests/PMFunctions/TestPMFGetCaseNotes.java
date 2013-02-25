@@ -116,11 +116,11 @@ public class TestPMFGetCaseNotes{
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-}
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

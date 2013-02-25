@@ -134,14 +134,14 @@ public class DerivationRulesEvaluation{
 		Pages.DynaformExecution().setFieldValue("continue", "Yes");
 		Pages.DynaformExecution().setFieldValue("send", "");
 	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
 	}
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

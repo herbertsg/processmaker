@@ -175,14 +175,13 @@ public class AllFieldsTest{
 		gridValue =  Pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridDateField");
 		Assert.assertEquals(gridValue, "2013-04-05");
 
-
-		Pages.DynaformExecution().outDynaform();
-
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

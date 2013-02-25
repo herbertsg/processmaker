@@ -48,11 +48,13 @@ public class TestSetCaseTrackerCode{
 		System.out.println(Pages.Designer().getTaskColorStatus("Task 2"));
 		Assert.assertEquals("Pending Task / Not Executed", Pages.Designer().getTaskColorStatus("Task 2"));
 
+		Pages.DynaformExecution().outDynaform();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

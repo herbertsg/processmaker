@@ -29,11 +29,13 @@ public class TestOutputDocProcess{
 		Pages.OutputDocProcess().downloadPdfFile();
 		Pages.OutputDocProcess().nextbtn();
 		Pages.OutputDocProcess().continuebtn();
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

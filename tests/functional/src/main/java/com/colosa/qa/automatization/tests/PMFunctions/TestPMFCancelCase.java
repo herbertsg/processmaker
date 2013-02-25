@@ -53,11 +53,13 @@ public class TestPMFCancelCase{
 		    
 		    Pages.Home().gotoParticipated();
 		    Assert.assertTrue("The case with Cancelled status does not exist in Participated", Pages.Home().caseStatus(casenumber, status));
-    }
+            Pages.InputDocProcess().switchToDefault();
+            Pages.Main().logout();
+}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

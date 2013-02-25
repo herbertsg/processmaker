@@ -28,10 +28,12 @@ public class TestProcessExc{
 		Pages.Designer().initialTask("Task 1");
 		Pages.Designer().sequential("Task 1", "Task 2");
 		Pages.Designer().endTask("Task 2");
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

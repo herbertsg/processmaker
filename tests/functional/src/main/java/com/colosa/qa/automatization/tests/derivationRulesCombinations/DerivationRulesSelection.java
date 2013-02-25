@@ -165,14 +165,14 @@ public class DerivationRulesSelection{
 		fieldArray9[0].fieldType = FieldType.BUTTON;
 		fieldArray9[0].fieldValue = "";
 		FormFiller.formFillElements(fieldArray9);
-		Pages.DynaformExecution().outDynaform();
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

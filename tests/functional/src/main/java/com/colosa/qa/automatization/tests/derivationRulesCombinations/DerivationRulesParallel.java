@@ -126,15 +126,14 @@ public class DerivationRulesParallel{
 		Pages.DynaformExecution().setFieldValue("send", "");
 		Pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
 	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

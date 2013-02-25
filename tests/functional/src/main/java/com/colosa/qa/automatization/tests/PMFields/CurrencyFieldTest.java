@@ -111,9 +111,12 @@ public class CurrencyFieldTest{
     Assert.assertEquals("Negative Mask does not exist", "- 123,456,789.02 $", fieldCURRENCY_NEGATIVE);
     
     Pages.InputDocProcess().continuebtn();
-  }
-  @After
-    public void cleanup(){
-        Browser.close();
-    } 	
+    Pages.InputDocProcess().switchToDefault();
+    Pages.Main().logout();
+    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }	
 }

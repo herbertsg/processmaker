@@ -88,11 +88,13 @@ public class TestPMFNewCaseTest{
         // verify if the field OBSERVACIONES is validate
         Assert.assertEquals("No case has created with field OBSERVACIONES ", fieldOBSERVACIONES, "ESTA ES UNA CREACION DE CASOS VIA TRIGGER");
         // case was create with field OBSERVACIONES correctly
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

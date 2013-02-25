@@ -36,12 +36,13 @@ public class TestPMFCreateUsers{
 		Pages.Admin().goToUsers();
 		Assert.assertTrue(Pages.Admin().userExists("felipe"));	
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

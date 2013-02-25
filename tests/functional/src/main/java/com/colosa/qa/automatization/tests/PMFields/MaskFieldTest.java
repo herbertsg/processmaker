@@ -99,8 +99,14 @@ public class MaskFieldTest{
     Assert.assertEquals("Mask other value(,) does not exist", "123,02", fieldMASK_OTHER2);
     
     Pages.InputDocProcess().continuebtn();
-  	Browser.close();
-  }
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
+    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
  	
  	public void openCaseFrame() throws Exception{
 	  Browser.driver().switchTo().defaultContent();

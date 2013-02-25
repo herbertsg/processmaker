@@ -114,14 +114,14 @@ public class TestProcessSupervisor{
 		Pages.InputDocProcess().uploadFile("test.pdf", "Test File");
 	    Pages.InputDocProcess().continuebtn();
        	Pages.Home().gotoInbox(); 
- 		Pages.Main().logout(); 
-
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

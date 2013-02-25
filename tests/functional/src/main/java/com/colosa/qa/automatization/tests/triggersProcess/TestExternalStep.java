@@ -103,10 +103,12 @@ public class TestExternalStep{
         
         Pages.Main().goAdmin();
         Pages.Admin().activePlugin("external", false);
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

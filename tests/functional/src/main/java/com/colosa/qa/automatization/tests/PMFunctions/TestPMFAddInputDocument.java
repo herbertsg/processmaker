@@ -29,11 +29,13 @@ public class TestPMFAddInputDocument{
 		Pages.DynaformExecution().setFieldValue("send", "");
 		Assert.assertTrue(Pages.InputDocumentList().fileExists("bug8283.txt"));
 
-	}
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
+}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

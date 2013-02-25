@@ -70,12 +70,12 @@ public class TestFunctionExecuteQueryMysqlOracle{
 		Pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.Main().logout();
-}
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+ //   @After
+  //  public void cleanup(){
+ //       Browser.close();
+ //   }
 
 
 }

@@ -56,12 +56,13 @@ public class TestPMFCasesList{
         
         Pages.Home().gotoParticipated();
         Assert.assertTrue("The case does not exist in Participated", Pages.Home().existCase(fieldNAME));
-        Pages.DynaformExecution().outDynaform();  
-    }
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
+}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }
