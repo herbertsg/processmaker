@@ -52,8 +52,9 @@ public class TestSLAMultipleTasksWithConditionAndPenalty{
 		Pages.Home().gotoReports();
 
 		Pages.PmslaReport().generateReport("SLA Process - Multiple Task with Condiion and Pen", "All", "All", "All");
-		String[] caseInfo = Pages.PmslaReport().displayCases("SLA Process - Multiple Task with Condiion and Pen");
+		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "OPEN");
+		Pages.PmslaReport().displayCases("SLA Process - Multiple Task with Condiion and Pen");
 		Pages.PmslaReport().displayTasks(numCase);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Documento Generado");
 		Assert.assertEquals(taskInfo[5], "OPEN");

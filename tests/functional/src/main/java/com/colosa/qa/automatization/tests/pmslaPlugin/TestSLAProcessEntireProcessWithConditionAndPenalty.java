@@ -39,8 +39,9 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty{
 		Pages.Home().gotoReports();
 
 		Pages.PmslaReport().generateReport("SLA-Entire Process with condition and Penalty", "All", "All", "All");
-		String[] caseInfo = Pages.PmslaReport().displayCases("SLA-Entire Process with condition and Penalty");
+		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "OPEN");
+		Pages.PmslaReport().displayCases("SLA-Entire Process with condition and Penalty");
 		Pages.PmslaReport().displayTasks(numCase);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solucion");
 		Assert.assertEquals(taskInfo[5], "OPEN");

@@ -49,8 +49,9 @@ public class TestSLAProcesswithDerivationParallel{
 		Pages.Home().gotoReports();
 
 		Pages.PmslaReport().generateReport("SLA-Entire Process with Derivation Pararell", "All", "All", "All");
-		String[] caseInfo = Pages.PmslaReport().displayCases("SLA-Entire Process with Derivation Pararell");
+		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "OPEN");
+		Pages.PmslaReport().displayCases("SLA-Entire Process with Derivation Pararell");
 		Pages.PmslaReport().displayTasks(numCase);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo[5], "OPEN");
