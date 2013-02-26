@@ -122,11 +122,12 @@ public class SubprocessesTest{
 		Assert.assertEquals(desc, Value.getValue(arrayDataEmp2[0].fieldFindType, arrayDataEmp2[0].fieldPath));
 		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

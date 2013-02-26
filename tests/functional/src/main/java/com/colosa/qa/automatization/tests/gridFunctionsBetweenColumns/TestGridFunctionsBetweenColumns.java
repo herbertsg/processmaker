@@ -95,14 +95,14 @@ public class TestGridFunctionsBetweenColumns{
 		//Assert.assertEquals(Double.toString(sum), Pages.DynaformExecution().getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
 		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

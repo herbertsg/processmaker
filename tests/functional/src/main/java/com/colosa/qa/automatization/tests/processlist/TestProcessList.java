@@ -24,11 +24,13 @@ public class TestProcessList{
 		//Pages.ProcessList().importProcess("/home/ernesto/Documents/Test_6.pm");
 		//Pages.ProcessList().exportProcess("Test2");
 		Pages.ProcessList().newProcess("Test Process2", "Proceso de prueba 2");
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

@@ -118,11 +118,13 @@ public class TestPMDateFunctions{
 		    Assert.assertEquals("Spanish Language is not recognized in the literalDate", "9 de Enero de 2013", fieldLITERAL_DATE_ES);
 		    
 		    Pages.InputDocProcess().continuebtn();
-    }
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
+}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

@@ -58,11 +58,13 @@ public class TestTriggersProcess{
 		Pages.TriggersProcess().newZimbraTrigger("CreateZimbraFolder","Test CreateZimbraFolder", "Test CreateZimbraFolder", "http://zimbra.server:port", "Zimbra user", "Zimbra key", "folder name", "Color name", "returnvalue");
 		Pages.TriggersProcess().closePopup();					
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

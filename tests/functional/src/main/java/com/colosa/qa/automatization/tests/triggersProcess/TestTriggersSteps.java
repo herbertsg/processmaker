@@ -107,10 +107,12 @@ public class TestTriggersSteps{
         Pages.Main().goDesigner();
         Pages.ProcessList().openProcess("Process Debug");
         Pages.Designer().activeDebug(false);
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

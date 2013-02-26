@@ -126,10 +126,12 @@ public class TestPermissions{
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in case notes not work :'(", true, existCaseNote);
         // case was create with field CELULAR correctly
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

@@ -200,16 +200,14 @@ public class DerivationRulesParallelEvaluation{
 		Pages.DynaformExecution().setFieldValue("tasks", "Cyclical");
 		Pages.DynaformExecution().setFieldValue("send", "");
 	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
-
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

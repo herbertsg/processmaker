@@ -22,12 +22,13 @@ public class TestDocuments{
 		Pages.Home().gotoDocuments();
 		Pages.Documents().selectFolder("Test 1");
 		Pages.Documents().downloadDocument("default.conf");
-		
-
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

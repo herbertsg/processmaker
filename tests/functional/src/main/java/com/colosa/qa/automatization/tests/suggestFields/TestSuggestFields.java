@@ -94,15 +94,14 @@ public class TestSuggestFields{
 		Assert.assertEquals(city, Value.getValue(arrayData1[2].fieldFindType, arrayData1[2].fieldPath));
 		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
-
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }
