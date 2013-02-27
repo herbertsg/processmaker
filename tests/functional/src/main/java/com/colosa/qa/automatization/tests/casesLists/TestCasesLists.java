@@ -107,10 +107,12 @@ public class TestCasesLists{
 		    Pages.DynaformExecution().outDynaform();  
 		    Pages.Home().gotoPaused();
 		    Assert.assertTrue("The case does not exist in Paused", Pages.Home().existCase(casenumber));
-		}
+			Pages.InputDocProcess().switchToDefault();
+			Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

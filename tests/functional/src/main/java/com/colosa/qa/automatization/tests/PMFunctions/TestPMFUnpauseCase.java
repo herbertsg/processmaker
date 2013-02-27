@@ -44,14 +44,13 @@ public class TestPMFUnpauseCase{
 		Pages.Main().goHome();
      		Pages.Home().gotoPaused();	
   		Assert.assertFalse("The case exist in Paused", Pages.Home().existCase(caseNum-1));     								  
-		Pages.InputDocProcess().switchToDefault();
+		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
+	}
 
-}
-
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

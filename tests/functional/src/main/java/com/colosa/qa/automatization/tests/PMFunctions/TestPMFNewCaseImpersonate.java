@@ -68,10 +68,10 @@ public class TestPMFNewCaseImpersonate{
 		    
 		    FormFiller.formFillElements(fieldArray1);
 		    Pages.InputDocProcess().continuebtn();
-    }
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }    
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }   
 }

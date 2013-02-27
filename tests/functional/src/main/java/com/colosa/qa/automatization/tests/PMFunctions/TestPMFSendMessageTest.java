@@ -88,11 +88,13 @@ public class TestPMFSendMessageTest{
 				
 		    String emStatus = Pages.Admin().emailStatus(casenumber);
 		    Assert.assertEquals("Mail not sent", emStatus, "Sent");
-    }
+			Pages.DynaformExecution().outDynaform();
+			Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

@@ -37,11 +37,13 @@ public class TestWithEvaluationCondition{
 	Assert.assertTrue(Pages.Designer().endTask("Task 3"));
 	Assert.assertTrue(Pages.Designer().endTask("Task 4"));
 
-}
+	Pages.InputDocProcess().switchToDefault();
+	Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

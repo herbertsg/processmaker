@@ -55,10 +55,12 @@ public class TestNotifications{
         // verify if the field CELULAR is validate
         Assert.assertEquals("No sent the notification :'(", valorEnviado, "sent");
         // case was create with field CELULAR correctly
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

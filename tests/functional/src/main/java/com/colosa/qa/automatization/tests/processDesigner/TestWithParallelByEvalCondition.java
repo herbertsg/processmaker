@@ -39,11 +39,13 @@ public class TestWithParallelByEvalCondition{
 		Assert.assertTrue(Pages.Designer().parallelJoin("Task 4", "Task 5"));
 		Assert.assertTrue(Pages.Designer().endTask("Task 5"));
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

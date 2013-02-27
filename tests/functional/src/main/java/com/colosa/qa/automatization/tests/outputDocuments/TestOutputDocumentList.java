@@ -24,10 +24,12 @@ public class TestOutputDocumentList{
 			Pages.ProcessDesigner().openOutputDocuments();
 			Pages.OutputDocumentList().createOutputDoc("Prueba1", "@#PROCESS_prueba1", "Prueba1", "A4", "Landscape", "PDF", "Enabled", "YES", "@#PROCESS", "@#TASK");
 			//Pages.OutputDocumentList().closePopup();
-		}
+			Pages.InputDocProcess().switchToDefault();
+			Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

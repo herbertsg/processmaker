@@ -123,9 +123,10 @@ public void opencase(int casenumber)throws Exception{
 Pages.Home().openCase(casenumber);
 }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

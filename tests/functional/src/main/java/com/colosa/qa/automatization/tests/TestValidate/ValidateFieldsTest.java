@@ -146,11 +146,13 @@ public class ValidateFieldsTest{
     Assert.assertEquals("Validate Percentaje Integer does not exist", "123 %", fieldPERCENTAJE_INTEGER);
     
     Pages.InputDocProcess().continuebtn();
-  }
-  
-  @After
-    public void cleanup(){
-        Browser.close();
-    } 	
+    Pages.InputDocProcess().switchToDefault();
+    Pages.Main().logout();
+    }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }
 

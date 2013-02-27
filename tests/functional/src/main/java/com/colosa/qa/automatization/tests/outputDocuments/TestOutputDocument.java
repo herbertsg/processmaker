@@ -67,10 +67,12 @@ public class TestOutputDocument{
 
 		FormFiller.formFillElements(fieldArray);
     Pages.OutputDocProcess().continuebtn();
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-	@After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

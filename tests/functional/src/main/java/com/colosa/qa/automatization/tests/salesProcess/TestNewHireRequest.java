@@ -200,10 +200,12 @@ public class TestNewHireRequest{
 		Assert.assertTrue(FormFiller.formFillElements(arrayData6));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }
