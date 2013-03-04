@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.testFieldModeView;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -64,10 +65,14 @@ public class TestModeView{
 		Pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
 
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
-
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

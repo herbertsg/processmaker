@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -57,6 +58,13 @@ public class TestTriggersProcess{
 		Pages.TriggersProcess().newZimbraTrigger("CreateZimbraFolder","Test CreateZimbraFolder", "Test CreateZimbraFolder", "http://zimbra.server:port", "Zimbra user", "Zimbra key", "folder name", "Color name", "returnvalue");
 		Pages.TriggersProcess().closePopup();					
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

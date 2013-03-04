@@ -1,6 +1,8 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -25,5 +27,10 @@ public class TestPMFJumping{
 		Assert.assertTrue(Pages.Home().isGridPresent("casesGrid"));
 
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

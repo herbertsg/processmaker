@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.TestCaseScheduler;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -28,7 +29,13 @@ public class TestCaseSchedulerCron{
 		Pages.CronExecute().execute("workflow");
 		Pages.DynaformExecution().sleep(20000);
 
+
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 
 }

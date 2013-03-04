@@ -73,11 +73,13 @@ public class TestPMFUpdateUser{
 		    
 		    Pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
 		    Pages.InputDocProcess().continuebtn();
-    }
+			Pages.DynaformExecution().outDynaform();
+			Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

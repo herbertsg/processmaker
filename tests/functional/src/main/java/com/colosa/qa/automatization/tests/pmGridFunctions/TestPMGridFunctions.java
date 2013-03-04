@@ -1,6 +1,7 @@
-package com.colosa.qa.automatization.tests.pmGridFunctions;
+﻿package com.colosa.qa.automatization.tests.pmGridFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -74,5 +75,7 @@ public class TestPMGridFunctions{
 			Assert.assertEquals(fmt.format(Double.parseDouble(Pages.DynaformExecution().getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
 		}
 	}
+
+PMFunctions
 
 }

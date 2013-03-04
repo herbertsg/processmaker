@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.inputDocuments;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -23,6 +24,14 @@ public class TestInputDocumentList{
 		Pages.InputDocumentList().createInputDoc("Prueba 3", "Digital", "Prueba 3", "YES", "@#PROCESS", "_Document3_@#TASK");
 		//Pages.InputDocumentList().closePopup();
 
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
+
 
 }

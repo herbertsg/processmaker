@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.testsJavascript;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -34,8 +35,13 @@ public class TestJSGetRow{
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Dropdwn"), Pages.DynaformExecution().getFieldValue("Dropdwn"));
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Descripcion"), Pages.DynaformExecution().getFieldValue("Descripcion"));
 		Pages.DynaformExecution().sleep(15000);
-		Browser.close();
-
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

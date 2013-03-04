@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -40,6 +41,12 @@ public class TestPMFInformationUser{
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-}
+
+	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

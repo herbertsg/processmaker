@@ -184,6 +184,7 @@ public class DynaformExecution extends Page {
                 break;
             case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
                         // suggest (type=hidden), 
+                System.out.println("Ingresa al case");
                 System.out.println(" HTML tag: input");
                 String typeAttribute = element.getAttribute("type");
                 System.out.println(" HTML type: " + typeAttribute);
@@ -232,7 +233,7 @@ public class DynaformExecution extends Page {
                 }
                 if(typeAttribute.equals("checkbox")){
                     System.out.println(" Element Type: CHECK");
-                    elementFieldType = FieldType.CHECK;
+                    elementFieldType = FieldType.CHECK;                    
                 }
                 if(typeAttribute.equals("button") || typeAttribute.equals("submit") || typeAttribute.equals("reset")){
                     System.out.println(" Element Type: BUTTON");
@@ -277,6 +278,19 @@ public class DynaformExecution extends Page {
        // intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        System.out.println(" Element to search for: " + str);
+
+        return Browser.getElement(str);
+    }
+
+    public WebElement getFieldWithoutForm(String fieldName) throws Exception{
+        System.out.println("getField: " + fieldName);
+
+       // intoDynaform();
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         System.out.println(" Element to search for: " + str);
@@ -487,6 +501,157 @@ public class DynaformExecution extends Page {
         return;
     }
 
+    public void setFieldValueWithoutForm(String fieldName, String value) throws Exception{
+       // intoDynaform();
+        String str = "";
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getFieldWithoutForm(fieldName);
+
+        System.out.println("element : " + element.getAttribute("value"));
+
+        fieldType = this.detectFieldType(element);
+
+        this.setFieldValueWithoutForm(element, value, fieldType);
+
+        return;
+    }
+
+    public void setFieldValueWithoutForm(String fieldName, String value, FieldType fieldType) throws Exception{
+        System.out.println("setFieldValue (String fieldName): ");
+
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
+
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        //search element
+        WebElement element = Browser.getElement(str);
+
+        this.setFieldValueWithoutForm(element, value, fieldType);
+
+        return;
+    }
+
+    public void setFieldValueWithoutForm(WebElement element, String value, FieldType fieldType) throws Exception{
+        System.out.println("setFieldValue (WebElement): ");
+
+        switch(fieldType)
+        {
+            case LINK:
+                element.click();
+                break;
+            case FILE:
+                //this.clear(element);
+                element.sendKeys(value);
+                break;
+            case TEXTBOX:
+                this.clear(element);
+                element.sendKeys(value);
+                break;
+            case BUTTON:    
+                element.click();
+                break;  
+            case TEXTAREA: 
+                this.clear(element);
+                element.sendKeys(value);
+                break; 
+            case DROPDOWN:
+            case LISTBOX:
+                Select selectList = new Select(element);
+                selectList.selectByVisibleText(value);
+                break;
+            case RADIOBUTTON:   
+                element.click();
+                break;
+            case CHECK:     
+                element.click();
+                break;
+            case DATEPICKER:     
+                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                break;
+            case READONLY:  
+                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                break;
+            case SUGGEST:   //using label textbox
+                WebElement elem2 = null;
+                List<WebElement> listEl;
+                //WebElement sugElem = null;
+                //get the label element
+                
+                //if suggest a label element is used to select option
+                String idElementAttribute = element.getAttribute("id");
+                String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
+                System.out.println(" HTML element id: " + elementId);
+
+                //get label element 
+                WebElement labelElement = this.getField(elementId + "_label");                
+
+                this.clear(labelElement);
+
+                labelElement.sendKeys(value);
+                
+                Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
+                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                listEl = elem2.findElements(By.xpath("a"));
+                for(WebElement we2:listEl)
+                {
+                    if(we2.findElement(By.xpath("span[3]")).getText().equals(value))
+                    {
+                        //sugElem = we2;
+                        we2.click();
+                        break;
+                    }
+                }                
+                /*
+                String cadIns = value;
+                char c;
+                WebElement elem2 = null;
+                WebElement sugElem = null;
+                List<WebElement> listEl;                    
+                for(int lon=0;lon<cadIns.length();lon++)    
+                {
+                    c = cadIns.charAt(0);
+                    element.sendKeys(Character.toString(c));
+                    try {
+                        Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
+                    } catch(Exception ex){
+                        //element not found
+                        cadIns = cadIns.substring(1, cadIns.length());
+                        continue;
+                    }
+                    elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                    listEl = elem2.findElements(By.xpath("a"));
+                    for(WebElement we2:listEl)
+                    {
+                        if(we2.findElement(By.xpath("span[3]")).getText().equals(value))
+                        {
+                            sugElem = we2;
+                            we2.click();
+                            break;
+                        }                                       
+                    }
+
+                    if(sugElem!=null)
+                    {
+                        break;
+                    }
+                    cadIns = cadIns.substring(1, cadIns.length());
+                }
+                //Thread.sleep(1000);
+                */
+                break;  
+            /*    
+            case HIDDEN: //??? can't set values
+                this.clear(element);
+                element.sendKeys(value); */
+            default:    break;                                                                                                                                                      
+        }
+
+        return;
+    }
+
     public String getFieldValue(String fieldName) throws Exception{
         intoDynaform();
         System.out.println("getFieldValue: " + fieldName);
@@ -496,6 +661,54 @@ public class DynaformExecution extends Page {
 
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+        WebElement element = Browser.getElement(str);
+
+        fieldType = this.detectFieldType(element);
+
+        switch(fieldType)
+        {
+            case TEXTBOX:
+                elementValue = element.getAttribute("value");
+                break; 
+            case TEXTAREA:
+                elementValue = element.getAttribute("value");
+                break; 
+            case DROPDOWN:
+            case LISTBOX:
+                Select selectList = new Select(element);
+                elementValue = selectList.getFirstSelectedOption().getAttribute("value");
+                break;
+            case DATEPICKER:
+                elementValue = element.getAttribute("value");
+                break;
+            case SUGGEST:   //get value attribute of field
+                elementValue = element.getAttribute("value");
+                break;      
+            case HIDDEN: // get value
+                elementValue = element.getAttribute("value");
+                break;
+            case CHECK:
+                elementValue = new Boolean(element.isSelected()).toString();
+                break;        
+            default:    
+                break;                                                                                                                                                      
+        }
+        
+        System.out.println(" field value:" + elementValue);
+
+        return elementValue;
+    }
+
+    public String getFieldValueWithoutForm(String fieldName) throws Exception{
+        intoDynaform();
+        System.out.println("getFieldValue: " + fieldName);
+
+        FieldType fieldType;
+        String elementValue = "";
+
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
         str = str.replace("replaceNameFieldDynaform", fieldName);
         WebElement element = Browser.getElement(str);
 

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -23,5 +24,12 @@ public class TestOutputDocumentList{
 			Pages.ProcessDesigner().openOutputDocuments();
 			Pages.OutputDocumentList().createOutputDoc("Prueba1", "@#PROCESS_prueba1", "Prueba1", "A4", "Landscape", "PDF", "Enabled", "YES", "@#PROCESS", "@#TASK");
 			//Pages.OutputDocumentList().closePopup();
-		}
+			Pages.InputDocProcess().switchToDefault();
+			Pages.Main().logout();
+	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

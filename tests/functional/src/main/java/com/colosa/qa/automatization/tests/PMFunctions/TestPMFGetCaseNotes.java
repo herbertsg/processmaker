@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class TestPMFGetCaseNotes{
 		fieldArray[0].fieldFindType=FieldKeyType.XPATH;
 		fieldArray[0].fieldType=FieldType.BUTTON;
 		fieldArray[0].fieldValue="";
-		Pages.DynaformExecution().sleep(6000);  		
+		Pages.DynaformExecution().sleep(10000);  		
         FormFiller.formFillElements(fieldArray);	
         FormFieldData[] fieldArray2=new FormFieldData[1];
 		fieldArray2[0]=new FormFieldData();
@@ -53,7 +54,7 @@ public class TestPMFGetCaseNotes{
 		fieldArray33[0].fieldType=FieldType.BUTTON;
 		fieldArray33[0].fieldValue="";
         FormFiller.formFillElements(fieldArray33);  
-		Pages.DynaformExecution().sleep(6000);        
+		Pages.DynaformExecution().sleep(10000);        
         FormFiller.formFillElements(fieldArray2);              
          FormFieldData[] fieldArray4=new FormFieldData[1];
 		fieldArray4[0]=new FormFieldData();
@@ -62,8 +63,9 @@ public class TestPMFGetCaseNotes{
 		fieldArray4[0].fieldType=FieldType.TEXTAREA;
 		fieldArray4[0].fieldValue="Test2";
         FormFiller.formFillElements(fieldArray4);
+		Pages.DynaformExecution().sleep(5000); 
         FormFiller.formFillElements(fieldArray33);  
- 		Pages.DynaformExecution().sleep(6000);         
+ 		Pages.DynaformExecution().sleep(10000);         
         FormFiller.formFillElements(fieldArray2);                   
         FormFieldData[] fieldArray5=new FormFieldData[1];
 		fieldArray5[0]=new FormFieldData();
@@ -72,8 +74,9 @@ public class TestPMFGetCaseNotes{
 		fieldArray5[0].fieldType=FieldType.TEXTAREA;
 		fieldArray5[0].fieldValue="Test3";
         FormFiller.formFillElements(fieldArray5);
+		Pages.DynaformExecution().sleep(5000); 
         FormFiller.formFillElements(fieldArray33);  
- 		Pages.DynaformExecution().sleep(6000);         
+ 		Pages.DynaformExecution().sleep(10000);         
         FormFiller.formFillElements(fieldArray2);              
         FormFieldData[] fieldArray6=new FormFieldData[1];
 		fieldArray6[0]=new FormFieldData();
@@ -82,6 +85,7 @@ public class TestPMFGetCaseNotes{
 		fieldArray6[0].fieldType=FieldType.TEXTAREA;
 		fieldArray6[0].fieldValue="Test4";
         FormFiller.formFillElements(fieldArray6);
+		Pages.DynaformExecution().sleep(5000); 
         FormFiller.formFillElements(fieldArray33); 
 		Pages.DynaformExecution().sleep(6000);           
         FormFieldData[] fieldArray44=new FormFieldData[1];
@@ -112,6 +116,11 @@ public class TestPMFGetCaseNotes{
 		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-}
+	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

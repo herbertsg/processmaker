@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.gridFunctionsBetweenColumns;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -94,8 +95,14 @@ public class TestGridFunctionsBetweenColumns{
 		//Assert.assertEquals(Double.toString(sum), Pages.DynaformExecution().getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
 		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
+
 
 }

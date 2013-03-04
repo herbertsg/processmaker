@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -42,6 +43,12 @@ public class TestPMFDeleteCase{
   		Assert.assertFalse("The case exist in Draft", Pages.Home().existCase(caseNum-1));     								  
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
+
 }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

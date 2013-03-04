@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -117,10 +118,13 @@ public class DerivationRulesSequential{
 		caseNum = Pages.Home().startCase("Derivation rules - sequential (Init)");
 		Pages.DynaformExecution().intoDynaform();
 	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
-
 	}
 
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

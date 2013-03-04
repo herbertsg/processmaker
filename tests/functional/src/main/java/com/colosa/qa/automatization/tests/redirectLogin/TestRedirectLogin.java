@@ -130,12 +130,13 @@ public class TestRedirectLogin{
      	Pages.InputDocProcess().switchToDefault();
  		Pages.Main().goToUrl("http://192.168.11.132/sysworkflow/en/classic/setup/main");  
         Pages.Admin().activePlugin("redirecLogin", false);  		  	
-		Pages.Main().logout();			
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-       // Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

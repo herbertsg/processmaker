@@ -82,11 +82,13 @@ public class TestPMFGetEmailConfiguration{
 		    		    
 		    Pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
 				Pages.InputDocProcess().continuebtn();
-    }
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
+	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.subprocessesTest;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -121,6 +122,12 @@ public class SubprocessesTest{
 		Assert.assertEquals(desc, Value.getValue(arrayDataEmp2[0].fieldFindType, arrayDataEmp2[0].fieldPath));
 		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

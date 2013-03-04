@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processDesigner;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -42,6 +43,13 @@ public class TestWithSelectCondition{
 	Assert.assertTrue(Pages.Designer().endTask("Task 5"));
 	Assert.assertTrue(Pages.Designer().endTask("Task 6"));
 
-}
+	Pages.InputDocProcess().switchToDefault();
+	Pages.Main().logout();
+	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

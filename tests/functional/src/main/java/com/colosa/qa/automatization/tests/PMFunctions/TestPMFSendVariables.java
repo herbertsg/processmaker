@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -51,6 +52,13 @@ public class TestPMFSendVariables{
 		Pages.DynaformExecution().setFieldValue("Enviar", "");
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
+		Pages.DynaformExecution().outDynaform();
+		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

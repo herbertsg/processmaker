@@ -127,4 +127,16 @@ public class Pages{
 		return caseTracker;
 	}
 
+	public static PmslaReport PmslaReport() throws Exception{
+		PmslaReport pmslaReport = new PmslaReport();
+
+		return pmslaReport;
+	}
+
+	public static PMSLAConfiguration PMSLAConfiguration() throws Exception{
+		PMSLAConfiguration pmslaConfiguration = new PMSLAConfiguration();
+
+		return pmslaConfiguration;
+	}
+
 }

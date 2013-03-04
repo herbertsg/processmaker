@@ -65,11 +65,12 @@ public class TestHideShowCaseTitle{
         // verify if the case title is show
         Assert.assertEquals("The case title is show :'(", showCaseTitle, false);
         // trigger after the form working
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
     }
 
-
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 }

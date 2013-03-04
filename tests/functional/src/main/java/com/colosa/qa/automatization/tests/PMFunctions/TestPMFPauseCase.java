@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -34,5 +35,10 @@ public class TestPMFPauseCase{
 		Assert.assertTrue(Pages.Home().selectCase(numCase));
 
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

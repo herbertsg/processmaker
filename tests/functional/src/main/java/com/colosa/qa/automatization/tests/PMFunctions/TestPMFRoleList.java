@@ -52,11 +52,13 @@ public class TestPMFRoleList{
         Assert.assertEquals("PMFRoleList function not working properly", roles, fieldROLES);
         
         //System.out.println("LOS ROLES  "+roles);
+        Pages.DynaformExecution().outDynaform();
+        Pages.Main().logout();
     }
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
     
 }

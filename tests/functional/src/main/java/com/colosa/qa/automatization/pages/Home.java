@@ -127,6 +127,11 @@ public class Home extends Main{
 		selectMenuTreePanelOption("Documents/");
 	}
 
+	public static void gotoReports() throws Exception{
+		selectMenuTreePanelOption("Documents/Reports");
+	}
+
+
 	public int startCase(String processName) throws Exception{
 		String[] path = pathToArray(processName);
 		List<WebElement> wel;
@@ -252,7 +257,7 @@ public class Home extends Main{
 		bAction.click(); 
 		
 		Thread.sleep(4000);
-		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[6]"));
+		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[5]/ul/li[1]/a"));
 		WebElement pCase = pauseCase.findElement(By.tagName("span"));
 		pCase.click(); 
 		

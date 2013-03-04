@@ -118,14 +118,13 @@ public class TestDependentFields{
 		System.out.println("Total logins:" + totalLogins);
 		Assert.assertEquals(listBoxCount, Integer.parseInt(totalLogins));
 
-		Pages.DynaformExecution().outDynaform();
-
+		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

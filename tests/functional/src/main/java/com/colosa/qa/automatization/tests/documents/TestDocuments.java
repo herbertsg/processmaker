@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.documents;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -21,7 +22,13 @@ public class TestDocuments{
 		Pages.Home().gotoDocuments();
 		Pages.Documents().selectFolder("Test 1");
 		Pages.Documents().downloadDocument("default.conf");
-		
-
+		Pages.InputDocProcess().switchToDefault();
+		Pages.Main().logout();
 	}
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
+
 }

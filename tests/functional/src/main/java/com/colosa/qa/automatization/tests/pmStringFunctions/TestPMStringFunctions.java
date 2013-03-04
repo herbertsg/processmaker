@@ -1,6 +1,7 @@
-package com.colosa.qa.automatization.tests.pmStringFunctions;
+﻿package com.colosa.qa.automatization.tests.pmStringFunctions;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -35,4 +36,10 @@ public class TestPMStringFunctions{
 
 
 	}
+
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }
