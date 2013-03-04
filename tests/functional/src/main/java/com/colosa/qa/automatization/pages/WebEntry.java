@@ -104,7 +104,7 @@ public class WebEntry extends Page {
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
                     System.out.println(" HTML element id: " + elementId);
-                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id___form[" + elementId + "_label]");
+                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id__&&__form[" + elementId + "_label]");
 
                     if(suggestElementExists){
                         System.out.println(" Element Type: SUGGEST");
