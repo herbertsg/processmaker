@@ -1,13 +1,9 @@
-﻿package com.colosa.qa.automatization.tests.javascriptExecution;
+package com.colosa.qa.automatization.tests.javascriptExecution;
 
-import org.junit.Assert;
-import org.junit.AfterClass;
+import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.pages.Pages;
+import org.junit.After;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,8 +26,6 @@ public class TestJavascriptExecution{
 		Pages.DynaformExecution().setFieldValue("aceptar", "");
 		Pages.DynaformExecution().sleep(15000);
 		Browser.close();
-
-
 	}
 
     @After
