@@ -1,12 +1,12 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
+import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import com.colosa.qa.automatization.common.Browser;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+
+import java.util.List;
 
 
 public class Home extends Main{
@@ -210,6 +210,34 @@ public class Home extends Main{
         action.perform();
 	}
 
+    public int openFirstCase()throws Exception{
+
+        WebElement grid;
+
+        int value;
+
+        Actions action = new Actions(Browser.driver());
+
+        Browser.driver().switchTo().defaultContent();
+
+        Browser.driver().switchTo().frame("casesFrame");
+
+        Browser.driver().switchTo().frame("casesSubFrame");
+
+        grid = Browser.driver().findElement(By.id("casesGrid"));
+
+        WebElement row = grid.findElement(By.xpath("div/div[2]/div/div[1]/div[2]/div/div[1]/table/tbody/tr/td[3]/div"));
+
+        action.doubleClick(row);
+
+        action.perform();
+
+        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8));
+
+        return value;
+
+    }
+
 	public boolean selectCase(int numCase)throws Exception{
 		ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
@@ -312,6 +340,7 @@ public class Home extends Main{
 			return true;
 	}
 
+    /*
 	public int openFirstCase()throws Exception{
 	  WebElement grid;
 	  int value;
@@ -325,6 +354,6 @@ public class Home extends Main{
 	        action.perform();
 	        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8 ));
 	        return value;
-	 }
+	 }*/
 
 }

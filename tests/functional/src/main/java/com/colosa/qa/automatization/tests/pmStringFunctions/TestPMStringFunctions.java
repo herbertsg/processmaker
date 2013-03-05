@@ -1,4 +1,4 @@
-﻿package com.colosa.qa.automatization.tests.pmStringFunctions;
+package com.colosa.qa.automatization.tests.pmStringFunctions;
 
 import org.junit.Assert;
 import org.junit.After;

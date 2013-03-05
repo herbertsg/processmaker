@@ -1,15 +1,12 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
 import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class InputDocumentList{
 
@@ -20,7 +17,7 @@ public class InputDocumentList{
 	public void createInputDoc(String titleDoc, String formatDoc, String descriptionDoc, String versioning, String destination, String tags) throws Exception{
 
 		Browser.driver().switchTo().frame("frameMain");
-		WebElement newBtn = Browser.getElement("id___form[MNU_ADD]");
+		WebElement newBtn = Browser.getElement("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[MNU_ADD]");
 
 		newBtn.click();
 		FormFieldData[] fieldArray = new FormFieldData[7];
