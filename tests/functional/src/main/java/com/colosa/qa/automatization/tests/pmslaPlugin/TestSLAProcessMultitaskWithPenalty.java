@@ -51,7 +51,6 @@ public class TestSLAProcessMultitaskWithPenalty{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solicitud");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-
 }
 
 }
