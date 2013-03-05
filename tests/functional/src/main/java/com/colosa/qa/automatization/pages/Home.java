@@ -312,4 +312,19 @@ public class Home extends Main{
 			return true;
 	}
 
+	public int openFirstCase()throws Exception{
+	  WebElement grid;
+	  int value;
+	  Actions action = new Actions(Browser.driver());
+	  Browser.driver().switchTo().defaultContent();  
+	  Browser.driver().switchTo().frame("casesFrame");
+	  Browser.driver().switchTo().frame("casesSubFrame");
+	  grid = Browser.driver().findElement(By.id("casesGrid"));
+	  WebElement row = grid.findElement(By.xpath("div/div[2]/div/div[1]/div[2]/div/div[1]/table/tbody/tr/td[3]/div"));
+	  action.doubleClick(row);
+	        action.perform();
+	        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8 ));
+	        return value;
+	 }
+
 }
