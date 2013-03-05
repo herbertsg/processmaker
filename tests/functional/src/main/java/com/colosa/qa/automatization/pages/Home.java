@@ -340,6 +340,7 @@ public class Home extends Main{
 			return true;
 	}
 
+    /*
 	public int openFirstCase()throws Exception{
 	  WebElement grid;
 	  int value;
@@ -353,6 +354,6 @@ public class Home extends Main{
 	        action.perform();
 	        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8 ));
 	        return value;
-	 }
+	 }*/
 
 }

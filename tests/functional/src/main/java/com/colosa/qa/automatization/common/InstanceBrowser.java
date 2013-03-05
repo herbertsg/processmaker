@@ -90,7 +90,7 @@ public class InstanceBrowser {
 		if(str==null)
 			throw new Exception("The the search criteria must be specified");
 
-		if(str.lastIndexOf("__&&__")==-1) {
+		if(str.lastIndexOf(Constant.SEARCH_CRITERIA_SEPARATOR)==-1) {
 			str = ConfigurationSettings.getInstance().getSetting(str);
 
 			if(str == null)
@@ -98,7 +98,7 @@ public class InstanceBrowser {
 
 			str = String.format(str, args);
 
-			if(str.lastIndexOf("__&&__")==-1)
+			if(str.lastIndexOf(Constant.SEARCH_CRITERIA_SEPARATOR)==-1)
 				throw new Exception("The search prefix to find the element must be specified");
 		}
 
@@ -115,10 +115,10 @@ public class InstanceBrowser {
 		if(searchCriteria==null)
 			throw new Exception("The the search criteria must be specified");
 
-		if(searchCriteria.lastIndexOf("__&&__")==-1)
+		if(searchCriteria.lastIndexOf(Constant.SEARCH_CRITERIA_SEPARATOR)==-1)
 			throw new Exception("The search prefix to find the element must be specified");
 
-		String[] criteria = searchCriteria.split("__&&__", 2);
+		String[] criteria = searchCriteria.split(Constant.SEARCH_CRITERIA_SEPARATOR, 2);
 
 		System.out.println("searching element => criteria: "+ criteria[0] + " value:" + criteria[1]);
 

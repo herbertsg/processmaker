@@ -17,7 +17,7 @@ public class InputDocumentList{
 	public void createInputDoc(String titleDoc, String formatDoc, String descriptionDoc, String versioning, String destination, String tags) throws Exception{
 
 		Browser.driver().switchTo().frame("frameMain");
-		WebElement newBtn = Browser.getElement("id__&&__form[MNU_ADD]");
+		WebElement newBtn = Browser.getElement("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[MNU_ADD]");
 
 		newBtn.click();
 		FormFieldData[] fieldArray = new FormFieldData[7];

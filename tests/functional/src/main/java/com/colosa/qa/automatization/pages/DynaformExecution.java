@@ -2,19 +2,20 @@ package com.colosa.qa.automatization.pages;
 
 //import java.util.List;
 //import java.lang.Boolean;
-import java.util.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.ConfigurationSettings;
+import com.colosa.qa.automatization.common.Constant;
+import com.colosa.qa.automatization.common.FieldType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DynaformExecution extends Page {
 
@@ -197,7 +198,7 @@ public class DynaformExecution extends Page {
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
                     System.out.println(" HTML element id: " + elementId);
-                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id__&&__form[" + elementId + "_label]");
+                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id"+ Constant.SEARCH_CRITERIA_SEPARATOR +"form[" + elementId + "_label]");
 
                     if(suggestElementExists){
                         System.out.println(" Element Type: SUGGEST");
