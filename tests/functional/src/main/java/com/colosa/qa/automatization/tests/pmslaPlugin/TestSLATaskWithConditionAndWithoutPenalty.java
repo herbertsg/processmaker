@@ -55,6 +55,8 @@ public class TestSLATaskWithConditionAndWithoutPenalty{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 2");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
+		Pages.Main().logout();
+
 	}
 
 }
