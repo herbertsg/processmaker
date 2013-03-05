@@ -1,4 +1,4 @@
-﻿package com.colosa.qa.automatization.tests.gridFunctions;
+package com.colosa.qa.automatization.tests.gridFunctions;
 
 import org.junit.Assert;
 import org.junit.After;
