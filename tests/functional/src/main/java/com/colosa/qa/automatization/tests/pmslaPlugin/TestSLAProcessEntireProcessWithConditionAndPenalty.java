@@ -45,5 +45,7 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty{
 		Pages.PmslaReport().displayTasks(numCase);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solucion");
 		Assert.assertEquals(taskInfo[5], "OPEN");
+
+		Pages.Main().logout();
 	}
 }
