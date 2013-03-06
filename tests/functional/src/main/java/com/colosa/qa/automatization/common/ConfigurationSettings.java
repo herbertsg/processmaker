@@ -1,12 +1,7 @@
 package com.colosa.qa.automatization.common;
 
+import java.io.*;
 import java.util.Properties;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class ConfigurationSettings{
 
@@ -34,7 +29,17 @@ public class ConfigurationSettings{
 	}
 
 	public static ConfigurationSettings getInstance() throws FileNotFoundException, IOException{
-		ConfigurationSettings.getInstance("default.conf", "app.conf");
+        File f = new File("default.conf");
+        File fa = new File("app.conf");
+        if(f.exists() && fa.exists()) {
+            ConfigurationSettings.getInstance("default.conf", "app.conf");
+        }else{
+            f = new File("." +  File.separator +"src"+ File.separator + "main"+ File.separator + "default.conf");
+            fa = new File("." + File.separator +"src"+ File.separator +"main"+ File.separator + "app.conf");
+            if(f.exists() && fa.exists()) {
+                ConfigurationSettings.getInstance("." + File.separator +"src"+ File.separator + "main"+ File.separator + "default.conf", "." + File.separator +"src"+ File.separator + "main"+ File.separator + "app.conf");
+            }
+        }
 		return INSTANCE;
 	}
 
