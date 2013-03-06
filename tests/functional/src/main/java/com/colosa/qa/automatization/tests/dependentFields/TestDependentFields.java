@@ -1,13 +1,8 @@
 package com.colosa.qa.automatization.tests.dependentFields;
 
+import com.colosa.qa.automatization.pages.Pages;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -66,8 +61,9 @@ public class TestDependentFields{
 		//Pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
 		Pages.DynaformExecution().setFieldValue("username", userName);
 		//send tab to activate dependent fields
+        //Pages.DynaformExecution().sendTab("userCompleteName");
 		Pages.DynaformExecution().sendTab("username");
-		Pages.DynaformExecution().sleep(1000);
+		//Pages.DynaformExecution().sleep(1000);
 
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
@@ -104,7 +100,7 @@ public class TestDependentFields{
 		Pages.DynaformExecution().setFieldValue("username", userName1);
 		//send tab to activate dependent fields
 		Pages.DynaformExecution().sendTab("username");
-		Pages.DynaformExecution().sleep(1000);
+		//Pages.DynaformExecution().sleep(1000);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
 		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
 
