@@ -1095,7 +1095,16 @@ public class DynaformExecution extends Page {
         str = str.replace("replaceNameFieldDynaform", fieldName);
         WebElement element = Browser.getElement(str);
         element.sendKeys(Keys.TAB);
-     }     
+     }
+
+    public void click(String fieldName) throws Exception {
+
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+        WebElement element = Browser.getElement(str);
+        element.click();
+    }
 
      public void clear(WebElement element) throws Exception {
         element.clear();
