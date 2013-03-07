@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
@@ -19,8 +20,9 @@ public class CronExecute{
 
 	public static void execute(String workspace) throws FileNotFoundException, IOException, Exception{
 
+		Date date = new Date();
 		String url = ConfigurationSettings.getInstance().getSetting("server.url");
-		url = url + "/cron_exec.php?wrkspc=" +workspace ;
+		url = url + "/cron_exec.php?wrkspc=" +workspace+ "&dt=" + date.toString();
 
 		Browser.gotoUrl(url);
 

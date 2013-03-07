@@ -38,8 +38,7 @@ public class TestOutputDocument{
 		Pages.Home().gotoInbox();
     Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
 		Pages.Home().openCase(casenumber);
-		Pages.DynaformExecution().intoDynaform();
-		
+		Pages.DynaformExecution().intoDynaform();	
 		FormFieldData[] fieldArray=new FormFieldData[1];
     fieldArray[0]=new FormFieldData();
 		
