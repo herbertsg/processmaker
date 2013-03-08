@@ -71,7 +71,7 @@
       </dependencies>
       <goals>
         <goal>            
-          <id>test</id>
+          <id>test22</id>
           <configuration> 
           <fork>true</fork>
           <executable>${JAVA_JDK_1_7_JAVAC}</executable>

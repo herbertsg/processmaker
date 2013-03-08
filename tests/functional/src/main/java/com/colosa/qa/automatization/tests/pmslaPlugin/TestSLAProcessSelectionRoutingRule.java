@@ -57,7 +57,7 @@ public class TestSLAProcessSelectionRoutingRule{
 		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
 		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Tipo de Cambio");
+		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Tipo de cambio");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
 		Pages.Main().logout();

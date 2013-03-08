@@ -26,7 +26,7 @@ public class TestProcessSupervisor{
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("text", "text");
 		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Pages.InputDocProcess().uploadFile("test.pdf", "Test File");
+		Pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
 	    Pages.InputDocProcess().continuebtn();
 		Pages.Main().goHome();
 		Pages.Home().gotoReview();
@@ -103,7 +103,7 @@ public class TestProcessSupervisor{
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("text", "text");
 		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Pages.InputDocProcess().uploadFile("test.pdf", "Test File");
+		Pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
 	    Pages.InputDocProcess().continuebtn();
        	Pages.Home().gotoInbox();	
 		Pages.Main().goHome();
@@ -111,7 +111,7 @@ public class TestProcessSupervisor{
 		Pages.DynaformExecution().intoDynaform();
 		Pages.DynaformExecution().setFieldValue("text", "text");
 		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Pages.InputDocProcess().uploadFile("test.pdf", "Test File");
+		Pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
 	    Pages.InputDocProcess().continuebtn();
        	Pages.Home().gotoInbox(); 
 		Pages.InputDocProcess().switchToDefault();

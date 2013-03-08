@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -31,6 +32,7 @@ public class TestSLAProcesstaskWithPenalty2{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
 		Pages.CronExecute().execute("workflow");
+		Pages.DynaformExecution().sleep(5000);
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
@@ -56,5 +58,10 @@ public class TestSLAProcesstaskWithPenalty2{
 
 
 }
+
+//    @After
+//    public void cleanup(){
+//        Browser.close();
+//    }
 
 }

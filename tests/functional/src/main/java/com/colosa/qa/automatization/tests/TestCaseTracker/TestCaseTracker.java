@@ -43,7 +43,7 @@ public class TestCaseTracker{
 		System.out.println(Pages.Designer().getTaskColorStatus("Task 1"));
 		Assert.assertEquals("Completed Task", Pages.Designer().getTaskColorStatus("Task 1"));
 		System.out.println(Pages.Designer().getTaskColorStatus("Task 2"));
-		Assert.assertEquals("Pending Task / Not Executed", Pages.Designer().getTaskColorStatus("Task 2"));
+		Assert.assertEquals("Task in Progress", Pages.Designer().getTaskColorStatus("Task 2"));
 		System.out.println(Pages.Designer().getTaskColorStatus("Task 3"));
 		Assert.assertEquals("Pending Task / Not Executed", Pages.Designer().getTaskColorStatus("Task 3"));
 		Pages.CaseTracker().goFormDocs();
