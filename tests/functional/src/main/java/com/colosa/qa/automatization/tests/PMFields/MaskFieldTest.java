@@ -68,7 +68,7 @@ public class MaskFieldTest{
     Pages.Home().gotoInbox();
     Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
     Pages.Home().openCase(casenumber);
-    Pages.InputDocProcess().openCaseFrame();
+    Pages.DynaformExecution().intoDynaform();
     openCaseFrame();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
