@@ -24,9 +24,21 @@ public class InstanceBrowser {
 	public InstanceBrowser(String browserMode, String browserName, String browserVersion, String browserPlatform, String remoteServerUrl) throws MalformedURLException {
 		//create a new instance of the Browser
 		if(browserMode.equals("local")){
-			_instanceDriver = (browserName.equals("chrome"))?new ChromeDriver():
-				((browserName.equals("ie"))?new InternetExplorerDriver():
-					new FirefoxDriver());
+            if(browserName.equals("chrome")){
+                //start chrome maximized by default,
+//                ChromeOptions options = new ChromeOptions();
+//                options.addArguments("--start-maximized");
+//
+//                _instanceDriver = new ChromeDriver(options);
+                _instanceDriver = new ChromeDriver();
+            }
+            if(browserName.equals("ie")){
+                _instanceDriver = new InternetExplorerDriver();
+            }
+            if(browserName.equals("firefox")){
+			    _instanceDriver = new FirefoxDriver();
+            }
+
 		}
 
 		if(browserMode.equals("remote")){
@@ -37,8 +49,14 @@ public class InstanceBrowser {
 			DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
 			if(browserName.equals("chrome")){
-				desiredCapabilities = DesiredCapabilities.chrome();				
-			}else if(browserName.equals("internet explorer")){
+                //start chrome maximized by default
+//                ChromeOptions options = new ChromeOptions();
+//                options.addArguments("--start-maximized");
+
+				desiredCapabilities = DesiredCapabilities.chrome();
+
+//                desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
+			}else if(browserName.equals("ie")){
 				desiredCapabilities = DesiredCapabilities.internetExplorer();					
 			}else if(browserName.equals("firefox")){
 				desiredCapabilities = DesiredCapabilities.firefox();					
@@ -65,7 +83,9 @@ public class InstanceBrowser {
 			_instanceDriver = new RemoteWebDriver(url, desiredCapabilities);
 		}
 
-	}
+        //maximize browser by default
+        maximize();
+    }
 
     public WebDriver getInstanceDriver(){
         return _instanceDriver;
@@ -82,6 +102,12 @@ public class InstanceBrowser {
 	public void close(){
 		_instanceDriver.close();	
 	}
+
+    public void maximize(){
+
+        _instanceDriver.manage().window().maximize();
+
+    }
 
 	public By getBySearchCriteria(String str, Object... args) throws Exception{
 		By by = null;
