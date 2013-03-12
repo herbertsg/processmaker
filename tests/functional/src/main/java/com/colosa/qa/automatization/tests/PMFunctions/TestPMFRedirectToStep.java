@@ -66,8 +66,8 @@ public class TestPMFRedirectToStep{
 			Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }   
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

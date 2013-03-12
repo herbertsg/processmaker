@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -34,5 +35,10 @@ public class TestSLAProcesstaskWithPenalty{
 
 
 }
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

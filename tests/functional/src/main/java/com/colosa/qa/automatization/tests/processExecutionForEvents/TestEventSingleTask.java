@@ -20,7 +20,7 @@ public class TestEventSingleTask{
 		Pages.Login().loginUser("admin","admin","workflow");
     Pages.Main().goHome();
     int casenumber=Pages.Home().startCase("Event Process - Intermediate Conditional_Single Task (Task 1)");
-    openCaseFrame();
+    Pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
     fieldArray[1]=new FormFieldData();
@@ -50,9 +50,10 @@ public class TestEventSingleTask{
     Assert.assertTrue(FormFiller.formFillElements(fieldArray));
     	Assert.assertTrue(Pages.InputDocProcess().continuebtn());
     Pages.Main().logout();
-    openTask2(casenumber);
-}
-	public void openTask2(int casenumber) throws Exception{
+    //openTask2(casenumber);
+/*}
+	public void openTask2(int casenumber) throws Exception{ */
+        Pages.CronExecute().execute("workflow");
 		String eventStatus= "";
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("iver","sample","");
@@ -62,8 +63,8 @@ public class TestEventSingleTask{
 		eventStatus = Pages.Admin().eventStatus(casenumber);
 		Assert.assertEquals("CLOSE", eventStatus);
         Pages.Main().goHome();
-		opencase(casenumber);
-		openCaseFrame();
+		Pages.Home().openCase(casenumber);
+        Pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray2=new FormFieldData[2];
 
 		fieldArray2[0]=new FormFieldData();
@@ -82,16 +83,16 @@ public class TestEventSingleTask{
      Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
     	Assert.assertTrue(Pages.InputDocProcess().continuebtn());
     Pages.Main().logout();
-        openTask3(casenumber);
+        //openTask3(casenumber);
 
-	}
+	/*}
 
-	public void openTask3(int casenumber) throws Exception{
+	public void openTask3(int casenumber) throws Exception{ */
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("hector","sample","");
-    Pages.Main().goHome();
-		opencase(casenumber);
-		openCaseFrame();
+        Pages.Main().goHome();
+		Pages.Home().openCase(casenumber);
+		Pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray3=new FormFieldData[2];
 
 		fieldArray3[0]=new FormFieldData();
@@ -110,23 +111,13 @@ public class TestEventSingleTask{
      Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
     	Assert.assertTrue(Pages.InputDocProcess().continuebtn());
     Pages.Main().logout();
-	}
 
-	public void openCaseFrame() throws Exception{
-	    Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
-}
-
-public void opencase(int casenumber)throws Exception{
-Pages.Home().openCase(casenumber);
 }
 
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

@@ -19,19 +19,19 @@ public class TestInputDocumentList{
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goDesigner();
-		Pages.ProcessList().openProcess("Test 1");
+		Pages.ProcessList().openProcess("Test InputDoc List");
 		Pages.ProcessDesigner().openInputDocuments();
-		Pages.InputDocumentList().createInputDoc("Prueba 3", "Digital", "Prueba 3", "YES", "@#PROCESS", "_Document3_@#TASK");
+		Pages.InputDocumentList().createInputDoc("Prueba "+new java.util.Date().toString(), "Digital", "Prueba 3", "YES", "@#PROCESS", "_Document3_@#TASK");
 		//Pages.InputDocumentList().closePopup();
 
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 
 }

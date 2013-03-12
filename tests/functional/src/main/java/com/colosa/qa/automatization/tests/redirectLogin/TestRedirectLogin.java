@@ -101,7 +101,7 @@ public class TestRedirectLogin{
 		//login after put the default case list to Designer
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
-        Pages.DynaformExecution().sleep(8000); 	
+        Pages.DynaformExecution().sleep(18000); 	
      	Pages.InputDocProcess().switchToDefault();		
 		Pages.ProcessList().openProcess("RedirectLogin");
      	Pages.InputDocProcess().switchToDefault();
@@ -134,9 +134,9 @@ public class TestRedirectLogin{
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

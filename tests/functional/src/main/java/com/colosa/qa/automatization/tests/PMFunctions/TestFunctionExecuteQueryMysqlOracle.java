@@ -72,10 +72,10 @@ public class TestFunctionExecuteQueryMysqlOracle{
 		Pages.Main().logout();
 	}
 
- //   @After
-  //  public void cleanup(){
- //       Browser.close();
- //   }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 
 }

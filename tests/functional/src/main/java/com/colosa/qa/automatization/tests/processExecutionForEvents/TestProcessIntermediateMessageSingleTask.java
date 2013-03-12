@@ -59,7 +59,8 @@ public class TestProcessIntermediateMessageSingleTask{
 
 	@Test
 	public void continueCase() throws FileNotFoundException, IOException, Exception{*/
-
+		// Run cron 
+		Pages.CronExecute().execute("workflow");
 		String eventStatus= "";
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("pablo", "sample", "");
@@ -95,9 +96,9 @@ public class TestProcessIntermediateMessageSingleTask{
 	}
 
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

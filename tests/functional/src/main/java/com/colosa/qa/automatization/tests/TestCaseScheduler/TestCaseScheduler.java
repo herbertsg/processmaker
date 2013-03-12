@@ -18,37 +18,24 @@ public class TestCaseScheduler{
 	protected static String caseStatus;
 
 	@Test
-	public void executeProcess() throws FileNotFoundException, IOException, Exception{
-		//Init case
+	public void executeCron() throws FileNotFoundException, IOException, Exception{
+		//Execute cron
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();	
 		Pages.Main().goAdmin();		
 		Pages.Admin().goToLogs();
 		Pages.Admin().showCaseScheduler();
-		caseStatus = Pages.Admin().lastCreateCaseStatus();
-		String[] toArray = caseStatus.split(" ");
-		int lastCaseNum = Integer.parseInt(toArray[1]);
-		int currentCaseNum = lastCaseNum + 1;
-		Pages.DynaformExecution().sleep(20000);
 		Pages.CronExecute().execute("workflow");
-		System.out.println("run cron.php");
 		Pages.DynaformExecution().sleep(20000);
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Main().goAdmin();		
-		Pages.Admin().goToLogs();
-		Pages.Admin().showCaseScheduler();
-		caseStatus = Pages.Admin().lastCreateCaseStatus();
-		Assert.assertEquals("Case " + Integer.toString(currentCaseNum) + " Started successfully", caseStatus);
-		Pages.DynaformExecution().sleep(20000);
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+
+
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
+
+
 }

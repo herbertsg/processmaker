@@ -50,11 +50,8 @@ public class TestProcessIntermediateTimerMultipleTask{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 		Pages.Main().logout();
 
-	}
-
-	@Test
-	public void openTasks() throws FileNotFoundException, IOException, Exception{
-
+//		run cron
+		Pages.CronExecute().execute("workflow");
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
 		String eventStatus= "";
@@ -90,9 +87,9 @@ public class TestProcessIntermediateTimerMultipleTask{
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
