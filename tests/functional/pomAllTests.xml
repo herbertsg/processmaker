@@ -43,7 +43,7 @@
   </dependencies>
 
   <build>
-	<testSourceDirectory>${basedir}\src\main\java\com\colosa\qa\automatization\tests\testRadioButton</testSourceDirectory>
+	<testSourceDirectory>${basedir}\src\main\java\com\colosa\qa\automatization\tests</testSourceDirectory>
   <plugins>
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
@@ -71,7 +71,7 @@
       </dependencies>
       <goals>
         <goal>            
-          <id>test22</id>
+          <id>test</id>
           <configuration> 
           <fork>true</fork>
           <executable>${JAVA_JDK_1_7_JAVAC}</executable>

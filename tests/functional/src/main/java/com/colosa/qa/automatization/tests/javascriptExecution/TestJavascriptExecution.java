@@ -25,7 +25,7 @@ public class TestJavascriptExecution{
 		Pages.DynaformExecution().setFieldValue("num2", val2);
 		Pages.DynaformExecution().setFieldValue("aceptar", "");
 		Pages.DynaformExecution().sleep(15000);
-		Browser.close();
+
 	}
 
     @After

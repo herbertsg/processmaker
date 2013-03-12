@@ -167,9 +167,9 @@ public void opencase(int casenumber) throws Exception{
 }
 
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

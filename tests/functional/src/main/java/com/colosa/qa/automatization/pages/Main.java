@@ -1,11 +1,12 @@
 package com.colosa.qa.automatization.pages;
 
-import com.colosa.qa.automatization.common.Browser;
+import java.util.List;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.By;
+import com.colosa.qa.automatization.common.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public class Main extends Page{
 
@@ -40,7 +41,6 @@ public class Main extends Page{
     public void goHome() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
         this.weSectionButton = Browser.getElement("main.WebElement.HomeMenu");
-        //this.weSectionButton = Browser.driver().findElement(By.id("CASES"));
         
         this.weSectionButton.click();
             
@@ -49,7 +49,6 @@ public class Main extends Page{
     public void goDesigner() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
         this.weSectionButton = Browser.getElement("main.WebElement.DesignerMenu");
-        //this.weSectionButton = Browser.driver().findElement(By.id("PROCESSES"));
         
         this.weSectionButton.click();
     }
@@ -64,7 +63,6 @@ public class Main extends Page{
     public void goAdmin() throws FileNotFoundException, IOException, Exception{
         Browser.driver().switchTo().defaultContent();
         this.weSectionButton = Browser.getElement("main.WebElement.AdminMenu");
-        //this.weSectionButton = Browser.driver().findElement(By.id("SETUP"));
         
         this.weSectionButton.click();
     }
