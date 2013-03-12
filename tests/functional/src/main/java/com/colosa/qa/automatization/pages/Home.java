@@ -3,9 +3,9 @@ package com.colosa.qa.automatization.pages;
 import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
 import java.util.List;
 
 
@@ -144,6 +144,12 @@ public class Home extends Main{
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
+        Thread.sleep(5000);
+        int indice = processName.indexOf("(");
+        String cadenaNueva = processName.substring(0, indice);
+        Pages.DynaformExecution().setFieldValueWithoutForm("processesFilter", cadenaNueva);
+        WebElement el = Browser.driver().findElement(By.id("processesFilter"));
+        el.sendKeys(Keys.RETURN);
 		WebElement we = Browser.driver().findElement(By.id("startCaseTreePanel"));
 		if(path.length>2)
 			throw new Exception("the string Path parameter can contain up to 2 segments, you asshole!");
