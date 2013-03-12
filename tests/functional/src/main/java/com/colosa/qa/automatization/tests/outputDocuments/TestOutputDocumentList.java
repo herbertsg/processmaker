@@ -22,14 +22,14 @@ public class TestOutputDocumentList{
 			Pages.Main().goDesigner();
 			Pages.ProcessList().openProcess("Test 1");
 			Pages.ProcessDesigner().openOutputDocuments();
-			Pages.OutputDocumentList().createOutputDoc("Prueba1", "@#PROCESS_prueba1", "Prueba1", "A4", "Landscape", "PDF", "Enabled", "YES", "@#PROCESS", "@#TASK");
+			Pages.OutputDocumentList().createOutputDoc("Prueba "+new java.util.Date().toString(), "@#PROCESS_prueba1", "Prueba1", "A4", "Landscape", "PDF", "Enabled", "YES", "@#PROCESS", "@#TASK");
 			//Pages.OutputDocumentList().closePopup();
 			Pages.InputDocProcess().switchToDefault();
 			Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

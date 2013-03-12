@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import java.util.*;
@@ -69,4 +70,8 @@ public class TestSLAProcessByParalellEvaluation{
 		Pages.Main().logout();
 
 	}
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

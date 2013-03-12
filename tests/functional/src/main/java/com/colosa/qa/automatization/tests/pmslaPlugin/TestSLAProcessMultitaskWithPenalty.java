@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -37,6 +38,7 @@ public class TestSLAProcessMultitaskWithPenalty{
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
 		Pages.CronExecute().execute("workflow");
+		Pages.DynaformExecution().sleep(5000);
 
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
@@ -51,6 +53,12 @@ public class TestSLAProcessMultitaskWithPenalty{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solicitud");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
+
 }
+
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
