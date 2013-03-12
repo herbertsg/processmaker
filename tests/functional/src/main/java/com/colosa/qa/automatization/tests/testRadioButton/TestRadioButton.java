@@ -1,16 +1,14 @@
 package com.colosa.qa.automatization.tests.testRadioButton;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.pages.Pages;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 public class TestRadioButton{
 
@@ -44,9 +42,9 @@ public class TestRadioButton{
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

@@ -1,11 +1,10 @@
 package com.colosa.qa.automatization.pages;
 
-import org.openqa.selenium.WebDriver;
+import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.ConfigurationSettings;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
-import com.colosa.qa.automatization.common.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -24,6 +23,13 @@ public class Login extends Page{
 
 		//System.out.println("Login contructor....:" + url); 
 	}
+
+    public Login(String browserName) throws FileNotFoundException, IOException{
+        url = ConfigurationSettings.getInstance().getSetting("server.url");
+        pageTitle = "";
+
+        //System.out.println("Login contructor....:" + url);
+    }
 
 	public void initWebElements() throws Exception{
 		this.systemInformationLink = Browser.getElement("login.webElement.systemInformationLink");

@@ -3,24 +3,30 @@ package com.colosa.qa.automatization.pages;
 public class Pages{
 
 	public static Login Login() throws Exception{
+
 		Login loginPage = new Login();
 		
 		return loginPage;
 	}
 
 	public static Main Main() throws Exception{
+
 		Main mainPage = new Main();
 
 		return mainPage;
 	}
 
 	public static Home Home() throws Exception{
+
+
 		Home page = new Home();
 
 		return page;
 	}
 
 	public static Admin Admin() throws Exception{
+
+
 		Admin page = new Admin();
 
 		return page;

@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(value = Suite.class)
-@SuiteClasses(value = { com.colosa.qa.automatization.tests.dependentFields.TestDependentFields.class })
+@SuiteClasses(value = { com.colosa.qa.automatization.tests.dependentFields.TestDependentFields.class, com.colosa.qa.automatization.tests.testRadioButton.TestRadioButton.class })
 public class TestSuite1 {
 
 }

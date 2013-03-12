@@ -1,6 +1,8 @@
 package com.colosa.qa.automatization.tests.dependentFields;
 
+import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.pages.Pages;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,10 +31,12 @@ public class TestDependentFields{
 	protected static String userName1 = "admin";
 	protected static String completeName1 = "Administrator  ";
 	protected static String userDepartment1 = "";
+
 	@Test
 	public void testDependentFieldsCase() throws FileNotFoundException, IOException, Exception{
 
 		Pages.Login().gotoUrl();
+
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();	
 		caseNum = Pages.Home().startCase("TestDependentFields (Task 1)");
@@ -118,9 +122,9 @@ public class TestDependentFields{
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
