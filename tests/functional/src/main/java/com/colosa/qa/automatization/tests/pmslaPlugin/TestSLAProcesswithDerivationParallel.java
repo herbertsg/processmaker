@@ -56,6 +56,8 @@ public class TestSLAProcesswithDerivationParallel{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
+		Pages.Main().logout();
+
 	}
 
 }

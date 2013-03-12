@@ -12,7 +12,7 @@ import org.openqa.selenium.By;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAMultipleTasksWithConditionAndPenalty{
+public class TestSLAEntireProcessWithPenalty{
 
 	protected static int numCase;
 	@Test
@@ -21,46 +21,49 @@ public class TestSLAMultipleTasksWithConditionAndPenalty{
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
+		numCase = Pages.Home().startCase("SLA Process - Entire Process with penalty (Proveedores)");
 		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("eleccion", "first");
-		Pages.DynaformExecution().setFieldValue("save", "");
+		Pages.DynaformExecution().setFieldValue("nombre", "Norah Mollo Morales");
+		Pages.DynaformExecution().setFieldValue("registrar", "");
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
 		Pages.Home().openCase(numCase);
 		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("save", "");
+		Pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		
+		Pages.Home().openCase(numCase);
+		Pages.DynaformExecution().intoDynaform();
+		Pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		
+		Pages.Home().openCase(numCase);
+		Pages.DynaformExecution().intoDynaform();
+		Pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
 
 		Pages.Home().openCase(numCase);
 		Pages.DynaformExecution().intoDynaform();
-		Pages.OutputDocProcess().downloadDocFile();
-		//Pages.OutputDocProcess().downloadPdfFile();
-		Pages.DynaformExecution().setFieldValue("NEXT_STEP", "");
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("finalizacion", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-
+		
 		Pages.CronExecute().execute("workflow");
-
+		
 		Pages.Login().gotoUrl();
 		Pages.Login().loginUser("admin", "admin", "");
 		Pages.Main().goHome();
 		Pages.Home().gotoReports();
-
-		Pages.PmslaReport().generateReport("SLA Process - Multiple Task with Condiion and Pen", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA Process - Multiple Task with Condiion and Pen");
+		
+		Pages.PmslaReport();
+		Pages.PmslaReport().generateReport("SLA Process - Entire Process with penalty","All","All","All");
+		Pages.PmslaReport().displayCases("SLA Process - Entire Process with penalty");
 		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
 		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Documento Generado");
+		String[] taskInfo = Pages.PmslaReport().getTaskInfo("seleccion");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
 		Pages.Main().logout();
-	
+		
 	}
 
 }

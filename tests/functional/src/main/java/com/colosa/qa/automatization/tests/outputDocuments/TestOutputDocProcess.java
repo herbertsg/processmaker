@@ -21,7 +21,7 @@ public class TestOutputDocProcess{
 		Pages.Login().loginUser("admin", "admin", "workflow");
 		Pages.Main().goHome();
 		Pages.Home().startCase("outputDocProcess (Task 1)");
-
+		Pages.DynaformExecution().intoDynaform();
 		Pages.OutputDocProcess().downloadDocFile();
 		Pages.OutputDocProcess().downloadPdfFile();
 		Pages.OutputDocProcess().nextbtn();
