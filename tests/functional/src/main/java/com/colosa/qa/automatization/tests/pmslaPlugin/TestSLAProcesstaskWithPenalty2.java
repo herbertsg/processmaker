@@ -59,9 +59,9 @@ public class TestSLAProcesstaskWithPenalty2{
 
 }
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

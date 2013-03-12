@@ -46,7 +46,7 @@ public class TestRadioButton{
 
     @After
     public void cleanup(){
-      //  Browser.close();
+        Browser.close();
     }
 
 }

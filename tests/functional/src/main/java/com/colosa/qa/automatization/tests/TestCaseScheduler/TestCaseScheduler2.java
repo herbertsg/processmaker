@@ -1,4 +1,4 @@
-package com.colosa.qa.automatization.tests.TestCaseScheduler;
+package com.colosa.qa.automatization.tests.TestCaseScheduler2;
 
 import org.junit.Assert;
 import org.junit.After;
@@ -29,7 +29,7 @@ public class TestCaseScheduler2{
 		caseStatus = Pages.Admin().lastCreateCaseStatus();
 		String[] toArray = caseStatus.split(" ");
 		int lastCaseNum = Integer.parseInt(toArray[1]);
-		int currentCaseNum = lastCaseNum;
+		int currentCaseNum = lastCaseNum + 1;
 		Pages.DynaformExecution().sleep(20000);
 		Pages.CronExecute().execute("workflow");
 		System.out.println("run cron.php");
@@ -47,8 +47,8 @@ public class TestCaseScheduler2{
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

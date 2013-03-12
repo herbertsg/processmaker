@@ -52,14 +52,12 @@ public class TestPMFTaskCase{
 	    Pages.InputDocProcess().continuebtn();
 		Pages.DynaformExecution().outDynaform();
 		Pages.Main().logout();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 
 }

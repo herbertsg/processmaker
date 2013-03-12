@@ -56,9 +56,9 @@ public class TestSLAProcessMultitaskWithPenalty{
 
 }
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

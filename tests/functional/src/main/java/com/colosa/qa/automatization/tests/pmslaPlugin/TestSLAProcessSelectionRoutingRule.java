@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -63,5 +64,8 @@ public class TestSLAProcessSelectionRoutingRule{
 		Pages.Main().logout();
 
 	}
-
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

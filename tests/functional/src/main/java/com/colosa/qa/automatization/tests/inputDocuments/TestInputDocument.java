@@ -55,8 +55,8 @@ public class TestInputDocument{
 		fieldArray[5].fieldType = FieldType.BUTTON;
 		fieldArray[5].fieldValue = "";
 		FormFiller.formFillElements(fieldArray);
-		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
-		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
+		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
+		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		Pages.InputDocProcess().continuebtn();
 		Pages.Home().openCase(caseNumber);
 		Pages.InputDocProcess().openCaseFrame();
@@ -69,15 +69,15 @@ public class TestInputDocument{
 		fieldArray2[0].fieldValue = "";
 		FormFiller.formFillElements(fieldArray2);
 		
-		Pages.InputDocProcess().uploadFile("/home/ernesto/Documents/Prueba_Input_Doc.docx", "Test File");
+		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		Pages.InputDocProcess().continuebtn();
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

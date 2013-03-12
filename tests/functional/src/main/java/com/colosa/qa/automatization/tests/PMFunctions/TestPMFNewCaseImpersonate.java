@@ -70,8 +70,8 @@ public class TestPMFNewCaseImpersonate{
 		    Pages.InputDocProcess().continuebtn();
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }   
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 }

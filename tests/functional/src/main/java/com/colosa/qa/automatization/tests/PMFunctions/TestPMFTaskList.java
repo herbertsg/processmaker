@@ -50,10 +50,10 @@ public class TestPMFTaskList{
 
 	}
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 
 }

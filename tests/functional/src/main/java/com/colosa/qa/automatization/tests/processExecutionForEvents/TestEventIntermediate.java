@@ -19,7 +19,7 @@ public class TestEventIntermediate{
 		Pages.Login().loginUser("admin","admin","workflow");
     Pages.Main().goHome();
     int casenumber=Pages.Home().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
-    openCaseFrame();
+    Pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
     fieldArray[1]=new FormFieldData();
@@ -49,10 +49,11 @@ public class TestEventIntermediate{
     Assert.assertTrue(FormFiller.formFillElements(fieldArray));
     Assert.assertTrue(Pages.InputDocProcess().continuebtn());
     Pages.Main().logout();
-    openTask2(casenumber);
-}
+    //openTask2(casenumber);
+/*}
 
-public void openTask2(int casenumber) throws Exception{
+public void openTask2(int casenumber) throws Exception{ */
+    Pages.CronExecute().execute("workflow");
        String eventStatus= "";
         Pages.Login().gotoUrl();
         Pages.Login().loginUser("iver","sample","");
@@ -62,8 +63,8 @@ public void openTask2(int casenumber) throws Exception{
         eventStatus = Pages.Admin().eventStatus(casenumber);
         Assert.assertEquals("CLOSE", eventStatus);
         Pages.Main().goHome();
-        opencase(casenumber);
-        openCaseFrame();
+        Pages.Home().openCase(casenumber);
+        Pages.DynaformExecution().intoDynaform();
         FormFieldData[] fieldArray2=new FormFieldData[2];
         fieldArray2[0]=new FormFieldData();
         fieldArray2[1]=new FormFieldData();
@@ -81,37 +82,37 @@ public void openTask2(int casenumber) throws Exception{
      Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
         Assert.assertTrue(Pages.InputDocProcess().continuebtn());
         Pages.Main().logout();
-    openTask3(casenumber);
+    //openTask3(casenumber);
 
-}
+/*}
 
-public void openTask3(int casenumber) throws Exception{
+public void openTask3(int casenumber) throws Exception{ */
 	Pages.Login().gotoUrl();
-        Pages.Login().loginUser("hector","sample","");
+    Pages.Login().loginUser("hector","sample","");
     Pages.Main().goHome();
-    opencase(casenumber);
-	 openCaseFrame();
-	 FormFieldData[] fieldArray3=new FormFieldData[1];
-	 fieldArray3[0]=new FormFieldData();
+    Pages.Home().openCase(casenumber);
+    Pages.DynaformExecution().intoDynaform();
+    FormFieldData[] fieldArray3=new FormFieldData[1];
+    fieldArray3[0]=new FormFieldData();
 
-	 fieldArray3[0].fieldPath="form[send]";
-	 fieldArray3[0].fieldFindType=FieldKeyType.ID;
-	 fieldArray3[0].fieldType=FieldType.BUTTON;
-	 fieldArray3[0].fieldValue="";
+     fieldArray3[0].fieldPath="form[send]";
+     fieldArray3[0].fieldFindType=FieldKeyType.ID;
+     fieldArray3[0].fieldType=FieldType.BUTTON;
+     fieldArray3[0].fieldValue="";
 
 	  Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
         Assert.assertTrue(Pages.InputDocProcess().continuebtn());
         Pages.Main().logout();
-    openTask4(casenumber);
+    //openTask4(casenumber);
 
-}
+/*}
 
-public void openTask4(int casenumber) throws Exception{
+public void openTask4(int casenumber) throws Exception{   */
 	 Pages.Login().gotoUrl();
         Pages.Login().loginUser("admin","admin","");
     Pages.Main().goHome();
-    opencase(casenumber);
-	 openCaseFrame();
+    Pages.Home().openCase(casenumber);
+    Pages.DynaformExecution().intoDynaform();
 	 FormFieldData[] fieldArray4=new FormFieldData[2];
 	 fieldArray4[0]=new FormFieldData();
      fieldArray4[1]=new FormFieldData();
@@ -133,20 +134,9 @@ Pages.Main().logout();
 }
 
 
-public void openCaseFrame() throws Exception{
-	    Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
-}
-public void opencase(int casenumber)throws Exception{
-Pages.Home().openCase(casenumber);
-}
-
-
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }

@@ -1,8 +1,11 @@
 package com.colosa.qa.automatization.tests.pmGridFunctions;
 
+import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.pages.Pages;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
+import org.junit.AfterClass;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -70,5 +73,9 @@ public class TestPMGridFunctions{
 			Assert.assertEquals(fmt.format(Double.parseDouble(Pages.DynaformExecution().getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
 		}
 	}
+    @After
+    public void cleanup(){
+        Browser.close();
+    }
 
 }
