@@ -32,10 +32,10 @@ public class TestCaseScheduler{
 
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

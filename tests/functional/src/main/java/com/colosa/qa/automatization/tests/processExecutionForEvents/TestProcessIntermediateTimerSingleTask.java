@@ -73,12 +73,13 @@ public class TestProcessIntermediateTimerSingleTask{
 		Pages.Home().openCase(caseNum);
 		Pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 	}
 
     @After
-    public void cleanup(){
+/*    public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

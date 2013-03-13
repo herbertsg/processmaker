@@ -47,8 +47,8 @@ public class TestCaseScheduler2{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

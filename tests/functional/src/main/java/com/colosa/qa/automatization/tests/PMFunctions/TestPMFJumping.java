@@ -25,12 +25,14 @@ public class TestPMFJumping{
 		Pages.Home().startCase("Test PMFJumping (Task 1)");
 		Pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(Pages.Home().isGridPresent("casesGrid"));
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

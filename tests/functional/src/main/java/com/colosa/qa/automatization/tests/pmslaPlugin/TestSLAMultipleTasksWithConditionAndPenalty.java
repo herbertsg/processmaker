@@ -61,7 +61,8 @@ public class TestSLAMultipleTasksWithConditionAndPenalty{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Documento Generado");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	
 	}

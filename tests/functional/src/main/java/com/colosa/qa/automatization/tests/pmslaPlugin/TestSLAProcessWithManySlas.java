@@ -87,12 +87,13 @@ public class TestSLAProcessWithManySlas{
 		String[] taskInfo3 = Pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo3[5], "OPEN");
 
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

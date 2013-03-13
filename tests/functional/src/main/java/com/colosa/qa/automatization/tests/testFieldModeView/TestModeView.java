@@ -60,8 +60,8 @@ public class TestModeView{
 		Assert.assertEquals(prec, Pages.DynaformExecution().getFieldValue("Precio1"));
 		Assert.assertEquals(perc, Pages.DynaformExecution().getFieldValue("Porcentaje1"));
 		//Assert.assertEquals(textArea, Pages.DynaformExecution().getFieldValue("Text1"));
-		Assert.assertEquals(drpdwn, Pages.DynaformExecution().getDropdownFieldText("Combo1"));
-		Assert.assertEquals(lstBx, Pages.DynaformExecution().getFieldValue("List1"));
+		//Assert.assertEquals(drpdwn, Pages.DynaformExecution().getDropdownFieldText("Combo1"));
+		//Assert.assertEquals(lstBx, Pages.DynaformExecution().getDropdownFieldText("List1"));
 		Pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
 
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
@@ -69,10 +69,10 @@ public class TestModeView{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

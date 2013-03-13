@@ -33,12 +33,13 @@ public class TestSLAProcesstaskWithPenalty{
 
 		Pages.CronExecute().execute("workflow");
 
-
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

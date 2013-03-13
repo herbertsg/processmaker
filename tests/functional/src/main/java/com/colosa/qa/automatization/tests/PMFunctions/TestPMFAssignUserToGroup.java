@@ -51,9 +51,9 @@ public class TestPMFAssignUserToGroup{
 
 }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

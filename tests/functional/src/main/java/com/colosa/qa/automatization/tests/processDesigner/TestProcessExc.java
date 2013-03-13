@@ -32,8 +32,8 @@ public class TestProcessExc{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

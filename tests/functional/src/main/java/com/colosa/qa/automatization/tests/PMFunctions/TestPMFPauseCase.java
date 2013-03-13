@@ -33,12 +33,13 @@ public class TestPMFPauseCase{
 		Pages.DynaformExecution().setFieldValue("Enviar", "");
 		Pages.Home().gotoPaused();
 		Assert.assertTrue(Pages.Home().selectCase(numCase));
-
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

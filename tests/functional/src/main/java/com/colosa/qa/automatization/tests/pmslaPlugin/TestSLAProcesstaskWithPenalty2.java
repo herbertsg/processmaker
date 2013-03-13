@@ -55,13 +55,14 @@ public class TestSLAProcesstaskWithPenalty2{
 		Pages.PmslaReport().displayTasks(caseNum);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Reclamo");
 		Assert.assertEquals(taskInfo[5], "CLOSED");
-
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 }
-
+/*
     @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

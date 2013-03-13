@@ -28,9 +28,9 @@ public class TestProcessList{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

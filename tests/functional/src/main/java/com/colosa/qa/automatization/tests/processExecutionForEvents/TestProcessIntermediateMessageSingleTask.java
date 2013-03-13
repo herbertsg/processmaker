@@ -80,25 +80,14 @@ public class TestProcessIntermediateMessageSingleTask{
 		Pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
-	/*}
-
-	@Test
-	public void continueCase2() throws FileNotFoundException, IOException, Exception{*/
-
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 	}
 
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

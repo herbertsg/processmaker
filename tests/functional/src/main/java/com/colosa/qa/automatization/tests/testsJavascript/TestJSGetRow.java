@@ -26,9 +26,9 @@ public class TestJSGetRow{
 
 		Pages.DynaformExecution().setFieldValue("Nombre", "Favian");
 		Pages.DynaformExecution().setFieldValue("Salario", "231,321,321,321,231,321,321.4564");
-		Pages.DynaformExecution().setFieldValue("Dropdwn", "Valor4");
+		Pages.DynaformExecution().setFieldValue("Dropdwn", "Value4");
 		Pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		Pages.DynaformExecution().setFieldValue("cargar", "");
+		Pages.DynaformExecution().setFieldValue("Cargar", "");
 
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Nombre"), Pages.DynaformExecution().getFieldValue("Nombre"));
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Salario"), Pages.DynaformExecution().getFieldValue("Salario"));
@@ -39,9 +39,9 @@ public class TestJSGetRow{
 		Pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
+  //  @After
+   // public void cleanup(){
+   //     Browser.close();
+   // }
 
 }

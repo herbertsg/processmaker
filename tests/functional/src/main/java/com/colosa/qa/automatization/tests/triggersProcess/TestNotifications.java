@@ -59,8 +59,8 @@ public class TestNotifications{
         Pages.Main().logout();
     }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

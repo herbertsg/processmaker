@@ -32,13 +32,14 @@ public class TestPMStringFunctions{
 		Pages.DynaformExecution().setFieldValue("capital", str3);
 		Pages.DynaformExecution().setFieldValue("Send", "");
 		Pages.DynaformExecution().sleep(15000);
-
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
 
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }
