@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.apache.xalan.xsltc.util.IntegerArray;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,8 @@ import java.util.List;
 
 
 public class Home extends Main{
+
+    protected static int numCol;
 
 	public Home() throws Exception{
 	}
@@ -93,22 +96,27 @@ public class Home extends Main{
 
 	public static void gotoInbox() throws Exception{
 		selectMenuTreePanelOption("Cases/Inbox");
+        numCol = 7;
 	}
 
 	public static void gotoDraft() throws Exception{
 		selectMenuTreePanelOption("Cases/Draft");
+        numCol = 7;
 	}
 
 	public static void gotoParticipated() throws Exception{
 		selectMenuTreePanelOption("Cases/Participated");
+        numCol = 10;
 	}
 
 	public static void gotoUnassigned() throws Exception{
 		selectMenuTreePanelOption("Cases/Unassigned");
+        numCol = 7;
 	}
 
 	public static void gotoPaused() throws Exception{
 		selectMenuTreePanelOption("Cases/Paused");
+        numCol = 7;
 	}
 
 	public static void gotoAdvancedSearch() throws Exception{
@@ -203,11 +211,19 @@ public class Home extends Main{
 	}
 
 	public void openCase(int numCase)throws Exception{
-		ExtJSGrid grid;
+
+        ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
 		Browser.driver().switchTo().defaultContent();		
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
+        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
+        WebElement elem = null;
+        System.out.println("Numero de columna: "+numCol);
+        WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+numCol+"]/input"));
+        inputText.sendKeys(Integer.toString(numCase));
+        inputText.sendKeys(Keys.RETURN);
+
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
