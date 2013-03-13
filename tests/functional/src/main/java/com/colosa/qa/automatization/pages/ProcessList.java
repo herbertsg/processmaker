@@ -1,11 +1,9 @@
 package com.colosa.qa.automatization.pages;
 
 import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
 import com.colosa.qa.automatization.common.*;
 import com.colosa.qa.automatization.common.extJs.*;
 import java.io.FileNotFoundException;
@@ -27,6 +25,10 @@ public class ProcessList extends Page{
 		Actions action = new Actions(Browser.driver());
 
 		Browser.driver().switchTo().frame("frameMain");
+
+        Pages.DynaformExecution().setFieldValueWithoutForm("searchTxt", processName);
+        WebElement el = Browser.driver().findElement(By.id("searchTxt"));
+        el.sendKeys(Keys.RETURN);
 				
 		WebElement grid = Browser.getElement("designerList.webelement.Process");
 		ExtJSGrid extGrid = new ExtJSGrid(grid, Browser.driver());
