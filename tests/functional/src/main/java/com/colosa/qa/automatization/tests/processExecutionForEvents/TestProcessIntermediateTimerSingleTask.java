@@ -77,9 +77,11 @@ public class TestProcessIntermediateTimerSingleTask{
         Pages.Main().logout();
 	}
 
+/*
     @After
-/*    public void cleanup(){
+    public void cleanup(){
         Browser.close();
-    }*/
+    }
+*/
 
 }

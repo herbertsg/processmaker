@@ -13,6 +13,7 @@ import java.util.List;
 public class Home extends Main{
 
     protected static int numCol;
+    protected static String caseNum = "";
 
 	public Home() throws Exception{
 	}
@@ -212,19 +213,17 @@ public class Home extends Main{
 
 	public void openCase(int numCase)throws Exception{
 
+        caseNum = ""+Integer.toString(numCase);
         ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
 		Browser.driver().switchTo().defaultContent();		
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
         WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
-        WebElement elem = null;
-        System.out.println("Numero de columna: "+numCol);
-        WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+numCol+"]/input"));
-        inputText.sendKeys(Integer.toString(numCase));
+        WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+Integer.toString(numCol)+"]/input"));
+        inputText.sendKeys(caseNum);
         inputText.sendKeys(Keys.RETURN);
-
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+        grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
