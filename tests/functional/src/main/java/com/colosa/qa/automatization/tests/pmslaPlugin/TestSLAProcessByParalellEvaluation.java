@@ -67,11 +67,12 @@ public class TestSLAProcessByParalellEvaluation{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 5");
 		Assert.assertEquals(taskInfo[5], "CLOSED");
 
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

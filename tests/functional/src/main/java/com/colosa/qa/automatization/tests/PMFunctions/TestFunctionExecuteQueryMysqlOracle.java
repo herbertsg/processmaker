@@ -36,10 +36,10 @@ public class TestFunctionExecuteQueryMysqlOracle{
 		Pages.DynaformExecution().outDynaform();
 
 		//Open task 2 .
-		firstNameMysql = "FNMysql-" + Utils.getRandomString(5);
-		lastNameMysql = "LNMysql-" + Utils.getRandomString(5);;
-		firstNameOracle = "FNOracle-" + Utils.getRandomString(5);;
-		lastNameOracle = "LNOracle-" + Utils.getRandomString(5);;
+		firstNameMysql = "Administrator";
+		lastNameMysql = " " ;
+		firstNameOracle = "FNOracle-" + Utils.getRandomString(5);
+		lastNameOracle = "LNOracle-" + Utils.getRandomString(5);
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));		
@@ -72,10 +72,12 @@ public class TestFunctionExecuteQueryMysqlOracle{
 		Pages.Main().logout();
 	}
 
+/*
     @After
     public void cleanup(){
         Browser.close();
     }
+*/
 
 
 }

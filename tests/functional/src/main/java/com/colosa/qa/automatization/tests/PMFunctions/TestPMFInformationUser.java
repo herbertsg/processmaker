@@ -44,9 +44,9 @@ public class TestPMFInformationUser{
 
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

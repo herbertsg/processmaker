@@ -204,10 +204,10 @@ public class DerivationRulesParallelEvaluation{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

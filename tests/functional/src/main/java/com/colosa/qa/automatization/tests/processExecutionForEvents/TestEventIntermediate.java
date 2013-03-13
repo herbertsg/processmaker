@@ -129,14 +129,15 @@ public void openTask4(int casenumber) throws Exception{   */
 
 	  Assert.assertTrue(FormFiller.formFillElements(fieldArray4));
         Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-Pages.Main().logout();
+    Pages.InputDocProcess().switchToDefault();
+    Pages.Main().logout();
 
 }
 
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

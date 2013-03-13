@@ -59,10 +59,10 @@ public class TestPMFCasesList{
         Pages.InputDocProcess().switchToDefault();
         Pages.Main().logout();
 }
-
+/*
     @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
     
 }

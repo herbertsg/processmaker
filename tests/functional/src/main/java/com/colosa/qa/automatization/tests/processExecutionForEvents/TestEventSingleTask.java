@@ -80,7 +80,7 @@ public class TestEventSingleTask{
 		fieldArray2[1].fieldType=FieldType.BUTTON;
 		fieldArray2[1].fieldValue="";
 
-     Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
+     //Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
     	Assert.assertTrue(Pages.InputDocProcess().continuebtn());
     Pages.Main().logout();
         //openTask3(casenumber);
@@ -108,16 +108,17 @@ public class TestEventSingleTask{
 		fieldArray3[1].fieldType=FieldType.BUTTON;
 		fieldArray3[1].fieldValue="";
 
-     Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
+     //Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
     	Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-    Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 }
 
 
-    @After
+/*    @After
     public void cleanup(){
-        Browser.close();
-    }
+       Browser.close();
+    }*/
 
 }

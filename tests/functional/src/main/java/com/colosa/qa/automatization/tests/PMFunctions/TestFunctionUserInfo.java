@@ -49,10 +49,10 @@ public class TestFunctionUserInfo{
 		Pages.Main().logout();
 }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

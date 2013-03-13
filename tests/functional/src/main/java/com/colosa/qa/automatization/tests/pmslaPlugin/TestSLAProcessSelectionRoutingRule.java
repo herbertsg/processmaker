@@ -61,11 +61,12 @@ public class TestSLAProcessSelectionRoutingRule{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Tipo de cambio");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

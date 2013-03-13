@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
 import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Test;
 import java.util.*;
 import com.colosa.qa.automatization.pages.*;
@@ -57,9 +58,9 @@ public class TestPMFGetLabel{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

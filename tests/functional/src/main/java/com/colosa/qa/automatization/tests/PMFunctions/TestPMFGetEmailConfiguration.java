@@ -86,9 +86,9 @@ public class TestPMFGetEmailConfiguration{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
     
 }
