@@ -64,7 +64,8 @@ public class TestSLAEntireProcessWithPenalty{
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("seleccion");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 		
 	}
 //    @After

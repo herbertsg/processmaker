@@ -69,8 +69,8 @@ public class TestHideShowCaseTitle{
         Pages.Main().logout();
     }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

@@ -46,9 +46,9 @@ public class TestPMFDeleteCase{
 
 }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

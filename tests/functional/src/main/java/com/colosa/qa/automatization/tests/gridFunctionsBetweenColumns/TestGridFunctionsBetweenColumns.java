@@ -52,7 +52,7 @@ public class TestGridFunctionsBetweenColumns{
 			
 		}
 
-		Random rand = new Random();
+		/*Random rand = new Random();
 		int aleat = rand.nextInt(30);
 		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
@@ -64,7 +64,7 @@ public class TestGridFunctionsBetweenColumns{
 		aleat = rand.nextInt(30);
 		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);   */
 		
 		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
@@ -99,10 +99,10 @@ public class TestGridFunctionsBetweenColumns{
 		Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

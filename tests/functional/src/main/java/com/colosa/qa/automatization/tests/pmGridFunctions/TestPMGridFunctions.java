@@ -73,9 +73,9 @@ public class TestPMGridFunctions{
 			Assert.assertEquals(fmt.format(Double.parseDouble(Pages.DynaformExecution().getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
 		}
 	}
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

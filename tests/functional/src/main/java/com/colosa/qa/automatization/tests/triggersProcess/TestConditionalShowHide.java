@@ -107,8 +107,8 @@ public class TestConditionalShowHide{
         Pages.Main().logout();
     }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 }

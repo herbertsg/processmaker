@@ -25,13 +25,15 @@ public class TestJavascriptExecution{
 		Pages.DynaformExecution().setFieldValue("num2", val2);
 		Pages.DynaformExecution().setFieldValue("aceptar", "");
 		Pages.DynaformExecution().sleep(15000);
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 
 }

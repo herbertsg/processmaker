@@ -84,12 +84,13 @@ public class TestProcessIntermediateTimerMultipleTask{
 		Pages.Home().openCase(caseNum);
 		Pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 	}
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

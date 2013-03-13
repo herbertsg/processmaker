@@ -169,10 +169,12 @@ public class DerivationRulesSelection{
 		Pages.Main().logout();
 	}
 
+/*
     @After
     public void cleanup(){
         Browser.close();
     }
+*/
 
 
 }

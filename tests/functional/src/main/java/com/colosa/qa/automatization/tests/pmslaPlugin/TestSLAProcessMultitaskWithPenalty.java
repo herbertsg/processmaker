@@ -52,13 +52,14 @@ public class TestSLAProcessMultitaskWithPenalty{
 		Pages.PmslaReport().displayTasks(caseNum);
 		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solicitud");
 		Assert.assertEquals(taskInfo[5], "OPEN");
-
+        Pages.InputDocProcess().switchToDefault();
+        Pages.Main().logout();
 
 }
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }

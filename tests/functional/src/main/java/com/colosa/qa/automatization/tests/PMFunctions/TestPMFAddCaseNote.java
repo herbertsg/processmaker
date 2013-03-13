@@ -89,9 +89,11 @@ public class TestPMFAddCaseNote{
 			Pages.Main().logout();
 }
 
+/*
     @After
     public void cleanup(){
         Browser.close();
     }
+*/
 
 }
