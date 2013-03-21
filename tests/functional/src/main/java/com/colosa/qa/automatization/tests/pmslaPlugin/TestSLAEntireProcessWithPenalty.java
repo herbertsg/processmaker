@@ -68,9 +68,9 @@ public class TestSLAEntireProcessWithPenalty{
         Pages.Main().logout();
 		
 	}
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+/*    @After
+    public void cleanup(){
+        Browser.close();
+    }*/
 
 }

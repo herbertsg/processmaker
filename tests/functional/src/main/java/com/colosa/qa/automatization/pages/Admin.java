@@ -16,6 +16,7 @@ public class Admin extends Main{
 
     public static void goToLogs() throws Exception{
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__logs']/a[2]"));
         we.click();
@@ -24,6 +25,7 @@ public class Admin extends Main{
 
     public static void goToPlugins() throws Exception{
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__plugins']/a[2]"));
         we.click();
@@ -31,6 +33,7 @@ public class Admin extends Main{
    
     public static void goToUsers() throws Exception{
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__users']/a[2]"));
         we.click();
@@ -56,6 +59,7 @@ public class Admin extends Main{
   			goToSettings();
   			Thread.sleep(3000);
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         WebElement divPMT = Browser.driver().findElement(By.id("settings"));
   			WebElement PMT = divPMT.findElement(By.xpath("//div/div/ul/div/li[11]"));
@@ -63,6 +67,7 @@ public class Admin extends Main{
   			
   			Thread.sleep(3000);
   			Browser.driver().switchTo().frame("setup-frame");
+            Browser.waitForElement(By.id("infoGrid"),45);
   			WebElement divGridPMT = Browser.driver().findElement(By.id("infoGrid"));
   			WebElement newPMT = divGridPMT.findElement(By.xpath("div[2]/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
   			newPMT.click();
@@ -130,6 +135,7 @@ public class Admin extends Main{
   			goToSettings();
   			Thread.sleep(3000);
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         
         WebElement divPMT = Browser.driver().findElement(By.id("settings"));
@@ -159,8 +165,9 @@ public class Admin extends Main{
         goToUsers();
         Thread.sleep(3000);
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
-        
+        Browser.waitForElement(By.id("users"),60);
         WebElement divRoles = Browser.driver().findElement(By.id("users"));
         WebElement liRoles = divRoles.findElement(By.xpath("div/div/ul/div/li[4]/div"));
         liRoles.click();
@@ -186,6 +193,7 @@ public class Admin extends Main{
         goToPlugins();
         Thread.sleep(3000);
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("adminFrame"),120);
         Browser.driver().switchTo().frame("adminFrame");
         Browser.driver().switchTo().frame("setup-frame");
         WebElement divFils = Browser.driver().findElement(By.xpath("//*[@id='processesGrid']/div/div[2]/div/div/div[2]"));
@@ -231,6 +239,7 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
         Browser.driver().switchTo().frame("setup-frame");
+        Browser.waitForElement(By.id("eventsGrid"),60);
         ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("eventsGrid")), Browser.driver());
         String status;
         WebElement row = grid.getRowByColumnValue("Case Title", "#" + Integer.toString(numCase));
@@ -246,6 +255,7 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
         Browser.driver().switchTo().frame("setup-frame");
+        Browser.waitForElement(By.id("infoGrid"),60);
         ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
         String status;
         rows = grid.getRows();
@@ -261,6 +271,7 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
         Browser.driver().switchTo().frame("setup-frame");
+        Browser.waitForElement(By.id("emailsGrid"),60);
         ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("emailsGrid")), Browser.driver());
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
@@ -276,7 +287,7 @@ public class Admin extends Main{
         Browser.driver().switchTo().defaultContent();
         Browser.driver().switchTo().frame("adminFrame");
         Browser.driver().switchTo().frame("setup-frame");
-
+        Browser.waitForElement(By.id("infoGrid"),360);
         ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("User Name", userName);

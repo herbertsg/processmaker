@@ -115,8 +115,8 @@ public class CurrencyFieldTest{
     Pages.Main().logout();
     }
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }	
+/*    @After
+    public void cleanup(){
+        Browser.close();
+    }*/
 }

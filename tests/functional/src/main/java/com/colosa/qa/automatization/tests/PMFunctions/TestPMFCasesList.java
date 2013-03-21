@@ -45,7 +45,7 @@ public class TestPMFCasesList{
         Pages.InputDocProcess().continuebtn();
         
         Pages.Home().gotoInbox();
-		    Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
+		   // Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
 		    Pages.Home().openCase(casenumber);
 		    Pages.DynaformExecution().intoDynaform();
         
@@ -59,8 +59,7 @@ public class TestPMFCasesList{
         Pages.InputDocProcess().switchToDefault();
         Pages.Main().logout();
 }
-/*
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
     }*/

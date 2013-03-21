@@ -52,14 +52,12 @@ public class TestCaseTrackerStageMap{
 
 
 		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		//Pages.Main().logout();
 	}
 
-/*
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
-*/
+    }*/
 
 }
