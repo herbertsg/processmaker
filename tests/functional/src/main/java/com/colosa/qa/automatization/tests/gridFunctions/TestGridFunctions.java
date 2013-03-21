@@ -68,7 +68,7 @@ public class TestGridFunctions{
 		}*/
 		Random rand = new Random();
 		int aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		/*Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
 		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
@@ -78,7 +78,7 @@ public class TestGridFunctions{
 		aleat = rand.nextInt(30);
 		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);  */
 		
 		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
 		
@@ -123,8 +123,8 @@ public class TestGridFunctions{
 	}
 
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//
+  /*  @After
+    public void cleanup(){
+        Browser.close();
+    }*/
 }

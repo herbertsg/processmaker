@@ -27,7 +27,7 @@ public class TestCaseScheduler{
 		Pages.Admin().goToLogs();
 		Pages.Admin().showCaseScheduler();
 		Pages.CronExecute().execute("workflow");
-		Pages.DynaformExecution().sleep(20000);
+		//Pages.DynaformExecution().sleep(20000);
 
 
 	}
