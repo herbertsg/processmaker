@@ -95,6 +95,5 @@ public class TestPMFSendMessageTest{
 /*    @After
     public void cleanup(){
         Browser.close();
-    }
-    */
+    }*/
 }

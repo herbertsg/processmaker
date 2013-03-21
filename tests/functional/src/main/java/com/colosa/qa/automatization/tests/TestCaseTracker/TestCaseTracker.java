@@ -56,7 +56,7 @@ public class TestCaseTracker{
 		Assert.assertEquals(fecha, Value.getValue(FieldKeyType.XPATH, "//*[@id='publisherContent[1]']/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr[2]/td[8]/input"));
 
 		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		//Pages.Main().logout();
 	}
 
 /*    @After

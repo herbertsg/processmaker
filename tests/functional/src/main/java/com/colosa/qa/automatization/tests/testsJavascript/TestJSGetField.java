@@ -34,14 +34,15 @@ public class TestJSGetField{
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Salario"), Pages.DynaformExecution().getFieldValue("Salario"));
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Dropdwn"), Pages.DynaformExecution().getFieldValue("Dropdwn"));
 		Assert.assertEquals(Pages.DynaformExecution().getGridFieldValue("grd1", 1, "Descripcion"), Pages.DynaformExecution().getFieldValue("Descripcion"));
-		Pages.DynaformExecution().sleep(15000);
 		Pages.InputDocProcess().switchToDefault();
 		Pages.Main().logout();
 	}
 
-/*    @After
+/*
+    @After
     public void cleanup(){
         Browser.close();
-    }*/
+    }
+*/
 
 }

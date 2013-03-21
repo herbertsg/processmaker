@@ -44,6 +44,8 @@ public class Home extends Main{
 
 		/*
 		if(this.skin == 0)*/
+         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("casesFrame"),120);
 			Browser.driver().switchTo().frame("casesFrame");
 		/*else
 		{
@@ -151,6 +153,7 @@ public class Home extends Main{
 		Browser.driver().switchTo().defaultContent();
 		Home.selectMenuTreePanelOption("Cases/New case");
 		Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("casesFrame"),120);
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
         Thread.sleep(5000);
@@ -216,13 +219,15 @@ public class Home extends Main{
         caseNum = ""+Integer.toString(numCase);
         ExtJSGrid grid;
 		Actions action = new Actions(Browser.driver());
-		Browser.driver().switchTo().defaultContent();		
+		Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("casesFrame"),120);
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
-        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
+/*        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
         WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+Integer.toString(numCol)+"]/input"));
         inputText.sendKeys(caseNum);
         inputText.sendKeys(Keys.RETURN);
+        inputText.clear();*/
         grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
@@ -240,6 +245,7 @@ public class Home extends Main{
         Actions action = new Actions(Browser.driver());
 
         Browser.driver().switchTo().defaultContent();
+        Browser.waitForElement(By.id("casesFrame"),120);
 
         Browser.driver().switchTo().frame("casesFrame");
 
@@ -323,6 +329,11 @@ public class Home extends Main{
 		ExtJSGrid grid;
 		Browser.driver().switchTo().frame("casesFrame");
 		Browser.driver().switchTo().frame("casesSubFrame");
+/*        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
+        WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+Integer.toString(numCol)+"]/input"));
+        inputText.sendKeys(caseNum);
+        inputText.sendKeys(Keys.RETURN);
+        inputText.clear();*/
 		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		

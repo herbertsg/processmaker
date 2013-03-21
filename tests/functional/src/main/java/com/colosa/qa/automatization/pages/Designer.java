@@ -35,10 +35,10 @@ public class Designer{
 		String taskName = "Task ";
 		int tNum = taskNum + 1; 
 		Actions action = new Actions(Browser.driver());
-		Browser.waitForElement(By.className("processmap_title___processmaker"),15);
+		Browser.waitForElement(By.className("processmap_title___processmaker"),45);
 		WebElement gridPanel = Browser.driver().findElement(By.id("pm_target"));
 		action.contextClick(gridPanel).perform();
-
+        Browser.waitForElement(By.xpath("//div[2]/div[4]/div[2]"),45);
 		WebElement taskElem = Browser.driver().findElement(By.xpath("//div[2]/div[4]/div[2]"));
 
 		if(taskElem.getText().equals("Add task"))
@@ -303,6 +303,7 @@ public class Designer{
 		WebElement btnSend = null;
 		Select droplist;
 		int dropdownCount = 0;
+        int dropdownCount2 = 0;
 		String namePath = "";
 
 		if(conditionType==1){
@@ -342,7 +343,7 @@ public class Designer{
 		if(founded == true)
 		{
 			System.out.println("Xpath: "+elements[i][1]);
-			Browser.waitForElement(By.xpath(elements[i][1]),5);
+			Browser.waitForElement(By.xpath(elements[i][1]),45);
 			WebElement el = Browser.driver().findElement(By.xpath(elements[i][1]));			
 			el.click();
 		}
@@ -353,11 +354,13 @@ public class Designer{
 
 		if(arrayTasks.length>0)
 		{
-			for(int l=0;l<arrayTasks.length-1;l++)
+			for(int l=0;l< arrayTasks.length-1;l++)
 			{
-				Browser.waitForElement(By.id("form["+namePath+"][addLink]"),5);
+                dropdownCount2 = l + 2;
+				Browser.waitForElement(By.id("form["+namePath+"][addLink]"),45);
 				btnAdd = Browser.driver().findElement(By.id("form["+namePath+"][addLink]"));
 				btnAdd.click();
+                Browser.waitForElement(By.id("form["+namePath+"]["+dropdownCount2+"][ROU_NEXT_TASK]"),45);
 			}
 
 			for(int j=0;j<arrayTasks.length;j++)
@@ -449,6 +452,7 @@ public class Designer{
 		Select droplist = null;
 		Browser.driver().switchTo().defaultContent();
 		Browser.driver().switchTo().frame("frameMain");
+        Browser.waitForElement(By.id("events.webElement.New"),45);
 		Browser.getElement("events.webElement.New").click();
 		Browser.getElement("events.webElement.Description").sendKeys(description);
 		elem = Browser.getElement("events.webElement.Status");

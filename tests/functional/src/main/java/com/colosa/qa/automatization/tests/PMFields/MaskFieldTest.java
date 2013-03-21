@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFields;
 import org.junit.Assert;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -103,10 +104,10 @@ public class MaskFieldTest{
         Pages.Main().logout();
     }
 
-//    @After
-//    public void cleanup(){
-//        Browser.close();
-//    }
+/*    @After
+    public void cleanup(){
+        Browser.close();
+    }*/
  	
  	public void openCaseFrame() throws Exception{
 	  Browser.driver().switchTo().defaultContent();

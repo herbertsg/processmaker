@@ -295,9 +295,9 @@ public class TestEmploymentApplicationProcess{
 	}*/
 
 
-    @After
+/*    @After
     public void cleanup(){
         Browser.close();
-    }
+    }*/
 
 }
