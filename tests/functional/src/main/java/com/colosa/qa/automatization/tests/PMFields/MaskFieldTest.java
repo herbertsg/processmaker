@@ -1,22 +1,22 @@
 package com.colosa.qa.automatization.tests.PMFields;
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
-import java.io.FileNotFoundException;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.IOException;
 
-public class MaskFieldTest{
-@Test
+public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Test{
+
+    public MaskFieldTest(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
  	public void runProcess() throws Exception{
- 		Pages.Login().gotoUrl();
-   	Pages.Login().loginUser("admin","admin","workflow");
-    Pages.Main().goHome();
-    int casenumber=Pages.Home().startCase("TestMask (Task 1)");
+ 	pages.Login().gotoDefaultUrl();
+   	pages.Login().loginUser("admin","admin","workflow", "English");
+    pages.Main().goHome();
+    int casenumber=pages.Home().startCase("TestMask (Task 1)");
     openCaseFrame();
     FormFieldData[] fieldArray=new FormFieldData[7];
 
@@ -63,13 +63,13 @@ public class MaskFieldTest{
     fieldArray[6].fieldType=FieldType.BUTTON;
     fieldArray[6].fieldValue="";
 
-    FormFiller.formFillElements(fieldArray);
-    Pages.InputDocProcess().continuebtn();
+    FormFiller.formFillElements(browserInstance, fieldArray);
+    pages.InputDocProcess().continuebtn();
     
-    Pages.Home().gotoInbox();
-    Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
-    Pages.Home().openCase(casenumber);
-    Pages.DynaformExecution().intoDynaform();
+    pages.Home().gotoInbox();
+    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
+    pages.Home().openCase(casenumber);
+    pages.DynaformExecution().intoDynaform();
     openCaseFrame();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
@@ -79,16 +79,16 @@ public class MaskFieldTest{
     fieldArray1[0].fieldType=FieldType.BUTTON;
     fieldArray1[0].fieldValue="";
 
-		String fieldMASK1 = Pages.DynaformExecution().getFieldProperty("MASK1","value");
-		String fieldMASK2 = Pages.DynaformExecution().getFieldProperty("MASK2","value");
+		String fieldMASK1 = pages.DynaformExecution().getFieldProperty("MASK1","value");
+		String fieldMASK2 = pages.DynaformExecution().getFieldProperty("MASK2","value");
 		
-		String fieldMASK_BEFORE = Pages.DynaformExecution().getFieldProperty("MASK_BEFORE","value");
-		String fieldMASK_AFTER = Pages.DynaformExecution().getFieldProperty("MASK_AFTER","value");
+		String fieldMASK_BEFORE = pages.DynaformExecution().getFieldProperty("MASK_BEFORE","value");
+		String fieldMASK_AFTER = pages.DynaformExecution().getFieldProperty("MASK_AFTER","value");
 		
-		String fieldMASK_OTHER1 = Pages.DynaformExecution().getFieldProperty("MASK_OTHER1","value");
-		String fieldMASK_OTHER2 = Pages.DynaformExecution().getFieldProperty("MASK_OTHER2","value");
+		String fieldMASK_OTHER1 = pages.DynaformExecution().getFieldProperty("MASK_OTHER1","value");
+		String fieldMASK_OTHER2 = pages.DynaformExecution().getFieldProperty("MASK_OTHER2","value");
 				
-    FormFiller.formFillElements(fieldArray1);
+    FormFiller.formFillElements(browserInstance, fieldArray1);
     
     Assert.assertEquals("Mask does not exist", "123,456,789.02", fieldMASK1);
     Assert.assertEquals("Mask does not exist", "123,02", fieldMASK2);
@@ -99,9 +99,9 @@ public class MaskFieldTest{
     Assert.assertEquals("Mask other value does not exist", "123,456,789.02", fieldMASK_OTHER1);
     Assert.assertEquals("Mask other value(,) does not exist", "123,02", fieldMASK_OTHER2);
     
-    Pages.InputDocProcess().continuebtn();
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+    pages.InputDocProcess().continuebtn();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After
@@ -110,9 +110,9 @@ public class MaskFieldTest{
     }*/
  	
  	public void openCaseFrame() throws Exception{
-	  Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
+         browserInstance.switchToDefaultContent();
+         browserInstance.switchToFrame("casesFrame");
+         browserInstance.switchToFrame("casesSubFrame");
+         browserInstance.switchToFrame("openCaseFrame");
   }
 }

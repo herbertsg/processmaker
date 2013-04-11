@@ -1,19 +1,12 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
-import org.junit.AfterClass;
-import org.junit.After;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import java.text.DecimalFormat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFGetLabel{
+public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static String dropdwn = "Valor3";
 	protected static String list = "Valor4";
@@ -25,37 +18,41 @@ public class TestPMFGetLabel{
 
 	protected static String checkGroup = "";
 
+    public TestPMFGetLabel(String browserName) throws IOException {
+        super(browserName);
+    }
 
-	@Test
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		Pages.Home().startCase("PMF GetLabel (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		Pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		Pages.DynaformExecution().setFieldValue("Ingreso", "2004-08-17");
-		Pages.DynaformExecution().setFieldValue("Salario", "2,687,886.9976");
-		Pages.DynaformExecution().setFieldValue("dropdwn", dropdwn);
-		Pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		Pages.DynaformExecution().setFieldValue("List", list);
-		Pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
-		Pages.DynaformExecution().setCheckBoxGroup("check1", check);
-		Pages.DynaformExecution().setCheckBoxGroup("check1", check2);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().startCase("PMF GetLabel (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
+		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
+		pages.DynaformExecution().setFieldValue("Ingreso", "2004-08-17");
+		pages.DynaformExecution().setFieldValue("Salario", "2,687,886.9976");
+		pages.DynaformExecution().setFieldValue("dropdwn", dropdwn);
+		pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
+		pages.DynaformExecution().setFieldValue("List", list);
+		pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
+		pages.DynaformExecution().setCheckBoxGroup("check1", check);
+		pages.DynaformExecution().setCheckBoxGroup("check1", check2);
 
-		Pages.DynaformExecution().setCheckBoxGroup("check1", check3);		
-		Pages.DynaformExecution().setFieldValue("Enviar", "");
+		pages.DynaformExecution().setCheckBoxGroup("check1", check3);
+		pages.DynaformExecution().setFieldValue("Enviar", "");
 		checkGroup = check + " " + check2 + " " + check3 + " ";
 
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("lstValue"), list);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("rdValue"), radio);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
-		Pages.DynaformExecution().sleep(15000);
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("lstValue"), list);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("rdValue"), radio);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
+		pages.DynaformExecution().sleep(15000);
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

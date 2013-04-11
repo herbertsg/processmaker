@@ -1,61 +1,51 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
-import java.lang.Exception;
-
+import com.colosa.qa.automatization.common.ConfigurationSettings;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPermissions{
+public class TestPermissions extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestPermissions(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
 
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 
-        Pages.Main().goDesigner();
-        Pages.ProcessList().openProcess("Process Permissions");
-        Pages.Designer().deleteAllPermission();
+        pages.Main().goDesigner();
+        pages.ProcessList().openProcess("Process Permissions");
+        pages.Designer().deleteAllPermission();
 
-        Pages.Main().goHome();
+        pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Process Permissions (Task 1)");
+        int numberNewCase = pages.Home().startCase("Process Permissions (Task 1)");
 
         // get button submit
-	Pages.DynaformExecution().intoDynaform();
-        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("Submit");
+	pages.DynaformExecution().intoDynaform();
+        WebElement buttonSUBMIT = pages.DynaformExecution().getField("Submit");
 
         // click to button submit
         buttonSUBMIT.click();
 
         String pathFile = ConfigurationSettings.getInstance().getSetting("permissions.file.upload");
-	Pages.DynaformExecution().intoDynaform();            
-        Pages.DynaformExecution().setFieldValue("MNU_NEW", "click");
-        Pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", pathFile);
-        Pages.DynaformExecution().setFieldValue("SAVE", "click");
-        Pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "click");
-        Pages.DynaformExecution().setFieldValue("NEXT_STEP", "click");
+	pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("MNU_NEW", "click");
+        pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", pathFile);
+        pages.DynaformExecution().setFieldValue("SAVE", "click");
+        pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "click");
+        pages.DynaformExecution().setFieldValue("NEXT_STEP", "click");
 
         // get button continue
-        WebElement buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -64,70 +54,70 @@ public class TestPermissions{
         
         
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("cochalo","sample","");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("cochalo","sample","workflow", "English");
         
-        Pages.Main().goHome();
-        Pages.Home().gotoParticipated();
-        Pages.Home().openCase(numberNewCase);
+        pages.Main().goHome();
+        pages.Home().gotoParticipated();
+        pages.Home().openCase(numberNewCase);
 
-        Boolean existDynaforms = Pages.DynaformExecution().openInformationDynaforms();
+        Boolean existDynaforms = pages.DynaformExecution().openInformationDynaforms();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in dynaforms not work :'(", false, existDynaforms);
         // case was create with field CELULAR correctly
         
-        Boolean existUploaded = Pages.DynaformExecution().openInformationUploaded();
+        Boolean existUploaded = pages.DynaformExecution().openInformationUploaded();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in inputs not work :'(", false, existUploaded);
         // case was create with field CELULAR correctly
         
-        Boolean existGenerated = Pages.DynaformExecution().openInformationGenerated();
+        Boolean existGenerated = pages.DynaformExecution().openInformationGenerated();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in outputs not work :'(", false, existGenerated);
         // case was create with field CELULAR correctly
 
-        Boolean existCaseNote = Pages.DynaformExecution().openCasesNotes();
+        Boolean existCaseNote = pages.DynaformExecution().openCasesNotes();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in case notes not work :'(", false, existCaseNote);
         // case was create with field CELULAR correctly
         
-        Pages.Main().goDesigner();
-        Pages.ProcessList().openProcess("Process Permissions");
-        Pages.Designer().assignedPermission("cochalo cochalo (cochalo)", "All");
+        pages.Main().goDesigner();
+        pages.ProcessList().openProcess("Process Permissions");
+        pages.Designer().assignedPermission("cochalo cochalo (cochalo)", "All");
 
-        Pages.Main().goHome();
-        Pages.Home().gotoParticipated();
-        Pages.Home().openCase(numberNewCase);
+        pages.Main().goHome();
+        pages.Home().gotoParticipated();
+        pages.Home().openCase(numberNewCase);
 
-        existDynaforms = Pages.DynaformExecution().openInformationDynaforms();
+        existDynaforms = pages.DynaformExecution().openInformationDynaforms();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in dynaforms not work :'(", true, existDynaforms);
         // case was create with field CELULAR correctly
         
-        existUploaded = Pages.DynaformExecution().openInformationUploaded();
+        existUploaded = pages.DynaformExecution().openInformationUploaded();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in inputs not work :'(", true, existUploaded);
         // case was create with field CELULAR correctly
         
-        existGenerated = Pages.DynaformExecution().openInformationGenerated();
+        existGenerated = pages.DynaformExecution().openInformationGenerated();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in outputs not work :'(", true, existGenerated);
         // case was create with field CELULAR correctly
 
-        existCaseNote = Pages.DynaformExecution().openCasesNotes();
+        existCaseNote = pages.DynaformExecution().openCasesNotes();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in case notes not work :'(", true, existCaseNote);
         // case was create with field CELULAR correctly
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

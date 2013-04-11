@@ -21,26 +21,30 @@ import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestExternalStep{
+public class TestExternalStep extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestExternalStep(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 
         // go tab home
-        Pages.Main().goAdmin();
+        pages.Main().goAdmin();
 
-        Pages.Admin().activePlugin("external", true);
+        pages.Admin().activePlugin("external", true);
         
         // go tab home
-        Pages.Main().goHome();
+        pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Testeo external step (Tarea Inicial)");
+        int numberNewCase = pages.Home().startCase("Testeo external step (Tarea Inicial)");
         
-        Pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().intoDynaform();
 
         FormFieldData[] fieldArray = new FormFieldData[2];
         fieldArray[0]=new FormFieldData();
@@ -55,15 +59,15 @@ public class TestExternalStep{
         fieldArray[1].fieldFindType=FieldKeyType.ID;
         fieldArray[1].fieldType=FieldType.TEXTBOX;
         fieldArray[1].fieldValue="PEREYRA";
-        FormFiller.formFillElements(fieldArray);
+        FormFiller.formFillElements( browserInstance, fieldArray);
 
         // get button submit
-        WebElement linkSiguiente = Pages.DynaformExecution().getField("SIGUIENTE");
+        WebElement linkSiguiente = pages.DynaformExecution().getField("SIGUIENTE");
         
         // click to button submit
         linkSiguiente.click();
         
-        Pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().intoDynaform();
 
         fieldArray[0]=new FormFieldData();
         fieldArray[1]=new FormFieldData();
@@ -77,21 +81,21 @@ public class TestExternalStep{
         fieldArray[1].fieldFindType=FieldKeyType.ID;
         fieldArray[1].fieldType=FieldType.TEXTBOX;
         fieldArray[1].fieldValue="PEREYRA";
-        FormFiller.formFillElements(fieldArray);
+        FormFiller.formFillElements( browserInstance, fieldArray);
 
         // get button submit
-        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("SUBMIT");
+        WebElement buttonSUBMIT = pages.DynaformExecution().getField("SUBMIT");
 
         // click to button submit
         buttonSUBMIT.click();
 
-        Pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().intoDynaform();
 
         // get value of case generated in field NUM_CASE
-        String fieldNOMBRE = Pages.DynaformExecution().getFieldProperty("NONBRE","value");
+        String fieldNOMBRE = pages.DynaformExecution().getFieldProperty("NONBRE","value");
         
         // get value of case generated in field APELLIDO
-        String fieldAPELLIDO = Pages.DynaformExecution().getFieldProperty("APELLIDO","value");
+        String fieldAPELLIDO = pages.DynaformExecution().getFieldProperty("APELLIDO","value");
         
         // verify if the field NOMBRE is validate
         Assert.assertEquals("No case has created with field NOMBRE ", fieldNOMBRE, "BRAYAN");
@@ -101,10 +105,10 @@ public class TestExternalStep{
         Assert.assertEquals("No case has created with field APELLIDO ", fieldAPELLIDO, "PEREYRA");
         // case was create with field APELLIDO correctly
         
-        Pages.Main().goAdmin();
-        Pages.Admin().activePlugin("external", false);
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.Main().goAdmin();
+        pages.Admin().activePlugin("external", false);
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

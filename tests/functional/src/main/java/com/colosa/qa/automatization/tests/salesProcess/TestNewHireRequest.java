@@ -1,28 +1,31 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestNewHireRequest{
+public class TestNewHireRequest extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static String approve = "Yes";
 	protected static String approve2 = "Yes";
-	@Test
+
+    public TestNewHireRequest(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("hector", "sample", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("New Hire Request v_1 (Request for new hire)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("hector", "sample", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("New Hire Request v_1 (Request for new hire)");
 
 		FormFieldData[] arrayData = new FormFieldData[7];
 		arrayData[0] = new FormFieldData();
@@ -61,19 +64,19 @@ public class TestNewHireRequest{
 		arrayData[6].fieldFindType = FieldKeyType.ID;
 		arrayData[6].fieldType = FieldType.BUTTON;
 		arrayData[6].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 /*	}
 
 	@Test
 	public void reviewRequest() throws FileNotFoundException, IOException, Exception{*/
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("pablo", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("pablo", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[2];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[1] = new FormFieldData();
@@ -86,18 +89,18 @@ public class TestNewHireRequest{
 		arrayData2[1].fieldFindType = FieldKeyType.ID;
 		arrayData2[1].fieldType = FieldType.BUTTON;
 		arrayData2[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	/*}
 	@Test
 	public void budgetApproval() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 
 		FormFieldData[] arrayData3 = new FormFieldData[3];
 		arrayData3[0] = new FormFieldData();
@@ -116,20 +119,20 @@ public class TestNewHireRequest{
 		arrayData3[2].fieldFindType = FieldKeyType.ID;
 		arrayData3[2].fieldType = FieldType.BUTTON;
 		arrayData3[2].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData3));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 	/*}
 
 	@Test
 	public void positionPublication() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("pablo", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("pablo", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 
 		FormFieldData[] arrayData4 = new FormFieldData[5];
 		arrayData4[0] = new FormFieldData();
@@ -167,16 +170,16 @@ public class TestNewHireRequest{
 		arrayData5[0].fieldType = FieldType.BUTTON;
 		arrayData5[0].fieldValue = "";
 
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData4));
-		Assert.assertTrue(FormFiller.formFillElements(arrayData5));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());		
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData4));
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData5));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 	/*}
 
 	@Test
 	public void endPositionPublication() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Home().openCase(caseNum);
+		pages.Home().openCase(caseNum);
 
 		FormFieldData[] arrayData6 = new FormFieldData[3];
 		arrayData6[0] = new FormFieldData();
@@ -196,12 +199,12 @@ public class TestNewHireRequest{
 		arrayData6[2].fieldType = FieldType.BUTTON;
 		arrayData6[2].fieldValue = "";
 
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData6));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData6));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

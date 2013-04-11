@@ -1,37 +1,37 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFProcessList{
+public class TestPMFProcessList extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestPMFProcessList(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testPMFProcessList() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("PMFProcessList (Process list)");
-		Pages.DynaformExecution().intoDynaform();
-		int numProcessList = Integer.parseInt(Value.getValue(FieldKeyType.ID, "form[counter]"));
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("PMFProcessList (Process list)");
+		pages.DynaformExecution().intoDynaform();
+		int numProcessList = Integer.parseInt(Value.getValue(browserInstance, FieldKeyType.ID, "form[counter]"));
 		for(int i=1; i<numProcessList; i++){
-			Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[gridProcess][" + i + "][guid]"), Value.getValue(FieldKeyType.ID, "form[processQuery][" + i + "][PRO_UID]"));	
+			Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridProcess][" + i + "][guid]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[processQuery][" + i + "][PRO_UID]"));
         }
-		Pages.DynaformExecution().setFieldValue("send", "");
-	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.DynaformExecution().setFieldValue("send", "");
+	    pages.InputDocProcess().continuebtn();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 	}
 
 /*    @After

@@ -1,27 +1,30 @@
 package com.colosa.qa.automatization.tests.processExecutionForEvents;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestProcessIntermediateMessageMultipleTask{
+public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
-	@Test
+
+    public TestProcessIntermediateMessageMultipleTask(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Event Process - Intermediate Message_Multiple Task (Task 1)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("Event Process - Intermediate Message_Multiple Task (Task 1)");
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -44,69 +47,69 @@ public class TestProcessIntermediateMessageMultipleTask{
 		arrayData[3].fieldFindType = FieldKeyType.ID;
 		arrayData[3].fieldType = FieldType.BUTTON;
 		arrayData[3].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 	/*}
 
 	@Test
 	public void continueCase() throws FileNotFoundException, IOException, Exception{*/
 		String eventStatus= "";
-		Pages.CronExecute().execute("workflow");
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("hector", "sample", "");
-		Pages.Main().goHome();
-		Pages.Main().goAdmin();		
-		Pages.Admin().goToLogs();
-		eventStatus = Pages.Admin().eventStatus(caseNum);
+		pages.CronExecute().execute("workflow");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("hector", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Main().goAdmin();
+		pages.Admin().goToLogs();
+		eventStatus = pages.Admin().eventStatus(caseNum);
 		Assert.assertEquals("CLOSE", eventStatus);
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[guardar]";
 		arrayData2[0].fieldFindType = FieldKeyType.ID;
 		arrayData2[0].fieldType = FieldType.BUTTON;
 		arrayData2[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	/*}
 
 	@Test
 	public void continueCase2() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData3 = new FormFieldData[1];
 		arrayData3[0] = new FormFieldData();
 		arrayData3[0].fieldPath = "form[guardar]";
 		arrayData3[0].fieldFindType = FieldKeyType.ID;
 		arrayData3[0].fieldType = FieldType.BUTTON;
 		arrayData3[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData3));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	/*}
 
 
 	@Test
 	public void continueCase3() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("ronald", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("ronald", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 	}
 
 

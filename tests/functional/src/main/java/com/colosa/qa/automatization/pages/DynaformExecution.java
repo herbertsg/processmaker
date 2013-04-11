@@ -2,7 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 //import java.util.List;
 //import java.lang.Boolean;
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
 import com.colosa.qa.automatization.common.Constant;
 import com.colosa.qa.automatization.common.FieldType;
@@ -12,74 +12,80 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DynaformExecution extends Page {
 
-    public DynaformExecution() throws FileNotFoundException, IOException {
-
+    public DynaformExecution(BrowserInstance browser) {
+        super(browser);
     }
 
-    // Pages.Main().goHome();
+
+    // pages.Main().goHome();
 
     // into level of debug
     public void intoFrainMain() throws Exception {
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("frameMain");
+        browser.switchToDefaultContent();
+        browser.switchToFrame("frameMain");
     }
 
     public void intoDebug() throws Exception {
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("casesFrame");
+        browser.switchToDefaultContent();
+        browser.switchToFrame("casesFrame");
     }
 
     // into level of pmTrack
     public void intoPmtrack() throws Exception {
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("casesFrame");
-        Browser.driver().switchTo().frame("casesSubFrame");
+        browser.switchToDefaultContent();
+        browser.switchToFrame("casesFrame");
+        browser.switchToFrame("casesSubFrame");
     }
 
     // into level of dynaform    
     public void intoDynaform() throws Exception {
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("casesFrame");
-        Browser.driver().switchTo().frame("casesSubFrame");
-        Browser.driver().switchTo().frame("openCaseFrame");
+        browser.switchToDefaultContent();
+        browser.switchToFrame("casesFrame");
+        browser.switchToFrame("casesSubFrame");
+        browser.switchToFrame("openCaseFrame");
     }
 
     // out level of dynaform    
     public void outDynaform() throws Exception {
-        Browser.driver().switchTo().defaultContent();
+        browser.switchToDefaultContent();
     }
 
     public Boolean openCasesNotes() throws Exception {
         intoPmtrack();
         Thread.sleep(2000);
-        WebElement tableMenus = Browser.driver().findElement(By.id("caseNotes"));
+        WebElement tableMenus = browser.findElementById("caseNotes");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
         buttonInformation.click();
 
-        List<WebElement> windowCaseNotes = Browser.driver().findElements(By.id("caseNotesWindowPanel"));
+
+        /*List<WebElement> windowCaseNotes = browser.findElements(By.id("caseNotesWindowPanel"));
         
         for(WebElement myWindow:windowCaseNotes)
         {
             return true;
+        }*/
+
+        WebElement windowCaseNote = browser.findElementById("caseNotesWindowPanel");
+        if(windowCaseNote != null){
+            return true;
         }
+
         return false;
     }
 
     public Boolean openInformationDynaforms() throws Exception {
         intoPmtrack();
         Thread.sleep(2000);
-        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
         buttonInformation.click();
 
-        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        List<WebElement> menusInfomations = browser.findElementsByClassName("x-menu-item-text");
         
         for(WebElement menuInfo:menusInfomations)
         {
@@ -90,9 +96,9 @@ public class DynaformExecution extends Page {
             }
         }
 
-        Browser.driver().switchTo().frame("dynaformHistoryFrame");
+        browser.switchToFrame("dynaformHistoryFrame");
 
-        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        WebElement divDynaforms = browser.findElementByClassName("x-grid3-body");
         String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
         innerDiv = innerDiv.replace("&nbsp;", "");
         if (innerDiv.length() == 0) {
@@ -105,11 +111,11 @@ public class DynaformExecution extends Page {
     public Boolean openInformationUploaded() throws Exception {
         intoPmtrack();
         Thread.sleep(2000);
-        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
         buttonInformation.click();
 
-        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        List<WebElement> menusInfomations = browser.findElementsByClassName("x-menu-item-text");
         
         for(WebElement menuInfo:menusInfomations)
         {
@@ -120,9 +126,9 @@ public class DynaformExecution extends Page {
             }
         }
 
-        Browser.driver().switchTo().frame("uploadedDocumentsFrame");
+        browser.switchToFrame("uploadedDocumentsFrame");
 
-        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        WebElement divDynaforms = browser.findElementByClassName("x-grid3-body");
         String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
         innerDiv = innerDiv.replace("&nbsp;", "");
         if (innerDiv.length() == 0) {
@@ -135,11 +141,11 @@ public class DynaformExecution extends Page {
     public Boolean openInformationGenerated() throws Exception {
         intoPmtrack();
         Thread.sleep(2000);
-        WebElement tableMenus = Browser.driver().findElement(By.id("informationMenu"));
+        WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
         buttonInformation.click();
 
-        List<WebElement> menusInfomations = Browser.driver().findElements(By.className("x-menu-item-text"));
+        List<WebElement> menusInfomations = browser.findElementsByClassName("x-menu-item-text");
         
         for(WebElement menuInfo:menusInfomations)
         {
@@ -150,9 +156,9 @@ public class DynaformExecution extends Page {
             }
         }
 
-        Browser.driver().switchTo().frame("generatedDocumentsFrame");
+        browser.switchToFrame("generatedDocumentsFrame");
 
-        WebElement divDynaforms = Browser.driver().findElement(By.className("x-grid3-body"));
+        WebElement divDynaforms = browser.findElementByClassName("x-grid3-body");
         String innerDiv = divDynaforms.getAttribute("innerHTML").trim();
         innerDiv = innerDiv.replace("&nbsp;", "");
         if (innerDiv.length() == 0) {
@@ -198,7 +204,7 @@ public class DynaformExecution extends Page {
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
                     System.out.println(" HTML element id: " + elementId);
-                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id"+ Constant.SEARCH_CRITERIA_SEPARATOR +"form[" + elementId + "_label]");
+                    Boolean suggestElementExists = browser.elementExistsSearchCriteria("id"+ Constant.SEARCH_CRITERIA_SEPARATOR +"form[" + elementId + "_label]");
 
                     if(suggestElementExists){
                         System.out.println(" Element Type: SUGGEST");
@@ -283,7 +289,7 @@ public class DynaformExecution extends Page {
 
         System.out.println(" Element to search for: " + str);
 
-        return Browser.getElement(str);
+        return browser.findElement(str);
     }
 
     public WebElement getFieldWithoutForm(String fieldName) throws Exception{
@@ -296,12 +302,12 @@ public class DynaformExecution extends Page {
 
         System.out.println(" Element to search for: " + str);
 
-        return Browser.getElement(str);
+        return browser.findElement(str);
     }
 
     public Boolean activeCaseTitle() throws Exception {
         intoDynaform();
-        List<WebElement> trCaseTitle = Browser.driver().findElements(By.className("userGroupTitle"));
+        List<WebElement> trCaseTitle = browser.findElementsByClassName("userGroupTitle");
 
         for(WebElement trTitle:trCaseTitle)
         {
@@ -377,7 +383,7 @@ public class DynaformExecution extends Page {
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         //search element
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         this.setFieldValue(element, value, fieldType);
 
@@ -419,10 +425,10 @@ public class DynaformExecution extends Page {
                 element.click();
                 break;
             case DATEPICKER:     
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case READONLY:  
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case SUGGEST:   //using label textbox
                 WebElement elem2 = null;
@@ -442,8 +448,8 @@ public class DynaformExecution extends Page {
 
                 labelElement.sendKeys(value);
                 
-                Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
-                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
+                elem2 = browser.findElementByXPath("//div[1]/ul/li");
                 listEl = elem2.findElements(By.xpath("a"));
                 for(WebElement we2:listEl)
                 {
@@ -465,13 +471,13 @@ public class DynaformExecution extends Page {
                     c = cadIns.charAt(0);
                     element.sendKeys(Character.toString(c));
                     try {
-                        Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
+                        browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
                     } catch(Exception ex){
                         //element not found
                         cadIns = cadIns.substring(1, cadIns.length());
                         continue;
                     }
-                    elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                    elem2 = browser.findElementByXPath("//div[1]/ul/li");
                     listEl = elem2.findElements(By.xpath("a"));
                     for(WebElement we2:listEl)
                     {
@@ -528,7 +534,7 @@ public class DynaformExecution extends Page {
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         //search element
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         this.setFieldValueWithoutForm(element, value, fieldType);
 
@@ -570,10 +576,10 @@ public class DynaformExecution extends Page {
                 element.click();
                 break;
             case DATEPICKER:     
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case READONLY:  
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case SUGGEST:   //using label textbox
                 WebElement elem2 = null;
@@ -593,8 +599,8 @@ public class DynaformExecution extends Page {
 
                 labelElement.sendKeys(value);
                 
-                Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
-                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
+                elem2 = browser.findElementByXPath("//div[1]/ul/li");
                 listEl = elem2.findElements(By.xpath("a"));
                 for(WebElement we2:listEl)
                 {
@@ -616,13 +622,13 @@ public class DynaformExecution extends Page {
                     c = cadIns.charAt(0);
                     element.sendKeys(Character.toString(c));
                     try {
-                        Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
+                        browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
                     } catch(Exception ex){
                         //element not found
                         cadIns = cadIns.substring(1, cadIns.length());
                         continue;
                     }
-                    elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                    elem2 = browser.findElementByXPath("//div[1]/ul/li"));
                     listEl = elem2.findElements(By.xpath("a"));
                     for(WebElement we2:listEl)
                     {
@@ -663,7 +669,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         fieldType = this.detectFieldType(element);
 
@@ -711,7 +717,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
         str = str.replace("replaceNameFieldDynaform", fieldName);
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         fieldType = this.detectFieldType(element);
 
@@ -801,7 +807,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
         
         Select droplist = new Select(element);
         //verify if the dropdown is filled
@@ -818,7 +824,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
         
         fieldType = this.detectFieldType(element);
 
@@ -866,7 +872,7 @@ public class DynaformExecution extends Page {
 
     public void nextStepLinkWithMessage() throws Exception{
         setFieldValue("DYN_FORWARD", "", FieldType.BUTTON);
-        if(Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[1]")).isDisplayed())
+        if(browser.findElementByXPath("//div[1]/div[1]/div[6]/div[1]/input[1]").isDisplayed())
         {
             this.btnAceptar();
         }
@@ -881,13 +887,13 @@ public class DynaformExecution extends Page {
     }
 
     public void btnAceptar() throws Exception{
-        WebElement elem = Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[1]"));
+        WebElement elem = browser.findElementByXPath("//div[1]/div[1]/div[6]/div[1]/input[1]");
         elem.click();
 
     }
 
     public void btnCancelar() throws Exception{
-        WebElement elem = Browser.driver().findElement(By.xpath("//div[1]/div[1]/div[6]/div[1]/input[2]"));
+        WebElement elem = browser.findElementByXPath("//div[1]/div[1]/div[6]/div[1]/input[2]");
         elem.click();
     }
 
@@ -944,7 +950,7 @@ public class DynaformExecution extends Page {
 
         List<WebElement> element;
         String radioSelected = "";
-        element = Browser.driver().findElements(By.name(radioGroupName));
+        element = browser.findElementsByName(radioGroupName);
         System.out.println("Numero de radioButton: "+element.size());        
         for(WebElement we2:element)
             if(we2.isSelected())
@@ -964,7 +970,7 @@ public class DynaformExecution extends Page {
 
         List<WebElement> element;
         List<String> checkSelected = new ArrayList<String>();
-        element = Browser.driver().findElements(By.name(checkGroupName));
+        element = browser.findElementsByName(checkGroupName);
         System.out.println("Numero de checkbox: "+element.size());        
         for(WebElement we2:element)
             if(we2.isSelected())
@@ -983,7 +989,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridDeleteLink");
         str = str.replace("REPLACE_GRIDNAME", gridName);
 
-        WebElement elem = Browser.getElement(str);
+        WebElement elem = browser.findElement(str);
         wel = elem.findElements(By.xpath("tbody/tr"));
         WebElement we = null;
         for(WebElement we2:wel)
@@ -1004,7 +1010,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridDeleteLink");
         str = str.replace("REPLACE_GRIDNAME", gridName);
 
-        WebElement elem = Browser.getElement(str);
+        WebElement elem = browser.findElement(str);
         we = elem.findElement(By.xpath("tbody/tr[" + numRow + "]"));
         we =we.findElement(By.linkText("Delete"));
         we.click();
@@ -1021,7 +1027,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridNewRowLink");
         str = str.replace("REPLACE_GRIDNAME", gridName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         element.click();
 
@@ -1038,7 +1044,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
         
         fieldType = this.detectFieldType(element);
 
@@ -1072,7 +1078,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", nameField);
-        return Browser.getElement(str).getAttribute(property);
+        return browser.findElement(str).getAttribute(property);
     }
 
     // get object of dynaform
@@ -1081,7 +1087,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDebug");
         str = str.replace("replaceXpath", xpathField);
-        return Browser.getElement(str);
+        return browser.findElement(str);
     }
 
      public void sleep(long timeMilliSeconds) throws Exception {
@@ -1093,7 +1099,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
         element.sendKeys(Keys.TAB);
      }
 
@@ -1102,7 +1108,7 @@ public class DynaformExecution extends Page {
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
         element.click();
     }
 
@@ -1116,7 +1122,7 @@ public class DynaformExecution extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         this.clear(element);
     }

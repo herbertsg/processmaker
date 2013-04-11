@@ -1,46 +1,38 @@
 package com.colosa.qa.automatization.tests.TestPMTable;
 
-import java.lang.Exception;
-import java.util.List;
-
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.NoSuchElementException;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import java.io.IOException;
 
-public class TestPMTable{
+public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestPMTable(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 				
-				Pages.Main().goAdmin();
-        Pages.Admin().newPMTable("TESTTABLE","description Table");
-        Pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
-        Pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
-        Pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
-        Pages.Admin().createPMTable();
+				pages.Main().goAdmin();
+        pages.Admin().newPMTable("TESTTABLE","description Table");
+        pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
+        pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
+        pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
+        pages.Admin().createPMTable();
         
-        Pages.Main().goHome();
-        int casenumber = Pages.Home().startCase("TestPMTables (Task 1)");
-        Pages.DynaformExecution().intoDynaform();
+        pages.Main().goHome();
+        int casenumber = pages.Home().startCase("TestPMTables (Task 1)");
+        pages.DynaformExecution().intoDynaform();
         
-        String fieldRESULT = Pages.DynaformExecution().getFieldProperty("RESULT_TEST","value");
+        String fieldRESULT = pages.DynaformExecution().getFieldProperty("RESULT_TEST","value");
         Assert.assertEquals("PMTable does not exist in Database.", "0", fieldRESULT);
         
         FormFieldData[] fieldArray=new FormFieldData[1];
@@ -51,38 +43,38 @@ public class TestPMTable{
 		    fieldArray[0].fieldType=FieldType.BUTTON;
 		    fieldArray[0].fieldValue="";
     
-        FormFiller.formFillElements(fieldArray);
-        Pages.InputDocProcess().continuebtn();
+        FormFiller.formFillElements(browserInstance, fieldArray);
+        pages.InputDocProcess().continuebtn();
         
-        Pages.Main().goAdmin();
-        Pages.Admin().newPMTable("TEST TABLE1","description Table");
-        Pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
-        Pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
-        Pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
-        Pages.Admin().createPMTable();
+        pages.Main().goAdmin();
+        pages.Admin().newPMTable("TEST TABLE1","description Table");
+        pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
+        pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
+        pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
+        pages.Admin().createPMTable();
         
-        Assert.assertTrue("Exist any space in Name Table", Pages.Admin().verifyPMTable("TESTTABLE"));
-        
-        
-        Pages.Admin().newPMTable("TESTTABLE3","description Table3");
-        Pages.Admin().addField("ID","ID","VARCHAR","32",false,false,false);
-        Pages.Admin().addField("NAME","NAME","","50",false,false,false);
-        Pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
-        Pages.Admin().createPMTable();
+        Assert.assertTrue("Exist any space in Name Table", pages.Admin().verifyPMTable("TESTTABLE"));
         
         
-        Assert.assertEquals("Type Field should be defined in Table", false,Pages.Admin().verifyPMTable("TESTTABLE3"));
+        pages.Admin().newPMTable("TESTTABLE3","description Table3");
+        pages.Admin().addField("ID","ID","VARCHAR","32",false,false,false);
+        pages.Admin().addField("NAME","NAME","","50",false,false,false);
+        pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
+        pages.Admin().createPMTable();
         
-        Pages.Admin().newPMTable("TESTTABLE2","description Table2");
-        Pages.Admin().addField("ID","ID","VARCHAR","32",false,false,false);
-        Pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
-        Pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
-        Pages.Admin().createPMTable();
         
-        Assert.assertEquals("Does not exist Primary Key field in Table", false,Pages.Admin().verifyPMTable("TESTTABLE2"));
+        Assert.assertEquals("Type Field should be defined in Table", false,pages.Admin().verifyPMTable("TESTTABLE3"));
         
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.Admin().newPMTable("TESTTABLE2","description Table2");
+        pages.Admin().addField("ID","ID","VARCHAR","32",false,false,false);
+        pages.Admin().addField("NAME","NAME","VARCHAR","50",false,false,false);
+        pages.Admin().addField("DESCRIPCION","DESCRIPCION","VARCHAR","100",false,false,false);
+        pages.Admin().createPMTable();
+        
+        Assert.assertEquals("Does not exist Primary Key field in Table", false,pages.Admin().verifyPMTable("TESTTABLE2"));
+        
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

@@ -1,57 +1,46 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
-import java.lang.Exception;
-
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestWebEntry{
+public class TestWebEntry extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestWebEntry(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.WebEntry().goWebEntry("workflow" , "51139890850c52522d53dd5003076507");
+        pages.WebEntry().goWebEntry("workflow" , "51139890850c52522d53dd5003076507");
 
         // set value the field NAME
-        Pages.WebEntry().setFieldValue("NAME", "Brayan");
+        pages.WebEntry().setFieldValue("NAME", "Brayan");
 
         // set value the field LASTNAME
-        Pages.WebEntry().setFieldValue("LAST_NAME", "Pereyra");
+        pages.WebEntry().setFieldValue("LAST_NAME", "Pereyra");
 
         // set value the field LASTNAME
-        Pages.WebEntry().setFieldValue("Submit", "click");
+        pages.WebEntry().setFieldValue("Submit", "click");
 
-        Integer numberNewCase = Pages.WebEntry().getNumberCase();
+        Integer numberNewCase = pages.WebEntry().getNumberCase();
 
 
 
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","cochalo");
-        Pages.Main().goHome();
-        Pages.Home().gotoInbox();
-        Pages.Home().openCase(numberNewCase);
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English"); //"cochalo");
+        pages.Main().goHome();
+        pages.Home().gotoInbox();
+        pages.Home().openCase(numberNewCase);
 
         // get the value of field NAME after the form
-        String fielNAME = Pages.DynaformExecution().getFieldValue("NAME");
+        String fielNAME = pages.DynaformExecution().getFieldValue("NAME");
 
         // get the value of field LAST_NAME after the form
-        String fielLAST_NAME = Pages.DynaformExecution().getFieldValue("LAST_NAME");
+        String fielLAST_NAME = pages.DynaformExecution().getFieldValue("LAST_NAME");
 
         // verify if the field NAME is validate
         Assert.assertEquals("The variables the webentry not work :'(", fielNAME, "Brayan");
@@ -62,15 +51,15 @@ public class TestWebEntry{
         // trigger after the form working
 
         // click to button submit
-        Pages.DynaformExecution().setFieldValue("Submit", "click");
+        pages.DynaformExecution().setFieldValue("Submit", "click");
 
         // get button continue
-        WebElement buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

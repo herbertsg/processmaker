@@ -13,31 +13,35 @@ import java.text.DecimalFormat;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFCreateUsers{
+public class TestPMFCreateUsers extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
 
-	@Test
+    public TestPMFCreateUsers(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("Test PMFCreateUsers (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("userName", "felipe");		
-		Pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		Pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		Pages.DynaformExecution().setFieldValue("Email", "felipe@empresa.com");
-		Pages.DynaformExecution().setFieldValue("Password", "azsxdcfv");
-		Pages.DynaformExecution().setFieldValue("Enviar", "");	
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		numCase = pages.Home().startCase("Test PMFCreateUsers (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("userName", "felipe");
+		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
+		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
+		pages.DynaformExecution().setFieldValue("Email", "felipe@empresa.com");
+		pages.DynaformExecution().setFieldValue("Password", "azsxdcfv");
+		pages.DynaformExecution().setFieldValue("Enviar", "");
 			
-		Pages.Main().goAdmin();
-		Pages.Admin().goToUsers();
-		Assert.assertTrue(Pages.Admin().userExists("felipe"));	
+		pages.Main().goAdmin();
+		pages.Admin().goToUsers();
+		Assert.assertTrue(pages.Admin().userExists("felipe"));
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

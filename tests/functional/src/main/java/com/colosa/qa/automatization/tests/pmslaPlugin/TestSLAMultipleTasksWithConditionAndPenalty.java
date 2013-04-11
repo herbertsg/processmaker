@@ -1,68 +1,66 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAMultipleTasksWithConditionAndPenalty{
+public class TestSLAMultipleTasksWithConditionAndPenalty extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
-	@Test
+
+    public TestSLAMultipleTasksWithConditionAndPenalty(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("eleccion", "first");
-		Pages.DynaformExecution().setFieldValue("save", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		numCase = pages.Home().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("eleccion", "first");
+		pages.DynaformExecution().setFieldValue("save", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("save", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("save", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.OutputDocProcess().downloadDocFile();
-		//Pages.OutputDocProcess().downloadPdfFile();
-		Pages.DynaformExecution().setFieldValue("NEXT_STEP", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.OutputDocProcess().downloadDocFile();
+		//pages.OutputDocProcess().downloadPdfFile();
+		pages.DynaformExecution().setFieldValue("NEXT_STEP", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("finalizacion", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("finalizacion", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
-		Pages.DynaformExecution().sleep(5000);
+		pages.CronExecute().execute("workflow");
+		pages.DynaformExecution().sleep(5000);
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA Process - Multiple Task with Condiion and Pen", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA Process - Multiple Task with Condiion and Pen");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA Process - Multiple Task with Condiion and Pen", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA Process - Multiple Task with Condiion and Pen");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Documento Generado");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("Documento Generado");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 	
 	}

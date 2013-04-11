@@ -1,62 +1,51 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
-import java.lang.Exception;
-
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestNotifications{
+public class TestNotifications extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestNotifications(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 
-        Pages.Main().goHome();
+        pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Process Notification Email (Task 1)");
+        int numberNewCase = pages.Home().startCase("Process Notification Email (Task 1)");
         
         // get button submit
-	Pages.DynaformExecution().intoDynaform();
-        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("submit");
+	pages.DynaformExecution().intoDynaform();
+        WebElement buttonSUBMIT = pages.DynaformExecution().getField("submit");
 
         // click to button submit
         buttonSUBMIT.click();
 
         // get button continue
-        WebElement buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
 
-        Pages.Home().gotoInbox();
-        Pages.Home().openCase(numberNewCase);
-	Pages.DynaformExecution().intoDynaform();
-        String valorEnviado = Pages.DynaformExecution().getFieldValue("ENVIADO");
+        pages.Home().gotoInbox();
+        pages.Home().openCase(numberNewCase);
+	pages.DynaformExecution().intoDynaform();
+        String valorEnviado = pages.DynaformExecution().getFieldValue("ENVIADO");
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("No sent the notification :'(", valorEnviado, "sent");
         // case was create with field CELULAR correctly
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

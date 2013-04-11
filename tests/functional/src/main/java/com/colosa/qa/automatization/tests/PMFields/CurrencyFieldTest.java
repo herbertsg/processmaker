@@ -1,27 +1,27 @@
 package com.colosa.qa.automatization.tests.PMFields;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class CurrencyFieldTest{
+public class CurrencyFieldTest extends com.colosa.qa.automatization.tests.common.Test{
 
-@Test
+    public CurrencyFieldTest(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
  	public void runProcess() throws Exception{
- 		Pages.Login().gotoUrl();
-   	Pages.Login().loginUser("admin","admin","workflow");
-    Pages.Main().goHome();
-    int casenumber=Pages.Home().startCase("TestCurrency (Task 1)");
-    Pages.DynaformExecution().intoDynaform();
+ 		pages.Login().gotoDefaultUrl();
+   	pages.Login().loginUser("admin","admin","workflow", "English");
+    pages.Main().goHome();
+    int casenumber=pages.Home().startCase("TestCurrency (Task 1)");
+    pages.DynaformExecution().intoDynaform();
     
     FormFieldData[] fieldArray=new FormFieldData[8];
 
@@ -74,13 +74,13 @@ public class CurrencyFieldTest{
     fieldArray[7].fieldType=FieldType.BUTTON;
     fieldArray[7].fieldValue="";
 
-    FormFiller.formFillElements(fieldArray);
-    Pages.InputDocProcess().continuebtn();
+    FormFiller.formFillElements(browserInstance, fieldArray);
+    pages.InputDocProcess().continuebtn();
     
-    Pages.Home().gotoInbox();
-    Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
-    Pages.Home().openCase(casenumber);
-    Pages.DynaformExecution().intoDynaform();
+    pages.Home().gotoInbox();
+    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
+    pages.Home().openCase(casenumber);
+    pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
 		
@@ -89,17 +89,17 @@ public class CurrencyFieldTest{
     fieldArray1[0].fieldType=FieldType.BUTTON;
     fieldArray1[0].fieldValue="";
 		
-		String fieldCURRENCY_BEFORE = Pages.DynaformExecution().getFieldProperty("CURRENCY_BEFORE","value");
-		String fieldCURRENCY_AFTER = Pages.DynaformExecution().getFieldProperty("CURRENCY_AFTER","value");
-		String fieldCURRENCY_BOTH = Pages.DynaformExecution().getFieldProperty("CURRENCY_BOTH","value");
+		String fieldCURRENCY_BEFORE = pages.DynaformExecution().getFieldProperty("CURRENCY_BEFORE","value");
+		String fieldCURRENCY_AFTER = pages.DynaformExecution().getFieldProperty("CURRENCY_AFTER","value");
+		String fieldCURRENCY_BOTH = pages.DynaformExecution().getFieldProperty("CURRENCY_BOTH","value");
 		
-		String fieldOTHER_BEFORE = Pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERB","value");
-		String fieldOTHER_AFTER = Pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERA","value");
-		String fieldOTHER_BOTH = Pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER","value"); 
+		String fieldOTHER_BEFORE = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERB","value");
+		String fieldOTHER_AFTER = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERA","value");
+		String fieldOTHER_BOTH = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER","value");
 		
-		String fieldCURRENCY_NEGATIVE = Pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE","value"); 
+		String fieldCURRENCY_NEGATIVE = pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE","value");
 		
-	  FormFiller.formFillElements(fieldArray1);
+	  FormFiller.formFillElements(browserInstance, fieldArray1);
     Assert.assertEquals("Mask Before does not exist", "$us 123,456,789.02", fieldCURRENCY_BEFORE);
     Assert.assertEquals("Mask After does not exist", "123,456,789.02 $us", fieldCURRENCY_AFTER);
     Assert.assertEquals("Mask Both does not exist", "$us 123,456,789.02 $us", fieldCURRENCY_BOTH);
@@ -110,9 +110,9 @@ public class CurrencyFieldTest{
     
     Assert.assertEquals("Negative Mask does not exist", "- 123,456,789.02 $", fieldCURRENCY_NEGATIVE);
     
-    Pages.InputDocProcess().continuebtn();
-    Pages.InputDocProcess().switchToDefault();
-    Pages.Main().logout();
+    pages.InputDocProcess().continuebtn();
+    pages.InputDocProcess().switchToDefault();
+    pages.Main().logout();
     }
 
 /*    @After

@@ -1,71 +1,69 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAEntireProcessWithPenalty{
+public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
-	@Test
+
+    public TestSLAEntireProcessWithPenalty(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("SLA Process - Entire Process with penalty (Proveedores)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("nombre", "Norah Mollo Morales");
-		Pages.DynaformExecution().setFieldValue("registrar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		numCase = pages.Home().startCase("SLA Process - Entire Process with penalty (Proveedores)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("nombre", "Norah Mollo Morales");
+		pages.DynaformExecution().setFieldValue("registrar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		Pages.CronExecute().execute("workflow");
-		Pages.DynaformExecution().sleep(5000);
+		pages.CronExecute().execute("workflow");
+		pages.DynaformExecution().sleep(5000);
 		
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 		
-		Pages.PmslaReport();
-		Pages.PmslaReport().generateReport("SLA Process - Entire Process with penalty","All","All","All");
-		Pages.PmslaReport().displayCases("SLA Process - Entire Process with penalty");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport();
+		pages.PmslaReport().generateReport("SLA Process - Entire Process with penalty","All","All","All");
+		pages.PmslaReport().displayCases("SLA Process - Entire Process with penalty");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("seleccion");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("seleccion");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 		
 	}
 /*    @After

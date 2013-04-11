@@ -1,31 +1,33 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
-import org.junit.After;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.AfterClass;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAProcessSelectionRoutingRule{
+public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
-	@Test
+
+    public TestSLAProcessSelectionRoutingRule(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("SLA Process Selection Routing Rule (Monto)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("monto", "123165465");
-		Pages.DynaformExecution().setFieldValue("convertir", "");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		numCase = pages.Home().startCase("SLA Process Selection Routing Rule (Monto)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("monto", "123165465");
+		pages.DynaformExecution().setFieldValue("convertir", "");
 		
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();
@@ -33,36 +35,36 @@ public class TestSLAProcessSelectionRoutingRule{
 		fieldArray2[0].fieldFindType = FieldKeyType.XPATH;
 		fieldArray2[0].fieldType = FieldType.BUTTON;
 		fieldArray2[0].fieldValue = "";
-		FormFiller.formFillElements(fieldArray2);
+		FormFiller.formFillElements(browserInstance, fieldArray2);
 
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("convertir", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("convertir", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
+		pages.CronExecute().execute("workflow");
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA Task with Penality Selection Rule", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA Task with Penality Selection Rule");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA Task with Penality Selection Rule", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA Task with Penality Selection Rule");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Tipo de cambio");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("Tipo de cambio");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 	}
  /*   @After

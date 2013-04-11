@@ -1,65 +1,53 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
-import java.lang.Exception;
-
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestConditionalShowHide{
+public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestConditionalShowHide(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 
-        Pages.Main().goHome();
+        pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Process Conditional Show Hide (Task 1)");
-	Pages.DynaformExecution().intoDynaform();
-        Pages.DynaformExecution().setFieldValue("opcion", "opcion A");
-        Pages.DynaformExecution().setFieldValue("profesion", "Yes");
-        Pages.DynaformExecution().setFieldValue("fecha", "201399");
-        Pages.DynaformExecution().setFieldValue("porcentaje", "35");
+        int numberNewCase = pages.Home().startCase("Process Conditional Show Hide (Task 1)");
+	pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("opcion", "opcion A");
+        pages.DynaformExecution().setFieldValue("profesion", "Yes");
+        pages.DynaformExecution().setFieldValue("fecha", "201399");
+        pages.DynaformExecution().setFieldValue("porcentaje", "35");
 
         // get button submit
-        WebElement buttonSUBMIT = Pages.DynaformExecution().getField("send");
+        WebElement buttonSUBMIT = pages.DynaformExecution().getField("send");
 
         // click to button submit
         buttonSUBMIT.click();
 
         // get button continue
-        WebElement buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
 
-        Pages.Home().gotoInbox();
-        Pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox();
+        pages.Home().openCase(numberNewCase);
 
         // click to button submit
-	Pages.DynaformExecution().intoDynaform();
-        Pages.DynaformExecution().setFieldValue("send", "click");
+	pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -67,44 +55,44 @@ public class TestConditionalShowHide{
         ///////////////////////////
         
 
-        Pages.Main().goHome();
+        pages.Main().goHome();
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        numberNewCase = Pages.Home().startCase("Process Conditional Show Hide (Task 1)");
-	Pages.DynaformExecution().intoDynaform();
-        Pages.DynaformExecution().setFieldValue("opcion", "opcion B");
-        Pages.DynaformExecution().setFieldValue("titulacion][sistemas", "click");
+        numberNewCase = pages.Home().startCase("Process Conditional Show Hide (Task 1)");
+	pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("opcion", "opcion B");
+        pages.DynaformExecution().setFieldValue("titulacion][sistemas", "click");
         
-        Pages.DynaformExecution().setFieldValue("beca][conv", "click");
-        Pages.DynaformExecution().setFieldValue("beca][paa", "click");
+        pages.DynaformExecution().setFieldValue("beca][conv", "click");
+        pages.DynaformExecution().setFieldValue("beca][paa", "click");
 
-        Pages.DynaformExecution().setFieldValue("salario", "1000");
+        pages.DynaformExecution().setFieldValue("salario", "1000");
 
         // click to button submit
-        Pages.DynaformExecution().setFieldValue("send", "click");
+        pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
 
-        Pages.Home().gotoInbox();
-        Pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox();
+        pages.Home().openCase(numberNewCase);
 
         // click to button submit
-	Pages.DynaformExecution().intoDynaform();
-        Pages.DynaformExecution().setFieldValue("send", "click");
+	pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = Pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
 
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
 /*    @After

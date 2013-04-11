@@ -1,59 +1,55 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 
-public class TestSLAProcessMultitaskWithPenalty{
+public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestSLAProcessMultitaskWithPenalty(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeSLAProcessMultitaskWithPenalty() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("SLA Process - Multitask with penalty (Solicitud)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("nombre", "John");
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("SLA Process - Multitask with penalty (Solicitud)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("nombre", "John");
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(caseNum);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("nombres", "John Due");
-		Pages.DynaformExecution().setFieldValue("ci", "3333333");				
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(caseNum);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("nombres", "John Due");
+		pages.DynaformExecution().setFieldValue("ci", "3333333");
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
-		Pages.DynaformExecution().sleep(5000);
+		pages.CronExecute().execute("workflow");
+		pages.DynaformExecution().sleep(5000);
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA - multitask with penality", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA - multitask with penality");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(caseNum);
+		pages.PmslaReport().generateReport("SLA - multitask with penality", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA - multitask with penality");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(caseNum);
 		Assert.assertEquals(caseInfo[5], "In progress");
-		Pages.PmslaReport().displayTasks(caseNum);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Solicitud");
+		pages.PmslaReport().displayTasks(caseNum);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("Solicitud");
 		Assert.assertEquals(taskInfo[5], "OPEN");
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 }
 

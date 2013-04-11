@@ -1,28 +1,30 @@
 package com.colosa.qa.automatization.tests.processExecutionForEvents;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestProcessIntermediateTimerSingleTask{
+public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestProcessIntermediateTimerSingleTask(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void initProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Brianna", "sample", "wsqa");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Event with trigger - Intermediate Timer_Single Task (Task 1)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("Event with trigger - Intermediate Timer_Single Task (Task 1)");
 		FormFieldData[] arrayData = new FormFieldData[3];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -40,41 +42,41 @@ public class TestProcessIntermediateTimerSingleTask{
 		arrayData[2].fieldFindType = FieldKeyType.ID;
 		arrayData[2].fieldType = FieldType.BUTTON;
 		arrayData[2].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 		//Run crom
-		Pages.CronExecute().execute("workflow");
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
+		pages.CronExecute().execute("workflow");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		String eventStatus= "";
 
 		//Check if event is Closed
-		Pages.Main().goHome();
-		Pages.Main().goAdmin();		
-		Pages.Admin().goToLogs();
+		pages.Main().goHome();
+		pages.Main().goAdmin();
+		pages.Admin().goToLogs();
 		Thread.sleep(5000);	
-		eventStatus = Pages.Admin().eventStatus(caseNum);
+		eventStatus = pages.Admin().eventStatus(caseNum);
 		Assert.assertEquals("CLOSE", eventStatus);
-		Pages.Main().logout();
+		pages.Main().logout();
 
 		//open task 2
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		//Open task 3
-		//Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+		//pages.Main().goHome();
+		pages.Home().openCase(caseNum);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 	}
 
 /*    @After

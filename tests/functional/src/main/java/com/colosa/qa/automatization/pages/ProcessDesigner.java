@@ -1,16 +1,16 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import java.lang.Exception;
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
-import com.colosa.qa.automatization.pages.DynaformDesigner;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class ProcessDesigner extends Page{
 
-	public enum DynaformType{
+    public ProcessDesigner(BrowserInstance browser) {
+        super(browser);
+    }
+
+    public enum DynaformType{
 		BLANK("blankType"),
 		PM_TABLE("pmTableType");
 
@@ -61,15 +61,12 @@ public class ProcessDesigner extends Page{
 		}
 	};
 
-	public ProcessDesigner() throws Exception{
-
-	}
 	
 	public void open(MenuOption option) throws Exception{
-		Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("frameMain");
-		Browser.getElement("processDesigner.webElement.menuItems."+option.getId()).click();
-		Browser.driver().switchTo().defaultContent();
+		browser.switchToDefaultContent();
+		browser.switchToFrame("frameMain");
+		browser.findElement("processDesigner.webElement.menuItems." + option.getId()).click();
+		browser.switchToDefaultContent();
 	}
 
 	private void openDynaforms() throws Exception{
@@ -102,21 +99,21 @@ public class ProcessDesigner extends Page{
 
 	private void newDynaform(DynaformType type) throws Exception{
 		this.openDynaforms();
-		Browser.driver().switchTo().frame("frameMain");
-		Browser.getElement("processDesigner.webElement.panelNewButton").click();
-		Browser.getElement("processDesigner.webElement.newDynaform."+type.getId()).click();
-		Browser.getElement("processDesigner.webElement.newDynaform.selectDynaformTypeButton").click();
+		browser.switchToFrame("frameMain");
+		browser.findElement("processDesigner.webElement.panelNewButton").click();
+		browser.findElement("processDesigner.webElement.newDynaform." + type.getId()).click();
+		browser.findElement("processDesigner.webElement.newDynaform.selectDynaformTypeButton").click();
 	}
 
 	public DynaformDesigner newBlankDynaform(String title, DynaformSubType type, String description) throws Exception{
-		Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("frameMain");
+		browser.switchToDefaultContent();
+		browser.switchToFrame("frameMain");
 		this.newDynaform(ProcessDesigner.DynaformType.BLANK);
-		Browser.getElement("processDesigner.webElement.newBlankDynaform.title").sendKeys(title);
-		new Select(Browser.getElement("processDesigner.webElement.newBlankDynaform.type")).selectByValue(ConfigurationSettings.getInstance().getSetting("processDesigner.webElement.newBlankDynaform.type."+type.getId()));
-		Browser.getElement("processDesigner.webElement.newBlankDynaform.description").sendKeys(description);
-		Browser.getElement("processDesigner.webElement.newBlankDynaform.saveOpen").click();
-		return new DynaformDesigner(Browser.getElement("processDesigner.webElement.newBlankDynaform.designer"));
+		browser.findElement("processDesigner.webElement.newBlankDynaform.title").sendKeys(title);
+		new Select(browser.findElement("processDesigner.webElement.newBlankDynaform.type")).selectByValue(ConfigurationSettings.getInstance().getSetting("processDesigner.webElement.newBlankDynaform.type."+type.getId()));
+		browser.findElement("processDesigner.webElement.newBlankDynaform.description").sendKeys(description);
+		browser.findElement("processDesigner.webElement.newBlankDynaform.saveOpen").click();
+		return new DynaformDesigner(browser, browser.findElement("processDesigner.webElement.newBlankDynaform.designer"));
 	}
 
 	public DynaformDesigner newBlankDynaform(String title, DynaformSubType type) throws Exception{
@@ -124,12 +121,12 @@ public class ProcessDesigner extends Page{
 	}
 
 	public Boolean inPage() throws Exception{
-		return (Browser.driver().getCurrentUrl().indexOf(ConfigurationSettings.getInstance().getSetting("processDesigner.idURL")) >= 0);
+		return (browser.getInstanceDriver().getCurrentUrl().indexOf(ConfigurationSettings.getInstance().getSetting("processDesigner.idURL")) >= 0);
 	}
 
 	public Boolean inPage(String processName) throws Exception{
-		if(Browser.getElements("processDesigner.processNameLocation").size() == 0)
+		if(browser.findElements("processDesigner.processNameLocation").size() == 0)
 			return false;
-		return (Browser.getElement("processDesigner.processNameLocation").getText().trim().equals(processName.trim())) && this.inPage();
+		return (browser.findElement("processDesigner.processNameLocation").getText().trim().equals(processName.trim())) && this.inPage();
 	}
 }

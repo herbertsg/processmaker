@@ -1,36 +1,34 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestOutputDocProcess{
+public class TestOutputDocProcess extends com.colosa.qa.automatization.tests.common.Test{
 
 
-	@Test
+    public TestOutputDocProcess(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void downloadOutputDoc() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		Pages.Home().startCase("outputDocProcess (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.OutputDocProcess().downloadDocFile();
-		Pages.OutputDocProcess().downloadPdfFile();
-		Pages.OutputDocProcess().nextbtn();
-		Pages.OutputDocProcess().downloadDocFile();
-		Pages.OutputDocProcess().downloadPdfFile();
-		Pages.OutputDocProcess().nextbtn();
-		Pages.OutputDocProcess().continuebtn();
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().startCase("outputDocProcess (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+		pages.OutputDocProcess().downloadDocFile();
+		pages.OutputDocProcess().downloadPdfFile();
+		pages.OutputDocProcess().nextbtn();
+		pages.OutputDocProcess().downloadDocFile();
+		pages.OutputDocProcess().downloadPdfFile();
+		pages.OutputDocProcess().nextbtn();
+		pages.OutputDocProcess().continuebtn();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

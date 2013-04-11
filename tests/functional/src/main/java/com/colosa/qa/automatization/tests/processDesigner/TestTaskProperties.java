@@ -1,37 +1,35 @@
 package com.colosa.qa.automatization.tests.processDesigner;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
+import com.colosa.qa.automatization.common.TaskFieldData;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-public class TestTaskProperties{
 
-	@Test
+public class TestTaskProperties extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestTaskProperties(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testFunctional() throws FileNotFoundException, IOException, Exception{
 
-		Actions action = new Actions(Browser.driver());
+		Actions action = new Actions(browserInstance.getInstanceDriver());
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goDesigner();		
-		Pages.ProcessList().openProcess("Test 1");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goDesigner();
+		pages.ProcessList().openProcess("Test 1");
 		TaskFieldData taskProp = new TaskFieldData();
 		taskProp.taskName = "Task 1";
 		taskProp.caseAssignedBy = "MANUAL";
 
-		Pages.TaskProperties().properties(taskProp);
+		pages.TaskProperties().properties(taskProp);
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

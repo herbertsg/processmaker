@@ -1,53 +1,53 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFAssignUserToGroup{
+public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestPMFAssignUserToGroup(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executePMFAssignUserToGroup() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("PMFAssignUserToGroup (Assign to group)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("user", "zachary");
-		Pages.DynaformExecution().setFieldValue("group", "Accounting");
-		Pages.DynaformExecution().setFieldValue("send", "");
-		Assert.assertEquals("User assigned", Value.getValue(FieldKeyType.ID, "form[verifyuser]"));
-		System.out.println(Value.getValue(FieldKeyType.ID, "form[verifyuser]"));
-		Assert.assertEquals("1", Value.getValue(FieldKeyType.ID, "form[statusFunction]"));		
-		Pages.DynaformExecution().setFieldValue("continue", "");
-	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("PMFAssignUserToGroup (Assign to group)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("user", "zachary");
+		pages.DynaformExecution().setFieldValue("group", "Accounting");
+		pages.DynaformExecution().setFieldValue("send", "");
+		Assert.assertEquals("User assigned", Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
+		System.out.println(Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
+		Assert.assertEquals("1", Value.getValue(browserInstance, FieldKeyType.ID, "form[statusFunction]"));
+		pages.DynaformExecution().setFieldValue("continue", "");
+	    pages.InputDocProcess().continuebtn();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 		//Open report task for check
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("zachary", "sample", "");				
-		Pages.Main().goHome();	
-		Pages.Home().gotoUnassigned();
-		Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(caseNum));
-		Pages.Home().openCase(caseNum);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		Pages.DynaformExecution().outDynaform();
-		Pages.DynaformExecution().intoDynaform();
-	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("zachary", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoUnassigned();
+		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
+		pages.DynaformExecution().outDynaform();
+		pages.DynaformExecution().intoDynaform();
+	    pages.InputDocProcess().continuebtn();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 
 }
 

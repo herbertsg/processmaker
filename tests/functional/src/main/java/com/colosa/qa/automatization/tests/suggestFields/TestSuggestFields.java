@@ -1,31 +1,30 @@
 package com.colosa.qa.automatization.tests.suggestFields;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSuggestFields{
+public class TestSuggestFields extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static String country = "Albania";
 	protected static String state = "Bahia";
 	protected static String city = "Baago";
 
-	@Test
+    public TestSuggestFields(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Suggest Fields (Task 1)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("Suggest Fields (Task 1)");
 
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
@@ -50,10 +49,10 @@ public class TestSuggestFields{
 		arrayData[3].fieldType = FieldType.BUTTON;
 		arrayData[3].fieldValue = "";
 
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 
 	/*}
@@ -61,10 +60,10 @@ public class TestSuggestFields{
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "");
-		Pages.Main().goHome();	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 
 		FormFieldData[] arrayData1 = new FormFieldData[3];
 		arrayData1[0] = new FormFieldData();
@@ -86,16 +85,16 @@ public class TestSuggestFields{
 		arrayData2[0].fieldType = FieldType.BUTTON;
 		arrayData2[0].fieldValue = "";
 
-		Pages.InputDocProcess().openCaseFrame();
-		String varVal = Value.getValue(arrayData1[0].fieldFindType, arrayData1[0].fieldPath);
+		pages.InputDocProcess().openCaseFrame();
+		String varVal = Value.getValue(browserInstance, arrayData1[0].fieldFindType, arrayData1[0].fieldPath);
 
-		Assert.assertEquals(country, Value.getValue(arrayData1[0].fieldFindType, arrayData1[0].fieldPath));
-		Assert.assertEquals(state, Value.getValue(arrayData1[1].fieldFindType, arrayData1[1].fieldPath));
-		Assert.assertEquals(city, Value.getValue(arrayData1[2].fieldFindType, arrayData1[2].fieldPath));
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		Assert.assertEquals(country, Value.getValue(browserInstance, arrayData1[0].fieldFindType, arrayData1[0].fieldPath));
+		Assert.assertEquals(state, Value.getValue(browserInstance,arrayData1[1].fieldFindType, arrayData1[1].fieldPath));
+		Assert.assertEquals(city, Value.getValue(browserInstance,arrayData1[2].fieldFindType, arrayData1[2].fieldPath));
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance,arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

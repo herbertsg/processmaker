@@ -1,15 +1,14 @@
 package com.colosa.qa.automatization.tests.dependentFields;
 
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.pages.Pages;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestDependentFields{
+public class TestDependentFields extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static String country = "Bolivia";
@@ -32,101 +31,114 @@ public class TestDependentFields{
 	protected static String completeName1 = "Administrator  ";
 	protected static String userDepartment1 = "";
 
-	@Test
+    public TestDependentFields(String browser) throws IOException {
+        super(browser);
+    }
+
+    @Before
+    public void setup(){
+
+    }
+
+    @After
+    public void cleanup(){
+        browserInstance.close();
+    }
+
+    @Test
 	public void testDependentFieldsCase() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
+        System.out.println("Test testDependentFieldsCase with browserName:" + this.browserName);
 
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("TestDependentFields (Task 1)");
-		
-		Pages.DynaformExecution().intoDynaform();
+        pages.Login().gotoDefaultUrl();
 
-		//Pages.DynaformExecution().setFieldValue("country", country, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("country", country);
+        pages.Login().loginUser("admin", "admin", "workflow", "English");
+        pages.Main().goHome();
+		caseNum = pages.Home().startCase("TestDependentFields (Task 1)");
 
-		//Pages.DynaformExecution().setGridFieldValue("gridname", numerofila, "country", country, FieldType.DROPDOWN);
+        pages.DynaformExecution().intoDynaform();
+
+		//pages.DynaformExecution().setFieldValue("country", country, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("country", country);
+
+		//pages.DynaformExecution().setGridFieldValue("gridname", numerofila, "country", country, FieldType.DROPDOWN);
 		//sleep one second to wait ajax result
-		Pages.DynaformExecution().sleep(1000);
+		pages.DynaformExecution().sleep(1000);
 
-		Assert.assertEquals(Pages.DynaformExecution().getFieldText("state"), state);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldText("location"), location);
+		Assert.assertEquals(pages.DynaformExecution().getFieldText("state"), state);
+		Assert.assertEquals(pages.DynaformExecution().getFieldText("location"), location);
 
-		//Pages.DynaformExecution().setFieldValue("suggest_country", country, FieldType.SUGGEST);
-		Pages.DynaformExecution().setFieldValue("suggest_country", country);
+		//pages.DynaformExecution().setFieldValue("suggest_country", country, FieldType.SUGGEST);
+		pages.DynaformExecution().setFieldValue("suggest_country", country);
 
-		Pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
+		pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
 
-		//Pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
-		Pages.DynaformExecution().setFieldValue("username", userName);
+		//pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
+		pages.DynaformExecution().setFieldValue("username", userName);
 		//send tab to activate dependent fields
-        //Pages.DynaformExecution().sendTab("userCompleteName");
-		Pages.DynaformExecution().sendTab("username");
-		//Pages.DynaformExecution().sleep(1000);
+        //pages.DynaformExecution().sendTab("userCompleteName");
+		pages.DynaformExecution().sendTab("username");
+		//pages.DynaformExecution().sleep(1000);
 
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
 		
 		//change values in fields
-		//Pages.DynaformExecution().setFieldValue("state", state1, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("state", state1);
-		Pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("location"), location1);
+		//pages.DynaformExecution().setFieldValue("state", state1, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("state", state1);
+		pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("location"), location1);
 
 		//change fields in suggest
-		//Pages.DynaformExecution().setFieldValue("suggest_country", country2, FieldType.SUGGEST);
-		Pages.DynaformExecution().setFieldValue("suggest_country", country2);
-		Pages.DynaformExecution().sleep(1000);
-		//Pages.DynaformExecution().setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("suggest_state", state2);
-		Pages.DynaformExecution().sleep(1000);
-		//Pages.DynaformExecution().setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("suggest_location", location2);
-		Pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state"), state2);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location"), location2);
-		//Pages.DynaformExecution().setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("suggest_state2", state22);
-		Pages.DynaformExecution().sleep(1000);
-		//Pages.DynaformExecution().setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
-		Pages.DynaformExecution().setFieldValue("suggest_location2", location22);
-		Pages.DynaformExecution().sleep(1000);		
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state22);
-		Assert.assertEquals(Pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location22);
+		//pages.DynaformExecution().setFieldValue("suggest_country", country2, FieldType.SUGGEST);
+		pages.DynaformExecution().setFieldValue("suggest_country", country2);
+		pages.DynaformExecution().sleep(1000);
+		//pages.DynaformExecution().setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("suggest_state", state2);
+		pages.DynaformExecution().sleep(1000);
+		//pages.DynaformExecution().setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("suggest_location", location2);
+		pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state"), state2);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location2);
+		//pages.DynaformExecution().setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("suggest_state2", state22);
+		pages.DynaformExecution().sleep(1000);
+		//pages.DynaformExecution().setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
+		pages.DynaformExecution().setFieldValue("suggest_location2", location22);
+		pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state22);
+		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location22);
 
 		//change fields in textbox
-		//Pages.DynaformExecution().setFieldValue("username", userName1, FieldType.TEXTBOX);
-		Pages.DynaformExecution().setFieldValue("username", userName1);
+		//pages.DynaformExecution().setFieldValue("username", userName1, FieldType.TEXTBOX);
+		pages.DynaformExecution().setFieldValue("username", userName1);
 		//send tab to activate dependent fields
-		Pages.DynaformExecution().sendTab("username");
-		//Pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
+		pages.DynaformExecution().sendTab("username");
+		//pages.DynaformExecution().sleep(1000);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
 
 		//test other dependent fields
-		Pages.DynaformExecution().setFieldValue("userName2", userName1); //admin
-		Assert.assertEquals(Pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
-		int listBoxCount = Pages.DynaformExecution().getFieldCount("listBoxField");
+		pages.DynaformExecution().setFieldValue("userName2", userName1); //admin
+		Assert.assertEquals(pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
+		int listBoxCount = pages.DynaformExecution().getFieldCount("listBoxField");
 		System.out.println("ListBox value:" + listBoxCount);
-		//Assert.assertFalse(Pages.DynaformExecution().getFieldValue("listBoxField").equals("")); //at least one login
-		String totalLogins = Pages.DynaformExecution().getFieldValue("hiddenField");
+		//Assert.assertFalse(pages.DynaformExecution().getFieldValue("listBoxField").equals("")); //at least one login
+		String totalLogins = pages.DynaformExecution().getFieldValue("hiddenField");
 		System.out.println("Total logins:" + totalLogins);
 		Assert.assertEquals(listBoxCount, Integer.parseInt(totalLogins));
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*
-    @After
-    public void cleanup(){
-        Browser.close();
-    }
-*/
+
+
+
 
 }

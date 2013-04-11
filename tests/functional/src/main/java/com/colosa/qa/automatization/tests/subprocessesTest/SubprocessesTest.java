@@ -1,70 +1,68 @@
 package com.colosa.qa.automatization.tests.subprocessesTest;
 
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SubprocessesTest{
+public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.Test{
 	protected static int caseNum;
 	protected static String name = "Ernesto";
 	protected static String lastName = "Vega";
 	protected static String salary = "23,564.00";
 	protected static String desc = "Prueba...";
 
-	@Test
+    public SubprocessesTest(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Subprocess Test 1 (Task 1)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("Subprocess Test 1 (Task 1)");
        	caseNum++;
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("Nombre", "");
-        Pages.DynaformExecution().setFieldValue("Nombre", lastName);
-        Pages.DynaformExecution().setFieldValue("Salario", salary);
-        Pages.DynaformExecution().setFieldValue("Enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("Nombre", "");
+        pages.DynaformExecution().setFieldValue("Nombre", lastName);
+        pages.DynaformExecution().setFieldValue("Salario", salary);
+        pages.DynaformExecution().setFieldValue("Enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	/*}
 
 	@Test
 	public void openCaseNum() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
-        Pages.DynaformExecution().intoDynaform();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
+        pages.DynaformExecution().intoDynaform();
 
-        Assert.assertEquals(lastName, Pages.DynaformExecution().getFieldValue("lastname"));
-        Assert.assertEquals(salary, Pages.DynaformExecution().getFieldValue("salary"));
-        Assert.assertEquals(desc, Pages.DynaformExecution().getField("descripcion"));
-		Pages.DynaformExecution().setFieldValue("Send", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+        Assert.assertEquals(lastName, pages.DynaformExecution().getFieldValue("lastname"));
+        Assert.assertEquals(salary, pages.DynaformExecution().getFieldValue("salary"));
+        Assert.assertEquals(desc, pages.DynaformExecution().getField("descripcion"));
+		pages.DynaformExecution().setFieldValue("Send", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	/*}
 
 	@Test
 	public void endCase() throws FileNotFoundException, IOException, Exception{*/
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("hector", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("hector", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("Send", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("Send", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*    @After

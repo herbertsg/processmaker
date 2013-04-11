@@ -4,20 +4,18 @@ import com.colosa.qa.automatization.common.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
-public class InputDocumentList{
+public class InputDocumentList extends Page{
 
-	public InputDocumentList() throws FileNotFoundException, IOException{
+    public InputDocumentList(BrowserInstance browser) {
+        super(browser);
+    }
 
-	}
+    public void createInputDoc(String titleDoc, String formatDoc, String descriptionDoc, String versioning, String destination, String tags) throws Exception{
 
-	public void createInputDoc(String titleDoc, String formatDoc, String descriptionDoc, String versioning, String destination, String tags) throws Exception{
-
-		Browser.driver().switchTo().frame("frameMain");
-		WebElement newBtn = Browser.getElement("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[MNU_ADD]");
+		browser.switchToFrame("frameMain");
+		WebElement newBtn = browser.findElement("id" + Constant.SEARCH_CRITERIA_SEPARATOR + "form[MNU_ADD]");
 
 		newBtn.click();
 		FormFieldData[] fieldArray = new FormFieldData[7];
@@ -57,17 +55,17 @@ public class InputDocumentList{
 		fieldArray[6].fieldFindType = FieldKeyType.ID;
 		fieldArray[6].fieldType = FieldType.BUTTON;
 		fieldArray[6].fieldValue = "";
-		FormFiller.formFillElements(fieldArray);
+		FormFiller.formFillElements(browser, fieldArray);
 
-		Browser.driver().switchTo().defaultContent();
+		browser.switchToDefaultContent();
 
 	}
 
 	public void closePopup() throws Exception{
-		Browser.driver().switchTo().frame("frameMain");
-		WebElement btnClose = Browser.getElement("inputDocumentList.webelement.close");
+		browser.switchToFrame("frameMain");
+		WebElement btnClose = browser.findElement("inputDocumentList.webelement.close");
 		btnClose.click();
-		Browser.driver().switchTo().defaultContent();
+		browser.switchToDefaultContent();
 	}
 
 	public boolean fileExists(String fileName) throws Exception{
@@ -75,7 +73,7 @@ public class InputDocumentList{
 		boolean flag = false;
 		//html/body/table/tbody/tr/td/table/tbody/tr[3]/td/div/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr[2]/td[2]
 		WebElement we = null;
-		wel = Browser.driver().findElements(By.xpath("//table/tbody/tr/td/table/tbody/tr[3]/td/div/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr"));
+		wel = browser.findElementsByXPath("//table/tbody/tr/td/table/tbody/tr[3]/td/div/table/tbody/tr/td/div[2]/table/tbody/tr/td/table[2]/tbody/tr");
 		for(WebElement we2:wel)
 		{
 			we = we2.findElement(By.xpath("td[2]"));

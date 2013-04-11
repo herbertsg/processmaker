@@ -1,96 +1,97 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import com.colosa.qa.automatization.common.Browser;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-public class Admin extends Main{
+import java.util.ArrayList;
+import java.util.List;
 
-    public Admin() throws Exception{
+public class Admin extends Page{
+
+
+    public Admin(BrowserInstance browserInstance) {
+        super(browserInstance);
     }
 
-    public static void goToLogs() throws Exception{
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__logs']/a[2]"));
+    public void goToLogs() throws Exception{
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        WebElement we = browser.findElementByXPath("//*[@id='west-panel__logs']/a[2]");
         we.click();
-        //Browser.driver().switchTo().defaultContent();
+        //browser.switchToDefaultContent();
     }
 
-    public static void goToPlugins() throws Exception{
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__plugins']/a[2]"));
-        we.click();
-    }
-   
-    public static void goToUsers() throws Exception{
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__users']/a[2]"));
+    public void goToPlugins() throws Exception{
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        WebElement we = browser.findElementByXPath("//*[@id='west-panel__plugins']/a[2]");
         we.click();
     }
    
-    public static void showCaseScheduler() throws Exception{
-        WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[2]"));
+    public void goToUsers() throws Exception{
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        WebElement we = browser.findElementByXPath("//*[@id='west-panel__users']/a[2]");
+        we.click();
+    }
+   
+    public void showCaseScheduler() throws Exception{
+        WebElement we = browser.findElementByXPath("//div[@id='logs']/div/div/ul/div/li[2]");
         we.click();
     }
 
-    public static void showEmailLogs() throws Exception{
-        WebElement we = Browser.driver().findElement(By.xpath("//div[@id='logs']/div/div/ul/div/li[4]"));
+    public void showEmailLogs() throws Exception{
+        WebElement we = browser.findElementByXPath("//div[@id='logs']/div/div/ul/div/li[4]");
         we.click();
     }
     
-    public static void goToSettings() throws Exception{
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.xpath("//*[@id='west-panel__settings']/a[2]"));
+    public void goToSettings() throws Exception{
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        WebElement we = browser.findElementByXPath("//*[@id='west-panel__settings']/a[2]");
         we.click();
     }
-    public static void newPMTable(String nameTable, String descTable)throws Exception{
+    public void newPMTable(String nameTable, String descTable)throws Exception{
   			goToSettings();
   			Thread.sleep(3000);
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement divPMT = Browser.driver().findElement(By.id("settings"));
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        WebElement divPMT = browser.findElementById("REP_TAB_DSC");
   			WebElement PMT = divPMT.findElement(By.xpath("//div/div/ul/div/li[11]"));
   			PMT.click();
   			
   			Thread.sleep(3000);
-  			Browser.driver().switchTo().frame("setup-frame");
-            Browser.waitForElement(By.id("infoGrid"),45);
-  			WebElement divGridPMT = Browser.driver().findElement(By.id("infoGrid"));
+  			browser.switchToFrame("setup-frame");
+            browser.waitForElement(By.id("infoGrid"),45);
+  			WebElement divGridPMT = browser.findElementById("REP_TAB_DSC");
   			WebElement newPMT = divGridPMT.findElement(By.xpath("div[2]/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
   			newPMT.click();
   			//html/body/div[13]/ul/li/a
   			Thread.sleep(4000);
-  			WebElement newPMTable = Browser.driver().findElement(By.xpath("html/body/div[8]/ul/li"));
+  			WebElement newPMTable = browser.findElementByXPath("html/body/div[8]/ul/li");
   			WebElement newPMTables = newPMTable.findElement(By.tagName("span"));
 				newPMTables.click();
 				
 				Thread.sleep(4000);
-				WebElement REP_TAB_NAME = Browser.driver().findElement(By.id("REP_TAB_NAME"));
+				WebElement REP_TAB_NAME = browser.findElementById("REP_TAB_DSC");
   			REP_TAB_NAME.sendKeys(nameTable);
   			
-  			WebElement REP_TAB_DSC = Browser.driver().findElement(By.id("REP_TAB_DSC"));
+  			WebElement REP_TAB_DSC = browser.findElementById("REP_TAB_DSC");
   			REP_TAB_DSC.sendKeys(descTable);
   	}
   		
-  	public static void addField(String fieldName, String fieldLabel, String fieldType, String fieldSize, Boolean fieldPrimaryKey, Boolean fieldNull, Boolean fieldAutoincrement) throws Exception{		  			
-  			WebElement assignedGrid = Browser.driver().findElement(By.id("assignedGrid"));
+  	public void addField(String fieldName, String fieldLabel, String fieldType, String fieldSize, Boolean fieldPrimaryKey, Boolean fieldNull, Boolean fieldAutoincrement) throws Exception{
+  			WebElement assignedGrid = browser.findElementById("assignedGrid");
   			WebElement addField = assignedGrid.findElement(By.xpath("div/div/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/em/button"));
   			addField.click();
   			
-  			WebElement addFields = Browser.driver().findElement(By.xpath("/html/body/div[2]"));
+  			WebElement addFields = browser.findElementByXPath("/html/body/div[2]");
   			
   			WebElement setName = addFields.findElement(By.xpath("div/div/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/div/div/input"));
   			setName.sendKeys(fieldName);
@@ -125,8 +126,8 @@ public class Admin extends Main{
   			Thread.sleep(3000);
   	}
   			
-  	public static void createPMTable() throws Exception{		
-  			WebElement createTable = Browser.driver().findElement(By.xpath("/html/body/div[3]"));
+  	public void createPMTable() throws Exception{
+  			WebElement createTable = browser.findElementByXPath("/html/body/div[3]");
   			WebElement createTableButton = createTable.findElement(By.xpath("div/div/div/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]"));
   			createTableButton.click();
   	}
@@ -134,17 +135,17 @@ public class Admin extends Main{
   	public Boolean verifyPMTable(String nameTable) throws Exception{		
   			goToSettings();
   			Thread.sleep(3000);
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
         
-        WebElement divPMT = Browser.driver().findElement(By.id("settings"));
+        WebElement divPMT = browser.findElementById("settings");
   			WebElement PMT = divPMT.findElement(By.xpath("//div/div/ul/div/li[11]"));
   			PMT.click();
   			
-        Browser.driver().switchTo().frame("setup-frame");
+        browser.switchToFrame("setup-frame");
         
-  			WebElement divFils = Browser.driver().findElement(By.className("x-grid3-body"));
+  			WebElement divFils = browser.findElementByClassName("x-grid3-body");
         List<WebElement> divsRow = divFils.findElements(By.tagName("div"));
         
   			Boolean flagExist = false;
@@ -164,17 +165,17 @@ public class Admin extends Main{
   	public int countRoles() throws Exception{
         goToUsers();
         Thread.sleep(3000);
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.waitForElement(By.id("users"),60);
-        WebElement divRoles = Browser.driver().findElement(By.id("users"));
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        browser.waitForElement(By.id("users"),60);
+        WebElement divRoles = browser.findElementById("users");
         WebElement liRoles = divRoles.findElement(By.xpath("div/div/ul/div/li[4]/div"));
         liRoles.click();
         
-        Browser.driver().switchTo().frame("setup-frame");
+        browser.switchToFrame("setup-frame");
         
-        WebElement divFils = Browser.driver().findElement(By.className("x-grid3-body"));
+        WebElement divFils = browser.findElementByClassName("x-grid3-body");
         List<WebElement> divsGrid = divFils.findElements(By.tagName("div"));
         
         Integer count = 0;
@@ -189,14 +190,14 @@ public class Admin extends Main{
         //System.out.println("LAS FILAS  "+count);
     }
     
-    public static void activePlugin(String namePlugin, Boolean flagActive) throws Exception{
+    public void activePlugin(String namePlugin, Boolean flagActive) throws Exception{
         goToPlugins();
         Thread.sleep(3000);
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("adminFrame"),120);
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.driver().switchTo().frame("setup-frame");
-        WebElement divFils = Browser.driver().findElement(By.xpath("//*[@id='processesGrid']/div/div[2]/div/div/div[2]"));
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("adminFrame"),120);
+        browser.switchToFrame("adminFrame");
+        browser.switchToFrame("setup-frame");
+        WebElement divFils = browser.findElementByXPath("//*[@id='processesGrid']/div/div[2]/div/div/div[2]");
 
         List<WebElement> divsGrid = divFils.findElements(By.tagName("div"));
         Boolean flagExist = false;
@@ -212,7 +213,7 @@ public class Admin extends Main{
         }
 
         if (flagExist) {
-            WebElement buttonActive = Browser.driver().findElement(By.id("activator"));
+            WebElement buttonActive = browser.findElementById("activator");
             WebElement buttonLabel = buttonActive.findElement(By.tagName("button"));
             
             if ( buttonLabel.getAttribute("innerHTML").trim().indexOf ("Enable") > -1 && (flagActive) ) {
@@ -234,61 +235,61 @@ public class Admin extends Main{
         }
     }
 
-    public static String eventStatus(Integer numCase) throws Exception{
+    public String eventStatus(Integer numCase) throws Exception{
 
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.driver().switchTo().frame("setup-frame");
-        Browser.waitForElement(By.id("eventsGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("eventsGrid")), Browser.driver());
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        browser.switchToFrame("setup-frame");
+        browser.waitForElement(By.id("eventsGrid"),60);
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("eventsGrid"), browser.getInstanceDriver());
         String status;
         WebElement row = grid.getRowByColumnValue("Case Title", "#" + Integer.toString(numCase));
         if(row==null)
             throw new Exception("Case # "+Integer.toString(numCase)+" not found in Event Logs");
         status = row.findElement(By.xpath("table/tbody/tr/td[13]/div")).getText().trim();
-        Browser.driver().switchTo().defaultContent();
+        browser.switchToDefaultContent();
         return status;
     }
 
-    public static String lastCreateCaseStatus() throws Exception{
+    public String lastCreateCaseStatus() throws Exception{
         List<WebElement> rows = new ArrayList<WebElement>();
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.driver().switchTo().frame("setup-frame");
-        Browser.waitForElement(By.id("infoGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        browser.switchToFrame("setup-frame");
+        browser.waitForElement(By.id("infoGrid"),60);
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser.getInstanceDriver());
         String status;
         rows = grid.getRows();
         if(rows==null)
             throw new Exception("The case Scheduler log is Empty");
         status = rows.get(0).findElement(By.xpath("table/tbody/tr/td[6]/div")).getText().trim();
-        Browser.driver().switchTo().defaultContent();
+        browser.switchToDefaultContent();
         return status;
     }
 
-    public static String emailStatus(Integer numCase) throws Exception{
+    public String emailStatus(Integer numCase) throws Exception{
 
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.driver().switchTo().frame("setup-frame");
-        Browser.waitForElement(By.id("emailsGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("emailsGrid")), Browser.driver());
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        browser.switchToFrame("setup-frame");
+        browser.waitForElement(By.id("emailsGrid"),60);
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("emailsGrid"), browser.getInstanceDriver());
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
         if(row==null)
             throw new Exception("Case # "+Integer.toString(numCase)+" not found in Email Logs");
         emailStatus = row.findElement(By.xpath("table/tbody/tr/td[16]/div")).getText().trim();
-        Browser.driver().switchTo().defaultContent();
+        browser.switchToDefaultContent();
         return emailStatus;
     }
 
-    public static boolean userExists(String userName) throws Exception{
+    public boolean userExists(String userName) throws Exception{
 
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        Browser.driver().switchTo().frame("setup-frame");
-        Browser.waitForElement(By.id("infoGrid"),360);
-        ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.id("infoGrid")), Browser.driver());
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        browser.switchToFrame("setup-frame");
+        browser.waitForElement(By.id("infoGrid"),360);
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser.getInstanceDriver());
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("User Name", userName);
 
@@ -300,12 +301,12 @@ public class Admin extends Main{
 
     }
 
-    public static void pmSLA() throws Exception{
+    public void pmSLA() throws Exception{
         List<WebElement> wel;
         boolean flag = false;
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("adminFrame");
-        WebElement we = Browser.driver().findElement(By.id("settings"));
+        browser.switchToDefaultContent();
+        browser.switchToFrame("adminFrame");
+        WebElement we = browser.findElementById("settings");
         wel = we.findElements(By.xpath(" div/div/ul/div/li"));
             for(WebElement we2:wel)
             {

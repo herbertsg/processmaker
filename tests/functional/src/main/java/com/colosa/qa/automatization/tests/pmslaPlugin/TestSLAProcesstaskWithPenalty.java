@@ -15,26 +15,30 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class TestSLAProcesstaskWithPenalty{
+public class TestSLAProcesstaskWithPenalty extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestSLAProcesstaskWithPenalty(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeSLAProcesstaskWithPenalty() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("SLA Process - Task whit penalty (Reclamo)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("text", "123456");
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().startCase("SLA Process - Task whit penalty (Reclamo)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("text", "123456");
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
+		pages.CronExecute().execute("workflow");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 }
 
 /*    @After

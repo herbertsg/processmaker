@@ -1,24 +1,25 @@
 package com.colosa.qa.automatization.pages;
 
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
-import org.apache.xalan.xsltc.util.IntegerArray;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
 import java.util.List;
 
 
-public class Home extends Main{
+public class Home extends Page{
 
     protected static int numCol;
     protected static String caseNum = "";
 
-	public Home() throws Exception{
-	}
+    public Home(BrowserInstance browser) {
+        super(browser);
+    }
 
-	private static String[] pathToArray(String path){
+    private String[] pathToArray(String path){
 		if(path.charAt(0) == '/')
 			path = path.substring(1);
 		if(path.charAt(path.length()-1) == '/')
@@ -27,7 +28,7 @@ public class Home extends Main{
 		return path.split("/");
 	}
 
-	public static void selectMenuTreePanelOption(String path) throws Exception{
+	public void selectMenuTreePanelOption(String path) throws Exception{
 		List<WebElement> wel;
 		WebElement option = null;
 		String[] pathLevels;
@@ -44,19 +45,19 @@ public class Home extends Main{
 
 		/*
 		if(this.skin == 0)*/
-         Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("casesFrame"),120);
-			Browser.driver().switchTo().frame("casesFrame");
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("casesFrame"),120);
+		browser.switchToFrame("casesFrame");
 		/*else
 		{
 			this.waitForElementPresent(By.id("pm-frame-cases"),this.timeout);
-			Browser.driver().switchTo().frame("pm-frame-cases");
+			browser.switchToFrame("pm-frame-cases");
 		}*/
 
 		if(pathLevels.length==2 || path.charAt(path.length()-1)=='/')
-			wel = Browser.driver().findElements(By.xpath("//div[@id='tree-panel']/div/div/ul/div/li"));
+			wel = browser.findElementsByXPath("//div[@id='tree-panel']/div/div/ul/div/li");
 		else
-			wel = Browser.driver().findElements(By.xpath("//div[@id='tree-panel']/div/div/ul/div/li/ul/li"));
+			wel = browser.findElementsByXPath("//div[@id='tree-panel']/div/div/ul/div/li/ul/li");
 		for(WebElement we:wel)
 			try{
 				aux = we.findElement(By.xpath("div/a/span")).getText().toLowerCase();
@@ -90,55 +91,55 @@ public class Home extends Main{
 		}
 		option.findElement(By.xpath("div/a/span")).click();
 
-		Browser.driver().switchTo().defaultContent();
+		browser.switchToDefaultContent();
 	}
 
-	public static void gotoNewCase() throws Exception{
+	public void gotoNewCase() throws Exception{
 		selectMenuTreePanelOption("Cases/New case");
 	}
 
-	public static void gotoInbox() throws Exception{
+	public void gotoInbox() throws Exception{
 		selectMenuTreePanelOption("Cases/Inbox");
         numCol = 7;
 	}
 
-	public static void gotoDraft() throws Exception{
+	public void gotoDraft() throws Exception{
 		selectMenuTreePanelOption("Cases/Draft");
         numCol = 7;
 	}
 
-	public static void gotoParticipated() throws Exception{
+	public void gotoParticipated() throws Exception{
 		selectMenuTreePanelOption("Cases/Participated");
         numCol = 10;
 	}
 
-	public static void gotoUnassigned() throws Exception{
+	public void gotoUnassigned() throws Exception{
 		selectMenuTreePanelOption("Cases/Unassigned");
         numCol = 7;
 	}
 
-	public static void gotoPaused() throws Exception{
+	public void gotoPaused() throws Exception{
 		selectMenuTreePanelOption("Cases/Paused");
         numCol = 7;
 	}
 
-	public static void gotoAdvancedSearch() throws Exception{
+	public void gotoAdvancedSearch() throws Exception{
 		selectMenuTreePanelOption("Search/Advanced Search");
 	}
 
-	public static void gotoReview() throws Exception{
+	public void gotoReview() throws Exception{
 		selectMenuTreePanelOption("Process Supervisor/Review");
 	}
 
-	public static void gotoReassign() throws Exception{
+	public void gotoReassign() throws Exception{
 		selectMenuTreePanelOption("Process Supervisor/Reassign");
 	}
 
-	public static void gotoDocuments() throws Exception{
+	public void gotoDocuments() throws Exception{
 		selectMenuTreePanelOption("Documents/");
 	}
 
-	public static void gotoReports() throws Exception{
+	public void gotoReports() throws Exception{
 		selectMenuTreePanelOption("Documents/Reports");
 	}
 
@@ -146,23 +147,26 @@ public class Home extends Main{
 	public int startCase(String processName) throws Exception{
 		String[] path = pathToArray(processName);
 		List<WebElement> wel;
-		Actions action = new Actions(Browser.driver());
+		Actions action = new Actions(browser.getInstanceDriver());
 		boolean flag = false;
 		int value = 0;
 
-		Browser.driver().switchTo().defaultContent();
-		Home.selectMenuTreePanelOption("Cases/New case");
-		Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("casesFrame"),120);
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
+		browser.switchToDefaultContent();
+		this.selectMenuTreePanelOption("Cases/New case");
+		browser.switchToDefaultContent();
+        browser.waitForElement(By.id("casesFrame"),120);
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
         Thread.sleep(5000);
         int indice = processName.indexOf("(");
         String cadenaNueva = processName.substring(0, indice);
-        Pages.DynaformExecution().setFieldValueWithoutForm("processesFilter", cadenaNueva);
-        WebElement el = Browser.driver().findElement(By.id("processesFilter"));
+
+        DynaformExecution dynex = new DynaformExecution(browser);
+
+        dynex.setFieldValueWithoutForm("processesFilter", cadenaNueva);
+        WebElement el = browser.findElementById("processesFilter");
         el.sendKeys(Keys.RETURN);
-		WebElement we = Browser.driver().findElement(By.id("startCaseTreePanel"));
+		WebElement we = browser.findElementById("startCaseTreePanel");
 		if(path.length>2)
 			throw new Exception("the string Path parameter can contain up to 2 segments, you asshole!");
 
@@ -210,7 +214,7 @@ public class Home extends Main{
 		action.doubleClick(we);
         action.perform();
 
-        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8));
+        value = Integer.parseInt(browser.findElementByXPath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']").getText().trim().substring(8));
         return value;
 	}
 
@@ -218,17 +222,17 @@ public class Home extends Main{
 
         caseNum = ""+Integer.toString(numCase);
         ExtJSGrid grid;
-		Actions action = new Actions(Browser.driver());
-		Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("casesFrame"),120);
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-/*        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
+		Actions action = new Actions(browser.getInstanceDriver());
+		browser.switchToDefaultContent();
+        browser.waitForElement(By.id("casesFrame"),120);
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+/*        WebElement grd = browser.findElementById("casesGrid");
         WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+Integer.toString(numCol)+"]/input"));
         inputText.sendKeys(caseNum);
         inputText.sendKeys(Keys.RETURN);
         inputText.clear();*/
-        grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+        grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
@@ -242,16 +246,16 @@ public class Home extends Main{
 
         int value;
 
-        Actions action = new Actions(Browser.driver());
+        Actions action = new Actions(browser.getInstanceDriver());
 
-        Browser.driver().switchTo().defaultContent();
-        Browser.waitForElement(By.id("casesFrame"),120);
+        browser.switchToDefaultContent();
+        browser.waitForElement(By.id("casesFrame"),120);
 
-        Browser.driver().switchTo().frame("casesFrame");
+        browser.switchToFrame("casesFrame");
 
-        Browser.driver().switchTo().frame("casesSubFrame");
+        browser.switchToFrame("casesSubFrame");
 
-        grid = Browser.driver().findElement(By.id("casesGrid"));
+        grid = browser.findElementById("casesGrid");
 
         WebElement row = grid.findElement(By.xpath("div/div[2]/div/div[1]/div[2]/div/div[1]/table/tbody/tr/td[3]/div"));
 
@@ -259,7 +263,7 @@ public class Home extends Main{
 
         action.perform();
 
-        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8));
+        value = Integer.parseInt(browser.findElementByXPath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']").getText().trim().substring(8));
 
         return value;
 
@@ -267,11 +271,11 @@ public class Home extends Main{
 
 	public boolean selectCase(int numCase)throws Exception{
 		ExtJSGrid grid;
-		Actions action = new Actions(Browser.driver());
-		Browser.driver().switchTo().defaultContent();		
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		Actions action = new Actions(browser.getInstanceDriver());
+		browser.switchToDefaultContent();
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null){
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
@@ -286,11 +290,11 @@ public class Home extends Main{
 
 	public void selectTasktoAssign(int numCase)throws Exception{
 		ExtJSGrid grid;
-		Actions action = new Actions(Browser.driver());
-		Browser.driver().switchTo().defaultContent();		
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id("reassign-form")), Browser.driver(),45);
+		Actions action = new Actions(browser.getInstanceDriver());
+		browser.switchToDefaultContent();
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+		grid = new ExtJSGrid(browser.findElementById("reassign-form"), browser.getInstanceDriver(),45);
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
@@ -300,24 +304,24 @@ public class Home extends Main{
   
   public void pauseCase(int numCase)throws Exception{
 		
-		Actions action = new Actions(Browser.driver());
-		Browser.driver().switchTo().defaultContent();		
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
+		Actions action = new Actions(browser.getInstanceDriver());
+		browser.switchToDefaultContent();
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
 		
 		Thread.sleep(4000);
-		WebElement actionPanel = Browser.driver().findElement(By.id("navPanel"));
+		WebElement actionPanel = browser.findElementById("navPanel");
 		WebElement actionMenu = actionPanel.findElement(By.id("actionMenu"));
 		WebElement bAction = actionMenu.findElement(By.tagName("button"));
 		bAction.click(); 
 		
 		Thread.sleep(4000);
-		WebElement pauseCase = Browser.driver().findElement(By.xpath("/html/body/div[5]/ul/li[1]/a"));
+		WebElement pauseCase = browser.findElementByXPath("/html/body/div[5]/ul/li[1]/a");
 		WebElement pCase = pauseCase.findElement(By.tagName("span"));
 		pCase.click(); 
 		
 		Thread.sleep(4000);
-		WebElement pauseForm = Browser.driver().findElement(By.id("unpauseFrm"));
+		WebElement pauseForm = browser.findElementById("unpauseFrm");
 		WebElement pauseButton = pauseForm.findElement(By.id("submitPauseCase"));
 		WebElement pauseClick = pauseButton.findElement(By.tagName("button"));
 		
@@ -327,14 +331,14 @@ public class Home extends Main{
 	
 	public boolean existCase(int numCase)throws Exception{
 		ExtJSGrid grid;
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-/*        WebElement grd = Browser.driver().findElement(By.id("casesGrid"));
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+/*        WebElement grd = browser.findElementById("casesGrid");
         WebElement inputText = grd.findElement(By.xpath("div/div[1]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td["+Integer.toString(numCol)+"]/input"));
         inputText.sendKeys(caseNum);
         inputText.sendKeys(Keys.RETURN);
         inputText.clear();*/
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		
 		if(row==null)
@@ -345,9 +349,9 @@ public class Home extends Main{
 	
 	public boolean caseStatus(int numCase, String statusCase)throws Exception{
 		ExtJSGrid grid;
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id("casesGrid")), Browser.driver());
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
 		
 		WebElement row = grid.getRowByColumnsValue("#", "Status", Integer.toString(numCase), statusCase);
 		
@@ -359,13 +363,13 @@ public class Home extends Main{
 	
 
 	public void goCaseSubFrame()throws Exception{
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
 	}
 
 	public boolean isGridPresent(String grd) throws Exception{
 		ExtJSGrid grid = null;
-		grid = new ExtJSGrid(Browser.driver().findElement(By.id(grd)), Browser.driver());
+		grid = new ExtJSGrid(browser.findElementById(grd), browser.getInstanceDriver());
 		if(grid==null)
 			throw new Exception("Grid: "+grd+" not found");
 		else
@@ -377,14 +381,14 @@ public class Home extends Main{
 	  WebElement grid;
 	  int value;
 	  Actions action = new Actions(Browser.driver());
-	  Browser.driver().switchTo().defaultContent();  
-	  Browser.driver().switchTo().frame("casesFrame");
-	  Browser.driver().switchTo().frame("casesSubFrame");
-	  grid = Browser.driver().findElement(By.id("casesGrid"));
+	  browser.switchToDefaultContent();
+	  browser.switchToFrame("casesFrame");
+	  browser.switchToFrame("casesSubFrame");
+	  grid = browser.findElementById("casesGrid");
 	  WebElement row = grid.findElement(By.xpath("div/div[2]/div/div[1]/div[2]/div/div[1]/table/tbody/tr/td[3]/div"));
 	  action.doubleClick(row);
 	        action.perform();
-	        value = Integer.parseInt(Browser.driver().findElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8 ));
+	        value = Integer.parseInt(browser.findElementByXPath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']")).getText().trim().substring(8 ));
 	        return value;
 	 }*/
 

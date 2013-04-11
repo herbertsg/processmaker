@@ -1,9 +1,6 @@
 package com.colosa.qa.automatization.common;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -13,16 +10,55 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class InstanceBrowser {
+public class BrowserInstance {
 
 	private WebDriver _instanceDriver = null;
 
-	public InstanceBrowser(String browserMode, String browserName, String browserVersion, String browserPlatform, String remoteServerUrl) throws MalformedURLException {
+    public static BrowserSettings getDefaultBrowserSettings() throws IOException {
+        BrowserSettings browserSettings = new BrowserSettings();
+
+        //set browser information from configuration file
+        browserSettings.setBrowserMode(ConfigurationSettings.getInstance().getSetting("browser.mode"));
+        browserSettings.setBrowserName(ConfigurationSettings.getInstance().getSetting("browser.name"));
+        browserSettings.setBrowserVersion(ConfigurationSettings.getInstance().getSetting("browser.version"));
+        browserSettings.setBrowserPlatform(ConfigurationSettings.getInstance().getSetting("browser.platform"));
+        browserSettings.setRemoteServerUrl(ConfigurationSettings.getInstance().getSetting("remote.server.url"));
+
+        //Read browser information from registry and update in object
+        //-Dbrowser.settings=1 -Dbrowser.mode=local -Dbrowser.name=firefox
+        //-Dbrowser.settings=1 -Dbrowser.mode=remote -Dbrowser.name=firefox -Dremote.server.url=http:// browser.version=
+        //if variable set from system properties overrride configuration of browser
+        String setBrowserSettings = System.getProperty("browser.settings");
+
+        if(setBrowserSettings != null){
+            System.out.printf("User Browser Settings detected\n");
+            browserSettings.setBrowserMode(System.getProperty("browser.mode"));
+            browserSettings.setBrowserName(System.getProperty("browser.name"));
+            browserSettings.setBrowserVersion(System.getProperty("browser.version"));
+            browserSettings.setBrowserPlatform(System.getProperty("browser.platform"));
+            browserSettings.setRemoteServerUrl(System.getProperty("remote.server.url"));
+        }
+
+        return browserSettings;
+
+    }
+
+    public BrowserInstance(BrowserSettings browserSettings) throws MalformedURLException {
+        this(browserSettings.getBrowserMode(), browserSettings.getBrowserName(),
+                browserSettings.getBrowserVersion(), browserSettings.getBrowserPlatform(),
+                browserSettings.getRemoteServerUrl());
+
+    }
+
+	public BrowserInstance(String browserMode, String browserName, String browserVersion, String browserPlatform, String remoteServerUrl) throws MalformedURLException {
 		//create a new instance of the Browser
+
 		if(browserMode.equals("local")){
             if(browserName.equals("chrome")){
                 //start chrome maximized by default,
@@ -43,7 +79,7 @@ public class InstanceBrowser {
 
 		if(browserMode.equals("remote")){
 
-			System.out.printf("Remote browser:%s, version:%s, platform:%s, url:%s \n", 
+			System.out.printf("Instance Remote browser:%s, version:%s, platform:%s, url:%s \n",
 				browserName, browserVersion, browserPlatform, remoteServerUrl); 
 
 			DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
@@ -103,10 +139,30 @@ public class InstanceBrowser {
 		_instanceDriver.close();	
 	}
 
+    public void quit(){
+        _instanceDriver.quit();
+    }
+
     public void maximize(){
 
         _instanceDriver.manage().window().maximize();
 
+    }
+
+    public void switchToDefaultContent(){
+        _instanceDriver.switchTo().defaultContent();
+    }
+
+    public void switchToFrame(String frame){
+        _instanceDriver.switchTo().frame(frame);
+    }
+
+    public Alert switchToAlert(){
+        return _instanceDriver.switchTo().alert();
+    }
+
+    public void setImplicitWait(int seconds){
+        _instanceDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
 	public By getBySearchCriteria(String str, Object... args) throws Exception{
@@ -173,12 +229,8 @@ public class InstanceBrowser {
 		return element.findElement(By.xpath(".."));
 	}
 
-	public WebElement getElement(String str) throws Exception{
+	public WebElement findElement(String str) throws Exception{
 		return this.findElement(this.getBySearchCriteria(str));
-	}
-
-	public List<WebElement> getElements(String str) throws Exception{
-		return this.findElements(this.getBySearchCriteria(str));
 	}
 
 	private WebElement findElement(By searchCriteria) throws Exception{
@@ -189,15 +241,131 @@ public class InstanceBrowser {
 		return we;
 	}
 
+    public WebElement findElementById(String elementId) throws Exception{
+        WebElement we = null;
+
+        we = _instanceDriver.findElement(By.id(elementId));
+
+        return we;
+    }
+
+    public WebElement findElementByXPath(String elementXPath) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByXPath(elementXPath).get(0);
+
+        return we;
+    }
+
+    public WebElement findElementByClassName(String elementClassName) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByClassName(elementClassName).get(0);
+
+        return we;
+    }
+
+    public WebElement findElementByCssSelector(String cssSelector) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByCssSelector(cssSelector).get(0);
+
+        return we;
+    }
+
+    public WebElement findElementByLinkText(String linkText) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByLinkText(linkText).get(0);
+
+        return we;
+    }
+
+    public WebElement findElementByPartialLinkText(String partialLinkText) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByPartialLinkText(partialLinkText).get(0);
+
+        return we;
+    }
+
+    public WebElement findElementByTagName(String tagName) throws Exception{
+        WebElement we = null;
+
+        we = findElementsByTagName(tagName).get(0);
+
+        return we;
+    }
+
+    public List<WebElement> findElements(String str) throws Exception{
+        return this.findElements(this.getBySearchCriteria(str));
+    }
+
 	private List<WebElement> findElements(By searchCriteria) throws Exception{
 		List<WebElement> we = null;
 
 		we = _instanceDriver.findElements(searchCriteria);
 		
 		return we;
-	}	
+	}
 
-	public WebElement getElementf(String str, Object... args) throws Exception{
+    public List<WebElement> findElementsByXPath(String elementXPath) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.xpath(elementXPath));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByClassName(String elementClassName) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.className(elementClassName));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByName(String elementName) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.name(elementName));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByCssSelector(String cssSelector) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.cssSelector(cssSelector));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByLinkText(String linkText) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.linkText(linkText));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByPartialLinkText(String partialLinkText) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.partialLinkText(partialLinkText));
+
+        return lwe;
+    }
+
+    public List<WebElement> findElementsByTagName(String tagName) throws Exception{
+        List<WebElement> lwe = null;
+
+        lwe = _instanceDriver.findElements(By.tagName(tagName));
+
+        return lwe;
+    }
+
+    public WebElement getElementf(String str, Object... args) throws Exception{
 		return this.findElement(this.getBySearchCriteria(str, args));
 	}
 
@@ -245,4 +413,9 @@ public class InstanceBrowser {
 		
 		return resultElements;
      }
+
+    public void executeScript(){
+        //((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i][j].fieldValue);
+
+    }
 }

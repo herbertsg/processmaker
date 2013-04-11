@@ -1,25 +1,27 @@
 package com.colosa.qa.automatization.tests.processExecutionForEvents;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestEventIntermediate{
-@Test
+public class TestEventIntermediate extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestEventIntermediate(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess() throws Exception{
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin","admin","workflow");
-    Pages.Main().goHome();
-    int casenumber=Pages.Home().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
-    Pages.DynaformExecution().intoDynaform();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin","admin","workflow", "English");
+    pages.Main().goHome();
+    int casenumber=pages.Home().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
+    pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
     fieldArray[1]=new FormFieldData();
@@ -46,25 +48,25 @@ public class TestEventIntermediate{
     fieldArray[3].fieldType=FieldType.BUTTON;
     fieldArray[3].fieldValue="";
 
-    Assert.assertTrue(FormFiller.formFillElements(fieldArray));
-    Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-    Pages.Main().logout();
+    Assert.assertTrue(FormFiller.formFillElements( browserInstance, fieldArray));
+    Assert.assertTrue(pages.InputDocProcess().continuebtn());
+    pages.Main().logout();
     //openTask2(casenumber);
 /*}
 
 public void openTask2(int casenumber) throws Exception{ */
-    Pages.CronExecute().execute("workflow");
+    pages.CronExecute().execute("workflow");
        String eventStatus= "";
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("iver","sample","");
-        Pages.Main().goHome();
-        Pages.Main().goAdmin();     
-        Pages.Admin().goToLogs();
-        eventStatus = Pages.Admin().eventStatus(casenumber);
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("iver","sample","workflow", "English");
+        pages.Main().goHome();
+        pages.Main().goAdmin();
+        pages.Admin().goToLogs();
+        eventStatus = pages.Admin().eventStatus(casenumber);
         Assert.assertEquals("CLOSE", eventStatus);
-        Pages.Main().goHome();
-        Pages.Home().openCase(casenumber);
-        Pages.DynaformExecution().intoDynaform();
+        pages.Main().goHome();
+        pages.Home().openCase(casenumber);
+        pages.DynaformExecution().intoDynaform();
         FormFieldData[] fieldArray2=new FormFieldData[2];
         fieldArray2[0]=new FormFieldData();
         fieldArray2[1]=new FormFieldData();
@@ -79,19 +81,19 @@ public void openTask2(int casenumber) throws Exception{ */
     fieldArray2[1].fieldType=FieldType.BUTTON;
     fieldArray2[1].fieldValue="";
 
-     Assert.assertTrue(FormFiller.formFillElements(fieldArray2));
-        Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-        Pages.Main().logout();
+     Assert.assertTrue(FormFiller.formFillElements( browserInstance, fieldArray2));
+        Assert.assertTrue(pages.InputDocProcess().continuebtn());
+        pages.Main().logout();
     //openTask3(casenumber);
 
 /*}
 
 public void openTask3(int casenumber) throws Exception{ */
-	Pages.Login().gotoUrl();
-    Pages.Login().loginUser("hector","sample","");
-    Pages.Main().goHome();
-    Pages.Home().openCase(casenumber);
-    Pages.DynaformExecution().intoDynaform();
+	pages.Login().gotoDefaultUrl();
+    pages.Login().loginUser("hector","sample","workflow", "English");
+    pages.Main().goHome();
+    pages.Home().openCase(casenumber);
+    pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray3=new FormFieldData[1];
     fieldArray3[0]=new FormFieldData();
 
@@ -100,19 +102,19 @@ public void openTask3(int casenumber) throws Exception{ */
      fieldArray3[0].fieldType=FieldType.BUTTON;
      fieldArray3[0].fieldValue="";
 
-	  Assert.assertTrue(FormFiller.formFillElements(fieldArray3));
-        Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-        Pages.Main().logout();
+	  Assert.assertTrue(FormFiller.formFillElements( browserInstance, fieldArray3));
+        Assert.assertTrue(pages.InputDocProcess().continuebtn());
+        pages.Main().logout();
     //openTask4(casenumber);
 
 /*}
 
 public void openTask4(int casenumber) throws Exception{   */
-	 Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","");
-    Pages.Main().goHome();
-    Pages.Home().openCase(casenumber);
-    Pages.DynaformExecution().intoDynaform();
+	 pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
+    pages.Main().goHome();
+    pages.Home().openCase(casenumber);
+    pages.DynaformExecution().intoDynaform();
 	 FormFieldData[] fieldArray4=new FormFieldData[2];
 	 fieldArray4[0]=new FormFieldData();
      fieldArray4[1]=new FormFieldData();
@@ -127,10 +129,10 @@ public void openTask4(int casenumber) throws Exception{   */
 	 fieldArray4[1].fieldType=FieldType.BUTTON;
 	 fieldArray4[1].fieldValue="";
 
-	  Assert.assertTrue(FormFiller.formFillElements(fieldArray4));
-        Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-    Pages.InputDocProcess().switchToDefault();
-    Pages.Main().logout();
+	  Assert.assertTrue(FormFiller.formFillElements( browserInstance, fieldArray4));
+        Assert.assertTrue(pages.InputDocProcess().continuebtn());
+    pages.InputDocProcess().switchToDefault();
+    pages.Main().logout();
 
 }
 

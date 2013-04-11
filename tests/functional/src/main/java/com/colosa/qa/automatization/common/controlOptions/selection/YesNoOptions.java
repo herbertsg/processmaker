@@ -1,8 +1,8 @@
 package com.colosa.qa.automatization.common.controlOptions.selection;
 
-import org.openqa.selenium.support.ui.Select;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
+import org.openqa.selenium.support.ui.Select;
 
 public class YesNoOptions extends ControlOptions{
 	
@@ -25,8 +25,8 @@ public class YesNoOptions extends ControlOptions{
 	}
 
 	@Override
-	protected void fillDefaultValue() throws Exception{
-		new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.defaultValue")).selectByValue(this.defaultValue);
+	protected void fillDefaultValue(BrowserInstance browser) throws Exception{
+		new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.defaultValue")).selectByValue(this.defaultValue);
 	}
 
 	private void setRequired(){}
@@ -35,9 +35,9 @@ public class YesNoOptions extends ControlOptions{
 
 	private void setSQLConnection(/*SQLConnection connection*/){}
 
-	public void fillForm() throws Exception{
+	public void fillForm(BrowserInstance browser) throws Exception{
 		this.sqlConnection = null;
 		this.required = null;
-		super.fillForm();
+		super.fillForm(browser);
 	}
 }

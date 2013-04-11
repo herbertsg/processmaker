@@ -1,12 +1,11 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import org.openqa.selenium.WebDriver;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import com.colosa.qa.automatization.common.*;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class Main extends Page{
 
@@ -14,19 +13,20 @@ public class Main extends Page{
     WebElement weLogout;
     List<WebElement> wel;
 
-    public Main() throws FileNotFoundException, IOException{
-
+    public Main(BrowserInstance browserInstance) {
+        super(browserInstance);
     }
+
 
     /*public void goSection(String sectionName) throws FileNotFoundException, IOException, Exception{
 
         //this.we = null;
-        Browser.driver().switchTo().defaultContent();
+        browser.switchToDefaultContent();
         System.out.println("Redireccionando a seccion "+sectionName+"...");
         //this.waitForElementPresent(By.cssSelector("ul#pm_menu li a"),60);
-        //this.we = Browser.driver().findElement(By.id(ConfigurationSettings.getInstance().getSetting("main.menu")));
+        //this.we = browser.findElementById(ConfigurationSettings.getInstance().getSetting("main.menu"));
 
-        this.weMainMenu = Browser.getElement("main.WebElement.DashboardMenu");
+        this.weMainMenu = browser.findElement("main.WebElement.DashboardMenu");
 
         this.weSectionButton = this.weMainMenu.findElement(By.linkText(sectionName));
         
@@ -39,48 +39,48 @@ public class Main extends Page{
     }*/
 
     public void goHome() throws FileNotFoundException, IOException, Exception{
-        Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.HomeMenu");
+        browser.switchToDefaultContent();
+        this.weSectionButton = browser.findElement("main.WebElement.HomeMenu");
         
         this.weSectionButton.click();
             
     }
 
     public void goDesigner() throws FileNotFoundException, IOException, Exception{
-        Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.DesignerMenu");
+        browser.switchToDefaultContent();
+        this.weSectionButton = browser.findElement("main.WebElement.DesignerMenu");
         
         this.weSectionButton.click();
     }
 
     public void goDashboards() throws FileNotFoundException, IOException, Exception{
-        Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.DashboardMenu");
+        browser.switchToDefaultContent();
+        this.weSectionButton = browser.findElement("main.WebElement.DashboardMenu");
 
         this.weSectionButton.click();
     }
 
     public void goAdmin() throws FileNotFoundException, IOException, Exception{
-        Browser.driver().switchTo().defaultContent();
-        this.weSectionButton = Browser.getElement("main.WebElement.AdminMenu");
+        browser.switchToDefaultContent();
+        this.weSectionButton = browser.findElement("main.WebElement.AdminMenu");
         
         this.weSectionButton.click();
     }
 
     public void logout() throws FileNotFoundException, IOException, Exception{
-        //Browser.driver().switchTo().defaultContent();
+        //browser.switchToDefaultContent();
         //if(this.skin==0)
-        Browser.driver().switchTo().defaultContent();
-        Browser.getElement("main.WebElement.Logout").click();
+        browser.switchToDefaultContent();
+        browser.findElement("main.WebElement.Logout").click();
     }
 
     public void profile() throws FileNotFoundException, IOException, Exception{
-        Browser.driver().switchTo().defaultContent();
-        Browser.getElement("main.WebElement.profile").click();
+        browser.switchToDefaultContent();
+        browser.findElement("main.WebElement.profile").click();
     }
 
-    public void goToUrl(String url) throws FileNotFoundException, IOException, Exception{
+/*    public void goToUrl(String url) throws FileNotFoundException, IOException, Exception{
         Browser.gotoUrl(url);
-    }
+    }*/
 
 }

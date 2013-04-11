@@ -1,42 +1,30 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import java.lang.Exception;
-import java.util.List;
-
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-    
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.NoSuchElementException;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import java.io.IOException;
 
-public class TestPMFRedirectToStep{
+public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestPMFRedirectToStep(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 				
-				Pages.Main().goHome();
+				pages.Main().goHome();
 				
-				int casenumber = Pages.Home().startCase("Test PMFRedirectToStep (Task 1)");
-        Pages.DynaformExecution().intoDynaform();
+				int casenumber = pages.Home().startCase("Test PMFRedirectToStep (Task 1)");
+        pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[1];
 		    fieldArray[0]=new FormFieldData();
@@ -46,7 +34,7 @@ public class TestPMFRedirectToStep{
 		    fieldArray[0].fieldType=FieldType.BUTTON;
 		    fieldArray[0].fieldValue="";
     		
-    		FormFiller.formFillElements(fieldArray);
+    		FormFiller.formFillElements( browserInstance, fieldArray);
 		    
 		    FormFieldData[] fieldArray1=new FormFieldData[1];
 		    
@@ -56,14 +44,14 @@ public class TestPMFRedirectToStep{
 		    fieldArray1[0].fieldType=FieldType.BUTTON;
 		    fieldArray1[0].fieldValue="";
 		    
-		    String fieldSTEP = Pages.DynaformExecution().getFieldProperty("STEP","value");
+		    String fieldSTEP = pages.DynaformExecution().getFieldProperty("STEP","value");
 		    
 		    Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
 		    
-		    FormFiller.formFillElements(fieldArray1);
-		    Pages.InputDocProcess().continuebtn();
-			Pages.DynaformExecution().outDynaform();
-			Pages.Main().logout();
+		    FormFiller.formFillElements( browserInstance, fieldArray1);
+		    pages.InputDocProcess().continuebtn();
+			pages.DynaformExecution().outDynaform();
+			pages.Main().logout();
 	}
 
 /*    @After
