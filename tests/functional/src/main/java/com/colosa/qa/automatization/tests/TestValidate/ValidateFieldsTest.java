@@ -1,26 +1,28 @@
 package com.colosa.qa.automatization.tests.TestValidate;
 
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
-import java.io.FileNotFoundException;
+import org.junit.After;
+
 import java.io.IOException;
 
-public class ValidateFieldsTest{
+public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.common.Test{
 
-@Test
+    public ValidateFieldsTest(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
  	public void runProcess() throws Exception{
- 		Pages.Login().gotoUrl();
-   	Pages.Login().loginUser("admin","admin","workflow");
-    Pages.Main().goHome();
-    int casenumber=Pages.Home().startCase("TestValidate (Task 1)");
-    Pages.DynaformExecution().intoDynaform();
+ 		pages.Login().gotoDefaultUrl();
+   	pages.Login().loginUser("admin","admin","workflow", "English");
+    pages.Main().goHome();
+    int casenumber=pages.Home().gotoNewCase().startCase("TestValidate (Task 1)");
+    pages.DynaformExecution().intoDynaform();
     
     FormFieldData[] fieldArray=new FormFieldData[12];
 
@@ -100,13 +102,13 @@ public class ValidateFieldsTest{
 		fieldArray[11].fieldType=FieldType.BUTTON;
 		fieldArray[11].fieldValue="";
 		
-    FormFiller.formFillElements(fieldArray);
-    Pages.InputDocProcess().continuebtn();
+    FormFiller.formFillElements(browserInstance, fieldArray);
+    pages.AssignTask().pressContinueButton();
     
-    Pages.Home().gotoInbox();
-    Assert.assertTrue("The case does not exist in inbox", Pages.Home().existCase(casenumber));
-    Pages.Home().openCase(casenumber);
-    Pages.DynaformExecution().intoDynaform();
+    //pages.Home().gotoInbox();
+    Assert.assertTrue("The case does not exist in inbox", pages.Home().gotoInbox().existCase(casenumber));
+    pages.Home().gotoInbox().openCase(casenumber);
+    pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
 		
@@ -115,24 +117,24 @@ public class ValidateFieldsTest{
     fieldArray1[0].fieldType=FieldType.BUTTON;
     fieldArray1[0].fieldValue="";
 		
-		String fieldTEXT_ANY = Pages.DynaformExecution().getFieldProperty("TEXT_ANY","value");
-		String fieldTEXT_ALPHABETIC = Pages.DynaformExecution().getFieldProperty("TEXT_ALPHABETIC","value");
-		String fieldTEXT_ALPHANUMERIC = Pages.DynaformExecution().getFieldProperty("TEXT_ALPHANUMERIC","value");
-		String fieldTEXT_INTEGER = Pages.DynaformExecution().getFieldProperty("TEXT_INTEGER","value");
-		String fieldTEXT_REAL = Pages.DynaformExecution().getFieldProperty("TEXT_REAL","value");
-		String fieldTEXT_EMAIL = Pages.DynaformExecution().getFieldProperty("TEXT_EMAIL","value"); 
-		String fieldTEXT_LOGIN = Pages.DynaformExecution().getFieldProperty("TEXT_LOGIN","value"); 
+		String fieldTEXT_ANY = pages.DynaformExecution().getFieldProperty("TEXT_ANY","value");
+		String fieldTEXT_ALPHABETIC = pages.DynaformExecution().getFieldProperty("TEXT_ALPHABETIC","value");
+		String fieldTEXT_ALPHANUMERIC = pages.DynaformExecution().getFieldProperty("TEXT_ALPHANUMERIC","value");
+		String fieldTEXT_INTEGER = pages.DynaformExecution().getFieldProperty("TEXT_INTEGER","value");
+		String fieldTEXT_REAL = pages.DynaformExecution().getFieldProperty("TEXT_REAL","value");
+		String fieldTEXT_EMAIL = pages.DynaformExecution().getFieldProperty("TEXT_EMAIL","value");
+		String fieldTEXT_LOGIN = pages.DynaformExecution().getFieldProperty("TEXT_LOGIN","value");
 		
-		String fieldCURRENCY_REAL = Pages.DynaformExecution().getFieldProperty("CURRENCY_REAL","value"); 
-		String fieldCURRENCY_INTEGER = Pages.DynaformExecution().getFieldProperty("CURRENCY_INTEGER","value"); 
+		String fieldCURRENCY_REAL = pages.DynaformExecution().getFieldProperty("CURRENCY_REAL","value");
+		String fieldCURRENCY_INTEGER = pages.DynaformExecution().getFieldProperty("CURRENCY_INTEGER","value");
 		
-		String fieldPERCENTAJE_REAL = Pages.DynaformExecution().getFieldProperty("PERCENTAJE_REAL","value"); 
-		String fieldPERCENTAJE_INTEGER = Pages.DynaformExecution().getFieldProperty("PERCENTAJE_INTEGER","value"); 
+		String fieldPERCENTAJE_REAL = pages.DynaformExecution().getFieldProperty("PERCENTAJE_REAL","value");
+		String fieldPERCENTAJE_INTEGER = pages.DynaformExecution().getFieldProperty("PERCENTAJE_INTEGER","value");
 		
-	  FormFiller.formFillElements(fieldArray1);
+	  FormFiller.formFillElements(browserInstance, fieldArray1);
     
     Assert.assertEquals("Validate Text Any does not exist", "validation89()?¿'/&%$@|€", fieldTEXT_ANY);
-    Assert.assertEquals("Validate Text Alphabetic does not exist", "validationAA", fieldTEXT_ALPHABETIC);
+    Assert.assertEquals("Validate Text Alphabetic does not exist", "validationAABB", fieldTEXT_ALPHABETIC);
     Assert.assertEquals("Validate Text Alphanumeric does not exist", "12validation12302", fieldTEXT_ALPHANUMERIC);
     Assert.assertEquals("Validate Text Integer does not exist", "123456789", fieldTEXT_INTEGER);
     Assert.assertEquals("Validate Text Real does not exist", "123.00", fieldTEXT_REAL);
@@ -145,14 +147,14 @@ public class ValidateFieldsTest{
     Assert.assertEquals("Validate Percentaje Real not exist", "123.00 %", fieldPERCENTAJE_REAL);
     Assert.assertEquals("Validate Percentaje Integer does not exist", "123 %", fieldPERCENTAJE_INTEGER);
     
-    Pages.InputDocProcess().continuebtn();
-    Pages.InputDocProcess().switchToDefault();
-    Pages.Main().logout();
+    pages.AssignTask().pressContinueButton();
+    pages.InputDocProcess().switchToDefault();
+    pages.Main().logout();
     }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }
 

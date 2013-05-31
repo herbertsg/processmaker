@@ -1,22 +1,19 @@
 package com.colosa.qa.automatization.common;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-
+/*
 public class Browser {
 
 	private static WebDriver _driver = null;
-    private static InstanceBrowser _instanceBrowser = null;
+    private static BrowserInstance _browserInstance = null;
 	private static long _timeoutSeconds = 0;
 
 
     public static void checkBrowserSettingsFromSystemProperties() throws IOException {
+        //Read browser information from default page this is done in the constructor of Browsersettings
+
         //Read browser information from registry
+        //-Dbrowser.settings=1 -Dbrowser.mode=local -Dbrowser.name=firefox
+        //-Dbrowser.settings=1 -Dbrowser.mode=remote -Dbrowser.name=firefox -Dremote.server.url=http:// browser.version=
         //if variable set from system properties overrride configuration of browser
         String setBrowserSettings = System.getProperty("browser.settings");
 
@@ -46,12 +43,12 @@ public class Browser {
 
     }
 
-    /**
+    //
      * Create a default instance of the browser using default configuration from registry
      * @return Return the instance of the browser created by default
      * @throws FileNotFoundException
      * @throws IOException
-     */
+    //
 	public static WebDriver driver() throws FileNotFoundException, IOException{
 		if(_driver == null){
             System.out.printf("Create New Browser instance.\n");
@@ -65,8 +62,8 @@ public class Browser {
 			browserName = BrowserConfiguration.getInstance().getBrowserName();
 
 			if(browserMode.equals("local")){
-                _instanceBrowser = new InstanceBrowser(browserMode, browserName, "", "", "");
-                _driver = _instanceBrowser.getInstanceDriver();
+                _browserInstance = new BrowserInstance(browserMode, browserName, "", "", "");
+                _driver = _browserInstance.getInstanceDriver();
 			}
 
 			if(browserMode.equals("remote")){
@@ -77,118 +74,91 @@ public class Browser {
 				System.out.printf("Remote browser:%s, version:%s, platform:%s, url:%s \n", 
 					browserName, browserVersion, browserPlatform, remoteServerUrl); 
 				
-				_instanceBrowser = new InstanceBrowser(browserMode, browserName, browserVersion, browserPlatform, remoteServerUrl);
+				_browserInstance = new BrowserInstance(browserMode, browserName, browserVersion, browserPlatform, remoteServerUrl);
 
-                _driver = _instanceBrowser.getInstanceDriver();
+                _driver = _browserInstance.getInstanceDriver();
 			}
 		}
 		return _driver;
 	}
 
-    /*
-     * Create local instance of Browser using specified browser
-     * @param browserName The browser identifier used to initiate it "firefox, chrome, internet explorer"
-     * @return return the WebDriver instance that is created in base to the specified browser
-     * @throws FileNotFoundException
-     * @throws IOException
 
-    public static WebDriver driver(String browserName) throws FileNotFoundException, IOException{
-        if(_driver == null){
-
-            _instanceBrowser = new InstanceBrowser("local", browserName, "", "", "");
-            _driver = _instanceBrowser.getInstanceDriver();
-        }
-        return _driver;
-    }
-     * Create a remote instance of Browser with the specified parameters
-     * @param browserName The browser identifier used to initiate it "firefox, chrome, internet explorer"
-     * @param browserVersion  The target browser version 2.0, etc..
-     * @param browserPlatform The platform where must be executed the Browser: "WINDOWS, LINUX, MAC"
-     * @param remoteServerUrl The remote selenium server URL: http://192.168.11.24:4444/wd/hub
-     * @return return the WebDriver instance that is created in base to the specified browser
-     * @throws FileNotFoundException
-     * @throws IOException
-     *
-    public static WebDriver driver(String browserName, String browserVersion, String browserPlatform, String remoteServerUrl) throws FileNotFoundException, IOException{
-        if(_driver == null){
-            System.out.printf("Remote browser:%s, version:%s, platform:%s, url:%s \n",
-                    browserName, browserVersion, browserPlatform, remoteServerUrl);
-
-            _instanceBrowser = new InstanceBrowser("remote", browserName, browserVersion, browserPlatform, remoteServerUrl);
-
-            _driver = _instanceBrowser.getInstanceDriver();
-        }
-        return _driver;
-    }*/
 
     public static void maximize(){
-        _instanceBrowser.maximize();
+        _browserInstance.maximize();
     }
 
 	public static void gotoUrl(String url){
-		_instanceBrowser.gotoUrl(url);
+		_browserInstance.gotoUrl(url);
 	}
 
 	public static String title(){
-		return _instanceBrowser.title();
+		return _browserInstance.title();
 	}
 
 	public static void close(){
-		_instanceBrowser.close();
+		_browserInstance.quit();
+
         _driver = null;
-        _instanceBrowser = null;
+        _browserInstance = null;
 	}
 
+    public static void quit(){
+        _browserInstance.quit();
+        _driver = null;
+        _browserInstance = null;
+    }
+
 	public static By getBySearchCriteria(String str, Object... args) throws Exception{
-		return _instanceBrowser.getBySearchCriteria(str, args);
+		return _browserInstance.getBySearchCriteria(str, args);
 	}	
 
 	public static By getBySearchCriteriaUsingCriteria(String searchCriteria) throws Exception{
-		return _instanceBrowser.getBySearchCriteriaUsingCriteria(searchCriteria);
+		return _browserInstance.getBySearchCriteriaUsingCriteria(searchCriteria);
 	}	
 
 	public static WebElement getParent(WebElement element) throws Exception{
-		return _instanceBrowser.getParent(element);
+		return _browserInstance.getParent(element);
 	}
 
 	public static WebElement getElement(String str) throws Exception{
-		return  _instanceBrowser.getElement(str);
+		return  _browserInstance.getElement(str);
 	}
 
 	public static List<WebElement> getElements(String str) throws Exception{
-		return _instanceBrowser.getElements(str);
+		return _browserInstance.getElements(str);
 	}
 
 	public static WebElement getElementf(String str, Object... args) throws Exception{
-		return _instanceBrowser.getElementf(str, args);
+		return _browserInstance.getElementf(str, args);
 	}
 
 	public static Boolean elementExists(String key, int occurrences) throws Exception{
-		return _instanceBrowser.elementExists(key, occurrences);
+		return _browserInstance.elementExists(key, occurrences);
 	}
 
 	public static Boolean elementExists(String key) throws Exception{
-		return _instanceBrowser.elementExists(key);
+		return _browserInstance.elementExists(key);
 	}
 
 	public static Boolean elementExistsSearchCriteria(String searchCriteria, int occurrences) throws Exception{
-		return _instanceBrowser.elementExistsSearchCriteria(searchCriteria, occurrences);
+		return _browserInstance.elementExistsSearchCriteria(searchCriteria, occurrences);
 	}
 
 	public static Boolean elementExistsSearchCriteria(String searchCriteria) throws Exception{
-		return _instanceBrowser.elementExistsSearchCriteria(searchCriteria);
+		return _browserInstance.elementExistsSearchCriteria(searchCriteria);
 	}
 
 	public static Boolean waitForElement(By elementLocator, long timeoutSeconds) throws Exception{
 
-		return _instanceBrowser.waitForElement(elementLocator, timeoutSeconds);
+		return _browserInstance.waitForElement(elementLocator, timeoutSeconds);
      }
 
 	public static void waitForElement(String key, long timeoutSeconds) throws Exception{
-        _instanceBrowser.waitForElement(key, timeoutSeconds);
+        _browserInstance.waitForElement(key, timeoutSeconds);
      }
 
      public static List<WebElement> getPreviousSimblingElements(WebElement currentElement){
-		return _instanceBrowser.getPreviousSimblingElements(currentElement);
+		return _browserInstance.getPreviousSimblingElements(currentElement);
      }
-}
+}       */

@@ -7,14 +7,13 @@ last update: 2012-10-22 Hrs. 14:34
 
 package com.colosa.qa.automatization.common.extJs;
 
+import java.util.ArrayList;
 import java.util.List;
 //import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
+
+import org.openqa.selenium.*;
 //import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 //import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
 //import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,6 +23,14 @@ public class ExtJSGrid{
 
 	private WebDriver driver;
 	private WebElement grid;
+    private WebElement headerToolbar;
+    private List<WebElement> headerToolbarCells;
+    private WebElement searchInput;
+    private WebElement gridBody;
+    private ExtJSGridHeader gridBodyHeader;
+    //private List<ExtJSGridHeader> gridHeaders;
+    private List<WebElement> rows;
+
 	private List<WebElement> pager;
 	private WebElement btn_first;
 	private WebElement btn_previous;
@@ -34,11 +41,25 @@ public class ExtJSGrid{
 	private int totalPages;
 	private int items; //*falta dar utilidad
 	private int timeout;
-	
+
+    /**
+     * Creates an ExtJsGrid class.
+     * @param grid The element that has the class = x-grid-panel
+     * @param driver The browser driver
+     * @param timeout
+     */
 	public ExtJSGrid(WebElement grid, WebDriver driver, int timeout){
-		this.driver = driver;
+		//verify x-grid-panel class
+
+        this.driver = driver;
 		this.grid = grid;
 		this.timeout = timeout;
+        this.headerToolbar = this.grid.findElement(By.cssSelector("div.x-panel-tbar"));
+        this.headerToolbarCells = this.headerToolbar.findElements(By.cssSelector("td.x-toolbar-cell"));
+        this.gridBody = this.grid.findElement(By.cssSelector("div.x-grid3"));
+        //this.gridBodyHeader = this.gridBody.findElement(By.cssSelector("div.x-grid3-header"));
+
+        //this.gridHeaders = this.gridBodyHeader.findElements(By.cssSelector("td.x-grid3-hd.x-grid3-cell:not([style='display:none'])"));
 		this.pager = this.grid.findElements(By.xpath("div/div[3]/div/table/tbody/tr/td/table/tbody/tr/td"));
 		this.btn_first = this.pager.get(0).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 		this.btn_previous = this.pager.get(1).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
@@ -48,6 +69,11 @@ public class ExtJSGrid{
 		this.init();
 	}
 
+    /**
+     *
+     * @param grid
+     * @param driver
+     */
 	public ExtJSGrid(WebElement grid, WebDriver driver){
 		this(grid, driver, 30);
 	}
@@ -107,6 +133,125 @@ public class ExtJSGrid{
 	public List<WebElement> getRows(){
 		return this.grid.findElements(By.xpath("div/div[2]/div/div[1]/div[2]/div/div"));
 	}
+
+    public void setSearchFieldGrid(Boolean headerToolBar, Integer cellNumber){
+        this.searchInput = null;
+
+        //list of toolbar CELLS
+        System.out.println("Total toolbar cells: "+ headerToolbarCells.size());
+        Integer counter = 0;
+        for(WebElement toolbarElement: headerToolbarCells){
+            counter++;
+            System.out.println("  Toolbar cells["+counter+"]: "+ toolbarElement.getText());
+        }
+
+        //pm_search_text_field
+
+        //set the search cell as a headerToolbar of footer cell in toolbar.
+        if(headerToolBar){
+            this.searchInput = headerToolbarCells.get(cellNumber-1).findElement(By.cssSelector("input.x-form-text[type='text']"));
+        }
+    }
+
+    public List<ExtJSGridRow> getCurrentListRows(){
+        //clear previous list of rows
+
+        //div#ext-gen25.x-grid3 div#ext-gen26.x-grid3-viewport div#ext-gen28.x-grid3-scroller div#ext-gen30.x-grid3-body div.x-grid3-row
+        List<WebElement> listRows = this.gridBody.findElements(By.cssSelector("div.x-grid3-body div.x-grid3-row"));
+        System.out.println("Get current list of rows total: "+ listRows.size());
+
+
+        List<ExtJSGridRow> listGridRows = new ArrayList<ExtJSGridRow>(listRows.size());
+
+        for (WebElement gridRow : listRows) {
+            System.out.println("   row data: "+ gridRow.getText());
+
+            listGridRows.add(new ExtJSGridRow(gridRow));
+        }
+
+        return listGridRows;
+    }
+
+    public List<ExtJSGridRow> findRowsBySearchField(String searchCriteria) throws Exception {
+        if(this.searchInput == null){
+            throw new Exception("Search field not defined, define it with setSearchFieldGrid function.");
+        }
+
+        this.searchInput.sendKeys(searchCriteria);
+        this.searchInput.sendKeys(Keys.RETURN);
+
+        //wait for list to update
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        /*Boolean returnExpectedCondition = (new WebDriverWait(this.driver, timeoutSeconds))
+                .until(new ExpectedCondition<Boolean>(){
+                    @Override
+                    public Boolean apply(WebDriver d) {
+                        return (((JavascriptExecutor)this.driver).executeScript("return document.readyState;")).equals("complete");
+                        //return ((JavascriptExecutor)_instanceDriver).executeScript("return jQuery.active;") == 0;
+                    }
+                }
+                );*/
+
+        //return list of rows, only the filtered list is returned
+        return this.getCurrentListRows();
+
+    }
+
+    public ExtJSGridRow searchAndReturnRow(String searchCriteria, String columnName) throws Exception {
+        ExtJSGridRow resultGridRow = null;
+        Boolean rowFound = false;
+
+        if(this.searchInput == null){
+            throw new Exception("Search field not defined, define it with setSearchFieldGrid function.");
+        }
+
+        this.searchInput.sendKeys(searchCriteria);
+        this.searchInput.sendKeys(Keys.RETURN);
+
+        //wait for list to update
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        /*Boolean returnExpectedCondition = (new WebDriverWait(this.driver, timeoutSeconds))
+                .until(new ExpectedCondition<Boolean>(){
+                    @Override
+                    public Boolean apply(WebDriver d) {
+                        return (((JavascriptExecutor)this.driver).executeScript("return document.readyState;")).equals("complete");
+                        //return ((JavascriptExecutor)_instanceDriver).executeScript("return jQuery.active;") == 0;
+                    }
+                }
+                );*/
+
+        //return list of rows, only the filtered list is returned
+        List<ExtJSGridRow> listFoundRows = this.getCurrentListRows();
+        System.out.println("Search grid total items: "+ listFoundRows.size());
+
+        //update header
+        this.gridBodyHeader = new ExtJSGridHeader(this.grid);
+
+        //compare each found row with the value of the specified column
+        for (ExtJSGridRow gridRow:listFoundRows){
+            //get the number of the column of the header
+            Integer headerIndex =  this.gridBodyHeader.getHeaderColumnNumber(columnName);
+            System.out.println("   Header with name: "+ columnName + " = " + headerIndex);
+
+            System.out.println("   Row Data: " + gridRow.getRowColumnText(headerIndex));
+
+            if(gridRow.getRowColumnText(headerIndex).equals(searchCriteria)){
+                resultGridRow = gridRow;
+                //rowFound = true;
+                break;
+            }
+        }
+
+        return resultGridRow;
+    }
 
 	public WebElement getRowByColumnValue(String columnName, String columnValue) throws Exception{
 		WebElement header = this.grid.findElement(By.xpath("div/div[2]/div/div[1]/div[1]"));

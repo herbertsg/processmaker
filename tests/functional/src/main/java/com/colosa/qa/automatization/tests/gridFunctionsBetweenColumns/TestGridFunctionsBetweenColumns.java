@@ -1,20 +1,14 @@
 package com.colosa.qa.automatization.tests.gridFunctionsBetweenColumns;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldType;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Random;
 
-public class TestGridFunctionsBetweenColumns{
+public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	public static int addRow = 30;
@@ -27,82 +21,86 @@ public class TestGridFunctionsBetweenColumns{
 	public static String[] prom;
 	public static double sum = 101149.47;
 
+    public TestGridFunctionsBetweenColumns(String browserName) throws IOException {
+        super(browserName);
+    }
 
-	@Test
+
+    @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Grillas Funciones Entre Columnas (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("Grillas Funciones Entre Columnas (Task 1)");
+		pages.DynaformExecution().intoDynaform();
 		for(int rows = 1;rows<addRow;rows++)
 		{
-			Pages.DynaformExecution().gridAddNewRow("grd1");
+			pages.DynaformExecution().gridAddNewRow("grd1");
 		}	
 		int count = 0;
 
 		for(int rows = 0; rows<addRow;rows++)
 		{
 			count = rows + 1;
-			Pages.DynaformExecution().setGridFieldValue("grd1", count, "Cantidad", cant[rows]);
-			Pages.DynaformExecution().setGridFieldValue("grd1", count, "Precio", prec1[rows]);
-			Pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor1", perc1[rows]);
-			Pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor2", perc2[rows]);
+			pages.DynaformExecution().setGridFieldValue("grd1", count, "Cantidad", cant[rows]);
+			pages.DynaformExecution().setGridFieldValue("grd1", count, "Precio", prec1[rows]);
+			pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor1", perc1[rows]);
+			pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor2", perc2[rows]);
 			
 		}
 
 		/*Random rand = new Random();
 		int aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		Pages.DynaformExecution().gridDeleteRow("grid1", aleat);   */
+		pages.DynaformExecution().gridDeleteRow("grid1", aleat);   */
 		
-		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	
 	/*}
 
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "");
-		Pages.Main().goHome();	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 
-		Pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().intoDynaform();
 		/*for(int values = 0; values<gridData2.length;values++)
 		{
-			Assert.assertEquals(cant[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Cantidad"));
-			Assert.assertEquals(prec1[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Precio"));
-			Assert.assertEquals(total[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Total"));
-			Assert.assertEquals(perc1[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor1"));
-			Assert.assertEquals(perc2[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor2"));
-			Assert.assertEquals(prom[values], Pages.DynaformExecution().getGridFieldValue("grd1",values, "Promedio"));
+			Assert.assertEquals(cant[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Cantidad"));
+			Assert.assertEquals(prec1[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Precio"));
+			Assert.assertEquals(total[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Total"));
+			Assert.assertEquals(perc1[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor1"));
+			Assert.assertEquals(perc2[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor2"));
+			Assert.assertEquals(prom[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Promedio"));
 			
 		}*/
 
-		//Assert.assertEquals(Double.toString(sum), Pages.DynaformExecution().getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
-		Pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		//Assert.assertEquals(Double.toString(sum), pages.DynaformExecution().getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
+		pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

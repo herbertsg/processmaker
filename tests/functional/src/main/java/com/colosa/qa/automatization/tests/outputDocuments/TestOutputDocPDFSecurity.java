@@ -1,38 +1,38 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
-import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestOutputDocPDFSecurity{
+public class TestOutputDocPDFSecurity extends com.colosa.qa.automatization.tests.common.Test{
 
 
-	@Test
+    public TestOutputDocPDFSecurity(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testPDFSecurity() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		Pages.Home().startCase("Output documents - PDF security (PDF security)");
-		Pages.OutputDocProcess().downloadPdfFile();
-		System.out.println(Pages.OutputDocProcess().checkPdfSecurity("C:\\Users\\Administrator\\Downloads\\test_1.pdf","test"));
-		Assert.assertEquals(" \nTest PDF security.\nIf you can read this message, the file has been opened.\nPowered by TCPDF (www.tcpdf.org)", Pages.OutputDocProcess().checkPdfSecurity("C:\\Users\\Administrator\\Downloads\\test_1.pdf","test"));
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoNewCase().startCase("Output documents - PDF security (PDF security)");
+		pages.OutputDocProcess().downloadPdfFile();
+		System.out.println(pages.OutputDocProcess().checkPdfSecurity("C:\\Users\\Administrator\\Downloads\\test_1.pdf","test"));
+		Assert.assertEquals(" \nTest PDF security.\nIf you can read this message, the file has been opened.\nPowered by TCPDF (www.tcpdf.org)", pages.OutputDocProcess().checkPdfSecurity("C:\\Users\\Administrator\\Downloads\\test_1.pdf","test"));
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

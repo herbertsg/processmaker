@@ -1,32 +1,35 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class DebugExecution extends Page {
 
-    public DebugExecution() throws FileNotFoundException, IOException {
 
+    public DebugExecution(BrowserInstance browserInstance) throws Exception {
+        super(browserInstance);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // into level of debug
     public void intoDebug() throws Exception {
-        Browser.driver().switchTo().defaultContent();
-        Browser.driver().switchTo().frame("casesFrame");
+        browser.switchToDefaultContent();
+        browser.switchToFrame("casesFrame");
     }
 
     // verify debug
     public boolean verifyDebug() throws Exception {
     	intoDebug();
-    	WebElement debugPanel = Browser.driver().findElement(By.id("debugPanel"));
+    	WebElement debugPanel = browser.findElementById("debugPanel");
     	String debugPanelClass = debugPanel.getAttribute("class").trim();
 
     	if (debugPanelClass.indexOf ("x-hide-display") > -1) {
@@ -39,7 +42,7 @@ public class DebugExecution extends Page {
     // into tab variables
     public void showAllVariables() throws Exception {
     	intoDebug();
-    	WebElement divDebugVariables = Browser.driver().findElement(By.id("debugVariables"));
+    	WebElement divDebugVariables = browser.findElementById("debugVariables");
 
     	List<WebElement> gridDebugButtons = divDebugVariables.findElements(By.tagName("button"));
     	String valueField = "";
@@ -56,7 +59,7 @@ public class DebugExecution extends Page {
     // into tab variables
     public void goTabVariables() throws Exception {
     	intoDebug();
-    	WebElement tab = Browser.driver().findElement(By.id("debugPanelTabs__debugVariables"));
+    	WebElement tab = browser.findElementById("debugPanelTabs__debugVariables");
     	showAllVariables();
     	tab.click();
     }
@@ -65,7 +68,7 @@ public class DebugExecution extends Page {
     public String getValue(String nameVariable) throws Exception{
     	intoDebug();
         Thread.sleep(2000);
-        WebElement gridDebug = Browser.driver().findElement(By.id("debugVariables"));
+        WebElement gridDebug = browser.findElementById("debugVariables");
 
         List<WebElement> gridDebugTrs = gridDebug.findElements(By.tagName("td"));
         String valueField = "";

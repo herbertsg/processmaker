@@ -1,13 +1,13 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
+import org.openqa.selenium.WebElement;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class Documents extends Page{
 
@@ -16,15 +16,34 @@ public class Documents extends Page{
 	WebElement panel;
 	List<WebElement> files;
 
-	public Documents() throws FileNotFoundException, IOException{
+    public Documents(BrowserInstance browser) throws Exception {
+        super(browser);
 
-	}
+        verifyPage();
+    }
 
-	public void selectFolder(String folderName) throws FileNotFoundException, IOException, Exception{
+    @Override
+    public void verifyPage() throws Exception {
+
+        //wait for page
+        browser.switchToDefaultContent();
+        //browser.waitForElement(By.id("casesFrame"),120);
+        browser.switchToFrame("casesFrame");
+        //System.out.println("goto subcaseFrame ...");
+        browser.switchToFrame("casesSubFrame");
+        //browser.waitForElement(By.id("casesSubFrame"), 10);
+        //browser.switchToFrame("casesSubFrame");
+        System.out.println("wait for documents ...");
+        //browser.waitForElement(By.id("processesFilter"), 10);
+
+            browser.findElementById("documents");
+    }
+
+    public void selectFolder(String folderName) throws FileNotFoundException, IOException, Exception{
 
 
-		Browser.driver().switchTo().frame("casesSubFrame");
-		this.dirRoot = Browser.getElement("documents.WebElement.Root");
+		browser.switchToFrame("casesSubFrame");
+		this.dirRoot = browser.findElement("documents.WebElement.Root");
         
         this.dirs = this.dirRoot.findElements(By.xpath("div[2]/div/ul/li/ul/li"));
 
@@ -45,11 +64,11 @@ public class Documents extends Page{
 
 	public void downloadDocument(String fileName) throws FileNotFoundException, IOException, Exception{
 
-		ExtJSGrid grid = new ExtJSGrid(Browser.getElement("documents.WebElement.Panel"),Browser.driver());
+		ExtJSGrid grid = new ExtJSGrid(browser.findElement("documents.WebElement.Panel"),browser.getInstanceDriver());
 		
 		this.panel =  grid.getRowByColumnValue("Name", fileName);
 		this.panel.click();
-		Browser.getElement("documents.WebElement.Download").click();
+		browser.findElement("documents.WebElement.Download").click();
 		
 	}
 }

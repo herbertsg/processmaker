@@ -1,18 +1,15 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Value;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestFunctionUserInfo{
+public class TestFunctionUserInfo extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static String firstNameMysql;
@@ -20,39 +17,45 @@ public class TestFunctionUserInfo{
 	protected static String firstNameOracle;
 	protected static String lastNameOracle;
 
-	@Test
+    public TestFunctionUserInfo(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("UserInfo (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("usernameHold", "admin");
-		Pages.DynaformExecution().setFieldValue("send", "");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("UserInfo (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("usernameHold", "admin");
+		pages.DynaformExecution().setFieldValue("send", "");
 		//Verify results
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(FieldKeyType.ID, "form[userName]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][firstname]"), Value.getValue(FieldKeyType.ID, "form[firstName]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][lastname]"), Value.getValue(FieldKeyType.ID, "form[lastName]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][mail]"), Value.getValue(FieldKeyType.ID, "form[mail]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][status]"), Value.getValue(FieldKeyType.ID, "form[status]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][address]"), Value.getValue(FieldKeyType.ID, "form[address]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][phone]"), Value.getValue(FieldKeyType.ID, "form[phone]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][fax]"), Value.getValue(FieldKeyType.ID, "form[fax]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][cellular]"), Value.getValue(FieldKeyType.ID, "form[cellular]"));
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userInfoGrid][1][birthday]"), Value.getValue(FieldKeyType.ID, "form[birthday]"));
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("send", "");
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		//Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "username"), pages.DynaformExecution().getFieldValue("username"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "firstname"), pages.DynaformExecution().getFieldValue("firstname"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "lastname"), pages.DynaformExecution().getFieldValue("lastname"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "mail"), pages.DynaformExecution().getFieldValue("mail"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "status"), pages.DynaformExecution().getFieldValue("status"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "address"), pages.DynaformExecution().getFieldValue("address"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "phone"), pages.DynaformExecution().getFieldValue("phone"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "fax"), pages.DynaformExecution().getFieldValue("fax"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "cellular"), pages.DynaformExecution().getFieldValue("cellular"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "birthday"), pages.DynaformExecution().getFieldValue("birthday"));
+
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().clickButton("send");
+		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

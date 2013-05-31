@@ -1,6 +1,6 @@
 package com.colosa.qa.automatization.common.controlOptions.input;
 
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.support.ui.Select;
 
 public class NumericOptions extends InputControlOptions{
@@ -61,11 +61,11 @@ public class NumericOptions extends InputControlOptions{
 		this.defaultValue = defaultValue;
 	}
 
-	public void fillForm() throws Exception{
-		super.fillForm();
-		new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.validate")).selectByValue(this.validate.getValue());
-		new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.decimalSeparator")).selectByValue(this.decimalSeparator.getValue());
-		Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.formula").sendKeys(this.formula);
+	public void fillForm(BrowserInstance browser) throws Exception{
+		super.fillForm(browser);
+		new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.validate")).selectByValue(this.validate.getValue());
+		new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.decimalSeparator")).selectByValue(this.decimalSeparator.getValue());
+		browser.findElement("dynaformDesigner.webElement.blankDynaformModal.formula").sendKeys(this.formula);
 	}
 
 }

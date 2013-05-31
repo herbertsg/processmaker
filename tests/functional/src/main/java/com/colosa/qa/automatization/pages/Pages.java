@@ -1,146 +1,163 @@
 package com.colosa.qa.automatization.pages;
 
+import com.colosa.qa.automatization.common.BrowserInstance;
+
 public class Pages{
+    protected BrowserInstance _browserInstance;
 
-	public static Login Login() throws Exception{
+    private Pages(){
 
-		Login loginPage = new Login();
+    }
+
+    public Pages(BrowserInstance browserInstance){
+        _browserInstance = browserInstance;
+    }
+
+	public Login Login() throws Exception{
+
+		Login loginPage = new Login(_browserInstance);
 		
 		return loginPage;
 	}
 
-	public static Main Main() throws Exception{
+	public Main Main() throws Exception{
 
-		Main mainPage = new Main();
+		Main mainPage = new Main(_browserInstance);
 
 		return mainPage;
 	}
 
-	public static Home Home() throws Exception{
+	public Home Home() throws Exception{
 
 
-		Home page = new Home();
-
-		return page;
-	}
-
-	public static Admin Admin() throws Exception{
-
-
-		Admin page = new Admin();
+		Home page = new Home(_browserInstance);
 
 		return page;
 	}
 
-	public static Documents Documents() throws Exception{
-		Documents document = new Documents();
+	public Admin Admin() throws Exception{
+
+
+		Admin page = new Admin(_browserInstance);
+
+		return page;
+	}
+
+	public Documents Documents() throws Exception{
+		Documents document = new Documents(_browserInstance);
 
 		return document;
 	}
 
-	public static ProcessDesigner ProcessDesigner() throws Exception{
-		ProcessDesigner processDesigner = new ProcessDesigner();
+	public ProcessDesigner ProcessDesigner() throws Exception{
+		ProcessDesigner processDesigner = new ProcessDesigner(_browserInstance);
 
 		return processDesigner;
 	}
 
-	public static ProcessList ProcessList() throws Exception{
-		ProcessList processList = new ProcessList();
+	public ProcessList ProcessList() throws Exception{
+		ProcessList processList = new ProcessList(_browserInstance);
 
 		return processList;
 	}
 
-	public static InputDocProcess InputDocProcess() throws Exception{
-		InputDocProcess inputDocProcess = new InputDocProcess();
+	public InputDocProcess InputDocProcess() throws Exception{
+		InputDocProcess inputDocProcess = new InputDocProcess(_browserInstance);
 
 		return inputDocProcess;
 	}
 
-	public static OutputDocProcess OutputDocProcess() throws Exception{
-		OutputDocProcess outputDocProcess = new OutputDocProcess();
+	public OutputDocProcess OutputDocProcess() throws Exception{
+		OutputDocProcess outputDocProcess = new OutputDocProcess(_browserInstance);
 
 		return outputDocProcess;
 	}	
 
-	public static InputDocumentList InputDocumentList() throws Exception{
-		InputDocumentList inputdDocList = new InputDocumentList();
+	public InputDocumentList InputDocumentList() throws Exception{
+		InputDocumentList inputdDocList = new InputDocumentList(_browserInstance);
 
 		return inputdDocList;
 	}
 
-	public static OutputDocumentList OutputDocumentList() throws Exception{
-		OutputDocumentList outputdDocList = new OutputDocumentList();
+	public OutputDocumentList OutputDocumentList() throws Exception{
+		OutputDocumentList outputdDocList = new OutputDocumentList(_browserInstance);
 
 		return outputdDocList;
 	}
 
-	public static DynaformDesigner DynaformDesigner() throws Exception{
+	public DynaformDesigner DynaformDesigner() throws Exception{
 		
-		return new DynaformDesigner();
+		return new DynaformDesigner(_browserInstance);
 	}
 
-	public static TriggersProcess TriggersProcess() throws Exception{
-		TriggersProcess triggerProcess = new TriggersProcess();
+	public TriggersProcess TriggersProcess() throws Exception{
+		TriggersProcess triggerProcess = new TriggersProcess(_browserInstance);
 
 		return triggerProcess;
 	}
 
-	public static Designer Designer() throws Exception{
-		Designer designer = new Designer();
+	public Designer Designer() throws Exception{
+		Designer designer = new Designer(_browserInstance);
 
 		return designer;
 	}	
 
-	public static TaskProperties TaskProperties() throws Exception{
-		TaskProperties taskProperties = new TaskProperties();
+	public TaskProperties TaskProperties() throws Exception{
+		TaskProperties taskProperties = new TaskProperties(_browserInstance);
 
 		return taskProperties;
 	}
 
-	public static DynaformExecution DynaformExecution() throws Exception{
-		DynaformExecution dynaformExecution = new DynaformExecution();
+	public DynaformExecution DynaformExecution() throws Exception{
+		DynaformExecution dynaformExecution = new DynaformExecution(_browserInstance);
 
 		return dynaformExecution;
 	}
 
-	public static Profile Profile() throws Exception{
-		Profile profile = new Profile();
+    public AssignTask AssignTask() throws Exception{
+        AssignTask assignTask = new AssignTask(_browserInstance);
+
+        return assignTask;
+    }
+
+	public Profile Profile() throws Exception{
+		Profile profile = new Profile(_browserInstance);
 
 		return profile;
 	}	
 
-	public static DebugExecution DebugExecution() throws Exception{
-		DebugExecution debugExecution = new DebugExecution();
+	public DebugExecution DebugExecution() throws Exception{
+		DebugExecution debugExecution = new DebugExecution(_browserInstance);
 
 		return debugExecution;
 	}
 
-	public static CronExecute CronExecute() throws Exception{
-		CronExecute cronExecute = new CronExecute();
+	public CronExecute CronExecute() throws Exception{
+		CronExecute cronExecute = new CronExecute(_browserInstance);
 
 		return cronExecute;
 	}
 
-	public static WebEntry WebEntry() throws Exception{
-		WebEntry webEntry = new WebEntry();
+	public WebEntry WebEntry() throws Exception{
+		WebEntry webEntry = new WebEntry(_browserInstance);
 
 		return webEntry;
 	}
 
-	public static CaseTracker CaseTracker() throws Exception{
-		CaseTracker caseTracker = new CaseTracker();
+	public CaseTracker CaseTracker() throws Exception{
+		CaseTracker caseTracker = new CaseTracker(_browserInstance);
 
 		return caseTracker;
 	}
 
-	public static PmslaReport PmslaReport() throws Exception{
-		PmslaReport pmslaReport = new PmslaReport();
+	public PmslaReport PmslaReport() throws Exception{
+		PmslaReport pmslaReport = new PmslaReport(_browserInstance);
 
 		return pmslaReport;
 	}
 
-	public static PMSLAConfiguration PMSLAConfiguration() throws Exception{
-		PMSLAConfiguration pmslaConfiguration = new PMSLAConfiguration();
+	public PMSLAConfiguration PMSLAConfiguration() throws Exception{
+		PMSLAConfiguration pmslaConfiguration = new PMSLAConfiguration(_browserInstance);
 
 		return pmslaConfiguration;
 	}

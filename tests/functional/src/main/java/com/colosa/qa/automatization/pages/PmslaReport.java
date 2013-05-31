@@ -1,17 +1,13 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.*;
+import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import com.colosa.qa.automatization.common.Browser;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.JavascriptExecutor;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 
 public class PmslaReport extends Page{
 
@@ -22,48 +18,55 @@ public class PmslaReport extends Page{
 	WebElement statusSla;
 	WebElement submit;
 
-		public PmslaReport() throws Exception{
-		}
+    public PmslaReport(BrowserInstance browser) throws Exception {
+        super(browser);
+        verifyPage();
+    }
 
-		public void generateReport(String sla,String dates,String exceeded,String status) throws Exception{
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla");      
-		 this.slaName = Browser.driver().findElement(By.id("VAL_SLA"));
+    @Override
+    public void verifyPage() throws Exception {
+
+    }
+
+    public void generateReport(String sla,String dates,String exceeded,String status) throws Exception{
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
+		 this.slaName = browser.findElementById("VAL_SLA");
 			if(sla != "")
 			{
-				((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", slaName, sla);
+				((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", slaName, sla);
 
 			}
-			this.datesSla = Browser.driver().findElement(By.id("VAL_DATES"));    
+			this.datesSla = browser.findElementById("VAL_DATES");
 			if(dates != "")
 			{
-				((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", datesSla, dates);     
+				((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", datesSla, dates);
 			}
-			this.exceededSla = Browser.driver().findElement(By.id("VAL_EXCEEDED"));    
+			this.exceededSla = browser.findElementById("VAL_EXCEEDED");
 			if(exceeded != "")
 			{
-				((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", exceededSla, exceeded);        
+				((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", exceededSla, exceeded);
 			}
-			this.statusSla = Browser.driver().findElement(By.id("VAL_CASE_TYPE"));
+			this.statusSla = browser.findElementById("VAL_CASE_TYPE");
 			if(status != "")
 			{
-				((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", statusSla, status);       
+				((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", statusSla, status);
 			}
 			
-			this.submit = Browser.driver().findElement(By.xpath("//button[@class=' x-btn-text button_menu_ext ss_sprite ss_report']"));
+			this.submit = browser.findElementByXPath("//button[@class=' x-btn-text button_menu_ext ss_sprite ss_report']");
 			this.submit.click();   
 	 
 		}
 
 		// return [0]=timesExecuted, [1]=timesExceeded, [2]=averangeExceeded, [3]=penalty
 		public String[] getSlaInfo(String slaName) throws Exception{
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla");      
-			ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.xpath("//div[@class='x-panel x-grid-panel']")), Browser.driver());
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
 			String timesExecuted;
 			String timesExceeded;
 			String averangeExceeded;
@@ -81,12 +84,12 @@ public class PmslaReport extends Page{
 
 
 		public void displayCases(String slaName) throws Exception{
-			Actions action = new Actions(Browser.driver());
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla"); 
-			ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.xpath("//div[@class='x-panel x-grid-panel']")), Browser.driver());     
+			Actions action = new Actions(browser.getInstanceDriver());
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
 			WebElement row = grid.getRowByColumnValue("SLA", slaName);
 			if(row==null)
 					throw new Exception("SLA not found");
@@ -97,11 +100,11 @@ public class PmslaReport extends Page{
 
 		//return [0]=exceeded, [1]=startDate, [2]=dueDate, [3]=finishDate, [4]=penalty, [5]=status
 		public String[] getCaseInfo(int caseNum) throws Exception{
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla");      
-			ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.xpath("//div[@class='x-panel x-grid-panel']")), Browser.driver());
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
 			String exceeded;
 			String startDate;
 			String dueDate;
@@ -127,12 +130,12 @@ public class PmslaReport extends Page{
 		}   
 
 		public void displayTasks(int caseNum) throws Exception{
-			Actions action = new Actions(Browser.driver());
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla"); 
-			ExtJSGrid grid = new ExtJSGrid(Browser.driver().findElement(By.xpath("//div[@class='x-panel x-grid-panel']")), Browser.driver());     
+			Actions action = new Actions(browser.getInstanceDriver());
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
 			String caseNumString = NumberFormat.getIntegerInstance().format(caseNum);
 			if(caseNumString.contains("."))
 			{
@@ -147,17 +150,17 @@ public class PmslaReport extends Page{
 
 		//return [0]=delegatedUser, [1]=transferDate, [2]=startDate, [3]=endDate, [4]=duration, [5]=action
 		public String[] getTaskInfo(String taskName) throws Exception{
-			Browser.driver().switchTo().defaultContent();
-			Browser.driver().switchTo().frame("casesFrame");
-			Browser.driver().switchTo().frame("casesSubFrame");  
-			Browser.driver().switchTo().frame("iframe-id_tab_pmsla");      
+			browser.switchToDefaultContent();
+			browser.switchToFrame("casesFrame");
+			browser.switchToFrame("casesSubFrame");
+			browser.switchToFrame("iframe-id_tab_pmsla");
 			String delegatedUser;
 			String transferDate;
 			String startDate;
 			String endDate;
 			String duration;           
 			String action;
-			WebElement we = Browser.driver().findElement(By.xpath("//td[div='" + taskName + "']/.."));
+			WebElement we = browser.findElementByXPath("//td[div='" + taskName + "']/..");
 			delegatedUser = we.findElement(By.xpath("td[2]/div")).getText().trim();      
 			transferDate = we.findElement(By.xpath("td[3]/div")).getText().trim();   
 			startDate = we.findElement(By.xpath("td[4]/div")).getText().trim();   

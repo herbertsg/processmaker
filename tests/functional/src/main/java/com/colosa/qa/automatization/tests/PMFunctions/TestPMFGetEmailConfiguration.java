@@ -1,70 +1,56 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import java.lang.Exception;
-import java.util.List;
-
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-    
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldType;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.NoSuchElementException;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import java.io.IOException;
 
-public class TestPMFGetEmailConfiguration{
+public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.tests.common.Test{
 
-		@Test
+    public TestPMFGetEmailConfiguration(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
     public void runCase() throws Exception {
         
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 				
-				Pages.Main().goHome();
+				pages.Main().goHome();
 				
-				int casenumber = Pages.Home().startCase("Test PMFGetEmailConfiguration (Task 1)");
-        Pages.DynaformExecution().intoDynaform();
+				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFGetEmailConfiguration (Task 1)");
+        pages.DynaformExecution().intoDynaform();
         
-        String fieldPASSWORD = Pages.DynaformExecution().getFieldProperty("PASSWORD","value");
-		    String fieldMESS_ENABLED = Pages.DynaformExecution().getFieldProperty("MESS_ENABLED","value");
-		    String fieldMESS_ENGINE = Pages.DynaformExecution().getFieldProperty("MESS_ENGINE","value");
-		    String fieldMESS_SERVER = Pages.DynaformExecution().getFieldProperty("MESS_SERVER","value");
-		    String fieldMESS_RAUTH = Pages.DynaformExecution().getFieldProperty("MESS_RAUTH","value");
-		    String fieldMESS_PORT = Pages.DynaformExecution().getFieldProperty("MESS_PORT","value");
-		    String fieldMESS_ACCOUNT = Pages.DynaformExecution().getFieldProperty("MESS_ACCOUNT","value");
-		    String fieldMESS_BACKGROUND = Pages.DynaformExecution().getFieldProperty("MESS_BACKGROUND","value");
-		    String fieldMESS_EXECUTE_EVERY = Pages.DynaformExecution().getFieldProperty("MESS_EXECUTE_EVERY","value");
-				String fieldMESS_SEND_MAX = Pages.DynaformExecution().getFieldProperty("MESS_SEND_MAX","value");
-		    String fieldSMTPSecure = Pages.DynaformExecution().getFieldProperty("SMTPSecure","value");
-		    String fieldMAIL_TO = Pages.DynaformExecution().getFieldProperty("MAIL_TO","value");
-		    String fieldMESS_TRY_SEND_INMEDIATLY = Pages.DynaformExecution().getFieldProperty("MESS_TRY_SEND_INMEDIATLY","value");
+        String fieldPASSWORD = pages.DynaformExecution().getFieldProperty("PASSWORD","value");
+		    String fieldMESS_ENABLED = pages.DynaformExecution().getFieldProperty("MESS_ENABLED","value");
+		    String fieldMESS_ENGINE = pages.DynaformExecution().getFieldProperty("MESS_ENGINE","value");
+		    String fieldMESS_SERVER = pages.DynaformExecution().getFieldProperty("MESS_SERVER","value");
+		    String fieldMESS_RAUTH = pages.DynaformExecution().getFieldProperty("MESS_RAUTH","value");
+		    String fieldMESS_PORT = pages.DynaformExecution().getFieldProperty("MESS_PORT","value");
+		    String fieldMESS_ACCOUNT = pages.DynaformExecution().getFieldProperty("MESS_ACCOUNT","value");
+		    String fieldMESS_BACKGROUND = pages.DynaformExecution().getFieldProperty("MESS_BACKGROUND","value");
+		    String fieldMESS_EXECUTE_EVERY = pages.DynaformExecution().getFieldProperty("MESS_EXECUTE_EVERY","value");
+				String fieldMESS_SEND_MAX = pages.DynaformExecution().getFieldProperty("MESS_SEND_MAX","value");
+		    String fieldSMTPSecure = pages.DynaformExecution().getFieldProperty("SMTPSecure","value");
+		    String fieldMAIL_TO = pages.DynaformExecution().getFieldProperty("MAIL_TO","value");
+		    String fieldMESS_TRY_SEND_INMEDIATLY = pages.DynaformExecution().getFieldProperty("MESS_TRY_SEND_INMEDIATLY","value");
 		    
-		    String fieldCONFIG_PASSWORD = Pages.DynaformExecution().getFieldProperty("CONFIG_PASSWORD","value");
-		    String fieldCONFIG_MESS_ENABLED = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ENABLED","value");
-		    String fieldCONFIG_MESS_ENGINE = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ENGINE","value");
-		    String fieldCONFIG_MESS_SERVER = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_SERVER","value");
-		    String fieldCONFIG_MESS_RAUTH = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_RAUTH","value");
-		    String fieldCONFIG_MESS_PORT = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_PORT","value");
-		    String fieldCONFIG_MESS_ACCOUNT = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ACCOUNT","value");
-		    String fieldCONFIG_MESS_BACKGROUND = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_BACKGROUND","value");
-		    String fieldCONFIG_MESS_EXECUTE_EVERY = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_EXECUTE_EVERY","value");
-				String fieldCONFIG_MESS_SEND_MAX = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_SEND_MAX","value");
-		    String fieldCONFIG_SMTPSecure = Pages.DynaformExecution().getFieldProperty("CONFIG_SMTPSecure","value");
-		    String fieldCONFIG_MAIL_TO = Pages.DynaformExecution().getFieldProperty("CONFIG_MAIL_TO","value");
-		    String fieldCONFIG_MESS_TRY_SEND_INMEDIATLY = Pages.DynaformExecution().getFieldProperty("CONFIG_MESS_TRY_SEND_INMEDIATLY","value");
+		    String fieldCONFIG_PASSWORD = pages.DynaformExecution().getFieldProperty("CONFIG_PASSWORD","value");
+		    String fieldCONFIG_MESS_ENABLED = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ENABLED","value");
+		    String fieldCONFIG_MESS_ENGINE = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ENGINE","value");
+		    String fieldCONFIG_MESS_SERVER = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_SERVER","value");
+		    String fieldCONFIG_MESS_RAUTH = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_RAUTH","value");
+		    String fieldCONFIG_MESS_PORT = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_PORT","value");
+		    String fieldCONFIG_MESS_ACCOUNT = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_ACCOUNT","value");
+		    String fieldCONFIG_MESS_BACKGROUND = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_BACKGROUND","value");
+		    String fieldCONFIG_MESS_EXECUTE_EVERY = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_EXECUTE_EVERY","value");
+				String fieldCONFIG_MESS_SEND_MAX = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_SEND_MAX","value");
+		    String fieldCONFIG_SMTPSecure = pages.DynaformExecution().getFieldProperty("CONFIG_SMTPSecure","value");
+		    String fieldCONFIG_MAIL_TO = pages.DynaformExecution().getFieldProperty("CONFIG_MAIL_TO","value");
+		    String fieldCONFIG_MESS_TRY_SEND_INMEDIATLY = pages.DynaformExecution().getFieldProperty("CONFIG_MESS_TRY_SEND_INMEDIATLY","value");
 		    
 		    
 		    Assert.assertEquals("PMFAddCaseNote function not working properly", fieldPASSWORD, fieldCONFIG_PASSWORD);
@@ -80,15 +66,15 @@ public class TestPMFGetEmailConfiguration{
 		    Assert.assertEquals("PMFAddCaseNote function not working properly", fieldMAIL_TO, fieldCONFIG_MAIL_TO);
 		    Assert.assertEquals("PMFAddCaseNote function not working properly", fieldMESS_TRY_SEND_INMEDIATLY, fieldCONFIG_MESS_TRY_SEND_INMEDIATLY);
 		    		    
-		    Pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
-				Pages.InputDocProcess().continuebtn();
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		    pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
+				pages.AssignTask().pressContinueButton();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-    Browser.close();
-}*/
+        browserInstance.quit();
+    }
     
 }

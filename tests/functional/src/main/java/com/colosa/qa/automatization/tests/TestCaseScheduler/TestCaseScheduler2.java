@@ -1,4 +1,4 @@
-package com.colosa.qa.automatization.tests.TestCaseScheduler2;
+package com.colosa.qa.automatization.tests.TestCaseScheduler;
 
 import org.junit.Assert;
 import org.junit.After;
@@ -12,43 +12,47 @@ import org.openqa.selenium.WebElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestCaseScheduler2{
+public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static String caseStatus;
 
-	@Test
+    public TestCaseScheduler2(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		Pages.Main().goAdmin();		
-		Pages.Admin().goToLogs();
-		Pages.Admin().showCaseScheduler();
-		caseStatus = Pages.Admin().lastCreateCaseStatus();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Main().goAdmin();
+		pages.Admin().goToLogs();
+		pages.Admin().showCaseScheduler();
+		caseStatus = pages.Admin().lastCreateCaseStatus();
 		String[] toArray = caseStatus.split(" ");
 		int lastCaseNum = Integer.parseInt(toArray[1]);
 		int currentCaseNum = lastCaseNum + 1;
-		Pages.DynaformExecution().sleep(20000);
-		Pages.CronExecute().execute("workflow");
+		pages.DynaformExecution().sleep(20000);
+		pages.CronExecute().execute("workflow");
 		System.out.println("run cron.php");
-		Pages.DynaformExecution().sleep(20000);
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Main().goAdmin();		
-		Pages.Admin().goToLogs();
-		Pages.Admin().showCaseScheduler();
-		caseStatus = Pages.Admin().lastCreateCaseStatus();
+		pages.DynaformExecution().sleep(20000);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Main().goAdmin();
+		pages.Admin().goToLogs();
+		pages.Admin().showCaseScheduler();
+		caseStatus = pages.Admin().lastCreateCaseStatus();
 		Assert.assertEquals("Case " + Integer.toString(currentCaseNum) + " Started successfully", caseStatus);
-		Pages.DynaformExecution().sleep(20000);
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.DynaformExecution().sleep(20000);
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

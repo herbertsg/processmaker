@@ -1,70 +1,70 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestHiringProcess{
+public class TestHiringProcess extends com.colosa.qa.automatization.tests.common.Test{
 	protected static int addJob=5;
 	protected static int addJob1=3;
-@Test
-public void runProcess() throws Exception{
-	Pages.Login().gotoUrl();
-	Pages.Login().loginUser("hector","sample","workflow");
-	Pages.Main().goHome();
-	int casenumber=Pages.Home().startCase("Employee Hiring process - v0.2 (Review Candidates list, select top 3.)");
-	FormFieldData[][] gridData= new FormFieldData[addJob][1];
 
-	for(int rows=0; rows<gridData.length; rows++){ 
-			 gridData[rows][0]=new FormFieldData();
-		}
-		int cont=0;
+    public TestHiringProcess(String browserName) throws IOException {
+        super(browserName);
+    }
 
-     for(int rows=0; rows<gridData.length; rows++) {
-     	cont=rows+1;
-    if(cont<=2)
-    {
-		    gridData[rows][0].fieldPath="form[_list_of_candidates_for_hiring_]["+cont+"][CANDIDATE_TOP_3_PLACE]";
-			gridData[rows][0].fieldFindType=FieldKeyType.ID;
-			gridData[rows][0].fieldType=FieldType.DROPDOWN;
-			gridData[rows][0].fieldValue="Second";
-		}
-		else
-		{ gridData[rows][0].fieldPath="form[_list_of_candidates_for_hiring_]["+cont+"][CANDIDATE_TOP_3_PLACE]";
-			gridData[rows][0].fieldFindType=FieldKeyType.ID;
-			gridData[rows][0].fieldType=FieldType.DROPDOWN;
-			gridData[rows][0].fieldValue="First";
-		}
+    @Test
+    public void runProcess() throws Exception{
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("hector","sample","workflow", "English");
+        pages.Main().goHome();
+        int casenumber=pages.Home().gotoNewCase().startCase("Employee Hiring process - v0.2 (Review Candidates list, select top 3.)");
+        FormFieldData[][] gridData= new FormFieldData[addJob][1];
 
-				  
-		}
-		FormFieldData[] fieldarray=new FormFieldData[1];
-		fieldarray[0]= new FormFieldData();
-		fieldarray[0].fieldPath="form[_review_candidates_list_form_submit_button]";
-		fieldarray[0].fieldFindType=FieldKeyType.ID;
-		fieldarray[0].fieldType=FieldType.BUTTON;
-		fieldarray[0].fieldValue="";
+        for(int rows=0; rows<gridData.length; rows++){
+                 gridData[rows][0]=new FormFieldData();
+            }
+            int cont=0;
 
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(GridFiller.gridFillElements(gridData));
-		Assert.assertTrue(FormFiller.formFillElements(fieldarray));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Home().logout();
-		openTask2(casenumber);
-}
+         for(int rows=0; rows<gridData.length; rows++) {
+            cont=rows+1;
+        if(cont<=2)
+        {
+                gridData[rows][0].fieldPath="form[_list_of_candidates_for_hiring_]["+cont+"][CANDIDATE_TOP_3_PLACE]";
+                gridData[rows][0].fieldFindType=FieldKeyType.ID;
+                gridData[rows][0].fieldType=FieldType.DROPDOWN;
+                gridData[rows][0].fieldValue="Second";
+            }
+            else
+            { gridData[rows][0].fieldPath="form[_list_of_candidates_for_hiring_]["+cont+"][CANDIDATE_TOP_3_PLACE]";
+                gridData[rows][0].fieldFindType=FieldKeyType.ID;
+                gridData[rows][0].fieldType=FieldType.DROPDOWN;
+                gridData[rows][0].fieldValue="First";
+            }
+
+
+            }
+            FormFieldData[] fieldarray=new FormFieldData[1];
+            fieldarray[0]= new FormFieldData();
+            fieldarray[0].fieldPath="form[_review_candidates_list_form_submit_button]";
+            fieldarray[0].fieldFindType=FieldKeyType.ID;
+            fieldarray[0].fieldType=FieldType.BUTTON;
+            fieldarray[0].fieldValue="";
+
+            pages.InputDocProcess().openCaseFrame();
+            Assert.assertTrue(GridFiller.gridFillElements(browserInstance, gridData));
+            Assert.assertTrue(FormFiller.formFillElements(browserInstance, fieldarray));
+            Assert.assertTrue(pages.InputDocProcess().continuebtn());
+            pages.Main().logout();
+            openTask2(casenumber);
+    }
 
 public void openTask2(int casenumber) throws Exception{
-	Pages.Login().gotoUrl();
-	 Pages.Login().loginUser("iver","sample","");
-	 Pages.Main().goHome();
+	pages.Login().gotoDefaultUrl();
+	 pages.Login().loginUser("iver","sample","workflow", "English");
+	 pages.Main().goHome();
 	 opencase(casenumber);
     FormFieldData[][] gridData1= new FormFieldData[addJob][1];
     for(int rows=0; rows<gridData1.length;rows++){
@@ -93,19 +93,19 @@ public void openTask2(int casenumber) throws Exception{
 		    fieldarray2[0].fieldType=FieldType.BUTTON;
 		    fieldarray2[0].fieldValue="";
 
-		    Pages.InputDocProcess().openCaseFrame();
-		    Assert.assertTrue(GridFiller.gridFillElements(gridData1));
-		    Assert.assertTrue(FormFiller.formFillElements(fieldarray2));
-		    Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		    Pages.Home().logout();
+		    pages.InputDocProcess().openCaseFrame();
+		    Assert.assertTrue(GridFiller.gridFillElements(browserInstance,  gridData1));
+		    Assert.assertTrue(FormFiller.formFillElements(browserInstance,  fieldarray2));
+		    Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		    pages.Main().logout();
 		    openTask3(casenumber);
 
     }
 
     public void openTask3(int casenumber) throws Exception{
-    	Pages.Login().gotoUrl();
-	 Pages.Login().loginUser("ronald","sample","");
-	 Pages.Main().goHome();
+    	pages.Login().gotoDefaultUrl();
+	 pages.Login().loginUser("ronald","sample","workflow", "English");
+	 pages.Main().goHome();
 	 opencase(casenumber);
 	FormFieldData[] fieldarray3=new FormFieldData[1];
 			fieldarray3[0]=new FormFieldData();
@@ -114,17 +114,17 @@ public void openTask2(int casenumber) throws Exception{
 		    fieldarray3[0].fieldType=FieldType.BUTTON;
 		    fieldarray3[0].fieldValue="";
 
-		     Pages.InputDocProcess().openCaseFrame();
-		    Assert.assertTrue(FormFiller.formFillElements(fieldarray3));
-		    Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		    Pages.Home().logout();
+		     pages.InputDocProcess().openCaseFrame();
+		    Assert.assertTrue(FormFiller.formFillElements(browserInstance,  fieldarray3));
+		    Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		    pages.Main().logout();
 		    openTask4(casenumber);
     }
 
     public void openTask4(int casenumber) throws Exception{
-    	Pages.Login().gotoUrl();
-	 Pages.Login().loginUser("pablo","sample","");
-	 Pages.Main().goHome();
+    	pages.Login().gotoDefaultUrl();
+	 pages.Login().loginUser("pablo","sample","workflow", "English");
+	 pages.Main().goHome();
 	 opencase(casenumber);
 	 FormFieldData[][] gridData2= new FormFieldData[addJob1][1];
     for(int rows=0; rows<gridData2.length;rows++){
@@ -155,21 +155,21 @@ public void openTask2(int casenumber) throws Exception{
 		    fieldarray4[0].fieldType=FieldType.BUTTON;
 		    fieldarray4[0].fieldValue="";
 
-		    Pages.InputDocProcess().openCaseFrame();
-		    Assert.assertTrue(GridFiller.gridFillElements(gridData2));
-		    Assert.assertTrue(FormFiller.formFillElements(fieldarray4));
-		    Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		    Pages.Home().logout();
+		    pages.InputDocProcess().openCaseFrame();
+		    Assert.assertTrue(GridFiller.gridFillElements(browserInstance, gridData2));
+		    Assert.assertTrue(FormFiller.formFillElements(browserInstance, fieldarray4));
+		    Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		    pages.Main().logout();
 }
 public void opencase(int casenumber) throws Exception{ 
-	Pages.Home().openCase(casenumber);
+	pages.Home().openCase(casenumber);
 
 }
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

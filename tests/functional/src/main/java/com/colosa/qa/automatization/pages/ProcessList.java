@@ -1,38 +1,50 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-
-import org.openqa.selenium.*;
+import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class ProcessList extends Page{
 	WebElement webEl;
 	WebElement procName;
 	WebElement desc;
-	public ProcessList() throws FileNotFoundException, IOException{
-		
 
-	}
+    public ProcessList(BrowserInstance browser) throws Exception {
+        super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
+    }
 
 
-	public boolean openProcess(String processName) throws FileNotFoundException, IOException, Exception{
+    public boolean openProcess(String processName) throws FileNotFoundException, IOException, Exception{
 
 		WebElement we = null;
-		Actions action = new Actions(Browser.driver());
+		Actions action = new Actions(browser.getInstanceDriver());
 
-		Browser.driver().switchTo().frame("frameMain");
+		browser.switchToFrame("frameMain");
 
-        Pages.DynaformExecution().setFieldValueWithoutForm("searchTxt", processName);
-        WebElement el = Browser.driver().findElement(By.id("searchTxt"));
+        DynaformExecution dynex = new DynaformExecution(browser);
+
+        dynex.setFieldValueWithoutForm("searchTxt", processName);
+        WebElement el = browser.findElementById("searchTxt");
         el.sendKeys(Keys.RETURN);
 				
-		WebElement grid = Browser.getElement("designerList.webelement.Process");
-		ExtJSGrid extGrid = new ExtJSGrid(grid, Browser.driver());
-		WebElement pager = Browser.driver().findElement(By.xpath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr"));
+		WebElement grid = browser.findElement("designerList.webelement.Process");
+		ExtJSGrid extGrid = new ExtJSGrid(grid, browser.getInstanceDriver());
+		WebElement pager = browser.findElementByXPath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr");
 		List<WebElement> wl;
 		int index = 1;
 		int pages = Integer.parseInt(pager.findElement(By.xpath("td[6]/div")).getText().trim().substring(3));
@@ -69,16 +81,16 @@ public class ProcessList extends Page{
 
 	public void exportProcess(String processName) throws FileNotFoundException, IOException, Exception{
 		WebElement we = null;
-		Actions action = new Actions(Browser.driver());
+		Actions action = new Actions(browser.getInstanceDriver());
 
-		Browser.driver().switchTo().frame("frameMain");
+		browser.switchToFrame("frameMain");
 				
-		WebElement grid = Browser.getElement("designerList.webelement.Process");
+		WebElement grid = browser.findElement("designerList.webelement.Process");
 		List<WebElement> menulist = grid.findElements(By.xpath("div/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td"));
 		WebElement exportbtn = menulist.get(6).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 
-		ExtJSGrid extGrid = new ExtJSGrid(grid, Browser.driver());
-		WebElement pager = Browser.driver().findElement(By.xpath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr"));//no funciona al crear su variable en el default.conf
+		ExtJSGrid extGrid = new ExtJSGrid(grid, browser.getInstanceDriver());
+		WebElement pager = browser.findElementByXPath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr");//no funciona al crear su variable en el default.conf
 		List<WebElement> wl;
 		int index = 1;
 		int pages = Integer.parseInt(pager.findElement(By.xpath("td[6]/div")).getText().trim().substring(3));
@@ -118,11 +130,11 @@ public class ProcessList extends Page{
 
 	public void importProcess(String filePath) throws FileNotFoundException, IOException, Exception{
 		
-		JavascriptExecutor js = (JavascriptExecutor) Browser.driver();
-		Actions action = new Actions(Browser.driver());
+		JavascriptExecutor js = (JavascriptExecutor) browser.getInstanceDriver();
+		Actions action = new Actions(browser.getInstanceDriver());
 
-		Browser.driver().switchTo().frame("frameMain");
-		WebElement grid = Browser.getElement("designerList.webelement.Process");
+		browser.switchToFrame("frameMain");
+		WebElement grid = browser.findElement("designerList.webelement.Process");
 		List<WebElement> menulist = grid.findElements(By.xpath("div/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td"));
 		WebElement importbtn = menulist.get(7).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 		importbtn.click();
@@ -131,10 +143,10 @@ public class ProcessList extends Page{
 		js.executeScript("document.getElementById('form-file').style.display = 'none'");
 		js.executeScript("document.getElementById('form-file-file').style.opacity = 1");
 
-		WebElement inputfile = Browser.getElement("designerList.webelement.inputfile");
+		WebElement inputfile = browser.findElement("designerList.webelement.inputfile");
 		inputfile.sendKeys(filePath);
 
-		Browser.driver().findElement(By.xpath("//div[@id='uploader']/div[2]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/em/button")).click();//no funciona al crear su variable en el default.conf
+		browser.findElementByXPath("//div[@id='uploader']/div[2]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/em/button").click();//no funciona al crear su variable en el default.conf
 
 		System.out.println("-------fin-------");		
 		
@@ -143,15 +155,15 @@ public class ProcessList extends Page{
 
 	public void newProcess(String processName, String  description) throws FileNotFoundException, IOException, Exception{
 
-		Browser.driver().switchTo().frame("frameMain");
-		WebElement grid = Browser.getElement("designerList.webelement.Process");		
+		browser.switchToFrame("frameMain");
+		WebElement grid = browser.findElement("designerList.webelement.Process");
 		List<WebElement> menulist = grid.findElements(By.xpath("div/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td"));//no funciona al crear su variable en el default.conf
 		WebElement importbtn = menulist.get(0).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 		importbtn.click();
 
-		Browser.getElement("designerList.webelement.processName").sendKeys(processName);
-		Browser.getElement("designerList.webelement.description").sendKeys(description);
-		Browser.driver().findElement(By.xpath("//div[@id='newProcessForm']/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/em/button")).click();//no funciona al crear su variable en el default.conf
+		browser.findElement("designerList.webelement.processName").sendKeys(processName);
+		browser.findElement("designerList.webelement.description").sendKeys(description);
+		browser.findElementByXPath("//div[@id='newProcessForm']/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/em/button").click();//no funciona al crear su variable en el default.conf
 				
 	}
 

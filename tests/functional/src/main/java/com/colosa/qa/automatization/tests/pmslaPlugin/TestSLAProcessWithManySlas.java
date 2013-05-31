@@ -1,99 +1,98 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
-import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAProcessWithManySlas{
+public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
 	protected static String seleccion = "Ir a la Tarea 3";
-	@Test
+
+    public TestSLAProcessWithManySlas(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		numCase = Pages.Home().startCase("SLA Process with many sla's (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("elegir", "segundo");
-		Pages.DynaformExecution().setFieldValue("guardar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process with many sla's (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("elegir", "segundo");
+		pages.DynaformExecution().setFieldValue("guardar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
 
-		Pages.DynaformExecution().setFieldValue("seleccion", seleccion);
-		Pages.DynaformExecution().setFieldValue("guardar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.DynaformExecution().setFieldValue("seleccion", seleccion);
+		pages.DynaformExecution().setFieldValue("guardar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
-		Pages.DynaformExecution().sleep(5000);
+		pages.CronExecute().execute("workflow");
+		pages.DynaformExecution().sleep(5000);
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		Pages.CronExecute().execute("workflow");
+		pages.CronExecute().execute("workflow");
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA-Entire Process-with many SLA's", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA-Entire Process-with many SLA's");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA-Entire Process-with many SLA's", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA-Entire Process-with many SLA's");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 3");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo[5], "OPEN");
 
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA-Task 3 Process-with many SLA's", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA-Task 3 Process-with many SLA's");
-		String[] caseInfo2 = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA-Task 3 Process-with many SLA's", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA-Task 3 Process-with many SLA's");
+		String[] caseInfo2 = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo2[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo2 = Pages.PmslaReport().getTaskInfo("Task 3");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo2 = pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo2[5], "OPEN");
 
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA-Multiple Task 1-5 Process-with many SLA's", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA-Multiple Task 1-5 Process-with many SLA's");
-		String[] caseInfo3 = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA-Multiple Task 1-5 Process-with many SLA's", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA-Multiple Task 1-5 Process-with many SLA's");
+		String[] caseInfo3 = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo3[5], "In progress");
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo3 = Pages.PmslaReport().getTaskInfo("Task 3");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo3 = pages.PmslaReport().getTaskInfo("Task 3");
 		Assert.assertEquals(taskInfo3[5], "OPEN");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 	}
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

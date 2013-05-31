@@ -1,9 +1,8 @@
 package com.colosa.qa.automatization.common.controlOptions.selection;
 
-import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.controlOptions.selection.DropDownOptions;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.controlOptions.DependentFieldsNotApplicableOption;
+import org.openqa.selenium.WebElement;
 
 public class ListBoxOptions extends DropDownOptions{
 
@@ -20,11 +19,11 @@ public class ListBoxOptions extends DropDownOptions{
 	}
 
 	@Override
-	public void fillForm() throws Exception{
+	public void fillForm(BrowserInstance browser) throws Exception{
 		this.dependentFieldsApplicableBehavior = new DependentFieldsNotApplicableOption();;
 		this.readOnly = null;
-		super.fillForm();
-		WebElement we = Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.size");
+		super.fillForm(browser);
+		WebElement we = browser.findElement("dynaformDesigner.webElement.blankDynaformModal.size");
 		we.clear();
 		we.sendKeys(Integer.toString(this.size));
 	}

@@ -7,5 +7,7 @@ public enum FieldKeyType{
 	CSSSELECTOR,
 	LINKTEXT,
 	PARTIALLINKTEXT,
-	TAGNAME;
+	TAGNAME,
+    CLASSNAME,
+    NAME;
 }

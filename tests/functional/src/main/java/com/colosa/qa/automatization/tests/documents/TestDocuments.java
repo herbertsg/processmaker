@@ -1,34 +1,32 @@
 package com.colosa.qa.automatization.tests.documents;
 
-import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestDocuments{
+public class TestDocuments extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestDocuments(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void downloadFile() throws Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		Pages.Home().gotoDocuments();
-		Pages.Documents().selectFolder("Test 1");
-		Pages.Documents().downloadDocument("default.conf");
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoDocuments();
+		pages.Documents().selectFolder("Test 1");
+		pages.Documents().downloadDocument("default.conf");
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

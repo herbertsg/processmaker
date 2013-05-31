@@ -17,6 +17,17 @@ public class BrowserConfiguration {
     }
 
     private BrowserConfiguration() {
+        //init browser configuration by default
+        try {
+            getBrowserMode();
+            getBrowserName();
+            getBrowserVersion();
+            getBrowserPlatform();
+            getRemoteServerUrl();
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
 
     public String getBrowserMode() throws IOException {

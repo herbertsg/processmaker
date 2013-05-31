@@ -1,30 +1,32 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestExpenseReport{
+public class TestExpenseReport extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestExpenseReport(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void advanceCash()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Benjamin", "sample", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Expense Report v_2 (Cash Advance)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("Expense Report v_2 (Cash Advance)");
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -46,8 +48,8 @@ public class TestExpenseReport{
 		arrayData[3].fieldFindType = FieldKeyType.ID;
 		arrayData[3].fieldType = FieldType.BUTTON;
 		arrayData[3].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		FormFiller.formFillElements(arrayData);
+		pages.InputDocProcess().openCaseFrame();
+		FormFiller.formFillElements( browserInstance, arrayData);
 		FormFieldData[] arrayData2 = new FormFieldData[2];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[1] = new FormFieldData();
@@ -59,9 +61,9 @@ public class TestExpenseReport{
 		arrayData2[1].fieldFindType = FieldKeyType.ID;
 		arrayData2[1].fieldType = FieldType.BUTTON;
 		arrayData2[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData2));
+		pages.Main().logout();
 
 //	}
 
@@ -69,11 +71,11 @@ public class TestExpenseReport{
 //	@Depends("#advanceCash")
 //	public void approveAdvanceCash() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Brianna", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);	
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData3 = new FormFieldData[2];
 		arrayData3[0] = new FormFieldData();
 		arrayData3[1] = new FormFieldData();
@@ -85,21 +87,21 @@ public class TestExpenseReport{
 		arrayData3[1].fieldFindType = FieldKeyType.ID;
 		arrayData3[1].fieldType = FieldType.BUTTON;
 		arrayData3[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData3));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 //	}
 
 //	@Test
 //	@Depends("#approveAdvanceCash")
 //	public void reportExpenses() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Benjamin", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData7 = new FormFieldData[17];
 		arrayData7[0] = new FormFieldData();
 		arrayData7[1] = new FormFieldData();
@@ -186,31 +188,31 @@ public class TestExpenseReport{
 		arrayData7[16].fieldFindType = FieldKeyType.ID;
 		arrayData7[16].fieldType = FieldType.BUTTON;
 		arrayData7[16].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		WebElement btnLink= Browser.driver().findElement(By.id("form[repDetail][addLink]"));
+		pages.InputDocProcess().openCaseFrame();
+		WebElement btnLink= browserInstance.findElementById("form[repDetail][addLink]");
 		btnLink.click();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData7));
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData7));
 		FormFieldData[] arrayData8 = new FormFieldData[1];
 		arrayData8[0] = new FormFieldData();
 		arrayData8[0].fieldPath = "form[BTN_SUBMIT]";
 		arrayData8[0].fieldFindType = FieldKeyType.ID;
 		arrayData8[0].fieldType = FieldType.BUTTON;
 		arrayData8[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData8));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData8));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 //	}
 
 //	@Test
 //	@Depends("#reportExpenses")
 //	public void approveReport() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Ian", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Ian", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData9 = new FormFieldData[3];
 		arrayData9[0] = new FormFieldData();
 		arrayData9[1] = new FormFieldData();
@@ -227,21 +229,21 @@ public class TestExpenseReport{
 		arrayData9[2].fieldFindType = FieldKeyType.ID;
 		arrayData9[2].fieldType = FieldType.BUTTON;
 		arrayData9[2].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData9));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData9));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 //	}
 
 //	@Test
 //	@Depends("#approveReport")
 //	public void reinburseExpenses() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Jason", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Jason", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData10 = new FormFieldData[2];
 		arrayData10[0] = new FormFieldData();
 		arrayData10[1] = new FormFieldData();
@@ -253,24 +255,24 @@ public class TestExpenseReport{
 		arrayData10[1].fieldFindType = FieldKeyType.ID;
 		arrayData10[1].fieldType = FieldType.BUTTON;
 		arrayData10[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData10));
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData10));
 		FormFieldData[] arrayData11 = new FormFieldData[1];
 		arrayData11[0] = new FormFieldData();
 		arrayData11[0].fieldPath = "form[NEXT_STEP]";
 		arrayData11[0].fieldFindType = FieldKeyType.ID;
 		arrayData11[0].fieldType = FieldType.BUTTON;
 		arrayData11[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData11));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData11));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

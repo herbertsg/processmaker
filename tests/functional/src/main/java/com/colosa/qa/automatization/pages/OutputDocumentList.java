@@ -1,24 +1,24 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
 import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import org.openqa.selenium.WebElement;
 
-public class OutputDocumentList{
+public class OutputDocumentList extends Page{
 
-	public OutputDocumentList() throws FileNotFoundException, IOException{
-	}
 
-	public void createOutputDoc(String fileTitle, String fileName, String description, String docMedia, String docLandscape, String docGenerate, String securityEnabled, String versioning, String destinationPath, String tagField) throws Exception{
-		Browser.driver().switchTo().frame("frameMain");
-		WebElement newBtn = Browser.getElement("inputDocumentList.webelement.new");
+    public OutputDocumentList(BrowserInstance browser) throws Exception {
+        super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void createOutputDoc(String fileTitle, String fileName, String description, String docMedia, String docLandscape, String docGenerate, String securityEnabled, String versioning, String destinationPath, String tagField) throws Exception{
+		browser.switchToFrame("frameMain");
+		WebElement newBtn = browser.findElement("inputDocumentList.webelement.new");
 		newBtn.click();
 		FormFieldData[] fieldArray = new FormFieldData[11];
 		fieldArray[0] = new FormFieldData();
@@ -77,14 +77,14 @@ public class OutputDocumentList{
 		fieldArray[10].fieldFindType = FieldKeyType.ID;
 		fieldArray[10].fieldType = FieldType.BUTTON;
 		fieldArray[10].fieldValue = "";
-		FormFiller.formFillElements(fieldArray);
+		FormFiller.formFillElements(browser, fieldArray);
 
-		Browser.driver().switchTo().defaultContent();
+		browser.switchToDefaultContent();
 
 	}
 
 	public void closePopup() throws Exception{
-		Browser.getElement("outputDocumentList.webelement.close").click();
+		browser.findElement("outputDocumentList.webelement.close").click();
 	}
 
 

@@ -12,46 +12,50 @@ import org.openqa.selenium.WebElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestDesigner{
+public class TestDesigner extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestDesigner(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void tasks() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goDesigner();		
-		Pages.ProcessList().newProcess("Prueba" + new java.util.Date().toString(), "Prueba");			
-		Pages.Designer().createTask();
-		Pages.Designer().moveTask("Task 1", -100, -300);
-		Assert.assertTrue(Pages.Designer().createTask());
-		Pages.Designer().moveTask("Task 2", -300, -150);
-		Assert.assertTrue(Pages.Designer().createTask());
-		Pages.Designer().moveTask("Task 3", 0, -150);
-		Assert.assertTrue(Pages.Designer().createTask());
-		Pages.Designer().moveTask("Task 4", 300, -150);
-		Assert.assertTrue(Pages.Designer().createTask());
-		Pages.Designer().moveTask("Task 5", -100, -80);
-		Pages.Designer().initialTask("Task 1");		
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goDesigner();
+		pages.ProcessList().newProcess("Prueba" + new java.util.Date().toString(), "Prueba");
+		pages.Designer().createTask();
+		pages.Designer().moveTask("Task 1", -100, -300);
+		Assert.assertTrue(pages.Designer().createTask());
+		pages.Designer().moveTask("Task 2", -300, -150);
+		Assert.assertTrue(pages.Designer().createTask());
+		pages.Designer().moveTask("Task 3", 0, -150);
+		Assert.assertTrue(pages.Designer().createTask());
+		pages.Designer().moveTask("Task 4", 300, -150);
+		Assert.assertTrue(pages.Designer().createTask());
+		pages.Designer().moveTask("Task 5", -100, -80);
+		pages.Designer().initialTask("Task 1");
 		String[][] tasksListArray = {{"Task 2",""}, {"Task 3",""}, {"Task 4",""}};
-		Assert.assertTrue(Pages.Designer().parallelFork("Task 1", tasksListArray));
-		Assert.assertTrue(Pages.Designer().parallelJoin("Task 2", "Task 5"));
-		Assert.assertTrue(Pages.Designer().parallelJoin("Task 3", "Task 5"));
-		Assert.assertTrue(Pages.Designer().parallelJoin("Task 4", "Task 5"));
-		Assert.assertTrue(Pages.Designer().endTask("Task 5"));
+		Assert.assertTrue(pages.Designer().parallelFork("Task 1", tasksListArray));
+		Assert.assertTrue(pages.Designer().parallelJoin("Task 2", "Task 5"));
+		Assert.assertTrue(pages.Designer().parallelJoin("Task 3", "Task 5"));
+		Assert.assertTrue(pages.Designer().parallelJoin("Task 4", "Task 5"));
+		Assert.assertTrue(pages.Designer().endTask("Task 5"));
 
 		TaskFieldData taskProp = new TaskFieldData();
 		taskProp.taskName = "Task 1";
 		taskProp.title = "Tarea de Prueba";
 		taskProp.caseAssignedBy = "MANUAL";
 
-		Pages.TaskProperties().properties(taskProp);				
+		pages.TaskProperties().properties(taskProp);
 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }
