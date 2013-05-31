@@ -1,59 +1,60 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Value;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFTaskList{
+public class TestPMFTaskList extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
+	protected int caseNum;
 
-	@Test
+    public TestPMFTaskList(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testPMFTaskList() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("PMFTaskList (Init)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		Pages.DynaformExecution().setFieldValue("amount", "3000");
-		Pages.DynaformExecution().setFieldValue("send", "");
-		Pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
-	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("PMFTaskList (Init)");
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
+		pages.DynaformExecution().setFieldValue("amount", "3000");
+		pages.DynaformExecution().setFieldValue("send", "");
+		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
+	    pages.AssignTask().pressContinueButton();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 		//Open report task for check
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");				
-		Pages.Main().goHome();	
-    	Pages.Home().gotoInbox();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
-		Pages.Home().openCase(caseNum);
-		Pages.DynaformExecution().intoDynaform();
-		int numTaskList = Integer.parseInt(Value.getValue(FieldKeyType.ID, "form[longTaskList]"));
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+    	pages.Home().gotoInbox();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
+		pages.DynaformExecution().intoDynaform();
+		int numTaskList = Integer.parseInt(Value.getValue(browserInstance, FieldKeyType.ID, "form[longTaskList]"));
 		for(int i=1; i<numTaskList; i++){
-			Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[userTaskList][" + i + "][guid]"), Value.getValue(FieldKeyType.ID, "form[gridTaskListQuery][" + i + "][TAS_UID]"));	
+			Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userTaskList][" + i + "][guid]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridTaskListQuery][" + i + "][TAS_UID]"));
         }
-		Pages.DynaformExecution().setFieldValue("continue", "");
-	    Pages.InputDocProcess().continuebtn();
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.DynaformExecution().setFieldValue("continue", "");
+	    pages.AssignTask().pressContinueButton();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

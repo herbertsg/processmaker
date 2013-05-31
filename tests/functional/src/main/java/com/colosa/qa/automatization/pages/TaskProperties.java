@@ -1,29 +1,32 @@
 package com.colosa.qa.automatization.pages;
 
-import java.util.List;
-import java.util.ArrayList;
-import org.openqa.selenium.WebDriver;
+import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.TaskFieldData;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-public class TaskProperties{
+public class TaskProperties extends Page{
 
+    public TaskProperties(BrowserInstance browser) throws Exception {
+        super(browser);
 
-	public void properties(TaskFieldData taskProperties)  throws Exception{
+        verifyPage();
+    }
 
-		Actions action = new Actions(Browser.driver());
-		WebElement task = Pages.Designer().getTask(taskProperties.taskName);
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void properties(TaskFieldData taskProperties)  throws Exception{
+
+		Actions action = new Actions(browser.getInstanceDriver());
+        Pages pages = new Pages(browser);
+		WebElement task = pages.Designer().getTask(taskProperties.taskName);
 		action.contextClick(task).perform();
 
-		WebElement property = Browser.getElement("taskProperties.webElement.properties");
+		WebElement property = browser.findElement("taskProperties.webElement.properties");
 
 		if(property.getText().equals("Properties"))
 		{
@@ -41,7 +44,7 @@ public class TaskProperties{
 
 	public boolean definition(TaskFieldData taskProperties)  throws Exception{
 
-		WebElement def = Browser.getElement("taskProperties.webElement.definition");
+		WebElement def = browser.findElement("taskProperties.webElement.definition");
 		if(def.getText().equals("Definition"))
 		{
 			def.click();
@@ -52,11 +55,11 @@ public class TaskProperties{
 		}
 
 
-		WebElement title = Browser.getElement("taskProperties.webElement.taskTitle");
-		WebElement description = Browser.getElement("taskProperties.webElement.taskDescription");
-		WebElement casePriority = Browser.getElement("taskProperties.webElement.taskPriority");
-		WebElement routingScreen = Browser.getElement("taskProperties.webElement.taskDerivation");
-		WebElement starting = Browser.getElement("taskProperties.webElement.taskStart");
+		WebElement title = browser.findElement("taskProperties.webElement.taskTitle");
+		WebElement description = browser.findElement("taskProperties.webElement.taskDescription");
+		WebElement casePriority = browser.findElement("taskProperties.webElement.taskPriority");
+		WebElement routingScreen = browser.findElement("taskProperties.webElement.taskDerivation");
+		WebElement starting = browser.findElement("taskProperties.webElement.taskStart");
 
 		title.sendKeys(taskProperties.title);
 		description.sendKeys(taskProperties.description);
@@ -71,7 +74,7 @@ public class TaskProperties{
 	}
 
 	public boolean assignmentRules(TaskFieldData taskProperties)  throws Exception{
-		WebElement assign = Browser.getElement("taskProperties.webElement.assignmentRules");
+		WebElement assign = browser.findElement("taskProperties.webElement.assignmentRules");
 		if(assign.getText().equals("Assignment rules"))
 		{
 			assign.click();
@@ -84,23 +87,23 @@ public class TaskProperties{
 		{
 			taskProperties.caseAssignedBy = "BALANCED";
 		}
-		WebElement assignment = Browser.driver().findElement(By.id("form[TAS_ASSIGN_TYPE]["+taskProperties.caseAssignedBy+"]"));
+		WebElement assignment = browser.findElementById("form[TAS_ASSIGN_TYPE][" + taskProperties.caseAssignedBy + "]");
 		assignment.click();
 
 		return true;
 	}
 
 	public void timingControl(TaskFieldData taskProperties)  throws Exception{
-		WebElement timing = Browser.getElement("taskProperties.webElement.timingControl");
+		WebElement timing = browser.findElement("taskProperties.webElement.timingControl");
 		if(timing.getText().equals("Timing control"))
 		{
 			timing.click();
 		}		
-		WebElement allowUser = Browser.getElement("taskProperties.webElement.allowUser");
-		WebElement duration = Browser.getElement("taskProperties.webElement.taskDuration");
-		WebElement tUnit = Browser.getElement("taskProperties.webElement.timeUnit");
-		WebElement countD = Browser.getElement("taskProperties.webElement.typeDay");
-		WebElement clndr = Browser.getElement("taskProperties.webElement.calendar");
+		WebElement allowUser = browser.findElement("taskProperties.webElement.allowUser");
+		WebElement duration = browser.findElement("taskProperties.webElement.taskDuration");
+		WebElement tUnit = browser.findElement("taskProperties.webElement.timeUnit");
+		WebElement countD = browser.findElement("taskProperties.webElement.typeDay");
+		WebElement clndr = browser.findElement("taskProperties.webElement.calendar");
 		if(taskProperties.allowUserDefined==true)
 		{
 			allowUser.click();
@@ -116,12 +119,12 @@ public class TaskProperties{
 	}
 
 	public void permissions(TaskFieldData taskProperties)  throws Exception{
-		WebElement perm = Browser.getElement("taskProperties.webElement.permisions");
+		WebElement perm = browser.findElement("taskProperties.webElement.permisions");
 		if(perm.getText().equals("Permissions"))
 		{
 			perm.click();
 		}
-		WebElement allowArb = Browser.getElement("taskProperties.webElement.allowArbitrary");
+		WebElement allowArb = browser.findElement("taskProperties.webElement.allowArbitrary");
 
 		if(taskProperties.allowArbitrary==true)
 			allowArb.click();
@@ -129,27 +132,27 @@ public class TaskProperties{
 	}
 
 	public void caseLabels(TaskFieldData taskProperties)  throws Exception{
-		WebElement caselbl = Browser.getElement("taskProperties.webElement.caseLabels");
+		WebElement caselbl = browser.findElement("taskProperties.webElement.caseLabels");
 		if(caselbl.getText().equals("Case Labels"))
 		{
 			caselbl.click();
 		}
-		WebElement cTitle = Browser.getElement("taskProperties.webElement.caseTitle");
-		WebElement cDescription = Browser.getElement("taskProperties.webElement.caseDescription");
+		WebElement cTitle = browser.findElement("taskProperties.webElement.caseTitle");
+		WebElement cDescription = browser.findElement("taskProperties.webElement.caseDescription");
 		cTitle.sendKeys(taskProperties.caseTitle);
 		cDescription.sendKeys(taskProperties.caseDescription);
 	}
 
 	public void notifications(TaskFieldData taskProperties)  throws Exception{
-		WebElement notif = Browser.getElement("taskProperties.webElement.notifications");
+		WebElement notif = browser.findElement("taskProperties.webElement.notifications");
 		if(notif.getText().equals("Notifications"))
 		{
 			notif.click();
 		}
-		WebElement afterRoutDer =Browser.getElement("taskProperties.webElement.afterRoute");
-		WebElement sbjct = Browser.getElement("taskProperties.webElement.subject");
-		WebElement content = Browser.getElement("taskProperties.webElement.content");
-		WebElement msg = Browser.getElement("taskProperties.webElement.message");
+		WebElement afterRoutDer =browser.findElement("taskProperties.webElement.afterRoute");
+		WebElement sbjct = browser.findElement("taskProperties.webElement.subject");
+		WebElement content = browser.findElement("taskProperties.webElement.content");
+		WebElement msg = browser.findElement("taskProperties.webElement.message");
 		if(taskProperties.afterRouting==true){
 			afterRoutDer.click();
 			sbjct.sendKeys(taskProperties.subject);
@@ -161,10 +164,10 @@ public class TaskProperties{
 	}
 
 	public void save()  throws Exception{
-		WebElement btnSave = Browser.getElement("taskProperties.webElement.btnSave");
+		WebElement btnSave = browser.findElement("taskProperties.webElement.btnSave");
 		btnSave.click();
 		Thread.sleep(1000);
-		WebElement btnAccept = Browser.getElement("taskProperties.webElement.btnAccept");
+		WebElement btnAccept = browser.findElement("taskProperties.webElement.btnAccept");
 		btnAccept.click();
 		
 	}

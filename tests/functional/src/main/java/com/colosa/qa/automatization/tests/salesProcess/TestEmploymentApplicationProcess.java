@@ -1,30 +1,30 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestEmploymentApplicationProcess{
+public class TestEmploymentApplicationProcess extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 	protected static int addJob=3;
 
-	@Test
+    public TestEmploymentApplicationProcess(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void openAndRunProcess()  throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("hector", "sample", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("hector", "sample", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
 
 		FormFieldData[] arrayData = new FormFieldData[23];
 		arrayData[0] = new FormFieldData();
@@ -248,34 +248,34 @@ public class TestEmploymentApplicationProcess{
 		arrayData2[1].fieldType = FieldType.BUTTON;
 		arrayData2[1].fieldValue = "";
 
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
 		WebElement btnLink=null;
 		WebElement btnLink2 =null;
-		btnLink = Browser.driver().findElement(By.id("form[work_experience_grid][addLink]"));
+		btnLink = browserInstance.findElementById("form[work_experience_grid][addLink]");
 		for(int rows = 1;rows<addJob;rows++)
 		{
 			btnLink.click();
 		}
-		btnLink2 = Browser.driver().findElement(By.id("form[work_reference][addLink]"));
+		btnLink2 = browserInstance.findElementById("form[work_reference][addLink]");
 		for(int rows = 1;rows<addJob;rows++)
 		{
 			btnLink2.click();
 		}
-		Assert.assertTrue(GridFiller.gridFillElements(gridData));
-		Assert.assertTrue(GridFiller.gridFillElements(gridData2));
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		Assert.assertTrue(GridFiller.gridFillElements(browserInstance,gridData));
+		Assert.assertTrue(GridFiller.gridFillElements(browserInstance,gridData2));
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance,arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	}
 	
 	/*@Test
 	public void continueProcess() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("hector", "sample", "");
-		Pages.Main().goHome();
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("hector", "sample", "");
+		pages.Main().goHome();
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[2];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -288,16 +288,16 @@ public class TestEmploymentApplicationProcess{
 		arrayData[1].fieldFindType = FieldKeyType.ID;
 		arrayData[1].fieldType = FieldType.BUTTON;
 		arrayData[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements( browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	}*/
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

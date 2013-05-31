@@ -1,38 +1,36 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
-
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import java.text.DecimalFormat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFJumping{
+public class TestPMFJumping extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestPMFJumping(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		Pages.Home().startCase("Test PMFJumping (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue(Pages.Home().isGridPresent("casesGrid"));
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoNewCase().startCase("Test PMFJumping (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().clickButton("Enviar");
+		Assert.assertTrue(pages.Home().isGridPresent("casesGrid"));
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

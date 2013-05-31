@@ -1,47 +1,33 @@
 package com.colosa.qa.automatization.common;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.Select;
-import java.util.List;
-import java.net.URL;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import org.openqa.selenium.JavascriptExecutor;
 
 public class Value{
 
-	public static String getValue(FieldKeyType keyType, String pathElem) throws FileNotFoundException, IOException, Exception{
+	public static String getValue(BrowserInstance browser,  FieldKeyType keyType, String pathElem) throws FileNotFoundException, IOException, Exception{
 		WebElement elem = null;
 		switch(keyType)
 			{
 
-				case ID: 		elem = Browser.driver().findElement(By.id(pathElem));
+				case ID: 		elem = browser.findElementById(pathElem);
 										break;
 				
-				case XPATH: 	elem = Browser.driver().findElement(By.xpath(pathElem));
+				case XPATH: 	elem = browser.findElementByXPath(pathElem);
 											break;
 				
-				case CSSSELECTOR:	elem = Browser.driver().findElement(By.cssSelector(pathElem));
+				case CSSSELECTOR:	elem = browser.findElementByCssSelector(pathElem);
 												break;
 				
-				case LINKTEXT:	elem = Browser.driver().findElement(By.linkText(pathElem));
+				case LINKTEXT:	elem = browser.findElementByLinkText(pathElem);
 											break;
 				
-				case PARTIALLINKTEXT:	elem = Browser.driver().findElement(By.partialLinkText(pathElem));
+				case PARTIALLINKTEXT:	elem = browser.findElementByPartialLinkText(pathElem);
 													break;
 				
-				case TAGNAME: 	elem = Browser.driver().findElement(By.tagName(pathElem));
+				case TAGNAME: 	elem = browser.findElementByTagName(pathElem);
 											break;
 				
 				default:	break;

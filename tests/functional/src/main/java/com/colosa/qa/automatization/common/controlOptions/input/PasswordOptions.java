@@ -1,7 +1,7 @@
 package com.colosa.qa.automatization.common.controlOptions.input;
 
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.WebElement;
-import com.colosa.qa.automatization.common.Browser;
 
 public class PasswordOptions extends InputControlOptions{
 
@@ -27,9 +27,9 @@ public class PasswordOptions extends InputControlOptions{
 		this.autocomplete = autocomplete;
 	}
 
-	public void fillForm() throws Exception{
-		super.fillForm();
-		WebElement we = Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.autocomplete");
+	public void fillForm(BrowserInstance browser) throws Exception{
+		super.fillForm(browser);
+		WebElement we = browser.findElement("dynaformDesigner.webElement.blankDynaformModal.autocomplete");
 		if(this.autocomplete != we.isSelected())
 			we.click();
 	}

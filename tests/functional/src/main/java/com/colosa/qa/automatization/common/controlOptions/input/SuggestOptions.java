@@ -1,9 +1,8 @@
 package com.colosa.qa.automatization.common.controlOptions.input;
 
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.controlOptions.input.InputControlOptions;
 
 public class SuggestOptions extends InputControlOptions{
 
@@ -84,20 +83,20 @@ public class SuggestOptions extends InputControlOptions{
 		super.addDependentField(fieldName);
 	}
 	
-	public void fillForm() throws Exception{
-		super.fillForm();
-		(new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.saveSelectedOptionAs"))).selectByValue(this.saveSelectedOptionAs.getValue());
-		Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.maxResults").sendKeys(Integer.toString(this.maxResults));
-		WebElement we = Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.showNoResultsMessage");
+	public void fillForm(BrowserInstance browser) throws Exception{
+		super.fillForm(browser);
+		(new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.saveSelectedOptionAs"))).selectByValue(this.saveSelectedOptionAs.getValue());
+		browser.findElement("dynaformDesigner.webElement.blankDynaformModal.maxResults").sendKeys(Integer.toString(this.maxResults));
+		WebElement we = browser.findElement("dynaformDesigner.webElement.blankDynaformModal.showNoResultsMessage");
 		if(this.showNoResultsMessage != we.isSelected())
 			we.click();
-		we = Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry");
+		we = browser.findElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry");
 		if(we.isSelected() != this.storeNewEntry)
 			we.click();
-		(new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.table"))).selectByValue(this.table);
-		(new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.primaryKey"))).selectByValue(this.primaryKey);
-		(new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.primaryKeyType"))).selectByValue(storeNewEntryPrimaryKeyType.getValue());
-		Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.javascriptCallback").sendKeys(this.javascript);
+		(new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.table"))).selectByValue(this.table);
+		(new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.primaryKey"))).selectByValue(this.primaryKey);
+		(new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.storeNewEntry.primaryKeyType"))).selectByValue(storeNewEntryPrimaryKeyType.getValue());
+		browser.findElement("dynaformDesigner.webElement.blankDynaformModal.javascriptCallback").sendKeys(this.javascript);
 	}
 
 }

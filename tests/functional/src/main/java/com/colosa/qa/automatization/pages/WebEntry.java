@@ -1,6 +1,6 @@
 package com.colosa.qa.automatization.pages;
 
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
 import com.colosa.qa.automatization.common.Constant;
 import com.colosa.qa.automatization.common.FieldType;
@@ -9,15 +9,20 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 
 public class WebEntry extends Page {
 
-    public WebEntry() throws FileNotFoundException, IOException {
+    public WebEntry(BrowserInstance browser) throws Exception {
+        super(browser);
 
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // into level of debug
@@ -25,20 +30,18 @@ public class WebEntry extends Page {
         String myServer = ConfigurationSettings.getInstance().getSetting("server.url");
         String myUrl = myServer + "/sys" + workSpace + "/en/classic/" + idWebEntry + "/WebForm.php";
         System.out.println(myUrl);
-        Browser.gotoUrl(myUrl);
+        browser.gotoUrl(myUrl);
     }
 
     public Integer getNumberCase() throws Exception {
         Thread.sleep(2000);
-        WebElement fieldContent = Browser.driver().findElement(By.className("FormFieldContent"));
+        WebElement fieldContent = browser.findElementByClassName("FormFieldContent");
         String labelAll = fieldContent.getAttribute("innerHTML").trim();
         String[] labelPart = labelAll.split("<br>");
         String[] numberPart = labelPart[2].split(":");
         System.out.println("New Case of webentry: " + numberPart[1].trim());
         return Integer.parseInt(numberPart[1].trim());
     }
-
-    
 
     public void clear(WebElement element) throws Exception {
         element.clear();
@@ -50,7 +53,7 @@ public class WebEntry extends Page {
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         this.clear(element);
     }
@@ -65,7 +68,7 @@ public class WebEntry extends Page {
 
         System.out.println(" Element to search for: " + str);
 
-        return Browser.getElement(str);
+        return browser.findElement(str);
     }
 
     public FieldType detectFieldType(WebElement element) throws Exception{
@@ -103,7 +106,7 @@ public class WebEntry extends Page {
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
                     System.out.println(" HTML element id: " + elementId);
-                    Boolean suggestElementExists = Browser.elementExistsSearchCriteria("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[" + elementId + "_label]");
+                    Boolean suggestElementExists = browser.elementExistsSearchCriteria("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[" + elementId + "_label]");
 
                     if(suggestElementExists){
                         System.out.println(" Element Type: SUGGEST");
@@ -202,7 +205,7 @@ public class WebEntry extends Page {
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         //search element
-        WebElement element = Browser.getElement(str);
+        WebElement element = browser.findElement(str);
 
         this.setFieldValue(element, value, fieldType);
 
@@ -244,10 +247,10 @@ public class WebEntry extends Page {
                 element.click();
                 break;
             case DATEPICKER:     
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case READONLY:  
-                ((JavascriptExecutor)Browser.driver()).executeScript("arguments[0].value=arguments[1]", element, value);
+                ((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", element, value);
                 break;
             case SUGGEST:   //using label textbox
                 WebElement elem2 = null;
@@ -267,8 +270,8 @@ public class WebEntry extends Page {
 
                 labelElement.sendKeys(value);
                 
-                Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
-                elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
+                elem2 = browser.findElementByXPath("//div[1]/ul/li");
                 listEl = elem2.findElements(By.xpath("a"));
                 for(WebElement we2:listEl)
                 {
@@ -290,13 +293,13 @@ public class WebEntry extends Page {
                     c = cadIns.charAt(0);
                     element.sendKeys(Character.toString(c));
                     try {
-                        Browser.waitForElement(By.xpath("//div[1]/ul/li"),2);                                   
+                        browser.waitForElement(By.xpath("//div[1]/ul/li"),2);
                     } catch(Exception ex){
                         //element not found
                         cadIns = cadIns.substring(1, cadIns.length());
                         continue;
                     }
-                    elem2 = Browser.driver().findElement(By.xpath("//div[1]/ul/li"));
+                    elem2 = browser.findElementByXPath("//div[1]/ul/li"));
                     listEl = elem2.findElements(By.xpath("a"));
                     for(WebElement we2:listEl)
                     {

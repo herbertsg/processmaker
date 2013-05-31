@@ -1,46 +1,35 @@
 package com.colosa.qa.automatization.tests.casesLists;
 
-import java.lang.Exception;
-import java.util.List;
-
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.NoSuchElementException;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestCasesLists{
+public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestCasesLists(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
-				Pages.Main().goHome();
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
+		pages.Main().goHome();
         
-        int casenumber = Pages.Home().startCase("TestCasesStatus (Task 1)");
-        Pages.DynaformExecution().intoDynaform();
+        int casenumber = pages.Home().gotoNewCase().startCase("TestCasesStatus (Task 1)");
+        pages.DynaformExecution().intoDynaform();
                 
-        Pages.DynaformExecution().outDynaform();  
+        pages.DynaformExecution().outDynaform();
         
-		    Pages.Home().gotoDraft();                 
-		    Pages.Home().openCase(casenumber);
-        Pages.DynaformExecution().intoDynaform();
+        pages.Home().gotoDraft();
+        pages.Home().openCase(casenumber);
+        pages.DynaformExecution().intoDynaform();
     
         FormFieldData[] fieldArray1=new FormFieldData[2];
 		    fieldArray1[0]=new FormFieldData();
@@ -56,19 +45,19 @@ public class TestCasesLists{
 		    fieldArray1[1].fieldType=FieldType.BUTTON;
 		    fieldArray1[1].fieldValue="";
     		
-    		FormFiller.formFillElements(fieldArray1);
-		    Pages.InputDocProcess().continuebtn();
+    		FormFiller.formFillElements(browserInstance, fieldArray1);
+		    pages.AssignTask().pressContinueButton();
     		
-    		Pages.Home().gotoParticipated();
-		   // Assert.assertTrue("The case does not exist in Participated", Pages.Home().existCase(casenumber));
-		    Pages.Home().openCase(casenumber);
-		    Pages.DynaformExecution().outDynaform();  
+    		pages.Home().gotoParticipated();
+		   // Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(casenumber));
+		    pages.Home().openCase(casenumber);
+		    pages.DynaformExecution().outDynaform();
 		        		
-    		Pages.Home().gotoInbox();
-		   // Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(casenumber));
+    		pages.Home().gotoInbox();
+		   // Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(casenumber));
 		    
-		    Pages.Home().openCase(casenumber);
-		    Pages.DynaformExecution().intoDynaform();
+		    pages.Home().openCase(casenumber);
+		    pages.DynaformExecution().intoDynaform();
 		    
 		    FormFieldData[] fieldArray3=new FormFieldData[2];
 		    fieldArray3[0]=new FormFieldData();
@@ -84,13 +73,13 @@ public class TestCasesLists{
 		    fieldArray3[1].fieldType=FieldType.BUTTON;
 		    fieldArray3[1].fieldValue="";
 		    
-		    FormFiller.formFillElements(fieldArray3);
-		    Pages.InputDocProcess().continuebtn();
+		    FormFiller.formFillElements(browserInstance, fieldArray3);
+		    pages.AssignTask().pressContinueButton();
 		    
-		    Pages.Home().gotoUnassigned();
-		    //Assert.assertTrue("The case does not exist in Unassigned", Pages.Home().existCase(casenumber));
-		    Pages.Home().openCase(casenumber);
-		    Pages.DynaformExecution().intoDynaform();
+		    pages.Home().gotoUnassigned();
+		    //Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(casenumber));
+		    pages.Home().openCase(casenumber);
+		    pages.DynaformExecution().intoDynaform();
 		    
 		    FormFieldData[] fieldArray4=new FormFieldData[1];
 		    fieldArray4[0]=new FormFieldData();
@@ -100,19 +89,19 @@ public class TestCasesLists{
 		    fieldArray4[0].fieldType=FieldType.BUTTON;
 		    fieldArray4[0].fieldValue="";
 		    
-		    FormFiller.formFillElements(fieldArray4);
-		    Pages.DynaformExecution().intoDynaform();
-		    Pages.Home().pauseCase(casenumber);
+		    FormFiller.formFillElements(browserInstance, fieldArray4);
+		    pages.DynaformExecution().intoDynaform();
+		    pages.Home().pauseCase(casenumber);
 		    
-		    Pages.DynaformExecution().outDynaform();  
-		    Pages.Home().gotoPaused();
-		   // Assert.assertTrue("The case does not exist in Paused", Pages.Home().existCase(casenumber));
-			Pages.InputDocProcess().switchToDefault();
-			Pages.Main().logout();
+		    pages.DynaformExecution().outDynaform();
+		    pages.Home().gotoPaused();
+		   // Assert.assertTrue("The case does not exist in Paused", pages.Home().existCase(casenumber));
+			pages.InputDocProcess().switchToDefault();
+			pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

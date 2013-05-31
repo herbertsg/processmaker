@@ -1,47 +1,48 @@
 package com.colosa.qa.automatization.tests.testFieldModeView;
 
+import com.colosa.qa.automatization.common.FieldType;
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestModeView{
+public class TestModeView extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String textVal = "Ernesto";
-	protected static String prec = "123,132,132,123.45";
-	protected static String perc = "213.13 %";
-	protected static String textArea = "Prueba";
-	protected static String drpdwn = "Valor4";
-	protected static String lstBx = "Valor3";
+	protected int caseNum;
+	protected String textVal = "Ernesto";
+	protected String prec = "123,132,132,123.45";
+	protected String perc = "213.13 %";
+	protected String textArea = "Prueba";
+	protected String drpdwn = "Valor4";
+	protected String lstBx = "Valor3";
 
-	@Test
+    public TestModeView(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Testeo Modo Vista (Task 1)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+        pages.DynaformExecution().outDynaform();
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("Testeo Modo Vista (Task 1)");
 
 	
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("Campo1", textVal);
-		Pages.DynaformExecution().setFieldValue("Precio1", prec);
-		Pages.DynaformExecution().setFieldValue("Porcentaje1", perc);
-		//Pages.DynaformExecution().setFieldValue("Text1", textArea);
-		Pages.DynaformExecution().setFieldValue("Combo1", drpdwn);
-		Pages.DynaformExecution().setFieldValue("Lista1", lstBx);
-		Pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("Campo1", textVal);
+		pages.DynaformExecution().setFieldValue("Precio1", prec);
+		pages.DynaformExecution().setFieldValue("Porcentaje1", perc);
+		//pages.DynaformExecution().setFieldValue("Text1", textArea);
+		pages.DynaformExecution().setFieldValue("Combo1", drpdwn);
+		pages.DynaformExecution().setFieldValue("Lista1", lstBx);
+		pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
 
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 
 
 	/*}
@@ -49,30 +50,30 @@ public class TestModeView{
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("iver", "sample", "");
-		Pages.Main().goHome();	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("iver", "sample", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoInbox().openCase(caseNum);
 
-		Pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().intoDynaform();
 		
-		Assert.assertEquals(textVal, Pages.DynaformExecution().getFieldValue("Campo1"));
-		Assert.assertEquals(prec, Pages.DynaformExecution().getFieldValue("Precio1"));
-		Assert.assertEquals(perc, Pages.DynaformExecution().getFieldValue("Porcentaje1"));
-		//Assert.assertEquals(textArea, Pages.DynaformExecution().getFieldValue("Text1"));
-		//Assert.assertEquals(drpdwn, Pages.DynaformExecution().getDropdownFieldText("Combo1"));
-		//Assert.assertEquals(lstBx, Pages.DynaformExecution().getDropdownFieldText("List1"));
-		Pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
+		Assert.assertEquals(textVal, pages.DynaformExecution().getFieldValue("Campo1"));
+		Assert.assertEquals(prec, pages.DynaformExecution().getFieldValue("Precio1"));
+		Assert.assertEquals(perc, pages.DynaformExecution().getFieldValue("Porcentaje1"));
+		//Assert.assertEquals(textArea, pages.DynaformExecution().getFieldValue("Text1"));
+		//Assert.assertEquals(drpdwn, pages.DynaformExecution().getDropdownFieldText("Combo1"));
+		//Assert.assertEquals(lstBx, pages.DynaformExecution().getDropdownFieldText("List1"));
+		pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
 
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

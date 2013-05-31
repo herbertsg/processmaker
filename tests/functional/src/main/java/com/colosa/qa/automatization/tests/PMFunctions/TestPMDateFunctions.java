@@ -1,41 +1,32 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import java.lang.Exception;
-import java.util.List;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.Date;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-    
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.NoSuchElementException;
+import java.util.Date;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
+public class TestPMDateFunctions extends com.colosa.qa.automatization.tests.common.Test{
 
-public class TestPMDateFunctions{
+    public TestPMDateFunctions(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
-				Pages.Main().goHome();
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
+				pages.Main().goHome();
         
-        int casenumber = Pages.Home().startCase("Test PMDate Functions (Task 1)");
-        Pages.DynaformExecution().intoDynaform();
+        int casenumber = pages.Home().gotoNewCase().startCase("Test PMDate Functions (Task 1)");
+        pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[8];
 		    fieldArray[0]=new FormFieldData();
@@ -80,13 +71,13 @@ public class TestPMDateFunctions{
 		    fieldArray[7].fieldType=FieldType.BUTTON;
 		    fieldArray[7].fieldValue="";
     		
-    		String fieldFORMAT_DATE1 = Pages.DynaformExecution().getFieldProperty("FORMAT_DATE1","value");
-    		String fieldFORMAT_DATE2 = Pages.DynaformExecution().getFieldProperty("FORMAT_DATE2","value");
-    		String fieldFORMAT_DATE3 = Pages.DynaformExecution().getFieldProperty("FORMAT_DATE3","value");
-    		String fieldCURRENT_DATE = Pages.DynaformExecution().getFieldProperty("CURRENT_DATE","value");
-    		String fieldCURRENT_TIME = Pages.DynaformExecution().getFieldProperty("CURRENT_TIME","value");
-    		String fieldLITERAL_DATE_EN = Pages.DynaformExecution().getFieldProperty("LITERAL_DATE_EN","value");
-    		String fieldLITERAL_DATE_ES = Pages.DynaformExecution().getFieldProperty("LITERAL_DATE_ES","value");
+    		String fieldFORMAT_DATE1 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE1","value");
+    		String fieldFORMAT_DATE2 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE2","value");
+    		String fieldFORMAT_DATE3 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE3","value");
+    		String fieldCURRENT_DATE = pages.DynaformExecution().getFieldProperty("CURRENT_DATE","value");
+    		String fieldCURRENT_TIME = pages.DynaformExecution().getFieldProperty("CURRENT_TIME","value");
+    		String fieldLITERAL_DATE_EN = pages.DynaformExecution().getFieldProperty("LITERAL_DATE_EN","value");
+    		String fieldLITERAL_DATE_ES = pages.DynaformExecution().getFieldProperty("LITERAL_DATE_ES","value");
     		/*
     		@@FORMAT_DATE1 = formatDate('2013-01-09','d m yy');
 				@@FORMAT_DATE2 = formatDate('2013-01-09','d de M del yyyy','es');
@@ -117,14 +108,14 @@ public class TestPMDateFunctions{
 		    Assert.assertEquals("English Language is not recognized in the literalDate", "January 9,2013", fieldLITERAL_DATE_EN);
 		    Assert.assertEquals("Spanish Language is not recognized in the literalDate", "9 de Enero de 2013", fieldLITERAL_DATE_ES);
 		    
-		    Pages.InputDocProcess().continuebtn();
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		    pages.AssignTask().pressContinueButton();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

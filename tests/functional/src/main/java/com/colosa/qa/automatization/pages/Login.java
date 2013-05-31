@@ -1,11 +1,10 @@
 package com.colosa.qa.automatization.pages;
 
-import com.colosa.qa.automatization.common.Browser;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Login extends Page{
@@ -17,34 +16,42 @@ public class Login extends Page{
 	WebElement logOutLink;
 	Select languageDropDown;
 
-	public Login() throws FileNotFoundException, IOException{
-		url = ConfigurationSettings.getInstance().getSetting("server.url");
-		pageTitle = "";
+	public Login(BrowserInstance browserInstance) throws Exception {
+        super(browserInstance);
 
-		//System.out.println("Login contructor....:" + url); 
+        verifyPage();
 	}
 
-    public Login(String browserName) throws FileNotFoundException, IOException{
-        url = ConfigurationSettings.getInstance().getSetting("server.url");
-        pageTitle = "";
+    @Override
+    public void verifyPage() throws Exception {
+        //this.logOutLink = browser.findElement("login.WebElement.logoutButton");
 
-        //System.out.println("Login contructor....:" + url);
+        //return (this.logOutLink != null);
+        //return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-	public void initWebElements() throws Exception{
-		this.systemInformationLink = Browser.getElement("login.webElement.systemInformationLink");
-		this.user = Browser.getElement("login.webElement.userName");
-		this.password = Browser.getElement("login.webElement.password");
-		this.workspace = Browser.getElement("login.webElement.workspace");
-		this.submitButton = Browser.getElement("login.webElement.submitButton");
+    public void initWebElements() throws Exception{
+		this.systemInformationLink = browser.findElement("login.webElement.systemInformationLink");
+		this.user = browser.findElement("login.webElement.userName");
+		this.password = browser.findElement("login.webElement.password");
+		this.workspace = browser.findElement("login.webElement.workspace");
+		this.submitButton = browser.findElement("login.webElement.submitButton");
 
-		this.languageDropDown = new Select(Browser.getElement("login.webElement.language"));
+		this.languageDropDown = new Select(browser.findElement("login.webElement.language"));
 	}
 
 	public boolean isAtLoginPage() throws Exception{
 		this.initWebElements();
 		return (this.systemInformationLink != null); 
 	}
+
+    public  void gotoDefaultUrl() throws IOException {
+        String url;
+        //default url
+        url = ConfigurationSettings.getInstance().getSetting("server.url");
+
+        this.gotoUrl(url);
+    }
 
 	public void loginDefaultUser() throws Exception{		
 		this.initWebElements();
@@ -57,7 +64,7 @@ public class Login extends Page{
 	}
 
 	public void loginUser(String userName, String password, String workspace, String language) throws Exception{
-		Browser.waitForElement("login.webElement.userName", 40);
+        browser.waitForElement("login.webElement.userName", 40);
 		
 		this.initWebElements();
 
@@ -76,14 +83,15 @@ public class Login extends Page{
 		this.submitButton.click();
 	}
 
-	public void loginUser(String userName, String password, String workspace) throws Exception{
+/*	public void loginUser(String userName, String password, String workspace) throws Exception{
 
 		this.loginUser(userName, password,  workspace, ConfigurationSettings.getInstance().getSetting("login.defaultLanguage"));
 
-	}	
+	}*/
 
 	public boolean isUserLogged() throws Exception{
-		this.logOutLink = Browser.getElement("login.WebElement.logoutButton");
+        //correct!!!
+		this.logOutLink = browser.findElement("login.WebElement.logoutButton");
 
 		return (this.logOutLink != null);
 	}

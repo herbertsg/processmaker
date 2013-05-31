@@ -1,29 +1,43 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestFunctionPMFDerivateCase{
+public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestFunctionPMFDerivateCase(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 
 		//Open process
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		Pages.Home().gotoNewCase();	
-		int caseNumber = Pages.Home().startCase("PMFDerivateCase (Task 1)");	
-		Pages.InputDocProcess().openCaseFrame();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		int caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (Task 1)");
+        pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("nombre", "Ademar");
+        pages.DynaformExecution().setFieldValue("monto", "3000");
+        pages.DynaformExecution().clickButton("send");
+
+        //the pmfroute functions is executed after form
+        //the inbox list is display later
+        //the case must be found in the inbox list
+        boolean caseExists = pages.Home().gotoInbox().existCase(caseNumber);
+
+        Assert.assertTrue("The case does not exist in Inbox",caseExists);
+
+		/*pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[3];
 		fieldArray[0] = new FormFieldData();
 		fieldArray[1] = new FormFieldData();
@@ -40,13 +54,13 @@ public class TestFunctionPMFDerivateCase{
 		fieldArray[2].fieldFindType = FieldKeyType.ID;
 		fieldArray[2].fieldType = FieldType.BUTTON;
 		fieldArray[2].fieldValue = "";
-		FormFiller.formFillElements(fieldArray);
+		FormFiller.formFillElements(browserInstance, fieldArray);
 		//Open the next task .
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Home().gotoInbox();
-		//Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNumber));
-		Pages.Home().openCase(caseNumber);	
-		Pages.InputDocProcess().openCaseFrame();
+		pages.InputDocProcess().switchToDefault();
+		pages.Home().gotoInbox();
+		//Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNumber));
+		pages.Home().openCase(caseNumber);
+		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray2 = new FormFieldData[3];
 		fieldArray2[0] = new FormFieldData();
 		fieldArray2[1] = new FormFieldData();
@@ -63,21 +77,22 @@ public class TestFunctionPMFDerivateCase{
 		fieldArray2[2].fieldFindType = FieldKeyType.ID;
 		fieldArray2[2].fieldType = FieldType.BUTTON;
 		fieldArray2[2].fieldValue = "";
-		FormFiller.formFillElements(fieldArray2);
+		FormFiller.formFillElements(browserInstance, fieldArray2);
 		//Open the next task to verify if the DerivateCase function works fine 
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Home().gotoInbox();
-		//Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNumber));
-		Pages.Home().openCase(caseNumber);	
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
-		Pages.Main().logout();
+		pages.InputDocProcess().switchToDefault();
+		pages.Home().gotoInbox();
+		//Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNumber));
+		pages.Home().openCase(caseNumber);
+		pages.InputDocProcess().openCaseFrame(); */
+
+		//Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

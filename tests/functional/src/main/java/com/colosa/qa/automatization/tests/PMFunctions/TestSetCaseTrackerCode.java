@@ -1,62 +1,63 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Value;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSetCaseTrackerCode{
+public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String pin;
-	protected static String code;	
+	protected int caseNum;
+	protected String pin;
+	protected String code;
 
-	@Test
+    public TestSetCaseTrackerCode(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeSetCaseTrackerCode() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("setCaseTrackerCode (Task 1)");
-		Pages.DynaformExecution().intoDynaform();
-	    Pages.InputDocProcess().continuebtn();
-		Pages.Main().goHome();
-		Pages.InputDocProcess().switchToDefault();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("setCaseTrackerCode (Task 1)");
+		pages.DynaformExecution().intoDynaform();
+	    pages.AssignTask().pressContinueButton();
+		pages.Main().goHome();
+		pages.InputDocProcess().switchToDefault();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		//init Case tracker
-		Pages.Home().openCase(caseNum);
-		Pages.DynaformExecution().intoDynaform();
-		pin = Value.getValue(FieldKeyType.ID, "form[pin]");	
-		code = Value.getValue(FieldKeyType.ID, "form[code]");	
-		Pages.DynaformExecution().setFieldValue("continue", "");
-		Pages.DynaformExecution().intoDynaform();
-	    Pages.InputDocProcess().continuebtn();	
-		Pages.InputDocProcess().switchToDefault();
-		Pages.CaseTracker().goTo();
-		Pages.DynaformExecution().setFieldValue("CASE", code);
-		Pages.DynaformExecution().setFieldValue("PIN", pin);
-		Pages.DynaformExecution().setFieldValue("BSUBMIT", "");
-		System.out.println(Pages.Designer().getTaskColorStatus("Task 1"));
-		Assert.assertEquals("Completed Task", Pages.Designer().getTaskColorStatus("Task 1"));
-		System.out.println(Pages.Designer().getTaskColorStatus("Task 2"));
-		Assert.assertEquals("Pending Task / Not Executed", Pages.Designer().getTaskColorStatus("Task 2"));
+		pages.Home().openCase(caseNum);
+		pages.DynaformExecution().intoDynaform();
+		pin = Value.getValue(browserInstance, FieldKeyType.ID, "form[pin]");
+		code = Value.getValue(browserInstance, FieldKeyType.ID, "form[code]");
+		pages.DynaformExecution().setFieldValue("continue", "");
+		pages.DynaformExecution().intoDynaform();
+	    pages.AssignTask().pressContinueButton();
+		pages.InputDocProcess().switchToDefault();
+		pages.CaseTracker().goTo("workflow");
+		pages.DynaformExecution().setFieldValue("CASE", code);
+		pages.DynaformExecution().setFieldValue("PIN", pin);
+		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
+		System.out.println(pages.Designer().getTaskColorStatus("Task 1"));
+		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatus("Task 1"));
+		System.out.println(pages.Designer().getTaskColorStatus("Task 2"));
+		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatus("Task 2"));
 
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 	}
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 }

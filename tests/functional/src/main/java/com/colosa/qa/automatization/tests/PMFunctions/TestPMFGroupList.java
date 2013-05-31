@@ -1,35 +1,32 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFGroupList{
+public class TestPMFGroupList extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestPMFGroupList(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		Pages.Home().startCase("PMF Group List (Task 1)");
-		Pages.DynaformExecution().sleep(15000);
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoNewCase().startCase("PMF Group List (Task 1)");
+		//pages.DynaformExecution().sleep(15000);
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

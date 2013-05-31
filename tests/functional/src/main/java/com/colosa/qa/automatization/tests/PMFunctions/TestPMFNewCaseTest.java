@@ -1,76 +1,65 @@
-package com.colosa.qa.automatization.tests.triggersProcess;
-
-import java.lang.Exception;
+package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.After;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFNewCaseTest{
+public class TestPMFNewCaseTest extends com.colosa.qa.automatization.tests.common.Test{
+
+    public TestPMFNewCaseTest(String browserName) throws IOException {
+        super(browserName);
+    }
 
     @Test
     public void runCase() throws Exception {
         // login the PM
-        Pages.Login().gotoUrl();
-        Pages.Login().loginUser("admin","admin","workflow");
+        pages.Login().gotoDefaultUrl();
+        pages.Login().loginUser("admin","admin","workflow", "English");
 
         // go tab home
-        Pages.Main().goHome();
+        pages.Main().goHome();
         
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
-        int numberNewCase = Pages.Home().startCase("Testeo de funciones PMFNewCase (Creador de casos)");
+        int numberNewCase = pages.Home().gotoNewCase().startCase("Testeo de funciones PMFNewCase (Creador de casos)");
         
         // switch to frame the dynaform
-        //Pages.DynaformExecution().intoDynaform();
+        //pages.DynaformExecution().intoDynaform();
         
         // get count value of field UID_CASE
-        int countIdCase = Pages.DynaformExecution().getFieldProperty("UID_CASE","value").length();
+        int countIdCase = pages.DynaformExecution().getFieldProperty("UID_CASE","value").length();
 
         // get number of case generated in field NUM_CASE
-        String numberCaseGenerated = Pages.DynaformExecution().getFieldProperty("NUM_CASE","value");
+        String numberCaseGenerated = pages.DynaformExecution().getFieldProperty("NUM_CASE","value");
 
         // verify if the code is validate
         Assert.assertTrue("No case has created ", (countIdCase == 32) );
         // case was create correctly
         
         // out of frame of dynaform
-        Pages.DynaformExecution().outDynaform();
+        pages.DynaformExecution().outDynaform();
         
         // go submenu draft
-        Pages.Home().gotoDraft();
+        pages.Home().gotoDraft();
 
         // open the case generated
-        Pages.Home().openCase(Integer.parseInt(numberCaseGenerated));
+        pages.Home().openCase(Integer.parseInt(numberCaseGenerated));
 
         // switch to frame the dynaform
-        //Pages.DynaformExecution().intoDynaform();
+        //pages.DynaformExecution().intoDynaform();
 
         // get value of case generated in field NUM_CASE
-        String fieldNOMBRE = Pages.DynaformExecution().getFieldProperty("NOMBRE","value");
+        String fieldNOMBRE = pages.DynaformExecution().getFieldProperty("NOMBRE","value");
 
         // get value of case generated in field APELLIDO
-        String fieldAPELLIDO = Pages.DynaformExecution().getFieldProperty("APELLIDO","value");
+        String fieldAPELLIDO = pages.DynaformExecution().getFieldProperty("APELLIDO","value");
 
         // get value of case generated in field CELULAR
-        String fieldCELULAR = Pages.DynaformExecution().getFieldProperty("CELULAR","value");
+        String fieldCELULAR = pages.DynaformExecution().getFieldProperty("CELULAR","value");
 
         // get value of case generated in field OBSERVACIONES
-        String fieldOBSERVACIONES = Pages.DynaformExecution().getFieldProperty("OBSERVACIONES","value");
+        String fieldOBSERVACIONES = pages.DynaformExecution().getFieldProperty("OBSERVACIONES","value");
 
 
         // verify if the field NOMBRE is validate
@@ -88,13 +77,13 @@ public class TestPMFNewCaseTest{
         // verify if the field OBSERVACIONES is validate
         Assert.assertEquals("No case has created with field OBSERVACIONES ", fieldOBSERVACIONES, "ESTA ES UNA CREACION DE CASOS VIA TRIGGER");
         // case was create with field OBSERVACIONES correctly
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
     }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -1,10 +1,9 @@
 package com.colosa.qa.automatization.common.controlOptions.input;
 
-import com.colosa.qa.automatization.common.Browser;
-import com.colosa.qa.automatization.common.controlOptions.input.InputControlOptions;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.controlOptions.DependentFieldsApplicableOption;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class TextFieldOptions extends InputControlOptions{
 
@@ -80,17 +79,17 @@ public class TextFieldOptions extends InputControlOptions{
 	}
 
 	@Override
-	public void fillForm() throws Exception{
-		super.fillForm();
+	public void fillForm(BrowserInstance browser) throws Exception{
+		super.fillForm(browser);
 		WebElement we = null;
 		Select ddown = null;
 		
-		//ddown = new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.validate"));
+		//ddown = new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.validate"));
 		//ddown.selectByValue(this.validate.getValue());
-		//Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.mask").sendKeys(this.mask);
-		ddown = new Select(Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.textTransform"));
+		//browser.findElement("dynaformDesigner.webElement.blankDynaformModal.mask").sendKeys(this.mask);
+		ddown = new Select(browser.findElement("dynaformDesigner.webElement.blankDynaformModal.textTransform"));
 		ddown.selectByValue(this.textTransform.getValue());
-		//we = Browser.getElement("dynaformDesigner.webElement.blankDynaformModal.size");
+		//we = browser.findElement("dynaformDesigner.webElement.blankDynaformModal.size");
 		//we.clear();
 		//we.sendKeys(Integer.toString(this.size));
 	}

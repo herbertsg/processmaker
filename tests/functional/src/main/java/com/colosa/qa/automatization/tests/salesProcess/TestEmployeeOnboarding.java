@@ -1,28 +1,28 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestEmployeeOnboarding{
+public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestEmployeeOnboarding(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void onBoardNewEnployee()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("Employee Onboarding v-0.2 (Onboard New Employee)");
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("Employee Onboarding v-0.2 (Onboard New Employee)");
 		FormFieldData[] arrayData = new FormFieldData[8];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -64,8 +64,8 @@ public class TestEmployeeOnboarding{
 		arrayData[7].fieldFindType = FieldKeyType.ID;
 		arrayData[7].fieldType = FieldType.BUTTON;
 		arrayData[7].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		FormFiller.formFillElements(arrayData);
+		pages.InputDocProcess().openCaseFrame();
+		FormFiller.formFillElements(browserInstance, arrayData);
 		FormFieldData[] arrayData2 = new FormFieldData[2];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[1] = new FormFieldData();
@@ -77,8 +77,8 @@ public class TestEmployeeOnboarding{
 		arrayData2[1].fieldFindType = FieldKeyType.ID;
 		arrayData2[1].fieldType = FieldType.BUTTON;
 		arrayData2[1].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData2));
 		FormFieldData[] arrayData3 = new FormFieldData[8];
 		arrayData3[0] = new FormFieldData();
 		arrayData3[1] = new FormFieldData();
@@ -120,22 +120,22 @@ public class TestEmployeeOnboarding{
 		arrayData3[7].fieldFindType = FieldKeyType.ID;
 		arrayData3[7].fieldType = FieldType.BUTTON;
 		arrayData3[7].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData3));
-		Assert.assertTrue("The button Continue does not exit in this form", Browser.elementExists("inputDocProcess.webelement.continue"));
-		Pages.InputDocProcess().continuebtn();
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData3));
+		Assert.assertTrue("The button Continue does not exit in this form", browserInstance.elementExists("inputDocProcess.webelement.continue"));
+		pages.AssignTask().pressContinueButton();
+		pages.Main().logout();
 
 	}
 
 	@Test
 	public void materialsAllocation() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Julian", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);	
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Julian", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[15];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -212,28 +212,28 @@ public class TestEmployeeOnboarding{
 		arrayData[14].fieldFindType = FieldKeyType.ID;
 		arrayData[14].fieldType = FieldType.BUTTON;
 		arrayData[14].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[NEXT_STEP]";
 		arrayData2[0].fieldFindType = FieldKeyType.ID;
 		arrayData2[0].fieldType = FieldType.BUTTON;
 		arrayData2[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	}
 
 	@Test
 	public void trainingArrangement() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Joshua", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Joshua", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -255,20 +255,20 @@ public class TestEmployeeOnboarding{
 		arrayData[3].fieldFindType = FieldKeyType.ID;
 		arrayData[3].fieldType = FieldType.BUTTON;
 		arrayData[3].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	}
 
 	@Test
 	public void threeMonthReview() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Ian", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Ian", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[3];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -285,36 +285,36 @@ public class TestEmployeeOnboarding{
 		arrayData[2].fieldFindType = FieldKeyType.ID;
 		arrayData[2].fieldType = FieldType.BUTTON;
 		arrayData[2].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.Main().logout();
 	}
 
 	@Test
 	public void dissmisal() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("Jacob", "sample", "");
-		Pages.Main().goHome();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));	
-		Pages.Home().openCase(caseNum);
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("Jacob", "sample", "workflow", "English");
+		pages.Main().goHome();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[NEXT_STEP]";
 		arrayData2[0].fieldFindType = FieldKeyType.ID;
 		arrayData2[0].fieldType = FieldType.BUTTON;
 		arrayData2[0].fieldValue = "";
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue(FormFiller.formFillElements(arrayData2));
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData2));
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

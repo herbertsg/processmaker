@@ -1,37 +1,35 @@
 package com.colosa.qa.automatization.tests.processlist;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.After;
 
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestProcessList{
+public class TestProcessList extends com.colosa.qa.automatization.tests.common.Test{
 
 
-	@Test
+    public TestProcessList(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void openProc() throws Exception{
-
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goDesigner();
-		//Pages.ProcessList().openProcess("Test2");
-		//Pages.ProcessList().importProcess("/home/ernesto/Documents/Test_6.pm");
-		//Pages.ProcessList().exportProcess("Test2");
-		Pages.ProcessList().newProcess("Test Process2", "Proceso de prueba 2");
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+        //testeo de las funcionalidades disponible en el listado de procesos
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goDesigner();
+		//pages.ProcessList().openProcess("Test2");
+		//pages.ProcessList().importProcess("/home/ernesto/Documents/Test_6.pm");
+		//pages.ProcessList().exportProcess("Test2");
+		pages.ProcessList().newProcess("Test Process2", "Proceso de prueba 2");
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
 /*
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
 */
 

@@ -1,11 +1,9 @@
 package com.colosa.qa.automatization;
 
+import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import com.colosa.qa.automatization.common.Browser;
 
 @RunWith(value = Suite.class)
 @SuiteClasses(value = { com.colosa.qa.automatization.tests.derivationRulesCombinations.DerivationRulesEvaluation.class,
@@ -15,7 +13,7 @@ import com.colosa.qa.automatization.common.Browser;
                         com.colosa.qa.automatization.tests.derivationRulesCombinations.DerivationRulesSequential.class})
 public class derivationRulesCombinations {
     @AfterClass public static void tearDownClass() {
-        Browser.close();
+        //Browser.quit();
     }
 
 }

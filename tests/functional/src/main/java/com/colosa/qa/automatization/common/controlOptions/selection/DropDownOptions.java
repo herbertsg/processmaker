@@ -1,11 +1,9 @@
 package com.colosa.qa.automatization.common.controlOptions.selection;
 
-import com.colosa.qa.automatization.common.Browser;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-import com.colosa.qa.automatization.common.controlOptions.selection.DropDownOption;
 import com.colosa.qa.automatization.common.controlOptions.DependentFieldsApplicableOption;
-import java.util.Map;
-import java.util.HashMap;
+
 import java.util.ArrayList;
 
 public class DropDownOptions extends ControlOptions{
@@ -29,15 +27,15 @@ public class DropDownOptions extends ControlOptions{
 	}
 
 	@Override
-	public void fillForm() throws Exception{
-		super.fillForm();
+	public void fillForm(BrowserInstance browser) throws Exception{
+		super.fillForm(browser);
 		int i = 1;
 		for(DropDownOption opt:this.options)
 		{
 			if(i>1)
-				Browser.getElement("dynaformDesigner.webElement.dropdownModal.gridNewElementButton").click();
-			Browser.getElementf("dynaformDesigner.webElement.dropdownModal.gridValueElementLocator", i).sendKeys(opt.getValue());
-			Browser.getElementf("dynaformDesigner.webElement.dropdownModal.gridLabelElementLocator", i).sendKeys(opt.getKey());
+				browser.findElement("dynaformDesigner.webElement.dropdownModal.gridNewElementButton").click();
+			browser.getElementf("dynaformDesigner.webElement.dropdownModal.gridValueElementLocator", i).sendKeys(opt.getValue());
+			browser.getElementf("dynaformDesigner.webElement.dropdownModal.gridLabelElementLocator", i).sendKeys(opt.getKey());
 			i++;
 		}
 	}

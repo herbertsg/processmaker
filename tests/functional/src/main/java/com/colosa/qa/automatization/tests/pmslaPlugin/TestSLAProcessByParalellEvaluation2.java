@@ -2,66 +2,64 @@ package com.colosa.qa.automatization.tests.pmslaPlugin;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.AfterClass;
 import org.junit.Test;
-import java.util.*;
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestSLAProcessByParalellEvaluation2{
+public class TestSLAProcessByParalellEvaluation2 extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int numCase;
-	
-	@Test
+
+    public TestSLAProcessByParalellEvaluation2(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
 		
-		numCase = Pages.Home().openFirstCase();
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("ci", "15648796");
-		Pages.DynaformExecution().setFieldValue("verificar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		numCase = pages.Home().openFirstCase();
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("ci", "15648796");
+		pages.DynaformExecution().setFieldValue("verificar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.Home().openCase(numCase);
-		Pages.DynaformExecution().intoDynaform();
-		Pages.DynaformExecution().setFieldValue("enviar", "");
-		Assert.assertTrue(Pages.InputDocProcess().continuebtn());
+		pages.Home().openCase(numCase);
+		pages.DynaformExecution().intoDynaform();
+		pages.DynaformExecution().setFieldValue("enviar", "");
+		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		Pages.CronExecute().execute("workflow");
+		pages.CronExecute().execute("workflow");
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "");
-		Pages.Main().goHome();
-		Pages.Home().gotoReports();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoReports();
 
-		Pages.PmslaReport().generateReport("SLA Entire Process Paralell by Evaluation with pen", "All", "All", "All");
-		Pages.PmslaReport().displayCases("SLA Entire Process Paralell by Evaluation with pen");
-		String[] caseInfo = Pages.PmslaReport().getCaseInfo(numCase);
+		pages.PmslaReport().generateReport("SLA Entire Process Paralell by Evaluation with pen", "All", "All", "All");
+		pages.PmslaReport().displayCases("SLA Entire Process Paralell by Evaluation with pen");
+		String[] caseInfo = pages.PmslaReport().getCaseInfo(numCase);
 		Assert.assertEquals(caseInfo[5], "Closed");
 		Assert.assertNotNull(caseInfo[4]);
-		Pages.PmslaReport().displayTasks(numCase);
-		String[] taskInfo = Pages.PmslaReport().getTaskInfo("Task 5");
+		pages.PmslaReport().displayTasks(numCase);
+		String[] taskInfo = pages.PmslaReport().getTaskInfo("Task 5");
 		Assert.assertEquals(taskInfo[5], "CLOSED");
 
-        Pages.InputDocProcess().switchToDefault();
-        Pages.Main().logout();
+        pages.InputDocProcess().switchToDefault();
+        pages.Main().logout();
 
 	}
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

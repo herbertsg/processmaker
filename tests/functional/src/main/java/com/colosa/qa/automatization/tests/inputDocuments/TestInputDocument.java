@@ -1,26 +1,29 @@
 package com.colosa.qa.automatization.tests.inputDocuments;
 
-import org.junit.Assert;
+import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestInputDocument{
+public class TestInputDocument extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestInputDocument(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
 
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		int caseNumber = Pages.Home().startCase("Input Process with and without versioning (enviar formulario y documento)");
-		Pages.InputDocProcess().openCaseFrame();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		int caseNumber = pages.Home().gotoNewCase().startCase("Input Process with and without versioning (enviar formulario y documento)");
+		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[6];
 		fieldArray[0] = new FormFieldData();
 		fieldArray[1] = new FormFieldData();
@@ -54,12 +57,12 @@ public class TestInputDocument{
 		fieldArray[5].fieldFindType = FieldKeyType.ID;
 		fieldArray[5].fieldType = FieldType.BUTTON;
 		fieldArray[5].fieldValue = "";
-		FormFiller.formFillElements(fieldArray);
-		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		Pages.InputDocProcess().continuebtn();
-		Pages.Home().openCase(caseNumber);
-		Pages.InputDocProcess().openCaseFrame();
+		FormFiller.formFillElements( browserInstance, fieldArray);
+		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
+		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
+		pages.AssignTask().pressContinueButton();
+		pages.Home().openCase(caseNumber);
+		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();
 
@@ -67,17 +70,17 @@ public class TestInputDocument{
 		fieldArray2[0].fieldFindType = FieldKeyType.ID;
 		fieldArray2[0].fieldType = FieldType.BUTTON;
 		fieldArray2[0].fieldValue = "";
-		FormFiller.formFillElements(fieldArray2);
+		FormFiller.formFillElements( browserInstance, fieldArray2);
 		
-		Pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		Pages.InputDocProcess().continuebtn();
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
+		pages.AssignTask().pressContinueButton();
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

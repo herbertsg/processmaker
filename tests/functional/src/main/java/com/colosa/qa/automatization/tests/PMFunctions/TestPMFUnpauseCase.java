@@ -1,56 +1,55 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
-import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestPMFUnpauseCase{
+public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.common.Test{
 
 	protected static int caseNum;
 
-	@Test
+    public TestPMFUnpauseCase(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executePMFUnpauseCase() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();	
-		caseNum = Pages.Home().startCase("PMFUnpauseCase (Init)");
-		Pages.DynaformExecution().intoDynaform();
-		Pages.Home().pauseCase(caseNum);
-		Pages.DynaformExecution().outDynaform();  
-		Pages.Home().gotoPaused();
-		Assert.assertTrue("The case does not exist in Paused", Pages.Home().existCase(caseNum));
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().goHome();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
+		pages.DynaformExecution().intoDynaform();
+		pages.Home().pauseCase(caseNum);
+		pages.DynaformExecution().outDynaform();
+		pages.Home().gotoPaused();
+		Assert.assertTrue("The case does not exist in Paused", pages.Home().existCase(caseNum));
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().goHome();
 		//Init casa again	
-		caseNum = Pages.Home().startCase("PMFUnpauseCase (Init)");
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
-		Pages.Main().goHome();
-    		Pages.Home().gotoInbox();	
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNum));
-		Pages.Home().openCase(caseNum);	
-		Pages.DynaformExecution().intoDynaform();
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
-		Pages.Main().goHome();
-     		Pages.Home().gotoPaused();	
-  		Assert.assertFalse("The case exist in Paused", Pages.Home().existCase(caseNum-1));     								  
-		Pages.DynaformExecution().outDynaform();
-		Pages.Main().logout();
+		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
+		pages.DynaformExecution().intoDynaform();
+		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.Main().goHome();
+    		pages.Home().gotoInbox();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
+		pages.Home().openCase(caseNum);
+		pages.DynaformExecution().intoDynaform();
+		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.Main().goHome();
+     		pages.Home().gotoPaused();
+  		Assert.assertFalse("The case exist in Paused", pages.Home().existCase(caseNum-1));
+		pages.DynaformExecution().outDynaform();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

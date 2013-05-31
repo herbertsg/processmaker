@@ -1,38 +1,34 @@
 package com.colosa.qa.automatization.pages;
 
-import java.io.*;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
-
-import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.JavascriptExecutor;
-import com.colosa.qa.automatization.common.*;
-import com.colosa.qa.automatization.common.extJs.*;
-
+import java.io.File;
 
 
 public class OutputDocProcess extends Page{
 
-	public OutputDocProcess() throws FileNotFoundException, IOException{
-		
-	}
 
-	public void downloadPdfFile() throws Exception{
+    public OutputDocProcess(BrowserInstance browser) throws Exception {
+        super(browser);
+        verifyPage();
+    }
 
-		Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
-		Browser.getElement("outputDocProcess.webelement.outputPdfButton").click();
+    @Override
+    public void verifyPage() throws Exception {
+
+    }
+
+    public void downloadPdfFile() throws Exception{
+
+		browser.switchToDefaultContent();
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+		browser.switchToFrame("openCaseFrame");
+		browser.findElement("outputDocProcess.webelement.outputPdfButton").click();
 
 	}
 
@@ -40,23 +36,23 @@ public class OutputDocProcess extends Page{
 
 
 
-		Browser.driver().switchTo().defaultContent();
-		Browser.driver().switchTo().frame("casesFrame");
-		Browser.driver().switchTo().frame("casesSubFrame");
-		Browser.driver().switchTo().frame("openCaseFrame");
-		Browser.getElement("outputDocProcess.webelement.outputDocButton").click();
+		browser.switchToDefaultContent();
+		browser.switchToFrame("casesFrame");
+		browser.switchToFrame("casesSubFrame");
+		browser.switchToFrame("openCaseFrame");
+		browser.findElement("outputDocProcess.webelement.outputDocButton").click();
 
 	}
 
 	public void nextbtn() throws Exception{
 
-		Browser.getElement("outputDocProcess.webelement.nextButton").click();
+		browser.findElement("outputDocProcess.webelement.nextButton").click();
 
 	}
 
 	public void continuebtn() throws Exception{
 
-		Browser.getElement("inputDocProcess.webelement.continue").click();
+		browser.findElement("inputDocProcess.webelement.continue").click();
 
 	}
 

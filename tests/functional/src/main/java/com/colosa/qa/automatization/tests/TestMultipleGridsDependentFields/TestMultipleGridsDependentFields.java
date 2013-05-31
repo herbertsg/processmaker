@@ -1,29 +1,29 @@
 package com.colosa.qa.automatization.tests.TestMultipleGridsDependentFields;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Test;
-
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
-import org.openqa.selenium.WebElement;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class TestMultipleGridsDependentFields{
+public class TestMultipleGridsDependentFields extends com.colosa.qa.automatization.tests.common.Test{
 
-	@Test
+    public TestMultipleGridsDependentFields(String browserName) throws IOException {
+        super(browserName);
+    }
+
+    @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 
 		//Open process
-		Pages.Login().gotoUrl();
-		Pages.Login().loginUser("admin", "admin", "workflow");
-		Pages.Main().goHome();
-		Pages.Home().gotoNewCase();	
-		int caseNumber = Pages.Home().startCase("Multiple grids with dependent fields (Task 1)");	
-		Pages.InputDocProcess().openCaseFrame();
+		pages.Login().gotoDefaultUrl();
+		pages.Login().loginUser("admin", "admin", "workflow", "English");
+		pages.Main().goHome();
+		pages.Home().gotoNewCase();
+		int caseNumber = pages.Home().gotoNewCase().startCase("Multiple grids with dependent fields (Task 1)");
+		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[10];
 		fieldArray[0] = new FormFieldData();
 		fieldArray[1] = new FormFieldData();
@@ -75,33 +75,33 @@ public class TestMultipleGridsDependentFields{
 		fieldArray[9].fieldFindType = FieldKeyType.ID;
 		fieldArray[9].fieldType = FieldType.BUTTON;
 		fieldArray[9].fieldValue = "";
-		FormFiller.formFillElements(fieldArray);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
+		FormFiller.formFillElements( browserInstance, fieldArray);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		//Open the next task .
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Home().gotoInbox();
-		Assert.assertTrue("The case does not exist in Inbox", Pages.Home().existCase(caseNumber));		
-		Pages.Home().openCase(caseNumber);	
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[birthS]"), "BO");
-		Assert.assertEquals(Value.getValue(FieldKeyType.ID, "form[countryResidence]"), "AR");
+		pages.InputDocProcess().switchToDefault();
+		pages.Home().gotoInbox();
+		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNumber));
+		pages.Home().openCase(caseNumber);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[birthS]"), "BO");
+		Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[countryResidence]"), "AR");
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();
 		fieldArray2[0].fieldPath = "form[send]";
 		fieldArray2[0].fieldFindType = FieldKeyType.ID;
 		fieldArray2[0].fieldType = FieldType.BUTTON;
 		fieldArray2[0].fieldValue = "";
-		FormFiller.formFillElements(fieldArray2);
-		Pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue("The button Continue does not exit in this form", Pages.InputDocProcess().continuebtn());	
-		Pages.InputDocProcess().switchToDefault();
-		Pages.Main().logout();
+		FormFiller.formFillElements( browserInstance, fieldArray2);
+		pages.InputDocProcess().openCaseFrame();
+		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().switchToDefault();
+		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }
