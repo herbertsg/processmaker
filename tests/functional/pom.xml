@@ -89,7 +89,7 @@
         <version>2.14</version>
         <configuration>
           <includes>
-              <include>**/dependentFields.java</include>
+              <include>**/TestSuiteAll.java</include>
           </includes>
           <parallel>classes</parallel>
           <threadCount>2</threadCount>

@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFInformationUser (Get Information user)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFInformationUser (Get Information user)");
 		pages.DynaformExecution().intoDynaform();
 		//Verify results
 		Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
@@ -44,9 +45,9 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

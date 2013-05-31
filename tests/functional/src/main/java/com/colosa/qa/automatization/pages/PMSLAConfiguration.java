@@ -11,8 +11,15 @@ import java.util.List;
 public class PMSLAConfiguration extends Page{
 
 
-    public PMSLAConfiguration(BrowserInstance browser) {
+    public PMSLAConfiguration(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
     public void importPlugin() throws FileNotFoundException, IOException{

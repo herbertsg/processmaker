@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFields;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,26 +9,26 @@ import java.io.IOException;
 
 public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String country = "Bolivia";
-	protected static String state = "Chuquisaca";
-	protected static String location = "Sucre";
-	protected static String state1 = "La Paz";
-	protected static String location1 = "Apolo";
+	protected int caseNum;
+	protected String country = "Bolivia";
+	protected String state = "Chuquisaca";
+	protected String location = "Sucre";
+	protected String state1 = "La Paz";
+	protected String location1 = "Apolo";
 
-	protected static String country2 = "Argentina";
-	protected static String state2 = "Jujuy";
-	protected static String location2 = "San Pedro";
-	protected static String state22 = "Chubut";
-	protected static String location22 = "Trelew";
+	protected String country2 = "Argentina";
+	protected String state2 = "Jujuy";
+	protected String location2 = "San Pedro";
+	protected String state22 = "Chubut";
+	protected String location22 = "Trelew";
 
-	protected static String userName = "amy";
-	protected static String completeName = "Amy Connelly";
-	protected static String userDepartment = "Administrative Division";
+	protected String userName = "amy";
+	protected String completeName = "Amy Connelly";
+	protected String userDepartment = "Administrative Division";
 
-	protected static String userName1 = "admin";
-	protected static String completeName1 = "Administrator  ";
-	protected static String userDepartment1 = "";
+	protected String userName1 = "admin";
+	protected String completeName1 = "Administrator  ";
+	protected String userDepartment1 = "";
 
     public AllFieldsTest(String browserName) throws IOException {
         super(browserName);
@@ -39,7 +40,7 @@ public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Tes
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("FormularioTodosCampos (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("FormularioTodosCampos (Task 1)");
 		
 		pages.DynaformExecution().intoDynaform();
 
@@ -177,9 +178,9 @@ public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Tes
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

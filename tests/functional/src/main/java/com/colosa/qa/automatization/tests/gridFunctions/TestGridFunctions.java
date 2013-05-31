@@ -1,6 +1,8 @@
 package com.colosa.qa.automatization.tests.gridFunctions;
 
 import com.colosa.qa.automatization.common.FieldType;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,7 +37,7 @@ public class TestGridFunctions extends com.colosa.qa.automatization.tests.common
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Grillas Funciones (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Grillas Funciones (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		int count = 0;
 
@@ -120,9 +122,13 @@ public class TestGridFunctions extends com.colosa.qa.automatization.tests.common
 
 	}
 
-
-  /*  @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
+
+    /*@AfterClass
+    public static void  cleanupClass(){
+        browserInstance.quit();
+    } */
 }

@@ -1,7 +1,7 @@
 package com.colosa.qa.automatization.tests.triggersProcess;
 
 import org.junit.Test;
-
+import org.junit.After;
 import java.io.IOException;
 
 public class TestTriggersProcess extends com.colosa.qa.automatization.tests.common.Test{
@@ -59,9 +59,9 @@ public class TestTriggersProcess extends com.colosa.qa.automatization.tests.comm
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

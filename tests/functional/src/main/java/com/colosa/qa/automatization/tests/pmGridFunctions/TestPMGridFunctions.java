@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmGridFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class TestPMGridFunctions extends com.colosa.qa.automatization.tests.comm
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("Test Grid Functions (Task 1)");
+		pages.Home().gotoNewCase().startCase("Test Grid Functions (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		for(int count=0;count<19;count++)
 		{
@@ -73,9 +74,10 @@ public class TestPMGridFunctions extends com.colosa.qa.automatization.tests.comm
 			Assert.assertEquals(fmt.format(Double.parseDouble(pages.DynaformExecution().getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
 		}
 	}
-/*    @After
+
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

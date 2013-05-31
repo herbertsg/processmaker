@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
         pages.Login().loginUser("admin","admin","workflow", "English");
 				pages.Main().goHome();
         
-        int casenumber = pages.Home().startCase("Test PMFCaseList (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("Test PMFCaseList (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[1];
@@ -34,7 +35,7 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
 		    fieldArray[0].fieldValue="";
     
         FormFiller.formFillElements(browserInstance, fieldArray);
-        pages.InputDocProcess().continuebtn();
+        pages.AssignTask().pressContinueButton();
         
         pages.Home().gotoInbox();
 		   // Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
@@ -50,10 +51,10 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
         Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(fieldNAME));
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
-}
-/*    @After
+    }
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

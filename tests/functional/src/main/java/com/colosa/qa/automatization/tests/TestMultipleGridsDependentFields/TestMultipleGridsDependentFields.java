@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.TestMultipleGridsDependentFields;
 import com.colosa.qa.automatization.common.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class TestMultipleGridsDependentFields extends com.colosa.qa.automatizati
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase();
-		int caseNumber = pages.Home().startCase("Multiple grids with dependent fields (Task 1)");
+		int caseNumber = pages.Home().gotoNewCase().startCase("Multiple grids with dependent fields (Task 1)");
 		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[10];
 		fieldArray[0] = new FormFieldData();
@@ -98,9 +99,9 @@ public class TestMultipleGridsDependentFields extends com.colosa.qa.automatizati
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -16,11 +16,21 @@ public class Login extends Page{
 	WebElement logOutLink;
 	Select languageDropDown;
 
-	public Login(BrowserInstance browserInstance) {
+	public Login(BrowserInstance browserInstance) throws Exception {
         super(browserInstance);
+
+        verifyPage();
 	}
 
-	public void initWebElements() throws Exception{
+    @Override
+    public void verifyPage() throws Exception {
+        //this.logOutLink = browser.findElement("login.WebElement.logoutButton");
+
+        //return (this.logOutLink != null);
+        //return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void initWebElements() throws Exception{
 		this.systemInformationLink = browser.findElement("login.webElement.systemInformationLink");
 		this.user = browser.findElement("login.webElement.userName");
 		this.password = browser.findElement("login.webElement.password");

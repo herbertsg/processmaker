@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,7 +30,7 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
         pages.Login().loginUser("admin","admin","workflow", "English");
 
         pages.Main().goHome();
-        int casenumber = pages.Home().startCase("Test PMFAddCaseNote (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("Test PMFAddCaseNote (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[2];
@@ -51,7 +52,7 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
     		System.out.println("CASE NOTE "+fieldCASE_NOTE);
     		
     		FormFiller.formFillElements( browserInstance, fieldArray);
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
 		    
 		    pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(casenumber));
@@ -72,16 +73,16 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 		    Assert.assertEquals("PMFAddCaseNote function not working properly", fieldRESULT_CASE_NOTE, fieldCASE_NOTE);
 		    
 		    FormFiller.formFillElements( browserInstance, fieldArray1);
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
 			pages.InputDocProcess().switchToDefault();
 			pages.Main().logout();
-}
+    }
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 }

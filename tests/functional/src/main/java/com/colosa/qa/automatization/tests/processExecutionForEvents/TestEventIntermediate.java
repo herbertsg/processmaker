@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class TestEventIntermediate extends com.colosa.qa.automatization.tests.co
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
-    int casenumber=pages.Home().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
+    int casenumber=pages.Home().gotoNewCase().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
     pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
@@ -137,9 +138,9 @@ public void openTask4(int casenumber) throws Exception{   */
 }
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

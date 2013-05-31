@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class TestEventSingleTask extends com.colosa.qa.automatization.tests.comm
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
-    int casenumber=pages.Home().startCase("Event Process - Intermediate Conditional_Single Task (Task 1)");
+    int casenumber=pages.Home().gotoNewCase().startCase("Event Process - Intermediate Conditional_Single Task (Task 1)");
     pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
@@ -64,7 +65,7 @@ public class TestEventSingleTask extends com.colosa.qa.automatization.tests.comm
 		eventStatus = pages.Admin().eventStatus(casenumber);
 		Assert.assertEquals("CLOSE", eventStatus);
         pages.Main().goHome();
-		pages.Home().openCase(casenumber);
+		pages.Home().gotoInbox().openCase(casenumber);
         pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray2=new FormFieldData[2];
 
@@ -92,7 +93,7 @@ public class TestEventSingleTask extends com.colosa.qa.automatization.tests.comm
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("hector","sample","workflow", "English");
         pages.Main().goHome();
-		pages.Home().openCase(casenumber);
+		pages.Home().gotoInbox().openCase(casenumber);
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray3=new FormFieldData[2];
 
@@ -117,9 +118,9 @@ public class TestEventSingleTask extends com.colosa.qa.automatization.tests.comm
 }
 
 
-/*    @After
+    @After
     public void cleanup(){
-       Browser.close();
-    }*/
+       browserInstance.quit();
+    }
 
 }

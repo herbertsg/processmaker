@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFGetCaseNotes (Add notes)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFGetCaseNotes (Add notes)");
 		pages.DynaformExecution().intoPmtrack();
         FormFieldData[] fieldArray=new FormFieldData[1];
 		fieldArray[0]=new FormFieldData();
@@ -117,9 +118,9 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

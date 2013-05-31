@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class TestOutputDocument extends com.colosa.qa.automatization.tests.commo
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		
-		int casenumber = pages.Home().startCase("Test OutputDocument (Task 1)");
+		int casenumber = pages.Home().gotoNewCase().startCase("Test OutputDocument (Task 1)");
 
 		pages.OutputDocProcess().downloadDocFile();
 		pages.OutputDocProcess().downloadPdfFile();
@@ -36,9 +37,9 @@ public class TestOutputDocument extends com.colosa.qa.automatization.tests.commo
 		
 		pages.OutputDocProcess().continuebtn();
 		
-		pages.Home().gotoInbox();
-    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
-		pages.Home().openCase(casenumber);
+		pages.Home().gotoInbox().openCase(casenumber);
+        //Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
+		//pages.Home() .openCase(casenumber);
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray=new FormFieldData[1];
     fieldArray[0]=new FormFieldData();
@@ -71,8 +72,8 @@ public class TestOutputDocument extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

@@ -51,8 +51,8 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

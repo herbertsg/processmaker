@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
  		pages.Login().gotoDefaultUrl();
    	pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
-    int casenumber=pages.Home().startCase("TestValidate (Task 1)");
+    int casenumber=pages.Home().gotoNewCase().startCase("TestValidate (Task 1)");
     pages.DynaformExecution().intoDynaform();
     
     FormFieldData[] fieldArray=new FormFieldData[12];
@@ -102,11 +103,11 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
 		fieldArray[11].fieldValue="";
 		
     FormFiller.formFillElements(browserInstance, fieldArray);
-    pages.InputDocProcess().continuebtn();
+    pages.AssignTask().pressContinueButton();
     
-    pages.Home().gotoInbox();
-    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
-    pages.Home().openCase(casenumber);
+    //pages.Home().gotoInbox();
+    Assert.assertTrue("The case does not exist in inbox", pages.Home().gotoInbox().existCase(casenumber));
+    pages.Home().gotoInbox().openCase(casenumber);
     pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
@@ -133,7 +134,7 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
 	  FormFiller.formFillElements(browserInstance, fieldArray1);
     
     Assert.assertEquals("Validate Text Any does not exist", "validation89()?¿'/&%$@|€", fieldTEXT_ANY);
-    Assert.assertEquals("Validate Text Alphabetic does not exist", "validationAA", fieldTEXT_ALPHABETIC);
+    Assert.assertEquals("Validate Text Alphabetic does not exist", "validationAABB", fieldTEXT_ALPHABETIC);
     Assert.assertEquals("Validate Text Alphanumeric does not exist", "12validation12302", fieldTEXT_ALPHANUMERIC);
     Assert.assertEquals("Validate Text Integer does not exist", "123456789", fieldTEXT_INTEGER);
     Assert.assertEquals("Validate Text Real does not exist", "123.00", fieldTEXT_REAL);
@@ -146,14 +147,14 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
     Assert.assertEquals("Validate Percentaje Real not exist", "123.00 %", fieldPERCENTAJE_REAL);
     Assert.assertEquals("Validate Percentaje Integer does not exist", "123 %", fieldPERCENTAJE_INTEGER);
     
-    pages.InputDocProcess().continuebtn();
+    pages.AssignTask().pressContinueButton();
     pages.InputDocProcess().switchToDefault();
     pages.Main().logout();
     }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }
 

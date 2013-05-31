@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.suggestFields;
 import com.colosa.qa.automatization.common.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TestSuggestFields extends com.colosa.qa.automatization.tests.common
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Suggest Fields (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Suggest Fields (Task 1)");
 
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
@@ -97,10 +98,10 @@ public class TestSuggestFields extends com.colosa.qa.automatization.tests.common
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

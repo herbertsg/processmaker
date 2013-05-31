@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value = { com.colosa.qa.automatization.tests.testRadioButton.TestRadioButton.class})
 public class testRadioButton {
     @AfterClass public static void tearDownClass() {
-        //Browser.close();
+        //browserInstance.quit();
     }
 
 }

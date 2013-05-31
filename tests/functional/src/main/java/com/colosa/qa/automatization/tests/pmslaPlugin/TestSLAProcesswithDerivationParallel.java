@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,23 +21,23 @@ public class TestSLAProcesswithDerivationParallel extends com.colosa.qa.automati
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process with Derivation Parallel (Task 1)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process with Derivation Parallel (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("elegir", "segundo");
 		pages.DynaformExecution().setFieldValue("guardar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("guardar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("guardar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
@@ -61,9 +62,9 @@ public class TestSLAProcesswithDerivationParallel extends com.colosa.qa.automati
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

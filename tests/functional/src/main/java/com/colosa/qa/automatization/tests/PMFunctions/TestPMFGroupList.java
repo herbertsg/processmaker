@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -17,15 +18,15 @@ public class TestPMFGroupList extends com.colosa.qa.automatization.tests.common.
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("PMF Group List (Task 1)");
-		pages.DynaformExecution().sleep(15000);
+		pages.Home().gotoNewCase().startCase("PMF Group List (Task 1)");
+		//pages.DynaformExecution().sleep(15000);
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

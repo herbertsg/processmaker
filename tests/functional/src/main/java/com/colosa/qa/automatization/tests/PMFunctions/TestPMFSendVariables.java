@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,10 +9,10 @@ import java.io.IOException;
 
 public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String dir = "Calle A esq B #FFF";
-	protected static String tel = "564-651-32165465241564651";
-	protected static String mail = "angela@empresa.com";
+	protected int caseNum;
+	protected String dir = "Calle A esq B #FFF";
+	protected String tel = "564-651-32165465241564651";
+	protected String mail = "angela@empresa.com";
 
     public TestPMFSendVariables(String browserName) throws IOException {
         super(browserName);
@@ -23,7 +24,7 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum=pages.Home().startCase("Proceso1 (Task 1)");
+		caseNum=pages.Home().gotoNewCase().startCase("Proceso1 (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Nombre", "Angela");
 		pages.DynaformExecution().setFieldValue("Apellido", "Villegas");
@@ -32,7 +33,7 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.DynaformExecution().setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().startCase("Proceso2 (Task 1)");
+		pages.Home().gotoNewCase().startCase("Proceso2 (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("CaseNum", Integer.toString(caseNum));
 		pages.DynaformExecution().setFieldValue("Direccion", dir);
@@ -53,9 +54,9 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

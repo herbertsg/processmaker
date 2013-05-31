@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value = { com.colosa.qa.automatization.tests.TestMultipleGridsDependentFields.TestMultipleGridsDependentFields.class})
 public class TestMultipleGridsDependentFields {
     @AfterClass public static void tearDownClass() {
-        //Browser.close();
+        //browserInstance.quit();
     }
 
 }

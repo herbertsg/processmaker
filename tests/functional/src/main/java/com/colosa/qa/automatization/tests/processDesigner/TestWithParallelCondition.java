@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.processDesigner;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,9 +42,9 @@ public class TestWithParallelCondition extends com.colosa.qa.automatization.test
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

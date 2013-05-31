@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.gridFunctionsBetweenColumns;
 
 import com.colosa.qa.automatization.common.FieldType;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatizatio
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Grillas Funciones Entre Columnas (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Grillas Funciones Entre Columnas (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		for(int rows = 1;rows<addRow;rows++)
 		{
@@ -96,10 +97,10 @@ public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatizatio
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

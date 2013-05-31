@@ -18,8 +18,14 @@ public class PmslaReport extends Page{
 	WebElement statusSla;
 	WebElement submit;
 
-    public PmslaReport(BrowserInstance browser) {
+    public PmslaReport(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
     public void generateReport(String sla,String dates,String exceeded,String status) throws Exception{

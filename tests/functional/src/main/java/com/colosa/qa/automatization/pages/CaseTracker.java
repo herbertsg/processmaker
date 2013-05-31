@@ -11,8 +11,15 @@ public class CaseTracker extends Page{
 
 	WebElement weSectionButton;
 
-    public CaseTracker(BrowserInstance browserInstance) {
+    public CaseTracker(BrowserInstance browserInstance) throws Exception {
         super(browserInstance);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void goTo(String workspace) throws FileNotFoundException, IOException, Exception{

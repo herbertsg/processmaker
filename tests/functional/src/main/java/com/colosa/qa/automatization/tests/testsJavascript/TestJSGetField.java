@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.testsJavascript;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class TestJSGetField extends com.colosa.qa.automatization.tests.common.Te
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("JS getField (Task 1)");
+		pages.Home().gotoNewCase().startCase("JS getField (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 
 		pages.DynaformExecution().setFieldValue("Nombre", "Favian");
@@ -35,11 +36,11 @@ public class TestJSGetField extends com.colosa.qa.automatization.tests.common.Te
 		pages.Main().logout();
 	}
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 }

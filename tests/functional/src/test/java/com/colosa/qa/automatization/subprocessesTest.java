@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
-        //com.colosa.qa.automatization.tests.subprocessesTest.SubprocessesTest.class
+        com.colosa.qa.automatization.tests.subprocessesTest.SubprocessesTest.class
         })
 public class subprocessesTest {
     @AfterClass public static void tearDownClass() {

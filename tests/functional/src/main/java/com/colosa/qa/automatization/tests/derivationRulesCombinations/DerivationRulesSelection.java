@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - selection (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray = new FormFieldData[1];
 		fieldArray[0] = new FormFieldData();
@@ -137,14 +138,14 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - selection (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray8 = new FormFieldData[1];
 		fieldArray8[0] = new FormFieldData();
@@ -158,7 +159,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - selection (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray9 = new FormFieldData[1];
 		fieldArray9[0] = new FormFieldData();
@@ -171,10 +172,10 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

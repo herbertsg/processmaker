@@ -27,7 +27,7 @@ public class TestPMFCreateUsers extends com.colosa.qa.automatization.tests.commo
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("Test PMFCreateUsers (Task 1)");
+		numCase = pages.Home().gotoNewCase().startCase("Test PMFCreateUsers (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("userName", "felipe");
 		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
@@ -44,9 +44,9 @@ public class TestPMFCreateUsers extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

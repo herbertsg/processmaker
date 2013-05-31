@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.processlist;
 
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ public class TestProcessList extends com.colosa.qa.automatization.tests.common.T
 
     @Test
 	public void openProc() throws Exception{
-
+        //testeo de las funcionalidades disponible en el listado de procesos
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goDesigner();
@@ -28,7 +29,7 @@ public class TestProcessList extends com.colosa.qa.automatization.tests.common.T
 /*
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
 */
 

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.testRadioButton;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class TestRadioButton extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
+	protected int caseNum;
 
     public TestRadioButton(String browserName) throws IOException {
         super(browserName);
@@ -21,7 +22,7 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Test RB and CB (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Test RB and CB (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setRadioButtonGroup("Radio1", "Val2");
 		pages.DynaformExecution().setRadioButtonGroup("Radio1", "Val3");
@@ -43,10 +44,10 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -19,11 +19,17 @@ public class Designer extends Page{
 	protected static int taskN = 0;
 	protected static String[][] elements = new String[20][4];
 
-    public Designer(BrowserInstance browser) {
+    public Designer(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
     }
 
-	public boolean createTask() throws Exception{
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public boolean createTask() throws Exception{
 
 		String taskName = "Task ";
 		int tNum = taskNum + 1; 

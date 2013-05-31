@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.javascriptExecution;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -20,21 +21,21 @@ public class TestJavascriptExecution extends com.colosa.qa.automatization.tests.
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("Proceso con java script (Task 1)");
+		pages.Home().gotoNewCase().startCase("Proceso con java script (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("num1", val1);
 		pages.DynaformExecution().setFieldValue("num2", val2);
 		pages.DynaformExecution().setFieldValue("aceptar", "");
-		pages.DynaformExecution().sleep(15000);
+		//pages.DynaformExecution().sleep(15000);
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

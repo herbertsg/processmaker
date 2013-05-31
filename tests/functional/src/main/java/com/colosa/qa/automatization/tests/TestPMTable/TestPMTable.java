@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
         
         pages.Login().gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
-				
+        pages.DynaformExecution().outDynaform();
 				pages.Main().goAdmin();
         pages.Admin().newPMTable("TESTTABLE","description Table");
         pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
@@ -29,7 +30,7 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
         pages.Admin().createPMTable();
         
         pages.Main().goHome();
-        int casenumber = pages.Home().startCase("TestPMTables (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("TestPMTables (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         String fieldRESULT = pages.DynaformExecution().getFieldProperty("RESULT_TEST","value");
@@ -44,7 +45,7 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
 		    fieldArray[0].fieldValue="";
     
         FormFiller.formFillElements(browserInstance, fieldArray);
-        pages.InputDocProcess().continuebtn();
+        pages.AssignTask().pressContinueButton();
         
         pages.Main().goAdmin();
         pages.Admin().newPMTable("TEST TABLE1","description Table");
@@ -77,9 +78,9 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
         pages.Main().logout();
     }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

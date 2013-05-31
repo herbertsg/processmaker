@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class TestPMDateFunctions extends com.colosa.qa.automatization.tests.comm
         pages.Login().loginUser("admin","admin","workflow", "English");
 				pages.Main().goHome();
         
-        int casenumber = pages.Home().startCase("Test PMDate Functions (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("Test PMDate Functions (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[8];
@@ -107,14 +108,14 @@ public class TestPMDateFunctions extends com.colosa.qa.automatization.tests.comm
 		    Assert.assertEquals("English Language is not recognized in the literalDate", "January 9,2013", fieldLITERAL_DATE_EN);
 		    Assert.assertEquals("Spanish Language is not recognized in the literalDate", "9 de Enero de 2013", fieldLITERAL_DATE_ES);
 		    
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

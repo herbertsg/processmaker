@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.documents;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,9 +24,9 @@ public class TestDocuments extends com.colosa.qa.automatization.tests.common.Tes
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

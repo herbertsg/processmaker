@@ -187,7 +187,7 @@ public class BrowserInstance {
 		by = this.getBySearchCriteriaUsingCriteria(str);
 
 		return by;
-	}	
+	}
 
 	public By getBySearchCriteriaUsingCriteria(String searchCriteria) throws Exception{
 		By by = null;
@@ -223,7 +223,31 @@ public class BrowserInstance {
 		else
 			throw new Exception("Invalid search prefix");
 		return by;		
-	}	
+	}
+
+    public By getBySearchCriteria(FieldKeyType criteria, String key) throws Exception {
+        By by = null;
+
+        if(criteria == FieldKeyType.ID)
+            by = By.id(key);
+        else if(criteria == FieldKeyType.CSSSELECTOR)
+            by = By.cssSelector(key);
+        else if(criteria == FieldKeyType.CLASSNAME)
+            by = By.className(key);
+        else if(criteria == FieldKeyType.LINKTEXT)
+            by = By.linkText(key);
+        else if(criteria == FieldKeyType.NAME)
+            by = By.name(key);
+        else if(criteria == FieldKeyType.PARTIALLINKTEXT)
+            by = By.partialLinkText(key);
+        else if(criteria == FieldKeyType.TAGNAME)
+            by = By.tagName(key);
+        else if(criteria == FieldKeyType.XPATH)
+            by = By.xpath(key);
+        else
+            throw new Exception("Invalid search prefix");
+        return by;
+    }
 
 	public WebElement getParent(WebElement element) throws Exception{		
 		return element.findElement(By.xpath(".."));
@@ -400,15 +424,45 @@ public class BrowserInstance {
 		); 
 		
 		return true;
-     }
+    }
+
+    /**
+     * Wait for page state to be completed
+     * @param timeoutSeconds seconds to wait for page to change status to completed
+     * @throws Exception
+     */
+    public void waitForDocumentCompleted(long timeoutSeconds) throws Exception{
+
+        Boolean returnExpectedCondition = (new WebDriverWait(_instanceDriver, timeoutSeconds))
+                .until(new ExpectedCondition<Boolean>(){
+                    @Override
+                    public Boolean apply(WebDriver d) {
+                        return (((JavascriptExecutor)_instanceDriver).executeScript("return document.readyState;")).equals("complete");
+                        //return ((JavascriptExecutor)_instanceDriver).executeScript("return jQuery.active;") == 0;
+                        }
+                    }
+                );
+    }
+
 
 	public void waitForElement(String key, long timeoutSeconds) throws Exception{
 
 		WebDriverWait wait = new WebDriverWait(_instanceDriver, timeoutSeconds); // wait for timeoutSeconds
 		wait.until(ExpectedConditions.presenceOfElementLocated(this.getBySearchCriteria(key)));
-     }     
+    }
+    public void waitForElementToBeClickable(FieldKeyType criteria, String key, long timeoutSeconds) throws Exception{
 
-     public List<WebElement> getPreviousSimblingElements(WebElement currentElement){
+        waitForElementToBeClickable(this.getBySearchCriteria(criteria,key), timeoutSeconds);
+    }
+
+    public void waitForElementToBeClickable(By searchCriteria, long timeoutSeconds) throws Exception{
+
+        WebDriverWait wait = new WebDriverWait(_instanceDriver, timeoutSeconds); // wait for timeoutSeconds
+        wait.until(ExpectedConditions.elementToBeClickable(searchCriteria));
+    }
+
+
+    public List<WebElement> getPreviousSimblingElements(WebElement currentElement){
 		List<WebElement> resultElements = currentElement.findElements(By.xpath("preceding-sibling"));
 		
 		return resultElements;

@@ -8,8 +8,15 @@ import org.openqa.selenium.support.ui.Select;
 
 public class TaskProperties extends Page{
 
-    public TaskProperties(BrowserInstance browser) {
+    public TaskProperties(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void properties(TaskFieldData taskProperties)  throws Exception{

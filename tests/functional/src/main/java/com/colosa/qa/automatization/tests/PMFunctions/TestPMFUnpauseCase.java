@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFUnpauseCase (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
 		pages.DynaformExecution().intoDynaform();
 		pages.Home().pauseCase(caseNum);
 		pages.DynaformExecution().outDynaform();
@@ -30,7 +31,7 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().goHome();
 		//Init casa again	
-		caseNum = pages.Home().startCase("PMFUnpauseCase (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().goHome();
@@ -46,9 +47,9 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

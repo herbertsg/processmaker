@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldType;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class TestPMFUpdateUser extends com.colosa.qa.automatization.tests.common
 				
 				pages.Main().goHome();
 				
-				int casenumber = pages.Home().startCase("Test PMFUpdateUser (Task 1)");
+				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFUpdateUser (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         pages.DynaformExecution().setFieldValue("USER_NAME", firstname);
@@ -37,7 +38,7 @@ public class TestPMFUpdateUser extends com.colosa.qa.automatization.tests.common
 				pages.DynaformExecution().setFieldValue("PASSWORD", password);
 				pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
 		
-				pages.InputDocProcess().continuebtn();
+				pages.AssignTask().pressContinueButton();
 		    
 		    pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
@@ -57,14 +58,14 @@ public class TestPMFUpdateUser extends com.colosa.qa.automatization.tests.common
 		    Assert.assertEquals("PMFUpdateUser function does not function correctly.", "1", fieldRESULT_UPDATE);
 		    
 		    pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
 			pages.DynaformExecution().outDynaform();
 			pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

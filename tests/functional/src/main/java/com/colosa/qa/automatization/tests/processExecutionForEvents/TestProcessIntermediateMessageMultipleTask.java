@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Event Process - Intermediate Message_Multiple Task (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Event Process - Intermediate Message_Multiple Task (Task 1)");
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -114,8 +115,8 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

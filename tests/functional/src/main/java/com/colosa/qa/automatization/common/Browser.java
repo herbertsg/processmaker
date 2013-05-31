@@ -97,7 +97,7 @@ public class Browser {
 	}
 
 	public static void close(){
-		_browserInstance.close();
+		_browserInstance.quit();
 
         _driver = null;
         _browserInstance = null;

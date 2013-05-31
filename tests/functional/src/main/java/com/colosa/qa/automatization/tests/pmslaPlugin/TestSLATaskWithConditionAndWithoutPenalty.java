@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestSLATaskWithConditionAndWithoutPenalty extends com.colosa.qa.aut
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process - Task with Condition and without Penalty (Task 1)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Task with Condition and without Penalty (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("elegir", "Segundo");
 		pages.DynaformExecution().setFieldValue("guardar", "");
@@ -60,9 +61,9 @@ public class TestSLATaskWithConditionAndWithoutPenalty extends com.colosa.qa.aut
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestSLAMultipleTasksWithConditionAndPenalty extends com.colosa.qa.a
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("eleccion", "first");
 		pages.DynaformExecution().setFieldValue("save", "");
@@ -64,9 +65,9 @@ public class TestSLAMultipleTasksWithConditionAndPenalty extends com.colosa.qa.a
 
 	
 	}
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

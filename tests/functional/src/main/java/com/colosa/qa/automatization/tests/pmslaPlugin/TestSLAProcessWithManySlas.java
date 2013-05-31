@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process with many sla's (Task 1)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process with many sla's (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("elegir", "segundo");
 		pages.DynaformExecution().setFieldValue("guardar", "");
@@ -89,9 +90,9 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
         pages.Main().logout();
 
 	}
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -6,8 +6,14 @@ import org.openqa.selenium.WebElement;
 public class InputDocProcess extends Page{
 
 
-    public InputDocProcess(BrowserInstance browser) {
+    public InputDocProcess(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void uploadFile(String filePath, String description) throws Exception{

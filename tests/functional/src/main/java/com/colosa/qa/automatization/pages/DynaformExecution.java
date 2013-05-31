@@ -12,13 +12,22 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DynaformExecution extends Page {
 
-    public DynaformExecution(BrowserInstance browser) {
+    public DynaformExecution(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
@@ -355,6 +364,46 @@ public class DynaformExecution extends Page {
 
         this.setFieldValue(element, "", fieldType);
 
+    }
+
+    public void clickButton(String buttonName) throws Exception {
+        String str = "";
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(buttonName);
+
+        System.out.println("element : " + element.getAttribute("value"));
+
+        fieldType = this.detectFieldType(element);
+
+        if(fieldType != FieldType.BUTTON){
+            throw new Exception("Invalid button field.");
+        }
+
+        this.setFieldValue(element, "", fieldType); //empty string is enough to click button
+
+        return;
+    }
+
+    public void clickLink(String linkName) throws Exception {
+        String str = "";
+        FieldType fieldType;
+
+        //search element
+        WebElement element = this.getField(linkName);
+
+        System.out.println("element : " + element.getAttribute("value"));
+
+        fieldType = this.detectFieldType(element);
+
+        if(fieldType != FieldType.LINK){
+            throw new Exception("Invalid button field.");
+        }
+
+        this.setFieldValue(element, "", fieldType); //empty string is enough to click button
+
+        return;
     }
 
     public void setFieldValue(String fieldName, String value) throws Exception{
@@ -1125,5 +1174,15 @@ public class DynaformExecution extends Page {
         WebElement element = browser.findElement(str);
 
         this.clear(element);
+    }
+
+    public void waitForFieldToBeClickable(String fieldName, long timeoutSeconds) throws Exception {
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        By bySearchCriteria = browser.getBySearchCriteria(str);
+
+        browser.waitForElementToBeClickable(bySearchCriteria, timeoutSeconds);
     }
 }

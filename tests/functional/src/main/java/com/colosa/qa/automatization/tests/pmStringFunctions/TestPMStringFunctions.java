@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmStringFunctions;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -21,21 +22,21 @@ public class TestPMStringFunctions extends com.colosa.qa.automatization.tests.co
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("PM String Functions (Task 1)");
+		pages.Home().gotoNewCase().startCase("PM String Functions (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("upperC", str1);
 		pages.DynaformExecution().setFieldValue("lowC", str2);
 		pages.DynaformExecution().setFieldValue("capital", str3);
 		pages.DynaformExecution().setFieldValue("Send", "");
-		pages.DynaformExecution().sleep(15000);
+		//pages.DynaformExecution().sleep(15000);
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
 
 	}
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class TestPMFCancelCase extends com.colosa.qa.automatization.tests.common
 				
 				pages.Main().goHome();
 				
-				int casenumber = pages.Home().startCase("Test PMFCancelCase (Task 1)");
+				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFCancelCase (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[1];
@@ -42,11 +43,11 @@ public class TestPMFCancelCase extends com.colosa.qa.automatization.tests.common
 		    //Assert.assertTrue("The case with Cancelled status does not exist in Participated", pages.Home().caseStatus(casenumber, status));
             pages.InputDocProcess().switchToDefault();
             pages.Main().logout();
-}
+    }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

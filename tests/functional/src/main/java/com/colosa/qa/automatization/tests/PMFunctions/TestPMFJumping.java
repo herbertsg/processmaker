@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,17 +19,18 @@ public class TestPMFJumping extends com.colosa.qa.automatization.tests.common.Te
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("Test PMFJumping (Task 1)");
+		pages.Home().gotoNewCase().startCase("Test PMFJumping (Task 1)");
 		pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().clickButton("Enviar");
 		Assert.assertTrue(pages.Home().isGridPresent("casesGrid"));
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

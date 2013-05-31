@@ -17,8 +17,15 @@ public class ProcessList extends Page{
 	WebElement procName;
 	WebElement desc;
 
-    public ProcessList(BrowserInstance browser) {
+    public ProcessList(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
 

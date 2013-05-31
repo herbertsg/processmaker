@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,12 +24,12 @@ public class TestCaseTracker extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Process Case Tracker - Process Map (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Process Case Tracker - Process Map (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("nombre", "Ian");
 		pin = Value.getValue(browserInstance, FieldKeyType.ID, "form[pin]");
 		pages.DynaformExecution().setFieldValue("save", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.Main().goHome();
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -59,9 +60,9 @@ public class TestCaseTracker extends com.colosa.qa.automatization.tests.common.T
 		//pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

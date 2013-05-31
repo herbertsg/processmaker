@@ -9,8 +9,15 @@ import java.util.List;
 public class DebugExecution extends Page {
 
 
-    public DebugExecution(BrowserInstance browserInstance) {
+    public DebugExecution(BrowserInstance browserInstance) throws Exception {
         super(browserInstance);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // into level of debug

@@ -6,6 +6,7 @@ import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automa
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Event with trigger - Intermediate Timer_Single Task (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Event with trigger - Intermediate Timer_Single Task (Task 1)");
 		FormFieldData[] arrayData = new FormFieldData[3];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -79,9 +80,9 @@ public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automa
         pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

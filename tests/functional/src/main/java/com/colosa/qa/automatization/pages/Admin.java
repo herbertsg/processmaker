@@ -11,8 +11,15 @@ import java.util.List;
 public class Admin extends Page{
 
 
-    public Admin(BrowserInstance browserInstance) {
+    public Admin(BrowserInstance browserInstance) throws Exception {
         super(browserInstance);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void goToLogs() throws Exception{

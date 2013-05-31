@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import org.junit.After;
 
 public class TestCaseScheduler extends com.colosa.qa.automatization.tests.common.Test{
 
@@ -29,10 +30,10 @@ public class TestCaseScheduler extends com.colosa.qa.automatization.tests.common
 
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

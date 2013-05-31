@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.TestProcessSupervisor;
 import com.colosa.qa.automatization.common.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,16 +22,16 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Process Supervisors (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Process Supervisors (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("text", "text");
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.Main().goHome();
-		pages.Home().gotoReview();
+		//pages.Home().gotoReview();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoReview().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("text", "text-add");
 		pages.DynaformExecution().setFieldValue("enviar", "");
@@ -40,9 +41,9 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-    	pages.Home().gotoInbox();
+    	//pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertEquals("text-add", Value.getValue(browserInstance, FieldKeyType.ID, "form[text]"));
 		pages.DynaformExecution().setFieldValue("enviar", "");
@@ -98,29 +99,29 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Process Supervisors (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Process Supervisors (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("text", "text");
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
        	pages.Home().gotoInbox();
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Process Supervisors (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Process Supervisors (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("text", "text");
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		pages.InputDocProcess().uploadFile("c:\\test.pdf", "Test File");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
        	pages.Home().gotoInbox();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

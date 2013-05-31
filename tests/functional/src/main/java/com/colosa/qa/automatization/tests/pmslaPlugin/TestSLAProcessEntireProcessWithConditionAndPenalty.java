@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty extends com.colo
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process - Entire Process with condition and Penalty (Solicitud de Solucion de Ticket)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Entire Process with condition and Penalty (Solicitud de Solucion de Ticket)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("eleccion", "Immediate");
 		pages.DynaformExecution().setFieldValue("guadar", "");
@@ -50,8 +51,8 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty extends com.colo
         pages.Main().logout();
 
 	}
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

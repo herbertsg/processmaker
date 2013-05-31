@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Employee Onboarding v-0.2 (Onboard New Employee)");
+		caseNum = pages.Home().gotoNewCase().startCase("Employee Onboarding v-0.2 (Onboard New Employee)");
 		FormFieldData[] arrayData = new FormFieldData[8];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -122,7 +123,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(FormFiller.formFillElements(browserInstance, arrayData3));
 		Assert.assertTrue("The button Continue does not exit in this form", browserInstance.elementExists("inputDocProcess.webelement.continue"));
-		pages.InputDocProcess().continuebtn();
+		pages.AssignTask().pressContinueButton();
 		pages.Main().logout();
 
 	}
@@ -311,9 +312,9 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

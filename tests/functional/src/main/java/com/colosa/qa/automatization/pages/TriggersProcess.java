@@ -18,8 +18,15 @@ import java.io.IOException;
 public class TriggersProcess extends Page{
 
 
-    public TriggersProcess(BrowserInstance browser) {
+    public TriggersProcess(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     /**

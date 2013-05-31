@@ -2,12 +2,12 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 
-public class Page{
+public abstract class Page{
 	protected String url;
 	protected String pageTitle;
     protected BrowserInstance browser;
 
-	public Page(BrowserInstance browser)  {
+	public Page(BrowserInstance browser) throws Exception  {
         this.browser = browser;
 
 		//init implicit wait time
@@ -32,4 +32,5 @@ public class Page{
 		return (this.browser.title() == pageTitle);
 	}
 
+    public abstract void verifyPage() throws Exception;
 }

@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process Selection Routing Rule (Monto)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process Selection Routing Rule (Monto)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("monto", "123165465");
 		pages.DynaformExecution().setFieldValue("convertir", "");
@@ -67,8 +68,8 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
         pages.Main().logout();
 
 	}
- /*   @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

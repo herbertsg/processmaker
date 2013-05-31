@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Utils;
 import com.colosa.qa.automatization.common.Value;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,12 +29,12 @@ public class TestFunctionExecuteQueryMysqlOracle extends com.colosa.qa.automatiz
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("ExecuteQuery Mysql -Oracle (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("ExecuteQuery Mysql -Oracle (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("usern", "admin");
 		pages.DynaformExecution().setFieldValue("userNameOracle", "xxx");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 
 		//Open task 2 .
@@ -73,10 +74,10 @@ public class TestFunctionExecuteQueryMysqlOracle extends com.colosa.qa.automatiz
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

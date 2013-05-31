@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
         pages.Login().loginUser("admin","admin","workflow", "English");
 		pages.Main().goHome();
         
-        int casenumber = pages.Home().startCase("TestCasesStatus (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("TestCasesStatus (Task 1)");
         pages.DynaformExecution().intoDynaform();
                 
         pages.DynaformExecution().outDynaform();
@@ -45,7 +46,7 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		    fieldArray1[1].fieldValue="";
     		
     		FormFiller.formFillElements(browserInstance, fieldArray1);
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
     		
     		pages.Home().gotoParticipated();
 		   // Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(casenumber));
@@ -73,7 +74,7 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		    fieldArray3[1].fieldValue="";
 		    
 		    FormFiller.formFillElements(browserInstance, fieldArray3);
-		    pages.InputDocProcess().continuebtn();
+		    pages.AssignTask().pressContinueButton();
 		    
 		    pages.Home().gotoUnassigned();
 		    //Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(casenumber));
@@ -99,8 +100,8 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 			pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

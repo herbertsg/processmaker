@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.inputDocuments;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -18,20 +19,20 @@ public class TestInputDocProcess extends com.colosa.qa.automatization.tests.comm
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("inputDocProcess (Task 1)");
+		pages.Home().gotoNewCase().startCase("inputDocProcess (Task 1)");
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		pages.InputDocProcess().continuebtn();
+		pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 
 }

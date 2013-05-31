@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldType;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
 				
 				pages.Main().goHome();
 				
-				int casenumber = pages.Home().startCase("Test PMFGetEmailConfiguration (Task 1)");
+				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFGetEmailConfiguration (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         String fieldPASSWORD = pages.DynaformExecution().getFieldProperty("PASSWORD","value");
@@ -66,14 +67,14 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
 		    Assert.assertEquals("PMFAddCaseNote function not working properly", fieldMESS_TRY_SEND_INMEDIATLY, fieldCONFIG_MESS_TRY_SEND_INMEDIATLY);
 		    		    
 		    pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
-				pages.InputDocProcess().continuebtn();
+				pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-    Browser.close();
-}*/
+        browserInstance.quit();
+    }
     
 }

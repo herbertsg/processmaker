@@ -8,8 +8,14 @@ import java.util.List;
 
 public class InputDocumentList extends Page{
 
-    public InputDocumentList(BrowserInstance browser) {
+    public InputDocumentList(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void createInputDoc(String titleDoc, String formatDoc, String descriptionDoc, String versioning, String destination, String tags) throws Exception{

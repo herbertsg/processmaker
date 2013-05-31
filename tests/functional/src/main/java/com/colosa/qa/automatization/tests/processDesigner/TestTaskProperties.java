@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.processDesigner;
 import com.colosa.qa.automatization.common.TaskFieldData;
 import org.junit.Test;
 import org.openqa.selenium.interactions.Actions;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,9 +33,9 @@ public class TestTaskProperties extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

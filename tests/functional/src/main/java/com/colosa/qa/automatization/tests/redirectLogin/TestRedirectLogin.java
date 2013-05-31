@@ -4,13 +4,14 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
+	protected int caseNum;
 
     public TestRedirectLogin(String browserName) throws IOException {
         super(browserName);
@@ -36,7 +37,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		pages.Main().goHome();
 		pages.DynaformExecution().intoPmtrack();
 		Assert.assertEquals("Find a Process", Value.getValue(browserInstance, FieldKeyType.ID, "processesFilter"));
-		caseNum = pages.Home().startCase("RedirectLogin (Ini)");
+		caseNum = pages.Home().gotoNewCase().startCase("RedirectLogin (Ini)");
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
 		pages.DynaformExecution().intoFrainMain();
@@ -53,7 +54,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
         pages.DynaformExecution().sleep(8000);
      	pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Draft", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoDraft().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
      	pages.InputDocProcess().switchToDefault();
@@ -134,9 +135,9 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

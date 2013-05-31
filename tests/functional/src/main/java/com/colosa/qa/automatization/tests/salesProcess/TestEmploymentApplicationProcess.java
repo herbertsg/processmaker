@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -23,7 +24,7 @@ public class TestEmploymentApplicationProcess extends com.colosa.qa.automatizati
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
+		caseNum = pages.Home().gotoNewCase().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
 
 		FormFieldData[] arrayData = new FormFieldData[23];
 		arrayData[0] = new FormFieldData();
@@ -294,9 +295,9 @@ public class TestEmploymentApplicationProcess extends com.colosa.qa.automatizati
 	}*/
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

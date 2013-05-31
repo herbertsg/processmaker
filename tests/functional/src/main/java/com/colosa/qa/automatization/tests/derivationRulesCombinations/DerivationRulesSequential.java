@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,9 +21,9 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - sequential (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - sequential (Init)");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 	    //cyclical task
@@ -34,7 +35,7 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		pages.Home().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("TASKS][1][USR_UID", "Swan, William");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Manual task
@@ -48,7 +49,7 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
 		pages.DynaformExecution().setFieldValue("amount", "3000");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Value based task
@@ -59,7 +60,7 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Report to task
@@ -70,7 +71,7 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self service task
@@ -84,7 +85,7 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
@@ -98,33 +99,33 @@ public class DerivationRulesSequential extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - sequential (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - sequential (Init)");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - sequential (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - sequential (Init)");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 }

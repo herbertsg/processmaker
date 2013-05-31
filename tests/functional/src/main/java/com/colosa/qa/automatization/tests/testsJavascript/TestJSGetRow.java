@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.testsJavascript;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class TestJSGetRow extends com.colosa.qa.automatization.tests.common.Test
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("JS GetRow (Task 1)");
+		pages.Home().gotoNewCase().startCase("JS GetRow (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 
 		pages.DynaformExecution().setFieldValue("Nombre", "Favian");
@@ -35,9 +36,9 @@ public class TestJSGetRow extends com.colosa.qa.automatization.tests.common.Test
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

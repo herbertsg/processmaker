@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatizatio
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("SLA Process - Entire Process with penalty (Proveedores)");
+		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Entire Process with penalty (Proveedores)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("nombre", "Norah Mollo Morales");
 		pages.DynaformExecution().setFieldValue("registrar", "");
@@ -66,9 +67,10 @@ public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatizatio
         pages.Main().logout();
 		
 	}
-/*    @After
+
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

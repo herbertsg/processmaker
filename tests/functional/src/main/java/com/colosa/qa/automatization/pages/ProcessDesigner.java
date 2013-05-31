@@ -6,8 +6,14 @@ import org.openqa.selenium.support.ui.Select;
 
 public class ProcessDesigner extends Page{
 
-    public ProcessDesigner(BrowserInstance browser) {
+    public ProcessDesigner(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
     public enum DynaformType{

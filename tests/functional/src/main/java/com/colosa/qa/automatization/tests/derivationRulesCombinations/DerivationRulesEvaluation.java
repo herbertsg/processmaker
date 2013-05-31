@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,17 +15,22 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
         super(browserName);
     }
 
+    @After
+    public void cleanup(){
+        browserInstance.quit();
+    }
+
     @Test
 	public void derivationRulesEvaluation() throws FileNotFoundException, IOException, Exception{
 
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - evaluation (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 	    //cyclical task
@@ -38,7 +44,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
 		pages.DynaformExecution().setFieldValue("TASKS][1][USR_UID", "Swan, William");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Manual task
@@ -54,7 +60,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("send", "");
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Value based task
@@ -67,7 +73,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Report to task
@@ -80,7 +86,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self service task
@@ -96,7 +102,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("send", "");
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
@@ -110,36 +116,33 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - evaluation (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Derivation rules - evaluation (Init)");
+		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
-    public void cleanup(){
-        Browser.close();
-    }*/
+
 
 
 }

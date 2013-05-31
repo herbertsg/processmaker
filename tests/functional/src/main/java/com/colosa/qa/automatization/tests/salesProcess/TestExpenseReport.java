@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -25,7 +26,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Expense Report v_2 (Cash Advance)");
+		caseNum = pages.Home().gotoNewCase().startCase("Expense Report v_2 (Cash Advance)");
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -269,9 +270,9 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,9 +11,9 @@ import java.io.IOException;
 
 public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String pin;
-	protected static String code;
+	protected int caseNum;
+	protected String pin;
+	protected String code;
 
     public TestSetCaseTrackerCode(String browserName) throws IOException {
         super(browserName);
@@ -24,9 +25,9 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("setCaseTrackerCode (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("setCaseTrackerCode (Task 1)");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.Main().goHome();
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -37,7 +38,7 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		code = Value.getValue(browserInstance, FieldKeyType.ID, "form[code]");
 		pages.DynaformExecution().setFieldValue("continue", "");
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.CaseTracker().goTo("workflow");
 		pages.DynaformExecution().setFieldValue("CASE", code);
@@ -52,11 +53,11 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		pages.Main().logout();
 	}
 
-/*
+
     @After
     public void cleanup(){
-        Browser.close();
+        browserInstance.quit();
     }
-*/
+
 
 }

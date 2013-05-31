@@ -114,6 +114,12 @@ public class Pages{
 		return dynaformExecution;
 	}
 
+    public AssignTask AssignTask() throws Exception{
+        AssignTask assignTask = new AssignTask(_browserInstance);
+
+        return assignTask;
+    }
+
 	public Profile Profile() throws Exception{
 		Profile profile = new Profile(_browserInstance);
 

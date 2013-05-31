@@ -3,16 +3,17 @@ package com.colosa.qa.automatization.tests.suggestDependentFields;
 import com.colosa.qa.automatization.common.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TestSuggestDependentFields extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String country = "Belgium";
-	protected static String state = "Luxembourg (WAL)";
-	protected static String city = "Latour";
+	protected int caseNum;
+	protected String country = "Belgium";
+	protected String state = "Luxembourg (WAL)";
+	protected String city = "Latour";
 
     public TestSuggestDependentFields(String browserName) throws IOException {
         super(browserName);
@@ -24,7 +25,7 @@ public class TestSuggestDependentFields extends com.colosa.qa.automatization.tes
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Suggest Dependent Fields (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Suggest Dependent Fields (Task 1)");
 
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
@@ -98,9 +99,9 @@ public class TestSuggestDependentFields extends com.colosa.qa.automatization.tes
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

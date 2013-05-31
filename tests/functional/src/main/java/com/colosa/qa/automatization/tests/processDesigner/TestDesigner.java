@@ -54,8 +54,8 @@ public class TestDesigner extends com.colosa.qa.automatization.tests.common.Test
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

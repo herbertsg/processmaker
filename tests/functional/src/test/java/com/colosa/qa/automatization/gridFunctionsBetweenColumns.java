@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value = { com.colosa.qa.automatization.tests.gridFunctionsBetweenColumns.TestGridFunctionsBetweenColumns.class})
 public class gridFunctionsBetweenColumns {
     @AfterClass public static void tearDownClass() {
-        //Browser.close();
+        //browserInstance.quit();
     }
 
 }

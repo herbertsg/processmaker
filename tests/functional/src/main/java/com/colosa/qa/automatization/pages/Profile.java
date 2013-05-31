@@ -7,8 +7,14 @@ import org.openqa.selenium.WebElement;
 
 public class Profile extends Page {
 
-    public Profile(BrowserInstance browser) {
+    public Profile(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
 

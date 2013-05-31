@@ -3,19 +3,20 @@ package com.colosa.qa.automatization.tests.testFieldModeView;
 import com.colosa.qa.automatization.common.FieldType;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TestModeView extends com.colosa.qa.automatization.tests.common.Test{
 
-	protected static int caseNum;
-	protected static String textVal = "Ernesto";
-	protected static String prec = "123,132,132,123.45";
-	protected static String perc = "213.13 %";
-	protected static String textArea = "Prueba";
-	protected static String drpdwn = "Valor4";
-	protected static String lstBx = "Valor3";
+	protected int caseNum;
+	protected String textVal = "Ernesto";
+	protected String prec = "123,132,132,123.45";
+	protected String perc = "213.13 %";
+	protected String textArea = "Prueba";
+	protected String drpdwn = "Valor4";
+	protected String lstBx = "Valor3";
 
     public TestModeView(String browserName) throws IOException {
         super(browserName);
@@ -26,8 +27,9 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
+        pages.DynaformExecution().outDynaform();
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Testeo Modo Vista (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Testeo Modo Vista (Task 1)");
 
 	
 		pages.DynaformExecution().intoDynaform();
@@ -51,7 +53,7 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		pages.DynaformExecution().intoDynaform();
 		
@@ -68,10 +70,10 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

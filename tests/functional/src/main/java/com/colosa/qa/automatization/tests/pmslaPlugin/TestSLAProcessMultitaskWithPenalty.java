@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("SLA Process - Multitask with penalty (Solicitud)");
+		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Multitask with penalty (Solicitud)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("nombre", "John");
 		pages.DynaformExecution().setFieldValue("enviar", "");
@@ -51,11 +52,11 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
 
-}
+    }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -26,9 +26,16 @@ public class DynaformDesigner extends Page{
 	public DynaformDesigner(BrowserInstance browserInstance) throws Exception{
 
         this(browserInstance, browserInstance.findElement("processDesigner.webElement.newBlankDynaform.designer"));
+
+        verifyPage();
 	}
 
-	public DynaformDesigner(BrowserInstance browserInstance, WebElement we) throws Exception{
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public DynaformDesigner(BrowserInstance browserInstance, WebElement we) throws Exception{
         super(browserInstance);
 
         WebElement aux = we.findElement(By.cssSelector("#fields_Toolbar"));

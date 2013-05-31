@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -21,7 +22,7 @@ public class TestInputDocument extends com.colosa.qa.automatization.tests.common
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		int caseNumber = pages.Home().startCase("Input Process with and without versioning (enviar formulario y documento)");
+		int caseNumber = pages.Home().gotoNewCase().startCase("Input Process with and without versioning (enviar formulario y documento)");
 		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[6];
 		fieldArray[0] = new FormFieldData();
@@ -59,7 +60,7 @@ public class TestInputDocument extends com.colosa.qa.automatization.tests.common
 		FormFiller.formFillElements( browserInstance, fieldArray);
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		pages.InputDocProcess().continuebtn();
+		pages.AssignTask().pressContinueButton();
 		pages.Home().openCase(caseNumber);
 		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
@@ -72,14 +73,14 @@ public class TestInputDocument extends com.colosa.qa.automatization.tests.common
 		FormFiller.formFillElements( browserInstance, fieldArray2);
 		
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
-		pages.InputDocProcess().continuebtn();
+		pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

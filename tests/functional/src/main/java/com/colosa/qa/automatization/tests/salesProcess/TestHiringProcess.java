@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.salesProcess;
 
 import com.colosa.qa.automatization.common.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class TestHiringProcess extends com.colosa.qa.automatization.tests.common
         pages.Login().gotoDefaultUrl();
         pages.Login().loginUser("hector","sample","workflow", "English");
         pages.Main().goHome();
-        int casenumber=pages.Home().startCase("Employee Hiring process - v0.2 (Review Candidates list, select top 3.)");
+        int casenumber=pages.Home().gotoNewCase().startCase("Employee Hiring process - v0.2 (Review Candidates list, select top 3.)");
         FormFieldData[][] gridData= new FormFieldData[addJob][1];
 
         for(int rows=0; rows<gridData.length; rows++){
@@ -166,9 +167,9 @@ public void opencase(int casenumber) throws Exception{
 }
 
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -12,8 +12,14 @@ import java.io.File;
 public class OutputDocProcess extends Page{
 
 
-    public OutputDocProcess(BrowserInstance browser) {
+    public OutputDocProcess(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
     }
 
     public void downloadPdfFile() throws Exception{

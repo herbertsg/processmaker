@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFAssignUserToGroup (Assign to group)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFAssignUserToGroup (Assign to group)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("user", "zachary");
 		pages.DynaformExecution().setFieldValue("group", "Accounting");
@@ -31,7 +32,7 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		System.out.println(Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
 		Assert.assertEquals("1", Value.getValue(browserInstance, FieldKeyType.ID, "form[statusFunction]"));
 		pages.DynaformExecution().setFieldValue("continue", "");
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open report task for check
@@ -45,15 +46,15 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();
 		pages.DynaformExecution().intoDynaform();
-	    pages.InputDocProcess().continuebtn();
+	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 
-}
+    }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

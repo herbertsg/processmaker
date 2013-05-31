@@ -14,8 +14,15 @@ import java.util.List;
 
 public class WebEntry extends Page {
 
-    public WebEntry(BrowserInstance browser) {
+    public WebEntry(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     // into level of debug

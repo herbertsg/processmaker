@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -18,7 +19,7 @@ public class TestOutputDocProcess extends com.colosa.qa.automatization.tests.com
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("outputDocProcess (Task 1)");
+		pages.Home().gotoNewCase().startCase("outputDocProcess (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.OutputDocProcess().downloadDocFile();
 		pages.OutputDocProcess().downloadPdfFile();
@@ -31,9 +32,9 @@ public class TestOutputDocProcess extends com.colosa.qa.automatization.tests.com
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

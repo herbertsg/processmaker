@@ -2,16 +2,17 @@ package com.colosa.qa.automatization.tests.subprocessesTest;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.After;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.Test{
-	protected static int caseNum;
-	protected static String name = "Ernesto";
-	protected static String lastName = "Vega";
-	protected static String salary = "23,564.00";
-	protected static String desc = "Prueba...";
+	protected int caseNum;
+	protected String name = "Ernesto";
+	protected String lastName = "Vega";
+	protected String salary = "23,564.00";
+	protected String desc = "Prueba...";
 
     public SubprocessesTest(String browserName) throws IOException {
         super(browserName);
@@ -23,7 +24,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("Subprocess Test 1 (Task 1)");
+		caseNum = pages.Home().gotoNewCase().startCase("Subprocess Test 1 (Task 1)");
        	caseNum++;
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Nombre", "");
@@ -65,8 +66,8 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
         pages.Login().loginUser("admin","admin","workflow", "English");
 				pages.Main().goHome();
         
-        int casenumber = pages.Home().startCase("TestPMFSendMessage (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("TestPMFSendMessage (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[4];
@@ -52,8 +53,9 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 		    fieldArray[3].fieldValue="";
     		
     		FormFiller.formFillElements(browserInstance, fieldArray);
-		    pages.InputDocProcess().continuebtn();
-    
+		    pages.AssignTask().pressContinueButton();
+        pages.DynaformExecution().outDynaform();
+
     		pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
 		    pages.Home().openCase(casenumber);
@@ -69,8 +71,8 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 				Assert.assertEquals("Mail not sent", fieldSEND, "1");
 		    
 		    FormFiller.formFillElements(browserInstance, fieldArray1);
-		    pages.InputDocProcess().continuebtn();
-		    
+		    pages.AssignTask().pressContinueButton();
+        pages.DynaformExecution().outDynaform();
 		    pages.Main().goAdmin();
 				pages.Admin().goToLogs();
 				pages.Admin().showEmailLogs();
@@ -81,8 +83,8 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 			pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

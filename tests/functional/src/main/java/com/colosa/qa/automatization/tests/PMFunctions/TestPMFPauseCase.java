@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TestPMFPauseCase extends com.colosa.qa.automatization.tests.common.
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		numCase = pages.Home().startCase("Test PMFPauseCase (Task 1)");
+		numCase = pages.Home().gotoNewCase().startCase("Test PMFPauseCase (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
 		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
@@ -34,9 +35,9 @@ public class TestPMFPauseCase extends com.colosa.qa.automatization.tests.common.
         pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

@@ -18,7 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class processDesigner {
 
     @AfterClass public static void tearDownClass() {
-        //Browser.close();
+        //browserInstance.quit();
     }
 
 }

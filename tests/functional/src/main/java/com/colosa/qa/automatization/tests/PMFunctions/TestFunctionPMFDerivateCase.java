@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,9 +24,20 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().gotoNewCase();
-		int caseNumber = pages.Home().startCase("PMFDerivateCase (Task 1)");
-		pages.InputDocProcess().openCaseFrame();
+		int caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (Task 1)");
+        pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("nombre", "Ademar");
+        pages.DynaformExecution().setFieldValue("monto", "3000");
+        pages.DynaformExecution().clickButton("send");
+
+        //the pmfroute functions is executed after form
+        //the inbox list is display later
+        //the case must be found in the inbox list
+        boolean caseExists = pages.Home().gotoInbox().existCase(caseNumber);
+
+        Assert.assertTrue("The case does not exist in Inbox",caseExists);
+
+		/*pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[3];
 		fieldArray[0] = new FormFieldData();
 		fieldArray[1] = new FormFieldData();
@@ -71,15 +83,16 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
 		pages.Home().gotoInbox();
 		//Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNumber));
 		pages.Home().openCase(caseNumber);
-		pages.InputDocProcess().openCaseFrame();
-		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		pages.InputDocProcess().openCaseFrame(); */
+
+		//Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }

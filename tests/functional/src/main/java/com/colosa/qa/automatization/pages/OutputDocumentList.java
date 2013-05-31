@@ -6,8 +6,14 @@ import org.openqa.selenium.WebElement;
 public class OutputDocumentList extends Page{
 
 
-    public OutputDocumentList(BrowserInstance browser) {
+    public OutputDocumentList(BrowserInstance browser) throws Exception {
         super(browser);
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+        //return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public void createOutputDoc(String fileTitle, String fileName, String description, String docMedia, String docLandscape, String docGenerate, String securityEnabled, String versioning, String destinationPath, String tagField) throws Exception{

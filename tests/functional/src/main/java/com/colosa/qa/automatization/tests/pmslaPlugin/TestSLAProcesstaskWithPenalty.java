@@ -29,7 +29,7 @@ public class TestSLAProcesstaskWithPenalty extends com.colosa.qa.automatization.
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("SLA Process - Task whit penalty (Reclamo)");
+		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Task whit penalty (Reclamo)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("text", "123456");
 		pages.DynaformExecution().setFieldValue("enviar", "");
@@ -41,9 +41,9 @@ public class TestSLAProcesstaskWithPenalty extends com.colosa.qa.automatization.
         pages.Main().logout();
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

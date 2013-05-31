@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,13 +22,13 @@ public class TestPMFDeleteCase extends com.colosa.qa.automatization.tests.common
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFDeleteCase (Delete case)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFDeleteCase (Delete case)");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
      	pages.Home().gotoDraft();
  		Assert.assertTrue("The case does not exist in Draft", pages.Home().existCase(caseNum));
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("PMFDeleteCase (Delete case)");
+		caseNum = pages.Home().gotoNewCase().startCase("PMFDeleteCase (Delete case)");
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().goHome();
@@ -44,9 +45,9 @@ public class TestPMFDeleteCase extends com.colosa.qa.automatization.tests.common
 
 }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

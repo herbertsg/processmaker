@@ -16,8 +16,27 @@ public class Documents extends Page{
 	WebElement panel;
 	List<WebElement> files;
 
-    public Documents(BrowserInstance browser) {
+    public Documents(BrowserInstance browser) throws Exception {
         super(browser);
+
+        verifyPage();
+    }
+
+    @Override
+    public void verifyPage() throws Exception {
+
+        //wait for page
+        browser.switchToDefaultContent();
+        //browser.waitForElement(By.id("casesFrame"),120);
+        browser.switchToFrame("casesFrame");
+        //System.out.println("goto subcaseFrame ...");
+        browser.switchToFrame("casesSubFrame");
+        //browser.waitForElement(By.id("casesSubFrame"), 10);
+        //browser.switchToFrame("casesSubFrame");
+        System.out.println("wait for documents ...");
+        //browser.waitForElement(By.id("processesFilter"), 10);
+
+            browser.findElementById("documents");
     }
 
     public void selectFolder(String folderName) throws FileNotFoundException, IOException, Exception{

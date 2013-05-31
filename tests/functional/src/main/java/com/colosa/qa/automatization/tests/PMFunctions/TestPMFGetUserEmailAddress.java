@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class TestPMFGetUserEmailAddress extends com.colosa.qa.automatization.tes
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().startCase("Test PMFGetUserEmailAddress (Task 1)");
+		pages.Home().gotoNewCase().startCase("Test PMFGetUserEmailAddress (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
 		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
@@ -29,14 +30,14 @@ public class TestPMFGetUserEmailAddress extends com.colosa.qa.automatization.tes
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Envio"), "qatest@colosa.com");
 		pages.DynaformExecution().setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
-		pages.DynaformExecution().sleep(15000);
+		//pages.DynaformExecution().sleep(15000);
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 }

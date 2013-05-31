@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
         pages.Login().loginUser("admin","admin","workflow", "English");
 				pages.Main().goHome();
         
-        int casenumber = pages.Home().startCase("Test PMFRoleList (Task 1)");
+        int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRoleList (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         Integer fieldROLES = Integer.parseInt(pages.DynaformExecution().getFieldProperty("ROLES","value"));
@@ -36,7 +37,7 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
 		    fieldArray[0].fieldValue="";
     
         FormFiller.formFillElements(browserInstance, fieldArray);
-        pages.InputDocProcess().continuebtn();
+        pages.AssignTask().pressContinueButton();
         
         pages.Main().goAdmin();
         Integer roles = pages.Admin().countRoles();
@@ -48,9 +49,9 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
         pages.Main().logout();
     }
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
     
 }

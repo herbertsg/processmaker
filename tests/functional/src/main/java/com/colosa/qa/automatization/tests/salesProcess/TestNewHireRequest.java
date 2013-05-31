@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 		pages.Login().gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
-		caseNum = pages.Home().startCase("New Hire Request v_1 (Request for new hire)");
+		caseNum = pages.Home().gotoNewCase().startCase("New Hire Request v_1 (Request for new hire)");
 
 		FormFieldData[] arrayData = new FormFieldData[7];
 		arrayData[0] = new FormFieldData();
@@ -207,8 +208,8 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 }

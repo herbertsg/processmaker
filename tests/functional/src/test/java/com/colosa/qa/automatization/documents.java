@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
-        //com.colosa.qa.automatization.tests.documents.TestDocuments.class
+        com.colosa.qa.automatization.tests.documents.TestDocuments.class
 })
 public class documents {
     @AfterClass public static void tearDownClass() {

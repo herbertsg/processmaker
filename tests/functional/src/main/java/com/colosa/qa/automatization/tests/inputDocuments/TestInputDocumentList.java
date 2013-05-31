@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.inputDocuments;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -26,10 +27,10 @@ public class TestInputDocumentList extends com.colosa.qa.automatization.tests.co
 		pages.Main().logout();
 	}
 
-/*    @After
+    @After
     public void cleanup(){
-        Browser.close();
-    }*/
+        browserInstance.quit();
+    }
 
 
 }
