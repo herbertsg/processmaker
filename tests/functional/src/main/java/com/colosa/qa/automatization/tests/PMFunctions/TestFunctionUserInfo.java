@@ -33,10 +33,11 @@ public class TestFunctionUserInfo extends com.colosa.qa.automatization.tests.com
 		pages.DynaformExecution().setFieldValue("usernameHold", "admin");
 		pages.DynaformExecution().setFieldValue("send", "");
 		//Verify results
-		//Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "username"), pages.DynaformExecution().getFieldValue("username"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "firstname"), pages.DynaformExecution().getFieldValue("firstname"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "lastname"), pages.DynaformExecution().getFieldValue("lastname"));
+
+        //Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "username"), pages.DynaformExecution().getFieldValue("userName"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "firstname"), pages.DynaformExecution().getFieldValue("firstName"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "lastname"), pages.DynaformExecution().getFieldValue("lastName"));
         Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "mail"), pages.DynaformExecution().getFieldValue("mail"));
         Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "status"), pages.DynaformExecution().getFieldValue("status"));
         Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "address"), pages.DynaformExecution().getFieldValue("address"));
