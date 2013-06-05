@@ -1097,6 +1097,9 @@ public class DynaformExecution extends Page {
         
         fieldType = this.detectFieldType(element);
 
+        System.out.println("getFieldCount: field type detected.");
+
+
         switch(fieldType)
         {
             case TEXTBOX:
