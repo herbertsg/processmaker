@@ -24,6 +24,16 @@ public class Login extends Page{
 
     @Override
     public void verifyPage() throws Exception {
+        WebElement logoutLink = null;
+
+        browser.switchToDefaultContent();
+
+        this.user = browser.findElementById("form[USR_USERNAME]");
+        this.password = browser.findElementById("form[USR_PASSWORD]");
+
+        if(this.user == null || this.password == null){
+            System.out.println("Invalid login page ...");
+        }
         //this.logOutLink = browser.findElement("login.WebElement.logoutButton");
 
         //return (this.logOutLink != null);
@@ -45,13 +55,13 @@ public class Login extends Page{
 		return (this.systemInformationLink != null); 
 	}
 
-    public  void gotoDefaultUrl() throws IOException {
+    /*public  void gotoDefaultUrl() throws IOException {
         String url;
         //default url
         url = ConfigurationSettings.getInstance().getSetting("server.url");
 
         this.gotoUrl(url);
-    }
+    } */
 
 	public void loginDefaultUser() throws Exception{		
 		this.initWebElements();

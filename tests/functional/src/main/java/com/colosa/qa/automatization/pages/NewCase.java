@@ -6,7 +6,7 @@ import com.colosa.qa.automatization.common.extJs.ExtJSTreeNode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+//import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class NewCase extends Page {
     public int startCase(String processName) throws Exception{
         //String[] path = pathToArray(processName);
         List<WebElement> wel;
-        Actions action = new Actions(browser.getInstanceDriver());
+        //Actions action = new Actions(browser.getInstanceDriver());
         boolean flag = false;
         int value = 0;
 
@@ -98,8 +98,8 @@ public class NewCase extends Page {
         }
 
         System.out.println("starting case "+processName+"...");
-        action.doubleClick(node.getWebElementNode());
-        action.perform();
+        node.doubleClick();
+
 
         //all the frame is updated
         //wait() for WebElement present

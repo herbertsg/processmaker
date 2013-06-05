@@ -16,7 +16,7 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
     @Test
     public void runCase() throws Exception {
         
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 				
 				pages.Main().goHome();

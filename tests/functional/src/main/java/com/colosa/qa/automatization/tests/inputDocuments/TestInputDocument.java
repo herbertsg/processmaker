@@ -19,7 +19,7 @@ public class TestInputDocument extends com.colosa.qa.automatization.tests.common
     @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		int caseNumber = pages.Home().gotoNewCase().startCase("Input Process with and without versioning (enviar formulario y documento)");

@@ -31,7 +31,7 @@ public class TestWebEntry extends com.colosa.qa.automatization.tests.common.Test
 
 
 
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English"); //"cochalo");
         pages.Main().goHome();
         pages.Home().gotoInbox();

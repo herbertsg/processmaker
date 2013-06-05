@@ -26,7 +26,7 @@ public class TestSLAProcesstaskWithPenalty extends com.colosa.qa.automatization.
     @Test
 	public void executeSLAProcesstaskWithPenalty() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Task whit penalty (Reclamo)");

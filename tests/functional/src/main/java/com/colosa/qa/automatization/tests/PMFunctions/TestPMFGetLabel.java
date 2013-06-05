@@ -27,7 +27,7 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PMF GetLabel (Task 1)");

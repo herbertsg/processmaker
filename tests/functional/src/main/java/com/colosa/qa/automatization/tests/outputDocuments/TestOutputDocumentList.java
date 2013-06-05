@@ -16,7 +16,7 @@ public class TestOutputDocumentList extends com.colosa.qa.automatization.tests.c
     @Test
 		public void createOutputDocument() throws FileNotFoundException, IOException, Exception{
 
-			pages.Login().gotoDefaultUrl();
+			pages.gotoDefaultUrl();
 			pages.Login().loginUser("admin", "admin", "workflow", "English");
 			pages.Main().goDesigner();
 			pages.ProcessList().openProcess("Test 1");

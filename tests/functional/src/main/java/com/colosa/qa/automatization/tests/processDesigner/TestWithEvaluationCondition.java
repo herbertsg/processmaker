@@ -16,7 +16,7 @@ public class TestWithEvaluationCondition extends com.colosa.qa.automatization.te
     @Test
 	public void createEvaluationConditionProcess() throws FileNotFoundException, IOException, Exception{
 
-	pages.Login().gotoDefaultUrl();
+	pages.gotoDefaultUrl();
 	pages.Login().loginUser("admin", "admin", "workflow", "English");
 	pages.Main().goDesigner();
 	pages.ProcessList().newProcess("Test Process with Evaluation Condition " + new java.util.Date().toString(), "Test Process with Evaluation Condition");

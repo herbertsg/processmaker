@@ -18,7 +18,7 @@ public class TestMultipleGridsDependentFields extends com.colosa.qa.automatizati
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 
 		//Open process
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase();

@@ -22,7 +22,7 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
     @Test
 	public void executeSetCaseTrackerCode() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("setCaseTrackerCode (Task 1)");

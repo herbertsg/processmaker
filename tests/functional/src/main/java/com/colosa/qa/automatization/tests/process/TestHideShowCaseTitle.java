@@ -15,7 +15,7 @@ public class TestHideShowCaseTitle extends com.colosa.qa.automatization.tests.co
     @Test
     public void runCase() throws Exception {
         // login the PM
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 
         pages.Main().goDesigner();

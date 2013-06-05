@@ -22,7 +22,7 @@ public class TestSuggestDependentFields extends com.colosa.qa.automatization.tes
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Suggest Dependent Fields (Task 1)");
@@ -61,7 +61,7 @@ public class TestSuggestDependentFields extends com.colosa.qa.automatization.tes
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

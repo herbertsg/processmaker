@@ -16,7 +16,7 @@ public class TestWithParallelByEvalCondition extends com.colosa.qa.automatizatio
     @Test
 	public void createProcess() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goDesigner();
 		pages.ProcessList().newProcess("Test Process with Parallel By Evaluation Condition" + new java.util.Date().toString(),"Test Process with Parallel By Evaluation Condition");

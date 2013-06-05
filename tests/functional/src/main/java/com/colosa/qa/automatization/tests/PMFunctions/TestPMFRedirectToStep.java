@@ -19,7 +19,7 @@ public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.co
     @Test
     public void runCase() throws Exception {
         
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
         pages.DynaformExecution().outDynaform();
 				pages.Main().goHome();

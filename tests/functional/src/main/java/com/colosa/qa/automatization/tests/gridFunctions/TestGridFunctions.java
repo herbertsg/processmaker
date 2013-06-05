@@ -34,7 +34,7 @@ public class TestGridFunctions extends com.colosa.qa.automatization.tests.common
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Grillas Funciones (Task 1)");
@@ -90,7 +90,7 @@ public class TestGridFunctions extends com.colosa.qa.automatization.tests.common
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

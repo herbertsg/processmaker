@@ -20,7 +20,7 @@ public class TestOutputDocument extends com.colosa.qa.automatization.tests.commo
     @Test
 	public void downloadOutputDoc() throws Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		

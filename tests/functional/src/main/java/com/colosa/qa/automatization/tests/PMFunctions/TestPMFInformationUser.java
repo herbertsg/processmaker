@@ -21,7 +21,7 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
 	public void executePMFInformationUser() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFInformationUser (Get Information user)");

@@ -22,7 +22,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Event Process - Intermediate Message_Multiple Task (Task 1)");
@@ -59,7 +59,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 	public void continueCase() throws FileNotFoundException, IOException, Exception{*/
 		String eventStatus= "";
 		pages.CronExecute().execute("workflow");
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Main().goAdmin();
@@ -83,7 +83,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 	@Test
 	public void continueCase2() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);
@@ -103,7 +103,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 	@Test
 	public void continueCase3() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ronald", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

@@ -19,7 +19,7 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
     @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Process Supervisors (Task 1)");
@@ -38,7 +38,7 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		pages.InputDocProcess().switchToDefault();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
     	//pages.Home().gotoInbox();
@@ -48,7 +48,7 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		Assert.assertEquals("text-add", Value.getValue(browserInstance, FieldKeyType.ID, "form[text]"));
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReassign();
@@ -76,7 +76,7 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		fieldArray3[0].fieldValue="B";
         FormFiller.formFillElements(browserInstance, fieldArray3);
  		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoDocuments();
@@ -96,7 +96,7 @@ public class TestProcessSupervisor extends com.colosa.qa.automatization.tests.co
 		fieldArray33[0].fieldValue="";
         FormFiller.formFillElements(browserInstance, fieldArray33);
  		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Process Supervisors (Task 1)");

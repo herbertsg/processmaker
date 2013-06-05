@@ -60,7 +60,7 @@ import org.junit.runners.Suite.SuiteClasses;
                   */
 @RunWith(Suite.class)
 @SuiteClasses({
-                dependentFields.class,
+                dependentFields.class/*,
                 javascriptExecution.class, //mejorar asserts, javascript no funcionaba
                 notifications.class, //mejorar asserts
                 ////outputDocuments.class, //mejorar asserts  3

@@ -22,7 +22,7 @@ public class TestProcessIntermediateMessageSingleTask extends com.colosa.qa.auto
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Event Process - Intermediate Message_Single Task (Task 1)");
@@ -65,7 +65,7 @@ public class TestProcessIntermediateMessageSingleTask extends com.colosa.qa.auto
 		// Run cron 
 		pages.CronExecute().execute("workflow");
 		String eventStatus= "";
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("pablo", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Main().goAdmin();

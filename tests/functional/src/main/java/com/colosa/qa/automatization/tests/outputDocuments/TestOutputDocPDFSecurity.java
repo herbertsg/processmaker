@@ -17,7 +17,7 @@ public class TestOutputDocPDFSecurity extends com.colosa.qa.automatization.tests
     @Test
 	public void testPDFSecurity() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("Output documents - PDF security (PDF security)");

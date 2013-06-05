@@ -18,7 +18,7 @@ public class TestJavascriptExecution extends com.colosa.qa.automatization.tests.
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("Proceso con java script (Task 1)");

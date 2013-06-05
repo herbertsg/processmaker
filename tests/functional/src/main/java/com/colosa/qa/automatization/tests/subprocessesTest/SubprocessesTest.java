@@ -21,7 +21,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
     @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Subprocess Test 1 (Task 1)");
@@ -38,7 +38,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 	@Test
 	public void openCaseNum() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);
@@ -54,7 +54,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 
 	@Test
 	public void endCase() throws FileNotFoundException, IOException, Exception{*/
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

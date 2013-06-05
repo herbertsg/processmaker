@@ -19,14 +19,14 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
     @Test
     public void runCase() throws Exception {
         
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 				
 		pages.Main().goDesigner();
         pages.ProcessList().openProcess("Test PMFAddCaseNote");
         pages.Designer().assignedPermission("Administrators","All");
         
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 
         pages.Main().goHome();

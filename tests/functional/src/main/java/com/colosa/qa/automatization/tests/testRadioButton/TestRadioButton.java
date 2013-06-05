@@ -19,7 +19,7 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Test RB and CB (Task 1)");

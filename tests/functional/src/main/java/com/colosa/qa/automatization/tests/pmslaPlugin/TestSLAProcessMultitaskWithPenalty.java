@@ -18,7 +18,7 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
     @Test
 	public void executeSLAProcessMultitaskWithPenalty() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Multitask with penalty (Solicitud)");
@@ -37,7 +37,7 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
 		pages.CronExecute().execute("workflow");
 		pages.DynaformExecution().sleep(5000);
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

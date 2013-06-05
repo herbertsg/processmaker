@@ -17,7 +17,7 @@ public class TestHiringProcess extends com.colosa.qa.automatization.tests.common
 
     @Test
     public void runProcess() throws Exception{
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("hector","sample","workflow", "English");
         pages.Main().goHome();
         int casenumber=pages.Home().gotoNewCase().startCase("Employee Hiring process - v0.2 (Review Candidates list, select top 3.)");
@@ -62,7 +62,7 @@ public class TestHiringProcess extends com.colosa.qa.automatization.tests.common
     }
 
 public void openTask2(int casenumber) throws Exception{
-	pages.Login().gotoDefaultUrl();
+	pages.gotoDefaultUrl();
 	 pages.Login().loginUser("iver","sample","workflow", "English");
 	 pages.Main().goHome();
 	 opencase(casenumber);
@@ -103,7 +103,7 @@ public void openTask2(int casenumber) throws Exception{
     }
 
     public void openTask3(int casenumber) throws Exception{
-    	pages.Login().gotoDefaultUrl();
+    	pages.gotoDefaultUrl();
 	 pages.Login().loginUser("ronald","sample","workflow", "English");
 	 pages.Main().goHome();
 	 opencase(casenumber);
@@ -122,7 +122,7 @@ public void openTask2(int casenumber) throws Exception{
     }
 
     public void openTask4(int casenumber) throws Exception{
-    	pages.Login().gotoDefaultUrl();
+    	pages.gotoDefaultUrl();
 	 pages.Login().loginUser("pablo","sample","workflow", "English");
 	 pages.Main().goHome();
 	 opencase(casenumber);

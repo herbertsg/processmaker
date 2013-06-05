@@ -16,7 +16,7 @@ public class TestOutputDocProcess extends com.colosa.qa.automatization.tests.com
     @Test
 	public void downloadOutputDoc() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("outputDocProcess (Task 1)");

@@ -18,7 +18,7 @@ public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatizatio
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Entire Process with penalty (Proveedores)");
@@ -49,7 +49,7 @@ public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatizatio
 		pages.CronExecute().execute("workflow");
 		pages.DynaformExecution().sleep(5000);
 		
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

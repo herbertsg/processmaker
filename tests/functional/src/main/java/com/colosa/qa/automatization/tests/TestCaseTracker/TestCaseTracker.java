@@ -21,7 +21,7 @@ public class TestCaseTracker extends com.colosa.qa.automatization.tests.common.T
     @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Process Case Tracker - Process Map (Task 1)");

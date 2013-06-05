@@ -16,7 +16,7 @@ public class TestWithSelectCondition extends com.colosa.qa.automatization.tests.
     @Test
 	public void createSelectConditionProcess() throws FileNotFoundException, IOException, Exception{
 
-	pages.Login().gotoDefaultUrl();
+	pages.gotoDefaultUrl();
 	pages.Login().loginUser("admin", "admin", "workflow", "English");
 	pages.Main().goDesigner();
 	pages.ProcessList().newProcess("Test Process with Select Condition " + new java.util.Date().toString(), "Test Process with Select Condition");

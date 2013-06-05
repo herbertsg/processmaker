@@ -20,7 +20,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
     @Test
 	public void executeRedirectLogin() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().profile();
 		pages.DynaformExecution().intoFrainMain();
@@ -32,7 +32,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Home-->Newcase
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.DynaformExecution().intoPmtrack();
@@ -49,7 +49,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Home-->Draft
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(8000);
      	pages.InputDocProcess().switchToDefault();
@@ -68,7 +68,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Home-->Unassigned
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(8000);
      	pages.InputDocProcess().switchToDefault();
@@ -84,7 +84,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Home-->Participated
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(8000);
      	pages.InputDocProcess().switchToDefault();
@@ -100,7 +100,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Designer
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(18000);
      	pages.InputDocProcess().switchToDefault();
@@ -116,14 +116,14 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Admin
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(8000);
         pages.Admin().activePlugin("redirecLogin", true);
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 		//login after put the default case list to Admin
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().sleep(8000);
       	pages.InputDocProcess().switchToDefault();

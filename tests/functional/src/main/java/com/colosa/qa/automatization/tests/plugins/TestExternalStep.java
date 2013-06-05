@@ -30,7 +30,7 @@ public class TestExternalStep extends com.colosa.qa.automatization.tests.common.
     @Test
     public void runCase() throws Exception {
         // login the PM
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 
         // go tab home

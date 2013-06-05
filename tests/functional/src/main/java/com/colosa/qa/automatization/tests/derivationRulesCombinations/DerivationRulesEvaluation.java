@@ -23,7 +23,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
     @Test
 	public void derivationRulesEvaluation() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");
@@ -34,7 +34,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 	    //cyclical task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("chris", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -48,7 +48,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Manual task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("william", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -64,7 +64,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Value based task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample","workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -77,7 +77,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Report to task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("zachary", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -90,7 +90,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self service task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("chris", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
@@ -106,7 +106,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("william", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
@@ -120,7 +120,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");
@@ -130,7 +130,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - evaluation (Init)");

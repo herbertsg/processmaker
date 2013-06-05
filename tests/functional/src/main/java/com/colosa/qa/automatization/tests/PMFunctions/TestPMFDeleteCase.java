@@ -19,7 +19,7 @@ public class TestPMFDeleteCase extends com.colosa.qa.automatization.tests.common
 	public void executePMFDeleteCase() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFDeleteCase (Delete case)");

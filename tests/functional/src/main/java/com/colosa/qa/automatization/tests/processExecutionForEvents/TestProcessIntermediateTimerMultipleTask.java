@@ -22,7 +22,7 @@ public class TestProcessIntermediateTimerMultipleTask extends com.colosa.qa.auto
     @Test
 	public void initProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Event Process - Intermediate Timer_Multiple Task (Task 1)");
@@ -55,7 +55,7 @@ public class TestProcessIntermediateTimerMultipleTask extends com.colosa.qa.auto
 
 //		run cron
 		pages.CronExecute().execute("workflow");
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		String eventStatus= "";
 
@@ -69,7 +69,7 @@ public class TestProcessIntermediateTimerMultipleTask extends com.colosa.qa.auto
 		pages.Main().logout();
 
 		//open task 2
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

@@ -37,7 +37,7 @@ public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Tes
     @Test
 	public void allFieldsTest() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("FormularioTodosCampos (Task 1)");

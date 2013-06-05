@@ -53,7 +53,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 
         System.out.println("Test testDependentFieldsCase with browserName:" + this.browserName);
 
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
 
         pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.Main().goHome();

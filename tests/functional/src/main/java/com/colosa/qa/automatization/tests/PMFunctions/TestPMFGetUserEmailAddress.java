@@ -17,7 +17,7 @@ public class TestPMFGetUserEmailAddress extends com.colosa.qa.automatization.tes
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("Test PMFGetUserEmailAddress (Task 1)");

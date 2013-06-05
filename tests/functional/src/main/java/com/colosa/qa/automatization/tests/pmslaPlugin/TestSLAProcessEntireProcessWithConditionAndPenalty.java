@@ -18,7 +18,7 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty extends com.colo
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Entire Process with condition and Penalty (Solicitud de Solucion de Ticket)");
@@ -34,7 +34,7 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty extends com.colo
 		pages.CronExecute().execute("workflow");
 		pages.DynaformExecution().sleep(5000);
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

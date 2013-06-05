@@ -23,7 +23,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
     @Test
 	public void advanceCash()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Expense Report v_2 (Cash Advance)");
@@ -71,7 +71,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 //	@Depends("#advanceCash")
 //	public void approveAdvanceCash() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -97,7 +97,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 //	@Depends("#approveAdvanceCash")
 //	public void reportExpenses() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -208,7 +208,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 //	@Depends("#reportExpenses")
 //	public void approveReport() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Ian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -239,7 +239,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 //	@Depends("#approveReport")
 //	public void reinburseExpenses() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Jason", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));

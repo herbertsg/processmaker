@@ -254,7 +254,11 @@ public class BrowserInstance {
 	}
 
 	public WebElement findElement(String str) throws Exception{
-		return this.findElement(this.getBySearchCriteria(str));
+        WebElement element = this.findElement(this.getBySearchCriteria(str));
+
+        System.out.println("Element Found: " + element.getText());
+
+		return element;
 	}
 
 	private WebElement findElement(By searchCriteria) throws Exception{

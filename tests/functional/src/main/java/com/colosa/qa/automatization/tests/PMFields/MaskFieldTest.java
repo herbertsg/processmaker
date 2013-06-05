@@ -14,7 +14,7 @@ public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Tes
 
     @Test
  	public void runProcess() throws Exception{
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
         pages.Main().goHome();
         int casenumber=pages.Home().gotoNewCase().startCase("TestMask (Task 1)");

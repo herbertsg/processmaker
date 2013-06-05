@@ -65,7 +65,7 @@ public class ExtJSTree{
         List<ExtJSTreeNode> listTreeRootNodes = new ArrayList<ExtJSTreeNode>(rootNodes.size());
 
         for (WebElement rootNode : rootNodes) {
-            listTreeRootNodes.add(new ExtJSTreeNode(rootNode));
+            listTreeRootNodes.add(new ExtJSTreeNode(rootNode, this.driver));
         }
 
         return listTreeRootNodes;
@@ -110,7 +110,7 @@ public class ExtJSTree{
         //search the root node in the path
         for(WebElement rootNodeElement:rootNodes){
             //check treenode text
-            auxRootNode = new ExtJSTreeNode(rootNodeElement);
+            auxRootNode = new ExtJSTreeNode(rootNodeElement, this.driver);
             //
             System.out.println("ExtJsTree->search rootNode:" + auxRootNode.getNodeText());
 

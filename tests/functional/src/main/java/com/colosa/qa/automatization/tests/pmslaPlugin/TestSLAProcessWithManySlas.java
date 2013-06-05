@@ -19,7 +19,7 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process with many sla's (Task 1)");
@@ -38,7 +38,7 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
 		pages.CronExecute().execute("workflow");
 		pages.DynaformExecution().sleep(5000);
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(numCase);
@@ -51,7 +51,7 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
 		
 		pages.CronExecute().execute("workflow");
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

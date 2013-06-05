@@ -136,7 +136,9 @@ public class Home extends Page{
 
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/New case");
 
-        resultWebElement.getWebElementNode().click();
+        System.out.println("Returned Node found:" + resultWebElement.getNodeText());
+
+        resultWebElement.click();
 
 		//selectMenuTreePanelOption("Cases/New case");
         //create new instance of NewCase class
@@ -149,7 +151,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Inbox \\(.*\\)", true);
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Inbox inbox = new Inbox(browser);
 
@@ -163,7 +165,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Draft \\(.*\\)", true);
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Draft draft = new Draft(browser);
 
@@ -177,7 +179,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Participated \\(.*\\)", true);
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Participated participated = new Participated(browser);
 
@@ -191,7 +193,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Unassigned \\(.*\\)", true);
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Unassigned unassigned = new Unassigned(browser);
 
@@ -204,7 +206,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Paused \\(.*\\)", true);
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Paused paused = new Paused(browser);
 
@@ -217,7 +219,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Search/Advanced Search");
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         AdvancedSearch advancedSearch = new AdvancedSearch(browser);
 
@@ -229,7 +231,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Process Supervisor/Review");
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         SupervisorReview supervisorReview = new SupervisorReview(browser);
 
@@ -244,7 +246,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Process Supervisor/Reassign");
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         SupervisorReassign supervisorReassign = new SupervisorReassign(browser);
 
@@ -257,7 +259,7 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Documents");
 
-        resultWebElement.getWebElementNode().click();
+        resultWebElement.click();
 
         Documents documents = new Documents(browser);
 

@@ -1,7 +1,9 @@
 package com.colosa.qa.automatization.common.extJs;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +17,33 @@ import java.util.List;
  */
 public class ExtJSTreeNode {
     WebElement treeNode = null;
+    private WebDriver driver;
 
     /**
      * Initialized with the webelement that represent a Tree-node <li class="x-tree-node"></li>
      * @param treeNode
      */
-    public ExtJSTreeNode(WebElement treeNode){
+    public ExtJSTreeNode(WebElement treeNode, WebDriver driver){
         this.treeNode = treeNode;
+        this.driver = driver;
     }
 
     public String getNodeText(){
         WebElement node = this.treeNode.findElement(By.cssSelector("div.x-tree-node-el a.x-tree-node-anchor span"));
         return node.getText();
+    }
+
+    public void click(){
+        WebElement node = this.treeNode.findElement(By.cssSelector("div.x-tree-node-el a.x-tree-node-anchor"));
+        node.click();
+    }
+
+    public void doubleClick(){
+        Actions action = new Actions(this.driver);
+
+        WebElement node = this.treeNode.findElement(By.cssSelector("div.x-tree-node-el"));
+        action.doubleClick(node);
+        action.perform();
     }
 
     public int countChildNodes(){
@@ -40,13 +57,13 @@ public class ExtJSTreeNode {
         List<ExtJSTreeNode> listTreeChildNodes = new ArrayList<ExtJSTreeNode>(childList.size());
 
         for (WebElement childNode : childList) {
-            listTreeChildNodes.add(new ExtJSTreeNode(childNode));
+            listTreeChildNodes.add(new ExtJSTreeNode(childNode, this.driver));
         }
         return listTreeChildNodes;
     }
 
-    public WebElement getWebElementNode(){
+    /*public WebElement getWebElementNode(){
         return this.treeNode;
-    }
+    }*/
 
 }

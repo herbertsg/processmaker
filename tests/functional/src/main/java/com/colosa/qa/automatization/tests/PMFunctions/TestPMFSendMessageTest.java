@@ -19,7 +19,7 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
     @Test
     public void runCase() throws Exception {
         
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 				pages.Main().goHome();
         

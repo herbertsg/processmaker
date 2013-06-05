@@ -22,7 +22,7 @@ public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automa
     @Test
 	public void initProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Event with trigger - Intermediate Timer_Single Task (Task 1)");
@@ -50,7 +50,7 @@ public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automa
 
 		//Run crom
 		pages.CronExecute().execute("workflow");
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		String eventStatus= "";
 
@@ -64,7 +64,7 @@ public class TestProcessIntermediateTimerSingleTask extends com.colosa.qa.automa
 		pages.Main().logout();
 
 		//open task 2
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

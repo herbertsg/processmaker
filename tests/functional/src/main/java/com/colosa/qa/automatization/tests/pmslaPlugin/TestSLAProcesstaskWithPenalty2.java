@@ -18,7 +18,7 @@ public class TestSLAProcesstaskWithPenalty2 extends com.colosa.qa.automatization
     @Test
 	public void executeSLAProcesstaskWithPenalty2() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		
@@ -30,7 +30,7 @@ public class TestSLAProcesstaskWithPenalty2 extends com.colosa.qa.automatization
 		pages.CronExecute().execute("workflow");
 		pages.DynaformExecution().sleep(5000);
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

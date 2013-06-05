@@ -21,7 +21,7 @@ public class TestEmploymentApplicationProcess extends com.colosa.qa.automatizati
     @Test
 	public void openAndRunProcess()  throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("aa) Employment Application Process v_1 (Candidate CV uploading)");
@@ -272,7 +272,7 @@ public class TestEmploymentApplicationProcess extends com.colosa.qa.automatizati
 	/*@Test
 	public void continueProcess() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

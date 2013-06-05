@@ -16,7 +16,7 @@ public class TestJSGetRow extends com.colosa.qa.automatization.tests.common.Test
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("JS GetRow (Task 1)");

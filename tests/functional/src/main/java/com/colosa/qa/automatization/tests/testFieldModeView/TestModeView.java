@@ -25,7 +25,7 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.DynaformExecution().outDynaform();
 		pages.Main().goHome();
@@ -50,7 +50,7 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 	@Test
 	public void continueTestCase() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(caseNum);

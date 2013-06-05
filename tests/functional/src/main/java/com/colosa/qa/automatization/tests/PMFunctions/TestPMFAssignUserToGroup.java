@@ -20,7 +20,7 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
     @Test
 	public void executePMFAssignUserToGroup() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFAssignUserToGroup (Assign to group)");
@@ -36,7 +36,7 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open report task for check
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("zachary", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();

@@ -19,7 +19,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
     @Test
 	public void onBoardNewEnployee()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Employee Onboarding v-0.2 (Onboard New Employee)");
@@ -131,7 +131,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 	@Test
 	public void materialsAllocation() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Julian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -229,7 +229,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 	@Test
 	public void trainingArrangement() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Joshua", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -264,7 +264,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 	@Test
 	public void threeMonthReview() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Ian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -294,7 +294,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 	@Test
 	public void dissmisal() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Jacob", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));

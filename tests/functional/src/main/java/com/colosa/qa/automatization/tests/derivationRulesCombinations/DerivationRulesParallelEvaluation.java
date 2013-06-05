@@ -18,7 +18,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
     @Test
 	public void derivationRulesParallelEvaluation() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -32,7 +32,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 	    //cyclical task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("chris", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -43,7 +43,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -58,7 +58,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Manual task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("william", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -69,7 +69,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -83,7 +83,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Value based task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -94,7 +94,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -108,7 +108,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Report to task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("zachary", "sample", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
@@ -119,7 +119,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -133,7 +133,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self service task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("chris", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
@@ -147,7 +147,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -161,7 +161,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("william", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
@@ -175,7 +175,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");
@@ -188,7 +188,7 @@ public class DerivationRulesParallelEvaluation extends com.colosa.qa.automatizat
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - parallel evaluation (Init)");

@@ -19,7 +19,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
     @Test
 	public void startEnployeeBoarding()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Employee Offboarding v_1 (Start employee offboarding)");
@@ -75,7 +75,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 //	@Test
 //	public void registerOffBoarding() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Jacob", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -105,7 +105,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 //	@Test
 //	public void desactiveCredentialsInventary() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Julian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
@@ -170,7 +170,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 	@Test
 	public void removeEnployee() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("Jason", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));

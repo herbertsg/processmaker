@@ -23,7 +23,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 
     @Test
 	public void runProcess() throws FileNotFoundException, IOException, Exception{
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("New Hire Request v_1 (Request for new hire)");
@@ -74,7 +74,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 
 	@Test
 	public void reviewRequest() throws FileNotFoundException, IOException, Exception{*/
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("pablo", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);
@@ -98,7 +98,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 	@Test
 	public void budgetApproval() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);
@@ -130,7 +130,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 	@Test
 	public void positionPublication() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("pablo", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().openCase(caseNum);

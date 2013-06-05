@@ -18,7 +18,7 @@ public class TestCaseScheduler extends com.colosa.qa.automatization.tests.common
     @Test
 	public void executeCron() throws FileNotFoundException, IOException, Exception{
 		//Execute cron
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Main().goAdmin();

@@ -18,7 +18,7 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
 
     @Test
  	public void runProcess() throws Exception{
- 		pages.Login().gotoDefaultUrl();
+ 		pages.gotoDefaultUrl();
    	pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     int casenumber=pages.Home().gotoNewCase().startCase("TestValidate (Task 1)");

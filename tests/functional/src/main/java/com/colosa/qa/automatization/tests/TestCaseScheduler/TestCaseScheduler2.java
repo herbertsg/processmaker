@@ -24,7 +24,7 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
     @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Main().goAdmin();
@@ -38,7 +38,7 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
 		pages.CronExecute().execute("workflow");
 		System.out.println("run cron.php");
 		pages.DynaformExecution().sleep(20000);
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Main().goAdmin();

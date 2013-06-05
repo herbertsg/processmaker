@@ -19,7 +19,7 @@ public class TestPMStringFunctions extends com.colosa.qa.automatization.tests.co
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PM String Functions (Task 1)");

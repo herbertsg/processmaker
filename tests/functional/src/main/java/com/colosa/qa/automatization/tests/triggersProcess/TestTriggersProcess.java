@@ -15,7 +15,7 @@ public class TestTriggersProcess extends com.colosa.qa.automatization.tests.comm
 	public void createTrigger() throws Exception{
 
 		//Lpgin and create a process for test
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goDesigner();
 		pages.ProcessList().newProcess("Test ProcessTriggers " + new java.util.Date().toString(), "Test process triggers");

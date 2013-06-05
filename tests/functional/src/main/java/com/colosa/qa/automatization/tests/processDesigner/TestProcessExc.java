@@ -13,7 +13,7 @@ public class TestProcessExc extends com.colosa.qa.automatization.tests.common.Te
     @Test
 	public void createProcess() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goDesigner();
 		pages.ProcessList().newProcess("TestNewProcess"+new java.util.Date().toString(), "just another test process");

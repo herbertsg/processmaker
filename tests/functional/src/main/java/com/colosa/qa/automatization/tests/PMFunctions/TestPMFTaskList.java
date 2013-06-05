@@ -20,7 +20,7 @@ public class TestPMFTaskList extends com.colosa.qa.automatization.tests.common.T
     @Test
 	public void testPMFTaskList() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFTaskList (Init)");
@@ -33,7 +33,7 @@ public class TestPMFTaskList extends com.colosa.qa.automatization.tests.common.T
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
 		//Open report task for check
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();

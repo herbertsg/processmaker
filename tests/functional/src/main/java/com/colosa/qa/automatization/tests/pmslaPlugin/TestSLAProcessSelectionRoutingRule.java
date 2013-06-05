@@ -22,7 +22,7 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process Selection Routing Rule (Monto)");
@@ -51,7 +51,7 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
 
 		pages.CronExecute().execute("workflow");
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoReports();

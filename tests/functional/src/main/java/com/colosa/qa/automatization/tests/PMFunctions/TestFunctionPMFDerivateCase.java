@@ -21,7 +21,7 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
 
 		//Open process
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		int caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (Task 1)");

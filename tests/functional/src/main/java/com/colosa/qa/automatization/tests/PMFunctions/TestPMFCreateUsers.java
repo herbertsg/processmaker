@@ -24,7 +24,7 @@ public class TestPMFCreateUsers extends com.colosa.qa.automatization.tests.commo
     @Test
 	public void runProcess()throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("Test PMFCreateUsers (Task 1)");

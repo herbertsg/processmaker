@@ -20,7 +20,7 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 	public void executePMFGetCaseNotes() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFGetCaseNotes (Add notes)");
@@ -99,7 +99,7 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
  		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
  		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
     	pages.Home().gotoInbox();

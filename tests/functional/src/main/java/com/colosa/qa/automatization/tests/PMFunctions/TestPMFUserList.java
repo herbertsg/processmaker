@@ -15,7 +15,7 @@ public class TestPMFUserList extends com.colosa.qa.automatization.tests.common.T
     @Test
 	public void testCase() throws FileNotFoundException, IOException, Exception{
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PMF User List (Task 1)");

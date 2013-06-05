@@ -19,7 +19,7 @@ public class TestTaskProperties extends com.colosa.qa.automatization.tests.commo
 
 		Actions action = new Actions(browserInstance.getInstanceDriver());
 
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goDesigner();
 		pages.ProcessList().openProcess("Test 1");

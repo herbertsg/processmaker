@@ -18,7 +18,7 @@ public class TestEventIntermediate extends com.colosa.qa.automatization.tests.co
 
     @Test
 	public void runProcess() throws Exception{
-		pages.Login().gotoDefaultUrl();
+		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     int casenumber=pages.Home().gotoNewCase().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
@@ -58,7 +58,7 @@ public class TestEventIntermediate extends com.colosa.qa.automatization.tests.co
 public void openTask2(int casenumber) throws Exception{ */
     pages.CronExecute().execute("workflow");
        String eventStatus= "";
-        pages.Login().gotoDefaultUrl();
+        pages.gotoDefaultUrl();
         pages.Login().loginUser("iver","sample","workflow", "English");
         pages.Main().goHome();
         pages.Main().goAdmin();
@@ -90,7 +90,7 @@ public void openTask2(int casenumber) throws Exception{ */
 /*}
 
 public void openTask3(int casenumber) throws Exception{ */
-	pages.Login().gotoDefaultUrl();
+	pages.gotoDefaultUrl();
     pages.Login().loginUser("hector","sample","workflow", "English");
     pages.Main().goHome();
     pages.Home().openCase(casenumber);
@@ -111,7 +111,7 @@ public void openTask3(int casenumber) throws Exception{ */
 /*}
 
 public void openTask4(int casenumber) throws Exception{   */
-	 pages.Login().gotoDefaultUrl();
+	 pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     pages.Home().openCase(casenumber);
