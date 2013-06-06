@@ -44,7 +44,7 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
         
         Assert.assertEquals("PMFRoleList function not working properly", roles, fieldROLES);
         
-        //System.out.println("LOS ROLES  "+roles);
+        //Logger.addLog("LOS ROLES  "+roles);
         pages.DynaformExecution().outDynaform();
         pages.Main().logout();
     }

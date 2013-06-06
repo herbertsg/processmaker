@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.After;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.DynaformExecution().setFieldValue("group", "Accounting");
 		pages.DynaformExecution().setFieldValue("send", "");
 		Assert.assertEquals("User assigned", Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
-		System.out.println(Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
+		Logger.addLog(Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
 		Assert.assertEquals("1", Value.getValue(browserInstance, FieldKeyType.ID, "form[statusFunction]"));
 		pages.DynaformExecution().setFieldValue("continue", "");
 	    pages.AssignTask().pressContinueButton();

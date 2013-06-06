@@ -36,7 +36,7 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
 		int currentCaseNum = lastCaseNum + 1;
 		pages.DynaformExecution().sleep(20000);
 		pages.CronExecute().execute("workflow");
-		System.out.println("run cron.php");
+		Logger.addLog("run cron.php");
 		pages.DynaformExecution().sleep(20000);
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");

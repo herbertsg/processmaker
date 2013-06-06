@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSTree;
 import com.colosa.qa.automatization.common.extJs.ExtJSTreeNode;
 import org.openqa.selenium.By;
@@ -34,11 +35,11 @@ public class NewCase extends Page {
         browser.switchToDefaultContent();
         //browser.waitForElement(By.id("casesFrame"),120);
         browser.switchToFrame("casesFrame");
-        //System.out.println("goto subcaseFrame ...");
+        //Logger.addLog("goto subcaseFrame ...");
         browser.switchToFrame("casesSubFrame");
         //browser.waitForElement(By.id("casesSubFrame"), 10);
         //browser.switchToFrame("casesSubFrame");
-        System.out.println("wait for processesFilter ...");
+        Logger.addLog("wait for processesFilter ...");
         //browser.waitForElement(By.id("processesFilter"), 10);
 
             browser.findElementById("processesFilter");
@@ -62,15 +63,15 @@ public class NewCase extends Page {
         browser.switchToDefaultContent();
         browser.waitForElement(By.id("casesFrame"),120);
         browser.switchToFrame("casesFrame");
-        System.out.println("goto subcaseFrame ...");
+        Logger.addLog("goto subcaseFrame ...");
         browser.switchToFrame("casesSubFrame");
         //browser.waitForElement(By.id("casesSubFrame"), 10);
         //browser.switchToFrame("casesSubFrame");
-        System.out.println("wait for processesFilter ...");
+        Logger.addLog("wait for processesFilter ...");
         browser.waitForElement(By.id("processesFilter"), 10);
 
         //search process
-        System.out.println("search process new case ...");
+        Logger.addLog("search process new case ...");
         WebElement processFilterElement = browser.findElementById("processesFilter");
         processFilterElement.clear();
 
@@ -90,14 +91,14 @@ public class NewCase extends Page {
         //build tree path
         ExtJSTreeNode node = null;
         for(ExtJSTreeNode treeNode:listRootNodes){
-            System.out.println("search process path: "+treeNode.getNodeText() + "/" + processName+"...");
+            Logger.addLog("search process path: " + treeNode.getNodeText() + "/" + processName + "...");
             node = processListsTree.gotoNode(treeNode.getNodeText() + "/" + processName);
             if(node != null){
                 break;
             }
         }
 
-        System.out.println("starting case "+processName+"...");
+        Logger.addLog("starting case " + processName + "...");
         node.doubleClick();
 
 
@@ -106,7 +107,7 @@ public class NewCase extends Page {
         browser.waitForElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']"), 5);
 
         value = Integer.parseInt(browser.findElementByXPath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']").getText().trim().substring(8));
-        System.out.println("New case created #:" + value);
+        Logger.addLog("New case created #:" + value);
 
         return value;
     }

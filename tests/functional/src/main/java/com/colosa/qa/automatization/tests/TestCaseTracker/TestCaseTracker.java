@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.TestCaseTracker;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,11 +42,11 @@ public class TestCaseTracker extends com.colosa.qa.automatization.tests.common.T
 		pages.DynaformExecution().setFieldValue("CASE", String.valueOf(caseNum));
 		pages.DynaformExecution().setFieldValue("PIN", pin);
 		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
-		System.out.println(pages.Designer().getTaskColorStatus("Task 1"));
+		Logger.addLog(pages.Designer().getTaskColorStatus("Task 1"));
 		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatus("Task 1"));
-		System.out.println(pages.Designer().getTaskColorStatus("Task 2"));
+		Logger.addLog(pages.Designer().getTaskColorStatus("Task 2"));
 		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatus("Task 2"));
-		System.out.println(pages.Designer().getTaskColorStatus("Task 3"));
+		Logger.addLog(pages.Designer().getTaskColorStatus("Task 3"));
 		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatus("Task 3"));
 		pages.CaseTracker().goFormDocs();
 		pages.CaseTracker().openFirstForm();

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.After;
 import org.junit.Assert;
@@ -44,9 +45,9 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		pages.DynaformExecution().setFieldValue("CASE", code);
 		pages.DynaformExecution().setFieldValue("PIN", pin);
 		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
-		System.out.println(pages.Designer().getTaskColorStatus("Task 1"));
+		Logger.addLog(pages.Designer().getTaskColorStatus("Task 1"));
 		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatus("Task 1"));
-		System.out.println(pages.Designer().getTaskColorStatus("Task 2"));
+		Logger.addLog(pages.Designer().getTaskColorStatus("Task 2"));
 		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatus("Task 2"));
 
 		pages.DynaformExecution().outDynaform();

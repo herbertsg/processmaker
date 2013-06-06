@@ -78,11 +78,11 @@ import org.junit.runners.Suite.SuiteClasses;
 public class TestSuiteAll {
     @BeforeClass
     public static void setUpClass() {
-        //System.out.println("Master setup");
+        //Logger.addLog("Master setup");
 
     }
 
     @AfterClass public static void tearDownClass() {
-       // System.out.println("Master tearDown");
+       // Logger.addLog("Master tearDown");
     }
 }

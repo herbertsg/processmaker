@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -29,11 +30,11 @@ public class Documents extends Page{
         browser.switchToDefaultContent();
         //browser.waitForElement(By.id("casesFrame"),120);
         browser.switchToFrame("casesFrame");
-        //System.out.println("goto subcaseFrame ...");
+        //Logger.addLog("goto subcaseFrame ...");
         browser.switchToFrame("casesSubFrame");
         //browser.waitForElement(By.id("casesSubFrame"), 10);
         //browser.switchToFrame("casesSubFrame");
-        System.out.println("wait for documents ...");
+        Logger.addLog("wait for documents ...");
         //browser.waitForElement(By.id("processesFilter"), 10);
 
             browser.findElementById("documents");
@@ -55,7 +56,7 @@ public class Documents extends Page{
         }
         else
         {
-        	System.out.println("No se encontró el directorio");
+        	Logger.addLog("No se encontró el directorio");
         	break;
         }
 

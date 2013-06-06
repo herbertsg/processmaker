@@ -12,6 +12,7 @@ import java.util.List;
 //import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
 
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.*;
 //import org.openqa.selenium.Keys;
 //import org.openqa.selenium.JavascriptExecutor;
@@ -110,7 +111,7 @@ public class ExtJSGrid{
 	}
 
 	public int nextPage(){
-		System.out.println("next");
+		Logger.addLog("next");
 		return this.moveToPage(1);
 	}
 
@@ -138,11 +139,11 @@ public class ExtJSGrid{
         this.searchInput = null;
 
         //list of toolbar CELLS
-        System.out.println("Total toolbar cells: "+ headerToolbarCells.size());
+        Logger.addLog("Total toolbar cells: " + headerToolbarCells.size());
         Integer counter = 0;
         for(WebElement toolbarElement: headerToolbarCells){
             counter++;
-            System.out.println("  Toolbar cells["+counter+"]: "+ toolbarElement.getText());
+            Logger.addLog("  Toolbar cells[" + counter + "]: " + toolbarElement.getText());
         }
 
         //pm_search_text_field
@@ -158,13 +159,13 @@ public class ExtJSGrid{
 
         //div#ext-gen25.x-grid3 div#ext-gen26.x-grid3-viewport div#ext-gen28.x-grid3-scroller div#ext-gen30.x-grid3-body div.x-grid3-row
         List<WebElement> listRows = this.gridBody.findElements(By.cssSelector("div.x-grid3-body div.x-grid3-row"));
-        System.out.println("Get current list of rows total: "+ listRows.size());
+        Logger.addLog("Get current list of rows total: " + listRows.size());
 
 
         List<ExtJSGridRow> listGridRows = new ArrayList<ExtJSGridRow>(listRows.size());
 
         for (WebElement gridRow : listRows) {
-            System.out.println("   row data: "+ gridRow.getText());
+            Logger.addLog("   row data: " + gridRow.getText());
 
             listGridRows.add(new ExtJSGridRow(gridRow));
         }
@@ -230,7 +231,7 @@ public class ExtJSGrid{
 
         //return list of rows, only the filtered list is returned
         List<ExtJSGridRow> listFoundRows = this.getCurrentListRows();
-        System.out.println("Search grid total items: "+ listFoundRows.size());
+        Logger.addLog("Search grid total items: " + listFoundRows.size());
 
         //update header
         this.gridBodyHeader = new ExtJSGridHeader(this.grid);
@@ -239,9 +240,9 @@ public class ExtJSGrid{
         for (ExtJSGridRow gridRow:listFoundRows){
             //get the number of the column of the header
             Integer headerIndex =  this.gridBodyHeader.getHeaderColumnNumber(columnName);
-            System.out.println("   Header with name: "+ columnName + " = " + headerIndex);
+            Logger.addLog("   Header with name: " + columnName + " = " + headerIndex);
 
-            System.out.println("   Row Data: " + gridRow.getRowColumnText(headerIndex));
+            Logger.addLog("   Row Data: " + gridRow.getRowColumnText(headerIndex));
 
             if(gridRow.getRowColumnText(headerIndex).equals(searchCriteria)){
                 resultGridRow = gridRow;
@@ -273,7 +274,7 @@ public class ExtJSGrid{
 		while(this.currentPage <= this.totalPages)
 		{	
 			headerFields = this.getRows();
-			System.out.println(headerFields.size()+"   "+this.currentPage +" de "+ this.totalPages);
+			Logger.addLog(headerFields.size() + "   " + this.currentPage + " de " + this.totalPages);
 			for(WebElement row:headerFields)
 				if(row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(columnNumber)+"]/div")).getText().trim().equals(columnValue))		
 					return row;
@@ -305,7 +306,7 @@ public class ExtJSGrid{
 		while(this.currentPage <= this.totalPages)
 		{	
 			headerFields = this.getRows();
-			System.out.println(headerFields.size()+"   "+this.currentPage +" de "+ this.totalPages);
+			Logger.addLog(headerFields.size() + "   " + this.currentPage + " de " + this.totalPages);
 			for(WebElement row:headerFields)
 				if((row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(columnNumber)+"]/div")).getText().trim().equals(columnValue))	&& (row.findElement(By.xpath("table/tbody/tr/td["+Integer.toString(otherColumnNumber)+"]/div")).getText().trim().equals(columnValue)))	
 					return row;																																																																										
@@ -371,7 +372,7 @@ public class ExtJSGrid{
 
 		public PageStatusChanged(String status){
 			this.status = status;
-			System.out.println("actual "+this.status);
+			Logger.addLog("actual " + this.status);
 		}
 
 		public PageStatusChanged(String[] statuses){
@@ -380,13 +381,13 @@ public class ExtJSGrid{
 
 		public PageStatusChanged(){
 			this.status = grid.findElement(By.xpath("div/div[3]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td/div")).getText().trim();
-			//System.out.println("actual "+this.status);
+			//Logger.addLog("actual "+this.status);
 		}
 
 		@Override
 		public Boolean apply(WebDriver input) {
 			String actual = grid.findElement(By.xpath("div/div[3]/div/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td/div")).getText().trim();
-			//System.out.println(actual+" / "+this.status+" => "+!actual.equals(this.status));
+			//Logger.addLog(actual+" / "+this.status+" => "+!actual.equals(this.status));
 			if(this.statuses.length == 0)
 				return !actual.equals(this.status);
 			else

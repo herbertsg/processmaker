@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.testRadioButton;
 
+import com.colosa.qa.automatization.common.Logger;
 import org.junit.After;
 import org.junit.Test;
 
@@ -36,10 +37,10 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
 		{
 			String value=(String)it.next();
 
-        	System.out.println("Value :"+value);
+        	Logger.addLog("Value :" + value);
 		}
 		String rbGroup = pages.DynaformExecution().getRadioButtonGroupSelected("Radio1");
-		System.out.println("RadioButton selected:"+rbGroup);
+		Logger.addLog("RadioButton selected:"+rbGroup);
 
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();

@@ -1,9 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
-import com.colosa.qa.automatization.common.FieldKeyType;
-import com.colosa.qa.automatization.common.FieldType;
-import com.colosa.qa.automatization.common.FormFieldData;
-import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.common.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,7 +36,7 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         String fieldCASE_NOTE = "Test Case Note";
 
-        System.out.println("CASE NOTE "+fieldCASE_NOTE);
+        Logger.addLog("CASE NOTE " + fieldCASE_NOTE);
 
         pages.AssignTask().pressContinueButton();
 

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -25,12 +26,12 @@ public class AssignTask extends Page {
         browser.switchToDefaultContent();
         //browser.waitForElement(By.id("casesFrame"),120);
         browser.switchToFrame("casesFrame");
-        //System.out.println("goto subcaseFrame ...");
+        //Logger.addLog("goto subcaseFrame ...");
         browser.switchToFrame("casesSubFrame");
         //browser.waitForElement(By.id("casesSubFrame"), 10);
         browser.switchToFrame("openCaseFrame");
 
-        System.out.println("wait for casesgrid ...");
+        Logger.addLog("wait for casesgrid ...");
         //browser.waitForElement(By.id("processesFilter"), 10);
 
         WebElement frmDerivation = browser.findElementById("frmDerivation");

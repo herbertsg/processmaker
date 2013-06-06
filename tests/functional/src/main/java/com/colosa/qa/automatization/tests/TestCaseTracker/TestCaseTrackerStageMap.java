@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.TestCaseTracker;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,9 +42,9 @@ public class TestCaseTrackerStageMap extends com.colosa.qa.automatization.tests.
 		pages.DynaformExecution().setFieldValue("CASE", String.valueOf(caseNum));
 		pages.DynaformExecution().setFieldValue("PIN", pin);
 		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
-		System.out.println(pages.Designer().getTaskColorStatusStage("Inicio del Proceso de Prueba"));
+		Logger.addLog(pages.Designer().getTaskColorStatusStage("Inicio del Proceso de Prueba"));
 		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatusStage("Inicio del Proceso de Prueba"));
-		System.out.println(pages.Designer().getTaskColorStatusStage("Finalizacion del Proceso de Prueba"));
+		Logger.addLog(pages.Designer().getTaskColorStatusStage("Finalizacion del Proceso de Prueba"));
 		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatusStage("Finalizacion del Proceso de Prueba"));
 		pages.CaseTracker().goHistory();
 		java.util.Date date = new java.util.Date();

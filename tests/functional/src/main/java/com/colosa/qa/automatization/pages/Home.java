@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import com.colosa.qa.automatization.common.extJs.ExtJSTree;
 import com.colosa.qa.automatization.common.extJs.ExtJSTreeNode;
@@ -78,7 +79,7 @@ public class Home extends Page{
 		if(pathLevels.length>2)
 			throw new Exception("the PATH parameter must contain up to 2 path levels.");
 
-		System.out.println("trying to enter "+pathLevels[0]+((pathLevels.length>1)?" => "+pathLevels[1]:"")+"...");
+		Logger.addLog("trying to enter " + pathLevels[0] + ((pathLevels.length > 1) ? " => " + pathLevels[1] : "") + "...");
 
 		/*
 		if(this.skin == 0)*/
@@ -136,7 +137,7 @@ public class Home extends Page{
 
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/New case");
 
-        System.out.println("Returned Node found:" + resultWebElement.getNodeText());
+        Logger.addLog("Returned Node found:" + resultWebElement.getNodeText());
 
         resultWebElement.click();
 

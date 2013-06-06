@@ -1,9 +1,6 @@
 package com.colosa.qa.automatization.pages;
 
-import com.colosa.qa.automatization.common.BrowserInstance;
-import com.colosa.qa.automatization.common.ConfigurationSettings;
-import com.colosa.qa.automatization.common.Constant;
-import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -29,7 +26,7 @@ public class WebEntry extends Page {
     public void goWebEntry(String workSpace, String idWebEntry) throws Exception {
         String myServer = ConfigurationSettings.getInstance().getSetting("server.url");
         String myUrl = myServer + "/sys" + workSpace + "/en/classic/" + idWebEntry + "/WebForm.php";
-        System.out.println(myUrl);
+        Logger.addLog(myUrl);
         browser.gotoUrl(myUrl);
     }
 
@@ -39,7 +36,7 @@ public class WebEntry extends Page {
         String labelAll = fieldContent.getAttribute("innerHTML").trim();
         String[] labelPart = labelAll.split("<br>");
         String[] numberPart = labelPart[2].split(":");
-        System.out.println("New Case of webentry: " + numberPart[1].trim());
+        Logger.addLog("New Case of webentry: " + numberPart[1].trim());
         return Integer.parseInt(numberPart[1].trim());
     }
 
@@ -60,13 +57,13 @@ public class WebEntry extends Page {
 
     // get field of dynaform
     public WebElement getField(String fieldName) throws Exception{
-        System.out.println("getField: " + fieldName);
+        Logger.addLog("getField: " + fieldName);
 
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        System.out.println(" Element to search for: " + str);
+        Logger.addLog(" Element to search for: " + str);
 
         return browser.findElement(str);
     }
@@ -74,86 +71,86 @@ public class WebEntry extends Page {
     public FieldType detectFieldType(WebElement element) throws Exception{
         FieldType elementFieldType = null;
 
-        System.out.println("detectFieldType:");
+        Logger.addLog("detectFieldType:");
 
         //try to get field type using tagname
         String elementTagName = element.getTagName();
-        System.out.println(" element tagName:" + elementTagName);
+        Logger.addLog(" element tagName:" + elementTagName);
 
         switch(elementTagName){
             case "select": 
                 String multipleAttribute = element.getAttribute("multiple");
                 if(multipleAttribute != null && multipleAttribute.equals("multiple")){ //listbox
-                    System.out.println(" Element Type: ListBox");
+                    Logger.addLog(" Element Type: ListBox");
                     elementFieldType = FieldType.LISTBOX;
                 }
                 else { //Dropdown, yesno (no way to differentiate)
-                    System.out.println(" Element Type: DropDown");
+                    Logger.addLog(" Element Type: DropDown");
                     elementFieldType = FieldType.DROPDOWN;
                 }
                 break;
             case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
                         // suggest (type=hidden), 
-                System.out.println(" HTML tag: input");
+                Logger.addLog(" HTML tag: input");
                 String typeAttribute = element.getAttribute("type");
-                System.out.println(" HTML type: " + typeAttribute);
+                Logger.addLog(" HTML type: " + typeAttribute);
                 if(typeAttribute.equals("hidden")){
                     //this can be a suggest field, find previous simbling
                     //if suggest a label element is present
                     String idElementAttribute = element.getAttribute("id");
-                    System.out.println(" HTML id: " + idElementAttribute);
+                    Logger.addLog(" HTML id: " + idElementAttribute);
                     //get sub_string
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                    System.out.println(" HTML element id: " + elementId);
+                    Logger.addLog(" HTML element id: " + elementId);
                     Boolean suggestElementExists = browser.elementExistsSearchCriteria("id"+Constant.SEARCH_CRITERIA_SEPARATOR+"form[" + elementId + "_label]");
 
                     if(suggestElementExists){
-                        System.out.println(" Element Type: SUGGEST");
+                        Logger.addLog(" Element Type: SUGGEST");
                         elementFieldType = FieldType.SUGGEST;
                     }
                     else {
                         //else return hidden field
-                        System.out.println(" Element Type: HIDDEN");
+                        Logger.addLog(" Element Type: HIDDEN");
                         elementFieldType = FieldType.HIDDEN;
                     }
                 }
                 if(typeAttribute.equals("text")){ // textbox, currency, percentage, 
                    //datepicker??????
                     String readonlyAttribute = element.getAttribute("readonly");
-                    System.out.println(" HTML readonly Attribute: " + readonlyAttribute);
+                    Logger.addLog(" HTML readonly Attribute: " + readonlyAttribute);
                     if(readonlyAttribute != null && readonlyAttribute.equals("true"))
                     {
-                        System.out.println(" Element Type: DATEPICKER");
+                        Logger.addLog(" Element Type: DATEPICKER");
                         elementFieldType = FieldType.DATEPICKER;
                     }else{
                         //text field
-                        System.out.println(" Element Type: TEXTBOX");
+                        Logger.addLog(" Element Type: TEXTBOX");
                         elementFieldType = FieldType.TEXTBOX;                        
                     }
                 }
                 if(typeAttribute.equals("password")){ //password
-                    System.out.println(" Element Type: TEXTBOX");
+                    Logger.addLog(" Element Type: TEXTBOX");
                     elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("radio")){
-                    System.out.println(" Element Type: RADIOBUTTON");
+                    Logger.addLog(" Element Type: RADIOBUTTON");
                     elementFieldType = FieldType.RADIOBUTTON;
                 }
                 if(typeAttribute.equals("checkbox")){
-                    System.out.println(" Element Type: CHECK");
+                    Logger.addLog(" Element Type: CHECK");
                     elementFieldType = FieldType.CHECK;
                 }
                 if(typeAttribute.equals("button") || typeAttribute.equals("submit") || typeAttribute.equals("reset")){
-                    System.out.println(" Element Type: BUTTON");
+                    Logger.addLog(" Element Type: BUTTON");
                     elementFieldType = FieldType.BUTTON;
                 } 
                 if(typeAttribute.equals("file")){
-                    System.out.println(" Element Type: FILE");
+                    Logger.addLog(" Element Type: FILE");
                     elementFieldType = FieldType.FILE;
                 } 
                 if(typeAttribute.equals("")){ //datepicker ???
-                    //System.out.println("Element Type: CHECK");
+                    //Logger.addLog("Element Type: CHECK");
                     String readonlyAttribute = element.getAttribute("readonly");
                     if(readonlyAttribute.equals("readonly"))
                     {
@@ -162,15 +159,15 @@ public class WebEntry extends Page {
                 }
                 break;
             case "textarea":
-                System.out.println(" Element Type: TEXTAREA");
+                Logger.addLog(" Element Type: TEXTAREA");
                 elementFieldType = FieldType.TEXTAREA;
                 break;
             case "span": //title, subtitle
-                System.out.println(" Element Type: TITLE");
+                Logger.addLog(" Element Type: TITLE");
                 elementFieldType = FieldType.TITLE;                
                 break;
             case "a": //link
-                System.out.println(" Element Type: LINK");
+                Logger.addLog(" Element Type: LINK");
                 elementFieldType = FieldType.LINK;                 
                 break;
             default:
@@ -187,7 +184,7 @@ public class WebEntry extends Page {
         //search element
         WebElement element = this.getField(fieldName);
 
-        System.out.println("element : " + element.getAttribute("value"));
+        Logger.addLog("element : " + element.getAttribute("value"));
 
         fieldType = this.detectFieldType(element);
 
@@ -197,7 +194,7 @@ public class WebEntry extends Page {
     }
 
     public void setFieldValue(String fieldName, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (String fieldName): ");
+        Logger.addLog("setFieldValue (String fieldName): ");
 
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
@@ -213,7 +210,7 @@ public class WebEntry extends Page {
     }
 
     public void setFieldValue(WebElement element, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (WebElement): ");
+        Logger.addLog("setFieldValue (WebElement): ");
 
         switch(fieldType)
         {
@@ -261,7 +258,7 @@ public class WebEntry extends Page {
                 //if suggest a label element is used to select option
                 String idElementAttribute = element.getAttribute("id");
                 String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                System.out.println(" HTML element id: " + elementId);
+                Logger.addLog(" HTML element id: " + elementId);
 
                 //get label element 
                 WebElement labelElement = this.getField(elementId + "_label");                

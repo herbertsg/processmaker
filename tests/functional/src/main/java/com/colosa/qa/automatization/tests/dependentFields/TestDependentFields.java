@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.dependentFields;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
+import com.colosa.qa.automatization.common.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
     @Test
 	public void testDependentFieldsCase() throws FileNotFoundException, IOException, Exception{
 
-        System.out.println("Test testDependentFieldsCase with browserName:" + this.browserName);
+        Logger.addLog("Test testDependentFieldsCase with browserName:" + this.browserName);
 
         pages.gotoDefaultUrl();
 
@@ -151,10 +152,10 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
         pages.DynaformExecution().waitForFieldToBeClickable("textAreaField", 2);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
 		int listBoxCount = pages.DynaformExecution().getFieldCount("listBoxField");
-		System.out.println("ListBox value:" + listBoxCount);
+		Logger.addLog("ListBox value:" + listBoxCount);
 		//Assert.assertFalse(pages.DynaformExecution().getFieldValue("listBoxField").equals("")); //at least one login
 		String totalLogins = pages.DynaformExecution().getFieldValue("hiddenField");
-		System.out.println("Total logins:" + totalLogins);
+		Logger.addLog("Total logins:" + totalLogins);
 		Assert.assertEquals(listBoxCount, Integer.parseInt(totalLogins));
 
 		//pages..switchToDefault();

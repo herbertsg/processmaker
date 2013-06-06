@@ -11,7 +11,7 @@ public class GridFiller{
 
 	public static boolean gridFillElements(BrowserInstance browser, FormFieldData[][] fieldData) throws FileNotFoundException, IOException, Exception{
 		WebElement elem = null;
-		System.out.println("Tamaño del elemento: "+fieldData.length);
+		Logger.addLog("Tamaño del elemento: "+fieldData.length);
 
 		for(int i = 0;i<fieldData.length;i++)
 		{

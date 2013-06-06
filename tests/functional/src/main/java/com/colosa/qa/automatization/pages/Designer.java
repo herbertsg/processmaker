@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -341,14 +342,14 @@ public class Designer extends Page{
 
 		if(founded == true)
 		{
-			System.out.println("Xpath: "+elements[i][1]);
+			Logger.addLog("Xpath: " + elements[i][1]);
 			browser.waitForElement(By.xpath(elements[i][1]),45);
 			WebElement el = browser.findElementByXPath(elements[i][1]);
 			el.click();
 		}
 		else
 		{
-			System.out.println("No se encontro la tarea "+taskName);
+			Logger.addLog("No se encontro la tarea " + taskName);
 		}
 
 		if(arrayTasks.length>0)
@@ -531,15 +532,15 @@ public class Designer extends Page{
         if ( (!checkedDebug) && (flagActiveDebug) ) {
             checkDebug.click();
             submitButton.click();
-            System.out.println("Debug active :)");
+            Logger.addLog("Debug active :)");
         } else if ( (checkedDebug) && (flagActiveDebug) ) {
-            System.out.println("Debug active :|");
+            Logger.addLog("Debug active :|");
         } else if ( (!checkedDebug) && (!flagActiveDebug) ) {
-            System.out.println("Debug desactive :|");
+            Logger.addLog("Debug desactive :|");
         } else if ( (checkedDebug) && (!flagActiveDebug) ) {
             checkDebug.click();
             submitButton.click();
-            System.out.println("Debug desactive :)");
+            Logger.addLog("Debug desactive :)");
         }
     }
 
@@ -565,15 +566,15 @@ public class Designer extends Page{
         if ( (checkedHide) && (flagShowTitle) ) {
             checkShowTitle.click();
             submitButton.click();
-            System.out.println("Show title :)");
+            Logger.addLog("Show title :)");
         } else if ( (!checkedHide) && (flagShowTitle) ) {
-            System.out.println("Show title :|");
+            Logger.addLog("Show title :|");
         } else if ( (checkedHide) && (!flagShowTitle) ) {
-            System.out.println("Hide title :|");
+            Logger.addLog("Hide title :|");
         } else if ( (!checkedHide) && (!flagShowTitle) ) {
             checkShowTitle.click();
             submitButton.click();
-            System.out.println("Hide title :)");
+            Logger.addLog("Hide title :)");
         }
     }
 

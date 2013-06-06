@@ -15,7 +15,7 @@ public abstract class Page{
 
 		url = "";
 		pageTitle = "";	
-		//System.out.println("Page contructor....:" + url);
+		//Logger.addLog("Page contructor....:" + url);
 	}
 
     /**
@@ -23,9 +23,9 @@ public abstract class Page{
      */
 	public void gotoUrl(String url){
         this.url = url;
-		//System.out.println("Page.Goto url:" + url); 
+		//Logger.addLog("Page.Goto url:" + url);
         this.browser.gotoUrl(url);
-		//System.out.println("Browser.goto url:" + url); 
+		//Logger.addLog("Browser.goto url:" + url);
 	}
 
 	public boolean isAt(){

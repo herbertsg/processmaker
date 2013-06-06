@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.common;
 import com.colosa.qa.automatization.common.BrowserSettings;
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.pages.Pages;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -31,7 +32,7 @@ public abstract class Test {
         this.browserName = browserName;
 
         //initialize test pages
-        initializeTest();
+        initializeTest(browserName);
         //initialize pages
         pages = new Pages(browserInstance);
     }
@@ -48,14 +49,14 @@ public abstract class Test {
             for (int i = 0; i< browserCount; i++){
                 String browserName = ConfigurationSettings.getInstance().getSetting("browser.browser" + (i + 1));
                 data[i][0] = browserName;
-                //System.out.println("Browser: "+browserName);
+                //Logger.addLog("Browser: "+browserName);
             }
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
         //Object[][] data = new Object[][] { { "firefox" }, { "chrome" }, { "ie" } };
-        //System.out.println(Arrays.toString(data));
+        //Logger.addLog(Arrays.toString(data));
 
         return Arrays.asList(data);
 
@@ -66,12 +67,16 @@ public abstract class Test {
         } */
     }
 
-    public void initializeTest() throws IOException {
+    public void initializeTest(String browserName) throws IOException {
+        Logger.addLog("initializeTest .");
         //creates the instance of the Browser
-        BrowserSettings browserSettings = BrowserInstance.getDefaultBrowserSettings();
+        BrowserSettings browserSettings = BrowserInstance.getDefaultBrowserSettings(browserName);
+        Logger.addLog("initializeTest ..");
         //change browser name
         browserSettings.setBrowserName(browserName);
+        Logger.addLog("initializeTest ...");
         browserInstance = new BrowserInstance(browserSettings);
+        Logger.addLog("initializeTest ....");
     }
 
     public void goToUrl(String url){

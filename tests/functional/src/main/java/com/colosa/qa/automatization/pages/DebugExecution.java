@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -73,21 +74,21 @@ public class DebugExecution extends Page {
         List<WebElement> gridDebugTrs = gridDebug.findElements(By.tagName("td"));
         String valueField = "";
         
-        System.out.println("Looking for variable: " + nameVariable + "... ");
+        Logger.addLog("Looking for variable: " + nameVariable + "... ");
         for(WebElement divs:gridDebugTrs)
         {
-            //System.out.println("Contador: " + con + " -> " + divs.getAttribute("innerHTML"));
+            //Logger.addLog("Contador: " + con + " -> " + divs.getAttribute("innerHTML"));
             if ( (divs.getAttribute("class").indexOf ("x-grid3-td-name") > -1) && 
             	 (divs.getAttribute("innerHTML").indexOf (nameVariable) > -1) ) {
 
-                //System.out.println("Exists variable '" + nameVariable + "' :) ");
+                //Logger.addLog("Exists variable '" + nameVariable + "' :) ");
                 WebElement trElements = divs.findElement(By.xpath("..")).findElement(By.xpath(".."));
             	
             	List<WebElement> gridDebugDivs = trElements.findElements(By.tagName("div"));
 		        for(WebElement tds:gridDebugDivs)
 		        {
 		        	if ( (tds.getAttribute("class").indexOf ("x-grid3-col-value") > -1) ) {
-		            	System.out.println("Valor de variable es :'" + tds.getAttribute("innerHTML").trim() + "' :) ");
+		            	Logger.addLog("Valor de variable es :'" + tds.getAttribute("innerHTML").trim() + "' :) ");
 		            	valueField = tds.getAttribute("innerHTML").trim();
 		            	break;
 		        	}

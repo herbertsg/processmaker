@@ -2,10 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 //import java.util.List;
 //import java.lang.Boolean;
-import com.colosa.qa.automatization.common.BrowserInstance;
-import com.colosa.qa.automatization.common.ConfigurationSettings;
-import com.colosa.qa.automatization.common.Constant;
-import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -180,87 +177,87 @@ public class DynaformExecution extends Page {
     public FieldType detectFieldType(WebElement element) throws Exception{
         FieldType elementFieldType = null;
 
-        System.out.println("detectFieldType:");
+        Logger.addLog("detectFieldType:");
 
         //try to get field type using tagname
         String elementTagName = element.getTagName();
-        System.out.println(" element tagName:" + elementTagName);
+        Logger.addLog(" element tagName:" + elementTagName);
 
         switch(elementTagName){
             case "select": 
                 String multipleAttribute = element.getAttribute("multiple");
                 if(multipleAttribute != null && multipleAttribute.equals("multiple")){ //listbox
-                    System.out.println(" Element Type: ListBox");
+                    Logger.addLog(" Element Type: ListBox");
                     elementFieldType = FieldType.LISTBOX;
                 }
                 else { //Dropdown, yesno (no way to differentiate)
-                    System.out.println(" Element Type: DropDown");
+                    Logger.addLog(" Element Type: DropDown");
                     elementFieldType = FieldType.DROPDOWN;
                 }
                 break;
             case "input": //text (type=text)=>pm.textField, pm.currencyField, pm.percentageField
                         // suggest (type=hidden), 
-                System.out.println("Ingresa al case");
-                System.out.println(" HTML tag: input");
+                Logger.addLog("Ingresa al case");
+                Logger.addLog(" HTML tag: input");
                 String typeAttribute = element.getAttribute("type");
-                System.out.println(" HTML type: " + typeAttribute);
+                Logger.addLog(" HTML type: " + typeAttribute);
                 if(typeAttribute.equals("hidden")){
                     //this can be a suggest field, find previous simbling
                     //if suggest a label element is present
                     String idElementAttribute = element.getAttribute("id");
-                    System.out.println(" HTML id: " + idElementAttribute);
+                    Logger.addLog(" HTML id: " + idElementAttribute);
                     //get sub_string
                     String elementId;
                     elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                    System.out.println(" HTML element id: " + elementId);
+                    Logger.addLog(" HTML element id: " + elementId);
                     Boolean suggestElementExists = browser.elementExistsSearchCriteria("id"+ Constant.SEARCH_CRITERIA_SEPARATOR +"form[" + elementId + "_label]");
 
                     if(suggestElementExists){
-                        System.out.println(" Element Type: SUGGEST");
+                        Logger.addLog(" Element Type: SUGGEST");
                         elementFieldType = FieldType.SUGGEST;
                     }
                     else {
                         //else return hidden field
-                        System.out.println(" Element Type: HIDDEN");
+                        Logger.addLog(" Element Type: HIDDEN");
                         elementFieldType = FieldType.HIDDEN;
                     }
                 }
                 if(typeAttribute.equals("text")){ // textbox, currency, percentage, 
                    //datepicker??????
                     String readonlyAttribute = element.getAttribute("readonly");
-                    System.out.println(" HTML readonly Attribute: " + readonlyAttribute);
+                    Logger.addLog(" HTML readonly Attribute: " + readonlyAttribute);
                     if(readonlyAttribute != null && readonlyAttribute.equals("true"))
                     {
-                        System.out.println(" Element Type: DATEPICKER");
+                        Logger.addLog(" Element Type: DATEPICKER");
                         elementFieldType = FieldType.DATEPICKER;
                     }else{
                         //text field
-                        System.out.println(" Element Type: TEXTBOX");
+                        Logger.addLog(" Element Type: TEXTBOX");
                         elementFieldType = FieldType.TEXTBOX;                        
                     }
                 }
                 if(typeAttribute.equals("password")){ //password
-                    System.out.println(" Element Type: TEXTBOX");
+                    Logger.addLog(" Element Type: TEXTBOX");
                     elementFieldType = FieldType.TEXTBOX;
                 }
                 if(typeAttribute.equals("radio")){
-                    System.out.println(" Element Type: RADIOBUTTON");
+                    Logger.addLog(" Element Type: RADIOBUTTON");
                     elementFieldType = FieldType.RADIOBUTTON;
                 }
                 if(typeAttribute.equals("checkbox")){
-                    System.out.println(" Element Type: CHECK");
+                    Logger.addLog(" Element Type: CHECK");
                     elementFieldType = FieldType.CHECK;                    
                 }
                 if(typeAttribute.equals("button") || typeAttribute.equals("submit") || typeAttribute.equals("reset")){
-                    System.out.println(" Element Type: BUTTON");
+                    Logger.addLog(" Element Type: BUTTON");
                     elementFieldType = FieldType.BUTTON;
                 } 
                 if(typeAttribute.equals("file")){
-                    System.out.println(" Element Type: FILE");
+                    Logger.addLog(" Element Type: FILE");
                     elementFieldType = FieldType.FILE;
                 } 
                 if(typeAttribute.equals("")){ //datepicker ???
-                    //System.out.println("Element Type: CHECK");
+                    //Logger.addLog("Element Type: CHECK");
                     String readonlyAttribute = element.getAttribute("readonly");
                     if(readonlyAttribute.equals("readonly"))
                     {
@@ -269,15 +266,15 @@ public class DynaformExecution extends Page {
                 }
                 break;
             case "textarea":
-                System.out.println(" Element Type: TEXTAREA");
+                Logger.addLog(" Element Type: TEXTAREA");
                 elementFieldType = FieldType.TEXTAREA;
                 break;
             case "span": //title, subtitle
-                System.out.println(" Element Type: TITLE");
+                Logger.addLog(" Element Type: TITLE");
                 elementFieldType = FieldType.TITLE;                
                 break;
             case "a": //link
-                System.out.println(" Element Type: LINK");
+                Logger.addLog(" Element Type: LINK");
                 elementFieldType = FieldType.LINK;                 
                 break;
             default:
@@ -289,27 +286,27 @@ public class DynaformExecution extends Page {
 
     // get field of dynaform
     public WebElement getField(String fieldName) throws Exception{
-        System.out.println("getField: " + fieldName);
+        Logger.addLog("getField: " + fieldName);
 
        // intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        System.out.println(" Element to search for: " + str);
+        Logger.addLog(" Element to search for: " + str);
 
         return browser.findElement(str);
     }
 
     public WebElement getFieldWithoutForm(String fieldName) throws Exception{
-        System.out.println("getField: " + fieldName);
+        Logger.addLog("getField: " + fieldName);
 
        // intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
-        System.out.println(" Element to search for: " + str);
+        Logger.addLog(" Element to search for: " + str);
 
         return browser.findElement(str);
     }
@@ -326,7 +323,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setGridFieldValue(String gridName, int row, String fieldName, String value) throws Exception{
-        System.out.println("setGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "] = " + value);
+        Logger.addLog("setGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "] = " + value);
 
         String gridFieldName = gridName + "][" + row + "][" + fieldName;
         FieldType fieldType;
@@ -342,7 +339,7 @@ public class DynaformExecution extends Page {
     }    
 
     public void setCheckBoxGroup(String checkGroup, String checkName) throws Exception{
-        System.out.println("setCheckbox: " + checkGroup + "[" + checkName + "]");
+        Logger.addLog("setCheckbox: " + checkGroup + "[" + checkName + "]");
         String checkFieldName = checkGroup + "][" + checkName;
         FieldType fieldType;
 
@@ -354,7 +351,7 @@ public class DynaformExecution extends Page {
     }   
 
     public void setRadioButtonGroup(String radioGroup, String radioName) throws Exception{
-        System.out.println("setRadioButton: " + radioGroup + "[" + radioName + "]");
+        Logger.addLog("setRadioButton: " + radioGroup + "[" + radioName + "]");
         String radioButtonName = radioGroup + "][" + radioName;
         FieldType fieldType;
 
@@ -373,7 +370,7 @@ public class DynaformExecution extends Page {
         //search element
         WebElement element = this.getField(buttonName);
 
-        System.out.println("element : " + element.getAttribute("value"));
+        Logger.addLog("element : " + element.getAttribute("value"));
 
         fieldType = this.detectFieldType(element);
 
@@ -393,7 +390,7 @@ public class DynaformExecution extends Page {
         //search element
         WebElement element = this.getField(linkName);
 
-        System.out.println("element : " + element.getAttribute("value"));
+        Logger.addLog("element : " + element.getAttribute("value"));
 
         fieldType = this.detectFieldType(element);
 
@@ -414,7 +411,7 @@ public class DynaformExecution extends Page {
         //search element
         WebElement element = this.getField(fieldName);
 
-        System.out.println("element : " + element.getAttribute("value"));
+        Logger.addLog("element : " + element.getAttribute("value"));
 
         fieldType = this.detectFieldType(element);
 
@@ -424,7 +421,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValue(String fieldName, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (String fieldName): ");
+        Logger.addLog("setFieldValue (String fieldName): ");
 
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
@@ -440,7 +437,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValue(WebElement element, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (WebElement): ");
+        Logger.addLog("setFieldValue (WebElement): ");
 
         switch(fieldType)
         {
@@ -488,7 +485,7 @@ public class DynaformExecution extends Page {
                 //if suggest a label element is used to select option
                 String idElementAttribute = element.getAttribute("id");
                 String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                System.out.println(" HTML element id: " + elementId);
+                Logger.addLog(" HTML element id: " + elementId);
 
                 //get label element 
                 WebElement labelElement = this.getField(elementId + "_label");                
@@ -565,7 +562,7 @@ public class DynaformExecution extends Page {
         //search element
         WebElement element = this.getFieldWithoutForm(fieldName);
 
-        System.out.println("element : " + element.getAttribute("value"));
+        Logger.addLog("element : " + element.getAttribute("value"));
 
         fieldType = this.detectFieldType(element);
 
@@ -575,7 +572,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValueWithoutForm(String fieldName, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (String fieldName): ");
+        Logger.addLog("setFieldValue (String fieldName): ");
 
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaformWithoutForm");
@@ -591,7 +588,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValueWithoutForm(WebElement element, String value, FieldType fieldType) throws Exception{
-        System.out.println("setFieldValue (WebElement): ");
+        Logger.addLog("setFieldValue (WebElement): ");
 
         switch(fieldType)
         {
@@ -639,7 +636,7 @@ public class DynaformExecution extends Page {
                 //if suggest a label element is used to select option
                 String idElementAttribute = element.getAttribute("id");
                 String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                System.out.println(" HTML element id: " + elementId);
+                Logger.addLog(" HTML element id: " + elementId);
 
                 //get label element 
                 WebElement labelElement = this.getField(elementId + "_label");                
@@ -710,7 +707,7 @@ public class DynaformExecution extends Page {
 
     public String getFieldValue(String fieldName) throws Exception{
         intoDynaform();
-        System.out.println("getFieldValue: " + fieldName);
+        Logger.addLog("getFieldValue: " + fieldName);
 
         FieldType fieldType;
         String elementValue = "";
@@ -751,14 +748,14 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
         
-        System.out.println(" field value:" + elementValue);
+        Logger.addLog(" field value:" + elementValue);
 
         return elementValue;
     }
 
     public String getFieldValueWithoutForm(String fieldName) throws Exception{
         intoDynaform();
-        System.out.println("getFieldValue: " + fieldName);
+        Logger.addLog("getFieldValue: " + fieldName);
 
         FieldType fieldType;
         String elementValue = "";
@@ -799,13 +796,13 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
         
-        System.out.println(" field value:" + elementValue);
+        Logger.addLog(" field value:" + elementValue);
 
         return elementValue;
     }
 
     public String getGridFieldValue(String gridName, int row, String fieldName) throws Exception{
-        System.out.println("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
+        Logger.addLog("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
 
         String elementValue = "";
         String gridFieldName = gridName + "][" + row + "][" + fieldName;
@@ -845,7 +842,7 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
 
-        System.out.println(" field value:" + elementValue);
+        Logger.addLog(" field value:" + elementValue);
 
         return elementValue;
     }
@@ -864,7 +861,7 @@ public class DynaformExecution extends Page {
     }
 
     public String getFieldText(String fieldName) throws Exception{
-        System.out.println("getFieldText: " + fieldName);
+        Logger.addLog("getFieldText: " + fieldName);
 
         FieldType fieldType;
         String elementText = "";
@@ -897,7 +894,7 @@ public class DynaformExecution extends Page {
                 //if suggest a label element is used to select option
                 String idElementAttribute = element.getAttribute("id");
                 String elementId = idElementAttribute.substring(idElementAttribute.indexOf('[')+1,idElementAttribute.lastIndexOf(']'));
-                System.out.println(" HTML element id: " + elementId);
+                Logger.addLog(" HTML element id: " + elementId);
 
                 //get label element 
                 WebElement labelElement = this.getField(elementId + "_label");
@@ -914,7 +911,7 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
 
-        System.out.println(" field text: " + elementText);
+        Logger.addLog(" field text: " + elementText);
 
         return elementText;        
     }
@@ -947,7 +944,7 @@ public class DynaformExecution extends Page {
     }
 
     public String getGridFieldText(String gridName, int row, String fieldName) throws Exception{
-        System.out.println("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
+        Logger.addLog("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
 
         String elementText = "";
         String gridFieldName = gridName + "][" + row + "][" + fieldName;
@@ -987,20 +984,20 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
 
-        System.out.println(" field text:" + elementText);
+        Logger.addLog(" field text:" + elementText);
 
         return elementText;
     }
 
     public String getRadioButtonGroupSelected(String radioGroup) throws Exception{
-        System.out.println("getRadioButtonSelected: " + radioGroup);
+        Logger.addLog("getRadioButtonSelected: " + radioGroup);
         String radioGroupName = "form["+ radioGroup + "]";
         FieldType fieldType;
 
         List<WebElement> element;
         String radioSelected = "";
         element = browser.findElementsByName(radioGroupName);
-        System.out.println("Numero de radioButton: "+element.size());        
+        Logger.addLog("Numero de radioButton: " + element.size());
         for(WebElement we2:element)
             if(we2.isSelected())
             {
@@ -1013,14 +1010,14 @@ public class DynaformExecution extends Page {
 
     public List<String> getCheckBoxGroupSelected(String checkGroup) throws Exception{
 
-        System.out.println("getCheckBoxSelected: " + checkGroup);
+        Logger.addLog("getCheckBoxSelected: " + checkGroup);
         String checkGroupName = "form["+ checkGroup + "][]";
         FieldType fieldType;
 
         List<WebElement> element;
         List<String> checkSelected = new ArrayList<String>();
         element = browser.findElementsByName(checkGroupName);
-        System.out.println("Numero de checkbox: "+element.size());        
+        Logger.addLog("Numero de checkbox: " + element.size());
         for(WebElement we2:element)
             if(we2.isSelected())
             {
@@ -1084,7 +1081,7 @@ public class DynaformExecution extends Page {
     }
 
     public int getFieldCount(String fieldName) throws Exception{
-        System.out.println("getFieldCount: " + fieldName);
+        Logger.addLog("getFieldCount: " + fieldName);
 
         FieldType fieldType;
         int elementCount = 0;
@@ -1097,7 +1094,7 @@ public class DynaformExecution extends Page {
         
         fieldType = this.detectFieldType(element);
 
-        System.out.println("getFieldCount: field type detected.");
+        Logger.addLog("getFieldCount: field type detected.");
 
 
         switch(fieldType)
@@ -1119,7 +1116,7 @@ public class DynaformExecution extends Page {
                 break;                                                                                                                                                      
         }
 
-        System.out.println(" field count: " + elementCount);
+        Logger.addLog(" field count: " + elementCount);
 
         return elementCount;        
     }    

@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.ConfigurationSettings;
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -28,11 +29,14 @@ public class Login extends Page{
 
         browser.switchToDefaultContent();
 
+        Logger.addLog("VerifyPage Login .");
         this.user = browser.findElementById("form[USR_USERNAME]");
+        Logger.addLog("VerifyPage Login ..");
         this.password = browser.findElementById("form[USR_PASSWORD]");
+        Logger.addLog("VerifyPage Login ...");
 
         if(this.user == null || this.password == null){
-            System.out.println("Invalid login page ...");
+            Logger.addLog("Invalid login page ...");
         }
         //this.logOutLink = browser.findElement("login.WebElement.logoutButton");
 

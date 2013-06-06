@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization;
 
+import com.colosa.qa.automatization.common.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class TestCase1 {
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("TestCase1 setup");
+        Logger.addLog("TestCase1 setup");
     }
 
     @Test

@@ -2,6 +2,8 @@ package com.colosa.qa.automatization.common.extJs;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
@@ -98,8 +100,8 @@ public class ExtJSTree{
         searchPath = removeLeftNodePath(searchPath);
 
         //list of nodes
-        System.out.println("ExtJsTree->Number of root nodes found:" + rootNodes.size());
-        System.out.println("ExtJsTree->Search root node:" + nodeName);
+        Logger.addLog("ExtJsTree->Number of root nodes found:" + rootNodes.size());
+        Logger.addLog("ExtJsTree->Search root node:" + nodeName);
 
         //verify if list of nodes is available
         if(rootNodes == null){
@@ -112,7 +114,7 @@ public class ExtJSTree{
             //check treenode text
             auxRootNode = new ExtJSTreeNode(rootNodeElement, this.driver);
             //
-            System.out.println("ExtJsTree->search rootNode:" + auxRootNode.getNodeText());
+            Logger.addLog("ExtJsTree->search rootNode:" + auxRootNode.getNodeText());
 
             if(useRegularExpresion){
                 if(auxRootNode.getNodeText().matches(nodeName)){
@@ -138,7 +140,7 @@ public class ExtJSTree{
             return rootNode;
         }
 
-        System.out.println("ExtJsTree-> Root node found:" + rootNode.getNodeText());
+        Logger.addLog("ExtJsTree-> Root node found:" + rootNode.getNodeText());
 
         resultWebElement = gotoNodeFromNode(rootNode, searchPath, useRegularExpresion);
 
@@ -195,7 +197,7 @@ public class ExtJSTree{
         Boolean nodeFound =false;
 
         //current path
-        System.out.println("ExtJsTree->GotoNodeFromNode->current node Path:" + path);
+        Logger.addLog("ExtJsTree->GotoNodeFromNode->current node Path:" + path);
 
         while(!searchPath.trim().equals("")){
             //verify if node is found in level
@@ -205,15 +207,15 @@ public class ExtJSTree{
             //search first node from left of path (root node)
             String auxNodeName = getLeftNodePath(searchPath);
             searchPath = removeLeftNodePath(searchPath);
-            System.out.println("ExtJsTree->GotoNodeFromNode->find node:" + auxNodeName);
+            Logger.addLog("ExtJsTree->GotoNodeFromNode->find node:" + auxNodeName);
 
             //count child nodes
-            System.out.println("ExtJsTree->GotoNodeFromNode->child nodes:" + rootNode.getListChildNodes().size());
+            Logger.addLog("ExtJsTree->GotoNodeFromNode->child nodes:" + rootNode.getListChildNodes().size());
             for (ExtJSTreeNode childNode : rootNode.getListChildNodes()) {
 
                 //check treenode text
                 //auxRootNode = new ExtJSTreeNode(webElement);
-                System.out.println("ExtJsTree->GotoNodeFromNode->search childNode:" + childNode.getNodeText());
+                Logger.addLog("ExtJsTree->GotoNodeFromNode->search childNode:" + childNode.getNodeText());
                 if(useRegularExpresion){
                     if(childNode.getNodeText().matches(auxNodeName)){
                         rootNode = childNode;
@@ -248,7 +250,7 @@ public class ExtJSTree{
         //the found node is rootNode
         if(nodeFound){
             //node found
-            System.out.println("Node found:" + rootNode.getNodeText());
+            Logger.addLog("Node found:" + rootNode.getNodeText());
             return rootNode;
         }
         else{

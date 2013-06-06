@@ -59,4 +59,10 @@ public class BrowserSettings {
         if(remoteServerUrl != null)
             _remoteServerURL = remoteServerUrl;
     }
+
+    public String toString() {
+        return "Browser Mode:" + _browserMode + ", Browser Name:" + _browserName +
+                ", Browser Version:" + _browserVersion + ", Browser Platform:" + _browserPlatform +
+                ", Remote Server URL:" + _remoteServerURL;
+    }
 }

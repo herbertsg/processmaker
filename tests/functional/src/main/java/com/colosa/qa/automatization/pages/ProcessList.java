@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -50,15 +51,15 @@ public class ProcessList extends Page{
 		int pages = Integer.parseInt(pager.findElement(By.xpath("td[6]/div")).getText().trim().substring(3));
 
 		while(extGrid.getCurrentPage()<=extGrid.getTotalPages() && we==null){
-			System.out.println("Buscando en pagina "+extGrid.getCurrentPage() +" de "+ extGrid.getTotalPages()+"...");
+			Logger.addLog("Buscando en pagina " + extGrid.getCurrentPage() + " de " + extGrid.getTotalPages() + "...");
 			wl = grid.findElements(By.xpath("div/div[2]/div/div[1]/div[2]/div/div"));
 			for(WebElement we2:wl)
 			{
-				//System.out.println(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText()+"   "+processName);
+				//Logger.addLog(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText()+"   "+processName);
 				if(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText().equals(processName))
 				{
 					we = we2;
-					System.out.println("Se encontro el proceso \""+processName+"\"");
+					Logger.addLog("Se encontro el proceso \"" + processName + "\"");
 					break;
 				}
 			}
@@ -68,10 +69,10 @@ public class ProcessList extends Page{
 		}		
 
 		if(we==null)
-			System.out.println("ERROR al intentar abrir el proceso \""+processName+"\", no se encontró el proceso"); //talvez se deberia lanzar un error
+			Logger.addLog("ERROR al intentar abrir el proceso \"" + processName + "\", no se encontró el proceso"); //talvez se deberia lanzar un error
 		else
 		{
-			System.out.println("Abriendo proceso \""+processName+"\"...");
+			Logger.addLog("Abriendo proceso \"" + processName + "\"...");
 			action.doubleClick(we);
         	action.perform();
 		}
@@ -95,18 +96,18 @@ public class ProcessList extends Page{
 		int index = 1;
 		int pages = Integer.parseInt(pager.findElement(By.xpath("td[6]/div")).getText().trim().substring(3));
 
-		System.out.println("Buscando proceso \""+processName+"\"...");
+		Logger.addLog("Buscando proceso \"" + processName + "\"...");
 
 		while(extGrid.getCurrentPage()<=extGrid.getTotalPages() && we==null){
-			System.out.println("Buscando en pagina "+extGrid.getCurrentPage() +" de "+ extGrid.getTotalPages()+"...");
+			Logger.addLog("Buscando en pagina " + extGrid.getCurrentPage() + " de " + extGrid.getTotalPages() + "...");
 			wl = grid.findElements(By.xpath("div/div[2]/div/div[1]/div[2]/div/div"));
 			for(WebElement we2:wl)
 			{
-				//System.out.println(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText()+"   "+processName);
+				//Logger.addLog(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText()+"   "+processName);
 				if(we2.findElement(By.xpath("table/tbody/tr[1]/td[5]/div")).getText().equals(processName))
 				{
 					we = we2;
-					System.out.println("Se encontro el proceso \""+processName+"\"");
+					Logger.addLog("Se encontro el proceso \"" + processName + "\"");
 					break;
 				}
 			}
@@ -116,10 +117,10 @@ public class ProcessList extends Page{
 		}		
 
 		if(we==null)
-			System.out.println("ERROR al intentar abrir el proceso \""+processName+"\", no se encontró el proceso"); //talvez se deberia lanzar un error
+			Logger.addLog("ERROR al intentar abrir el proceso \"" + processName + "\", no se encontró el proceso"); //talvez se deberia lanzar un error
 		else
 		{
-			System.out.println("Seleccionando proceso \""+processName+"\"...");
+			Logger.addLog("Seleccionando proceso \"" + processName + "\"...");
 			action.click(we);
         	action.perform();
 		}
@@ -148,7 +149,7 @@ public class ProcessList extends Page{
 
 		browser.findElementByXPath("//div[@id='uploader']/div[2]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/table/tbody/tr[2]/td[2]/em/button").click();//no funciona al crear su variable en el default.conf
 
-		System.out.println("-------fin-------");		
+		Logger.addLog("-------fin-------");
 		
 
 	}

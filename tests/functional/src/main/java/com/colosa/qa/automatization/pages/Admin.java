@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -168,7 +169,7 @@ public class Admin extends Page{
   			return flagExist;
   	}
   	
-  	//System.out.println("HTML " + newww.getAttribute("innerHTML"));
+  	//Logger.addLog("HTML " + newww.getAttribute("innerHTML"));
   	public int countRoles() throws Exception{
         goToUsers();
         Thread.sleep(3000);
@@ -194,7 +195,7 @@ public class Admin extends Page{
 				    }
 				}
 				return count;
-        //System.out.println("LAS FILAS  "+count);
+        //Logger.addLog("LAS FILAS  "+count);
     }
     
     public void activePlugin(String namePlugin, Boolean flagActive) throws Exception{
@@ -226,19 +227,19 @@ public class Admin extends Page{
             if ( buttonLabel.getAttribute("innerHTML").trim().indexOf ("Enable") > -1 && (flagActive) ) {
                 buttonLabel.click();
                 Thread.sleep(3000);
-                System.out.println("Plugin " + namePlugin + " active :)");
+                Logger.addLog("Plugin " + namePlugin + " active :)");
             } else if ( buttonLabel.getAttribute("innerHTML").trim().indexOf ("Disable") > -1 && (flagActive) ) {
-                System.out.println("Plugin " + namePlugin + " is active :|");
+                Logger.addLog("Plugin " + namePlugin + " is active :|");
             } else if ( buttonLabel.getAttribute("innerHTML").trim().indexOf ("Enable") > -1 && (!(flagActive)) ) {
-                System.out.println("Plugin " + namePlugin + " is desactive :|");
+                Logger.addLog("Plugin " + namePlugin + " is desactive :|");
             } else if ( buttonLabel.getAttribute("innerHTML").trim().indexOf ("Disable") > -1 && (!(flagActive)) ) {
                 buttonLabel.click();
                 Thread.sleep(3000);
-                System.out.println("Plugin " + namePlugin + " desactive :)");
+                Logger.addLog("Plugin " + namePlugin + " desactive :)");
             }
             
         } else {
-            System.out.println("Plugin " + namePlugin + " not exist :(");
+            Logger.addLog("Plugin " + namePlugin + " not exist :(");
         }
     }
 

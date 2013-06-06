@@ -35,7 +35,7 @@ public class Main extends Page{
 
         //this.we = null;
         browser.switchToDefaultContent();
-        System.out.println("Redireccionando a seccion "+sectionName+"...");
+        Logger.addLog("Redireccionando a seccion "+sectionName+"...");
         //this.waitForElementPresent(By.cssSelector("ul#pm_menu li a"),60);
         //this.we = browser.findElementById(ConfigurationSettings.getInstance().getSetting("main.menu"));
 
@@ -44,7 +44,7 @@ public class Main extends Page{
         this.weSectionButton = this.weMainMenu.findElement(By.linkText(sectionName));
         
         
-        //System.out.println(this.we); //raro pero se necesita esta linea para que funcione correctamente
+        //Logger.addLog(this.we); //raro pero se necesita esta linea para que funcione correctamente
         if(this.weSectionButton == null)
             throw new Exception("Invalid section name.");
 

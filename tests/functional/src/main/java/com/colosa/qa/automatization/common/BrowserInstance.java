@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,33 +21,80 @@ public class BrowserInstance {
 
 	private WebDriver _instanceDriver = null;
 
-    public static BrowserSettings getDefaultBrowserSettings() throws IOException {
+    /**
+     * Get default Browser Settings
+     * @param browserName The default configuration for the specified browser, if empty default browser is used.
+     * @return BrowserSettings object
+     * @throws IOException
+     */
+    public static BrowserSettings getDefaultBrowserSettings(String browserName) throws IOException {
+        int browserCount = 1;
         BrowserSettings browserSettings = new BrowserSettings();
 
+        List<BrowserSettings> browserSettingsList = null;
+
         //set browser information from configuration file
-        browserSettings.setBrowserMode(ConfigurationSettings.getInstance().getSetting("browser.mode"));
-        browserSettings.setBrowserName(ConfigurationSettings.getInstance().getSetting("browser.name"));
-        browserSettings.setBrowserVersion(ConfigurationSettings.getInstance().getSetting("browser.version"));
-        browserSettings.setBrowserPlatform(ConfigurationSettings.getInstance().getSetting("browser.platform"));
-        browserSettings.setRemoteServerUrl(ConfigurationSettings.getInstance().getSetting("remote.server.url"));
+        //check if the browsername is empty then default browser is used.
+        if(browserName.equals("")){
+            browserSettings  = readBrowserSettings(0);
 
-        //Read browser information from registry and update in object
-        //-Dbrowser.settings=1 -Dbrowser.mode=local -Dbrowser.name=firefox
-        //-Dbrowser.settings=1 -Dbrowser.mode=remote -Dbrowser.name=firefox -Dremote.server.url=http:// browser.version=
-        //if variable set from system properties overrride configuration of browser
-        String setBrowserSettings = System.getProperty("browser.settings");
+            //Read browser information from registry and update in object
+            //-Dbrowser.settings=1 -Dbrowser.mode=local -Dbrowser.name=firefox
+            //-Dbrowser.settings=1 -Dbrowser.mode=remote -Dbrowser.name=firefox -Dremote.server.url=http:// browser.version=
+            //if variable set from system properties override configuration of browser
+            String setBrowserSettings = System.getProperty("browser.settings");
 
-        if(setBrowserSettings != null){
-            System.out.printf("User Browser Settings detected\n");
-            browserSettings.setBrowserMode(System.getProperty("browser.mode"));
-            browserSettings.setBrowserName(System.getProperty("browser.name"));
-            browserSettings.setBrowserVersion(System.getProperty("browser.version"));
-            browserSettings.setBrowserPlatform(System.getProperty("browser.platform"));
-            browserSettings.setRemoteServerUrl(System.getProperty("remote.server.url"));
+            if(setBrowserSettings != null){
+                System.out.printf("User Browser Settings detected\n");
+                browserSettings.setBrowserMode(System.getProperty("browser.mode"));
+                browserSettings.setBrowserName(System.getProperty("browser.name"));
+                browserSettings.setBrowserVersion(System.getProperty("browser.version"));
+                browserSettings.setBrowserPlatform(System.getProperty("browser.platform"));
+                browserSettings.setRemoteServerUrl(System.getProperty("remote.server.url"));
+            }
+        }
+        else{
+             //get configuration specific for the specified browser
+            browserCount = Integer.parseInt(ConfigurationSettings.getInstance().getSetting("browser.count"));
+            for (int i = 1; i <= browserCount; i++){
+                BrowserSettings auxBrowserSettings = readBrowserSettings(i);
+                //browserSettingsList.add(readBrowserSettings(i));
+
+                if(auxBrowserSettings.getBrowserName().equals(browserName)){
+                    browserSettings = auxBrowserSettings;
+                    break;
+                }
+            }
+        }
+
+        Logger.addLog("getDefaultBrowserSettings . " + browserSettings.toString());
+
+        return browserSettings;
+    }
+
+    /**
+     * Read the browser configuration from configuration file
+      * @param browserNumber 0 use the default browser
+     * @return
+     */
+    public static BrowserSettings readBrowserSettings(Integer browserNumber) throws IOException {
+        BrowserSettings browserSettings = new BrowserSettings();
+        if(browserNumber == 0){
+            browserSettings.setBrowserMode(ConfigurationSettings.getInstance().getSetting("browser.mode"));
+            browserSettings.setBrowserName(ConfigurationSettings.getInstance().getSetting("browser.name"));
+            browserSettings.setBrowserVersion(ConfigurationSettings.getInstance().getSetting("browser.version"));
+            browserSettings.setBrowserPlatform(ConfigurationSettings.getInstance().getSetting("browser.platform"));
+            browserSettings.setRemoteServerUrl(ConfigurationSettings.getInstance().getSetting("remote.server.url"));
+        }
+        else{
+            browserSettings.setBrowserMode(ConfigurationSettings.getInstance().getSetting("browser.mode"));
+            browserSettings.setBrowserName(ConfigurationSettings.getInstance().getSetting("browser.browser" + (browserNumber)));
+            browserSettings.setBrowserVersion(ConfigurationSettings.getInstance().getSetting("browser.version"  + (browserNumber)));
+            browserSettings.setBrowserPlatform(ConfigurationSettings.getInstance().getSetting("browser.platform"  + (browserNumber)));
+            browserSettings.setRemoteServerUrl(ConfigurationSettings.getInstance().getSetting("remote.server.url"));
         }
 
         return browserSettings;
-
     }
 
     public BrowserInstance(BrowserSettings browserSettings) throws MalformedURLException {
@@ -192,7 +240,7 @@ public class BrowserInstance {
 	public By getBySearchCriteriaUsingCriteria(String searchCriteria) throws Exception{
 		By by = null;
 
-		System.out.println("searching element using criteria => "+ searchCriteria);
+		Logger.addLog("searching element using criteria => "+ searchCriteria);
 
 		if(searchCriteria==null)
 			throw new Exception("The the search criteria must be specified");
@@ -202,7 +250,7 @@ public class BrowserInstance {
 
 		String[] criteria = searchCriteria.split(Constant.SEARCH_CRITERIA_SEPARATOR, 2);
 
-		System.out.println("searching element => criteria: "+ criteria[0] + " value:" + criteria[1]);
+		Logger.addLog("searching element => criteria: "+ criteria[0] + " value:" + criteria[1]);
 
 		if(criteria[0].equals("id"))
 			by = By.id(criteria[1]);
@@ -256,7 +304,7 @@ public class BrowserInstance {
 	public WebElement findElement(String str) throws Exception{
         WebElement element = this.findElement(this.getBySearchCriteria(str));
 
-        //System.out.println("Element Found: " + element.getText());
+        //Logger.addLog("Element Found: " + element.getText());
 
 		return element;
 	}
