@@ -19,12 +19,12 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
         pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
 				
-		pages.Main().goDesigner();
-        pages.ProcessList().openProcess("Test PMFAddCaseNote");
-        pages.Designer().assignedPermission("Administrators","All");
+		//pages.Main().goDesigner();
+        //pages.ProcessList().openProcess("Test PMFAddCaseNote");
+        //pages.Designer().assignedPermission("Administrators","All");
         
-        pages.gotoDefaultUrl();
-        pages.Login().loginUser("admin","admin","workflow", "English");
+        //pages.gotoDefaultUrl();
+        //pages.Login().loginUser("admin","admin","workflow", "English");
 
         pages.Main().goHome();
         int casenumber = pages.Home().gotoNewCase().startCase("Test PMFAddCaseNote (Task 1)");
@@ -32,7 +32,6 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         pages.DynaformExecution().setFieldValue("CASE_NOTE", "Test Case Note");
         pages.DynaformExecution().clickButton("SUBMIT");
-        
 
         String fieldCASE_NOTE = "Test Case Note";
 
@@ -47,11 +46,12 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
         String fieldRESULT_CASE_NOTE = pages.DynaformExecution().getFieldProperty("RESULT_CASE_NOTE","value");
         String fieldTEST_RESULT = pages.DynaformExecution().getFieldProperty("TEST_RESULT","value");
 
-        pages.DynaformExecution().clickButton("SUBMIT");
-		    		    
+        //pages.DynaformExecution().clickButton("SUBMIT");
+
+        Assert.assertEquals("PMFAddCaseNote function return 1", fieldTEST_RESULT, "1");
         Assert.assertEquals("PMFAddCaseNote function not working properly", fieldRESULT_CASE_NOTE, fieldCASE_NOTE);
 
-        pages.AssignTask().pressContinueButton();
+        //pages.AssignTask().pressContinueButton();
 
         pages.Main().logout();
     }

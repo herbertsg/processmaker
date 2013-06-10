@@ -31,11 +31,13 @@ public class TestNotifications extends com.colosa.qa.automatization.tests.common
         // click to button submit
         buttonSUBMIT.click();
 
-        // get button continue
+        pages.AssignTask().pressContinueButton();
+
+        /*// get button continue
         WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
 
         // click to button continue
-        buttonContinueSubmit.click();
+        buttonContinueSubmit.click();*/
 
         pages.Home().gotoInbox().openCase(numberNewCase);
 
