@@ -53,10 +53,10 @@ com.colosa.qa.automatization.tests.PMFunctions.TestSetCaseTrackerCode.class //er
 @SuiteClasses(value = {
         com.colosa.qa.automatization.tests.PMFunctions.TestFunctionPMFDerivateCase.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestFunctionUserInfo.class,
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFAddCaseNote.class/*,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFAddCaseNote.class,
         /*com.colosa.qa.automatization.tests.PMFunctions.TestPMFCasesList.class/*, //revisar
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class, //revisar, demasiado lento busca en drafts, buscar en participated caso borrado??
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetCaseNotes.class,
+        */com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetCaseNotes.class/*,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetEmailConfiguration.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetLabel.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetNextAssignedUser.class,
