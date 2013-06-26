@@ -25,6 +25,7 @@ public class CurrencyFieldTest extends com.colosa.qa.automatization.tests.common
         int casenumber=pages.Home().gotoNewCase().startCase("TestCurrency (Task 1)");
         pages.DynaformExecution().intoDynaform();
 
+        //point separator
         pages.DynaformExecution().setFieldValue("CURRENCY_BEFORE", "123456789.02");
         pages.DynaformExecution().setFieldValue("CURRENCY_AFTER", "123456789.02");
         pages.DynaformExecution().setFieldValue("CURRENCY_BOTH", "123456789.02");
@@ -32,6 +33,16 @@ public class CurrencyFieldTest extends com.colosa.qa.automatization.tests.common
         pages.DynaformExecution().setFieldValue("CURRENCY_OTHERA", "123456789.02");
         pages.DynaformExecution().setFieldValue("CURRENCY_OTHER", "123456789.02");
         pages.DynaformExecution().setFieldValue("CURRENCY_NEGATIVE", "-123456789.02");
+
+        //comma separator
+        pages.DynaformExecution().setFieldValue("CURRENCY_BEFORE2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_AFTER2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_BOTH2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_OTHERB2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_OTHERA2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_OTHER2", "123456789,02");
+        pages.DynaformExecution().setFieldValue("CURRENCY_NEGATIVE2", "-123456789,02");
+
         pages.DynaformExecution().clickButton("SUBMIT");
 
         pages.AssignTask().pressContinueButton();
@@ -41,25 +52,21 @@ public class CurrencyFieldTest extends com.colosa.qa.automatization.tests.common
         pages.Home().gotoInbox().openCase(casenumber);
         pages.DynaformExecution().intoDynaform();
 
-		String fieldCURRENCY_BEFORE = pages.DynaformExecution().getFieldProperty("CURRENCY_BEFORE","value");
-		String fieldCURRENCY_AFTER = pages.DynaformExecution().getFieldProperty("CURRENCY_AFTER","value");
-		String fieldCURRENCY_BOTH = pages.DynaformExecution().getFieldProperty("CURRENCY_BOTH","value");
-		
-		String fieldOTHER_BEFORE = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERB","value");
-		String fieldOTHER_AFTER = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERA","value");
-		String fieldOTHER_BOTH = pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER","value");
-		
-		String fieldCURRENCY_NEGATIVE = pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE","value");
+        Assert.assertEquals("Mask Before does not exist", "$us 123,456,789.02", pages.DynaformExecution().getFieldProperty("CURRENCY_BEFORE","value"));
+        Assert.assertEquals("Mask After does not exist", "123,456,789.02 $us", pages.DynaformExecution().getFieldProperty("CURRENCY_AFTER","value"));
+        Assert.assertEquals("Mask Both does not exist", "$us 123,456,789.02 $us", pages.DynaformExecution().getFieldProperty("CURRENCY_BOTH","value"));
+        Assert.assertEquals("Numeric Mask does not exist", "€ 123,456,789.02", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERB","value"));
+        Assert.assertEquals("Symbol Mask does not exist", "123,456,789.02 @@", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERA","value"));
+        Assert.assertEquals("String Mask does not exist", "$us 123,456,789.02 AB", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER","value"));
+        Assert.assertEquals("Negative Mask does not exist", "-123,456,789.02 $", pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE","value"));
 
-        Assert.assertEquals("Mask Before does not exist", "$us 123,456,789.02", fieldCURRENCY_BEFORE);
-        Assert.assertEquals("Mask After does not exist", "123,456,789.02 $us", fieldCURRENCY_AFTER);
-        Assert.assertEquals("Mask Both does not exist", "$us 123,456,789.02 $us", fieldCURRENCY_BOTH);
-
-        Assert.assertEquals("Numeric Mask does not exist", "€ 123,456,789.02", fieldOTHER_BEFORE);
-        Assert.assertEquals("Symbol Mask does not exist", "123,456,789.02 @@", fieldOTHER_AFTER);
-        Assert.assertEquals("String Mask does not exist", "$us 123,456,789.02 AB", fieldOTHER_BOTH);
-
-        Assert.assertEquals("Negative Mask does not exist", "-123,456,789.02 $", fieldCURRENCY_NEGATIVE);
+        Assert.assertEquals("Mask Before does not exist", "$us 123.456.789,02", pages.DynaformExecution().getFieldProperty("CURRENCY_BEFORE2","value"));
+        Assert.assertEquals("Mask After does not exist", "123.456.789,02 $us", pages.DynaformExecution().getFieldProperty("CURRENCY_AFTER2","value"));
+        Assert.assertEquals("Mask Both does not exist", "$us 123.456.789,02 $us", pages.DynaformExecution().getFieldProperty("CURRENCY_BOTH2","value"));
+        Assert.assertEquals("Numeric Mask does not exist", "€ 123.456.789,02", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERB2","value"));
+        Assert.assertEquals("Symbol Mask does not exist", "123.456.789,02 @@", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHERA2","value"));
+        Assert.assertEquals("String Mask does not exist", "$us 123.456.789,02 AB", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER2","value"));
+        Assert.assertEquals("Negative Mask does not exist", "-123.456.789,02 $", pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE2","value"));
 
         pages.DynaformExecution().clickButton("SUBMIT");
 

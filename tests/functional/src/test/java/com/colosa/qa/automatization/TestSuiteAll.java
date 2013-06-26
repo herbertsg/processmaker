@@ -75,7 +75,7 @@ import org.junit.runners.Suite.SuiteClasses;
                 TestMultipleGridsDependentFields.class, //mejorar test
                 TestValidate.class */
 
-                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class
+                //com.colosa.qa.automatization.tests.PMFields.CurrencyFieldTest.class
 
                 })
 public class TestSuiteAll {
