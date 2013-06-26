@@ -63,7 +63,7 @@ import org.junit.runners.Suite.SuiteClasses;
                 dependentFields.class,
                 javascriptExecution.class, //mejorar asserts, javascript no funcionaba
                 notifications.class, //mejorar asserts
-                ////outputDocuments.class, //mejorar asserts  3  */
+                ////outputDocuments.class, //mejorar asserts  3
                 PMFields.class,   //3 se deben añadir mas tests de mascaras fechas, etc
                 PMFunctions.class/*, //18 fallados=15
                 /*pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
@@ -74,6 +74,8 @@ import org.junit.runners.Suite.SuiteClasses;
                 TestCaseTracker.class,  //2  fallado=1
                 TestMultipleGridsDependentFields.class, //mejorar test
                 TestValidate.class */
+
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class
 
                 })
 public class TestSuiteAll {

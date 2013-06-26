@@ -26,10 +26,13 @@ public class TestNotifications extends com.colosa.qa.automatization.tests.common
         
         // get button submit
 	    pages.DynaformExecution().intoDynaform();
-        WebElement buttonSUBMIT = pages.DynaformExecution().getField("submit");
+
+        pages.DynaformExecution().clickButton("submit");
+
+        //WebElement buttonSUBMIT = pages.DynaformExecution().getField("submit");
 
         // click to button submit
-        buttonSUBMIT.click();
+        //buttonSUBMIT.click();
 
         pages.AssignTask().pressContinueButton();
 
@@ -46,7 +49,7 @@ public class TestNotifications extends com.colosa.qa.automatization.tests.common
         String valorEnviado = pages.DynaformExecution().getFieldValue("ENVIADO");
 
         // verify if the field CELULAR is validate
-        Assert.assertEquals("No sent the notification :'(", valorEnviado, "sent");
+        Assert.assertEquals("Notification not sent.:'(", valorEnviado, "sent");
         // case was create with field CELULAR correctly
         //pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
