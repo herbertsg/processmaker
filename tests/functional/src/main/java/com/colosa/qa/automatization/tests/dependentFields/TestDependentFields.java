@@ -75,7 +75,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 
         //pages.DynaformExecution().sleep(1000);
 
-		Assert.assertEquals(pages.DynaformExecution().getFieldText("state"), state);
+        Assert.assertEquals(pages.DynaformExecution().getFieldText("state"), state);
 		Assert.assertEquals(pages.DynaformExecution().getFieldText("location"), location);
 
 		//pages.DynaformExecution().setFieldValue("suggest_country", country, FieldType.SUGGEST);
@@ -96,7 +96,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		pages.DynaformExecution().setFieldValue("username", userName);
 		//send tab to activate dependent fields
         //pages.DynaformExecution().sendTab("userCompleteName");
-		pages.DynaformExecution().sendTab("username");
+            pages.DynaformExecution().sendTab("username");
 		//pages.DynaformExecution().sleep(1000);
         browserInstance.waitForDocumentCompleted(20);
         //pages.DynaformExecution().waitForFieldToBeClickable("userCompleteName", 2);
