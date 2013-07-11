@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.test;
 
+import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.Logger;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,9 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public class Example extends com.colosa.qa.automatization.tests.common.Test {
+    protected int caseNum;
+    protected  String nom="Marco";
+    protected String ape="Avalos";
 
     public Example(String browserName) throws IOException {
         super(browserName);
@@ -40,20 +44,41 @@ public class Example extends com.colosa.qa.automatization.tests.common.Test {
 
         pages.gotoDefaultUrl();
 
-        pages.Login().loginUser("aaron", "sample", "workflow", "English");
+        pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.Main().goHome();
-            /*
-        caseNum = pages.Home().gotoNewCase().startCase("TestDependentFields (Task 1)");
+
+        caseNum = pages.Home().gotoNewCase().startCase("marco (Task 1)");
 
         pages.DynaformExecution().intoDynaform();
 
+
         //pages.DynaformExecution().setFieldValue("country", country, FieldType.DROPDOWN);
-        pages.DynaformExecution().setFieldValue("country", country);
+
+        pages.DynaformExecution().setFieldValue("nombre", nom);
+        pages.DynaformExecution().setFieldValue("apellido", ape);
+
+        Assert.assertEquals(pages.DynaformExecution().getFieldValue("nombre"), nom);
+        Assert.assertEquals(pages.DynaformExecution().getFieldValue("apellido"), ape);
+        //pages.DynaformExecution().setFieldValue("mandar", "", FieldType.BUTTON);
+        pages.DynaformExecution().clickButton("mandar");
+
+        pages.AssignTask().pressContinueButton();
+
+        /*pages.gotoDefaultUrl();
+        pages.Login().loginUser("admin", "admin", "workflow", "English");
+        pages.Main().goHome();*/
+        pages.Home().gotoInbox().openCase(caseNum);
+        pages.DynaformExecution().intoDynaform();
+        Assert.assertEquals(pages.DynaformExecution().getFieldValue("nombre"), nom);
+        Assert.assertEquals(pages.DynaformExecution().getFieldValue("apellido"), ape);
+        pages.DynaformExecution().clickButton("mandar");
+        pages.AssignTask().pressContinueButton();
 
         //pages.DynaformExecution().setGridFieldValue("gridname", numerofila, "country", country, FieldType.DROPDOWN);
         //sleep one second to wait ajax result
 
         //wait for combo to populate
+        /*
         pages.DynaformExecution().waitForFieldToBeClickable("state", 2);
         pages.DynaformExecution().waitForFieldToBeClickable("location", 2);
 
