@@ -72,6 +72,7 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
 		pages.Main().logout();
 	}
 
+   // @After
     @After
     public void cleanup(){
         browserInstance.quit();
