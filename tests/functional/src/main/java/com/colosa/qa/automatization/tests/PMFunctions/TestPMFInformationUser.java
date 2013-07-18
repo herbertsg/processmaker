@@ -30,23 +30,23 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
 	public void executePMFInformationUser() throws FileNotFoundException, IOException, Exception{
 
 		//Init case
-	pages.gotoDefaultUrl();
-	pages.Login().loginUser("admin", "admin", "workflow", "English");
-	pages.Main().goHome();
-	caseNum = pages.Home().gotoNewCase().startCase("PMFInformationUser (Get Information user)");
-	pages.DynaformExecution().intoDynaform();
+        pages.gotoDefaultUrl();
+        pages.Login().loginUser("admin", "admin", "workflow", "English");
+        pages.Main().goHome();
+        caseNum = pages.Home().gotoNewCase().startCase("PMFInformationUser (Get Information user)");
+        pages.DynaformExecution().intoDynaform();
 		//Verify results
-    Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "username"), pages.DynaformExecution().getFieldValue("userName"));
-    Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "firstname"), pages.DynaformExecution().getFieldValue("firstName"));
-    Assert.assertEquals("Invalid LastName", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "lastname"),pages.DynaformExecution().getFieldValue("lastName") );
-    Assert.assertEquals("Invalid Mail", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "mail"),pages.DynaformExecution().getFieldValue("mail") );
-    Assert.assertEquals("Invalid status", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "status"),pages.DynaformExecution().getFieldValue("status") );
-    Assert.assertEquals("Invalid Address", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "address"),pages.DynaformExecution().getFieldValue("address") );
-    Assert.assertEquals("Invalid Phone", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "phone"),pages.DynaformExecution().getFieldValue("phone") );
-    Assert.assertEquals("Invalid Fax", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "fax"),pages.DynaformExecution().getFieldValue("fax") );
-    Assert.assertEquals("Invalid Cellular", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "cellular"),pages.DynaformExecution().getFieldValue("cellular") );
-    Assert.assertEquals("Invalid birthday", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "birthday"),pages.DynaformExecution().getFieldValue("birthday") );
-	pages.Main().logout();
+        Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "username"), pages.DynaformExecution().getFieldValue("userName"));
+        Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "firstname"), pages.DynaformExecution().getFieldValue("firstName"));
+        Assert.assertEquals("Invalid LastName", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "lastname"),pages.DynaformExecution().getFieldValue("lastName") );
+        Assert.assertEquals("Invalid Mail", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "mail"),pages.DynaformExecution().getFieldValue("mail") );
+        Assert.assertEquals("Invalid status", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "status"),pages.DynaformExecution().getFieldValue("status") );
+        Assert.assertEquals("Invalid Address", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "address"),pages.DynaformExecution().getFieldValue("address") );
+        Assert.assertEquals("Invalid Phone", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "phone"),pages.DynaformExecution().getFieldValue("phone") );
+        Assert.assertEquals("Invalid Fax", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "fax"),pages.DynaformExecution().getFieldValue("fax") );
+        Assert.assertEquals("Invalid Cellular", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "cellular"),pages.DynaformExecution().getFieldValue("cellular") );
+        Assert.assertEquals("Invalid birthday", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "birthday"),pages.DynaformExecution().getFieldValue("birthday") );
+        pages.Main().logout();
 
 	}
 
