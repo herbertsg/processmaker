@@ -59,12 +59,12 @@ import org.junit.runners.Suite.SuiteClasses;
                 webEntry.class  //mejorar Integer numberNewCase = pages.WebEntry().getNumberCase();
                   */
 @RunWith(Suite.class)
-@SuiteClasses({ /*
+@SuiteClasses({
                 dependentFields.class,
                 javascriptExecution.class, //mejorar asserts, javascript no funcionaba
                 notifications.class, //mejorar asserts
                 ////outputDocuments.class, //mejorar asserts  3
-                PMFields.class,   //3 se deben añadir mas tests de mascaras fechas, etc
+                PMFields.class/*,   //3 se deben añadir mas tests de mascaras fechas, etc
                 PMFunctions.class /*, //18 fallados=15
                 /*pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
                 pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
