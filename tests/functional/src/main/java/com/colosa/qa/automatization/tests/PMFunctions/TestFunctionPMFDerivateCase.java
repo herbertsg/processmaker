@@ -19,23 +19,73 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
 
     @Test
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
-
+        int caseNumber = 0;
+        boolean caseExists = false;
 		//Open process
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		int caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (Task 1)");
-        pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("nombre", "Ademar");
-        pages.DynaformExecution().setFieldValue("monto", "3000");
-        pages.DynaformExecution().clickButton("send");
 
-        //the pmfroute functions is executed after form
-        //the inbox list is display later
-        //the case must be found in the inbox list
-        boolean caseExists = pages.Home().gotoInbox().existCase(caseNumber);
+        try{
+            caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallBeforeDynaform)");
 
-        Assert.assertTrue("The case does not exist in Inbox",caseExists);
+            //the pmfroute functions is executed after form
+            //the inbox list is display later
+            //the case must be found in the inbox list
+            //The task is derivated directly without displaying assign task
+            caseExists = pages.Inbox().existCase(caseNumber);
+
+            Assert.assertTrue("PMFDerivateCase (CallBeforeDynaform): The case does not exist in Inbox",caseExists);
+        }catch (Exception ex){
+            Assert.assertTrue("Function PMFDerivateCase->CallBeforeDynaform is causing an exception.", false);
+        }
+
+        try{
+            caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallAfterDynaform)");
+            pages.DynaformExecution().intoDynaform();
+            pages.DynaformExecution().setFieldValue("nombre", "User");
+            pages.DynaformExecution().setFieldValue("monto", "3000");
+            pages.DynaformExecution().clickButton("send");
+
+            caseExists = pages.Inbox().existCase(caseNumber);
+            Assert.assertTrue("PMFDerivateCase (CallAfterDynaform): The case does not exist in Inbox",caseExists);
+        }catch (Exception ex){
+            Assert.assertTrue("Function PMFDerivateCase->CallAfterDynaform is causing an exception.", false);
+        }
+
+        try{
+            caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallBeforeAssignment)");
+            pages.DynaformExecution().intoDynaform();
+            pages.DynaformExecution().setFieldValue("nombre", "User");
+            pages.DynaformExecution().setFieldValue("monto", "3000");
+            pages.DynaformExecution().clickButton("send");
+
+            caseExists = pages.Inbox().existCase(caseNumber);
+            Assert.assertTrue("PMFDerivateCase (CallBeforeAssignment): The case does not exist in Inbox",caseExists);
+        }catch (Exception ex){
+            Assert.assertTrue("Function PMFDerivateCase->CallBeforeAssignment is causing an exception. " + ex.getMessage(), false);
+        }
+
+        try{
+            caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallBeforeRouting)");
+            pages.AssignTask().pressContinueButton();
+
+            caseExists = pages.Inbox().existCase(caseNumber);
+            Assert.assertTrue("PMFDerivateCase (CallBeforeRouting): The case does not exist in Inbox",caseExists);
+        }catch (Exception ex){
+            Assert.assertTrue("Function PMFDerivateCase->CallBeforeRouting is causing an exception.", false);
+        }
+
+        try{
+            caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallAfterRouting)");
+            pages.AssignTask().pressContinueButton();
+
+            caseExists = pages.Inbox().existCase(caseNumber);
+            Assert.assertTrue("PMFDerivateCase (CallAfterRouting): The case does not exist in Inbox",caseExists);
+        }catch (Exception ex){
+            Assert.assertTrue("Function PMFDerivateCase->CallAfterRouting is causing an exception.", false);
+        }
+
 
 		/*pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray = new FormFieldData[3];

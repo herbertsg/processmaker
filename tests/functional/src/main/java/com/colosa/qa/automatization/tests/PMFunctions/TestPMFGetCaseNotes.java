@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,7 +25,13 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFGetCaseNotes (Add notes)");
+
 		pages.DynaformExecution().intoPmtrack();
+
+
+
+
+
         FormFieldData[] fieldArray=new FormFieldData[1];
 		fieldArray[0]=new FormFieldData();
 		fieldArray[0].fieldPath="//*[@id='caseNotes']/tbody/tr[2]/td[2]/em/button";

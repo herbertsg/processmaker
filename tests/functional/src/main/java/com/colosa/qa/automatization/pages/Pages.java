@@ -42,6 +42,22 @@ public class Pages{
 		return page;
 	}
 
+    public Inbox Inbox() throws Exception{
+
+
+        Inbox page = new Inbox(_browserInstance);
+
+        return page;
+    }
+
+    public NewCase NewCase() throws Exception{
+
+
+        NewCase page = new NewCase(_browserInstance);
+
+        return page;
+    }
+
 	public Admin Admin() throws Exception{
 
 

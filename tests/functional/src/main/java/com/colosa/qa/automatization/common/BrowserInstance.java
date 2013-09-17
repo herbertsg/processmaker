@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileNotFoundException;
@@ -484,7 +485,7 @@ public class BrowserInstance {
      * @throws Exception
      */
     public void waitForDocumentCompleted(long timeoutSeconds) throws Exception{
-
+        /*
         Boolean returnExpectedCondition = (new WebDriverWait(_instanceDriver, timeoutSeconds))
                 .until(new ExpectedCondition<Boolean>(){
                     @Override
@@ -494,6 +495,22 @@ public class BrowserInstance {
                         }
                     }
                 );
+         */
+
+        ExpectedCondition<Boolean> expectation = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+                    }
+                };
+
+        Wait<WebDriver> wait = new WebDriverWait(_instanceDriver,timeoutSeconds);
+        try {
+            wait.until(expectation);
+        } catch(Throwable error) {
+            throw new Exception("Page not completed.");
+             //assertFalse("Timeout waiting for Page Load Request to complete.",true);
+        }
     }
 
 

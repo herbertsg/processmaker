@@ -51,8 +51,8 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("lstValue"), list);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("rdValue"), radio);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
-		pages.DynaformExecution().sleep(15000);
-		pages.InputDocProcess().switchToDefault();
+		//pages.DynaformExecution().sleep(15000);
+		//pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}
 

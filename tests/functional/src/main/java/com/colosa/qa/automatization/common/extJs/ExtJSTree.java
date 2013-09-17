@@ -27,7 +27,13 @@ public class ExtJSTree{
 		this.tree = tree;
 		//this.timeout = timeout;
 		//element with class x-tree-root-ct
+        Logger.addLog("ExtJSTree()->find x-tree-root-ct");
         this.root = tree.findElement(By.className("x-tree-root-ct"));//(By.xpath("div/div/ul/div"));
+        if(this.root == null){
+            //change of root node
+            throw new Exception("No ExtJs tree structure found. The specified element is not a tree.");
+        }
+
         //check if there's another level
         WebElement auxRoot = null;
         auxRoot = this.root.findElement(By.className("x-tree-root-node"));

@@ -133,8 +133,10 @@ public class Home extends Page{
 	}
 
 	public NewCase gotoNewCase() throws Exception{
+        Logger.addLog("Home.gotoNewCase");
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
 
+        Logger.addLog("Home.gotoNewCase2");
         ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/New case");
 
         Logger.addLog("Returned Node found:" + resultWebElement.getNodeText());

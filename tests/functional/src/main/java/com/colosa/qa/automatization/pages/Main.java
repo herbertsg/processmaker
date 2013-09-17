@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.InvalidPageException;
+import com.colosa.qa.automatization.common.Logger;
 import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
@@ -56,12 +57,20 @@ public class Main extends Page{
         //verify that we are in the correct page
         verifyPage();
 
+        //Logger.addLog("Main.gotoHome");
+
         this.weSectionButton = browser.findElement("main.WebElement.HomeMenu");
+
+        //Logger.addLog("Main.gotoHome2");
         //verify element exist
 
         this.weSectionButton.click();
 
-        browser.waitForDocumentCompleted(5);
+        //Logger.addLog("Main.gotoHome3");
+
+        //browser.waitForDocumentCompleted(15);
+
+        //Logger.addLog("Main.gotoHome4");
     }
 
     public void goDesigner() throws FileNotFoundException, IOException, Exception{
@@ -69,7 +78,7 @@ public class Main extends Page{
         this.weSectionButton = browser.findElement("main.WebElement.DesignerMenu");
         
         this.weSectionButton.click();
-        browser.waitForDocumentCompleted(5);
+        //browser.waitForDocumentCompleted(5);
     }
 
     public void goDashboards() throws FileNotFoundException, IOException, Exception{
@@ -78,7 +87,7 @@ public class Main extends Page{
         this.weSectionButton = browser.findElement("main.WebElement.DashboardMenu");
 
         this.weSectionButton.click();
-        browser.waitForDocumentCompleted(5);
+        //browser.waitForDocumentCompleted(5);
     }
 
     public void goAdmin() throws FileNotFoundException, IOException, Exception{
@@ -87,7 +96,7 @@ public class Main extends Page{
         this.weSectionButton = browser.findElement("main.WebElement.AdminMenu");
         
         this.weSectionButton.click();
-        browser.waitForDocumentCompleted(5);
+        //browser.waitForDocumentCompleted(5);
     }
 
     public void logout() throws FileNotFoundException, IOException, Exception{
@@ -96,7 +105,7 @@ public class Main extends Page{
         //if(this.skin==0)
 
         browser.findElement("main.WebElement.Logout").click();
-        browser.waitForDocumentCompleted(5);
+        //browser.waitForDocumentCompleted(5);
     }
 
     public void profile() throws FileNotFoundException, IOException, Exception{

@@ -65,7 +65,7 @@ import org.junit.runners.Suite.SuiteClasses;
                 notifications.class, //mejorar asserts
                 ////outputDocuments.class, //mejorar asserts  3
                 PMFields.class,   //3 se deben añadir mas tests de mascaras fechas, etc
-                PMFunctions.class/*, //18 fallados=15
+                PMFunctions.class /*, //18 fallados=15
                 /*pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
                 pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
                 process.class, //3
@@ -75,8 +75,17 @@ import org.junit.runners.Suite.SuiteClasses;
                 TestMultipleGridsDependentFields.class, //mejorar test
                 TestValidate.class */
 
-                //com.colosa.qa.automatization.tests.PMFields.CurrencyFieldTest.class
+                //review tests
+                //com.colosa.qa.automatization.tests.PMFunctions.TestFunctionPMFDerivateCase.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestFunctionUserInfo.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFAddCaseNote.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetEmailConfiguration.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetLabel.class revisar list
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetNextAssignedUser.class
 
+                ////com.colosa.qa.automatization.tests.PMFields.CurrencyFieldTest.class
+                //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetCaseNotes.class
                 })
 public class TestSuiteAll {
     @BeforeClass

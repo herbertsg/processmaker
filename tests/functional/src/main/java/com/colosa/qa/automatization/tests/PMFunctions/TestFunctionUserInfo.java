@@ -46,10 +46,10 @@ public class TestFunctionUserInfo extends com.colosa.qa.automatization.tests.com
         Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "cellular"), pages.DynaformExecution().getFieldValue("cellular"));
         Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "birthday"), pages.DynaformExecution().getFieldValue("birthday"));
 
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().clickButton("send");
-		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
-		pages.InputDocProcess().switchToDefault();
+		//pages.DynaformExecution().intoDynaform();
+		//pages.DynaformExecution().clickButton("send");
+		//Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
+		//pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 }
 
