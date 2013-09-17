@@ -59,7 +59,7 @@ import org.junit.runners.Suite.SuiteClasses;
                 webEntry.class  //mejorar Integer numberNewCase = pages.WebEntry().getNumberCase();
                   */
 @RunWith(Suite.class)
-@SuiteClasses({
+@SuiteClasses({ /*
                 dependentFields.class,
                 javascriptExecution.class, //mejorar asserts, javascript no funcionaba
                 notifications.class, //mejorar asserts

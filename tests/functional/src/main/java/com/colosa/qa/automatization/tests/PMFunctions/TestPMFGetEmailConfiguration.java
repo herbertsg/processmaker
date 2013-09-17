@@ -1,30 +1,47 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldType;
+import com.colosa.qa.automatization.common.Logger;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
 public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.tests.common.Test{
 
+    protected int caseNum;
+
     public TestPMFGetEmailConfiguration(String browserName) throws IOException {
         super(browserName);
     }
 
+
+    @Before
+    public void setup(){
+
+    }
+
+    @After
+    public void cleanup(){
+        browserInstance.quit();
+    }
+
+
     @Test
     public void runCase() throws Exception {
-        
+
         pages.gotoDefaultUrl();
+
         pages.Login().loginUser("admin","admin","workflow", "English");
-				
 		pages.Main().goHome();
-				
-		int casenumber = pages.Home().gotoNewCase().startCase("Test PMFGetEmailConfiguration (Task 1)");
+
+		caseNum = pages.Home().gotoNewCase().startCase("Test PMFGetEmailConfiguration (Task 1)");
         pages.DynaformExecution().intoDynaform();
         
         String fieldPASSWORD = pages.DynaformExecution().getFieldProperty("PASSWORD","value");
+
         String fieldMESS_ENABLED = pages.DynaformExecution().getFieldProperty("MESS_ENABLED","value");
         String fieldMESS_ENGINE = pages.DynaformExecution().getFieldProperty("MESS_ENGINE","value");
         String fieldMESS_SERVER = pages.DynaformExecution().getFieldProperty("MESS_SERVER","value");
@@ -72,9 +89,5 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
 		pages.Main().logout();
 	}
 
-    @After
-    public void cleanup(){
-        browserInstance.quit();
-    }
-    
+
 }
