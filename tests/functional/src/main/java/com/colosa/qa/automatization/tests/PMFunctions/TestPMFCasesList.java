@@ -25,23 +25,17 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
         
         int casenumber = pages.Home().gotoNewCase().startCase("Test PMFCaseList (Task 1)");
         pages.DynaformExecution().intoDynaform();
-        
-        FormFieldData[] fieldArray=new FormFieldData[1];
-		    fieldArray[0]=new FormFieldData();
-				
-		    fieldArray[0].fieldPath="form[SUBMIT]";
-		    fieldArray[0].fieldFindType=FieldKeyType.ID;
-		    fieldArray[0].fieldType=FieldType.BUTTON;
-		    fieldArray[0].fieldValue="";
-    
-        FormFiller.formFillElements(browserInstance, fieldArray);
+        pages.DynaformExecution().clickButton("SUBMIT");
         pages.AssignTask().pressContinueButton();
         
-        pages.Home().gotoInbox();
-		   // Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
-		    pages.Home().openCase(casenumber);
-		    pages.DynaformExecution().intoDynaform();
-        
+        //pages.Home().gotoInbox();
+        pages.Home().gotoInbox().openCase(casenumber);
+		Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
+        pages.Home().gotoInbox().openCase(casenumber);
+		 //pages.Home().openCase(casenumber);
+		 pages.DynaformExecution().intoDynaform();
+
+
         String fieldSTATUS = pages.DynaformExecution().getFieldProperty("STATUS","value");
         Integer fieldNAME = Integer.parseInt(pages.DynaformExecution().getFieldProperty("NAME","value"));
         
@@ -51,6 +45,8 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
         Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(fieldNAME));
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
+        Thread.sleep(10000);
+
     }
     @After
     public void cleanup(){

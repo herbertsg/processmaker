@@ -47,20 +47,25 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
 		//pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba ");
 		pages.DynaformExecution().setFieldValue("List", list);
 		pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
+        Thread.sleep(5000);
 		pages.DynaformExecution().setCheckBoxGroup("check1", check);
+        Thread.sleep(5000);
 		pages.DynaformExecution().setCheckBoxGroup("check1", check2);
-
+        Thread.sleep(5000);
 		pages.DynaformExecution().setCheckBoxGroup("check1", check3);
+        Thread.sleep(5000);
 		pages.DynaformExecution().setFieldValue("Enviar", "");
+        Thread.sleep(5000);
 		checkGroup = check + " " + check2 + " " + check3 + " ";
+        Thread.sleep(5000);
 
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
+		/*Assert.assertEquals(pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("lstValue"), list);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("rdValue"), radio);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
 		//pages.DynaformExecution().sleep(15000);
 		//pages.InputDocProcess().switchToDefault();
-		pages.Main().logout();
+		pages.Main().logout(); */
 	}
 
 

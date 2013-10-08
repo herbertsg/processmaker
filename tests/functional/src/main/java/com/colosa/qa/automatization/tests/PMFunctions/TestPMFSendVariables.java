@@ -42,16 +42,16 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.DynaformExecution().setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(caseNum);
+		//pages.Home().openCase(caseNum);
+        pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Direccion"), dir);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Telefono"), tel);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Email"), mail);
 		pages.DynaformExecution().setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
-
-		pages.DynaformExecution().outDynaform();
-		pages.Main().logout();
+        pages.DynaformExecution().outDynaform();
+        //pages.Home().gotoInbox().openCase(caseNum);
 	}
 
     @After

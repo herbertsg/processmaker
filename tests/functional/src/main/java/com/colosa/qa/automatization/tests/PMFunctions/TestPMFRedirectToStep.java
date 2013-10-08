@@ -26,30 +26,11 @@ public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.co
 				
 				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRedirectToStep (Task 1)");
         pages.DynaformExecution().intoDynaform();
-        
-        FormFieldData[] fieldArray=new FormFieldData[1];
-		    fieldArray[0]=new FormFieldData();
-				
-				fieldArray[0].fieldPath="form[SUBMIT]";
-		    fieldArray[0].fieldFindType=FieldKeyType.ID;
-		    fieldArray[0].fieldType=FieldType.BUTTON;
-		    fieldArray[0].fieldValue="";
-    		
-    		FormFiller.formFillElements( browserInstance, fieldArray);
+        pages.DynaformExecution().clickButton("SUBMIT");
         pages.DynaformExecution().intoDynaform();
-		    FormFieldData[] fieldArray1=new FormFieldData[1];
-		    
-		    fieldArray1[0]=new FormFieldData();
-				fieldArray1[0].fieldPath="form[SUBMIT]";
-		    fieldArray1[0].fieldFindType=FieldKeyType.ID;
-		    fieldArray1[0].fieldType=FieldType.BUTTON;
-		    fieldArray1[0].fieldValue="";
-		    
+       pages.DynaformExecution().clickButton("SUBMIT");
 		    String fieldSTEP = pages.DynaformExecution().getFieldProperty("STEP","value");
-		    
 		    Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
-		    
-		    FormFiller.formFillElements( browserInstance, fieldArray1);
 		    pages.AssignTask().pressContinueButton();
 			pages.DynaformExecution().outDynaform();
 			pages.Main().logout();
