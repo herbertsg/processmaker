@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.Test{
-
     public TestPMFCasesList(String browserName) throws IOException {
         super(browserName);
     }
