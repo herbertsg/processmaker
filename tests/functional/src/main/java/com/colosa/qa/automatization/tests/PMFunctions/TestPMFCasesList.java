@@ -15,7 +15,6 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
     public TestPMFCasesList(String browserName) throws IOException {
         super(browserName);
     }
-
     @Test
     public void runCase() throws Exception {
         pages.gotoDefaultUrl();
@@ -25,22 +24,19 @@ public class TestPMFCasesList extends com.colosa.qa.automatization.tests.common.
         pages.DynaformExecution().intoDynaform();
         pages.DynaformExecution().clickButton("SUBMIT");
         pages.AssignTask().pressContinueButton();
-        //pages.Home().gotoInbox();
         pages.Home().gotoInbox().openCase(casenumber);
-		Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
-        pages.Home().gotoInbox().openCase(casenumber);
-		 //pages.Home().openCase(casenumber);
+		Assert.assertTrue("The case does not exist in inbox", pages.Home().gotoInbox().existCase(casenumber));
+        /*pages.Home().gotoInbox().openCase(casenumber);
 		pages.DynaformExecution().intoDynaform();
         String fieldSTATUS = pages.DynaformExecution().getFieldProperty("STATUS","value");
         Integer fieldNAME = Integer.parseInt(pages.DynaformExecution().getFieldProperty("NAME","value"));
         pages.DynaformExecution().outDynaform();
         pages.Home().gotoParticipated();
         Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(fieldNAME));
-        pages.InputDocProcess().switchToDefault();
+        pages.InputDocProcess().switchToDefault();  */
     }
     @After
     public void cleanup(){
         browserInstance.quit();
     }
-    
 }
