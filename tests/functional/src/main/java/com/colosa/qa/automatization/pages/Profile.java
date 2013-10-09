@@ -63,7 +63,7 @@ public class Profile extends Page {
                 Pages pages = new Pages(browser);
 
                 pages.InputDocProcess().switchToDefault();
-                pages.DynaformExecution().intoFrainMain();
+                pages.DynaformExecution().intoMainFrame();
 
                 switch(listCases)
                 {

@@ -23,7 +23,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("HOME","New case");
@@ -35,12 +35,12 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.DynaformExecution().intoPmtrack();
+		pages.DynaformExecution().intoCasesSubFrame();
 		Assert.assertEquals("Find a Process", Value.getValue(browserInstance, FieldKeyType.ID, "processesFilter"));
 		caseNum = pages.Home().gotoNewCase().startCase("RedirectLogin (Ini)");
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("HOME","Draft");
@@ -59,7 +59,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("HOME","Unassigned");
@@ -75,7 +75,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("HOME","Participated");
@@ -91,7 +91,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(caseNum));
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("DESIGNER","");
@@ -107,7 +107,7 @@ public class TestRedirectLogin extends com.colosa.qa.automatization.tests.common
 		pages.ProcessList().openProcess("RedirectLogin");
      	pages.InputDocProcess().switchToDefault();
 		pages.Main().profile();
-		pages.DynaformExecution().intoFrainMain();
+		pages.DynaformExecution().intoMainFrame();
 		pages.Profile().editProfile();
         pages.DynaformExecution().sleep(8000);
 		pages.Profile().changeDefaultMenu("ADMIN","");

@@ -3,14 +3,13 @@ package com.colosa.qa.automatization.pages;
 //import java.util.List;
 //import java.lang.Boolean;
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.common.extJs.ExtJSToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +30,18 @@ public class DynaformExecution extends Page {
     // pages.Main().goHome();
 
     // into level of debug
-    public void intoFrainMain() throws Exception {
+    public void intoMainFrame() throws Exception {
         browser.switchToDefaultContent();
         browser.switchToFrame("frameMain");
     }
 
-    public void intoDebug() throws Exception {
+    public void intoCasesFrame() throws Exception {
         browser.switchToDefaultContent();
         browser.switchToFrame("casesFrame");
     }
 
     // into level of pmTrack
-    public void intoPmtrack() throws Exception {
+    public void intoCasesSubFrame() throws Exception {
         browser.switchToDefaultContent();
         browser.switchToFrame("casesFrame");
         browser.switchToFrame("casesSubFrame");
@@ -61,13 +60,41 @@ public class DynaformExecution extends Page {
         browser.switchToDefaultContent();
     }
 
-    public Boolean openCasesNotes() throws Exception {
-        intoPmtrack();
+    public CaseNote openCasesNotes() throws Exception {
+        intoCasesSubFrame();
+
+
+        WebElement ttoolbar = browser.findElementById("navPanel");
+
+        //search navPanel
+        if(ttoolbar == null){
+            Logger.addLog("Nav Panel not found");
+        }
+        Logger.addLog("Nav Panel found");
+
+        //toolbar
+        ExtJSToolbar toolbar = new  ExtJSToolbar(ttoolbar, browser);
+
+        //toolbar.findToolbarCell("  Case Notes").click();
+        toolbar.findToolbarCell(3).click();
+
+        //wait for case notes window to appear
+        CaseNote caseNote = new CaseNote(browser);
+        if(caseNote == null){
+            throw new Exception("Error opening Case Notes window.");
+        }
+
+        Logger.addLog("Case Note window open");
+
+        return caseNote;
+
+        //Thread.sleep(2000);
+        /*
         Thread.sleep(2000);
         WebElement tableMenus = browser.findElementById("caseNotes");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
         buttonInformation.click();
-
+          */
 
         /*List<WebElement> windowCaseNotes = browser.findElements(By.id("caseNotesWindowPanel"));
         
@@ -75,17 +102,17 @@ public class DynaformExecution extends Page {
         {
             return true;
         }*/
-
+        /*
         WebElement windowCaseNote = browser.findElementById("caseNotesWindowPanel");
         if(windowCaseNote != null){
             return true;
-        }
+        }*/
 
-        return false;
+        //return false;
     }
 
     public Boolean openInformationDynaforms() throws Exception {
-        intoPmtrack();
+        intoCasesSubFrame();
         Thread.sleep(2000);
         WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
@@ -115,7 +142,7 @@ public class DynaformExecution extends Page {
     }
 
     public Boolean openInformationUploaded() throws Exception {
-        intoPmtrack();
+        intoCasesSubFrame();
         Thread.sleep(2000);
         WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
@@ -145,7 +172,7 @@ public class DynaformExecution extends Page {
     }
 
     public Boolean openInformationGenerated() throws Exception {
-        intoPmtrack();
+        intoCasesSubFrame();
         Thread.sleep(2000);
         WebElement tableMenus = browser.findElementById("informationMenu");
         WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));

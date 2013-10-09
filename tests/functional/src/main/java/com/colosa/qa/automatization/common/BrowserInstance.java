@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class BrowserInstance {
 
 	private WebDriver _instanceDriver = null;
+    private int _implicitWaitSeconds = 0;
 
     /**
      * Get default Browser Settings
@@ -211,7 +212,17 @@ public class BrowserInstance {
     }
 
     public void setImplicitWait(int seconds){
-        _instanceDriver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+        _implicitWaitSeconds = seconds;
+
+        _instanceDriver.manage().timeouts().implicitlyWait(_implicitWaitSeconds, TimeUnit.SECONDS);
+    }
+
+    public void turnOffImplicitWaits() {
+        _instanceDriver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    }
+
+    public void turnOnImplicitWaits() {
+        _instanceDriver.manage().timeouts().implicitlyWait(_implicitWaitSeconds, TimeUnit.SECONDS);
     }
 
 	public By getBySearchCriteria(String str, Object... args) throws Exception{
@@ -479,6 +490,23 @@ public class BrowserInstance {
 		return true;
     }
 
+    public boolean waitForElement(final WebElement fromWebElement, By elementLocator, long timeoutSeconds) throws Exception{
+
+        final By elem = elementLocator;
+
+        WebElement myDynamicElement = (new WebDriverWait(_instanceDriver, timeoutSeconds))
+                .until(new ExpectedCondition<WebElement>(){
+                    @Override
+                    public WebElement apply(WebDriver d) {
+                        return fromWebElement.findElement(elem);
+                    }
+                }
+
+                );
+
+        return true;
+    }
+
     /**
      * Wait for page state to be completed
      * @param timeoutSeconds seconds to wait for page to change status to completed
@@ -530,15 +558,24 @@ public class BrowserInstance {
         wait.until(ExpectedConditions.elementToBeClickable(searchCriteria));
     }
 
+    public void waitForTextToBePresent(By searchCriteria, String textToBePresent, long timeoutSeconds) throws Exception{
+
+        WebDriverWait wait = new WebDriverWait(_instanceDriver, timeoutSeconds); // wait for timeoutSeconds
+        wait.until(ExpectedConditions.textToBePresentInElement(searchCriteria, textToBePresent));
+    }
 
     public List<WebElement> getPreviousSimblingElements(WebElement currentElement){
 		List<WebElement> resultElements = currentElement.findElements(By.xpath("preceding-sibling"));
 		
 		return resultElements;
-     }
+    }
 
     public void executeScript(){
         //((JavascriptExecutor)browser.getInstanceDriver()).executeScript("arguments[0].value=arguments[1]", elem, fieldData[i][j].fieldValue);
 
+    }
+
+    public void sleep(long timeMilliSeconds) throws Exception {
+        Thread.sleep(timeMilliSeconds);
     }
 }

@@ -1,10 +1,10 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.pages.CaseNote;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,11 +26,32 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFGetCaseNotes (Add notes)");
 
-		pages.DynaformExecution().intoPmtrack();
+        CaseNote caseNotePage = pages.DynaformExecution().openCasesNotes();
+        caseNotePage.addCaseNote("Test1");
+        caseNotePage.addCaseNote("Test2");
+        caseNotePage.addCaseNote("Test3");
+        caseNotePage.addCaseNote("Test4");
+        caseNotePage.closeWindow();
+        pages.AssignTask().pressContinueButton();
+        pages.Inbox().openCase(caseNum);
+
+        pages.DynaformExecution().intoDynaform();
+        //Verify results
+
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("gridNotes", 1, "NOTE_CONTENT"), pages.DynaformExecution().getGridFieldValue("gridQuery", 4, "NOTE_CONTENT"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("gridNotes", 2, "NOTE_CONTENT"), pages.DynaformExecution().getGridFieldValue("gridQuery", 3, "NOTE_CONTENT"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("gridNotes", 3, "NOTE_CONTENT"), pages.DynaformExecution().getGridFieldValue("gridQuery", 2, "NOTE_CONTENT"));
+        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("gridNotes", 4, "NOTE_CONTENT"), pages.DynaformExecution().getGridFieldValue("gridQuery", 1, "NOTE_CONTENT"));
+
+        /*Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][1][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][4][NOTE_CONTENT]"));
+        Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][2][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][3][NOTE_CONTENT]"));
+        Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][3][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][2][NOTE_CONTENT]"));
+        Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][4][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][1][NOTE_CONTENT]"));
+        */
 
 
 
-
+        /*
 
         FormFieldData[] fieldArray=new FormFieldData[1];
 		fieldArray[0]=new FormFieldData();
@@ -123,6 +144,7 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
+		*/
 	}
 
     @After

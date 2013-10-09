@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.ConfigurationSettings;
 
 public abstract class Page{
 	protected String url;
@@ -11,7 +12,8 @@ public abstract class Page{
         this.browser = browser;
 
 		//init implicit wait time
-        browser.setImplicitWait(30);
+        String implicitWaitSeconds = ConfigurationSettings.getInstance().getSetting("implicit.wait.seconds");
+        browser.setImplicitWait(Integer.parseInt(implicitWaitSeconds));
 
 		url = "";
 		pageTitle = "";	

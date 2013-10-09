@@ -185,4 +185,10 @@ public class Pages{
 		return pmslaConfiguration;
 	}
 
+    public CaseNote CaseNote() throws Exception{
+        CaseNote caseNote = new CaseNote(_browserInstance);
+
+        return caseNote;
+    }
+
 }
