@@ -3,9 +3,9 @@
   name="dynaforms_Properties"
   type="xmlform"
   width="450"
-  height="450"
+  height="auto"
 >
-
+<!--height="450"-->
 <PME_PROPERTIES_TITLE type="title">
   <en>Properties</en>
 </PME_PROPERTIES_TITLE>
@@ -58,7 +58,7 @@
 <en>Show print dynaform button</en>
 </PRINTDYNAFORM>
 
-<ADJUSTGRIDSWIDTH type="checkbox" falseValue="0" value="0" defaultvalue="0" labelOnRight="0">
+<ADJUSTGRIDSWIDTH type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
   <en>Adjust the grid width to the width of the main form</en>
 </ADJUSTGRIDSWIDTH>
 <!--<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
@@ -89,6 +89,28 @@ if(document.getElementById("form[DYN_TYPE]").value=="grid"){
     hideRowById('ADJUSTGRIDSWIDTH');
 }
 
+function changeFormType(checkSessionPersists) {
+  checkSessionPersists = typeof(checkSessionPersists) != 'undefined' ? checkSessionPersists : true;
+  if (checkSessionPersists) {
+    if (!sessionPersits()) {
+      showPrompt('changeFormType');
+      return;
+    }
+  }
+  var proUid = document.getElementById("form[PRO_UID]").value;
+  var dynUid = document.getElementById("form[DYN_UID]").value;
+
+  if(document.getElementById("form[DYN_TYPE]").value=="grid"){
+    validateGridConversion(proUid,dynUid);
+  } else {
+    changeToolbar("xmlform");
+    showRowById('WIDTH');
+    showRowById('NEXTSTEPSAVE');
+    showRowById('PRINTDYNAFORM');
+    showRowById('ADJUSTGRIDSWIDTH');
+  }
+}
+
 function getElementsByClassNameCrossBrowser(searchClass,node,tag) {
 
        var classElements = new Array();
@@ -112,20 +134,7 @@ function getElementsByClassNameCrossBrowser(searchClass,node,tag) {
 // this evaluates whenever a change is made and if its posible to convert
 // a dynaform grid into a normal dynaform and vice versa.
 
-leimnud.event.add(getField('DYN_TYPE'), 'change', function() {
-  var proUid = document.getElementById("form[PRO_UID]").value;
-  var dynUid = document.getElementById("form[DYN_UID]").value;
-
-  if(document.getElementById("form[DYN_TYPE]").value=="grid"){
-    validateGridConversion(proUid,dynUid);
-  } else {
-    changeToolbar("xmlform");
-    showRowById('WIDTH');
-    showRowById('NEXTSTEPSAVE');
-    showRowById('PRINTDYNAFORM');
-    showRowById('ADJUSTGRIDSWIDTH');
-  }
-});
+leimnud.event.add(getField('DYN_TYPE'), 'change', changeFormType);
 
 // function validateGridConversion
 // @param proUid process id

@@ -81,12 +81,12 @@ try {
     $messs = $renegerateContent->upgradeContent();
 
     $result->msg = G::LoadTranslation( 'IMPORT_LANGUAGE_SUCCESS' ) . "\n";
-    $result->msg .= "PO File num. records: " . $importResults->recordsCount . "\n";
-    $result->msg .= "Success Records: " . $importResults->recordsCountSuccess . "\n";
-    $result->msg .= "Failed Records: " . ($importResults->recordsCount - $importResults->recordsCountSuccess) . "\n";
+    $result->msg .= G::LoadTranslation("ID_FILE_NUM_RECORD") . $importResults->recordsCount . "\n";
+    $result->msg .= G::LoadTranslation("ID_SUCCESS_RECORD") . $importResults->recordsCountSuccess . "\n";
+    $result->msg .= G::LoadTranslation("ID_FAILED_RECORD") . ($importResults->recordsCount - $importResults->recordsCountSuccess) . "\n";
 
     if ($importResults->errMsg != '') {
-        $result->msg .= "Errors registered: \n" . $importResults->errMsg . "\n";
+        $result->msg .= G::LoadTranslation("ID_ERROR_REGISTERED"). " \n" . $importResults->errMsg . "\n";
     }
 
     //$result->msg = htmlentities($result->msg);
@@ -96,6 +96,12 @@ try {
     $configuration->aConfig = Array ('headers' => $importResults->headers,'language' => $importResults->lang,'import-date' => date( 'Y-m-d H:i:s' ),'user' => '','version' => '1.0'
     );
     $configuration->saveConfig( 'LANGUAGE_META', $importResults->lang );
+
+    $dir = PATH_CORE . 'content' . PATH_SEP . 'translations' . PATH_SEP;
+    if (! is_writable( $dir )) {
+        throw new Exception( G::LoadTranslation( 'ID_TRANSLATIONS_FOLDER_PERMISSIONS' ) );
+    }
+    G::uploadFile($languageFile, $dir, $languageFilename, 0777);
 
     ini_set( 'max_execution_time', $sMaxExecutionTime );
 

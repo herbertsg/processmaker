@@ -33,7 +33,7 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		//init Case tracker
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pin = Value.getValue(browserInstance, FieldKeyType.ID, "form[pin]");
 		code = Value.getValue(browserInstance, FieldKeyType.ID, "form[code]");

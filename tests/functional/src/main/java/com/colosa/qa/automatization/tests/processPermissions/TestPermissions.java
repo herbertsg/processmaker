@@ -60,7 +60,7 @@ public class TestPermissions extends com.colosa.qa.automatization.tests.common.T
         
         pages.Main().goHome();
         pages.Home().gotoParticipated();
-        pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox().openCase(numberNewCase);
 
         Boolean existDynaforms = pages.DynaformExecution().openInformationDynaforms();
 
@@ -94,7 +94,7 @@ public class TestPermissions extends com.colosa.qa.automatization.tests.common.T
 
         pages.Main().goHome();
         pages.Home().gotoParticipated();
-        pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox().openCase(numberNewCase);
 
         existDynaforms = pages.DynaformExecution().openInformationDynaforms();
 

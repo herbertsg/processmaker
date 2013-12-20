@@ -16,7 +16,7 @@ new Ext.KeyMap(document, {
         e.stopEvent();
         document.location = document.location;
       }else{
-        Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        Ext.Msg.alert( _('ID_REFRESH_LABEL') , _('ID_REFRESH_MESSAGE') );
       }
     }
 });
@@ -27,6 +27,7 @@ var editButton;
 var deleteButton;
 var importButton;
 var exportButton;
+
 var dataButton;
 
 var store;
@@ -329,7 +330,7 @@ Ext.onReady(function(){
       autoWidth : true,
       title : _('ID_REPORT_TABLES'),
       stateful : true,
-      stateId : 'grid',
+      stateId : 'gridReportMain',
       enableColumnResize: true,
       enableHdMenu: true,
       frame:false,

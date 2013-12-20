@@ -65,7 +65,7 @@ public class Documents extends Page{
 
 	public void downloadDocument(String fileName) throws FileNotFoundException, IOException, Exception{
 
-		ExtJSGrid grid = new ExtJSGrid(browser.findElement("documents.WebElement.Panel"),browser.getInstanceDriver());
+		ExtJSGrid grid = new ExtJSGrid(browser.findElement("documents.WebElement.Panel"),browser);
 		
 		this.panel =  grid.getRowByColumnValue("Name", fileName);
 		this.panel.click();

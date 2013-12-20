@@ -24,7 +24,9 @@
  *
  */
 
-//require_once 'classes/model/om/BaseConfiguration.php';
+if (!class_exists('BaseConfiguration')) {
+    require_once 'classes/model/om/BaseConfiguration.php';
+}
 //require_once 'classes/model/Content.php';
 
 
@@ -125,10 +127,34 @@ class Configuration extends BaseConfiguration
         }
     }
 
-    public function exists($CfgUid, $ObjUid, $ProUid, $UsrUid, $AppUid)
+    /**
+    * To check if the configuration row exists, by using Configuration Uid data 
+    */
+    public function exists($CfgUid, $ObjUid='', $ProUid='', $UsrUid='', $AppUid='')
     {
         $oRow = ConfigurationPeer::retrieveByPK( $CfgUid, $ObjUid, $ProUid, $UsrUid, $AppUid );
         return (( get_class ($oRow) == 'Configuration' )&&(!is_null($oRow)));
+    }
+
+    public function getAll ()
+    {
+        $oCriteria = new Criteria( 'workflow' );
+
+        $oCriteria->addSelectColumn( ConfigurationPeer::CFG_UID );
+        $oCriteria->addSelectColumn( ConfigurationPeer::OBJ_UID );
+        $oCriteria->addSelectColumn( ConfigurationPeer::CFG_VALUE );
+        $oCriteria->addSelectColumn( ConfigurationPeer::PRO_UID );
+        $oCriteria->addSelectColumn( ConfigurationPeer::USR_UID );
+        $oCriteria->addSelectColumn( ConfigurationPeer::APP_UID );
+
+        //execute the query
+        $oDataset = ConfigurationPeer::doSelectRS( $oCriteria );
+        $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
+        $aRows = array ();
+        while ($oDataset->next()) {
+            $aRows[] = $oDataset->getRow();
+        }
+        return $aRows;
     }
 }
 

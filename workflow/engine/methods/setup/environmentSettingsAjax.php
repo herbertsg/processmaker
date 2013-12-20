@@ -9,6 +9,7 @@
 G::LoadClass( "configuration" );
 
 $request = isset( $_POST["request"] ) ? $_POST["request"] : (isset( $_GET["request"] ) ? $_GET["request"] : null);
+$result = new stdclass();
 
 switch ($request) {
     case "getUserMaskList":
@@ -21,7 +22,6 @@ switch ($request) {
         break;
     case "getCasesListDateFormat":
         $result->rows = Configurations::getDateFormats();
-        ;
         print (G::json_encode( $result )) ;
         break;
     case "getCasesListRowNumber":
@@ -35,10 +35,15 @@ switch ($request) {
         break;
     case "save":
         $conf = new Configurations();
+        $config = $conf->getConfiguration("ENVIRONMENT_SETTINGS", "" );
+        $config['format'] = $_POST["userFormat"];
+        $config['dateFormat'] = $_POST["dateFormat"];
+        $config['startCaseHideProcessInf'] = ((isset( $_POST["hideProcessInf"] )) ? true : false);
+        $config['casesListDateFormat'] = $_POST["casesListDateFormat"];
+        $config['casesListRowNumber'] = intval( $_POST["casesListRowNumber"] );
+        $config['casesListRefreshTime'] = intval( $_POST["txtCasesRefreshTime"]);
 
-        $conf->aConfig = array ("format" => $_POST["userFormat"],"dateFormat" => $_POST["dateFormat"],"startCaseHideProcessInf" => ((isset( $_POST["hideProcessInf"] )) ? true : false),"casesListDateFormat" => $_POST["casesListDateFormat"],"casesListRowNumber" => intval( $_POST["casesListRowNumber"] ),"casesListRefreshTime" => intval( $_POST["txtCasesRefreshTime"] )
-        );
-
+        $conf->aConfig = $config;
         $conf->saveConfig( "ENVIRONMENT_SETTINGS", "" );
 
         $response = new stdclass();

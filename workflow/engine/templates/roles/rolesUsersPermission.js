@@ -16,7 +16,7 @@ new Ext.KeyMap(document, {
     		e.stopEvent();
     		document.location = document.location;
     	}else{
-    		Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+    		Ext.Msg.alert( _('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
     	}
     }
 });
@@ -52,21 +52,117 @@ var assignUAllButton;
 var removeUButton;
 var removeUAllButton;
 var backButton;
+var editForm;
 
 var sw_func_permissions;
 var sw_func_users;
 
 var pm_admin = '00000000000000000000000000000002';
 
+//Function DoSearch Available
+DoSearchA = function(){
+	availableGrid.store.load({params: {textFilter: searchTextA.getValue()}});
+};
+
+//Function DoSearch Assigned
+DoSearchP = function(){
+	assignedGrid.store.load({params: {textFilter: searchTextP.getValue()}});
+};
+
+//Load Grid By Default Available Members
+GridByDefaultA = function(){
+	searchTextA.reset();
+	availableGrid.store.load();
+};
+
+//Load Grid By Default Assigned Members
+GridByDefaultP = function(){
+	searchTextP.reset();
+	assignedGrid.store.load();
+};
+
+//Function DoSearch Available
+DoSearchU = function(){
+	availableUGrid.store.load({params: {textFilter: searchTextU.getValue()}});
+};
+
+//Function DoSearch Assigned
+DoSearchX = function(){
+	assignedUGrid.store.load({params: {textFilter: searchTextX.getValue()}});
+};
+
+//Load Grid By Default Available Members
+GridByDefaultU = function(){
+	searchTextU.reset();
+	availableUGrid.store.load();
+};
+
+//Load Grid By Default Assigned Members
+GridByDefaultX = function(){
+	searchTextX.reset();
+	assignedUGrid.store.load();
+};
+
+//edit permissions action
+EditPermissionsAction = function(){
+  availableGrid.show();
+  buttonsPanel.show();
+  editPermissionsButton.disable();
+  //cancelEditPermissionsButton.show();
+  PermissionsPanel.doLayout();
+};
+
+EditPermissionsContentsAction = function(){
+  //availableGrid.show();
+  //buttonsPanel.show();
+  editPermissionsContentsButton.disable();
+  editPermissionsButton.disable();
+  EditPermissionsWindow();
+};
+
+//CancelEditPermissions Function
+CancelEditPermissionsAction = function(){
+  availableGrid.hide();
+  buttonsPanel.hide();
+  editPermissionsButton.enable();
+  //cancelEditPermissionsButton.hide();
+  PermissionsPanel.doLayout();
+};
+
+//edit users action
+EditPermissionsActionU = function(){
+  availableUGrid.show();
+  buttonsUPanel.show();
+  editPermissionsUButton.disable();
+  //cancelEditPermissionsUButton.show();
+  UsersPanel.doLayout();
+};
+
+//CancelEditUsers Function
+CancelEditPermissionsActionU = function(){
+  availableUGrid.hide();
+  buttonsUPanel.hide();
+  editPermissionsUButton.enable();
+  //cancelEditPermissionsUButton.hide();
+  UsersPanel.doLayout();
+};
+
+
 Ext.onReady(function(){
-	
+
 	sw_func_permissions = false;
 	sw_func_users = false;
-	
-	editPermissionsButton = new Ext.Action({
+
+	  editPermissionsButton = new Ext.Action({
 	    text: _('ID_EDIT_PERMISSIONS'),
 	    iconCls: 'button_menu_ext ss_sprite  ss_key_add',
 	    handler: EditPermissionsAction
+	  });
+
+	  editPermissionsContentsButton = new Ext.Action({
+	    text: _('ID_EDIT_PERMISSIONS_CONTENT'),
+	    iconCls: 'button_menu_ext ss_sprite  ss_key_add',
+	    handler: EditPermissionsContentsAction
 	  });
 
 	  cancelEditPermissionsButton = new Ext.Action({
@@ -74,7 +170,7 @@ Ext.onReady(function(){
 	    iconCls: 'button_menu_ext ss_sprite ss_cancel',
 	    handler: CancelEditPermissionsAction
 	  });
-	  
+
 	  editPermissionsUButton = new Ext.Action({
 		    text: _('ID_ASSIGN_USERS'),
 		    iconCls: 'button_menu_ext ss_sprite  ss_user_add',
@@ -86,13 +182,13 @@ Ext.onReady(function(){
 		    iconCls: 'button_menu_ext ss_sprite ss_cancel',
 		    handler: CancelEditPermissionsActionU
 		  });
-	
+
 	backButton = new Ext.Action({
 		text: _('ID_BACK'),
 		iconCls: 'button_menu_ext ss_sprite ss_arrow_redo',
 		handler: BackToRoles
 	});
-    
+
 	storeP = new Ext.data.GroupingStore( {
         proxy : new Ext.data.HttpProxy({
             url: 'data_rolesPermissions?rUID=' + ROLES.ROL_UID + '&type=list'
@@ -102,12 +198,13 @@ Ext.onReady(function(){
     		fields : [
     		    {name : 'PER_UID'},
     		    {name : 'PER_CODE'},
+    		    {name : 'PER_NAME'},
     		    {name : 'PER_CREATE_DATE'},
     		    {name : 'PER_STATUS'}
     		    ]
     	})
     });
-	
+
 	storeA = new Ext.data.GroupingStore( {
         proxy : new Ext.data.HttpProxy({
             url: 'data_rolesPermissions?rUID=' + ROLES.ROL_UID + '&type=show'
@@ -117,12 +214,13 @@ Ext.onReady(function(){
     		fields : [
     		    {name : 'PER_UID'},
     		    {name : 'PER_CODE'},
+    		    {name : 'PER_NAME'},
     		    {name : 'PER_CREATE_DATE'},
     		    {name : 'PER_STATUS'}
     		    ]
     	})
     });
-	
+
 	cmodelP = new Ext.grid.ColumnModel({
         defaults: {
             width: 50,
@@ -130,22 +228,23 @@ Ext.onReady(function(){
         },
         columns: [
             {id:'PER_UID', dataIndex: 'PER_UID', hidden:true, hideable:false},
-            {header: _('ID_PERMISSION_CODE'), dataIndex: 'PER_CODE', width: 60, align:'left'}
+            {header: _('ID_PERMISSION_CODE'), dataIndex: 'PER_CODE', width: 60, align:'left', hidden: !PARTNER_FLAG ? false : true},
+            {header: _('ID_PERMISSION_NAME'), dataIndex: 'PER_NAME', width: 60, align:'left'}
         ]
     });
-	
+
 	smodelA = new Ext.grid.RowSelectionModel({
 		selectSingle: false,
 		listeners:{
 			selectionchange: function(sm){
     			switch(sm.getCount()){
     			case 0: Ext.getCmp('assignButton').disable(); break;
-    			default: Ext.getCmp('assignButton').enable(); break;	
+    			default: Ext.getCmp('assignButton').enable(); break;
     			}
     		}
 		}
 	});
-	
+
 	smodelP = new Ext.grid.RowSelectionModel({
 		selectSingle: false,
 		listeners:{
@@ -157,7 +256,7 @@ Ext.onReady(function(){
                     if (ROLES.ROL_UID == pm_admin) {
                         var permissionUid = assignedGrid.getSelectionModel().getSelections();
                         permissionUid = permissionUid[0].get('PER_UID');
-                        for (var i=0; i<permissionsAdmin.length; i++)
+                        for (var i=0; i < permissionsAdmin.length; i++)
                         {
                             if (permissionUid == permissionsAdmin[i]['PER_UID']) {
                                 Ext.getCmp('removeButton').disable();
@@ -185,13 +284,13 @@ Ext.onReady(function(){
           }
         }
     });
-	
+
 	clearTextButtonA = new Ext.Action({
     	text: 'X',
     	ctCls:'pm_search_x_button',
     	handler: GridByDefaultA
     });
-	
+
 	searchTextP = new Ext.form.TextField ({
         id: 'searchTextP',
         ctCls:'pm_search_text_field',
@@ -206,13 +305,13 @@ Ext.onReady(function(){
           }
         }
     });
-	
+
 	clearTextButtonP = new Ext.Action({
     	text: 'X',
     	ctCls:'pm_search_x_button',
     	handler: GridByDefaultP
     });
-	
+
   	availableGrid = new Ext.grid.GridPanel({
   		    layout			: 'fit',
   		    title           : _('ID_AVAILABLE_PERMISSIONS'),
@@ -229,13 +328,13 @@ Ext.onReady(function(){
         	height			: 100,
         	autoWidth 		: true,
         	stateful 		: true,
-        	stateId 		: 'grid',
+        	stateId 		: 'gridUsersPermissionAvailable',
         	enableColumnResize : true,
         	enableHdMenu	: true,
         	frame			: false,
         	columnLines		: false,
         	viewConfig		: {forceFit:true},
-            tbar: [cancelEditPermissionsButton,{xtype: 'tbfill'},'-',searchTextA,clearTextButtonA],
+            tbar: [cancelEditPermissionsButton, {xtype: 'tbfill'},'-',searchTextA,clearTextButtonA],
             //bbar: [{xtype: 'tbfill'}, assignAllButton],
             listeners: {rowdblclick: AssignPermissionAction},
             hidden: true
@@ -256,18 +355,22 @@ Ext.onReady(function(){
         	height			: 100,
         	autoWidth 		: true,
         	stateful 		: true,
-        	stateId 		: 'grid',
+        	stateId 		: 'gridUsersPermissionAssign',
         	enableColumnResize : true,
         	enableHdMenu	: true,
         	frame			: false,
         	columnLines		: false,
         	viewConfig		: {forceFit:true},
-            tbar: [editPermissionsButton,{xtype: 'tbfill'},'-',searchTextP,clearTextButtonP],
+            tbar: [editPermissionsButton, /*editPermissionsContentsButton,*/ {xtype: 'tbfill'},'-',searchTextP,clearTextButtonP],
             //bbar: [{xtype: 'tbfill'},removeAllButton],
         	listeners: {rowdblclick: function(){
-        	      (availableGrid.hidden)? DoNothing() :RemovePermissionAction();}} 
+        	      (availableGrid.hidden)? DoNothing() :RemovePermissionAction();}},
+        	view: new Ext.grid.GroupingView({
+              forceFit:true,
+              groupTextTpl: '{text}'
+            })
     });
-  	
+
   	buttonsPanel = new Ext.Panel({
 	    width	 	 : 40,
 		layout       : {
@@ -285,7 +388,7 @@ Ext.onReady(function(){
                ],
         hidden : true
     });
-  	
+
   	RefreshPermissions();
 
   	//PERMISSIONS DRAG AND DROP PANEL
@@ -300,7 +403,7 @@ Ext.onReady(function(){
     		//bbar: [{xtype: 'tbfill'},editPermissionsButton, cancelEditPermissionsButton]
 
     });
-    
+
     storeU = new Ext.data.GroupingStore({
     	proxy : new Ext.data.HttpProxy({
             url: 'data_rolesUsers?rUID=' + ROLES.ROL_UID + '&type=list'
@@ -315,7 +418,7 @@ Ext.onReady(function(){
     		    ]
     	})
     });
-    
+
     storeX = new Ext.data.GroupingStore({
     	proxy : new Ext.data.HttpProxy({
             url: 'data_rolesUsers?rUID=' + ROLES.ROL_UID + '&type=show'
@@ -330,7 +433,7 @@ Ext.onReady(function(){
     		    ]
     	})
     });
-    
+
     cmodelU = new Ext.grid.ColumnModel({
         defaults: {
             width: 50,
@@ -343,31 +446,31 @@ Ext.onReady(function(){
             {header: _('ID_USER_NAME'), dataIndex: 'USR_USERNAME', width: 60, align:'left'}
         ]
     });
-    
+
     smodelX = new Ext.grid.RowSelectionModel({
 		selectSingle: false,
 		listeners:{
 			selectionchange: function(sm){
     			switch(sm.getCount()){
     			case 0: Ext.getCmp('assignUButton').disable(); break;
-    			default: Ext.getCmp('assignUButton').enable(); break;	
+    			default: Ext.getCmp('assignUButton').enable(); break;
     			}
     		}
 		}
 	});
-	
+
 	smodelU = new Ext.grid.RowSelectionModel({
 		selectSingle: false,
 		listeners:{
 			selectionchange: function(sm){
     			switch(sm.getCount()){
     			case 0: Ext.getCmp('removeUButton').disable(); break;
-    			default: Ext.getCmp('removeUButton').enable(); break;	
+    			default: Ext.getCmp('removeUButton').enable(); break;
     			}
     		}
 		}
 	});
-	
+
 	searchTextU = new Ext.form.TextField ({
         id: 'searchTextU',
         ctCls:'pm_search_text_field',
@@ -382,13 +485,13 @@ Ext.onReady(function(){
           }
         }
     });
-	
+
 	clearTextButtonU = new Ext.Action({
     	text: 'X',
     	ctCls:'pm_search_x_button',
     	handler: GridByDefaultU
     });
-	
+
 	searchTextX = new Ext.form.TextField ({
         id: 'searchTextX',
         ctCls:'pm_search_text_field',
@@ -403,17 +506,17 @@ Ext.onReady(function(){
           }
         }
     });
-	
+
 	clearTextButtonX = new Ext.Action({
     	text: 'X',
     	ctCls:'pm_search_x_button',
     	handler: GridByDefaultX
     });
-    
+
     availableUGrid = new Ext.grid.GridPanel({
-		    layout			: 'fit',
-		    title: _('ID_AVAILABLE_USERS'),
-		    region          : 'center',
+	    layout			: 'fit',
+	    title			: _('ID_AVAILABLE_USERS'),
+	    region          : 'center',
     	ddGroup         : 'assignedUGridDDGroup',
         store           : storeX,
         cm          	: cmodelU,
@@ -426,7 +529,7 @@ Ext.onReady(function(){
     	height			: 100,
     	autoWidth 		: true,
     	stateful 		: true,
-    	stateId 		: 'grid',
+    	stateId 		: 'gridUserPermissionAvailable2',
     	enableColumnResize : true,
     	enableHdMenu	: true,
     	frame			: false,
@@ -437,11 +540,11 @@ Ext.onReady(function(){
         listeners: {rowdblclick: AssignUserAction},
         hidden : true
     });
-    
+
     assignedUGrid = new Ext.grid.GridPanel({
-		    layout			: 'fit',
-		    title: _('ID_ASSIGNED_USERS'),
-			ddGroup         : 'availableUGridDDGroup',
+	    layout			: 'fit',
+	    title			: _('ID_ASSIGNED_USERS'),
+		ddGroup         : 'availableUGridDDGroup',
         store           : storeU,
         cm          	: cmodelU,
         sm				: smodelU,
@@ -453,7 +556,7 @@ Ext.onReady(function(){
     	height			: 100,
     	autoWidth 		: true,
     	stateful 		: true,
-    	stateId 		: 'grid',
+    	stateId 		: 'gridUserPermissionAssigned2',
     	enableColumnResize : true,
     	enableHdMenu	: true,
     	frame			: false,
@@ -462,9 +565,9 @@ Ext.onReady(function(){
         tbar: [editPermissionsUButton,{xtype: 'tbfill'},'-',searchTextX, clearTextButtonX],
         //bbar: [{xtype: 'tbfill'},removeUAllButton],
     	listeners: {rowdblclick: function(){
-  	      (availableUGrid.hidden)? DoNothing() : RemoveUserAction();}} 
+  	      (availableUGrid.hidden)? DoNothing() : RemoveUserAction();}}
     });
-    
+
     buttonsUPanel = new Ext.Panel({
 	    width	 	 : 40,
 		layout       : {
@@ -482,7 +585,7 @@ Ext.onReady(function(){
                ],
         hidden: true
     });
-    
+
     RefreshUsers();
 
   	//PERMISSIONS DRAG AND DROP PANEL
@@ -496,14 +599,14 @@ Ext.onReady(function(){
     		viewConfig	 : {forceFit:true}//,
     		//bbar: [{xtype: 'tbfill'},editPermissionsUButton, cancelEditPermissionsUButton]
     });
-    
+
     //NORTH PANEL WITH TITLE AND ROLE DETAILS
     northPanel = new Ext.Panel({
     	region: 'north',
     	xtype: 'panel',
     	tbar: ['<b>'+_('ID_ROLE') + ' : ' + ROLES.ROL_CODE+'</b>',{xtype: 'tbfill'},backButton]
     });
-    
+
     //TABS PANEL
     tabsPanel = new Ext.TabPanel({
        	region: 'center',
@@ -522,13 +625,13 @@ Ext.onReady(function(){
     		}
     	}
     });
-    
+
     //LOAD ALL PANELS
     viewport = new Ext.Viewport({
     	layout: 'border',
     	items: [northPanel, tabsPanel]
     });
-    
+
 });
 
 //Do Nothing Function
@@ -589,7 +692,7 @@ DDLoadUsers = function(){
                             return true;
                     }
     });
-	
+
     //USERS DRAG N DROP ASSIGNED
     var assignedUGridDropTargetEl = assignedUGrid.getView().scroller.dom;
     var assignedUGridDropTarget = new Ext.dd.DropTarget(assignedUGridDropTargetEl, {
@@ -651,7 +754,7 @@ DeletePermissionsRole = function(arr_per, function_success, function_failure){
 		params: {request: 'deletePermissionToRoleMultiple', ROL_UID: ROLES.ROL_UID, PER_UID: arr_per.join(',')},
 		success: function(){
 			        function_success();
-					viewport.getEl().unmask();			        
+					viewport.getEl().unmask();
 		},
 		failure: function(){
 					function_failure();
@@ -678,7 +781,7 @@ RemovePermissionAction = function(){
     for(var a=0; a < rowsSelected.length; a++){
         sw = true;
         if (ROLES.ROL_UID == pm_admin) {
-            for (var i=0; i<permissionsAdmin.length; i++)
+            for (var i=0; i < permissionsAdmin.length; i++)
             {
                 if (permissionsAdmin[i]['PER_UID'] == rowsSelected[a].get('PER_UID')) {
                     sw = false;
@@ -716,7 +819,7 @@ RemoveAllPermissionsAction = function(){
             row = allRows.getAt(r);
             sw = true;
             if (ROLES.ROL_UID == pm_admin) {
-                for (var i=0; i<permissionsAdmin.length; i++)
+                for (var i=0; i < permissionsAdmin.length; i++)
                 {
                     if (permissionsAdmin[i]['PER_UID'] == row.data['PER_UID']) {
                         sw = false;
@@ -739,7 +842,17 @@ SaveUsersRole = function(arr_usr, function_success, function_failure){
 	Ext.Ajax.request({
 		url: 'roles_Ajax',
 		params: {request: 'assignUserToRole', ROL_UID: ROLES.ROL_UID, aUsers: arr_usr.join(',')},
-		success: function(){
+		success: function( result, request ){
+				    var data = Ext.util.JSON.decode(result.responseText);
+		            if( data.userRole ) {
+		             Ext.Msg.show({
+		                  title: _('ID_WARNING'),
+		                  msg: _('ID_ADMINISTRATOR_ROLE_CANT_CHANGED'),
+		                  animEl: 'elId',
+		                  icon: Ext.MessageBox.WARNING,
+		                  buttons: Ext.MessageBox.OK
+		             });
+		            }
 					viewport.getEl().unmask();
 					function_success();
 				  },
@@ -820,82 +933,70 @@ RemoveAllUsersAction = function(){
 	}
 };
 
-//Function DoSearch Available
-DoSearchA = function(){
-	availableGrid.store.load({params: {textFilter: searchTextA.getValue()}});
-};
+//update the content table, using php layer & update the Extjs table
+updatePermissionContent = function() {
+  rowSelected = assignedGrid.getSelectionModel().getSelections();
+  permission_name = editForm.getForm().findField('name').getValue();
+  permission_name.trim();
+  if (permission_name != '') {
+      viewport.getEl().mask(_('ID_PROCESSING'));
 
-//Function DoSearch Assigned
-DoSearchP = function(){
-	assignedGrid.store.load({params: {textFilter: searchTextP.getValue()}});
-};
-
-//Load Grid By Default Available Members
-GridByDefaultA = function(){
-	searchTextA.reset();
-	availableGrid.store.load();
-};
-
-//Load Grid By Default Assigned Members
-GridByDefaultP = function(){
-	searchTextP.reset();
-	assignedGrid.store.load();
-};
-
-//Function DoSearch Available
-DoSearchU = function(){
-	availableUGrid.store.load({params: {textFilter: searchTextU.getValue()}});
-};
-
-//Function DoSearch Assigned
-DoSearchX = function(){
-	assignedUGrid.store.load({params: {textFilter: searchTextX.getValue()}});
-};
-
-//Load Grid By Default Available Members
-GridByDefaultU = function(){
-	searchTextU.reset();
-	availableUGrid.store.load();
-};
-
-//Load Grid By Default Assigned Members
-GridByDefaultX = function(){
-	searchTextX.reset();
-	assignedUGrid.store.load();
-};
-
-//edit permissions action
-EditPermissionsAction = function(){
-  availableGrid.show();
-  buttonsPanel.show();
-  editPermissionsButton.disable();
-  //cancelEditPermissionsButton.show();
-  PermissionsPanel.doLayout();
-};
-
-//CancelEditPermissions Function
-CancelEditPermissionsAction = function(){
-  availableGrid.hide();
-  buttonsPanel.hide();
+      Ext.Ajax.request({
+        url: 'roles_Ajax',
+        params: {request: 'updatePermissionContent', PER_NAME: permission_name, PER_UID: rowSelected[0].get('PER_UID')},
+        success: function(r,o) {
+          viewport.getEl().unmask();
+        },
+        failure: function(r,o) {
+          viewport.getEl().unmask();
+        }
+      });
+  }
+  Ext.getCmp('w').hide();
+  editPermissionsContentsButton.enable();
   editPermissionsButton.enable();
-  //cancelEditPermissionsButton.hide();
-  PermissionsPanel.doLayout();
 };
 
-//edit users action
-EditPermissionsActionU = function(){
-  availableUGrid.show();
-  buttonsUPanel.show();
-  editPermissionsUButton.disable();
-  //cancelEditPermissionsUButton.show();
-  UsersPanel.doLayout();
+//Close Popup Window
+closeWindow = function(){
+  Ext.getCmp('w').hide();
+  editPermissionsContentsButton.enable();
+  editPermissionsButton.enable();
 };
 
-//CancelEditUsers Function
-CancelEditPermissionsActionU = function(){
-  availableUGrid.hide();
-  buttonsUPanel.hide();
-  editPermissionsUButton.enable();
-  //cancelEditPermissionsUButton.hide();
-  UsersPanel.doLayout();
+editForm = new Ext.FormPanel({
+    url: 'permissions_Ajax?request=updatePermission',
+    frame: true,
+    items:[
+           {xtype: 'textfield', name: 'per_uid', hidden: true },
+           {xtype: 'textfield', fieldLabel: _('ID_CODE'), name: 'code', width: 250, allowBlank: false, readOnly: true },
+           {xtype: 'textfield', fieldLabel: _('ID_NAME'), name: 'name', width: 200, allowBlank: false},
+          ],
+    buttons: [
+              {text: _('ID_SAVE'), handler: updatePermissionContent},
+              {text: _('ID_CANCEL'), handler: closeWindow}
+             ]
+  });
+
+//Edit Selected Permission
+EditPermissionsWindow = function(){
+  var permissionUid = assignedGrid.getSelectionModel().getSelections();
+  if (permissionUid.length > 0){
+    if (permissionUid[0].get('PER_UID') == '00000000000000000000000000000002'){
+      PMExt.warning(_('ID_PERMISSION'),_('ID_PERMISSION_MSG'));
+    }else{
+      editForm.getForm().findField('per_uid').setValue(permissionUid[0].get('PER_UID'));
+      editForm.getForm().findField('code').setValue(permissionUid[0].get('PER_CODE'));
+      editForm.getForm().findField('name').setValue(permissionUid[0].get('PER_NAME'));
+      w = new Ext.Window({
+        autoHeight: true,
+        id: 'w',
+        modal: true,
+        width: 420,
+        title: _('ID_EDIT_PERMISSION_TITLE'),
+        items: [editForm]
+      });
+      w.show();
+    }
+  }
 };

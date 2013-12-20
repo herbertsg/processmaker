@@ -86,6 +86,13 @@ class adminProxy extends HttpProxyController
             $updatedConf['proxy_pass'] = G::encrypt($httpData->proxy_pass, 'proxy_pass');
         }
 
+        $sessionGcMaxlifetime = ini_get('session.gc_maxlifetime');
+        if (($httpData->max_life_time != "")  && ($sessionGcMaxlifetime != $httpData->max_life_time)) {
+            if (!isset($sysConf['session.gc_maxlifetime']) || ($sysConf['session.gc_maxlifetime'] != $httpData->max_life_time)) {
+                $updatedConf['session.gc_maxlifetime'] = $httpData->max_life_time;
+            }
+        }
+
         if ($updateRedirector) {
             if (!file_exists(PATH_HTML . 'index.html')) {
                 throw new Exception('The index.html file is not writable on workflow/public_html directory.');
@@ -217,17 +224,17 @@ class adminProxy extends HttpProxyController
 
         if ($type == 'assoc') {
             $list = array(
-                'NORMAL' => 'Normal',
-                'SIMPLIFIED' => 'Simplified',
-                'SWITCHABLE' => 'Switchable',
-                'SINGLE' => 'Single Application'
+                'NORMAL'     => G::loadTranslation('ID_UXS_NORMAL'),
+                'SIMPLIFIED' => G::loadTranslation('ID_UXS_SIMPLIFIED'),
+                'SWITCHABLE' => G::loadTranslation('ID_UXS_SWITCHABLE'),
+                'SINGLE'     => G::loadTranslation('ID_UXS_SINGLE')
             );
         } else {
             $list = array(
-                array('NORMAL', 'Normal'),
-                array('SIMPLIFIED', 'Simplified'),
-                array('SWITCHABLE', 'Switchable'),
-                array('SINGLE', 'Single Application')
+                array('NORMAL',     G::loadTranslation('ID_UXS_NORMAL') ),
+                array('SIMPLIFIED', G::loadTranslation('ID_UXS_SIMPLIFIED') ),
+                array('SWITCHABLE', G::loadTranslation('ID_UXS_SWITCHABLE') ),
+                array('SINGLE',     G::loadTranslation('ID_UXS_SINGLE') )
             );
         }
         return $list;
@@ -478,15 +485,23 @@ class adminProxy extends HttpProxyController
                             if (strtoupper($UseSecureCon) == 'TLS') {
                                 $smtp->Hello($hello);
                             }
-                            if ( $smtp->Authenticate($user, $passwd) ) {
+                            if ($smtp->Authenticate($user, $passwd) ) {
                                 $this->success = true;
                             } else {
-                                $this->success = false;
-                                $this->msg = $smtp->error['error'];
+                                if (strtoupper($UseSecureCon) == 'TLS') {
+                                    $this->success = true;
+                                } else {
+                                    $this->success = false;
+                                    $smtpError = $smtp->getError();
+                                    $this->msg = $smtpError['error'];
+                                    // $this->msg = $smtp->error['error'];
+                                }
                             }
                         } else {
                             $this->success = false;
-                            $this->msg = $smtp->error['error'];
+                            $smtpError = $smtp->getError();
+                            $this->msg = $smtpError['error'];
+                            // $this->msg = $smtp->error['error'];
                         }
                     } catch (Exception $e) {
                         $this->success = false;
@@ -500,12 +515,12 @@ class adminProxy extends HttpProxyController
             case 5:
                 if ($SendaTestMail == 'true') {
                     try {
-                        $_POST['FROM_NAME'] = 'Process Maker O.S. [Test mail]';
-                        $_POST['FROM_EMAIL'] = $user;
-                        $_POST['MESS_ENGINE'] = 'PHPMAILER';
-                        $_POST['MESS_SERVER'] = $server;
-                        $_POST['MESS_PORT']   = $port;
-                        $_POST['MESS_ACCOUNT'] = $user;
+                        $_POST['FROM_NAME']     = G::LoadTranslation('ID_MESS_TEST_BODY');
+                        $_POST['FROM_EMAIL']    = $user;
+                        $_POST['MESS_ENGINE']   = 'PHPMAILER';
+                        $_POST['MESS_SERVER']   = $server;
+                        $_POST['MESS_PORT']     = $port;
+                        $_POST['MESS_ACCOUNT']  = $user;
                         $_POST['MESS_PASSWORD'] = $passwd;
                         $_POST['TO'] = $Mailto;
 
@@ -517,15 +532,19 @@ class adminProxy extends HttpProxyController
                         if (strtolower($_POST["UseSecureCon"]) != "no") {
                             $_POST["SMTPSecure"] = $_POST["UseSecureCon"];
                         }
+                        /*
                         if ($_POST['UseSecureCon'] == 'ssl') {
                             $_POST['MESS_SERVER'] = 'ssl://'.$_POST['MESS_SERVER'];
                         }
+                        */
                         $resp = $this->sendTestMail();
                         if ($resp->status == '1') {
                             $this->success=true;
                         } else {
                             $this->success=false;
-                            $this->msg=$smtp->error['error'];
+                            $smtpError = $smtp->getError();
+                            $this->msg = $smtpError['error'];
+                            // $this->msg = $smtp->error['error'];
                         }
                     } catch (Exception $e) {
                         $this->success = false;
@@ -669,6 +688,7 @@ class adminProxy extends HttpProxyController
             $aFields['SMTPSecure']               = $_POST['UseSecureCon'];
             $aFields['SMTPSecure']               = ($aFields['SMTPSecure'] == 'No') ? 'none' : $aFields['SMTPSecure'];
             $aFields['MAIL_TO']                  = $_POST['eMailto'];
+            $aFields['MESS_FROM_NAME']           = $_POST['FromName'];
             $aFields['MESS_TRY_SEND_INMEDIATLY'] = $_POST['SendaTestMail'];//isset($_POST['form']['MESS_TRY_SEND_INMEDIATLY']) ? $_POST['form']['MESS_TRY_SEND_INMEDIATLY'] : '';
             $aFields['MESS_TRY_SEND_INMEDIATLY'] = ($aFields['MESS_TRY_SEND_INMEDIATLY'] == 'true') ? '1' : $aFields['MESS_TRY_SEND_INMEDIATLY'];
             $CfgUid='Emails';

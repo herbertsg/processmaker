@@ -85,6 +85,14 @@ public class ExtJSToolbarCell {
     }
 
     /**
+     * Get webelement of toolbar-cell
+     */
+    public WebElement getWebElement(){
+        return this.toolbarCell;
+        //html.ext-strict body#ext-gen3.ext-gecko div#navPanel.x-panel div#ext-gen16.x-panel-bwrap div#ext-gen17.x-panel-tbar div#ext-comp-1004.x-toolbar table.x-toolbar-ct tbody tr td.x-toolbar-left table tbody tr.x-toolbar-left-row td#ext-gen27.x-toolbar-cell table#caseNotes.x-btn tbody.x-btn-small tr td.x-btn-mc em button#ext-gen28.x-btn-text
+    }
+
+    /**
      * Click any non-identified element in toolbar-cell
      */
     public void click(){

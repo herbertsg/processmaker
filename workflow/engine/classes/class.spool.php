@@ -139,9 +139,14 @@ class spoolRun
     public function create ($aData)
     {
         if (is_array($aData['app_msg_attach'])) {
-            $attachment = implode(",", $aData['app_msg_attach']);
-            $aData['app_msg_attach'] = $attachment;
+            $attachment = $aData['app_msg_attach'];
+        } else {
+            $attachment = @unserialize($aData['app_msg_attach']);
+            if ($attachment === false) {
+                $attachment = explode(',', $aData['app_msg_attach']);
+            }
         }
+        $aData['app_msg_attach'] = serialize($attachment);
         $aData['app_msg_show_message'] = (isset($aData['app_msg_show_message'])) ? $aData['app_msg_show_message'] : 1;
         $sUID = $this->db_insert( $aData );
 
@@ -184,7 +189,7 @@ class spoolRun
         $this->fileData['cc'] = $sCC;
         $this->fileData['bcc'] = $sBCC;
         $this->fileData['template'] = $sTemplate;
-        $this->fileData['attachments'] = is_array( $aAttachment ) ? $aAttachment : ($aAttachment != '' ? explode( ',', $aAttachment ) : array ());
+        $this->fileData['attachments'] = $aAttachment;
         $this->fileData['envelope_to'] = array ();
         $this->fileData["contentTypeIsHtml"] = $bContentTypeIsHtml;
 
@@ -272,6 +277,22 @@ class spoolRun
 
             $this->fileData['from_name'] = '';
             $this->fileData['from_email'] = $matches[0];
+        }
+        
+        // Set reply to
+        preg_match( $this->longMailEreg, $this->fileData['from_name'], $matches );
+        if (isset($matches[3])) {
+            $this->fileData['reply_to'] = $matches[3];
+            $this->fileData['reply_to_name'] = isset($matches[1]) ? $matches[1] : $this->fileData['from_name'];
+        } else {
+            preg_match( $this->mailEreg, $this->fileData['from_name'], $matches );
+            if (isset($matches[1])) {
+                $this->fileData['reply_to'] = $matches[1];
+                $this->fileData['reply_to_name'] = '';
+            } else {
+                $this->fileData['reply_to'] = '';
+                $this->fileData['reply_to_name'] = '';
+            }
         }
 
     }
@@ -405,6 +426,11 @@ class spoolRun
                     $oPHPMailer->Password = $this->config['MESS_PASSWORD'];
                     $oPHPMailer->From = $this->fileData['from_email'];
                     $oPHPMailer->FromName = utf8_decode( $this->fileData['from_name'] );
+                    if (isset($this->fileData['reply_to'])) {
+                        if ($this->fileData['reply_to'] != '') {
+                            $oPHPMailer->AddReplyTo($this->fileData['reply_to'], $this->fileData['reply_to_name']);
+                        }
+                    }
 
                     $msSubject = $this->fileData['subject'];
 
@@ -422,8 +448,12 @@ class spoolRun
 
                     $oPHPMailer->Body = $msBody;
 
-                    if (is_array( $this->fileData['attachments'] )) {
-                        foreach ($this->fileData['attachments'] as $key => $fileAttach) {
+                    $attachment = @unserialize($this->fileData['attachments']);
+                    if ($attachment === false) {
+                        $attachment = $this->fileData['attachments'];
+                    }
+                    if (is_array($attachment)) {
+                        foreach ($attachment as $key => $fileAttach) {
                             if (file_exists( $fileAttach )) {
                                 $oPHPMailer->AddAttachment( $fileAttach, is_int( $key ) ? '' : $key );
                             }
@@ -466,6 +496,10 @@ class spoolRun
                     }
 
                     $oPHPMailer->IsHTML($this->fileData["contentTypeIsHtml"]);
+
+                    if ( $this->config['MESS_ENGINE'] == 'MAIL') {
+                        $oPHPMailer->WordWrap = 300;
+                    }
 
                     if ($oPHPMailer->Send()) {
                         $this->error = '';

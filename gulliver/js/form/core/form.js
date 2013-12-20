@@ -105,15 +105,20 @@ function G_Field ( form, element, name )
   var tempValue;
   if (me.dependentFields.length===0) return true;
   var fields=[],Fields = [],i,grid='',row=0;
+  var gridField = "";
+
   for(i in me.dependentFields) {
     if (me.dependentFields[i].dependentOf) {
       for (var j = 0; j < me.dependentFields[i].dependentOf.length; j++) {
         var oAux = me.dependentFields[i].dependentOf[j];
         if (oAux.name.indexOf('][') > -1) {
-          var aAux  = oAux.name.split('][');
-          grid      = aAux[0];
-          row       = aAux[1];
-          fieldName = aAux[2];
+          var arrayAux = oAux.name.split("][");
+          grid = arrayAux[0];
+          row  = parseInt(arrayAux[1]);
+          fieldName = arrayAux[2];
+
+          gridField = gridGetAllFieldAndValue(oAux.name, 0); //Not get current field
+
           if (Fields.length > 0){
             aux = Fields;
             aux.push('?');
@@ -145,15 +150,19 @@ function G_Field ( form, element, name )
         }
       }
     }
+
     var callServer;
+
     callServer = new leimnud.module.rpc.xmlhttp({
-      url     : me.form.ajaxServer,
-      async   : false,
-      method  : "POST",
-      args    : "function=reloadField&" + 'form='+encodeURIComponent(me.form.id)+'&fields='+encodeURIComponent(fields.toJSONString())+(grid!=''?'&grid='+grid:'')+(row>0?'&row='+row:'')
+        url: me.form.ajaxServer,
+        async: false,
+        method: "POST",
+        args: "function=reloadField" + "&form=" + encodeURIComponent(me.form.id) + "&fields=" + encodeURIComponent(fields.toJSONString()) + ((grid != "")? "&grid=" + grid + ((gridField != "")? "&gridField=" + encodeURIComponent("{" + gridField + "}") : "") : "") + ((row > 0)? "&row=" + row: "")
     });
+
     callServer.make();
     var response = callServer.xmlhttp.responseText;
+
     //Validate the response
     if (response.substr(0,1)==='[') {
       var newcont;
@@ -183,7 +192,20 @@ function G_Field ( form, element, name )
             var oAux2 = oAux.getElementByName(row, newcont[i].name);
             if (oAux2) {
               oAux2.setValue(newcont[i].value);
-              oAux2.setContent(newcont[i].content);
+
+              if (oAux2.element.type != "textarea") {
+                  oAux2.setContent(newcont[i].content);
+              } else {
+                  //This code fragment is copy of method G_Text.setContent()
+                  oAux2.element.value = "";
+
+                  if (newcont[i].content.options) {
+                     if (newcont[i].content.options[0]) {
+                         oAux2.element.value = newcont[i].content.options[0].value;
+                     }
+                  }
+              }
+
               oAux2.updateDepententFields();
               // this line is also needed to trigger the onchange event to trigger the calculation of
               // sumatory or average functions in text fields
@@ -306,25 +328,12 @@ function G_DropDown( form, element, name )
   var me=this;
   this.parent = G_Field;
   this.parent( form, element, name );
-  this.setContent=function(content) {
-    var dd=me.element;
-    var browser = getBrowserClient();
-    if ((browser.name=='msie') || ((browser.name == 'firefox') && (browser.version < 12))){
-      while(dd.options.length>1) dd.remove(0);
-    } else {
-      for (var key in dd.options){
-        dd.options[key] = null;
-      }
-    }
-    // the remove function is no longer reliable
-    // while(dd.options.length>1) dd.remove(0);
-    for(var o=0;o<content.options.length;o++) {
-      var optn = $dce("OPTION");
-      optn.text = content.options[o].value;
-      optn.value = content.options[o].key;
-      dd.options[o]=optn;
-    }
+
+  this.setContent = function (content)
+  {
+      dropDownSetOption(me, content);
   };
+
   if (!element) return;
   leimnud.event.add(this.element,'change',this.updateDepententFields);
 }
@@ -880,11 +889,19 @@ function G_Text(form, element, name)
       switch(chars[c]){
         case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9':
-        case me.comma_separator:
           newValue += chars[c];
           newCont++;
           if (c + 1 == cursor.selectionStart){
             newCursor = newCont;
+          }
+          break;
+        case me.comma_separator:
+          if(me.mType != 'date') {
+              newValue += chars[c];
+              newCont++;
+              if (c + 1 == cursor.selectionStart){
+                newCursor = newCont;
+              }
           }
           break;
         case '-':
@@ -982,9 +999,12 @@ function G_Text(form, element, name)
       currentSel = dataWOMask.cursor;
       cursorStart = currentSel.selectionStart;
       cursorEnd = currentSel.selectionEnd;
-      action = 'mask';
-      swPeriod = false;
-      switch(keyCode){
+
+      var action = "mask";
+      var swPeriod = false;
+      var i = 0;
+
+      switch (keyCode) {
         case 0:
           action = 'none';
           break;
@@ -1020,71 +1040,86 @@ function G_Text(form, element, name)
           action = 'move';
           break;
         case 45:
-          if (me.mType == 'currency') {
-            newValue = currentValue.substring(0, currentValue.length).split('');
-            for (var numI = 0; newValue.length > numI; numI++) {
-              var campVal = newValue[numI];
-              if ((typeof(campVal) === 'number' || typeof(campVal) === 'string') && (campVal !== '') && (!isNaN(campVal))) {
-                newValue = currentValue.substring(0, numI-1);
-                newValue += '-' + currentValue.substring(numI);
-                numI = newValue.length + 1;
-                newCursor = cursorStart+1;
-              } else {
-                if (campVal == '-') {
-                  newValue = currentValue.substring(0, numI-1);
-                  newValue += currentValue.substring(numI+1);
-                  newCursor = cursorStart-1;
-                  numI = newValue.length + 1;
+            if (me.mType == "currency" || (me.mType == "text" && (me.validate == "Real" || me.validate == "Int"))) {
+                newValue = currentValue.substring(0, currentValue.length).split("");
+
+                if (newValue.length > 0) {
+                    for (i = 0; i <= newValue.length - 1; i++) {
+                        var campVal = newValue[i];
+
+                        if ((typeof campVal == "number" || typeof campVal == "string") && campVal != "" && !isNaN(campVal)) {
+                            newValue = currentValue.substring(0, i - 1);
+                            newValue = newValue + "-" + currentValue.substring(i);
+                            i = newValue.length + 1;
+                            newCursor = cursorStart + 1;
+                        } else {
+                            if (campVal == "-") {
+                                newValue = currentValue.substring(0, i - 1);
+                                newValue = newValue + currentValue.substring(i + 1);
+                                newCursor = cursorStart - 1;
+                                i = newValue.length + 1;
+                            }
+                        }
+                    }
+
+                    if (newValue.join) {
+                        newValue = newValue.join("");
+                    }
+                } else {
+                    //default
+                    newKey = String.fromCharCode(keyCode);
+                    newValue = currentValue.substring(0, cursorStart);
+                    newValue = newValue + newKey;
+                    newValue = newValue + currentValue.substring(cursorEnd, currentValue.length);
+                    newCursor = cursorStart + 1;
                 }
-              }
             }
-            if (newValue.join) {
-              newValue = newValue.join('');
-            }
-          }
-          break;
+            break;
         default:
-          newKey = String.fromCharCode(keyCode);
-          newValue  = currentValue.substring(0, cursorStart);
-          newValue += newKey;
-          newValue += currentValue.substring(cursorEnd, currentValue.length);
-          newCursor = cursorStart + 1;
-          break;
+            newKey = String.fromCharCode(keyCode);
+            newValue = currentValue.substring(0, cursorStart);
+            newValue = newValue + newKey;
+            newValue = newValue + currentValue.substring(cursorEnd, currentValue.length);
+            newCursor = cursorStart + 1;
+            break;
       }
-      if (newCursor < 0)  newCursor = 0;
+
+      if (newCursor < 0) {
+          newCursor = 0;
+      }
+
       if (keyCode != 8 && keyCode != 46 && keyCode != 35 && keyCode != 36 && keyCode != 37 && keyCode != 39){
-        testData = dataWOMask.result;
-        tamData = testData.length;
-        cleanMask = me.getCleanMask();
-        tamMask = cleanMask.length;
-        sw = false;
+        var testData = dataWOMask.result;
+        var tamData = testData.length;
+        var cleanMask = me.getCleanMask();
+        var tamMask = cleanMask.length;
+        var sw = false;
+
         if (testData.indexOf(me.comma_separator) == -1){
           aux = cleanMask.split('_');
           tamMask = aux[0].length;
           sw = true;
         }
-        if (tamData >= tamMask){
-          var minusExi;
-          for (var numI = 0; newValue.length > numI; numI++) {
-            var campVal = newValue[numI];
-            if ((typeof(campVal) === 'number' || typeof(campVal) === 'string') && (campVal !== '') && (!isNaN(campVal))) {
-              minusExi = false;
-            } else {
-              if (campVal == '-') {
-                minusExi = true;
-                numI = newValue.length + 1;
-              }
-            }
-          }
 
-          if (!(keyCode == 45 || (minusExi && tamMask >= tamData))) {
-            if (sw && !swPeriod && testData.indexOf(me.comma_separator) == -1){
-              action = 'none';
+        if (tamData >= tamMask) {
+            var swMinus = false;
+
+            if (/^.*\-.*$/.test(newValue)) {
+                swMinus = true;
             }
-            if (!sw) action = 'none';
-          }
+
+            if (!(keyCode == 45 || (swMinus && tamMask >= tamData))) {
+                if (sw && !swPeriod){
+                    action = "none";
+                }
+
+                if (!sw) {
+                    action = "none";
+                }
+            }
         }
       }
+
       switch(action){
         case 'mask': case 'move':
           dataNewMask = me.replaceMasks(newValue, newCursor);
@@ -1096,8 +1131,8 @@ function G_Text(form, element, name)
           //me.setSelectionRange(newCursor,newCursor);
           //break;
       }
-    }
-    else{
+    } else{
+      //no mask
       currentValue = me.element.value;
       currentSel = me.getCursorPosition();
       cursorStart = currentSel.selectionStart;
@@ -1372,6 +1407,17 @@ function G_Text(form, element, name)
       }
 
       if (keyValid){
+        if (me.mask == "" && (me.validate == 'Real' || me.validate == 'Int') && me.mType == 'text') {
+          if (key == '-') {
+            currentValue = me.element.value;
+            if (currentValue.charAt(0) == '-') {
+              currentValue = currentValue.substring(1, currentValue.length);
+              me.element.value = currentValue;
+            } else {
+              me.element.value = '-'+currentValue;
+            }
+          }
+        }
         //APPLY MASK
         if ((me.validate == "Login" || me.validate == "NodeName") && me.mask == "") {
             return true;
@@ -1495,7 +1541,7 @@ function G_Text(form, element, name)
       }
 
       if (this.validate == "Email") {
-        var pat = /^\w+(?:[\.-]?\w+)*@\w+(?:[\.-]?\w+)*\.\w{2,6}$/;
+        var pat = /^\w+(?:[\.-]?\w+)*@\w+(?:[\.-]?\w+)*\.\w{2,9}$/;
 
         if(!pat.test(this.element.value))
         {
@@ -1886,14 +1932,26 @@ function G()
 
   //Apply a mask to a number
    this.ApplyMask = function(num, mask, cursor, dir, comma_sep){
-     myOut = '';
-     myCursor = cursor;
-     if (num.length == 0) return {result: '', cursor: 0};
-     switch(dir){
+     var myOut = "";
+     var myCursor = cursor;
+     var key = "";
+
+     if (num.length == 0) {
+         return {result: "", cursor: 0};
+     }
+
+     switch (dir) {
        case 'forward':
-         iMask = mask.split('');
-         value = _getOnlyNumbers(num,'');
-         iNum = value.split('');
+         iMask = mask.split("");
+         value = _getOnlyNumbers(num, "");
+         iNum = value.split("");
+
+         var swMinus = (iNum.length > 0 && iNum[0] == "-")? 1 : 0;
+
+         if (swMinus == 1) {
+             key = iNum.shift();
+         }
+
          for(e=0; e < iMask.length && iNum.length > 0; e++){
            switch(iMask[e]){
              case '#': case '0': case 'd': case 'm': case 'y': case 'Y':
@@ -1907,6 +1965,10 @@ function G()
               if (e < myCursor) myCursor++;
               break;
            }
+         }
+
+         if (swMinus == 1) {
+             myOut = "-" + myOut;
          }
          break;
        case 'reverse':
@@ -2045,6 +2107,8 @@ function G()
           }
         }
         else if(cursor == num.length){
+          var last = 0;
+
           for(l=0; l < aOut.length; l++){
             switch(aOut[l]){
               case '0': case '1': case '2': case '3': case '4':
@@ -2760,11 +2824,12 @@ var validateGridForms = function(invalidFields){
   }
 
   for(j=0; j<grids.length; j++){
-
     fields = grids[j].getElementsByTagName('input');
+
     for(i=0; i<fields.length; i++){
       var vtext = new input(fields[i]);
-      if (fields[i].getAttribute("pm:required")=="1"&&fields[i].value==''){
+
+      if (fields[i].getAttribute("pm:required") == "1" && fields[i].value.trim() == "") {
         $label = fields[i].name.split("[");
         $labelPM = fields[i].getAttribute("pm:label");
         if ($labelPM == '' || $labelPM == null){
@@ -2787,12 +2852,13 @@ var validateGridForms = function(invalidFields){
     textAreas = grids[j].getElementsByTagName('textarea');
     for(i=0; i<textAreas.length; i++){
       var vtext = new input(textAreas[i]);
-      if (textAreas[i].getAttribute("pm:required")=="1"&&textAreas[i].value==''){
+
+      if (textAreas[i].getAttribute("pm:required") == "1" && textAreas[i].value.trim() == "") {
         $label = textAreas[i].name.split("[");
         $labelPM = textAreas[i].getAttribute("pm:label");
-        if ($labelPM == '' || $labelPM == null){
+        if ($labelPM == '' || $labelPM == null) {
           $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
-        }else{
+        } else {
           $fieldName = $labelPM + " " + $label[2].split("]")[0];
         }
         fieldGridName = $label[1] + "[" + $label[2] + "[" + $label[3].split("]")[0];
@@ -2811,12 +2877,12 @@ var validateGridForms = function(invalidFields){
     for(i=0; i<dropdowns.length; i++){
       var vtext = new input(dropdowns[i]);
 
-      if (dropdowns[i].getAttribute("pm:required")=="1"&&dropdowns[i].value==''){
+      if (dropdowns[i].getAttribute("pm:required") == "1" && dropdowns[i].value.trim() == "") {
         $label = dropdowns[i].name.split("[");
         $labelPM = dropdowns[i].getAttribute("pm:label");
-        if ($labelPM == '' || $labelPM == null){
+        if ($labelPM == '' || $labelPM == null) {
           $fieldName = $label[3].split("]")[0]+ " " + $label[2].split("]")[0];
-        }else{
+        } else {
           $fieldName = $labelPM + " " + $label[2].split("]")[0];
         }
         fieldGridName = $label[1] + "[" + $label[2] + "[" + $label[3].split("]")[0];
@@ -2835,6 +2901,7 @@ var validateGridForms = function(invalidFields){
   return (invalidFields);
 };
 
+
 /**
  *
  * This function validates via javascript
@@ -2844,339 +2911,364 @@ var validateGridForms = function(invalidFields){
  *
  **/
 
+var swSubmitValidateForm = 1;
+
 var validateForm = function(sRequiredFields) {
-  /**
-   *  replacing the %27 code by " character (if exists), this solve the problem that " broke the properties definition into a html
-   *  i.ei <form onsubmit="myaction(MyjsString)" ...   with var MyjsString = "some string that is into a variable, so this broke the html";
-   */
+    if (swSubmitValidateForm == 1) {
 
-  if( typeof(sRequiredFields) != 'object' || sRequiredFields.indexOf("%27") > 0 ){
-    sRequiredFields = sRequiredFields.replace(/%27/gi, '"');
-  }
-  if( typeof(sRequiredFields) != 'object' || sRequiredFields.indexOf("%39") > 0 ){
-    sRequiredFields = sRequiredFields.replace(/%39/gi, "'");
-  }
-  aRequiredFields = eval(sRequiredFields);
+        swSubmitValidateForm = 0;
 
-  var sMessage = '';
-  var invalid_fields   = Array();
-  var fielEmailInvalid = Array();
+        sFormName = document.getElementById('__DynaformName__');
+        if (typeof(__dynaformSVal__) != 'undefined' && (typeof(sFormName) != 'undefined' && sFormName != 'login') && (typeof(__usernameLogged__) != 'undefined' && __usernameLogged__ != '') ) {
+            if (!sessionPersits()) {
+                showPromptLogin('session');
 
-      for (var i = 0; i < aRequiredFields.length; i++) {
-        aRequiredFields[i].label=(aRequiredFields[i].label=='')?aRequiredFields[i].name:aRequiredFields[i].label;
+                swSubmitValidateForm = 1;
 
-        if (!notValidateThisFields.inArray(aRequiredFields[i].name)) {
-
-          if (typeof aRequiredFields[i].required != 'undefined'){
-            required = aRequiredFields[i].required;
-          }
-          else {
-            required = 1;
-          }
-
-          if (typeof aRequiredFields[i].validate != 'undefined') {
-            validate = aRequiredFields[i].validate;
-          }
-          else {
-            validate = '';
-          }
-
-          if(required == 1)
-          {
-            switch(aRequiredFields[i].type) {
-              case 'suggest':
-                var vtext1 = new input(getField(aRequiredFields[i].name+'_label'));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext1.failed();
-                } else {
-                  vtext1.passed();
-                }
-              break;
-              case 'text':
-                var vtext = new input(getField(aRequiredFields[i].name));
-                  if(getField(aRequiredFields[i].name).value=='') {
-                    invalid_fields.push(aRequiredFields[i].label);
-                    vtext.failed();
-                  }
-                  else {
-                    vtext.passed();
-                  }
-                break;
-
-              case 'dropdown':
-                var vtext = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext.failed();
-                } else {
-                  vtext.passed();
-                }
-                break;
-
-              case 'textarea':
-
-                var vtext = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext.failed();
-                } else {
-                  vtext.passed();
-                }
-
-              break;
-
-              case 'password':
-                var vpass = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vpass.failed();
-                } else {
-                  vpass.passed();
-                }
-                break;
-
-              case 'currency':
-                var vcurr = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vcurr.failed();
-                } else {
-                  vcurr.passed();
-                }
-              break;
-
-              case 'percentage':
-                var vper = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vper.failed();
-                } else {
-                  vper.passed();
-                }
-              break;
-
-              case 'yesno':
-                var vtext = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext.failed();
-                } else {
-                  vtext.passed();
-                }
-              break;
-
-              case 'date':
-                var vtext = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext.failed();
-                } else {
-                  vtext.passed();
-                }
-              break;
-
-              case 'file':
-                var vtext = new input(getField(aRequiredFields[i].name));
-                if(getField(aRequiredFields[i].name).value==''){
-                  invalid_fields.push(aRequiredFields[i].label);
-                  vtext.failed();
-                } else {
-                  vtext.passed();
-                }
-              break;
-
-              case 'listbox':
-                var oAux = getField(aRequiredFields[i].name);
-                var bOneSelected = false;
-                for (var j = 0; j < oAux.options.length; j++) {
-                  if (oAux.options[j].selected) {
-                    bOneSelected = true;
-                    j = oAux.options.length;
-                  }
-                }
-                if(bOneSelected == false)
-                  invalid_fields.push(aRequiredFields[i].label);
-              break;
-
-              case 'radiogroup':
-                var x=aRequiredFields[i].name;
-                var oAux = document.getElementsByName('form['+ x +']');
-                var bOneChecked = false;
-                for (var k = 0; k < oAux.length; k++) {
-                  var r = oAux[k];
-                  if (r.checked) {
-                    bOneChecked = true;
-                    k = oAux.length;
-                  }
-                }
-
-                if(bOneChecked == false)
-                  invalid_fields.push(aRequiredFields[i].label);
-
-              break;
-
-              case 'checkgroup':
-                var bOneChecked = false;
-                var aAux = document.getElementsByName('form[' + aRequiredFields[i].name + '][]');
-                for (var k = 0; k < aAux.length; k++) {
-                  if (aAux[k].checked) {
-                    bOneChecked = true;
-                    k = aAux.length;
-                  }
-                }
-                if(!bOneChecked) {
-                  invalid_fields.push(aRequiredFields[i].label);
-                }
-
-              break;
+                return false;
             }
-          }
-
-          if(validate != '') {
-            //validate_fields
-              switch(aRequiredFields[i].type) {
-                case 'suggest':
-                break;
-
-                case 'text':
-
-                  if(validate=="Email") {
-                    var vtext = new input(getField(aRequiredFields[i].name));
-                      if(getField(aRequiredFields[i].name).value!='') {
-                        var email = getField(aRequiredFields[i].name);
-                        //var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                        //var filter = /^[\w\_\-\.ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
-                        var filter =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                          if (!filter.test(email.value)&&email.value!="") {
-                            fielEmailInvalid.push(aRequiredFields[i].label);
-                            vtext.failed();
-                            email.focus();
-                          }
-                          else {
-                            vtext.passed();
-                          }
-                      }
-                  }
-                  break;
-              }
-          }
         }
-      }
 
-  // call added by gustavo - cruz, gustavo-at-colosa.com validate grid forms
-  invalid_fields = validateGridForms(invalid_fields);
+        /**
+         *  replacing the %27 code by " character (if exists), this solve the problem that " broke the properties definition into a html
+         *  i.ei <form onsubmit="myaction(MyjsString)" ...   with var MyjsString = "some string that is into a variable, so this broke the html";
+        */
 
-  if (invalid_fields.length > 0 ||fielEmailInvalid.length> 0) {
-    //alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
-
-
-
-    // loop for invalid_fields
-    for(j=0; j<invalid_fields.length; j++){
-      sMessage += (j > 0)? ', ': '';
-      sMessage += invalid_fields[j];
-    }
-
-    // Loop for invalid_emails
-    var emailInvalidMessage = "";
-    for(j=0; j<fielEmailInvalid.length; j++){
-      emailInvalidMessage += (j > 0)? ', ': '';
-      emailInvalidMessage += fielEmailInvalid[j];
-    }
-
-
-    /* new leimnud.module.app.alert().make({
-            label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br/><br/>[ " + sMessage + " ]",
-            width:450,
-            height:140 + (parseInt(invalid_fields.length/10)*10)
-        });*/
-
-    //!create systemMessaggeInvalid of field invalids
-    var systemMessaggeInvalid = "";
-
-      if(invalid_fields.length > 0) {
-        systemMessaggeInvalid += "\n \n"+G_STRINGS.ID_REQUIRED_FIELDS + ": \n \n [ " + sMessage + " ]";
-      }
-
-      if(fielEmailInvalid.length > 0) {
-        systemMessaggeInvalid += "\n \n" +  G_STRINGS.ID_VALIDATED_FIELDS + ": \n \n [ " + emailInvalidMessage + " ]";
-      }
-
-
-    alert(systemMessaggeInvalid);
-    return false;
-  }
-  else {
-    var arrayForm = document.getElementsByTagName("form");
-    var inputAux;
-    var id = "";
-    var i1 = 0;
-    var i2 = 0;
-
-    for (i1 = 0; i1 <= arrayForm.length - 1; i1++) {
-      var frm = arrayForm[i1];
-
-      for (i2 = 0; i2 <= frm.elements.length - 1; i2++)  {
-        var elem = frm.elements[i2];
-
-        if (elem.type == "checkbox" && elem.disabled && elem.checked) {
-          id = elem.id + "_";
-
-          if (!document.getElementById(id)) {
-              inputAux       = document.createElement("input");
-              inputAux.type  = "hidden";
-              inputAux.id    = id;
-              inputAux.name  = elem.name;
-              inputAux.value = elem.value;
-
-              frm.appendChild(inputAux);
-          }
+        if( typeof(sRequiredFields) != 'object' || sRequiredFields.indexOf("%27") > 0 ) {
+            sRequiredFields = sRequiredFields.replace(/%27/gi, '"');
         }
-      }
+        if( typeof(sRequiredFields) != 'object' || sRequiredFields.indexOf("%39") > 0 ) {
+            sRequiredFields = sRequiredFields.replace(/%39/gi, "'");
+        }
+        aRequiredFields = eval(sRequiredFields);
 
-      var arrayLink = frm.getElementsByTagName("a");
+        var sMessage = '';
+        var invalid_fields   = Array();
+        var fielEmailInvalid = Array();
 
-      for (i2 = 0; i2 <= arrayLink.length - 1; i2++)  {
-          var link = arrayLink[i2];
+        for (var i = 0; i < aRequiredFields.length; i++) {
+            aRequiredFields[i].label=(aRequiredFields[i].label=='')?aRequiredFields[i].name:aRequiredFields[i].label;
 
-          if (typeof link.id != "undefined" && link.id != "" && link.id != "form[DYN_BACKWARD]" && link.id != "form[DYN_FORWARD]") {
-              var strHtml = link.parentNode.innerHTML;
+            if (!notValidateThisFields.inArray(aRequiredFields[i].name)) {
 
-              strHtml = stringReplace("\\x0A", "", strHtml); //\n 10
-              strHtml = stringReplace("\\x0D", "", strHtml); //\r 13
-              strHtml = stringReplace("\\x09", "", strHtml); //\t  9
+                if (typeof aRequiredFields[i].required != 'undefined') {
+                    required = aRequiredFields[i].required;
+                } else {
+                    required = 1;
+                }
 
-              if (/^.*pm:field.*$/.test(strHtml)) {
-                  id = link.id + "_";
+                if (typeof aRequiredFields[i].validate != 'undefined') {
+                    validate = aRequiredFields[i].validate;
+                } else {
+                    validate = '';
+                }
 
-                  if (!document.getElementById(id)) {
-                      var strAux = link.id.replace("form[", "");
-                      strAux = strAux.substring(0, strAux.length - 1);
+                if(required == 1) {
+                    switch(aRequiredFields[i].type) {
+                        case 'suggest':
+                            var vtext1 = new input(getField(aRequiredFields[i].name+'_label'));
 
-                      inputAux       = document.createElement("input");
-                      inputAux.type  = "hidden";
-                      inputAux.id    = id;
-                      inputAux.name  = link.id;
-                      inputAux.value = link.href;
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext1.failed();
+                            } else {
+                               vtext1.passed();
+                            }
+                            break;
 
-                      frm.appendChild(inputAux);
+                        case 'text':
+                            var vtext = new input(getField(aRequiredFields[i].name));
 
-                      inputAux   = document.createElement("input");
-                      inputAux.type  = "hidden";
-                      inputAux.id    = id + "label";
-                      inputAux.name  = "form[" + strAux + "_label]";
-                      inputAux.value = link.innerHTML;
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
 
-                      frm.appendChild(inputAux);
-                  }
-              }
-          }
-      }
+                        case 'dropdown':
+                            var vtext = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
+
+                        case 'textarea':
+                            var vtext = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
+
+                        case 'password':
+                            var vpass = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vpass.failed();
+                            } else {
+                                vpass.passed();
+                            }
+                            break;
+
+                        case 'currency':
+                            var vcurr = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vcurr.failed();
+                            } else {
+                                vcurr.passed();
+                            }
+                            break;
+
+                        case 'percentage':
+                            var vper = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vper.failed();
+                            } else {
+                                vper.passed();
+                            }
+                            break;
+
+                        case 'yesno':
+                            var vtext = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
+
+                        case 'date':
+                            var vtext = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
+
+                        case 'file':
+                            var vtext = new input(getField(aRequiredFields[i].name));
+
+                            if (getField(aRequiredFields[i].name).value.trim() == "") {
+                                invalid_fields.push(aRequiredFields[i].label);
+                                vtext.failed();
+                            } else {
+                                vtext.passed();
+                            }
+                            break;
+
+                        case 'listbox':
+                            var oAux = getField(aRequiredFields[i].name);
+                            var bOneSelected = false;
+                            for (var j = 0; j < oAux.options.length; j++) {
+                                if (oAux.options[j].selected) {
+                                    bOneSelected = true;
+                                    j = oAux.options.length;
+                               }
+                            }
+                            if(bOneSelected == false)
+                                invalid_fields.push(aRequiredFields[i].label);
+                            break;
+
+                        case 'radiogroup':
+                            var x=aRequiredFields[i].name;
+                            var oAux = document.getElementsByName('form['+ x +']');
+                            var bOneChecked = false;
+                            for (var k = 0; k < oAux.length; k++) {
+                                var r = oAux[k];
+                                if (r.checked) {
+                                    bOneChecked = true;
+                                    k = oAux.length;
+                                }
+                            }
+
+                            if(bOneChecked == false)
+                                invalid_fields.push(aRequiredFields[i].label);
+                            break;
+
+                        case 'checkgroup':
+                            var bOneChecked = false;
+                            var aAux = document.getElementsByName('form[' + aRequiredFields[i].name + '][]');
+                            for (var k = 0; k < aAux.length; k++) {
+                                if (aAux[k].checked) {
+                                    bOneChecked = true;
+                                    k = aAux.length;
+                                }
+                            }
+                            if(!bOneChecked) {
+                                invalid_fields.push(aRequiredFields[i].label);
+                            }
+                            break;
+                    }
+                }
+
+                if (validate != '') {
+                    //validate_fields
+                    switch(aRequiredFields[i].type) {
+                        case 'suggest':
+                            break;
+
+                        case 'text':
+
+                            if (validate == "Email") {
+                                var vtext = new input(getField(aRequiredFields[i].name));
+
+                                if (getField(aRequiredFields[i].name).value.trim() != "") {
+                                    var email = getField(aRequiredFields[i].name);
+                                    //var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                                    //var filter = /^[\w\_\-\.ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â§ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
+                                    // var filter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                                    var filter = /^\w+(?:[\.-]?\w+)*@\w+(?:[\.-]?\w+)*\.\w{2,9}$/;
+
+                                    if (!filter.test(email.value.trim()) && email.value != "") {
+                                        fielEmailInvalid.push(aRequiredFields[i].label);
+                                        vtext.failed();
+                                        email.focus();
+                                    } else {
+                                        vtext.passed();
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        // call added by gustavo - cruz, gustavo-at-colosa.com validate grid forms
+        invalid_fields = validateGridForms(invalid_fields);
+
+        if (invalid_fields.length > 0 ||fielEmailInvalid.length> 0) {
+            //alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
+
+            // loop for invalid_fields
+            for(j=0; j<invalid_fields.length; j++){
+                sMessage += (j > 0)? ', ': '';
+                sMessage += invalid_fields[j];
+            }
+
+            // Loop for invalid_emails
+            var emailInvalidMessage = "";
+            for(j=0; j<fielEmailInvalid.length; j++) {
+                emailInvalidMessage += (j > 0)? ', ': '';
+                emailInvalidMessage += fielEmailInvalid[j];
+            }
+
+            /* new leimnud.module.app.alert().make({
+               label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br/><br/>[ " + sMessage + " ]",
+               width:450,
+               height:140 + (parseInt(invalid_fields.length/10)*10)
+            });*/
+
+            //!create systemMessaggeInvalid of field invalids
+            var systemMessaggeInvalid = "";
+
+            if(invalid_fields.length > 0) {
+                systemMessaggeInvalid += "\n \n"+G_STRINGS.ID_REQUIRED_FIELDS + ": \n \n [ " + sMessage + " ]";
+            }
+
+            if(fielEmailInvalid.length > 0) {
+              systemMessaggeInvalid += "\n \n" +  G_STRINGS.ID_VALIDATED_FIELDS + ": \n \n [ " + emailInvalidMessage + " ]";
+            }
+
+            alert(systemMessaggeInvalid);
+
+            swSubmitValidateForm = 1;
+
+            return false;
+        }
+        else {
+            var arrayForm = document.getElementsByTagName("form");
+            var inputAux;
+            var id = "";
+            var i1 = 0;
+            var i2 = 0;
+
+            for (i1 = 0; i1 <= arrayForm.length - 1; i1++) {
+                var frm = arrayForm[i1];
+
+                for (i2 = 0; i2 <= frm.elements.length - 1; i2++)  {
+                    var elem = frm.elements[i2];
+
+                    if (elem.type == "checkbox" && elem.disabled && elem.checked) {
+                        id = elem.id + "_";
+
+                        if (!document.getElementById(id)) {
+                            inputAux       = document.createElement("input");
+                            inputAux.type  = "hidden";
+                            inputAux.id    = id;
+                            inputAux.name  = elem.name;
+                            inputAux.value = elem.value;
+
+                            frm.appendChild(inputAux);
+                        }
+                    }
+                }
+
+                var arrayLink = frm.getElementsByTagName("a");
+
+                for (i2 = 0; i2 <= arrayLink.length - 1; i2++) {
+                    var link = arrayLink[i2];
+
+                    if (typeof link.id != "undefined" && link.id != "" && link.id != "form[DYN_BACKWARD]" && link.id != "form[DYN_FORWARD]") {
+                        var strHtml = link.parentNode.innerHTML;
+
+                        strHtml = stringReplace("\\x0A", "", strHtml); //\n 10
+                        strHtml = stringReplace("\\x0D", "", strHtml); //\r 13
+                        strHtml = stringReplace("\\x09", "", strHtml); //\t  9
+
+                        if (/^.*pm:field.*$/.test(strHtml)) {
+                            id = link.id + "_";
+
+                            if (!document.getElementById(id)) {
+                                var strAux = link.id.replace("form[", "");
+                                strAux = strAux.substring(0, strAux.length - 1);
+
+                                inputAux       = document.createElement("input");
+                                inputAux.type  = "hidden";
+                                inputAux.id    = id;
+                                inputAux.name  = link.id;
+                                inputAux.value = link.href;
+
+                                frm.appendChild(inputAux);
+
+                                inputAux   = document.createElement("input");
+                                inputAux.type  = "hidden";
+                                inputAux.id    = id + "label";
+                                inputAux.name  = "form[" + strAux + "_label]";
+                                inputAux.value = link.innerHTML;
+
+                                frm.appendChild(inputAux);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+    } else {
+
+        return false;
     }
-
-    return true;
-  }
 };
 
 
@@ -3207,6 +3299,109 @@ var saveAndRefreshForm = function(oObject) {
   }
 };
 
+
+/**
+ * @function sessionPersits
+ *
+ * @returns {@exp;response@pro;status}
+ */
+var sessionPersits = function() {
+    var rpc = new leimnud.module.rpc.xmlhttp({
+        url: '../services/sessionPersists',
+        args: 'dynaformRestoreValues=' + (typeof(__dynaformSVal__) != 'undefined' ? __dynaformSVal__ : ''),
+        async: false
+    });
+    rpc.make();
+    var response = rpc.xmlhttp.responseText.parseJSON();
+    return response.status;
+};
+
+/**
+ * @function showPromptLogin
+ *
+ * @param {type} lastAction
+ * @returns {showPrompt}
+ */
+var showPromptLogin = function(lastAction) {
+    lastActionPerformed = lastAction;
+    promptPanel = new leimnud.module.panel();
+    promptPanel.options={
+        statusBarButtons:[{value: _('LOGIN')}],
+        position:{center:true},
+        size:{w:300,h:130},
+        control:{
+            close:false,
+            resize:false
+        },
+        fx:{
+            modal:true
+        }
+    };
+    promptPanel.setStyle={
+        content:{
+            padding:10,
+            paddingBottom:2,
+            textAlign:'left',
+            paddingLeft:50,
+            backgroundRepeat:'no-repeat',
+            backgroundPosition:'10 50%',
+            backgroundColor:'transparent',
+            borderWidth:0
+        }
+    };
+    promptPanel.make();
+    promptPanel.addContent(_('ID_DYNAFORM_EDITOR_LOGIN_AGAIN'));
+    promptPanel.addContent('<br />');
+    var thePassword = $dce('input');
+    thePassword.type = 'password';
+    thePassword.id = 'thePassword';
+    leimnud.dom.setStyle(thePassword,{
+        font:'normal 8pt Tahoma,MiscFixed',
+        color:'#000',
+        width:'100%',
+        marginTop:3,
+        backgroundColor:'white',
+        border:'1px solid #919B9C'
+    });
+    promptPanel.addContent(thePassword);
+    thePassword.focus();
+    thePassword.onkeyup=function(evt)
+    {
+        var evt = (window.event)?window.event:evt;
+        var key = (evt.which)?evt.which:evt.keyCode;
+        if(key == 13) {
+            verifyLogin();
+        }
+    }.extend(this);
+    promptPanel.fixContent();
+    promptPanel.elements.statusBarButtons[0].onmouseup = verifyLogin;
+};
+
+/**
+ * @function verifyLogin
+ *
+ * @returns {unresolved}
+ */
+var verifyLogin = function() {
+    if (document.getElementById('thePassword').value.trim() == '') {
+        alert(_('ID_WRONG_PASS'));
+        return;
+    }
+    var rpc = new leimnud.module.rpc.xmlhttp({
+        url : '../login/authentication',
+        args: 'form[USR_USERNAME]=' + __usernameLogged__ + '&form[USR_PASSWORD]=' + document.getElementById('thePassword').value.trim() + '&form[USR_LANG]=' + SYS_LANG
+    });
+    rpc.callback = function(rpc) {
+        if (rpc.xmlhttp.responseText.indexOf('form[USR_USERNAME]') == -1) {
+            promptPanel.remove();
+            lastActionPerformed = '';
+        } else {
+            alert(_('ID_WRONG_PASS'));
+        }
+    }.extend(this);
+    rpc.make();
+};
+
 /**
  * @function saveForm
  * @author gustavo cruz gustavo[at]colosa[dot]com
@@ -3219,14 +3414,16 @@ var saveAndRefreshForm = function(oObject) {
  *         refreshed or submited, at least not in the traditional sense.
  **/
 
-var saveForm = function(oObject) {
+var saveForm = function(oObject, actionParameter) {
   if (oObject) {
-    ajax_post(oObject.form.action,oObject.form,'POST');
+    var actionUrl = actionParameter || oObject.form.action.replace('cases_SaveData', 'saveForm');
+    ajax_post(actionUrl, oObject.form, 'POST');
   }
   else {
     var oAux = window.document.getElementsByTagName('form');
     if (oAux.length > 0) {
-      ajax_post(oAux[0].action,oAux[0],'POST');
+      var actionUrl = actionParameter || oAux[0].action.replace('cases_SaveData', 'saveForm');
+      ajax_post(actionUrl, oAux[0], 'POST');
     }
   }
 };
@@ -3310,7 +3507,15 @@ function dynaformVerifyFieldName(){
   return true;
 }
 
-function verifyFieldName1(){
+function verifyFieldName1() {
+  if (getField('PME_VALIDATE_NAME').value == '__error_session__') {
+    showPrompt('refreshDynaformEditor');
+    return;
+  }
+  verifyFieldNameFunction();
+}
+
+function verifyFieldNameFunction() {
   var newFieldName=fieldName.value;
   var msj = _('DYNAFIELD_ALREADY_EXIST');
   var validatedFieldName=getField("PME_VALIDATE_NAME",fieldForm).value;
@@ -3342,6 +3547,9 @@ function verifyFieldName1(){
   return valid;
 }
 
+function refreshDynaformEditor() {
+  window.location.href = window.location.href.replace('#', '');
+}
 
 var objectsWithFormula = Array();
 
@@ -3595,3 +3803,165 @@ function getNumericValue(val, decimalSeparator)
     return num;
 }
 
+function gridGetAllFieldAndValue(fieldId, swCurrentField)
+{
+    var frm = G.getObject(getField(fieldId).form);
+
+    var arrayAux = fieldId.split("][");
+    var gridName = arrayAux[0];
+    var row = parseInt(arrayAux[1]);
+    var fieldName = arrayAux[2];
+
+    var grid;
+    var gridField = "";
+    var fieldNameAux  = "";
+    var fieldValueAux = "";
+    var i1 = 0;
+    var i2 = 0;
+
+    //Get all fields of grid
+    for (i1 = 0; i1 <= frm.aElements.length - 1; i1++) {
+        if (frm.aElements[i1].name == gridName) {
+            grid = frm.aElements[i1];
+
+            for (i2 = 0; i2 <= grid.aFields.length - 1; i2++) {
+                fieldNameAux  = grid.aFields[i2].sFieldName;
+                fieldValueAux = grid.getElementByName(row, fieldNameAux).value();
+
+                if ((swCurrentField == 1 || fieldNameAux != fieldName) && typeof fieldValueAux != "undefined") {
+                    gridField = gridField + ((gridField != "")? "," : "") + "\"" + fieldNameAux + "\":\"" + fieldValueAux + "\"";
+                }
+            }
+        }
+    }
+
+    return gridField;
+}
+
+function dropDownSetOption(elem, arrayOption)
+{
+    var selectdd = elem.element;
+    var arraySelectddAttribute = document.getElementById("form[" + elem.name + "]").attributes;
+    var optGroupAux;
+    var optionAux;
+    var swOptGroup = 0;
+    var swOptGroupPrev = 0;
+    var swAppend = 0;
+    var i = 0;
+
+    for (i = 0; i <= arraySelectddAttribute.length - 1; i++) {
+        if (arraySelectddAttribute[i].name == "pm:optgroup") {
+            swOptGroup = parseInt(arraySelectddAttribute[i].value);
+        }
+    }
+
+    //selectdd.options.length = 0; //Delete options
+    selectdd.innerHTML = "";
+
+    for (i = 0; i <= arrayOption.options.length - 1; i++) {
+        if (swOptGroup == 1 && /^optgroup\d+$/.test(arrayOption.options[i].key)) {
+            optGroupAux = document.createElement("optgroup");
+
+            //selectdd.appendChild(optGroupAux);
+
+            optGroupAux.label = arrayOption.options[i].value;
+
+            swOptGroupPrev = 1;
+            swAppend = 1;
+        } else {
+            if (swOptGroupPrev == 1) {
+                //Append optGroupAux
+                if (swAppend == 1) {
+                    selectdd.appendChild(optGroupAux);
+
+                    swAppend = 0;
+                }
+
+                //Append optionAux
+                optionAux = document.createElement("option");
+
+                optGroupAux.appendChild(optionAux);
+
+                optionAux.value = arrayOption.options[i].key;
+                optionAux.text = arrayOption.options[i].value;
+            } else {
+                optionAux = document.createElement("option");
+
+                selectdd.appendChild(optionAux);
+
+                optionAux.value = arrayOption.options[i].key;
+                optionAux.text = arrayOption.options[i].value;
+            }
+        }
+    }
+
+    if (selectdd.options.length == 0) {
+        selectdd.options[0] = new Option("", "");
+    }
+}
+
+function dynaFormChanged(frm)
+{
+    for (var i1 = 0; i1 <= frm.elements.length - 1; i1++) {
+        if (frm.elements[i1].type == "text" && frm.elements[i1].value != frm.elements[i1].defaultValue) {
+            return true;
+        }
+
+        if (frm.elements[i1].type == "textarea" && frm.elements[i1].value != frm.elements[i1].defaultValue) {
+            return true;
+        }
+
+        if (frm.elements[i1].tagName.toLowerCase() == "select") {
+            var selectDefaultValue = frm.elements[i1].value;
+
+            for (var i2 = 0; i2 <= frm.elements[i1].options.length - 1; i2++) {
+                if (frm.elements[i1].options[i2].defaultSelected) {
+                    selectDefaultValue = frm.elements[i1].options[i2].value;
+                    break;
+                }
+            }
+
+            if (frm.elements[i1].value != selectDefaultValue) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function dynaFormPrint(formId, link, width, height, left, top, resizable)
+{
+    var frm = document.getElementById(formId);
+
+    if (dynaFormChanged(frm)) {
+       swSubmitValidateForm = 1;
+
+       new leimnud.module.app.confirm().make({
+           label: _("ID_SAVE_DYNAFORM_INFORMATION_BEFORE_PRINTING"),
+
+           action: function ()
+           {
+               if (frm.length > 0) {
+                   var result = ajax_post(
+                       frm.action,
+                       frm,
+                       "POST",
+                       function (responseText)
+                       {
+                           popUp(link, width, height, left, top, resizable);
+                       },
+                       true
+                   );
+               }
+           },
+
+           cancel: function()
+           {
+               popUp(link, width, height, left, top, resizable);
+           }
+       });
+   } else {
+       popUp(link, width, height, left, top, resizable);
+   }
+}

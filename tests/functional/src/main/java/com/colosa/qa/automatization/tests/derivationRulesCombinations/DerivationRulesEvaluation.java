@@ -39,7 +39,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
@@ -53,7 +53,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
 		pages.DynaformExecution().setFieldValue("amount", "3000");
@@ -69,7 +69,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
@@ -82,7 +82,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("continue", "Yes");
 		pages.DynaformExecution().setFieldValue("send", "");
@@ -95,7 +95,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().intoDynaform();
@@ -111,7 +111,7 @@ public class DerivationRulesEvaluation extends com.colosa.qa.automatization.test
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();

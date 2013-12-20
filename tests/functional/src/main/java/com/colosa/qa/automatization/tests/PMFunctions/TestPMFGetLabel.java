@@ -39,28 +39,23 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PMF GetLabel (Task 1)");
 		pages.DynaformExecution().intoDynaform();
-		//pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		//pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		//pages.DynaformExecution().setFieldValue("Ingreso", "2004-08-17");
-		//pages.DynaformExecution().setFieldValue("Salario", "2,687,886.9976");
 		pages.DynaformExecution().setFieldValue("dropdwn", dropdwn);
-		//pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba ");
 		pages.DynaformExecution().setFieldValue("List", list);
 		pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
 		pages.DynaformExecution().setCheckBoxGroup("check1", check);
 		pages.DynaformExecution().setCheckBoxGroup("check1", check2);
-
 		pages.DynaformExecution().setCheckBoxGroup("check1", check3);
-		pages.DynaformExecution().setFieldValue("Enviar", "");
+		pages.DynaformExecution().clickButton("Enviar");
 		checkGroup = check + " " + check2 + " " + check3 + " ";
 
+        pages.DynaformExecution().intoDynaform();
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("lstValue"), list);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("rdValue"), radio);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
 		//pages.DynaformExecution().sleep(15000);
 		//pages.InputDocProcess().switchToDefault();
-		pages.Main().logout();
+		//pages.Main().logout();
 	}
 
 

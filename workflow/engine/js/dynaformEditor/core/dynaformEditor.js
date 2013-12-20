@@ -8,11 +8,13 @@ var h3OK = 1;
 
 var promptPanel;
 var lastActionPerformed = '';
+var lastTypeSelected = '';
 
 var sessionPersits = function() {
     var rpc = new leimnud.module.rpc.xmlhttp({
-        url : '../services/sessionPersists',
-        async:false
+        url: '../services/sessionPersists',
+        args: 'dynaformEditorParams=' + dynaformEditorParams + (lastActionPerformed != '' ? '&DYN_UID=' + __DYN_UID__ : ''),
+        async: false
     });
     rpc.make();
     var response = rpc.xmlhttp.responseText.parseJSON();
@@ -26,7 +28,7 @@ var verifyLogin = function() {
     }
 	var rpc = new leimnud.module.rpc.xmlhttp({
         url : '../login/authentication',
-        args: 'form[USR_USERNAME]=' + usernameLogged + '&form[USR_PASSWORD]=' + document.getElementById('thePassword').value.trim() + '&form[USR_LANG]=' + SYS_LANG
+        args: 'form[USR_USERNAME]=' + __usernameLogged__ + '&form[USR_PASSWORD]=' + document.getElementById('thePassword').value.trim() + '&form[USR_LANG]=' + SYS_LANG
     });
     rpc.callback = function(rpc) {
         if (rpc.xmlhttp.responseText.indexOf('form[USR_USERNAME]') == -1) {
@@ -41,8 +43,17 @@ var verifyLogin = function() {
                 case 'saveJavascript':
                     dynaformEditor.saveJavascript();
                     break;
+                case 'changeJavascriptCode':
+                    dynaformEditor.changeJavascriptCode(false);
+                    break;
                 case 'close':
                     dynaformEditor.close();
+                    break;
+                case 'saveProperties':
+                    dynaformEditor.saveProperties(false);
+                    break;
+                case 'changeFormType':
+                    changeFormType(false);
                     break;
                 case 'changeToPreview':
                     dynaformEditor.changeToPreview();
@@ -65,6 +76,21 @@ var verifyLogin = function() {
                 case 'changeToShowHide':
                     dynaformEditor.changeToShowHide();
                     break;
+                case 'refreshDynaformEditor':
+                    refreshDynaformEditor();
+                    break;
+                case 'fieldsSave':
+                    fieldsSave(getField('PME_XMLNODE_NAME').form);
+                    break;
+                case 'fieldsAdd':
+                    fieldsAdd(lastTypeSelected);
+                    break;
+                case '__ActionEdit':
+                    document.getElementById('dynaframe').contentWindow.__ActionEdit(document.getElementById('dynaframe').contentWindow.lastUidFHSelected);
+                    break;
+                case '__ActionDelete':
+                    document.getElementById('dynaframe').contentWindow.__ActionDelete(document.getElementById('dynaframe').contentWindow.lastUidFHSelected, document.getElementById('dynaframe').contentWindow.lastFTypeFHSelected);
+                    break;
             }
             lastActionPerformed = '';
         } else {
@@ -80,7 +106,7 @@ var showPrompt = function(lastAction) {
     promptPanel.options={
     	statusBarButtons:[{value: _('LOGIN')}],
     	position:{center:true},
-    	size:{w:300,h:110},
+        size:{w:300,h:125},
     	control:{
     		close:false,
     		resize:false
@@ -312,7 +338,7 @@ var dynaformEditor={
         this.saveJavascript();
         break;
       case "properties":
-        this.saveProperties();
+        this.saveProperties(false);
         break;
     }
   },
@@ -337,7 +363,7 @@ var dynaformEditor={
         this.saveJavascript();
         break;
       case "properties":
-        this.saveProperties();
+        this.saveProperties(false);
         break;
     }
   },
@@ -349,7 +375,7 @@ var dynaformEditor={
         var todoRefreshXmlCode = xmlCode === null;
         if (todoRefreshXmlCode) return;
         var res = this.ajax.set_xmlcode(this.A, encodeURIComponent(xmlCode));
-        if (res!=="") G.alert(res);
+        if (res!=="" && typeof(res) == 'string') G.alert(res);
         this.responseAction = true;
     } else {
         this.responseAction = false;
@@ -357,13 +383,18 @@ var dynaformEditor={
   },
   saveHtmlCode:function()
   {
-    var htmlCode = getField("HTML");
-    todoRefreshHtmlCode = htmlCode === null;
-    if (todoRefreshHtmlCode) return;
-    var response=this.ajax.set_htmlcode(this.A,htmlCode.value);
+    //var htmlCode = getField("HTML");
+    var response = null;
+    try {
+        response = this.ajax.set_htmlcode(this.A, tinyMCE.activeEditor.getContent());
+    } catch (e) {
+    }
+
     if (response) {
-        G.alert(response["*message"],"Error");
-        this.responseAction = false;
+        if (typeof(response["*message"]) != 'undefined') {
+            G.alert(response["*message"],"Error");
+            this.responseAction = false;
+        }
     } else {
         this.responseAction = true;
     }
@@ -384,13 +415,20 @@ var dynaformEditor={
     }
     this.responseAction = true;
   },
-  saveProperties:function()
+  saveProperties:function(checkSessionPersists)
   {
+    checkSessionPersists = typeof(checkSessionPersists) != 'undefined' ? checkSessionPersists : true;
+    if (checkSessionPersists) {
+        if (!sessionPersits()) {
+            showPrompt('saveProperties');
+            return;
+        }
+    }
     var form=this.views["properties"].getElementsByTagName("form")[0];
     var post=ajax_getForm(form);
     var response=this.ajax.set_properties(this.A,this.dynUid,post);
-                if (response!=0){
-                   G.alert(response["*message"]);
+    if (typeof(response["*message"])==="string") {
+        G.alert(response["*message"]);
     }
     this.responseAction = true;
   },
@@ -424,7 +462,12 @@ var dynaformEditor={
     if( ! xmlEditor ) {
       clientWinSize = getClientWindowSize();
 
-        xmlEditor = CodeMirror.fromTextArea('form[XML]', {
+        if (_BROWSER.name == 'msie') {
+          var content_withoutLabel = document.getElementById("form[XML]").parentNode;
+          content_withoutLabel.style.height = (clientWinSize.height - 140) + 'px';
+        }
+
+        /*xmlEditor = CodeMirror.fromTextArea('form[XML]', {
         height: (clientWinSize.height - 120) + "px",
         width: (_BROWSER.name == 'msie' ? '100%' : '98%'),
         parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
@@ -433,8 +476,13 @@ var dynaformEditor={
         stylesheet: ["css/xmlcolors.css", "css/jscolors.css"],
         path: "js/",
         lineNumbers: true,
-        continuousScanning: 500
-      });
+        continuousScanning: 500 });*/
+
+        xmlEditor = CodeMirror.fromTextArea(document.getElementById("form[XML]"), {
+        mode: "application/xml",
+        styleActiveLine: true,
+        lineNumbers: true,
+        lineWrapping: true });
     }
   },
   changeToHtmlCode:function()
@@ -493,16 +541,26 @@ var dynaformEditor={
       if( ! jsEditor )
       {
         clientWinSize = getClientWindowSize();
+
+        if (_BROWSER.name == 'msie') {
+          var content_withoutLabel = document.getElementById("form[JS]").parentNode;
+          content_withoutLabel.style.height = (clientWinSize.height - 140) + 'px';
+        }
         startJSCodePress();
-        jsEditor = CodeMirror.fromTextArea('form[JS]', {
+
+        /*jsEditor = CodeMirror.fromTextArea('form[JS]', {
           height: (clientWinSize.height - 140) + "px",
           width: (_BROWSER.name == 'msie' ? '100%' : '98%'),
           parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
           stylesheet: ["css/jscolors.css"],
           path: "js/",
           lineNumbers: true,
-          continuousScanning: 500
-        });
+          continuousScanning: 500 });*/
+
+          jsEditor = CodeMirror.fromTextArea(document.getElementById("form[JS]"), {
+            mode: "javascript",
+            lineNumbers: true,
+            lineWrapping: true });
       }
     } else {
       showRowById('JS_TITLE');
@@ -664,8 +722,10 @@ var dynaformEditor={
   {
     //if (JSCodePress)
     if( jsEditor ) {
-      if(typeof jsEditor.setCode == 'function')
-        jsEditor.setCode(newCode);
+        if(typeof jsEditor.setValue == 'function')
+        {
+            jsEditor.setValue(newCode);//jsEditor.setCode(newCode);
+        }
     }
     else
     {
@@ -683,7 +743,7 @@ var dynaformEditor={
   setXMLCode:function(newCode)
   {
     if( xmlEditor ) {
-      xmlEditor.setCode(newCode);
+      xmlEditor.setValue(newCode);//setCode(newCode);
     } else {
       var code = getField("XML","dynaforms_XmlEditor");
       code.value = newCode;
@@ -755,8 +815,15 @@ var dynaformEditor={
       showRowById('JS_TITLE');hideRowById('JS_LIST');hideRowById('JS');}
 
   },
-  changeJavascriptCode:function()
+  changeJavascriptCode:function(checkSessionPersists)
   {
+    checkSessionPersists = typeof(checkSessionPersists) != 'undefined' ? checkSessionPersists : true;
+    if (checkSessionPersists) {
+      if (!sessionPersits()) {
+        showPrompt('changeJavascriptCode');
+        return;
+      }
+    }
     var field=getField("JS_LIST","dynaforms_JSEditor");
     var value=field.value;
     if (this.currentJS)
@@ -836,6 +903,11 @@ function getElementByPMClass(__class){
 
   function fieldsSave( form ) {
 
+    if (!sessionPersits()) {
+      showPrompt('fieldsSave');
+      return;
+    }
+
     var str    = document.getElementById('form[PME_XMLNODE_NAME]').value;
     var dField = new input(getField('PME_XMLNODE_NAME'));
 
@@ -880,6 +952,11 @@ function getElementByPMClass(__class){
   var typePopup = 0;
   function fieldsAdd( type,label )
   {
+    lastTypeSelected = type;
+    if (!sessionPersits()) {
+      showPrompt('fieldsAdd');
+      return;
+    }
     switch (type){
       case 'text'      : label=TRANSLATIONS.ID_FIELD_DYNAFORM_TEXT;        typePopup = 1;   break;
       case 'currency'  : label=TRANSLATIONS.ID_FIELD_DYNAFORM_CURRENCY;    typePopup = 1;  break;

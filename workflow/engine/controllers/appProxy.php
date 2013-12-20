@@ -1,5 +1,11 @@
 <?php
-
+if (!isset($_SESSION['USER_LOGGED'])) {
+    $response = new stdclass();
+    $response->message = G::LoadTranslation('ID_LOGIN_AGAIN');
+    $response->lostSession = true;
+    print G::json_encode( $response );
+    die();
+}
 /**
  * App controller
  *
@@ -21,6 +27,13 @@ class AppProxy extends HttpProxyController
      */
     function getNotesList ($httpData)
     {
+        if (!isset($_SESSION['USER_LOGGED'])) {
+            $response = new stdclass();
+            $response->message = G::LoadTranslation('ID_LOGIN_AGAIN');
+            $response->lostSession = true;
+            print G::json_encode( $response );
+            die();
+        }
         $appUid = null;
 
         if (isset( $httpData->appUid ) && trim( $httpData->appUid ) != "") {
@@ -38,15 +51,15 @@ class AppProxy extends HttpProxyController
         if (!isset($_SESSION['PROCESS']) && !isset($httpData->pro)) {
             $caseLoad = $case->loadCase($appUid);
             $httpData->pro = $caseLoad['PRO_UID'];
-        }    
-        
+        }
+
         if(!isset($httpData->pro) || empty($httpData->pro) )
         {
             $proUid = $_SESSION['PROCESS'];
         } else {
             $proUid = $httpData->pro;
         }
-        
+
         if(!isset($httpData->tas) || empty($httpData->tas))
         {
             $tasUid = $_SESSION['TASK'];
@@ -56,7 +69,7 @@ class AppProxy extends HttpProxyController
         //$proUid = (!isset($httpData->pro)) ? $_SESSION['PROCESS'] : $httpData->pro;
         //$tasUid = (!isset($httpData->tas)) ? ((isset($_SESSION['TASK'])) ? $_SESSION['TASK'] : '') : $httpData->tas;
         $usrUid = $_SESSION['USER_LOGGED'];
-        
+
         $respView = $case->getAllObjectsFrom( $proUid, $appUid, $tasUid, $usrUid, 'VIEW' );
         $respBlock = $case->getAllObjectsFrom( $proUid, $appUid, $tasUid, $usrUid, 'BLOCK' );
 
@@ -68,7 +81,7 @@ class AppProxy extends HttpProxyController
         //require_once ("classes/model/AppNotes.php");
 
         if (! isset( $appUid )) {
-            throw new Exception( 'Can\'t resolve the Apllication ID for this request.' );
+            throw new Exception( G::LoadTranslation('ID_RESOLVE_APPLICATION_ID' ) );
         }
 
         $usrUid = isset( $_SESSION['USER_LOGGED'] ) ? $_SESSION['USER_LOGGED'] : "";
@@ -100,7 +113,7 @@ class AppProxy extends HttpProxyController
         }
 
         if (! isset( $appUid )) {
-            throw new Exception( 'Can\'t resolve the Apllication ID for this request.' );
+            throw new Exception(G::LoadTranslation("ID_CANT_RESOLVE_APPLICATION"));
         }
 
         $usrUid = (isset( $_SESSION['USER_LOGGED'] )) ? $_SESSION['USER_LOGGED'] : "";
@@ -108,14 +121,30 @@ class AppProxy extends HttpProxyController
 
         //Disabling the controller response because we handle a special behavior
         $this->setSendResponse(false);
-        
+
         //Add note case
         $appNote = new AppNotes();
-        $response = $appNote->addCaseNote($appUid, $usrUid, $noteContent, intval($httpData->swSendMail));
+        try {
+            $response = $appNote->addCaseNote($appUid, $usrUid, $noteContent, intval($httpData->swSendMail));
+        } catch (Exception $error) {
+            $response = new stdclass();
+            $response->success  = 'success';
+            $response->message  = G::LoadTranslation('ID_ERROR_SEND_NOTIFICATIONS');
+            $response->message .= '<br /><br />' . $error->getMessage() . '<br /><br />';
+            $response->message .= G::LoadTranslation('ID_CONTACT_ADMIN');
+            die(G::json_encode($response));
+        }
 
         //Send the response to client
         @ini_set("implicit_flush", 1);
         ob_start();
+        if (!isset($_SESSION['USER_LOGGED'])) {
+            $response = new stdclass();
+            $response->message = G::LoadTranslation('ID_LOGIN_AGAIN');
+            $response->lostSession = true;
+            print G::json_encode( $response );
+            die();
+        }
         echo G::json_encode($response);
         @ob_flush();
         @flush();
@@ -193,7 +222,7 @@ class AppProxy extends HttpProxyController
     function getSummary ($httpData)
     {
         $labels = array ();
-        $form = new Form( 'cases/cases_Resume', PATH_XMLFORM, SYS_LANG );
+        $form = new Form( 'cases/cases_Resume', PATH_XMLFORM, SYS_LANG ); //este es el problema!!!!!
         G::LoadClass( 'case' );
         $case = new Cases();
 
@@ -231,41 +260,25 @@ class AppProxy extends HttpProxyController
         $taskData = $task->load( $applicationFields['TAS_UID'] );
         $currentUser = $applicationFields['CURRENT_USER'] != '' ? $applicationFields['CURRENT_USER'] : '[' . G::LoadTranslation( 'ID_UNASSIGNED' ) . ']';
 
-        $data[] = array ('label' => $labels['PRO_TITLE'],'value' => $processData['PRO_TITLE'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['TITLE'],'value' => $applicationFields['TITLE'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['APP_NUMBER'],'value' => $applicationFields['APP_NUMBER'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['STATUS'],'value' => $applicationFields['STATUS'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['APP_UID'],'value' => $applicationFields['APP_UID'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['CREATOR'],'value' => $applicationFields['CREATOR'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['CREATE_DATE'],'value' => $applicationFields['CREATE_DATE'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['UPDATE_DATE'],'value' => $applicationFields['UPDATE_DATE'],'section' => $labels['TITLE1']
-        );
-        $data[] = array ('label' => $labels['DESCRIPTION'],'value' => $applicationFields['DESCRIPTION'],'section' => $labels['TITLE1']
-        );
+        $data[] = array ('label' => $labels['PRO_TITLE'],'value' => $processData['PRO_TITLE'],'section' => $labels['TITLE1']);
+        $data[] = array ("label" => $labels["TITLE"], "value" => htmlentities($applicationFields["TITLE"], ENT_QUOTES, "UTF-8"), "section" => $labels["TITLE1"]);
+        $data[] = array ('label' => $labels['APP_NUMBER'],'value' => $applicationFields['APP_NUMBER'],'section' => $labels['TITLE1']);
+        $data[] = array ('label' => $labels['STATUS'],'value' => $applicationFields['STATUS'],'section' => $labels['TITLE1']);
+        $data[] = array ('label' => $labels['APP_UID'],'value' => $applicationFields['APP_UID'],'section' => $labels['TITLE1']);
+        $data[] = array ('label' => $labels['CREATOR'],'value' => $applicationFields['CREATOR'],'section' => $labels['TITLE1']);
+        $data[] = array ('label' => $labels['CREATE_DATE'],'value' => $applicationFields['CREATE_DATE'],'section' => $labels['TITLE1']);
+        $data[] = array ('label' => $labels['UPDATE_DATE'],'value' => $applicationFields['UPDATE_DATE'],'section' => $labels['TITLE1']);
+        $data[] = array ("label" => $labels["DESCRIPTION"], "value" => htmlentities($applicationFields["DESCRIPTION"], ENT_QUOTES, "UTF-8"), "section" => $labels["TITLE1"]);
 
         // note added by krlos pacha carlos[at]colosa[dot]com
         //getting this field if it doesn't exist. Related 7994 bug
         $taskData['TAS_TITLE'] = (array_key_exists( 'TAS_TITLE', $taskData )) ? $taskData['TAS_TITLE'] : Content::Load( "TAS_TITLE", "", $applicationFields['TAS_UID'], SYS_LANG );
-
-        $data[] = array ('label' => $labels['TAS_TITLE'],'value' => $taskData['TAS_TITLE'],'section' => $labels['TITLE2']
-        );
-        $data[] = array ('label' => $labels['CURRENT_USER'],'value' => $currentUser,'section' => $labels['TITLE2']
-        );
-        $data[] = array ('label' => $labels['DEL_DELEGATE_DATE'],'value' => $applicationFields['DEL_DELEGATE_DATE'],'section' => $labels['TITLE2']
-        );
-        $data[] = array ('label' => $labels['DEL_INIT_DATE'],'value' => $applicationFields['DEL_INIT_DATE'],'section' => $labels['TITLE2']
-        );
-        $data[] = array ('label' => $labels['DEL_TASK_DUE_DATE'],'value' => $applicationFields['DEL_TASK_DUE_DATE'],'section' => $labels['TITLE2']
-        );
-        $data[] = array ('label' => $labels['DEL_FINISH_DATE'],'value' => $applicationFields['DEL_FINISH_DATE'],'section' => $labels['TITLE2']
-        );
+        $data[] = array ("label" => $labels["TAS_TITLE"], "value" => htmlentities($taskData["TAS_TITLE"], ENT_QUOTES, "UTF-8"), "section" => $labels["TITLE2"]);
+        $data[] = array ('label' => $labels['CURRENT_USER'],'value' => $currentUser,'section' => $labels['TITLE2']);
+        $data[] = array ('label' => $labels['DEL_DELEGATE_DATE'],'value' => $applicationFields['DEL_DELEGATE_DATE'],'section' => $labels['TITLE2']);
+        $data[] = array ('label' => $labels['DEL_INIT_DATE'],'value' => $applicationFields['DEL_INIT_DATE'],'section' => $labels['TITLE2']);
+        $data[] = array ('label' => $labels['DEL_TASK_DUE_DATE'],'value' => $applicationFields['DEL_TASK_DUE_DATE'],'section' => $labels['TITLE2']);
+        $data[] = array ('label' => $labels['DEL_FINISH_DATE'],'value' => $applicationFields['DEL_FINISH_DATE'],'section' => $labels['TITLE2']);
         //$data[] = array('label'=>$labels['DYN_UID'] ,           'value' => $processData['PRO_DYNAFORMS']['PROCESS'];, 'section'=>$labels['DYN_UID']);
         return $data;
     }

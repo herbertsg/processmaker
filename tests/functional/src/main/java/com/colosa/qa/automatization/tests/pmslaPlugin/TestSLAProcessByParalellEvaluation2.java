@@ -28,12 +28,12 @@ public class TestSLAProcessByParalellEvaluation2 extends com.colosa.qa.automatiz
 		pages.DynaformExecution().setFieldValue("verificar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());

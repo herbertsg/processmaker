@@ -2,7 +2,11 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,11 +16,14 @@ import org.openqa.selenium.WebElement;
  * To change this template use File | Settings | File Templates.
  */
 public class AssignTask extends Page {
+    WebElement frmDerivation;
 
     public AssignTask(BrowserInstance browser) throws Exception {
         super(browser);
 
         verifyPage();
+
+        this.frmDerivation = browser.findElementById("frmDerivation");
     }
 
     @Override
@@ -51,5 +58,31 @@ public class AssignTask extends Page {
         else{
             nextBtn.click();
         }
+    }
+
+    public void selectManualAssignedUser(Integer taskNumber, String value) throws Exception{
+        //find user element
+        //List<WebElement> listTaskLabels = browser.findElementsByClassName("FormLabel");
+        List<WebElement> listTaskContent = this.frmDerivation.findElements(By.cssSelector("td.FormFieldContent"));
+
+        Logger.addLog("List of tasks content:" + listTaskContent.size());
+
+        //get the specified task content
+        WebElement tdTaskSelect = listTaskContent.get((taskNumber*2) - 1);
+        if(tdTaskSelect == null){
+            throw new Exception("Specified manual task selection not found.");
+        }
+
+        WebElement taskSelect = tdTaskSelect.findElement(By.tagName("select"));
+        if(taskSelect == null){
+            throw new Exception("Specified manual task selection not found 2.");
+        }
+
+        Select selectTask = new Select(taskSelect);
+
+        Logger.addLog("Select task:" + selectTask.toString());
+
+        selectTask.selectByVisibleText(value);
+
     }
 }

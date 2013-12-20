@@ -313,65 +313,233 @@ class wsBase
      * @param string $userId
      * @return $result will return an object
      */
-    public function caseList ($userId)
+    public function caseList($userUid)
     {
         try {
-            $result = array ();
-            $oCriteria = new Criteria( 'workflow' );
-            $del = DBAdapter::getStringDelimiter();
-            $oCriteria->addSelectColumn( ApplicationPeer::APP_UID );
-            $oCriteria->addSelectColumn( ApplicationPeer::APP_NUMBER );
-            $oCriteria->addSelectColumn( ApplicationPeer::APP_STATUS );
-            $oCriteria->addSelectColumn( AppDelegationPeer::DEL_INDEX );
-            $oCriteria->addSelectColumn( ApplicationPeer::PRO_UID );
-            $oCriteria->addAsColumn( 'CASE_TITLE', 'C1.CON_VALUE' );
-            $oCriteria->addAlias( "C1", 'CONTENT' );
-            $caseTitleConds = array ();
-            $caseTitleConds[] = array (ApplicationPeer::APP_UID,'C1.CON_ID'
-            );
-            $caseTitleConds[] = array ('C1.CON_CATEGORY',$del . 'APP_TITLE' . $del
-            );
-            $caseTitleConds[] = array ('C1.CON_LANG',$del . SYS_LANG . $del
-            );
-            $oCriteria->addJoinMC( $caseTitleConds, Criteria::LEFT_JOIN );
+            $solrEnabled = 0;
 
-            $oCriteria->addJoin( ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN );
+            if (($solrEnv = System::solrEnv()) !== false) {
+                G::LoadClass("AppSolr");
 
-            $oCriteria->add( ApplicationPeer::APP_STATUS, array ('TO_DO','DRAFT'
-            ), Criteria::IN );
-            $oCriteria->add( AppDelegationPeer::USR_UID, $userId );
-            $oCriteria->add( AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
-            $oCriteria->addDescendingOrderByColumn( ApplicationPeer::APP_NUMBER );
-            $oDataset = ApplicationPeer::doSelectRS( $oCriteria );
-            $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
-            $oDataset->next();
-
-            while ($aRow = $oDataset->getRow()) {
-                /*
-                $result[] = array(
-                    'guid'     => $aRow['APP_UID'],
-                    'name'     => $aRow['CASE_TITLE'],
-                    'status'   => $aRow['APP_STATUS'],
-                    'delIndex' => $aRow['DEL_INDEX']
+                $appSolr = new AppSolr(
+                    $solrEnv["solr_enabled"],
+                    $solrEnv["solr_host"],
+                    $solrEnv["solr_instance"]
                 );
-                */
-                $result[] = array('guid' => $aRow['APP_UID'],
-                                  'name' => $aRow['APP_NUMBER'],
-                                  'status' => $aRow['APP_STATUS'],
-                                  'delIndex' => $aRow['DEL_INDEX'],
-                                  'processId' => $aRow['PRO_UID']);
-                $oDataset->next();
+
+                if ($appSolr->isSolrEnabled() && $solrEnv["solr_enabled"] == true) {
+                    //Check if there are missing records to reindex and reindex them
+                    $appSolr->synchronizePendingApplications();
+
+                    $solrEnabled = 1;
+                }
             }
 
-            return $result;
-        } catch (Exception $e) {
-            $result[] = array ('guid' => $e->getMessage(),
-                               'name' => $e->getMessage(),
-                               'status' => $e->getMessage(),
-                               'status' => $e->getMessage(),
-                               'processId' => $e->getMessage());
+            if ($solrEnabled == 1) {
+                try {
+                    G::LoadClass("searchIndex");
 
-            return $result;
+                    $arrayData = array();
+
+                    $delegationIndexes = array();
+                    $columsToInclude = array("APP_UID");
+                    $solrSearchText = null;
+
+                    //Todo
+                    $solrSearchText = $solrSearchText . (($solrSearchText != null)? " OR " : null) . "(APP_STATUS:TO_DO AND APP_ASSIGNED_USERS:" . $userUid . ")";
+                    $delegationIndexes[] = "APP_ASSIGNED_USER_DEL_INDEX_" . $userUid . "_txt";
+
+                    //Draft
+                    $solrSearchText = $solrSearchText . (($solrSearchText != null)? " OR " : null) . "(APP_STATUS:DRAFT AND APP_DRAFT_USER:" . $userUid . ")";
+                    //Index is allways 1
+
+                    $solrSearchText = "($solrSearchText)";
+
+                    //Add del_index dynamic fields to list of resulting columns
+                    $columsToIncludeFinal = array_merge($columsToInclude, $delegationIndexes);
+
+                    $solrRequestData = Entity_SolrRequestData::createForRequestPagination(
+                        array(
+                            "workspace"  => $solrEnv["solr_instance"],
+                            "startAfter" => 0,
+                            "pageSize"   => 1000,
+                            "searchText" => $solrSearchText,
+                            "numSortingCols" => 1,
+                            "sortCols" => array("APP_NUMBER"),
+                            "sortDir"  => array(strtolower("DESC")),
+                            "includeCols"  => $columsToIncludeFinal,
+                            "resultFormat" => "json"
+                        )
+                    );
+
+                    //Use search index to return list of cases
+                    $searchIndex = new BpmnEngine_Services_SearchIndex($appSolr->isSolrEnabled(), $solrEnv["solr_host"]);
+
+                    //Execute query
+                    $solrQueryResult = $searchIndex->getDataTablePaginatedList($solrRequestData);
+
+                    //$rows = array();
+
+                    //Number of found records
+                    //$numRecTotal = $solrQueryResult->iTotalDisplayRecords;
+
+                    //print_r($solrQueryResult->aaData); exit(0);
+
+                    //Get the missing data from database
+                    $arrayApplicationUid = array();
+
+                    foreach ($solrQueryResult->aaData as $i => $data) {
+                        $arrayApplicationUid[] = $data["APP_UID"];
+                    }
+
+                    $aaappsDBData = $appSolr->getListApplicationDelegationData($arrayApplicationUid);
+
+                    foreach ($solrQueryResult->aaData as $i => $data) {
+                        //Initialize array
+                        $delIndexes = array(); //Store all the delegation indexes
+
+                        //Complete empty values
+                        $applicationUid = $data["APP_UID"]; //APP_UID
+
+                        //Get all the indexes returned by Solr as columns
+                        for($i = count($columsToInclude); $i <= count($data) - 1; $i++) {
+                            if (is_array($data[$columsToIncludeFinal[$i]])) {
+                                foreach ($data[$columsToIncludeFinal[$i]] as $delIndex) {
+                                    $delIndexes[] = $delIndex;
+                                }
+                            }
+                        }
+
+                        //Verify if the delindex is an array
+                        //if is not check different types of repositories
+                        //the delegation index must always be defined.
+                        if (count($delIndexes) == 0) {
+                            ////if is draft
+                            //if ($action == "draft") {
+                                $delIndexes[] = 1; // the first default index
+                            //} else {
+                            //    //error an index must always be defined
+                            //    print date("Y-m-d H:i:s:u") . " Delegation not defined\n";
+                            //}
+                        }
+
+                        //Remove duplicated
+                        $delIndexes = array_unique($delIndexes);
+
+                        //Get records
+                        foreach ($delIndexes as $delIndex) {
+                            $aRow = array();
+
+                            //Copy result values to new row from Solr server
+                            $aRow["APP_UID"] = $data["APP_UID"];
+
+                            //Get delegation data from DB
+                            //Filter data from db
+                            $indexes = $appSolr->aaSearchRecords($aaappsDBData, array(
+                                "APP_UID" => $applicationUid,
+                                "DEL_INDEX" => $delIndex
+                            ));
+
+                            foreach ($indexes as $index) {
+                                $row = $aaappsDBData[$index];
+                            }
+
+                            if(!isset($row))
+                            {
+                                //$fh = fopen("SolrAppWithoutDelIndex.txt", "a") or die("can't open file to store Solr search time.");
+                                //fwrite($fh, sprintf("Solr AppUid: %s DelIndex: %s not found.\r\n", $applicationUid, $delIndex));
+                                //fclose($fh);
+                                continue;
+                            }
+
+                            $aRow["APP_NUMBER"] = $row["APP_NUMBER"];
+                            $aRow["APP_STATUS"] = $row["APP_STATUS"];
+                            $aRow["PRO_UID"]    = $row["PRO_UID"];
+                            $aRow["DEL_INDEX"]  = $row["DEL_INDEX"];
+
+                            //$rows[] = $aRow;
+
+                            $arrayData[] = array(
+                                "guid" => $aRow["APP_UID"],
+                                "name" => $aRow["APP_NUMBER"],
+                                "status" => $aRow["APP_STATUS"],
+                                "delIndex" => $aRow["DEL_INDEX"],
+                                "processId" => $aRow["PRO_UID"]
+                            );
+                        }
+                    }
+
+                    return $arrayData;
+                } catch (InvalidIndexSearchTextException $e) {
+                    $arrayData = array();
+
+                    $arrayData[] = array (
+                        "guid" => $e->getMessage(),
+                        "name" => $e->getMessage(),
+                        "status" => $e->getMessage(),
+                        "delIndex" => $e->getMessage(),
+                        "processId" => $e->getMessage()
+                    );
+
+                    return $arrayData;
+                }
+            } else {
+                $arrayData = array();
+
+                $criteria = new Criteria("workflow");
+
+                $criteria->addSelectColumn(AppCacheViewPeer::APP_UID);
+                $criteria->addSelectColumn(AppCacheViewPeer::DEL_INDEX);
+                $criteria->addSelectColumn(AppCacheViewPeer::APP_NUMBER);
+                $criteria->addSelectColumn(AppCacheViewPeer::APP_STATUS);
+                $criteria->addSelectColumn(AppCacheViewPeer::PRO_UID);
+
+                $criteria->add(AppCacheViewPeer::USR_UID, $userUid);
+
+                $criteria->add(
+                    //ToDo - getToDo()
+                    $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "TO_DO", CRITERIA::EQUAL)->addAnd(
+                    $criteria->getNewCriterion(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL))->addAnd(
+                    $criteria->getNewCriterion(AppCacheViewPeer::APP_THREAD_STATUS, "OPEN"))->addAnd(
+                    $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "OPEN"))
+                )->addOr(
+                    //Draft - getDraft()
+                    $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "DRAFT", CRITERIA::EQUAL)->addAnd(
+                    $criteria->getNewCriterion(AppCacheViewPeer::APP_THREAD_STATUS, "OPEN"))->addAnd(
+                    $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "OPEN"))
+                );
+
+                $criteria->addDescendingOrderByColumn(AppCacheViewPeer::APP_NUMBER);
+
+                $rsCriteria = AppCacheViewPeer::doSelectRS($criteria);
+                $rsCriteria->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+                while ($rsCriteria->next()) {
+                    $row = $rsCriteria->getRow();
+
+                    $arrayData[] = array(
+                        "guid" => $row["APP_UID"],
+                        "name" => $row["APP_NUMBER"],
+                        "status" => $row["APP_STATUS"],
+                        "delIndex" => $row["DEL_INDEX"],
+                        "processId" => $row["PRO_UID"]
+                    );
+                }
+
+                return $arrayData;
+            }
+        } catch (Exception $e) {
+            $arrayData = array();
+
+            $arrayData[] = array (
+                "guid" => $e->getMessage(),
+                "name" => $e->getMessage(),
+                "status" => $e->getMessage(),
+                "delIndex" => $e->getMessage(),
+                "processId" => $e->getMessage()
+            );
+
+            return $arrayData;
         }
     }
 
@@ -770,8 +938,17 @@ class wsBase
             }
 
             $oSpool = new spoolRun();
-            $oSpool->setConfig( array ('MESS_ENGINE' => $aSetup['MESS_ENGINE'],'MESS_SERVER' => $aSetup['MESS_SERVER'],'MESS_PORT' => $aSetup['MESS_PORT'],'MESS_ACCOUNT' => $aSetup['MESS_ACCOUNT'],'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],'SMTPAuth' => $aSetup['MESS_RAUTH']
-            ) );
+            $oSpool->setConfig(
+                array (
+                    'MESS_ENGINE' => $aSetup['MESS_ENGINE'],
+                    'MESS_SERVER' => $aSetup['MESS_SERVER'],
+                    'MESS_PORT' => $aSetup['MESS_PORT'],
+                    'MESS_ACCOUNT' => $aSetup['MESS_ACCOUNT'],
+                    'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
+                    'SMTPSecure' => $aSetup['SMTPSecure'],
+                    'SMTPAuth' => $aSetup['MESS_RAUTH']
+                )
+            );
 
             $oCase = new Cases();
             $oldFields = $oCase->loadCase( $caseId );
@@ -794,12 +971,20 @@ class wsBase
             }
 
             $sBody = G::replaceDataGridField(file_get_contents($fileTemplate), $Fields);
-
             $hasEmailFrom = preg_match( '/(.+)@(.+)\.(.+)/', $sFrom, $match );
 
-            if (! $hasEmailFrom || strpos( $sFrom, $aSetup['MESS_ACCOUNT'] ) === false) {
-                $sFrom = '"' . stripslashes( $sFrom ) . '" <' . $aSetup['MESS_ACCOUNT'] . ">";
+            if (!$hasEmailFrom || strpos($sFrom, $aSetup["MESS_ACCOUNT"]) === false) {
+                if (trim($aSetup["MESS_ACCOUNT"]) != "") {
+                    $sFrom = "\"" . stripslashes($sFrom) . "\" <" . $aSetup["MESS_ACCOUNT"] . ">";
+                } else {
+                    if ($aSetup["MESS_ENGINE"] == "MAIL") {
+                        $sFrom = "\"" . stripslashes($sFrom) . "\"";
+                    } else {
+                        $sFrom = $sFrom . " <info@" . ((isset($_SERVER["HTTP_HOST"]) && $_SERVER["HTTP_HOST"] != "")? $_SERVER["HTTP_HOST"] : "processmaker.com") . ">";
+                    }
+                }
             }
+
             $showMessage = ($showMessage) ? 1 : 0 ;
 
             $messageArray = array(
@@ -1049,7 +1234,12 @@ class wsBase
             $arrayData["USR_AUTH_USER_DN"] = "";
             $arrayData["USR_STATUS"] = ($status == "ACTIVE") ? 1 : 0;
 
-            $userUid = $RBAC->createUser( $arrayData, $strRole );
+            try {
+                $userUid = $RBAC->createUser( $arrayData, $strRole );
+            } catch(Exception $oError) {
+                $result =  new wsCreateUserResponse(100, $oError->getMessage(), null );
+                return $result;
+            }
 
             $arrayData["USR_UID"] = $userUid;
             $arrayData["USR_STATUS"] = $status;
@@ -1692,10 +1882,13 @@ class wsBase
      * @param string $userId
      * @param string $taskId
      * @param string $variables
+     * @param int $executeTriggers : Optional parameter. The execution all triggers of the task, according to your steps, 1 yes 0 no.
      * @return $result will return an object
      */
-    public function newCase ($processId, $userId, $taskId, $variables)
+    public function newCase($processId, $userId, $taskId, $variables, $executeTriggers = 0)
     {
+        //$executeTriggers, this parameter is not important, it may be the last parameter in the method
+
         $g = new G();
 
         try {
@@ -1723,7 +1916,6 @@ class wsBase
             }
 
             $oCase = new Cases();
-            $oTask = new Tasks();
             $startingTasks = $oCase->getStartCases( $userId );
             array_shift( $startingTasks ); //remove the first row, the header row
             $founded = '';
@@ -1764,6 +1956,7 @@ class wsBase
                 return $result;
             }
 
+            //Start case
             $case = $oCase->startCase( $taskId, $userId );
 
             $_SESSION['APPLICATION'] = $case['APPLICATION'];
@@ -1771,7 +1964,7 @@ class wsBase
             $_SESSION['TASK'] = $taskId;
             $_SESSION['INDEX'] = $case['INDEX'];
             $_SESSION['USER_LOGGED'] = $userId;
-            $_SESSION['USR_USERNAME'] = $case['USR_USERNAME'];
+            $_SESSION['USR_USERNAME'] = (isset($case['USR_USERNAME'])) ? $case['USR_USERNAME'] : '';
             $_SESSION['STEP_POSITION'] = 0;
 
             $caseId = $case['APPLICATION'];
@@ -1781,8 +1974,30 @@ class wsBase
 
             $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields );
 
+            $oldFields['DEL_INDEX'] = $case['INDEX'];
+            $oldFields['TAS_UID'] = $taskId;
             $up_case = $oCase->updateCase( $caseId, $oldFields );
 
+            //Execute all triggers of the task, according to your steps
+            if ($executeTriggers == 1) {
+                $task = new Tasks();
+                $arrayStep = $task->getStepsOfTask($taskId);
+
+                foreach ($arrayStep as $step) {
+                    $arrayField = $oCase->loadCase($caseId);
+
+                    $arrayField["APP_DATA"] = $oCase->executeTriggers($taskId, $step["STEP_TYPE_OBJ"], $step["STEP_UID_OBJ"], "BEFORE", $arrayField["APP_DATA"]);
+                    $arrayField["APP_DATA"] = $oCase->executeTriggers($taskId, $step["STEP_TYPE_OBJ"], $step["STEP_UID_OBJ"], "AFTER", $arrayField["APP_DATA"]);
+
+                    unset($arrayField['APP_STATUS']);
+                    unset($arrayField['APP_PROC_STATUS']);
+                    unset($arrayField['APP_PROC_CODE']);
+                    unset($arrayField['APP_PIN']);
+                    $arrayField = $oCase->updateCase($caseId, $arrayField);
+                }
+            }
+
+            //Response
             $result = new wsResponse( 0, G::loadTranslation( 'ID_STARTED_SUCCESSFULLY' ) );
             $result->caseId = $caseId;
             $result->caseNumber = $caseNr;
@@ -1805,18 +2020,18 @@ class wsBase
      * @param string $processId
      * @param string $userId
      * @param string $variables
+     * @param string $taskId, must be in the starting group.
      * @return $result will return an object
      */
-    public function newCaseImpersonate ($processId, $userId, $variables)
+    public function newCaseImpersonate ($processId, $userId, $variables, $taskId = '')
     {
         try {
             if (is_array( $variables )) {
                 if (count( $variables ) > 0) {
                     $c = count( $variables );
                     $Fields = $variables;
-
+                } else {
                     if ($c == 0) {
-                        //Si no tenenmos ninguna variables en el array variables.
                         $result = new wsResponse( 10, G::loadTranslation( 'ID_ARRAY_VARIABLES_EMPTY' ) );
 
                         return $result;
@@ -1846,8 +2061,19 @@ class wsBase
 
             $oCase = new Cases();
 
-            $arrayTask = $processes->getStartingTaskForUser( $processId, null );
-            $numTasks = count( $arrayTask );
+            $numTasks = 0;
+            if ($taskId != '') {
+                $aTasks = $processes->getStartingTaskForUser( $processId, null );
+                foreach ($aTasks as $task) {
+                    if ($task['TAS_UID'] == $taskId) {
+                        $arrayTask[0]['TAS_UID'] = $taskId;
+                        $numTasks = 1;
+                    }
+                }
+            } else {
+                $arrayTask = $processes->getStartingTaskForUser( $processId, null );
+                $numTasks = count( $arrayTask );
+            }
 
             if ($numTasks == 1) {
                 $case = $oCase->startCase( $arrayTask[0]['TAS_UID'], $userId );
@@ -2021,6 +2247,10 @@ class wsBase
 
                             //$appFields = $oCase->loadCase( $caseId );
                             $appFields['APP_DATA'] = $oPMScript->aFields;
+                            unset($appFields['APP_STATUS']);
+                            unset($appFields['APP_PROC_STATUS']);
+                            unset($appFields['APP_PROC_CODE']);
+                            unset($appFields['APP_PIN']);
                             $oCase->updateCase( $caseId, $appFields );
                         }
                     }
@@ -2068,6 +2298,10 @@ class wsBase
                         $varTriggers .= "&nbsp;- " . nl2br( htmlentities( $oTrigger->getTriTitle(), ENT_QUOTES ) ) . "<br/>";
                         //$appFields = $oCase->loadCase( $caseId );
                         $appFields['APP_DATA'] = $oPMScript->aFields;
+                        unset($appFields['APP_STATUS']);
+                        unset($appFields['APP_PROC_STATUS']);
+                        unset($appFields['APP_PROC_CODE']);
+                        unset($appFields['APP_PIN']);
                         //$appFields['APP_DATA']['APPLICATION'] = $caseId;
                         $oCase->updateCase( $caseId, $appFields );
                     }
@@ -2194,6 +2428,10 @@ class wsBase
                         $appFields['APP_DATA'] = $oPMScript->aFields;
                         //$appFields['APP_DATA']['APPLICATION'] = $caseId;
                         //$appFields = $oCase->loadCase($caseId);
+                        unset($aFields['APP_STATUS']);
+                        unset($aFields['APP_PROC_STATUS']);
+                        unset($aFields['APP_PROC_CODE']);
+                        unset($aFields['APP_PIN']);
                         $oCase->updateCase( $caseId, $appFields );
                     }
                 }
@@ -2394,6 +2632,10 @@ class wsBase
 
                 //Save data - Start
                 $appFields['APP_DATA'] = $oPMScript->aFields;
+                unset($appFields['APP_STATUS']);
+                unset($appFields['APP_PROC_STATUS']);
+                unset($appFields['APP_PROC_CODE']);
+                unset($appFields['APP_PIN']);
                 //$appFields = $oCase->loadCase($caseId);
                 $oCase->updateCase( $caseId, $appFields );
                 //Save data - End
@@ -2431,21 +2673,19 @@ class wsBase
      */
     public function taskCase ($caseId)
     {
+        $result = array ();
         try {
-            $result = array ();
             $oCriteria = new Criteria( 'workflow' );
-            $del = DBAdapter::getStringDelimiter();
+            $del       = DBAdapter::getStringDelimiter();
             $oCriteria->addSelectColumn( AppDelegationPeer::DEL_INDEX );
+            $oCriteria->addSelectColumn( AppDelegationPeer::TAS_UID );
 
             $oCriteria->addAsColumn( 'TAS_TITLE', 'C1.CON_VALUE' );
             $oCriteria->addAlias( "C1", 'CONTENT' );
-            $tasTitleConds = array ();
-            $tasTitleConds[] = array (AppDelegationPeer::TAS_UID,'C1.CON_ID'
-            );
-            $tasTitleConds[] = array ('C1.CON_CATEGORY',$del . 'TAS_TITLE' . $del
-            );
-            $tasTitleConds[] = array ('C1.CON_LANG',$del . SYS_LANG . $del
-            );
+            $tasTitleConds   = array ();
+            $tasTitleConds[] = array (AppDelegationPeer::TAS_UID,'C1.CON_ID');
+            $tasTitleConds[] = array ('C1.CON_CATEGORY',$del . 'TAS_TITLE' . $del);
+            $tasTitleConds[] = array ('C1.CON_LANG',$del . SYS_LANG . $del);
             $oCriteria->addJoinMC( $tasTitleConds, Criteria::LEFT_JOIN );
 
             $oCriteria->add( AppDelegationPeer::APP_UID, $caseId );
@@ -2456,15 +2696,17 @@ class wsBase
             $oDataset->next();
 
             while ($aRow = $oDataset->getRow()) {
-                $result[] = array ('guid' => $aRow['DEL_INDEX'],'name' => $aRow['TAS_TITLE']
+                $result[] = array (
+                    'guid'     => $aRow['TAS_UID'],
+                    'name'     => $aRow['TAS_TITLE'],
+                    'delegate' => $aRow['DEL_INDEX']
                 );
                 $oDataset->next();
             }
 
             return $result;
         } catch (Exception $e) {
-            $result[] = array ('guid' => $e->getMessage(),'name' => $e->getMessage()
-            );
+            $result[] = array ('guid' => $e->getMessage(),'name' => $e->getMessage(), 'delegate' => $e->getMessage() );
 
             return $result;
         }
@@ -2698,137 +2940,6 @@ class wsBase
      * @param string passwordLibrary : The password to obtain access to the ProcessMaker library.
      * @return $eturns will return an object
      */
-    public function importProcessFromLibrary ($processId, $version = '', $importOption = '', $usernameLibrary = '', $passwordLibrary = '')
-    {
-        try {
-            G::LoadClass( 'processes' );
-            //$versionReq = $_GET['v'];
-            //. (isset($_GET['s']) ? '&s=' . $_GET['s'] : '')
-            $ipaddress = $_SERVER['REMOTE_ADDR'];
-            $oProcesses = new Processes();
-            $oProcesses->ws_open_public();
-            $oProcess = $oProcesses->ws_processGetData( $processId );
-
-            if ($oProcess->status_code != 0) {
-                throw (new Exception( $oProcess->message ));
-            }
-
-            $privacy = $oProcess->privacy;
-
-            $strSession = '';
-
-            if ($privacy != 'FREE') {
-                global $sessionId;
-                $antSession = $sessionId;
-                $oProcesses->ws_open( $usernameLibrary, $passwordLibrary );
-                $strSession = "&s=" . $sessionId;
-                $sessionId = $antSession;
-            }
-
-            //downloading the file
-            $localPath = PATH_DOCUMENT . 'input' . PATH_SEP;
-            G::mk_dir( $localPath );
-            $newfilename = G::GenerateUniqueId() . '.pm';
-
-            $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $processId . $strSession;
-
-            $oProcess = new Processes();
-            $oProcess->downloadFile( $downloadUrl, $localPath, $newfilename );
-
-            //getting the ProUid from the file recently downloaded
-            $oData = $oProcess->getProcessData( $localPath . $newfilename );
-
-            if (is_null( $oData )) {
-                $data['DOWNLOAD_URL'] = $downloadUrl;
-                $data['LOCAL_PATH'] = $localPath;
-                $data['NEW_FILENAME'] = $newfilename;
-
-                throw new Exception( G::loadTranslation( 'ID_ERROR_URL_PROCESS_INVALID', SYS_LANG, $data ) );
-            }
-
-            $sProUid = $oData->process['PRO_UID'];
-            $oData->process['PRO_UID_OLD'] = $sProUid;
-
-            //if the process exists, we need to check the $importOption to and re-import if the user wants,
-            if ($oProcess->processExists( $sProUid )) {
-                //Update the current Process, overwriting all tasks and steps
-                if ($importOption == 1) {
-                    $oProcess->updateProcessFromData( $oData, $localPath . $newfilename );
-                    //delete the xmlform cache
-
-
-                    if (file_exists( PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP . $sProUid )) {
-                        $oDirectory = dir( PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP . $sProUid );
-
-                        while ($sObjectName = $oDirectory->read()) {
-                            if (($sObjectName != '.') && ($sObjectName != '..')) {
-                                $strAux = PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP;
-                                $strAux = $strAux . $sProUid . PATH_SEP . $sObjectName;
-
-                                unlink( $strAux );
-                            }
-                        }
-
-                        $oDirectory->close();
-                    }
-
-                    $sNewProUid = $sProUid;
-                }
-
-                //Disable current Process and create a new version of the Process
-                if ($importOption == 2) {
-                    $oProcess->disablePreviousProcesses( $sProUid );
-                    $sNewProUid = $oProcess->getUnusedProcessGUID();
-                    $oProcess->setProcessGuid( $oData, $sNewProUid );
-                    $oProcess->setProcessParent( $oData, $sProUid );
-                    $oData->process['PRO_TITLE'] = "New - " . $oData->process['PRO_TITLE'] . ' - ' . date( 'M d, H:i' );
-                    $oProcess->renewAll( $oData );
-                    $oProcess->createProcessFromData( $oData, $localPath . $newfilename );
-                }
-
-                //Create a completely new Process without change the current Process
-                if ($importOption == 3) {
-                    //krumo ($oData); die;
-                    $sNewProUid = $oProcess->getUnusedProcessGUID();
-                    $oProcess->setProcessGuid( $oData, $sNewProUid );
-
-                    $strAux = "Copy of  - " . $oData->process['PRO_TITLE'] . ' - ' . date( 'M d, H:i' );
-
-                    $oData->process['PRO_TITLE'] = $strAux;
-                    $oProcess->renewAll( $oData );
-                    $oProcess->createProcessFromData( $oData, $localPath . $newfilename );
-                }
-
-                if ($importOption != 1 && $importOption != 2 && $importOption != 3) {
-                    throw new Exception( G::loadTranslation( 'ID_PROCESS_ALREADY_IN_SYSTEM' ) );
-                }
-            }
-
-            //finally, creating the process if the process doesn't exist
-            if (! $oProcess->processExists( $processId )) {
-                $oProcess->createProcessFromData( $oData, $localPath . $newfilename );
-            }
-
-            //show the info after the imported process
-            $oProcess = new Processes();
-            $oProcess->ws_open_public();
-            $processData = $oProcess->ws_processGetData( $processId );
-
-            $result->status_code = 0;
-            $result->message = G::loadTranslation( 'ID_COMMAND_EXECUTED_SUCCESSFULLY' );
-            $result->timestamp = date( 'Y-m-d H:i:s' );
-            $result->processId = $processId;
-            $result->processTitle = $processData->title;
-            $result->category = (isset( $processData->category ) ? $processData->category : '');
-            $result->version = $processData->version;
-
-            return $result;
-        } catch (Exception $e) {
-            $result = new wsResponse( 100, $e->getMessage() );
-
-            return $result;
-        }
-    }
 
     public function getCaseNotes ($applicationID, $userUid = '')
     {
@@ -3174,6 +3285,31 @@ class wsBase
         } catch (Exception $e) {
             $result = new wsResponse(100, $e->getMessage());
 
+            return $result;
+        }
+    }
+    
+    /**
+     * ClaimCase
+     *
+     * @param string $userId
+     * @param string $guid
+     * @param string $delIndex
+     * @return $result will return an object
+     */
+    public function claimCase($userId, $guid, $delIndex)
+    {
+        try {
+            G::LoadClass('case');
+            $oCase = new Cases();
+            $oCase->loadCase($guid);
+            $oCase->setCatchUser($guid, $delIndex, $userId);
+
+            $result = new wsResponse(0, G::LoadTranslation("ID_COMMAND_EXECUTED_SUCCESSFULLY"));
+            return $result;
+        } catch (Exception $e) {
+
+            $result = new wsResponse(100, $e->getMessage());
             return $result;
         }
     }

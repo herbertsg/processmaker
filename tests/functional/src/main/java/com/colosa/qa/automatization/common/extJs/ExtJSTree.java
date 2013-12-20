@@ -15,6 +15,7 @@ public class ExtJSTree{
 	private int timeout;
 	private WebElement currentNode;
 	private WebElement root = null;
+    private List<ExtJSTreeNode> listTreeRootNodes;
 
     /**
      * Class used to manage - navigate ext-js tree
@@ -42,13 +43,38 @@ public class ExtJSTree{
             this.root =auxRoot;
         }
 
-		this.currentNode = this.root;
+		//this.currentNode = this.root;
+
+        this.readTreeNodes();
 
         //check if node was found
         if(this.root == null){
             throw new Exception("No ExtJs tree structure found.");
         }
 	}
+
+    public List<ExtJSTreeNode> readTreeNodes(){
+        List<WebElement> rootNodes = null;
+
+        //search root nodes
+        rootNodes = this.root.findElements(By.cssSelector(this.root.getTagName() + " > li.x-tree-node:not([style='display: none;'])"));  //style="" [style='']
+        //rootNodes = this.root.findElements(By.cssSelector("x-tree-node-el"));
+
+        listTreeRootNodes = new ArrayList<ExtJSTreeNode>(rootNodes.size());
+
+        Logger.addLog("ExtJSTree()->getListRootNodes list x-tree-node-el: " + rootNodes.size());
+
+        for (WebElement rootNode : rootNodes) {
+
+            ExtJSTreeNode newTreeNode = new ExtJSTreeNode(rootNode, this.driver);
+
+            Logger.addLog("ExtJSTree()->rootNode: " + newTreeNode.getNodeText());
+
+            listTreeRootNodes.add(newTreeNode);
+        }
+
+        return listTreeRootNodes;
+    }
 
     /**
      * Go to element that represent the root "/"
@@ -65,23 +91,98 @@ public class ExtJSTree{
 	}
 
     public List<ExtJSTreeNode> getListRootNodes(){
-        List<WebElement> rootNodes = null;
+        /*List<WebElement> rootNodes = null;
 
         //search root nodes
         rootNodes = this.root.findElements(By.cssSelector(this.root.getTagName() + " > li.x-tree-node"));  //style="" [style='']
+        //rootNodes = this.root.findElements(By.cssSelector("x-tree-node-el"));
 
         List<ExtJSTreeNode> listTreeRootNodes = new ArrayList<ExtJSTreeNode>(rootNodes.size());
 
+        Logger.addLog("ExtJSTree()->getListRootNodes list x-tree-node-el: " + listTreeRootNodes.size());
+
         for (WebElement rootNode : rootNodes) {
-            listTreeRootNodes.add(new ExtJSTreeNode(rootNode, this.driver));
+
+            ExtJSTreeNode newTreeNode = new ExtJSTreeNode(rootNode, this.driver);
+
+            Logger.addLog("ExtJSTree()->rootNode: " + newTreeNode.getNodeText());
+
+            listTreeRootNodes.add(newTreeNode);
         }
 
+        return listTreeRootNodes;*/
         return listTreeRootNodes;
     }
 
+    /**
+     * Select the specified node in the tree from the root
+     * @param nodePath The path to the node, start with /rootNode/nodelevel1/nodelevel2 etc.
+     *             The complete path must be specified. Regular expressions are supported.
+     * @return The found tree node
+     */
+    public ExtJSTreeNode getTreeNode(String nodePath, Boolean useRegularExpresion) throws Exception {
+        //ExtJSTreeNode treeNodeModel = new ExtJSTreeNode();
+
+        return ExtJSTreeNode.getTreeNodeInList(this.listTreeRootNodes, nodePath, useRegularExpresion);
+
+        /*
+        ExtJSTreeNode resultTreeNode = null;
+        String searchPath = path;
+
+        //search first node from left of path (root node)
+        String nodeName = getLeftNodePath(searchPath);
+        searchPath = removeLeftNodePath(searchPath);
+
+        Logger.addLog("ExtJSTree()->getTreeNode: search node:" + nodeName + " pending path:" + searchPath );
+
+
+        //search in root nodes
+        for(ExtJSTreeNode rootNodeElement:this.listTreeRootNodes){
+
+            //check if is the same node
+            if(useRegularExpresion){
+                Logger.addLog("ExtJSTree()->getTreeNode: usign reg expresions if "+ rootNodeElement.getNodeText() + "== " + nodeName );
+                if(rootNodeElement.getNodeText().matches(nodeName)){
+                    //verify if is the node that we are searching for
+                    if(searchPath.equals("")){
+                        //this is the search node
+                        resultTreeNode = rootNodeElement;
+                    }else{
+                        //continue searching nodes
+                        resultTreeNode = rootNodeElement.getTreeNode(searchPath, useRegularExpresion);
+                    }
+                    break;
+                }
+            }else{
+                Logger.addLog("ExtJSTree()->getTreeNode: using equals if "+ rootNodeElement.getNodeText() + " == " + nodeName );
+                if(rootNodeElement.getNodeText().equals(nodeName)){
+                    //verify if is the node that we are searching for
+                    if(searchPath.equals("")){
+                        resultTreeNode = rootNodeElement;
+                    }else{
+                        //continue searching nodes
+                        resultTreeNode = rootNodeElement.getTreeNode(searchPath, useRegularExpresion);
+                    }
+                    break;
+                }
+            }
+        }
+
+        if(resultTreeNode == null){
+            throw new Exception("No treeNode found with the specified path.");
+        }
+
+        return resultTreeNode;  */
+    }
+
+    public ExtJSTreeNode getTreeNode(String path) throws Exception {
+        return getTreeNode(path, false);
+    }
+
+/*
     public ExtJSTreeNode gotoNode(String path) throws Exception {
         return gotoNode(path, false);
-    }
+    } */
 
     /**
      * Select the specified node in the tree from the root
@@ -89,6 +190,7 @@ public class ExtJSTree{
      *             The complete path must be specified. Regular expressions are supported.
      * @return The found tree node
      */
+    /*
 	public ExtJSTreeNode gotoNode(String path, Boolean useRegularExpresion) throws Exception {
 		String itemToSearch = null;
 		List<WebElement> rootNodes = null;
@@ -99,6 +201,7 @@ public class ExtJSTree{
         String searchPath = path;
 
         //search root nodes
+        Logger.addLog("ExtJsTree-> Root tagname:" + this.root.getTagName());
         rootNodes = this.root.findElements(By.cssSelector(this.root.getTagName() + " > li.x-tree-node"));  //style="" [style='']
 
         //search first node from left of path (root node)
@@ -151,44 +254,13 @@ public class ExtJSTree{
         resultWebElement = gotoNodeFromNode(rootNode, searchPath, useRegularExpresion);
 
         return resultWebElement;
-
-        /*
-		WebElement elm = (path.charAt(0)=='/')?this.root:this.currentNode;
-
-		path = (path.charAt(path.length()-1)=='/')?path.substring(0, path.length()-1):path;
-		path = (path.charAt(0)=='/')?path.substring(1):path;
-		if(path.indexOf('/')>0)
-		{
-			itemToSearch = path.substring(0, path.indexOf('/'));
-			path = path.substring(itemToSearch.length()+1);
-		}
-		else
-			itemToSearch = path;
-
-		childs = elm.findElements(By.xpath("ul/li"));
-
-		for(WebElement child:childs){
-			if(child.findElement(By.xpath("div/a/span")).getText().equals(itemToSearch)){
-				elm = child;
-				this.currentNode = elm;
-				break;
-			}
-		}
-
-		elm.findElement(By.xpath("div/a/span")).click();
-
-		if(path.equals(itemToSearch))
-			return elm;
-		else
-			return gotoNode(path);
-			*/
 	}
 
     public ExtJSTreeNode gotoNodeFromNode(ExtJSTreeNode currentNode, String path) throws Exception {
         return this.gotoNodeFromNode(currentNode, path, false);
     }
 
-
+    */
         /**
          * Find the node from the specified node, the path must not include the current node
          * If the node is not found null is returned.
@@ -196,6 +268,7 @@ public class ExtJSTree{
          * @param path path to the node, the current node must not be included.
          * @return
          */
+        /*
     public ExtJSTreeNode gotoNodeFromNode(ExtJSTreeNode currentNode, String path, Boolean useRegularExpresion) throws Exception {
         ExtJSTreeNode rootNode = currentNode;
         //ExtJSTreeNode auxRootNode = null;
@@ -262,7 +335,7 @@ public class ExtJSTree{
         else{
             throw new Exception("ExtJsTree->Node not found.");
         }
-    }
+    }*/
 
 	public WebElement getRootNode(){
 		return this.root;
@@ -271,7 +344,7 @@ public class ExtJSTree{
 	public WebElement getCurrentNode(){
 		return this.currentNode;
 	}
-
+    /*
     public String getLeftNodePath(String path){
         String workingPath = path;
 
@@ -323,5 +396,5 @@ public class ExtJSTree{
         }
         //se trata de
         return workingPath;
-    }
+    }*/
 }

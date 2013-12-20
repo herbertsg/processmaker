@@ -26,17 +26,17 @@ class dashletOpenVSCompleted implements DashletInterface
         $contextTimeStore->xtype = 'arraystore';
         $contextTimeStore->fields = array ('id','value'
         );
-        $contextTimeStore->data = array (array ('TODAY','Today'
-        ),array ('YESTERDAY','Yesterday'
-        ),array ('THIS_WEEK','This week'
-        ),array ('PREVIOUS_WEEK','Previous Week'
-        ),array ('THIS_MONTH','This Month'
-        ),array ('PREVIOUS_MONTH','Previous Month'
-        ),array ('THIS_YEAR','This Year'
-        ),array ('PREVIOUS_YEAR','Previous Year'
+        $contextTimeStore->data = array (array ('TODAY', G::LoadTranslation('ID_TODAY')
+        ),array ('YESTERDAY', G::LoadTranslation('ID_YESTERDAY')
+        ),array ('THIS_WEEK', G::LoadTranslation('ID_THIS_WEEK')
+        ),array ('PREVIOUS_WEEK', G::LoadTranslation('ID_PREVIOUS_WEEK')
+        ),array ('THIS_MONTH', G::LoadTranslation('ID_THIS_MONTH')
+        ),array ('PREVIOUS_MONTH', G::LoadTranslation('ID_PREVIOUS_MONTH')
+        ),array ('THIS_YEAR', G::LoadTranslation('ID_THIS_YEAR')
+        ),array ('PREVIOUS_YEAR', G::LoadTranslation('ID_PREVIOUS_YEAR')
         )
         );
-
+        
         $contextTime = new stdclass();
         $contextTime->xtype = 'combo';
         $contextTime->name = 'DAS_INS_CONTEXT_TIME';
@@ -237,34 +237,34 @@ class dashletOpenVSCompleted implements DashletInterface
         $this->completed = $casesCompleted + $casesTodo;
         switch ($config['DAS_INS_CONTEXT_TIME']) {
             case 'TODAY':
-                $this->centerLabel = 'Today';
+                $this->centerLabel = G::LoadTranslation('ID_TODAY');
                 break;
             case 'YESTERDAY':
-                $this->centerLabel = 'Yesterday';
+                $this->centerLabel = G::LoadTranslation('ID_YESTERDAY');
                 break;
             case 'THIS_WEEK':
-                $this->centerLabel = 'This week';
+                $this->centerLabel = G::LoadTranslation('ID_THIS_WEEK');
                 break;
             case 'PREVIOUS_WEEK':
-                $this->centerLabel = 'Previous week';
+                $this->centerLabel = G::LoadTranslation('ID_PREVIOUS_WEEK');
                 break;
             case 'THIS_MONTH':
-                $this->centerLabel = 'This month';
+                $this->centerLabel = G::LoadTranslation('ID_THIS_MONTH');
                 break;
             case 'PREVIOUS_MONTH':
-                $this->centerLabel = 'Previous month';
+                $this->centerLabel = G::LoadTranslation('ID_PREVIOUS_MONTH');
                 break;
             case 'THIS_QUARTER':
-                $this->centerLabel = 'This quarter';
+                $this->centerLabel = G::LoadTranslation('ID_THIS_QUARTER');
                 break;
             case 'PREVIOUS_QUARTER':
-                $this->centerLabel = 'Previous quarter';
+                $this->centerLabel = G::LoadTranslation('ID_PREVIOUS_QUARTER');
                 break;
             case 'THIS_YEAR':
-                $this->centerLabel = 'This year';
+                $this->centerLabel = G::LoadTranslation('ID_THIS_YEAR');
                 break;
             case 'PREVIOUS_YEAR':
-                $this->centerLabel = 'Previous year';
+                $this->centerLabel = G::LoadTranslation('ID_PREVIOUS_YEAR');
                 break;
             default:
                 $this->centerLabel = '';

@@ -27,7 +27,7 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("nombres", "John Due");
 		pages.DynaformExecution().setFieldValue("ci", "3333333");

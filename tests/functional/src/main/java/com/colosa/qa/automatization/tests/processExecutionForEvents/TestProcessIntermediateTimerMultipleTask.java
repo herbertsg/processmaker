@@ -72,19 +72,19 @@ public class TestProcessIntermediateTimerMultipleTask extends com.colosa.qa.auto
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		//Open task 3
 		//pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		//Open task 4
 		//pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
         pages.InputDocProcess().switchToDefault();

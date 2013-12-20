@@ -39,12 +39,12 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
 		FormFiller.formFillElements(browserInstance, fieldArray2);
 
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("convertir", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());

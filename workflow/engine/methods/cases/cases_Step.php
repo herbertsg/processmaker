@@ -1,4 +1,18 @@
 <?php
+if (!isset($_SESSION['USER_LOGGED'])) {
+      G::SendTemporalMessage( 'ID_LOGIN_AGAIN', 'warning', 'labels' );
+      die( '<script type="text/javascript">
+                try 
+                  {
+                     prnt = parent.parent;
+                     top.location = top.location;
+                  }
+                catch (err) 
+                  {
+                     parent.location = parent.location;
+                  }
+            </script>');
+}
 /**
  * cases_Step.php
  *
@@ -164,6 +178,10 @@ if (isset( $_GET['breakpoint'] )) {
 
 
 //Save data - Start
+unset($Fields['APP_STATUS']);
+unset($Fields['APP_PROC_STATUS']);
+unset($Fields['APP_PROC_CODE']);
+unset($Fields['APP_PIN']);
 $oCase->updateCase( $_SESSION['APPLICATION'], $Fields );
 //Save data - End
 
@@ -177,7 +195,15 @@ try {
 }
 //Obtain previous and next step - End
 
+$aRequiredFields = array(
+    'APPLICATION'   => $Fields['APP_DATA']['APPLICATION'],
+    'PROCESS'       => $Fields['APP_DATA']['PROCESS'],
+    'TASK'          => $Fields['APP_DATA']['TASK'],
+    'INDEX'         => $Fields['APP_DATA']['INDEX'],
+    'TRIGGER_DEBUG' => isset($Fields['APP_DATA']['TRIGGER_DEBUG']) ? $Fields['APP_DATA']['TRIGGER_DEBUG']:array()
+);
 
+$oHeadPublisher->addScriptCode('var __dynaformSVal__ = \'' . base64_encode(serialize($aRequiredFields)) . '\'; ');
 try {
     //Add content content step - Start
     $oApp = ApplicationPeer::retrieveByPK( $_SESSION['APPLICATION'] );
@@ -209,12 +235,15 @@ try {
             $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['DYNUIDPRINT'] = $_GET['UID'];
 
             $oHeadPublisher = & headPublisher::getSingleton();
-            $oHeadPublisher->addScriptCode( "
-      if (typeof parent != 'undefined') {
-        if (parent.setNode) {
-          parent.setNode('" . $_GET['UID'] . "');
-        }
-      }" );
+
+            if (!isset($_SESSION["PM_RUN_OUTSIDE_MAIN_APP"])) {
+                $oHeadPublisher->addScriptCode( "
+                                                    if (typeof parent != 'undefined') {
+                                                        if (parent.setNode) {
+                                                            parent.setNode('" . $_GET['UID'] . "');
+                                                        }
+                                                    }" );
+            }
 
             $oStep = new Step();
             $oStep = $oStep->loadByProcessTaskPosition( $_SESSION['PROCESS'], $_SESSION['TASK'], $_GET['POSITION'] );
@@ -411,7 +440,7 @@ try {
 
                     $sFilename = $aFields['APP_DOC_UID'] . "_" . $lastDocVersion;
 
-                    $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs' . PATH_SEP;
+                    $pathOutput = PATH_DOCUMENT . G::getPathFromUID($_SESSION['APPLICATION']) . PATH_SEP . 'outdocs' . PATH_SEP;
                     G::mk_dir( $pathOutput );
                     switch ($aOD['OUT_DOC_TYPE']) {
                         case 'HTML':
@@ -510,6 +539,10 @@ try {
                     //Execute after triggers - End
 
                     //Save data - Start
+                    unset($Fields['APP_STATUS']);
+                    unset($Fields['APP_PROC_STATUS']);
+                    unset($Fields['APP_PROC_CODE']);
+                    unset($Fields['APP_PIN']);
                     $oCase->updateCase( $_SESSION['APPLICATION'], $Fields );
                     //Save data - End
 
@@ -518,7 +551,7 @@ try {
                     if ($oPluginRegistry->existsTrigger( PM_UPLOAD_DOCUMENT ) && class_exists( 'uploadDocumentData' )) {
                         $triggerDetail = $oPluginRegistry->getTriggerInfo( PM_UPLOAD_DOCUMENT );
 
-                        $sPathName = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
+                        $sPathName = PATH_DOCUMENT . G::getPathFromUID($_SESSION['APPLICATION']) . PATH_SEP;
 
                         $oData['APP_UID'] = $_SESSION['APPLICATION'];
                         $oData['ATTACHMENT_FOLDER'] = true;
@@ -905,6 +938,9 @@ try {
                 }
             }
 
+            $title = htmlentities($aFields['TASK'][$sKey]['NEXT_TASK']['TAS_TITLE'], ENT_QUOTES, 'UTF-8');
+            $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_TITLE'] = $title;
+
             $G_PUBLISH->AddContent( 'smarty', $tplFile, '', '', $aFields );
             /*
             if (isset( $aFields['TASK'][1]['NEXT_TASK']['USER_ASSIGNED'])){
@@ -983,16 +1019,20 @@ try {
 
 $oHeadPublisher = & headPublisher::getSingleton();
 $oHeadPublisher->addScriptFile( "/jscore/cases/core/cases_Step.js" );
-$oHeadPublisher->addScriptCode( "
-  if (typeof parent != 'undefined') {
-    if (parent.showCaseNavigatorPanel) {
-      parent.showCaseNavigatorPanel('$sStatus');
-    }
 
-    if (parent.setCurrent) {
-      parent.setCurrent('" . $_GET['UID'] . "');
-    }
-  }" );
+if (!isset($_SESSION["PM_RUN_OUTSIDE_MAIN_APP"])) {
+    $oHeadPublisher->addScriptCode( "
+                                        if (typeof parent != 'undefined') {
+                                            if (parent.showCaseNavigatorPanel) {
+                                                parent.showCaseNavigatorPanel('$sStatus');
+                                            }
+
+                                            if (parent.setCurrent) {
+                                                parent.setCurrent('" . $_GET['UID'] . "');
+                                            }
+                                        }" );
+
+}
 
 G::RenderPage( 'publish', 'blank' );
 

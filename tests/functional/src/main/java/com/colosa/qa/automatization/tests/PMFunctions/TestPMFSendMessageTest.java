@@ -58,7 +58,7 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 
     		pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
-		    pages.Home().openCase(casenumber);
+		    pages.Home().gotoInbox().openCase(casenumber);
 		    pages.DynaformExecution().intoDynaform();
 		    FormFieldData[] fieldArray1=new FormFieldData[1];
 		    fieldArray1[0]=new FormFieldData();

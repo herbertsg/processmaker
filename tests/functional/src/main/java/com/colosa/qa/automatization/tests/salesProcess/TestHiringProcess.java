@@ -162,7 +162,7 @@ public void openTask2(int casenumber) throws Exception{
 		    pages.Main().logout();
 }
 public void opencase(int casenumber) throws Exception{ 
-	pages.Home().openCase(casenumber);
+	pages.Home().gotoInbox().openCase(casenumber);
 
 }
 

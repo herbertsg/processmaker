@@ -26,22 +26,74 @@ $actionAjax = isset( $_REQUEST['actionAjax'] ) ? $_REQUEST['actionAjax'] : null;
 
 if ($actionAjax == 'messageHistoryGridList_JXP') {
 
+    if (!isset($_REQUEST['start'])) {
+        $_REQUEST['start'] = 0;
+    }
+
+    if (!isset($_REQUEST['limit'])) {
+        $_REQUEST['limit'] = 20;
+    }
+
     G::LoadClass( 'case' );
     G::LoadClass( "BasePeer" );
 
     global $G_PUBLISH;
     $oCase = new Cases();
 
-    $appMessageArray = $oCase->getHistoryMessagesTrackerExt( $_SESSION['APPLICATION'] );
-
+    $appMessageArray = $oCase->getHistoryMessagesTrackerExt( $_SESSION['APPLICATION'], true, $_REQUEST['start'], $_REQUEST['limit']);
+    $appMessageCountArray = $oCase->getHistoryMessagesTrackerExt( $_SESSION['APPLICATION'], true);
     $result = new stdClass();
     $aProcesses = Array ();
 
-    $totalCount = 0;
+
+    $proUid	= $_SESSION['PROCESS'];
+    $appUid = $_SESSION['APPLICATION'];
+    $tasUid	= $_SESSION['TASK'];
+    $usrUid = $_SESSION['USER_LOGGED'];
+
+    $respBlock  = $oCase->getAllObjectsFrom( $proUid, $appUid, $tasUid, $usrUid, 'BLOCK' );
+    $respView   = $oCase->getAllObjectsFrom( $proUid, $appUid, $tasUid, $usrUid, 'VIEW' );
+    $respResend = $oCase->getAllObjectsFrom( $proUid, $appUid, $tasUid, $usrUid, 'RESEND' );
+
+    $delIndex = array();
+    $respMess = "";
+
+    if (count($respBlock["MSGS_HISTORY"]) > 0) {
+        $respMess = $respBlock["MSGS_HISTORY"]["PERMISSION"];
+        if (isset($respBlock["MSGS_HISTORY"]["DEL_INDEX"])) {
+            $delIndex = $respBlock["MSGS_HISTORY"]["DEL_INDEX"];
+        }
+    }
+
+    if (count($respView["MSGS_HISTORY"]) > 0) {
+        $respMess = $respView["MSGS_HISTORY"]["PERMISSION"];
+        if (isset($respView["MSGS_HISTORY"]["DEL_INDEX"])) {
+            $delIndex = $respView["MSGS_HISTORY"]["DEL_INDEX"];
+        }
+    }
+
+    if (count($respResend["MSGS_HISTORY"]) > 0) {
+        $respMess = $respResend["MSGS_HISTORY"]["PERMISSION"];
+        if (isset($respResend["MSGS_HISTORY"]["DEL_INDEX"])) {
+            $delIndex = $respResend["MSGS_HISTORY"]["DEL_INDEX"];
+        }
+    }
+
     foreach ($appMessageArray as $index => $value) {
-        if ($appMessageArray[$index]['APP_MSG_SHOW_MESSAGE'] == 1) {
+        if (($appMessageArray[$index]['APP_MSG_SHOW_MESSAGE'] == 1  && $respMess != 'BLOCK' ) &&
+            ($appMessageArray[$index]['DEL_INDEX'] == 0 || in_array($appMessageArray[$index]['DEL_INDEX'], $delIndex ))) {
+
             $appMessageArray[$index]['ID_MESSAGE'] = $appMessageArray[$index]['APP_UID'] . '_' . $appMessageArray[$index]['APP_MSG_UID'];
-            $aProcesses[] = $appMessageArray[$index];
+            if ($respMess == 'BLOCK' || $respMess == '') {
+                $appMessageArray[$index]['APP_MSG_BODY'] = "";
+            }
+            $aProcesses[] = array_merge($appMessageArray[$index], array('MSGS_HISTORY' => $respMess));
+        }
+    }
+
+    $totalCount = 0;
+    foreach ($appMessageCountArray as $index => $value) {
+        if ($appMessageCountArray[$index]['APP_MSG_SHOW_MESSAGE'] == 1) {
             $totalCount ++;
         }
     }
@@ -115,37 +167,16 @@ if ($actionAjax == 'sendMailMessage_JXP') {
         $_POST['APP_MSG_UID'] = $_REQUEST['APP_MSG_UID'];
 
         G::LoadClass( 'case' );
-        $oCase = new Cases();
-
-        require_once 'classes/model/Configuration.php';
         G::LoadClass( 'spool' );
 
         $oCase = new Cases();
         $data = $oCase->getHistoryMessagesTrackerView( $_POST['APP_UID'], $_POST['APP_MSG_UID'] );
-        //print_r($data);
 
+        G::LoadClass("system");
 
-        $oConfiguration = new Configuration();
-        $sDelimiter = DBAdapter::getStringDelimiter();
-        $oCriteria = new Criteria( 'workflow' );
-        $oCriteria->add( ConfigurationPeer::CFG_UID, 'Emails' );
-        $oCriteria->add( ConfigurationPeer::OBJ_UID, '' );
-        $oCriteria->add( ConfigurationPeer::PRO_UID, '' );
-        $oCriteria->add( ConfigurationPeer::USR_UID, '' );
-        $oCriteria->add( ConfigurationPeer::APP_UID, '' );
-        if (ConfigurationPeer::doCount( $oCriteria ) == 0) {
-            $oConfiguration->create( array ('CFG_UID' => 'Emails','OBJ_UID' => '','CFG_VALUE' => '','PRO_UID' => '','USR_UID' => '','APP_UID' => ''
-            ) );
-            $aConfiguration = array ();
-        } else {
-            $aConfiguration = $oConfiguration->load( 'Emails', '', '', '', '' );
-            if ($aConfiguration['CFG_VALUE'] != '') {
-                $aConfiguration = unserialize( $aConfiguration['CFG_VALUE'] );
-            } else {
-                $aConfiguration = array ();
-            }
-        }
-        $passwd = $aConfiguration['MESS_PASSWORD'];
+        $aSetup = System::getEmailConfiguration();
+
+        $passwd = $aSetup['MESS_PASSWORD'];
         $passwdDec = G::decrypt( $passwd, 'EMAILENCRYPT' );
         $auxPass = explode( 'hash:', $passwdDec );
         if (count( $auxPass ) > 1) {
@@ -156,16 +187,25 @@ if ($actionAjax == 'sendMailMessage_JXP') {
                 $passwd = implode( '', $auxPass );
             }
         }
-        $aConfiguration['MESS_PASSWORD'] = $passwd;
+        $aSetup['MESS_PASSWORD'] = $passwd;
+        if ($aSetup['MESS_RAUTH'] == false || (is_string($aSetup['MESS_RAUTH']) && $aSetup['MESS_RAUTH'] == 'false')) {
+            $aSetup['MESS_RAUTH'] = 0;
+        } else {
+            $aSetup['MESS_RAUTH'] = 1;
+        }
 
         $oSpool = new spoolRun();
-        if ($aConfiguration['MESS_RAUTH'] == false || (is_string($aConfiguration['MESS_RAUTH']) && $aConfiguration['MESS_RAUTH'] == 'false')) {
-            $aConfiguration['MESS_RAUTH'] = 0;
-        } else {
-            $aConfiguration['MESS_RAUTH'] = 1;
-        }
-        $oSpool->setConfig( array ('MESS_ENGINE' => $aConfiguration['MESS_ENGINE'],'MESS_SERVER' => $aConfiguration['MESS_SERVER'],'MESS_PORT' => $aConfiguration['MESS_PORT'],'MESS_ACCOUNT' => $aConfiguration['MESS_ACCOUNT'],'MESS_PASSWORD' => $passwd,'SMTPAuth' => $aConfiguration['MESS_RAUTH']
-        ) );
+        $oSpool->setConfig(
+            array (
+                'MESS_ENGINE' => $aSetup['MESS_ENGINE'],
+                'MESS_SERVER' => $aSetup['MESS_SERVER'],
+                'MESS_PORT' => $aSetup['MESS_PORT'],
+                'MESS_ACCOUNT' => $aSetup['MESS_ACCOUNT'],
+                'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
+                'SMTPSecure' => $aSetup['SMTPSecure'],
+                'SMTPAuth' => $aSetup['MESS_RAUTH']
+            )
+        );
 
         $oSpool->create( array ('msg_uid' => $data['MSG_UID'],'app_uid' => $data['APP_UID'],'del_index' => $data['DEL_INDEX'],'app_msg_type' => $data['APP_MSG_TYPE'],'app_msg_subject' => $data['APP_MSG_SUBJECT'],'app_msg_from' => $data['APP_MSG_FROM'],'app_msg_to' => $data['APP_MSG_TO'],'app_msg_body' => $data['APP_MSG_BODY'],'app_msg_cc' => $data['APP_MSG_CC'],'app_msg_bcc' => $data['APP_MSG_BCC'],'app_msg_attach' => $data['APP_MSG_ATTACH'],'app_msg_template' => $data['APP_MSG_TEMPLATE'],'app_msg_status' => 'pending'
         ) );

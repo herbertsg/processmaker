@@ -142,6 +142,7 @@ class dynaFormHandler
     //attributes (String node-name, Array attributes(atribute-name =>attribute-value, ..., ...), Array childs(child-name=>child-content), Array Child-childs())
     public function add($name, $attributes, $childs, $childs_childs = null)
     {
+
         $newnode = $this->root->appendChild($this->dom->createElement($name));
         if (isset($attributes['#cdata'])) {
             $newnode->appendChild($this->dom->createTextNode("\n"));
@@ -155,9 +156,14 @@ class dynaFormHandler
         if (is_array($childs)) {
             foreach ($childs as $child_name => $child_text) {
                 $newnode_child = $newnode->appendChild($this->dom->createElement($child_name));
-                $newnode_child->appendChild($this->dom->createTextNode($child_text));
+                if (strip_tags($child_text) !== $child_text) {
+                    $newnode_child->appendChild($this->dom->createCDATASection($child_text));
+                } else {
+                   $newnode_child->appendChild($this->dom->createTextNode($child_text));
+                }
                 if ($childs_childs != null and is_array($childs_childs)) {
                     foreach ($childs_childs as $cc) {
+                        $newnode_child->appendChild($this->dom->createTextNode("\n" . str_repeat(" ", 6)));
                         $ccmode = $newnode_child->appendChild($this->dom->createElement($cc['name']));
                         $ccmode->appendChild($this->dom->createTextNode($cc['value']));
                         foreach ($cc['attributes'] as $cc_att_name => $cc_att_value) {
@@ -225,9 +231,7 @@ class dynaFormHandler
             unset($attributes['#text']);
         }
         if (isset($attributes['#cdata'])) {
-            $newnode->appendChild($this->dom->createTextNode("\n"));
             $newnode->appendChild($this->dom->createCDATASection($attributes['#cdata']));
-            $newnode->appendChild($this->dom->createTextNode("\n"));
             unset($attributes['#cdata']);
         }
 
@@ -246,11 +250,16 @@ class dynaFormHandler
 
             foreach ($childs as $child_name => $child_text) {
 
-                $newnode->appendChild($this->dom->createTextNode("    "));
+                $newnode->appendChild($this->dom->createTextNode("\n" . str_repeat(" ", 4)));
                 $newnode_child = $newnode->appendChild($this->dom->createElement($child_name));
                 if (is_string($child_text)) {
-                    $newnode_child->appendChild($this->dom->createTextNode($child_text));
+                    if (strip_tags($child_text) !== $child_text) {
+                        $newnode_child->appendChild($this->dom->createCDATASection($child_text));
+                    } else {
+                       $newnode_child->appendChild($this->dom->createTextNode($child_text));
+                    }
                 } else {
+
                     if (is_array($child_text) && isset($child_text['cdata'])) {
                         $newnode_child->appendChild($this->dom->createCDATASection($child_text));
                     }
@@ -258,8 +267,9 @@ class dynaFormHandler
                 if ($child_name == SYS_LANG) {
                     if ($childs_childs != null and is_array($childs_childs)) {
                         foreach ($childs_childs as $cc) {
+                            $newnode_child->appendChild($this->dom->createTextNode("\n" . str_repeat(" ", 6)));
                             $ccmode = $newnode_child->appendChild($this->dom->createElement($cc['name']));
-                            $ccmode->appendChild($this->dom->createTextNode($cc['value']));
+                            $ccmode->appendChild($this->dom->createTextNode($cc['value'] ));
                             foreach ($cc['attributes'] as $cc_att_name => $cc_att_value) {
                                 $ccmode->setAttribute($cc_att_name, $cc_att_value);
                             }
@@ -276,8 +286,7 @@ class dynaFormHandler
                         }
                     }
                 }
-
-                $newnode->appendChild($this->dom->createTextNode("\n"));
+                $newnode->appendChild($this->dom->createTextNode("\n" . str_repeat(" ", 2)));
             }
         } else {
             if (isset($childs)) {

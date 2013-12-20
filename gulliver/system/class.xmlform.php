@@ -1,5 +1,4 @@
 <?php
-
 /**
  * class.xmlform.php
  *
@@ -1268,6 +1267,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
     public $sqlConnection = 0;
     public $sql = '';
     public $sqlOption = array ();
+    public $searchType = "*searchtext*";
     //Atributes only for grids
     public $gridFieldType = 'suggest';
     public $formula = '';
@@ -1419,7 +1419,9 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
 
                 $sOptions .= '  return "' . $this->ajaxServer . '?request=suggest&json=true&limit=' . $this->maxresults;
                 $sOptions .= '&hash=' . $hash . '&dependentFieldsKeys=' . $sResultKeys . '&dependentFieldsValue="';
-                $sOptions .= $depValues . '"&input="+inputValue+"&inputEnconde64=enable"; ';
+
+                $sOptions .= $depValues . '"&input="+inputValue+"&inputEnconde64=enable&searchType=' . $this->searchType . '";';
+
                 $sOptions .= '},';
                 $sOptions .= 'json: true,';
                 $sOptions .= 'limit: ' . $this->maxresults . ',';
@@ -1455,24 +1457,24 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                 $sOptions .= '  var newcont; ';
                 $sOptions .= '  eval(\'newcont=\' + response + \';\'); ';
                 $sOptions .= '  for(var i = 0; i<newcont.length; i++) { ';
-                $sOptions .= '    var j = getField(newcont[i].name); ';
+                //$sOptions .= '    var j = getField(newcont[i].name); ';
                 $sOptions .= '    getField(newcont[i].name).value = newcont[i].value; ';
-                $sOptions .= '    if (newcont[i].content.type == \'dropdown\') { ';
+                $sOptions .= '
+                                  switch (newcont[i].content.type) {
+                                      case "dropdown":
+                                          dropDownSetOption({element: getField(newcont[i].name), name: newcont[i].name}, newcont[i].content);
+                                          break;
+                                      case "text":
+                                          getField(newcont[i].name).value = "";
 
-                $sOptions .= '      fieldLength = getField(newcont[i].name).options.length; ';
-                $sOptions .= '      for (ni = 0; ni < fieldLength; ni++ ){ ';
-                $sOptions .= '        getField(newcont[i].name).options.remove(ni); ';
-                $sOptions .= '      } ';
-                $sOptions .= '      getField(newcont[i].name).length = 0; ';
-
-                $sOptions .= '      for (ni = 0; ni < newcont[i].content.options.length; ni++ ){ ';
-                $sOptions .= '        var opt = document.createElement("OPTION"); ';
-                $sOptions .= '        opt.value = newcont[i].content.options[ni].key; ';
-                $sOptions .= '        opt.text  = newcont[i].content.options[ni].value; ';
-                $sOptions .= '        getField(newcont[i].name).options.add(opt); ';
-                $sOptions .= '      } ';
-                $sOptions .= '    } ';
-
+                                          if (newcont[i].content.options) {
+                                              if (newcont[i].content.options[0]) {
+                                                  getField(newcont[i].name).value = newcont[i].content.options[0].value;
+                                              }
+                                          }
+                                          break;
+                                  }
+                ';
                 $sOptions .= '  } ';
                 $sOptions .= '} else { ';
                 $sOptions .= '  alert(\'Invalid response: \' + response); ';
@@ -1482,7 +1484,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                 $sOptions .= '}';
 
                 $str .= '<script type="text/javascript">';
-                $str .= 'var as_json = new bsn.AutoSuggest(\'form[' . $this->name . '_label]\', {' . $sOptions . $storeEntryData . '});';
+                $str .= 'var as_json = new bsn.AutoSuggest(\'form[' . $this->name . '_label]\', {' . $sOptions . $storeEntryData . '}, "' . $this->searchType . '");';
                 $str .= '</script>';
 
                 return $str;
@@ -1604,26 +1606,14 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                     $depValues = '+';
                 }
 
-                $aDepFields = array ();
-                $count = 0;
-                if ($this->dependentFields !== '') {
-                    $dependentFields = explode( ",", $this->dependentFields );
-                    foreach ($dependentFields as $valueDependent) {
-                        $sqlDepField = $owner->fields[$valueDependent]->sql;
-                        $count = preg_match_all( '/\@(?:([\@\%\#\=\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/', $sqlDepField, $match, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE );
-                        for ($cnt = 0; $cnt < $count; $cnt ++) {
-                            $aDepFields[$cnt] = $match[2][$cnt][0];
-                        }
-                    }
-                }
-
                 $sOptions = 'script: function (input) { ';
 
                 $sOptions .= '  var inputValue = base64_encode(getField(\'' . $rowIdField . '[' . $this->name . '_label\').value); ';
 
                 $sOptions .= '  return "' . $this->ajaxServer . '?request=suggest&json=true&limit=' . $this->maxresults;
                 $sOptions .= '&hash=' . $hash . '&dependentFieldsKeys=' . $sResultKeys . '&dependentFieldsValue="';
-                $sOptions .= $depValues . '"&input="+inputValue+"&inputEnconde64=enable"; ';
+                $sOptions .= $depValues . '"&input="+inputValue+"&inputEnconde64=enable&searchType=' . $this->searchType . '";';
+
                 $sOptions .= '},';
                 $sOptions .= 'json: true,';
                 $sOptions .= 'limit: ' . $this->maxresults . ',';
@@ -1635,60 +1625,41 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                 $sOptions .= 'callback: function (obj) { ';
 
                 $sOptions .= 'if (typeof obj != "undefined") { ';
-                $sOptions .= ' var jField = { };';
-                $sOptions .= ' var sField = "[]"; ';
                 $sOptions .= ' var aFieldCurrent = {};';
                 $sOptions .= ' aFieldCurrent[\'' . $this->name . '\'] = obj.id;';
                 $sOptions .= ' var sFieldCurrent = "["+ encodeURIComponent(aFieldCurrent.toJSONString()) + "]"; ';
-
-                if ($count > 0) {
-                    for ($cnt = 0; $cnt < $count; $cnt ++) {
-                        if ( $this->name  == $aDepFields[$cnt] ) {
-                            $sOptions .= '  jField[\'' . $aDepFields[$cnt] . '\'] = obj.id;';
-                        } else {
-                            $sOptions .= '  jField[\'' . $aDepFields[$cnt] . '\'] = getField(\'' . $rowIdField . '[' . $aDepFields[$cnt] . '\').value; ';
-                        }
-                    }
-                }
-
-                $sOptions .= ' var sField = "["+ encodeURIComponent(jField.toJSONString()) + "]"; ';
                 $sOptions .= $sCallBack . '; getField("' . $rowIdField . '[' . $this->name . '").value = obj.id;';
 
                 $sOwnerId = (isset($owner->owner->id))? $owner->owner->id : $owner->id;
                 $sOptions .= 'var indexField =  "' . $rowIdField . '[' . $this->name . '";';
                 $sOptions .= 'indexField = indexField.match(/\[[0-9]+\]/g); ';
                 $sOptions .= 'indexFieldVal = indexField[0].replace(/\[|\]/g,""); ';
-
-                $sOptions .= 'var response = ajax_function("../gulliver/defaultAjaxDynaform", "reloadField", ';
-                $sOptions .= '               "form=' . $sOwnerId . '&fields=" + sField + "&grid=' . $ownerName . '&row=" + indexFieldVal + "&aFieldCurrent=" + sFieldCurrent, "POST" ); ';
-
+                $sOptions .= 'var gridField = gridGetAllFieldAndValue("' . $ownerName . '][" + indexFieldVal + "][' . $this->name . '", 0); '; //Not get current field
+                $sOptions .= 'var response = ajax_function("../gulliver/defaultAjaxDynaform", "reloadField", "form=' . $sOwnerId . '&fields=" + sFieldCurrent + "&grid=' . $ownerName . '" + ((gridField != "")? "&gridField=" + encodeURIComponent("{" + gridField + "}") : "") + "&row=" + indexFieldVal, "POST"); ';
+                $sOptions .= '';
                 $sOptions .= 'if (response.substr(0,1) === \'[\') { ';
                 $sOptions .= '  var newcont; ';
                 $sOptions .= '  eval(\'newcont=\' + response + \';\'); ';
-
+                $sOptions .= '';
                 $sOptions .= '  for(var i = 0; i<newcont.length; i++) { ';
-                // $sOptions .= '    var depField = getField(\'' . $rowIdField . '[\' + ' . 'newcont[i].name); ';
-                $sOptions .= '    var depField = \'' . $rowIdField . '[\' + ' . 'newcont[i].name; ';
-
+                $sOptions .= '    var depField = "' . $rowIdField . '[" + newcont[i].name; ';
                 $sOptions .= '    getField(depField).value = newcont[i].value; ';
-                $sOptions .= '    if (newcont[i].content.type == \'dropdown\') { ';
+                $sOptions .= '
+                                  switch (newcont[i].content.type) {
+                                      case "dropdown":
+                                          dropDownSetOption({element: getField(depField), name: depField}, newcont[i].content);
+                                          break;
+                                      case "text":
+                                          getField(depField).value = "";
 
-                $sOptions .= '      fieldLength = getField(depField).options.length; ';
-
-                $sOptions .= '      for (ni = 0; ni < fieldLength; ni++ ){ ';
-                $sOptions .= '        getField(depField).options.remove(ni); ';
-                $sOptions .= '      } ';
-                $sOptions .= '      getField(depField).length = 0; ';
-
-                $sOptions .= '      for (ni = 0; ni < newcont[i].content.options.length; ni++ ){ ';
-                $sOptions .= '        var opt = document.createElement("OPTION"); ';
-                $sOptions .= '        opt.value = newcont[i].content.options[ni].key; ';
-                $sOptions .= '        opt.text  = newcont[i].content.options[ni].value; ';
-                $sOptions .= '        getField(depField).options.add(opt); ';
-
-                $sOptions .= '      } ';
-                $sOptions .= '    } ';
-
+                                          if (newcont[i].content.options) {
+                                              if (newcont[i].content.options[0]) {
+                                                  getField(depField).value = newcont[i].content.options[0].value;
+                                              }
+                                          }
+                                          break;
+                                  }
+                ';
                 $sOptions .= '  } ';
                 $sOptions .= '} else { ';
                 $sOptions .= '  alert(\'Invalid response: \' + response); ';
@@ -1698,7 +1669,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                 $sOptions .= '}';
 
                 $str .= '<script type="text/javascript">';
-                $str .= 'var as_json = new bsn.AutoSuggest(\'form' . $rowId . '[' . $this->name . '_label]\', {' . $sOptions . $storeEntryData . '}); ';
+                $str .= 'var as_json = new bsn.AutoSuggest(\'form' .  $rowId . '[' . $this->name . '_label]\', {' . $sOptions . $storeEntryData . '}, "' . $this->searchType . '"); ';
                 $str .= '</script>';
 
                 return $str;
@@ -1778,9 +1749,10 @@ class XmlForm_Field_Print extends XmlForm_Field_SimpleText //by neyek
         $value = G::replaceDataField( $this->value, $owner->values );
         $label = G::replaceDataField( $this->label, $owner->values );
 
-        $html = '<a href="#" onclick="popUp(\'' . $this->htmlentities( $link, ENT_QUOTES, 'utf-8' ) . '\', ' . $this->width . ', ' . $this->height . ', ' . $this->left . ', ' . $this->top . ', ' . $this->resizable . '); return false;" >
-            <image title="' . $this->htmlentities( $label, ENT_QUOTES, 'utf-8' ) . '" src="/images/printer.png" width="15" height="15" border="0"/>
-       </a>';
+        $html = '<a href="javascript:;" onclick="dynaFormPrint(\'' . $owner->parentFormId . '\', \'' . $this->htmlentities( $link, ENT_QUOTES, 'utf-8' ) . '\', ' . $this->width . ', ' . $this->height . ', ' . $this->left . ', ' . $this->top . ', ' . $this->resizable . '); return false;">
+                  <image title="' . $this->htmlentities( $label, ENT_QUOTES, 'utf-8' ) . '" src="/images/printer.png" width="15" height="15" border="0"/>
+                  </a>';
+
         return $html;
     }
 }
@@ -2011,17 +1983,32 @@ class XmlForm_Field_Textarea extends XmlForm_Field
      * @param string owner
      * @return string
      */
-    public function renderGrid ($values = null, $owner = null)
+    public function renderGrid ($values = array(), $owner = null)
     {
         $this->gridFieldType = 'textarea';
 
         if ($owner->mode != 'view') {
             $this->renderMode = $this->modeForGrid;
         }
-        $result = array ();
+
+        $result = array();
+        $arrayOptions = array();
+
         $r = 1;
 
         foreach ($values as $v) {
+            $this->executeSQL($owner, $r);
+
+            if (isset($this->sqlOption)) {
+                $firstElement = key($this->sqlOption);
+            }
+
+            if (isset($firstElement)) {
+                $v = $firstElement;
+            }
+
+            $arrayOptions[$r] = $v;
+
             $scrollStyle = $this->style . "overflow:scroll;overflow-y:scroll;overflow-x:hidden;overflow:-moz-scrollbars-vertical;";
             $html = '';
             if ($this->renderMode == 'edit') {
@@ -2053,6 +2040,8 @@ class XmlForm_Field_Textarea extends XmlForm_Field
             $result[] = $html;
             $r ++;
         }
+
+        $this->options = $arrayOptions;
         return $result;
     }
 }
@@ -2905,7 +2894,7 @@ class XmlForm_Field_File extends XmlForm_Field
             $styleDisplay = "display: none;";
         }
 
-        $html = $html1 . "<input type=\"file\" id=\"form" . $rowId . "[" . $this->name . "]\" name=\"form" . $rowId . "[" . $this->name . "]\" value=\"" . $value . "\" class=\"module_app_input___gray_file\" style=\"" . $styleDisplay . "\"" . $mode . " />" . $html2;
+        $html = $html1 . "<input type=\"file\" id=\"form" . $rowId . "[" . $this->name . "]\" name=\"form" . $rowId . "[" . $this->name . "]\" value=\"" . $value . "\" class=\"module_app_input___gray_file\" style=\"" . $styleDisplay . "\"" . $mode . " " . $this->NSRequiredValue() . " />" . $html2;
 
         if (isset( $this->input ) && $this->input != null) {
             require_once ("classes/model/InputDocument.php");
@@ -3054,7 +3043,7 @@ class XmlForm_Field_Checkbox extends XmlForm_Field
     public $required = false;
     public $value = 'on';
     public $falseValue = 'off';
-    public $labelOnRight = true;
+    public $labelOnRight = false;
     public $readOnly = false;
 
     /**
@@ -3264,11 +3253,12 @@ class XmlForm_Field_Submit extends XmlForm_Field
     public function render ($value = null, $owner = null)
     {
         $onclick = G::replaceDataField( $this->onclick, $owner->values );
+
         if ($this->mode === 'edit') {
             //      if ($this->readOnly)
             //        return '<input id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $this->label .'\' disabled/>';
             return "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='submit' value=\"{$this->label}\" " . (($this->onclick) ? 'onclick="' . htmlentities( $onclick, ENT_COMPAT, 'utf-8' ) . '"' : '') . " />";
-        } elseif ($this->mode === 'view') {
+         } elseif ($this->mode === 'view') {
             //return "<input style=\"{$this->style};display:none\" disabled='disabled' class='module_app_button___gray module_app_buttonDisabled___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='submit' value=\"{$this->label}\" " . (($this->onclick) ? 'onclick="' . htmlentities ( $onclick, ENT_COMPAT, 'utf-8' ) . '"' : '') . " />";
             //$sLinkNextStep = 'window.open("' . $owner->fields['__DYNAFORM_OPTIONS']->xmlMenu->values['NEXT_STEP'] . '", "_self");';
             $html = '';
@@ -3381,10 +3371,11 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
     public $required = false;
     public $dependentFields = '';
     public $readonly = false;
-    public $option = array ();
+    public $optgroup = 0;
+    public $option = array();
     public $sqlConnection = 0;
     public $sql = '';
-    public $sqlOption = array ();
+    public $sqlOption = array();
     public $saveLabel = 0;
     public $modeGridDrop = '';
     public $renderMode = '';
@@ -3452,33 +3443,85 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
             $html .= $this->NSGridLabel() . ' ';
             $html .= $rowId == '' ? $this->NSFieldType() : $this->NSGridType() . ' ';
             $html .= $this->NSDependentFields( true ) . ' ';
-            $html .= '>';
+            $html = $html . (($this->optgroup == 1)? "pm:optgroup=\"1\" " : null);
+            $html = $html . ">";
+
             $findValue = '';
             $firstValue = '';
-            $cont = 0;
+            $count = 0;
+            $swOption = 0;
+
+            $htmlOptGroup = null;
+            $swOptGroupPrev = 0;
+            $swAppend = 0;
+
             foreach ($this->option as $optValue => $optName) {
-                settype( $optValue, 'string' );
-                $html .= '<option value="' . $optValue . '" ' . (($optValue === $value) ? 'selected="selected"' : '') . '>' . $optName . '</option>';
-                if ($optValue === $value) {
-                    $findValue = $optValue;
-                    $displayLabel = $optName;
+                settype($optValue, "string");
+
+                if ($this->optgroup == 1 && preg_match("/^optgroup\d+$/", $optValue)) {
+                    if ($swOptGroupPrev == 1 && $swAppend == 1) {
+                        $html = $html . "</optgroup>";
+                    }
+
+                    $htmlOptGroup = "<optgroup label=\"$optName\">";
+                    $swOptGroupPrev = 1;
+                    $swAppend = 0;
+                } else {
+                    $html = $html . $htmlOptGroup . "<option value=\"$optValue\"" . (($optValue == $value)? " selected=\"selected\"" : null) . ">$optName</option>";
+                    $htmlOptGroup = null;
+                    $swAppend = 1;
+
+                    if ($optValue === $value) {
+                        $findValue = $optValue;
+                        $displayLabel = $optName;
+                    }
+
+                    if ($firstValue == "") {
+                        $firstValue = $optValue;
+                    }
+
+                    $count = $count + 1;
+                    $swOption = 1;
                 }
-                if ($firstValue == '') {
-                    $firstValue = $optValue;
-                }
-                $cont ++;
             }
+
             foreach ($this->sqlOption as $optValue => $optName) {
-                settype( $optValue, 'string' );
-                $html .= '<option value="' . $optValue . '" ' . (($optValue === $value) ? 'selected="selected"' : '') . '>' . $optName . '</option>';
-                if ($optValue === $value) {
-                    $findValue = $optValue;
-                    $displayLabel = $optName;
-                }
-                if ($firstValue == '') {
-                    $firstValue = $optValue;
+                settype($optValue, "string");
+
+                if ($this->optgroup == 1 && preg_match("/^optgroup\d+$/", $optValue)) {
+                    if ($swOptGroupPrev == 1 && $swAppend == 1) {
+                        $html = $html . "</optgroup>";
+                    }
+
+                    $htmlOptGroup = "<optgroup label=\"$optName\">";
+                    $swOptGroupPrev = 1;
+                    $swAppend = 0;
+                } else {
+                    $html = $html . $htmlOptGroup . "<option value=\"$optValue\"" . (($optValue == $value)? " selected=\"selected\"" : null) . ">$optName</option>";
+                    $htmlOptGroup = null;
+                    $swAppend = 1;
+
+                    if ($optValue === $value) {
+                        $findValue = $optValue;
+                        $displayLabel = $optName;
+                    }
+
+                    if ($firstValue == "") {
+                        $firstValue = $optValue;
+                    }
+
+                    $swOption = 1;
                 }
             }
+
+            if ($swOption == 1) {
+                if ($swOptGroupPrev == 1 && $swAppend == 1) {
+                    $html = $html . "</optgroup>";
+                }
+            } else {
+                $html = $html . "<option value=\"\"></option>";
+            }
+
             $html .= '</select>';
             if ($readOnlyField != '') {
                 $html .= '<input type="hidden" ';
@@ -3486,8 +3529,8 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
                 $html .= 'name="form' . $rowId . '[' . $this->name . ']" ';
                 $html .= 'value="' . (($findValue != '') ? $findValue : $firstValue) . '" />';
             }
-            $this->selectedValue = ($findValue != '') ? $findValue : ($cont == 0) ? $firstValue : '';
 
+            $this->selectedValue = ($findValue != "")? $findValue : ($count == 0)? $firstValue : "";
         } else {
             //Render Field showing only value;
             foreach ($this->option as $optValue => $optName) {
@@ -3578,6 +3621,15 @@ class XmlForm_Field_Listbox extends XmlForm_Field
         if (! is_array( $value )) {
             $value = explode( '|', $value );
         }
+
+        $arrayAux = array();
+
+        foreach ($value as $index2 => $value2) {
+            $arrayAux[] = $value2 . "";
+        }
+
+        $value = $arrayAux;
+
         if ($this->mode === 'edit') {
             $itemWidth = '';
             if ($this->width != '') {
@@ -3585,33 +3637,29 @@ class XmlForm_Field_Listbox extends XmlForm_Field
             }
             $html = '<select multiple="multiple" id="form[' . $this->name . ']" name="form[' . $this->name . '][]" size="' . $this->size . '" ' . $itemWidth . '  ' . $this->NSFieldType() . '>';
             foreach ($this->option as $optionName => $option) {
-                $html .= '<option value="' . $optionName . '" ' . ((in_array( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
+                $html .= "<option value=\"" . $optionName . "\" " . ((in_array( $optionName . "", $value )) ? "selected=\"selected\"" : "") . ">" . $option . "</option>";
             }
             foreach ($this->sqlOption as $optionName => $option) {
-                $html .= '<option value="' . $optionName . '" ' . ((in_array( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
+                $html .= "<option value=\"" . $optionName . "\" " . ((in_array( $optionName . "", $value )) ? "selected=\"selected\" " : "") . ">" . $option . "</option>";
             }
             $html .= '</select>';
 
             $html .= $this->renderHint();
             return $html;
         } elseif ($this->mode === 'view') {
-            $html = '<select multiple id="form[' . $this->name . ']" name="form[' . $this->name . '][]" size="' . $this->size . '" ' . $this->NSFieldType() . ' disabled>'; //disabled>';
+            $html = '<select multiple="multiple" id="form[' . $this->name . ']" name="form[' . $this->name . '][]" size="' . $this->size . '" ' . $this->NSFieldType() . ' style="background: none;" disabled="disabled">';
             foreach ($this->option as $optionName => $option) {
-                if ((in_array( $optionName, $value )) == 1) {
-                    $html .= ' <option  class="module_ListBoxView" value="' . $optionName . '" ' . ((in_array( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
-                } else {
-                    $html .= '<option value="' . $optionName . '" ' . ((in_array( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
-                }
+                $html .= "<option value=\"" . $optionName . "\" " . ((in_array( $optionName . "", $value )) ? "class=\"module_ListBoxView\" selected=\"selected\"" : "") . ">" . $option . "</option>";
             }
             foreach ($this->sqlOption as $optionName => $option) {
-                $html .= '<option value="' . $optionName . '" ' . ((in_array( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
+                $html .= "<option value=\"" . $optionName . "\" " . ((in_array( $optionName . "", $value )) ? "class=\"module_ListBoxView\" selected=\"selected\"" : "") . ">" . $option . "</option>";
             }
             $html .= '</select>';
             foreach ($this->option as $optionName => $option) {
-                $html .= '<input style="color:white;" type="hidden"  id="form[' . $this->name . ']" name="form[' . $this->name . '][]" value="' . ((in_array( $optionName, $value )) ? $optionName : '') . '">';
+                $html .= "<input type=\"hidden\" id=\"form[" . $this->name . "]\" name=\"form[" . $this->name . "][]\" value=\"" . ((in_array( $optionName . "", $value )) ? $optionName : "__NULL__") . "\">";
             }
             foreach ($this->sqlOption as $optionName => $option) {
-                $html .= '<input type="hidden"  id="form[' . $this->name . ']" name="form[' . $this->name . '][]" value="' . ((in_array( $optionName, $value )) ? $optionName : '') . '">';
+                $html .= "<input type=\"hidden\" id=\"form[" . $this->name . "]\" name=\"form[" . $this->name . "][]\" value=\"" . ((in_array( $optionName . "", $value )) ? $optionName : "__NULL__") . "\">";
             }
             return $html;
         } else {
@@ -3785,11 +3833,21 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
         if (! is_array( $value )) {
             $value = explode( '|', $value );
         }
+
+        $arrayAux = array();
+
+        foreach ($value as $index2 => $value2) {
+            $arrayAux[] = $value2 . "";
+        }
+
+        $value = $arrayAux;
+
         if ($this->mode === 'edit') {
             $i = 0;
             $html = '';
             foreach ($this->options as $optionName => $option) {
-                $html .= '<input id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][]" type=\'checkbox\' value="' . $optionName . '"' . (in_array( $optionName, $value ) ? 'checked' : '') . '><span class="FormCheck"><label for="form[' . $this->name . '][' . $optionName . ']">' . $option . '</label></span></input>';
+                $html .= "<input type=\"checkbox\" id=\"form[" . $this->name . "][" . $optionName . "]\" name=\"form[" . $this->name . "][]\"  value=\"" . $optionName . "\"" . (in_array( $optionName . "", $value ) ? "checked = \"checked\" " : "") . "><span class=\"FormCheck\"><label for=\"form[" . $this->name . "][" . $optionName . "]\">" . $option . "</label></span></input>";
+
                 if (++ $i == count( $this->options )) {
                     $html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $this->renderHint();
                 }
@@ -3799,8 +3857,8 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
         } elseif ($this->mode === 'view') {
             $html = '';
             foreach ($this->options as $optionName => $option) {
-                $html .= '<input class="FormCheck" id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][]" type=\'checkbox\' value="' . $optionName . '"' . (in_array( $optionName, $value ) ? 'checked' : '') . ' disabled><span class="FormCheck"><label for="form[' . $this->name . '][' . $optionName . ']">' . $option . '</label></span></input><br>';
-                $html .= '<input type="hidden"  id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][]"  value="' . ((in_array( $optionName, $value )) ? $optionName : '') . '">';
+                $html .= "<input class=\"FormCheck\" type=\"checkbox\" id=\"form[" . $this->name . "][" . $optionName . "]\" value=\"" . $optionName . "\"" . (in_array( $optionName . "", $value ) ? " checked=\"checked\" " : "") . " disabled=\"disabled\"><span class=\"FormCheck\"><label for=\"form[" . $this->name . "][" . $optionName . "]\">" . $option . "</label></span></input><br />";
+                $html .= "<input type=\"hidden\" name=\"form[" . $this->name . "][]\"  value=\"" . ((in_array( $optionName . "", $value )) ? $optionName : "__NULL__") . "\">";
             }
             return $html;
         } else {
@@ -4006,10 +4064,12 @@ class XmlForm_Field_Grid extends XmlForm_Field
             $using_template = 'grid_view';
         }
 
-        $tpl = new xmlformTemplate( $this, PATH_CORE . "templates/{$using_template}.html" );
+        $tpl = new xmlformTemplate($this, PATH_CORE . "templates" . PATH_SEP . "$using_template.html");
+
         if (! isset( $values ) || ! is_array( $values ) || sizeof( $values ) == 0) {
             $values = array_keys( $this->fields );
         }
+
         if ($therow != - 1) {
             //Check if values arrary is complete to can flip.
             $xValues = array ();
@@ -4033,22 +4093,48 @@ class XmlForm_Field_Grid extends XmlForm_Field
             }
             $values = $xValues;
         }
+
         $aValuekeys = array_keys( $values );
+
         if (count( $aValuekeys ) > 0 && (int) $aValuekeys[0] == 1) {
             $values = $this->flipValues( $values );
         }
+
         //if ($therow == 1)g::pr($values);
         $this->rows = count( reset( $values ) );
-        if (isset( $owner->values )) {
+
+        //Fields required in grid (view in sql attribute)
+        $arrayField = array();
+        $arrayFieldRequired = array();
+
+        foreach ($this->fields as $index1 => $value1) {
+            $field = $value1;
+
+            $arrayField[] = $field->name;
+            $arrayFieldRequired[] = "SYS_GRID_AGGREGATE_" . $this->name . "_" . $field->name;
+
+            preg_match_all("/@[@%#\?\$\=]([A-Za-z_]\w*)/", $field->sql, $arrayMatch, PREG_SET_ORDER);
+
+            foreach ($arrayMatch as $value2) {
+                $arrayFieldRequired[] = $value2[1];
+            }
+        }
+
+        $arrayFieldRequired = array_unique($arrayFieldRequired);
+        $arrayFieldRequired = array_diff($arrayFieldRequired, $arrayField);
+
+        //Fields Grid only required fields of the grid, no all fields of dynaform main
+        if (isset($owner->values) && count($arrayFieldRequired) > 0) {
             foreach ($owner->values as $key => $value) {
-                if (! isset( $values[$key] )) {
-                    $values[$key] = array ();
+                if (in_array($key, $arrayFieldRequired) && !isset($values[$key])) {
+                    $values[$key] = array();
                     //for($r=0; $r < $this->rows ; $r++ ) {
                     $values[$key] = $value;
                     //}
                 }
             }
         }
+
         foreach ($this->fields as $k => $v) {
             if (isset( $values['SYS_GRID_AGGREGATE_' . $this->name . '_' . $k] )) {
                 $this->fields[$k]->aggregate = $values['SYS_GRID_AGGREGATE_' . $this->name . '_' . $k];
@@ -4327,7 +4413,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
                         $mask = str_replace( "%", "", $this->mask );
                         $v = date( masktophp($mask, $v) );
                     }
-                    $html = '<input ' . $this->NSRequiredValue() . ' class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value="' . $this->htmlentities( $v, ENT_COMPAT, 'utf-8' ) . '" required="' . $isRequired . '" style="display:none;' . htmlentities( $this->style, ENT_COMPAT, 'utf-8' ) . '" ' . $this->NSGridType() . '/>' . htmlentities( $v, ENT_COMPAT, 'utf-8' );
+                    $html = '<input ' . $this->NSRequiredValue() . ' class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value="' . $this->htmlentities( $v, ENT_COMPAT, 'utf-8' ) . '" pm:required="' . $isRequired . '" style="display:none;' . htmlentities( $this->style, ENT_COMPAT, 'utf-8' ) . '" ' . $this->NSGridType() . '/>' . htmlentities( $v, ENT_COMPAT, 'utf-8' );
                 } else {
                     $id = 'form[' . $owner->name . '][' . $r . '][' . $this->name . ']';
                     $html = $this->__draw_widget( $id, $v, $owner, true );
@@ -4400,6 +4486,8 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
             $mask = '%Y-%m-%d'; //set default
         }
 
+        $valueDemo = masktophp($mask, "today");
+
         if ($this->defaultValue != "") {
             $defaultValue = masktophp( $mask, $defaultValue);
         }
@@ -4459,25 +4547,26 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
             $min = '%M';
             $sec = '%S';
             $sizehour = strpos( $mask, $hour );
-            $sizemin = strpos( $mask, $hour );
-            $sizesec = strpos( $mask, $hour );
+            $sizemin = strpos( $mask, $min );
+            $sizesec = strpos( $mask, $sec );
             $Time = 'false';
 
             if (($sizehour !== false) && ($sizemin !== false) && ($sizesec !== false)) {
-                $sizeend = $maskleng + 2;
-                $Time = 'true';
-            } else {
-                $sizeend = $maskleng + 2;
+                $Time = "true";
             }
+
+            $sizeend = strlen($valueDemo) + 3;
+
             if ($this->required) {
                 $isRequired = '1';
             } else {
                 $isRequired = '0';
             }
+
             if ($this->editable != "0") {
-                $html = '<input pm:required="' . $isRequired . '" id="' . $pID . '" name="' . $pID . '" pm:mask="' . $mask . '" pm:start="' . $startDate . '" pm:end="' . $endDate . '" pm:time="' . $Time . '" ' . $onchange . ' class="module_app_input___gray" size="' . $sizeend . '" value="' . $value . '" pm:defaultvalue="' . $defaultValue . '"  />' . '<a onclick="removeValue(\'' . $pID . '\'); return false;" style="position:relative;left:-17px;top:5px;" >' . '  <img src="/images/icons_silk/calendar_x_button.png" />' . '</a>' . '<a id="' . $pID . '[btn]" style="position:relative;left:-22px;top:0px;" >' . '  <img src="/images/pmdateicon.png" border="0" width="12" height="14" />' . '</a>' . '<script>datePicker4("", \'' . $pID . '\', \'' . $mask . '\', \'' . $startDate . '\', \'' . $endDate . '\',' . $Time . ')</script>';
+                $html = '<input pm:required="' . $isRequired . '" id="' . $pID . '" name="' . $pID . '" pm:mask="' . $mask . '" pm:start="' . $startDate . '" pm:end="' . $endDate . '" pm:time="' . $Time . '" ' . $onchange . ' class="module_app_input___gray" size="' . $sizeend . '" value="' . $value . '" pm:defaultvalue="' . $defaultValue . '"  />' . '<a onclick="removeValue(\'' . $pID . '\'); return false;" style="position:relative;left:-17px;top:2px;" >' . '  <img src="/images/icons_silk/calendar_x_button.png" />' . '</a>' . '<a id="' . $pID . '[btn]" style="position: relative; top: 2px; left: -16px;" >' . '  <img src="/images/pmdateicon.png" border="0" width="12" height="14" />' . '</a>' . '<script>datePicker4("", \'' . $pID . '\', \'' . $mask . '\', \'' . $startDate . '\', \'' . $endDate . '\',' . $Time . ')</script>';
             } else {
-                $html = '<input pm:required="' . $isRequired . '" id="' . $pID . '" name="' . $pID . '" pm:mask="' . $mask . '" pm:start="' . $startDate . '" pm:end="' . $endDate . '" pm:time="' . $Time . '" ' . $onchange . ' class="module_app_input___gray" size="' . $sizeend . '" value="' . $value . '" pm:defaultvalue="' . $defaultValue . '" readonly="readonly"  />' . '<a onclick="removeValue(\'' . $pID . '\'); return false;" style="position:relative;left:-17px;top:5px;" >' . '  <img src="/images/icons_silk/calendar_x_button.png" />' . '</a>' . '<a id="' . $pID . '[btn]" style="position:relative;left:-22px;top:0px;" >' . '  <img src="/images/pmdateicon.png" border="0" width="12" height="14" />' . '</a>' . '<script>datePicker4("", \'' . $pID . '\', \'' . $mask . '\', \'' . $startDate . '\', \'' . $endDate . '\',' . $Time . ')</script>';
+                $html = '<input pm:required="' . $isRequired . '" id="' . $pID . '" name="' . $pID . '" pm:mask="' . $mask . '" pm:start="' . $startDate . '" pm:end="' . $endDate . '" pm:time="' . $Time . '" ' . $onchange . ' class="module_app_input___gray" size="' . $sizeend . '" value="' . $value . '" pm:defaultvalue="' . $defaultValue . '" readonly="readonly"  />' . '<a onclick="removeValue(\'' . $pID . '\'); return false;" style="position:relative;left:-17px;top:2px;" >' . '  <img src="/images/icons_silk/calendar_x_button.png" />' . '</a>' . '<a id="' . $pID . '[btn]" style="position: relative; top: 2px; left: -16px;" >' . '  <img src="/images/pmdateicon.png" border="0" width="12" height="14" />' . '</a>' . '<script>datePicker4("", \'' . $pID . '\', \'' . $mask . '\', \'' . $startDate . '\', \'' . $endDate . '\',' . $Time . ')</script>';
             }
         } else {
             $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>" . '<input type="hidden" id="' . $pID . '" name="' . $pID . '" pm:mask="' . $mask . '" pm:start="' . $startDate . '"' . 'pm:end="' . $endDate . '"  ' . $onchange . ' class="module_app_input___gray" value="' . $value . '"/>';
@@ -4502,6 +4591,74 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
             $html .= $this->renderHint();
         }
         return $html;
+    }
+
+    public function maskDateValue ($value, $field)
+    {
+        $value = trim($value);
+        $mask = $field->mask;
+        if ($value == '' || $mask == '') {
+            return $value;
+        }
+        if (strpos( $mask, '%' ) === false) {
+            if (strpos( $mask, '-' ) !== false) {
+                $separator = '-';
+            }
+            if (strpos( $mask, '/' ) !== false) {
+                $separator = '/';
+            }
+            if (strpos( $mask, '.' ) !== false) {
+                $separator = '.';
+            }
+
+            $maskparts = explode( $separator, $mask );
+            $mask = '';
+            foreach ($maskparts as $part) {
+                if ($mask != '') {
+                    $mask .= $separator;
+                }
+                if ($part == 'yyyy') {
+                    $part = 'Y';
+                }
+                if ($part == 'dd') {
+                    $part = 'd';
+                }
+                if ($part == 'mm') {
+                    $part = 'm';
+                }
+                if ($part == 'yy') {
+                    $part = 'y';
+                }
+                $mask .= '%' . $part;
+            }
+        }
+
+        $withHours = (strpos($mask, '%H') !== false || strpos($mask, '%M') !== false || strpos($mask, '%S') !== false);
+
+        $tmp = str_replace( "%", "", $mask );
+        return $this->date_create_from_format($tmp, $value, $withHours);
+    }
+
+    function date_create_from_format( $dformat, $dvalue, $withHours = false )
+    {
+        $schedule = $dvalue;
+        $schedule_format = str_replace(array('Y','m','d','H','M','S'),array('%Y','%m','%d','%H','%M','%S') ,$dformat);
+        $ugly = strptime($schedule, $schedule_format);
+        $ymd = sprintf(
+            '%04d-%02d-%02d %02d:%02d:%02d',
+            $ugly['tm_year'] + 1900,
+            $ugly['tm_mon'] + 1,
+            $ugly['tm_mday'],
+            $ugly['tm_hour'],
+            $ugly['tm_min'],
+            $ugly['tm_sec']
+        );
+        try {
+            $new_schedule = new DateTime($ymd);
+        } catch (Exception $error) {
+            $new_schedule = new DateTime();
+        }
+        return $new_schedule->format('Y-m-d' . ($withHours ? ' H:i:s' : ''));
     }
 }
 
@@ -5107,8 +5264,10 @@ class XmlForm
 
         $newVersion = false;
         if ($forceParse || ((! file_exists( $this->parsedFile )) || (filemtime( $filename ) > filemtime( $this->parsedFile )) || (filemtime( __FILE__ ) > filemtime( $this->parsedFile ))) || (! file_exists( $this->scriptFile )) || (filemtime( $filename ) > filemtime( $this->scriptFile ))) {
-            foreach (glob( $filesToDelete ) as $fileToDelete) {
-                @unlink( $fileToDelete );
+            if (glob( $filesToDelete )) {
+                foreach (glob( $filesToDelete ) as $fileToDelete) {
+                    @unlink( $fileToDelete );
+                }
             }
             $this->tree = new Xml_Document();
             $this->tree->parseXmlFile( $filename );
@@ -5452,6 +5611,32 @@ class xmlformTemplate extends Smarty
      */
     public function printJSFile (&$form)
     {
+        //JS designer>preview
+        if (isset($_SERVER["HTTP_REFERER"]) && !empty($_SERVER["HTTP_REFERER"]) && preg_match("/^.*dynaforms_Editor\?.*PRO_UID=.*DYN_UID=.*$/", $_SERVER["HTTP_REFERER"]) && preg_match("/^.*dynaforms\/dynaforms_Ajax.*$/", $_SERVER["REQUEST_URI"])) {
+            $js = null;
+
+            foreach ($form->fields as $index => $value) {
+                $field = $value;
+
+                if ($field->type == "javascript" && !empty($field->code)) {
+                    $js = $js . " " . $field->code;
+                }
+            }
+
+            if ($js != null) {
+                $form->jsDesignerPreview = "
+                //JS designer>preview
+                $js
+
+                loadForm_" . $form->id . "(\"../gulliver/defaultAjaxDynaform\");
+
+                if (typeof(dynaformOnload) != \"undefined\") {
+                    dynaformOnload();
+                }
+                ";
+            }
+        }
+
         $this->assign( 'form', $form );
         $this->assign( 'printTemplate', false );
         $this->assign( 'printJSFile', true );
@@ -5470,22 +5655,31 @@ class xmlformTemplate extends Smarty
     public function getFields (&$form, $therow = -1)
     {
         $result = array ();
+
         foreach ($form->fields as $k => $v) {
+            $field = $v;
+
             if ($form->mode != '') {
                 #@ last modification: erik
-                $v->mode = $form->mode; #@
+                $field->mode = $form->mode; #@
             } #@
+
             //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
             $value = (isset( $form->values[$k] )) ? $form->values[$k] : null;
             $result[$k] = G::replaceDataField( $form->fields[$k]->label, $form->values );
+
             if ($form->type == 'xmlform') {
-                if (in_array($v->type, array('text', 'currency', 'percentage', 'password', 'suggest', 'textarea', 'dropdown', 'yesno', 'listbox', 'checkbox', 'date', 'link', 'file'))) {
+                if (in_array($field->type, array("text", "currency", "percentage", "password", "suggest", "textarea", "dropdown", "yesno", "listbox", "checkbox", "date", "link", "file"))) {
                     $result[$k] = '<label for="form[' . $k . ']">' . $result[$k] . '</label>';
                 }
             }
+
             if (! is_array( $value )) {
                 if ($form->type == 'grid') {
                     $aAux = array ();
+                    if (!isset($form->values[$form->name])) {
+                        $form->values[$form->name] = array();
+                    }
                     if ($therow == - 1) {
                         for ($i = 0; $i < count( $form->values[$form->name] ); $i ++) {
                             $aAux[] = '';
@@ -5496,7 +5690,7 @@ class xmlformTemplate extends Smarty
                         }
                     }
 
-                    switch ($v->type) {
+                    switch ($field->type) {
                         case "link":
                             $result["form"][$k] = $form->fields[$k]->renderGrid($aAux, array(), $form);
                             break;
@@ -5505,7 +5699,7 @@ class xmlformTemplate extends Smarty
                             break;
                     }
                 } else {
-                    switch ($v->type) {
+                    switch ($field->type) {
                         case "link":
                             $result["form"][$k] = $form->fields[$k]->render(
                                 $value,
@@ -5530,10 +5724,29 @@ class xmlformTemplate extends Smarty
                     }
                 }*/
 
-                if ($v->type == "grid") {
+                if ($field->type == "grid") {
+                    // Fix data for grids
+                    if (is_array($form->fields[$k]->fields)) {
+                        foreach ($form->fields[$k]->fields as $gridFieldName => $gridField) {
+                            $valueLength = count($value);
+                            for ($i = 1; $i <= $valueLength; $i++) {
+                                if (!isset($value[$i][$gridFieldName])) {
+                                    switch ($gridField->type) {
+                                        case 'checkbox':
+                                            $defaultAttribute = 'falseValue';
+                                            break;
+                                        default:
+                                            $defaultAttribute = 'defaultValue';
+                                            break;
+                                    }
+                                    $value[$i][$gridFieldName] = isset($gridField->$defaultAttribute) ? $gridField->$defaultAttribute : '';
+                                }
+                            }
+                        }
+                    }
                     $result["form"][$k] = $form->fields[$k]->renderGrid( $value, $form, $therow );
                 } else {
-                    switch ($v->type) {
+                    switch ($field->type) {
                         case "dropdown":
                             $result["form"][$k] = $form->fields[$k]->renderGrid( $value, $form, false, $therow );
                             break;
@@ -5554,11 +5767,13 @@ class xmlformTemplate extends Smarty
                 }
             }
         }
+
         foreach ($form as $name => $value) {
             if ($name !== 'fields') {
                 $result['form_' . $name] = $value;
             }
         }
+
         return $result;
     }
 
@@ -5747,3 +5962,67 @@ function masktophp ($mask, $value)
     return $value;
 }
 
+if (!function_exists('strptime')) {
+    function strptime($date, $format) {
+        $masks = array(
+            '%d' => '(?P<d>[0-9]{2})',
+            '%m' => '(?P<m>[0-9]{2})',
+            '%Y' => '(?P<Y>[0-9]{4})',
+            '%H' => '(?P<H>[0-9]{2})',
+            '%M' => '(?P<M>[0-9]{2})',
+            '%S' => '(?P<S>[0-9]{2})',
+            // usw..
+        );
+
+        $rexep = "#".strtr(preg_quote($format), $masks)."#";
+        if(!preg_match($rexep, $date, $out)) {
+            return false;
+        }
+
+        if (!isset($out['S'])) {
+            $out['S'] = 0;
+        } else {
+            $out['S'] = (int) $out['S'];
+        }
+
+        if (!isset($out['M'])) {
+            $out['M'] = 0;
+        } else {
+            $out['M'] = (int) $out['M'];
+        }
+
+        if (!isset($out['H'])) {
+            $out['H'] = 0;
+        } else {
+            $out['H'] = (int) $out['H'];
+        }
+
+        if (!isset($out['d'])) {
+            $out['d'] = 0;
+        } else {
+            $out['d'] = (int) $out['d'];
+        }
+
+        if (!isset($out['m'])) {
+            $out['m'] = 0;
+        } else {
+            $out['m'] = (int) $out['m'];
+        }
+
+        if (!isset($out['Y'])) {
+            $out['Y'] = 0;
+        } else {
+            $out['Y'] = (int) $out['Y'];
+        }
+
+        $ret = array(
+            "tm_sec"  => $out['S'],
+            "tm_min"  => $out['M'],
+            "tm_hour" => $out['H'],
+            "tm_mday" => $out['d'],
+            "tm_mon"  => $out['m'] ? $out['m'] - 1 : 0,
+            "tm_year" => $out['Y'] > 1900 ? $out['Y'] - 1900 : 0,
+        );
+        return $ret;
+    }
+}

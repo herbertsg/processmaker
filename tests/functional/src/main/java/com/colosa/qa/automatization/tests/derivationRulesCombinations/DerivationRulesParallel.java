@@ -36,7 +36,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
@@ -47,7 +47,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
@@ -58,7 +58,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
@@ -69,7 +69,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.DynaformExecution().outDynaform();
@@ -80,7 +80,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();
@@ -94,7 +94,7 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().outDynaform();

@@ -151,6 +151,8 @@ class AppCacheView extends BaseAppCacheView
             $criteria = $this->addPMFieldsToCriteria('draft');
         }
 
+        $criteria->addSelectColumn(AppCacheViewPeer::TAS_UID);
+        $criteria->addSelectColumn(AppCacheViewPeer::PRO_UID);
         $criteria->add(AppCacheViewPeer::APP_STATUS, "DRAFT", CRITERIA::EQUAL);
 
         if (!empty($userUid)) {
@@ -403,6 +405,8 @@ class AppCacheView extends BaseAppCacheView
             $criteria = $this->addPMFieldsToCriteria('unassigned');
         }
 
+        $criteria->addSelectColumn(AppCacheViewPeer::TAS_UID);
+        $criteria->addSelectColumn(AppCacheViewPeer::PRO_UID);
         $criteria->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
         $criteria->add(AppCacheViewPeer::USR_UID, '');
 
@@ -465,7 +469,7 @@ class AppCacheView extends BaseAppCacheView
         $oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(ProcessUserPeer::PRO_UID);
         $oCriteria->add(ProcessUserPeer::PU_TYPE, 'GROUP_SUPERVISOR');
-        $oCriteria->addJoin(ProcessUserPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
+        $oCriteria->addJoin(ProcessUserPeer::USR_UID, GroupUserPeer::GRP_UID, Criteria::LEFT_JOIN);
 
         if (!empty($userUid)) {
             $oCriteria->add(GroupUserPeer::USR_UID, $userUid);
@@ -725,9 +729,9 @@ class AppCacheView extends BaseAppCacheView
     {
         $criteria = $this->addPMFieldsToCriteria('sent');
 
-        $criteria->addAsColumn('MAX_DEL_INDEX', 'MAX(' . AppCacheViewPeer::DEL_INDEX . ')');
+        $criteria->addAsColumn("MAX_DEL_INDEX", AppCacheViewPeer::DEL_INDEX);
         //$criteria->add(AppCacheViewPeer::USR_UID, $userUid);
-        $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+        $criteria->add(AppCacheViewPeer::DEL_LAST_INDEX, 1);
 
         return $criteria;
         //return $this->getSearchCriteria(false);
@@ -756,10 +760,10 @@ class AppCacheView extends BaseAppCacheView
     public function getSimpleSearchListCriteria()
     {
         $criteria = $this->addPMFieldsToCriteria('sent');
-        $criteria->addAsColumn('DEL_INDEX', 'MAX(' . AppCacheViewPeer::DEL_INDEX . ')');
+        $criteria->addAsColumn("DEL_INDEX", AppCacheViewPeer::DEL_INDEX);
         $criteria->add(AppCacheViewPeer::USR_UID, $_SESSION['USER_LOGGED']);
         //$criteria->add(AppCacheViewPeer::USR_UID, $userUid);
-        $criteria->addGroupByColumn(AppCacheViewPeer::APP_UID);
+        $criteria->add(AppCacheViewPeer::DEL_LAST_INDEX, 1);
 
         return $criteria;
         //return $this->getSearchCriteria(false);
@@ -900,9 +904,9 @@ class AppCacheView extends BaseAppCacheView
                     }
                 }
             } else {
-                //foreach ($defaultFields as $field) {
-                $oCriteria->addSelectColumn('*');
-                //}
+                foreach (AppCacheViewPeer::getFieldNames(BasePeer::TYPE_FIELDNAME) as $field) {
+                    $oCriteria->addSelectColumn("APP_CACHE_VIEW.$field");
+                }
             }
 
             //add the default and hidden DEL_INIT_DATE
@@ -1035,7 +1039,7 @@ class AppCacheView extends BaseAppCacheView
             $criteria->getNewCriterion(AppCacheViewPeer::DEL_THREAD_STATUS, "OPEN"))
         )->addOr(
             //Paused
-            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, "PAUSED")->addAnd(
+            $criteria->getNewCriterion(AppCacheViewPeer::APP_STATUS, array("DRAFT", "TO_DO"), Criteria::IN)->addAnd(
             $criteria->getNewCriterion(AppCacheViewPeer::APP_UID, AppCacheViewPeer::APP_UID . " IN ($sqlAppDelay)", Criteria::CUSTOM))
         )->addOr(
             //Cancelled - getCancelled()
@@ -1142,47 +1146,20 @@ class AppCacheView extends BaseAppCacheView
 
     public function getDefaultFields()
     {
-        return array(
-            'APP_UID',
-            'DEL_INDEX',
-            'APP_NUMBER',
-            'APP_STATUS',
-            'USR_UID',
-            'PREVIOUS_USR_UID',
-            'TAS_UID',
-            'PRO_UID',
-            'DEL_DELEGATE_DATE',
-            'DEL_INIT_DATE',
-            'DEL_TASK_DUE_DATE',
-            'DEL_FINISH_DATE',
-            'DEL_THREAD_STATUS',
-            'APP_THREAD_STATUS',
-            'APP_TITLE',
-            'APP_PRO_TITLE',
-            'APP_TAS_TITLE',
-            'APP_CURRENT_USER',
-            'APP_DEL_PREVIOUS_USER',
-            'DEL_PRIORITY',
-            'DEL_DURATION',
-            'DEL_QUEUE_DURATION',
-            'DEL_DELAY_DURATION',
-            'DEL_STARTED',
-            'DEL_FINISHED',
-            'DEL_DELAYED',
-            'APP_CREATE_DATE',
-            'APP_FINISH_DATE',
-            'APP_UPDATE_DATE',
-            'APP_OVERDUE_PERCENTAGE',
-            'APP_DELAY_UID',
-            'APP_THREAD_INDEX',
-            'APP_DEL_INDEX',
-            'APP_TYPE',
-            'APP_DELEGATION_USER',
-            'APP_ENABLE_ACTION_USER',
-            'APP_ENABLE_ACTION_DATE',
-            'APP_DISABLE_ACTION_USER',
-            'APP_DISABLE_ACTION_DATE',
-            'APP_AUTOMATIC_DISABLED_DATE'
+        return array_merge(
+            AppCacheViewPeer::getFieldNames(BasePeer::TYPE_FIELDNAME),
+            array(
+                "APP_DELAY_UID",
+                "APP_THREAD_INDEX",
+                "APP_DEL_INDEX",
+                "APP_TYPE",
+                "APP_DELEGATION_USER",
+                "APP_ENABLE_ACTION_USER",
+                "APP_ENABLE_ACTION_DATE",
+                "APP_DISABLE_ACTION_USER",
+                "APP_DISABLE_ACTION_DATE",
+                "APP_AUTOMATIC_DISABLED_DATE"
+            )
         );
     }
 
@@ -1230,7 +1207,7 @@ class AppCacheView extends BaseAppCacheView
             $row = $rs1->getRow();
 
             if (is_array($row = $rs1->getRow())) {
-                $super = true;
+                $super = G::LoadTranslation('ID_TRUE'); //true;
             }
 
             return array('user' => $mysqlUser, 'super' => $super);
@@ -1284,8 +1261,34 @@ class AppCacheView extends BaseAppCacheView
             $oCriteria = new Criteria('workflow');
             $count = AppCacheViewPeer::doCount($oCriteria);
         }
-
+        $found = $found ? G::LoadTranslation('ID_TRUE') : G::LoadTranslation('ID_FALSE');
         return array('found' => $found, 'count' => $count);
+    }
+
+    /**
+     * Update the field APP_DELEGATION.DEL_LAST_INDEX
+     */
+    public function updateAppDelegationDelLastIndex($lang, $recreate = false)
+    {
+        $cnn = Propel::getConnection("workflow");
+        $stmt = $cnn->createStatement();
+
+        $filenameSql = $this->pathToAppCacheFiles . "app_delegation_del_last_index_update.sql";
+
+        if (!file_exists($filenameSql)) {
+            throw (new Exception("file app_delegation_del_last_index_update.sql does not exist"));
+        }
+
+        //Delete trigger
+        $rs = $stmt->executeQuery("DROP TRIGGER IF EXISTS APP_DELEGATION_UPDATE");
+
+        //Update field
+        $rs = $stmt->executeQuery(file_get_contents($filenameSql));
+
+        //Create trigger
+        $res = $this->triggerAppDelegationUpdate($lang, $recreate);
+
+        return "done updated field in table APP_DELEGATION";
     }
 
     /**
@@ -1363,10 +1366,9 @@ class AppCacheView extends BaseAppCacheView
             $sql = str_replace('{lang}', $lang, $sql);
             $stmt->executeQuery($sql);
 
-            return 'created';
+            return G::LoadTranslation('ID_CREATED');
         }
-
-        return 'exists';
+            return G::LoadTranslation('ID_EXIST');
     }
 
     /**
@@ -1410,10 +1412,10 @@ class AppCacheView extends BaseAppCacheView
             $sql = str_replace('{lang}', $lang, $sql);
             $stmt->executeQuery($sql);
 
-            return 'created';
+            return G::LoadTranslation('ID_CREATED');
         }
 
-        return 'exists';
+        return G::LoadTranslation('ID_EXIST');
     }
 
     /**
@@ -1455,10 +1457,10 @@ class AppCacheView extends BaseAppCacheView
             $sql = str_replace('{lang}', $lang, $sql);
             $stmt->executeQuery($sql);
 
-            return 'created';
+            return G::LoadTranslation('ID_CREATED');
         }
 
-        return 'exists';
+        return G::LoadTranslation('ID_EXIST');
     }
 
     /**
@@ -1500,10 +1502,10 @@ class AppCacheView extends BaseAppCacheView
             $sql = str_replace('{lang}', $lang, $sql);
             $stmt->executeQuery($sql);
 
-            return 'created';
+            return G::LoadTranslation('ID_CREATED');
         }
 
-        return 'exists';
+        return G::LoadTranslation('ID_EXIST');
     }
 
     public function triggerContentUpdate($lang, $recreate = false)
@@ -1539,11 +1541,51 @@ class AppCacheView extends BaseAppCacheView
 
             $stmt->executeQuery($sql);
 
-            return "created";
+            return G::LoadTranslation('ID_CREATED');
         }
 
-        return "exists";
+        return G::LoadTranslation('ID_EXIST');
     }
+
+    public function triggerSubApplicationInsert($lang, $recreate = false)
+    {
+        $cnn = Propel::getConnection("workflow");
+        $stmt = $cnn->createStatement();
+
+        $rs = $stmt->executeQuery("SHOW TRIGGERS", ResultSet::FETCHMODE_ASSOC);
+        $found = false;
+
+        while ($rs->next()) {
+            $row = $rs->getRow();
+
+            if (strtolower($row["Trigger"] == "SUB_APPLICATION_INSERT") && strtoupper($row["Table"]) == "SUB_APPLICATION") {
+                $found = true;
+            }
+        }
+
+        if ($recreate) {
+            $rs = $stmt->executeQuery("DROP TRIGGER IF EXISTS SUB_APPLICATION_INSERT");
+            $found = false;
+        }
+
+        if (!$found) {
+            $filenameSql = $this->pathToAppCacheFiles . "triggerSubApplicationInsert.sql";
+
+            if (!file_exists($filenameSql)) {
+                throw (new Exception("file triggerSubApplicationInsert.sql doesn't exist"));
+            }
+
+            $sql = file_get_contents($filenameSql);
+            $sql = str_replace("{lang}", $lang, $sql);
+
+            $stmt->executeQuery($sql);
+
+            return G::LoadTranslation("ID_CREATED");
+        }
+
+        return G::LoadTranslation("ID_EXIST");
+    }
+
 
     /**
      * Retrieve the SQL code to create the APP_CACHE_VIEW triggers.
@@ -1557,6 +1599,7 @@ class AppCacheView extends BaseAppCacheView
             'triggerApplicationUpdate.sql',
             'triggerAppDelegationUpdate.sql',
             'triggerAppDelegationInsert.sql',
+            "triggerSubApplicationInsert.sql",
             'triggerContentUpdate.sql'
         );
 

@@ -1,4 +1,11 @@
 <?php
+if (!isset($_SESSION['USER_LOGGED'])) {
+    $response = new stdclass();
+    $response->message = G::LoadTranslation('ID_LOGIN_AGAIN');
+    $response->lostSession = true;
+    print G::json_encode( $response );
+    die();
+}
 $callback = isset( $_POST['callback'] ) ? $_POST['callback'] : 'stcCallback1001';
 $dir = isset( $_POST['dir'] ) ? $_POST['dir'] : 'DESC';
 $sort = isset( $_POST['sort'] ) ? $_POST['sort'] : '';
@@ -13,7 +20,11 @@ $action = isset( $_GET['action'] ) ? $_GET['action'] : (isset( $_POST['action'] 
 $type = isset( $_GET['type'] ) ? $_GET['type'] : (isset( $_POST['type'] ) ? $_POST['type'] : 'extjs');
 $user = isset( $_POST['user'] ) ? $_POST['user'] : '';
 
-$sentUids = explode( ',', $_POST['APP_UIDS'] );
+if (isset($_POST['APP_UIDS'])) {
+    $sentUids = explode( ',', $_POST['APP_UIDS'] );
+} else {
+    $sentUids = array();
+}
 
 $allUidsRecords = array ();
 $allTasUids = array ();

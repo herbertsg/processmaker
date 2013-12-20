@@ -83,10 +83,11 @@ public class TestPMFGetEmailConfiguration extends com.colosa.qa.automatization.t
         Assert.assertEquals("PMFAddCaseNote function not working properly", fieldMAIL_TO, fieldCONFIG_MAIL_TO);
         Assert.assertEquals("PMFAddCaseNote function not working properly", fieldMESS_TRY_SEND_INMEDIATLY, fieldCONFIG_MESS_TRY_SEND_INMEDIATLY);
 
-        pages.DynaformExecution().setFieldValue("SUBMIT", "", FieldType.BUTTON);
-        pages.AssignTask().pressContinueButton();
-		pages.InputDocProcess().switchToDefault();
-		pages.Main().logout();
+        //pages.DynaformExecution().clickButton("SUBMIT"); //.setFieldValue("SUBMIT", "", FieldType.BUTTON);
+
+        //pages.AssignTask().pressContinueButton();
+		//pages.InputDocProcess().switchToDefault();
+		//pages.Main().logout();
 	}
 
 

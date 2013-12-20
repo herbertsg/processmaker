@@ -42,10 +42,19 @@ Ext.onReady(function(){
 
 function finishInstallation()
 {
-  wizard.showLoadMask(true, 'finishing');
+  Ext.MessageBox.show({
+    msg: _('ID_INSTALLING_WORKSPACE'),
+    progressText: 'Saving...',
+    width:300,
+    wait:true,
+    waitConfig: {interval:200},
+    animEl: 'mb7'
+  });
+  wizard.showLoadMask(true, _('ID_FINISH'));
   Ext.Ajax.request({
     url: 'createWorkspace',
     success: function(response){
+      Ext.MessageBox.hide();
       var response = Ext.util.JSON.decode(response.responseText);
       Ext.getCmp('finish_message').setValue(getFieldOutput(response.message, response.result));
       wizard.showLoadMask(false);
@@ -54,8 +63,8 @@ function finishInstallation()
 
         //Ext.msgBoxSlider.msgTopCenter(
         PMExt.info(
-          'ProcessMaker Installation',
-          'ProcessMaker was successfully installed<br/>Workspace "' + Ext.getCmp('workspace').getValue() + '" was installed correctly.',
+          _('ID_PROCESSMAKER_INSTALLATION'),
+          response.messageFinish,
           function(){
             _redirect(response.uri);
           }
@@ -76,7 +85,7 @@ function finishInstallation()
         })
       }
     },
-    failure: function(){wizard.showLoadMask(false);},
+    failure: function(){Ext.MessageBox.hide(); wizard.showLoadMask(false);},
     params: {
       'db_engine'     : Ext.getCmp('db_engine'    ).getValue(),
       'db_hostname'   : Ext.getCmp('db_hostname'  ).getValue(),

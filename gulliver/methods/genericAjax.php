@@ -60,17 +60,24 @@ if( isset($request) ){
         // Remplace values for dependent fields
         $aDependentFieldsKeys  = explode("|", base64_decode(str_rot13($_GET['dependentFieldsKeys'])));
         $aDependentFieldsValue = explode("|", $_GET['dependentFieldsValue']);
-        if($aDependentFieldsKeys){
-          $SQL = str_replace($aDependentFieldsKeys, $aDependentFieldsValue, $SQL);
+        if ($aDependentFieldsKeys) {
+            $aDependentFields = array();
+            foreach ($aDependentFieldsKeys as $nKey => $sFieldVar ) {
+                $sKeyDepFields = substr($sFieldVar, 2);
+                $aDependentFields[$sKeyDepFields] = $aDependentFieldsValue[$nKey];
+            }
+            $SQL = G::replaceDataField($SQL, $aDependentFields);
         }
 
         // Parsed SQL Structure
         G::LoadClass('phpSqlParser');
 
         $parser = new PHPSQLParser($SQL);
+        $searchType = $_GET["searchType"];
+
         // Verif parsed array
         // print_r($parser->parsed);
-        $SQL = queryModified($parser->parsed, $_GET['input']);
+        $SQL = queryModified($parser->parsed, $_GET['input'], $searchType);
 
         $aRows = Array();
         try {
@@ -135,16 +142,9 @@ if( isset($request) ){
         header ("Pragma: no-cache"); // HTTP/1.0
 
         if (isset($_REQUEST['json'])) {
-          header("Content-Type: application/json");
-          echo "{\"status\":0,  \"results\": [";
-          $arr = array();
-          $aReplace = array("(\r\n)", "(\n\r)", "(\n)", "(\r)");
-          for ($i=0;$i<count($aResults);$i++) {
-            $arr[] = "{\"id\": \"".$aResults[$i]['id']."\", \"value\": \"". html_entity_decode(preg_replace($aReplace, "", $aResults[$i]['value']))."\", \"info\": \"".$aResults[$i]['info']."\"}";
-          }
-          echo implode(", ", $arr);
-          echo "]}";
-        } else {
+            header("Content-Type: application/json");
+            echo Bootstrap::json_encode(array("status" => 0, "results" => $aResults));
+         } else {
           header("Content-Type: text/xml");
 
           echo "<?xml version=\"1.0\" encoding=\"utf-8\" ?><results>";
@@ -227,13 +227,13 @@ function sortByChar($aRows, $charSel)
  * @param string $inputSel default value empty string
  * @return string
  */
-function queryModified($sqlParsed, $inputSel = "")
+function queryModified($sqlParsed, $inputSel = "", $searchType)
 {
-
   if(!empty($sqlParsed['SELECT'])) {
+    $sqlSelectOptions = (isset($sqlParsed["OPTIONS"]) && count($sqlParsed["OPTIONS"]) > 0)? implode(" ", $sqlParsed["OPTIONS"]) : null;
 
-    $sqlSelect = "SELECT ";
-    $aSelect   = $sqlParsed['SELECT'];
+    $sqlSelect = "SELECT $sqlSelectOptions ";
+    $aSelect   = $sqlParsed["SELECT"];
 
     $sFieldSel = (count($aSelect)>1 ) ? $aSelect[1]['base_expr'] : $aSelect[0]['base_expr'];
     foreach($aSelect as $key => $value ) {
@@ -280,16 +280,27 @@ function queryModified($sqlParsed, $inputSel = "")
       }
     }
 
+    $sqlConditionLike = "LIKE '%" . $inputSel . "%'";
+
+    switch ($searchType) {
+        case "searchtype*":
+            $sqlConditionLike = "LIKE '" . $inputSel . "%'";
+            break;
+        case "*searchtype":
+            $sqlConditionLike = "LIKE '%" . $inputSel . "'";
+            break;
+    }
+
     if(!empty($sqlParsed['WHERE'])){
       $sqlWhere = " WHERE ";
       $aWhere   = $sqlParsed['WHERE'];
       foreach($aWhere as $key => $value ){
         $sqlWhere .= $value['base_expr'] . " ";
       }
-      $sqlWhere .= " AND " . $sFieldSel . " LIKE '%". $inputSel . "%'";
+      $sqlWhere .= " AND " . $sFieldSel . " " . $sqlConditionLike;
     }
     else {
-      $sqlWhere = " WHERE " . $sFieldSel . " LIKE '%". $inputSel ."%' ";
+      $sqlWhere = " WHERE " . $sFieldSel . " " . $sqlConditionLike;
     }
 
     $sqlGroupBy = "";

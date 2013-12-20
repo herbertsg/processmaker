@@ -69,6 +69,7 @@ class Publisher
         if ($mode != '') {
             $this->localMode = $mode;
         }
+
         $pos = 0;
         if (is_array( $this->Parts )) {
             $pos = count( $this->Parts );
@@ -89,6 +90,7 @@ class Publisher
             $this->Parts[$pos]['RenderedContent'] = ob_get_contents();
         }
         ob_end_clean();
+        unset($_SESSION['CURRENT_DYN_UID']);
     }
 
     /**
@@ -189,7 +191,7 @@ class Publisher
 
                 if (($this->publishType == 'dynaform') && (($Part['Template'] == 'xmlform') || ($Part['Template'] == 'xmlform_preview'))) {
                     $dynaformShow = (isset( $G_FORM->printdynaform ) && ($G_FORM->printdynaform)) ? 'gulliver/dynaforms_OptionsPrint' : 'gulliver/dynaforms_Options';
-                    $G_FORM->fields = G::array_merges( array ('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu( new Xml_Node( '__DYNAFORM_OPTIONS', 'complete', '', array ('type' => 'xmlmenu','xmlfile' => $dynaformShow
+                    $G_FORM->fields = G::array_merges( array ('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu( new Xml_Node( '__DYNAFORM_OPTIONS', 'complete', '', array ('type' => 'xmlmenu','xmlfile' => $dynaformShow, 'parentFormId' => $G_FORM->id
                     ) ), SYS_LANG, PATH_XMLFORM, $G_FORM )
                     ), $G_FORM->fields );
                 }
@@ -431,8 +433,14 @@ class Publisher
                 if (isset( $Part['ajaxServer'] ) && ($Part['ajaxServer'] !== '')) {
                     $oTable->ajaxServer = $Part['ajaxServer'];
                 }
+                if (!isset($G_FORM->xmlform)) {
+                    $G_FORM->xmlform = new stdclass();
+                }
                 $G_FORM->xmlform->fileXml = $G_FORM->fileName;
                 $G_FORM->xmlform->home = $G_FORM->home;
+                if (!isset($G_FORM->xmlform->tree)) {
+                    $G_FORM->xmlform->tree = new stdclass();
+                }
                 $G_FORM->xmlform->tree->attribute = $G_FORM->tree->attributes;
                 if (is_array( $Part['Data'] )) {
                     $G_FORM->values = array_merge( $G_FORM->values, $Part['Data'] );

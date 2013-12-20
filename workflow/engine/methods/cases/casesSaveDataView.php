@@ -21,6 +21,12 @@
  * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  */
+if (!isset($_SESSION['USER_LOGGED'])) {
+    G::SendTemporalMessage( 'ID_LOGIN_AGAIN', 'warning', 'labels' );
+    die( '<script type="text/javascript">
+              parent.location = "../cases/casesStartPage?action=startCase";
+          </script>');
+}
 //validate the data post
 //$oForm = new Form ( $_SESSION ['PROCESS'] . '/' . $_GET ['UID'], PATH_DYNAFORM );
 //$oForm->validatePost ();
@@ -28,6 +34,10 @@
 /* @author Alvaro Campos Sanchez */
 /* Includes */
 G::LoadClass( 'case' );
+
+if (!is_array($_POST['form'])) {
+    $_POST['form'] = array();
+}
 
 //load the variables
 $oCase = new Cases();

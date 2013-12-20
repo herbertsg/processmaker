@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.common.extJs;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.common.WaitTool;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,35 +22,50 @@ public class ExtJSToolbar {
     private WebElement toolbar;
     private WebElement toolbarContent;
     private List<ExtJSToolbarCell> listExtJSToolbarCells;
+    List<WebElement> auxSearchList;
 
 
     /**
      * Represents a ExtJs Toolbar
-     * @param toolbar element with class x-panel-tbar
+     * @param toolbar element with class x-toolbar
      * @param browserInstance browser instance
      */
-    public ExtJSToolbar(WebElement toolbar, BrowserInstance browserInstance){
+    public ExtJSToolbar(WebElement toolbar, BrowserInstance browserInstance) throws Exception {
         this.browserInstance = browserInstance;
         this.toolbar = toolbar;
 
         String classAttribute = toolbar.getAttribute("class");
-        if(classAttribute.contains("x-panel-tbar")){
+        if(classAttribute.contains("x-toolbar")){
             //this is the toolbar element
-            Logger.addLog("The passed element is the same toolbar: x-panel-tbar");
+            Logger.addLog("The passed element is the same toolbar: x-toolbar");
             this.toolbar = toolbar;
         }else{
             //search for the toolbar element
             //Logger.addLog("before Toolbar find x-panel-tbar");
-            this.toolbar = toolbar.findElement(By.className("x-panel-tbar"));
-            Logger.addLog("Toolbar found x-panel-tbar");
+            // findElement should not be used to look for non-present elements, use findElements(By) and assert zero length response instead.
+            auxSearchList = toolbar.findElements(By.className("x-toolbar"));
+            if(auxSearchList.size() > 0){
+                //use the first x-toolbar found
+                this.toolbar = auxSearchList.get(0);
+                Logger.addLog("Toolbar found x-toolbar");
+            }else
+            {
+                throw new Exception("Toolbar not found in specified element.");
+            }
         }
 
         //Logger.addLog("before Toolbar find x-toolbar-ct");
-        this.toolbarContent = this.toolbar.findElement(By.className("x-toolbar-ct"));
-        Logger.addLog("Toolbar content found x-toolbar-ct");
+        auxSearchList = this.toolbar.findElements(By.className("x-toolbar-ct"));
+        if(auxSearchList.size() > 0){
+            this.toolbarContent = auxSearchList.get(0);
+            Logger.addLog("Toolbar content found x-toolbar-ct");
+        }else
+        {
+            throw new Exception("Toolbar content not found in toolbar element.");
+        }
 
+        //detect all toolbar cells
         this.listExtJSToolbarCells = queryListToolbarCells();
-
     }
 
     private List<ExtJSToolbarCell> queryListToolbarCells(){
@@ -73,6 +89,11 @@ public class ExtJSToolbar {
         return queryListToolbarCells();
     }
 
+    /**
+     * Find cell in toolbar based in the cell text.
+     * @param buttonText text to search cell
+     * @return ExtJSToolbarCell found cell null in other case.
+     */
     public ExtJSToolbarCell findToolbarCell(String buttonText){
         ExtJSToolbarCell resultToolbarCell = null;
 
@@ -89,8 +110,28 @@ public class ExtJSToolbar {
         return resultToolbarCell;
     }
 
+    /**
+     * Find Toolbar cell in base to zero based index of cell
+     * @param cellIndex The Zero based index of the cell to return.
+     * @return ExtJSToolbarCell the found cell
+     */
     public ExtJSToolbarCell findToolbarCell(int cellIndex){
-        ExtJSToolbarCell resultToolbarCell = this.listExtJSToolbarCells.get(cellIndex);
+        ExtJSToolbarCell resultToolbarCell = null;
+        resultToolbarCell = this.listExtJSToolbarCells.get(cellIndex);
+        WaitTool.waitForElementVisibleAndEnable(browserInstance.getInstanceDriver(), resultToolbarCell.getWebElement(), 5);
+        Logger.addLog("   return toolbar cell:" + cellIndex);
         return resultToolbarCell;
     }
+
+    /*
+    public ExtJSToolbarCell waitForToolbarCellDisplay(int cellIndex){
+        ExtJSToolbarCell resultToolbarCell = null;
+        resultToolbarCell = this.listExtJSToolbarCells.get(cellIndex);
+
+        //resultToolbarCell.getWebElement().isDisplayed();
+        //Logger.addLog("   return toolbar cell:" + cellIndex);
+        return resultToolbarCell;
+    }*/
+
+
 }

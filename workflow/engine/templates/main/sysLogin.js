@@ -296,7 +296,7 @@ Login.submit = function()
 
   Login.form.getForm().submit({
     method: 'POST',
-    //waitTitle: '',
+    waitTitle: "&nbsp;",
     //waitMsg: 'Verifying User...',
     success: function(form, action)
     {
@@ -325,7 +325,7 @@ Login.submit = function()
         //Ext.msgBoxSlider.msgTopCenter('alert', 'LOGIN ERROR', serverResponse.message, 10);
       }
       else {
-        Ext.Msg.alert('ERROR', _('ID_SERVER_PROBLEM') + ' ' + action.response.responseText);
+        Ext.Msg.alert( _('ID_ERROR'), _('ID_SERVER_PROBLEM') + ' ' + action.response.responseText);
       }
       //Login.form.getForm().reset();
     }

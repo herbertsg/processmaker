@@ -31,8 +31,8 @@ public class TestPMFPauseCase extends com.colosa.qa.automatization.tests.common.
 		pages.DynaformExecution().setFieldValue("Enviar", "");
 		pages.Home().gotoPaused();
 		Assert.assertTrue(pages.Home().selectCase(numCase));
-        pages.InputDocProcess().switchToDefault();
-        pages.Main().logout();
+        //pages.InputDocProcess().switchToDefault();
+        //pages.Main().logout();
 	}
 
     @After

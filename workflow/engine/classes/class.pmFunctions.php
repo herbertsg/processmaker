@@ -46,9 +46,8 @@ if (! class_exists( 'PMScript' )) {
  */
 
 /**
- *
  * @method
- * 
+ *
  * Retrieves the current date formated in the format "yyyy-mm-dd", with leading zeros in the
  * month and day if less than 10. This function is equivalent to PHP's date("Y-m-d").
  *
@@ -849,6 +848,10 @@ function PMFSendMessage(
     $showMessage = true,
     $delIndex = 0
 ) {
+    ini_set ( "pcre.backtrack_limit", 1000000 );
+    ini_set ( 'memory_limit', '-1' );
+    @set_time_limit ( 100000 );
+
     global $oPMScript;
 
     if (isset( $oPMScript->aFields ) && is_array( $oPMScript->aFields )) {
@@ -1134,8 +1137,11 @@ function WSCreateUser ($userId, $password, $firstname, $lastname, $email, $role,
     $params = array ("sessionId" => $sessionId,"userId" => $userId,"firstname" => $firstname,"lastname" => $lastname,"email" => $email,"role" => $role,"password" => $password,"dueDate" => $dueDate,"status" => $status
     );
 
-    $result = $client->__soapCall( "CreateUser", array ($params
-    ) );
+    try {
+        $result = $client->__soapCall( "CreateUser", array ($params) );
+    } catch(Exception $oError) {
+        return $oError->getMessage();
+    }
 
     $fields["status_code"] = $result->status_code;
     $fields["message"] = $result->message;
@@ -1530,7 +1536,7 @@ function PMFUserList () //its test was successfull
  * Add a input document.
  *
  * @name PMFAddInputDocument
- * @label PMF Add a input document.
+ * @label PMF Add a input document
  * @link http://wiki.processmaker.com/index.php/ProcessMaker_Functions#PMFAddInputDocument.28.29
  *
  * @param string(32) | $inputDocumentUid | ID of the input document | The unique ID of the input document.
@@ -1702,7 +1708,7 @@ function PMFGenerateOutputDocument ($outputID, $sApplication = null, $index = nu
     }
     $sFilename = $aFields['APP_DOC_UID'] . "_" . $lastDocVersion;
 
-    $pathOutput = PATH_DOCUMENT . $sApplication . PATH_SEP . 'outdocs' . PATH_SEP; //G::pr($sFilename);die;
+    $pathOutput = PATH_DOCUMENT . G::getPathFromUID($sApplication) . PATH_SEP . 'outdocs' . PATH_SEP; //G::pr($sFilename);die;
     G::mk_dir( $pathOutput );
 
     $aProperties = array ();
@@ -1741,7 +1747,7 @@ function PMFGenerateOutputDocument ($outputID, $sApplication = null, $index = nu
         $oAppDocument1 = new AppDocument();
         $oAppDocument1->update( $aFields );
 
-        $sPathName = PATH_DOCUMENT . $sApplication . PATH_SEP;
+        $sPathName = PATH_DOCUMENT . G::getPathFromUID($sApplication) . PATH_SEP;
 
         $oData['APP_UID'] = $sApplication;
         $oData['ATTACHMENT_FOLDER'] = true;
@@ -1931,6 +1937,16 @@ function PMFSendVariables ($caseId, $variables)
 
     $result = $ws->sendVariables( $caseId, $variables );
     if ($result->status_code == 0) {
+        if (isset($_SESSION['APPLICATION'])) {
+            if ($caseId == $_SESSION['APPLICATION']) {
+                global $oPMScript;
+                if (isset($oPMScript->aFields) && is_array($oPMScript->aFields)) {
+                    if (is_array($variables)) {
+                        $oPMScript->aFields = array_merge($oPMScript->aFields, $variables);
+                    }
+                }
+            }
+        }
         return 1;
     } else {
         return 0;
@@ -1988,15 +2004,16 @@ function PMFDerivateCase ($caseId, $delIndex, $bExecuteTriggersBeforeAssignment 
  * @param string(32) | $processId | Process ID | The unique ID of the process.
  * @param string(32) | $userId | User ID | The unique ID of the user.
  * @param array | $variables | Array of variables | An associative array of the variables which will be sent to the case.
+ * @param string(32) | $taskId | The unique ID of the task taha is in the starting group.
  * @return int | $result | Result | Returns 1 if new case was created successfully; otherwise, returns 0 if an error occurred.
  *
  */
-function PMFNewCaseImpersonate ($processId, $userId, $variables)
+function PMFNewCaseImpersonate ($processId, $userId, $variables, $taskId = '')
 {
     G::LoadClass( "wsBase" );
 
     $ws = new wsBase();
-    $result = $ws->newCaseImpersonate( $processId, $userId, $variables );
+    $result = $ws->newCaseImpersonate( $processId, $userId, $variables, $taskId);
 
     if ($result->status_code == 0) {
         return $result->caseId;
@@ -2042,8 +2059,8 @@ function PMFNewCase ($processId, $userId, $taskId, $variables)
  *
  * Assigns a user to a group.
  *
- * Assigns a user to a group. Note that the logged-in user must have the PM_USERS permission in his/her role to be able to assign a user to a group. 
- * 
+ * Assigns a user to a group. Note that the logged-in user must have the PM_USERS permission in his/her role to be able to assign a user to a group.
+ *
  * @name PMFAssignUserToGroup
  * @label PMF Assign User To Group
  * @link http://wiki.processmaker.com/index.php/ProcessMaker_Functions#PMFNewCase.28.29
@@ -2201,12 +2218,12 @@ function generateCode ($iDigits = 4, $sType = 'NUMERIC')
  * @param string(32) | $sApplicationUID | Case ID | The unique ID for a case (which can be found with WSCaseList()
  * @param string(32) | $sCode | New Code for case | The new code for a case, which will be stored in the field wf_<WORKSPACE>.APPLICATION.APP_CODE
  * @param string(32) | $sPIN = "" | New Code PIN for case |The new code for a case.
- * @return int | $result | Result | If successful, returns zero, otherwise a non-zero error number.
+ * @return int | $result | Result | If successful, returns one, otherwise zero or error number.
  *
  */
 function setCaseTrackerCode ($sApplicationUID, $sCode, $sPIN = '')
 {
-    if ($sCode != '') {
+    if ($sCode != '' || $sPIN != '') {
         G::LoadClass( 'case' );
         $oCase = new Cases();
         $aFields = $oCase->loadCase( $sApplicationUID );
@@ -2216,6 +2233,14 @@ function setCaseTrackerCode ($sApplicationUID, $sCode, $sPIN = '')
             $aFields['APP_PIN'] = md5( $sPIN );
         }
         $oCase->updateCase( $sApplicationUID, $aFields );
+        if (isset($_SESSION['APPLICATION'])) {
+            if ($sApplicationUID == $_SESSION['APPLICATION']) {
+                global $oPMScript;
+                if (isset($oPMScript->aFields) && is_array($oPMScript->aFields)) {
+                    $oPMScript->aFields['PIN'] = $aFields['APP_DATA']['PIN'];
+                }
+            }
+        }
         return 1;
     } else {
         return 0;
@@ -2354,6 +2379,10 @@ function PMFRedirectToStep ($sApplicationUID, $iDelegation, $sStepType, $sStepUi
             // save data
             if (! is_null( $oPMScript )) {
                 $aFields['APP_DATA'] = $oPMScript->aFields;
+                unset($aFields['APP_STATUS']);
+                unset($aFields['APP_PROC_STATUS']);
+                unset($aFields['APP_PROC_CODE']);
+                unset($aFields['APP_PIN']);
                 $oCase->updateCase( $sApplicationUID, $aFields );
             }
 
@@ -2381,7 +2410,7 @@ function PMFRedirectToStep ($sApplicationUID, $iDelegation, $sStepType, $sStepUi
  * @return array | $array | List of users | Return a list of users
  *
  */
-function PMFGetNextAssignedUser ($application, $task)
+function PMFGetNextAssignedUser ($application, $task, $delIndex = null, $userUid = null)
 {
 
     require_once 'classes/model/AppDelegation.php';
@@ -2395,7 +2424,14 @@ function PMFGetNextAssignedUser ($application, $task)
     $TaskFields = $oTask->load( $task );
     $typeTask = $TaskFields['TAS_ASSIGN_TYPE'];
 
-    if ($typeTask == 'BALANCED') {
+    $g = new G();
+
+    $g->sessionVarSave();
+
+    $_SESSION['INDEX'] = (!is_null($delIndex) ? $delIndex : (isset($_SESSION['INDEX']) ? $_SESSION['INDEX'] : null));
+    $_SESSION['USER_LOGGED'] = (!is_null($userUid) ? $userUid : (isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : null));
+
+    if ($typeTask == 'BALANCED' && !is_null($_SESSION['INDEX']) && !is_null($_SESSION['USER_LOGGED'])) {
 
         G::LoadClass( 'derivation' );
         $oDerivation = new Derivation();
@@ -2409,6 +2445,8 @@ function PMFGetNextAssignedUser ($application, $task)
             $aUsers[] = $aUser;
         }
 
+        $g->sessionVarRestore();
+
         if (count( $aUsers ) == 1) {
             return $aUser;
         } else {
@@ -2416,23 +2454,24 @@ function PMFGetNextAssignedUser ($application, $task)
         }
 
     } else {
+        $g->sessionVarRestore();
         return false;
     }
 }
 
 /**
- *
  * @method
  *
  * Returns a list or user.
  *
  * @name PMFGetUserEmailAddress
- * @label PMFGet User Email Address
+ * @label PMF Get User Email Address
+ * @link http://wiki.processmaker.com/index.php/ProcessMaker_Functions#PMFGetUserEmailAddress.28.29
  *
- * @param string(32) or Array | $id | Case ID | Id of the case
- * @param string(32) | $APP_UID or null | Application ID | Id of the Application
- * @param string(32) | $prefix or default value 'usr' | prefix | Id of the task
- * @return array | $aRecipient | Array of the Recipient | Return an Array of the Recipient
+ * @param string(32) or Array | $id | Case ID | Id of the case.
+ * @param string(32) | $APP_UID = null | Application ID | Id of the Application.
+ * @param string(32) | $prefix = "usr" | prefix | Id of the task.
+ * @return array | $aRecipient | Array of the Recipient | Return an Array of the Recipient.
  *
  */
 function PMFGetUserEmailAddress ($id, $APP_UID = null, $prefix = 'usr')
@@ -2564,18 +2603,18 @@ function PMFGetUserEmailAddress ($id, $APP_UID = null, $prefix = 'usr')
 }
 
 /**
- *
  * @method
  *
  * Get of the cases notes an application.
  *
  * @name PMFGetCaseNotes
- * @label PMF Get of the cases notes an application.
+ * @label PMF Get of the cases notes an application
+ * @link http://wiki.processmaker.com/index.php/ProcessMaker_Functions#PMFGetCaseNotes.28.29
  *
- * @param string(32) | $applicationID | Application ID | ID of the Application
- * @param string(32) | $type or default value 'array' | type of the return value | type of the return value (array, object, string)
- * @param string(32) | $userUid default value empty string | User ID | Id of the User
- * @return array, object or string | $response | Array of the response | Return an Array or Object or String
+ * @param string(32) | $applicationID | Application ID | ID of the Application.
+ * @param string(32) | $type = "array" | type of the return value | type of the return value (array, object, string).
+ * @param string(32) | $userUid = "" | User ID | Id of the User.
+ * @return array, object or string | $response | Array of the response | Return an Array or Object or String.
  *
  */
 function PMFGetCaseNotes ($applicationID, $type = 'array', $userUid = '')

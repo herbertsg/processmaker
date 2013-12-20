@@ -7,6 +7,7 @@ last update: 2012-10-23 Hrs. 16:40
 
 package com.colosa.qa.automatization.tests.common;
 
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import org.openqa.selenium.By;
@@ -21,16 +22,18 @@ import java.util.concurrent.TimeUnit;
 public class WebDriverFunctionsPMOS2{
 	
 	private WebDriver driver = null;
+    private BrowserInstance _browserInstance = null;
 	private int skin = 1; //0: classic / 1: uxmodern
 	private int timeout = 30; //default timeout in seconds
 
-	public WebDriverFunctionsPMOS2(WebDriver driver, int skin){
-		this.driver = driver;
+	public WebDriverFunctionsPMOS2(BrowserInstance browserInstance, int skin){
+		this.driver = browserInstance.getInstanceDriver();
+        this._browserInstance = browserInstance;
 		this.skin = skin;
 	}
 
-	public WebDriverFunctionsPMOS2(WebDriver driver, int skin, int timeout){
-		this(driver, skin);
+	public WebDriverFunctionsPMOS2(BrowserInstance browserInstance, int skin, int timeout){
+		this(browserInstance, skin);
 		this.timeout = timeout;
 		this.driver.manage().timeouts().implicitlyWait(this.timeout, TimeUnit.SECONDS);
 	}
@@ -254,7 +257,7 @@ public class WebDriverFunctionsPMOS2{
 		return value;
 	}
 
-	public boolean openProcess(String processName){
+	public boolean openProcess(String processName) throws Exception {
 		this.goSection("DESIGNER");
 		WebElement we = null;
 		Actions action = new Actions(this.driver);
@@ -265,7 +268,7 @@ public class WebDriverFunctionsPMOS2{
 			this.driver.switchTo().frame("pm-frame-processes");
 		
 		WebElement grid = this.driver.findElement(By.id("processesGrid"));
-		ExtJSGrid extGrid = new ExtJSGrid(grid, driver);
+		ExtJSGrid extGrid = new ExtJSGrid(grid, this._browserInstance);
 		WebElement pager = this.driver.findElement(By.xpath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr"));
 		List<WebElement> wl;
 		int index = 1;

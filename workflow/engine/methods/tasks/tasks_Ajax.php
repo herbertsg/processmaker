@@ -32,6 +32,7 @@ try {
             $response = array ();
 
             $oTask = new Task();
+            $aTaskInfo = $oTask->load($aData['TAS_UID']);
 
             /**
              * routine to replace @amp@ by &
@@ -46,7 +47,8 @@ try {
             if (isset( $aData['SEND_EMAIL'] )) {
                 $aData['TAS_SEND_LAST_EMAIL'] = $aData['SEND_EMAIL'] == 'TRUE' ? 'TRUE' : 'FALSE';
             } else {
-                $aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
+                //$aTaskInfo = $oTask->load($aData['TAS_UID']);
+                $aData['TAS_SEND_LAST_EMAIL'] = is_null($aTaskInfo['TAS_SEND_LAST_EMAIL']) ? 'FALSE' : $aTaskInfo['TAS_SEND_LAST_EMAIL'];
             }
 
             //Additional configuration
@@ -64,10 +66,47 @@ try {
             }
 
             //Validating TAS_ASSIGN_VARIABLE value
-            if ($aData['TAS_ASSIGN_TYPE'] == 'SELF_SERVICE_EVALUATE') {
-                $aData['TAS_ASSIGN_TYPE'] = 'SELF_SERVICE';
-            } else {
-                $aData['TAS_GROUP_VARIABLE'] = '';
+            $sw = false;
+            if (!isset($aData['TAS_ASSIGN_TYPE'])) {
+                $sw = true;
+                if (isset($aTaskInfo['TAS_ASSIGN_TYPE'])) {
+                    switch($aTaskInfo['TAS_ASSIGN_TYPE']) {
+                        case 'SELF_SERVICE':
+                        case 'SELF_SERVICE_EVALUATE':
+                            $aData['TAS_ASSIGN_TYPE'] = ($aTaskInfo['TAS_GROUP_VARIABLE'] == '') ? 'SELF_SERVICE':'SELF_SERVICE_EVALUATE';
+                            $aData['TAS_GROUP_VARIABLE'] = $aTaskInfo['TAS_GROUP_VARIABLE'];
+                            break;
+                        default:
+                            $aData['TAS_ASSIGN_TYPE'] = $aTaskInfo['TAS_ASSIGN_TYPE'];
+                            break;
+                    }
+                } else {
+                    $derivateType = $oTask->kgetassigType($_SESSION['PROCESS'],$aData['TAS_UID']);
+                    if (is_null($derivateType)){
+                        $aData['TAS_ASSIGN_TYPE'] = 'BALANCED';
+                    } else {
+                        $aData['TAS_ASSIGN_TYPE'] = $derivateType['TAS_ASSIGN_TYPE'];
+                    }
+                }
+            }
+            switch($aData['TAS_ASSIGN_TYPE']) {
+                case 'SELF_SERVICE':
+                case 'SELF_SERVICE_EVALUATE':
+                    if ($aData['TAS_ASSIGN_TYPE'] == 'SELF_SERVICE_EVALUATE') {
+                        $aData['TAS_ASSIGN_TYPE'] = 'SELF_SERVICE';
+                        if(trim($aData['TAS_GROUP_VARIABLE']) == '') {
+                           $aData['TAS_GROUP_VARIABLE'] = '@@SYS_GROUP_TO_BE_ASSIGNED';
+                        }
+                    } else {
+                        $aData['TAS_GROUP_VARIABLE'] = '';
+                    }
+                    break;
+                default:
+                    if (isset($aTaskInfo['TAS_ASSIGN_TYPE']) && $sw) {
+                        $aData['TAS_ASSIGN_TYPE'] = $aTaskInfo['TAS_ASSIGN_TYPE'];
+                    }
+                    $aData['TAS_GROUP_VARIABLE'] = '';
+                    break;
             }
 
             $result = $oTask->update( $aData );

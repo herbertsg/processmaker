@@ -31,7 +31,7 @@ Ext.onReady(function(){
             document.location = document.location;
           }
           else{
-            Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+            Ext.Msg.alert( _('ID_REFRESH_LABEL') , _('ID_REFRESH_MESSAGE') );
           }
         }
     });
@@ -47,6 +47,7 @@ Ext.onReady(function(){
         handler: newPMTable
       });
     }
+    var flagProcessmap =  (typeof('flagProcessmap') != 'undefined') ? flagProcessmap : 0;
 
     newMenuOptions.push({
       text: _('ID_NEW_REPORT_TABLE'),
@@ -194,6 +195,7 @@ Ext.onReady(function(){
 
     store = new Ext.data.GroupingStore( {
       autoLoad: false,
+      remoteSort: true,
       proxy : new Ext.data.HttpProxy({
         url: 'pmTablesProxy/getList' + (PRO_UID? '?pro_uid='+PRO_UID: '')
       }),
@@ -262,9 +264,9 @@ Ext.onReady(function(){
     cmodelColumns.push({id:'ADD_TAB_UID', dataIndex: 'ADD_TAB_UID', hidden:true, hideable:false});
     cmodelColumns.push({dataIndex: 'ADD_TAB_TAG', hidden:true, hideable:false});
     cmodelColumns.push({header: _('ID_NAME'), dataIndex: 'ADD_TAB_NAME', width: 300, align:'left', renderer: function(v,p,r){
-      return r.get('TYPE') == 'CLASSIC'? v + '&nbsp<span style="font-size:9px; color:green">(old version)</font>' : v;
+      return r.get('TYPE') == 'CLASSIC'? v + '&nbsp<span style="font-size:9px; color:green">('+ _('ID_OLD_VERSION') +')</font>' : v;
     }});
-    cmodelColumns.push({header: _('ID_DESCRIPTION'), dataIndex: 'ADD_TAB_DESCRIPTION', width: 400, hidden:false, align:'left', renderer: function(v,p,r){
+    cmodelColumns.push({header: _('ID_DESCRIPTION'), dataIndex: 'ADD_TAB_DESCRIPTION', sortable:false, width: 400, hidden:false, align:'left', renderer: function(v,p,r){
       if (r.get('ADD_TAB_TAG')) {
         tag = r.get('ADD_TAB_TAG').replace('plugin@', '');
         tag = tag.charAt(0).toUpperCase() + tag.slice(1);
@@ -274,9 +276,11 @@ Ext.onReady(function(){
             break;
         }
       }
-      return r.get('ADD_TAB_TAG') ? '<span style="font-size:9px; color:green">'+tag+':</span> '+ v : v;
-    }});
+      
+      v = Ext.util.Format.htmlEncode(v);
 
+      return r.get("ADD_TAB_TAG") ? "<span style = \"font-size:9px; color:green\">" + tag + ":</span> "+ v : v;
+    }});
     cmodelColumns.push({header: _('ID_TABLE_TYPE'), dataIndex: 'PRO_UID', width: 120, align:'left', renderer: function(v,p,r){
       color = r.get('PRO_UID') ? 'blue' : 'green';
       value = r.get('PRO_UID') ? _('ID_REPORT_TABLE') : _('ID_PMTABLE');
@@ -285,7 +289,7 @@ Ext.onReady(function(){
 
     cmodelColumns.push({dataIndex: "DBS_UID", hidden: true, hideable: false});
 
-    cmodelColumns.push({header: 'Records', dataIndex: 'NUM_ROWS', width: 90, align:'left'});
+    cmodelColumns.push({header: _('ID_RECORDS'), dataIndex: 'NUM_ROWS', width: 90, align:'left'});
 
     if (PRO_UID === false) {
       cmodelColumns.push({header: _('ID_PROCESS'), dataIndex: 'PRO_TITLE', width: 180, align:'left'});
@@ -318,7 +322,7 @@ Ext.onReady(function(){
       autoWidth : true,
       title : (PRO_UID? _('ID_REPORT_TABLES') : _('ID_PMTABLE')),
       stateful : true,
-      stateId : 'grid',
+      stateId : 'gridList',
       enableColumnResize: true,
       enableHdMenu: true,
       frame:false,
@@ -345,7 +349,7 @@ Ext.onReady(function(){
       listeners: {
         rowdblclick: EditPMTable,
         render: function(){
-          this.loadMask = new Ext.LoadMask(this.body, {msg:'loading'});
+          this.loadMask = new Ext.LoadMask(this.body, {msg: _('ID_LOADING_GRID')});
         }
       },
       view: new Ext.grid.GroupingView({
@@ -410,11 +414,12 @@ capitalize = function(s){
 DoNothing = function(){};
 
 //Load New PM Table Forms
-NewReportTable = function(){
-  if(PRO_UID !== false)
-    location.href = 'pmTables/edit?PRO_UID='+PRO_UID+'&tableType=report';
-  else
-    location.href = 'pmTables/edit?tableType=report';
+NewReportTable = function() {
+    if(PRO_UID !== false) {
+        location.href = 'pmTables/edit?PRO_UID='+PRO_UID+'&tableType=report&flagProcessmap='+flagProcessmap;
+    } else {
+        location.href = 'pmTables/edit?tableType=report&flagProcessmap='+flagProcessmap;
+    }
 };
 
 NewReportTableOld = function(){
@@ -540,6 +545,7 @@ ImportPMTable = function(){
                 uploader.getForm().submit({
                   url: 'pmTablesProxy/import',
                   waitMsg: _('ID_UPLOADING_FILE'),
+                  waitTitle : "&nbsp;",
                   success: function(o, resp){
                     var result = Ext.util.JSON.decode(resp.response.responseText);
 

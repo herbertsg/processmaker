@@ -3,7 +3,7 @@
   <table name="APPLICATION">
     <vendor type="mysql">
       <parameter name="Name" value="APPLICATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -90,7 +90,7 @@
   <table name="APP_DELEGATION">
     <vendor type="mysql">
       <parameter name="Name" value="APP_DELEGATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -111,6 +111,7 @@
     <column name="APP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default=""/>
     <column name="DEL_INDEX" type="INTEGER" required="true" primaryKey="true" default="0"/>
     <column name="DEL_PREVIOUS" type="INTEGER" required="true" default="0"/>
+    <column name="DEL_LAST_INDEX" type="INTEGER" required="true" default="0"/>
     <column name="PRO_UID" type="VARCHAR" size="32" required="true" default=""/>
     <column name="TAS_UID" type="VARCHAR" size="32" required="true" default=""/>
     <column name="USR_UID" type="VARCHAR" size="32" required="true" default=""/>
@@ -143,7 +144,7 @@
   <table name="APP_DOCUMENT">
     <vendor type="mysql">
       <parameter name="Name" value="APP_DOCUMENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="26"/>
@@ -230,7 +231,7 @@
   <table name="APP_MESSAGE" idMethod="native">
     <vendor type="mysql">
       <parameter name="Name" value="APP_MESSAGE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -269,7 +270,7 @@
   <table name="APP_OWNER">
     <vendor type="mysql">
       <parameter name="Name" value="APP_OWNER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -294,7 +295,7 @@
   <table name="CONFIGURATION">
     <vendor type="mysql">
       <parameter name="Name" value="CONFIGURATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="11"/>
@@ -322,7 +323,7 @@
   <table name="CONTENT">
     <vendor type="mysql">
       <parameter name="Name" value="CONTENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="373"/>
@@ -372,7 +373,7 @@
   <table name="DEPARTMENT">
     <vendor type="mysql">
       <parameter name="Name" value="DEPARTMENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="13"/>
@@ -435,7 +436,7 @@
   <table name="DYNAFORM">
     <vendor type="mysql">
       <parameter name="Name" value="DYNAFORM"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="19"/>
@@ -464,7 +465,7 @@
   <table name="GROUPWF">
     <vendor type="mysql">
       <parameter name="Name" value="GROUPWF"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="4"/>
@@ -494,7 +495,7 @@
   <table name="GROUP_USER">
     <vendor type="mysql">
       <parameter name="Name" value="GROUP_USER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="4"/>
@@ -526,7 +527,7 @@
   <table name="HOLIDAY" idMethod="native">
     <vendor type="mysql">
       <parameter name="Name" value="HOLIDAY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -551,7 +552,7 @@
   <table name="INPUT_DOCUMENT">
     <vendor type="mysql">
       <parameter name="Name" value="INPUT_DOCUMENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="6"/>
@@ -601,7 +602,7 @@
   <table name="ISO_COUNTRY">
     <vendor type="mysql">
       <parameter name="Name" value="ISO_COUNTRY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="243"/>
@@ -626,7 +627,7 @@
   <table name="ISO_LOCATION">
     <vendor type="mysql">
       <parameter name="Name" value="ISO_LOCATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="54672"/>
@@ -653,7 +654,7 @@
   <table name="ISO_SUBDIVISION">
     <vendor type="mysql">
       <parameter name="Name" value="ISO_SUBDIVISION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="971"/>
@@ -678,7 +679,7 @@
   <table name="LANGUAGE">
     <vendor type="mysql">
       <parameter name="Name" value="LANGUAGE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="136"/>
@@ -715,7 +716,7 @@
   <table name="LEXICO">
     <vendor type="mysql">
       <parameter name="Name" value="LEXICO"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -741,7 +742,7 @@
   <table name="OUTPUT_DOCUMENT">
     <vendor type="mysql">
       <parameter name="Name" value="OUTPUT_DOCUMENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="4"/>
@@ -797,7 +798,7 @@
   <table name="PROCESS">
     <vendor type="mysql">
       <parameter name="Name" value="PROCESS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="2"/>
@@ -861,7 +862,7 @@
   <table name="PROCESS_OWNER">
     <vendor type="mysql">
       <parameter name="Name" value="PROCESS_OWNER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -885,7 +886,7 @@
   <table name="REPORT_TABLE">
     <vendor type="mysql">
       <parameter name="Name" value="REPORT_TABLE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -942,7 +943,7 @@
   <table name="REPORT_VAR">
     <vendor type="mysql">
       <parameter name="Name" value="REPORT_VAR"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -985,7 +986,7 @@
   <table name="ROUTE">
     <vendor type="mysql">
       <parameter name="Name" value="ROUTE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="14"/>
@@ -1052,7 +1053,7 @@
   <table name="STEP">
     <vendor type="mysql">
       <parameter name="Name" value="STEP"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="18"/>
@@ -1085,7 +1086,7 @@
   <table name="STEP_TRIGGER">
     <vendor type="mysql">
       <parameter name="Name" value="STEP_TRIGGER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="19"/>
@@ -1116,7 +1117,7 @@
   <table name="SWIMLANES_ELEMENTS">
     <vendor type="mysql">
       <parameter name="Name" value="SWIMLANES_ELEMENTS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="10"/>
@@ -1167,7 +1168,7 @@
   <table name="TASK">
     <vendor type="mysql">
       <parameter name="Name" value="TASK"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="11"/>
@@ -1197,7 +1198,7 @@
     <column name="TAS_PRIORITY_VARIABLE" type="VARCHAR" size="100" required="true" default=""/>
     <column name="TAS_ASSIGN_TYPE" type="VARCHAR" size="30" required="true" default="BALANCED"/>
     <column name="TAS_ASSIGN_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_NEXT_USER_TO_BE_ASSIGNED"/>
-    <column name="TAS_GROUP_VARIABLE" type="VARCHAR" size="100" required="false" default="@@SYS_GROUP_TO_BE_ASSIGNED"/>
+    <column name="TAS_GROUP_VARIABLE" type="VARCHAR" size="100" required="false"/>
     <column name="TAS_MI_INSTANCE_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_VAR_TOTAL_INSTANCE"/>
     <column name="TAS_MI_COMPLETE_VARIABLE" type="VARCHAR" size="100" required="true" default="@@SYS_VAR_TOTAL_INSTANCES_COMPLETE"/>
     <column name="TAS_ASSIGN_LOCATION" type="VARCHAR" size="20" required="true" default="FALSE"/>
@@ -1293,7 +1294,7 @@
   <table name="TASK_USER">
     <vendor type="mysql">
       <parameter name="Name" value="TASK_USER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="10"/>
@@ -1335,7 +1336,7 @@
   <table name="TRANSLATION">
     <vendor type="mysql">
       <parameter name="Name" value="TRANSLATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="121"/>
@@ -1378,7 +1379,7 @@
   <table name="TRIGGERS">
     <vendor type="mysql">
       <parameter name="Name" value="TRIGGERS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="17"/>
@@ -1409,7 +1410,7 @@
   <table name="USERS">
     <vendor type="mysql">
       <parameter name="Name" value="USERS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="9"/>
@@ -1461,7 +1462,7 @@
   <table name="APP_THREAD">
     <vendor type="mysql">
       <parameter name="Name" value="APP_THREAD"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -1491,7 +1492,7 @@
   <table name="APP_DELAY">
     <vendor type="mysql">
       <parameter name="Name" value="APP_DELAY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1546,11 +1547,14 @@
         <parameter name="Comment" value=""/>
       </vendor>
     </index>
+    <index name="indexAppUid">
+      <index-column name="APP_UID"/>
+    </index>
   </table>
   <table name="PROCESS_USER">
     <vendor type="mysql">
       <parameter name="Name" value="PROCESS_USER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="10"/>
@@ -1592,7 +1596,7 @@
   <table name="SESSION">
     <vendor type="mysql">
       <parameter name="Name" value="SESSION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1624,7 +1628,7 @@
   <table name="DB_SOURCE">
     <vendor type="mysql">
       <parameter name="Name" value="DB_SOURCE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1672,7 +1676,7 @@
   <table name="STEP_SUPERVISOR">
     <vendor type="mysql">
       <parameter name="Name" value="STEP_SUPERVISOR"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1721,7 +1725,7 @@
   <table name="OBJECT_PERMISSION">
     <vendor type="mysql">
       <parameter name="Name" value="OBJECT_PERMISSION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1815,7 +1819,7 @@
   <table name="CASE_TRACKER">
     <vendor type="mysql">
       <parameter name="Name" value="CASE_TRACKER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="0"/>
@@ -1857,7 +1861,7 @@
   <table name="CASE_TRACKER_OBJECT">
     <vendor type="mysql">
       <parameter name="Name" value="CASE_TRACKER_OBJECT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="18"/>
@@ -1906,7 +1910,7 @@
   <table name="STAGE">
     <vendor type="mysql">
       <parameter name="Name" value="STAGE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -1933,7 +1937,7 @@
   <table name="SUB_PROCESS">
     <vendor type="mysql">
       <parameter name="Name" value="SUB_PROCESS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -1994,7 +1998,7 @@
   <table name="SUB_APPLICATION">
     <vendor type="mysql">
       <parameter name="Name" value="SUB_APPLICATION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2028,7 +2032,7 @@
   <table name="LOGIN_LOG">
     <vendor type="mysql">
       <parameter name="Name" value="LOGIN_LOG"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2076,7 +2080,7 @@
   <table name="USERS_PROPERTIES">
     <vendor type="mysql">
       <parameter name="Name" value="USERS_PROPERTIES"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2102,7 +2106,7 @@
   <table name="ADDITIONAL_TABLES">
     <vendor type="mysql">
       <parameter name="Name" value="ADDITIONAL_TABLES"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2140,7 +2144,7 @@
   <table name="FIELDS">
     <vendor type="mysql">
       <parameter name="Name" value="FIELDS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2177,7 +2181,7 @@
   <table name="SHADOW_TABLE">
     <vendor type="mysql">
       <parameter name="Name" value="SHADOW_TABLE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2224,7 +2228,7 @@
   <table name="EVENT">
     <vendor type="mysql">
       <parameter name="Name" value="EVENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2284,7 +2288,7 @@
   <table name="GATEWAY">
     <vendor type="mysql">
       <parameter name="Name" value="GATEWAY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2321,7 +2325,7 @@
   <table name="APP_EVENT">
     <vendor type="mysql">
       <parameter name="Name" value="APP_EVENT"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2350,7 +2354,7 @@
   <table name="APP_CACHE_VIEW">
     <vendor type="mysql">
       <parameter name="Name" value="APP_CACHE_VIEW"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2370,6 +2374,7 @@
     </vendor>
     <column name="APP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default=""/>
     <column name="DEL_INDEX" type="INTEGER" required="true" primaryKey="true" default="0"/>
+    <column name="DEL_LAST_INDEX" type="INTEGER" required="true" default="0"/>
     <column name="APP_NUMBER" type="INTEGER" required="true" default="0"/>
     <column name="APP_STATUS" type="VARCHAR" size="32" required="true" default=""/>
     <column name="USR_UID" type="VARCHAR" size="32" required="true" default=""/>
@@ -2407,6 +2412,33 @@
         <parameter name="Seq_in_index" value="1"/>
       </vendor>
     </index>
+    <index name="protitle">
+      <index-column name="APP_PRO_TITLE"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_CACHE_VIEW"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="protitle"/>
+        <parameter name="Seq_in_index" value="1"/>
+      </vendor>
+    </index>
+    <index name="appupdatedate">
+      <index-column name="APP_UPDATE_DATE"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_CACHE_VIEW"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="appupdatedate"/>
+        <parameter name="Seq_in_index" value="1"/>
+      </vendor>
+    </index>
+    <index name="tastitle">
+      <index-column name="APP_TAS_TITLE"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_CACHE_VIEW"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="tastitle"/>
+        <parameter name="Seq_in_index" value="1"/>
+      </vendor>
+    </index>
     <index name="indexAppUser">
       <index-column name="USR_UID"/>
       <index-column name="APP_STATUS"/>
@@ -2421,7 +2453,7 @@
   <table name="DIM_TIME_DELEGATE">
     <vendor type="mysql">
       <parameter name="Name" value="DIM_TIME_DELEGATE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2451,7 +2483,7 @@
   <table name="DIM_TIME_COMPLETE">
     <vendor type="mysql">
       <parameter name="Name" value="DIM_TIME_COMPLETE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2481,7 +2513,7 @@
   <table name="APP_HISTORY">
     <vendor type="mysql">
       <parameter name="Name" value="APP_HISTORY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2523,7 +2555,7 @@
   <table name="APP_FOLDER">
     <vendor type="mysql">
       <parameter name="Name" value="APP_FOLDER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2550,7 +2582,7 @@
   <table name="FIELD_CONDITION">
     <vendor type="mysql">
       <parameter name="Name" value="FIELD_CONDITION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="88"/>
@@ -2580,7 +2612,7 @@
   <table name="LOG_CASES_SCHEDULER">
     <vendor type="mysql">
       <parameter name="Name" value="LOG_CASES_SCHEDULER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2612,7 +2644,7 @@
   <table name="CASE_SCHEDULER">
     <vendor type="mysql">
       <parameter name="Name" value="CASE_SCHEDULER"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2671,7 +2703,7 @@
   <table name="CALENDAR_DEFINITION">
     <vendor type="mysql">
       <parameter name="Name" value="CALENDAR_DEFINITION"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2703,7 +2735,7 @@
   <table name="CALENDAR_BUSINESS_HOURS">
     <vendor type="mysql">
       <parameter name="Name" value="CALENDAR_BUSINESS_HOURS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2732,7 +2764,7 @@
   <table name="CALENDAR_HOLIDAYS">
     <vendor type="mysql">
       <parameter name="Name" value="CALENDAR_HOLIDAYS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2758,7 +2790,7 @@
   <table name="CALENDAR_ASSIGNMENTS">
     <vendor type="mysql">
       <parameter name="Name" value="CALENDAR_ASSIGNMENTS"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2783,7 +2815,7 @@
   <table name="PROCESS_CATEGORY">
     <vendor type="mysql">
       <parameter name="Name" value="PROCESS_CATEGORY"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2809,7 +2841,7 @@
   <table name="APP_NOTES">
     <vendor type="mysql">
       <parameter name="Name" value="APP_NOTES"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2861,7 +2893,7 @@
   <table name="DASHLET">
     <vendor type="mysql">
       <parameter name="Name" value="DASHLET"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2891,7 +2923,7 @@
   <table name="DASHLET_INSTANCE">
     <vendor type="mysql">
       <parameter name="Name" value="DASHLET_INSTANCE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2921,7 +2953,7 @@
   <table name="APP_SOLR_QUEUE">
     <vendor type="mysql">
       <parameter name="Name" value="APP_SOLR_QUEUE"/>
-      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Engine" value="InnoDB"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
       <parameter name="Rows" value="129"/>
@@ -2940,6 +2972,32 @@
       <parameter name="Comment" value="APP_SOLR_QUEUE"/>
     </vendor>
     <column name="APP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default=""/>
+    <column name="APP_CHANGE_DATE" type="TIMESTAMP" required="true" />
+    <column name="APP_CHANGE_TRACE" type="VARCHAR" size="500" required="true" />
     <column name="APP_UPDATED" type="TINYINT" required="true" default="1"/>
+  </table>
+  <table name="SEQUENCES">
+    <vendor type="mysql">
+      <parameter name="Name" value="SEQUENCES"/>
+      <parameter name="Engine" value="InnoDB"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="2"/>
+      <parameter name="Avg_row_length" value="128"/>
+      <parameter name="Data_length" value="6768"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="5120"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2013-05-17 11:21:20"/>
+      <parameter name="Update_time" value="2013-05-17 11:48:16"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="Sequences, Controls the numerical sequence of a table"/>
+    </vendor>
+    <column name="SEQ_NAME" type="VARCHAR" size="50" required="true" primaryKey="true" default=""/>
+    <column name="SEQ_VALUE" type="INTEGER" required="true" default="0"/>
   </table>
 </database>

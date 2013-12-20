@@ -71,7 +71,9 @@ function objectToArray ($object)
 
 /**
  *
- * @method Gets SugarCRM entry using get_entry web service.
+ * @method
+ *
+ * Gets SugarCRM entry using get_entry web service.
  *
  * @name GetSugarEntry
  * @label Get SugarCRM Entry
@@ -85,7 +87,7 @@ function objectToArray ($object)
  * @param string | $linkNameToFieldsArray | A list of link names and the fields to be returned for each link name.
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarEntries | Sugar Entries (array or object)
+ * @return array/object | $sugarEntries | Sugar Entries (array or object) |
  *
  */
 
@@ -105,7 +107,9 @@ function GetSugarEntry ($sugarSoap, $user, $password, $module, $id, $selectField
 
 /**
  *
- * @method Gets SugarCRM entries from the indicated module.
+ * @method
+ *
+ * Gets SugarCRM entries from the indicated module.
  *
  * @name GetSugarEntries
  * @label Get SugarCRM Entries
@@ -120,7 +124,7 @@ function GetSugarEntry ($sugarSoap, $user, $password, $module, $id, $selectField
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarEntries | Sugar Entries (array or object)
+ * @return array/object | $sugarEntries | Sugar Entries (array or object) |
  *
  */
 
@@ -148,7 +152,9 @@ function GetSugarEntries ($sugarSoap, $user, $password, $module, $query, $orderB
 
 /**
  *
- * @method Gets SugarCRM entries from the Calls module
+ * @method
+ *
+ * Gets SugarCRM entries from the Calls module
  *
  * @name GetSugarCalls
  * @label Gets SugarCRM entries from the Calls module
@@ -162,7 +168,7 @@ function GetSugarEntries ($sugarSoap, $user, $password, $module, $query, $orderB
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarCalls | Sugar Calls (array or object)
+ * @return array/object | $sugarCalls | Sugar Calls (array or object) |
  *
  */
 
@@ -174,7 +180,9 @@ function GetSugarCalls ($sugarSoap, $user, $password, $query, $orderBy, $selecte
 
 /**
  *
- * @method Gets SugarCRM entries from the Leads module.
+ * @method
+ *
+ * Gets SugarCRM entries from the Leads module.
  *
  * @name GetSugarLeads
  * @label Gets SugarCRM entries from the Leads module.
@@ -188,7 +196,7 @@ function GetSugarCalls ($sugarSoap, $user, $password, $query, $orderBy, $selecte
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarLeads | Sugar Leads (array or object)
+ * @return array/object | $sugarLeads | Sugar Leads (array or object) |
  *
  */
 
@@ -200,7 +208,9 @@ function GetSugarLeads ($sugarSoap, $user, $password, $query, $orderBy, $selecte
 
 /**
  *
- * @method Gets SugarCRM entries from the Contacts module.
+ * @method
+ *
+ * Gets SugarCRM entries from the Contacts module.
  *
  * @name GetSugarContacts
  * @label Gets SugarCRM entries from the Contacts module.
@@ -214,7 +224,7 @@ function GetSugarLeads ($sugarSoap, $user, $password, $query, $orderBy, $selecte
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarContacts | Sugar Contacts (array or object)
+ * @return array/object | $sugarContacts | Sugar Contacts (array or object) |
  *
  */
 
@@ -226,7 +236,9 @@ function GetSugarContacts ($sugarSoap, $user, $password, $query, $orderBy, $sele
 
 /**
  *
- * @method Gets SugarCRM entries from the Opportunities module.
+ * @method
+ *
+ * Gets SugarCRM entries from the Opportunities module.
  *
  * @name GetSugarOpportunities
  * @label Gets SugarCRM entries from the Opportunities module.
@@ -240,7 +252,7 @@ function GetSugarContacts ($sugarSoap, $user, $password, $query, $orderBy, $sele
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarAccount | Sugar Opportunities (array or object)
+ * @return array/object | $sugarAccount | Sugar Opportunities (array or object) |
  *
  */
 
@@ -252,7 +264,9 @@ function GetSugarOpportunities ($sugarSoap, $user, $password, $query, $orderBy, 
 
 /**
  *
- * @method Gets SugarCRM entries from the Account module.
+ * @method
+ *
+ * Gets SugarCRM entries from the Account module.
  *
  * @name GetSugarAccount
  * @label Gets SugarCRM entries from the Account module.
@@ -266,7 +280,7 @@ function GetSugarOpportunities ($sugarSoap, $user, $password, $query, $orderBy, 
  * @param string | $maxResults=50 | Max Results
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarAccount | Sugar Opportunities (array or object)
+ * @return array/object | $sugarAccount | Sugar Opportunities (array or object) |
  *
  */
 
@@ -278,7 +292,9 @@ function GetSugarAccount ($sugarSoap, $user, $password, $query, $orderBy, $selec
 
 /**
  *
- * @method Creates SugarCRM entries from the Account module.
+ * @method
+ *
+ * Creates SugarCRM entries from the Account module.
  *
  * @name CreateSugarAccount
  *
@@ -290,7 +306,7 @@ function GetSugarAccount ($sugarSoap, $user, $password, $query, $orderBy, $selec
  * @param string | $name | Account name
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarAccount | Sugar Opportunities (array or object)
+ * @return array/object | $sugarAccount | Sugar Opportunities (array or object) |
  *
  */
 function CreateSugarAccount ($sugarSoap, $user, $password, $name, $resultType = "array")
@@ -319,11 +335,13 @@ function CreateSugarAccount ($sugarSoap, $user, $password, $name, $resultType = 
 
 /**
  *
- * @method Creates SugarCRM entries from the Account module
+ * @method
+ *
+ * Creates SugarCRM entries from the Contacts module
  *
  * @name CreateSugarContact
  *
- * @label Creates SugarCRM entries from the Account module
+ * @label Creates SugarCRM entries from the Contacts module
  *
  * @param string | $sugarSoap | Sugar SOAP URL | http://www.example.com/sugar/soap.php?wsdl
  * @param string | $user | User
@@ -336,7 +354,7 @@ function CreateSugarAccount ($sugarSoap, $user, $password, $name, $resultType = 
  * @param string | $account_id | Valid id account
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarContact | Sugar Opportunities (array or object)
+ * @return array/object | $sugarContact | Sugar Opportunities (array or object) |
  *
  */
 function CreateSugarContact ($sugarSoap, $user, $password, $first_name, $last_name, $email, $title, $phone, $account_id, $resultType = "array")
@@ -378,7 +396,9 @@ function CreateSugarContact ($sugarSoap, $user, $password, $first_name, $last_na
 
 /**
  *
- * @method Creates SugarCRM entries from the Opportunities module.
+ * @method
+ *
+ * Creates SugarCRM entries from the Opportunities module.
  *
  * @name CreateSugarOpportunity
  *
@@ -394,7 +414,7 @@ function CreateSugarContact ($sugarSoap, $user, $password, $first_name, $last_na
  * @param string | $sales_stage | Prospecting, Qualification, Needs Analysis, Value Proposition, Id. Decision Makers, Perception Analysis, Proposal/Price Quote, Negotiation/Review, Closed Won, Closed Lost
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarOpportunity | Sugar Opportunities (array or object)
+ * @return array/object | $sugarOpportunity | Sugar Opportunities (array or object) |
  *
  */
 function CreateSugarOpportunity ($sugarSoap, $user, $password, $name, $account_id, $amount, $date_closed, $sales_stage, $resultType = "array")
@@ -440,11 +460,13 @@ function CreateSugarOpportunity ($sugarSoap, $user, $password, $name, $account_i
 
 /**
  *
- * @method Creates SugarCRM entries from the Account module
+ * @method
+ *
+ * Creates SugarCRM entries from the Leads module
  *
  * @name CreateSugarLeads
  *
- * @label Creates SugarCRM entries from the Account module
+ * @label Creates SugarCRM entries from the Leads module
  *
  * @param string | $sugarSoap | Sugar SOAP URL | http://www.example.com/sugar/soap.php?wsdl
  * @param string | $user | User
@@ -457,7 +479,7 @@ function CreateSugarOpportunity ($sugarSoap, $user, $password, $name, $account_i
  * @param string | $account_id | Valid id account
  * @param string | $resultType=array | Result type (array or object)
  *
- * @return array/object | $sugarContact | Sugar Opportunities (array or object)
+ * @return array/object | $sugarContact | Sugar Opportunities (array or object) |
  *
  */
 function CreateSugarLeads ($sugarSoap, $user, $password, $first_name, $last_name, $email, $title, $phone, $account_id, $resultType = "array")

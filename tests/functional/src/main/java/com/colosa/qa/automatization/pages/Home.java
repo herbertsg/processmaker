@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.common.WaitTool;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import com.colosa.qa.automatization.common.extJs.ExtJSTree;
 import com.colosa.qa.automatization.common.extJs.ExtJSTreeNode;
@@ -137,11 +138,11 @@ public class Home extends Page{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
 
         Logger.addLog("Home.gotoNewCase2");
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/New case");
+        ExtJSTreeNode resultTreeNode = casesListsTree.getTreeNode("Cases/New case");
 
-        Logger.addLog("Returned Node found:" + resultWebElement.getNodeText());
+        Logger.addLog("Returned Node found:" + resultTreeNode.getNodeText());
 
-        resultWebElement.click();
+        resultTreeNode.click();
 
 		//selectMenuTreePanelOption("Cases/New case");
         //create new instance of NewCase class
@@ -152,9 +153,11 @@ public class Home extends Page{
 
 	public Inbox gotoInbox() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Inbox \\(.*\\)", true);
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Cases/Inbox \\(.*\\)", true);
 
         resultWebElement.click();
+
+        //WaitTool.waitForJavaScriptCondition(browser.getInstanceDriver(), "return (xmlhttp.readyState >= 2 && xmlhttp.status == 200)", 15);
 
         Inbox inbox = new Inbox(browser);
 
@@ -166,7 +169,7 @@ public class Home extends Page{
 
 	public Draft gotoDraft() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Draft \\(.*\\)", true);
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Cases/Draft \\(.*\\)", true);
 
         resultWebElement.click();
 
@@ -180,7 +183,7 @@ public class Home extends Page{
 
 	public Participated gotoParticipated() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Participated \\(.*\\)", true);
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Cases/Participated \\(.*\\)", true);
 
         resultWebElement.click();
 
@@ -194,7 +197,7 @@ public class Home extends Page{
 
 	public Unassigned gotoUnassigned() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Unassigned \\(.*\\)", true);
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Cases/Unassigned \\(.*\\)", true);
 
         resultWebElement.click();
 
@@ -207,7 +210,7 @@ public class Home extends Page{
 
 	public Paused gotoPaused() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Cases/Paused \\(.*\\)", true);
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Cases/Paused \\(.*\\)", true);
 
         resultWebElement.click();
 
@@ -220,7 +223,7 @@ public class Home extends Page{
 
 	public AdvancedSearch gotoAdvancedSearch() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Search/Advanced Search");
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Search/Advanced Search");
 
         resultWebElement.click();
 
@@ -232,7 +235,7 @@ public class Home extends Page{
 
 	public SupervisorReview gotoReview() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Process Supervisor/Review");
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Process Supervisor/Review");
 
         resultWebElement.click();
 
@@ -247,7 +250,7 @@ public class Home extends Page{
 
 	public SupervisorReassign gotoReassign() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Process Supervisor/Reassign");
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Process Supervisor/Reassign");
 
         resultWebElement.click();
 
@@ -260,7 +263,7 @@ public class Home extends Page{
 
 	public Documents gotoDocuments() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        ExtJSTreeNode resultWebElement = casesListsTree.gotoNode("Documents");
+        ExtJSTreeNode resultWebElement = casesListsTree.getTreeNode("Documents");
 
         resultWebElement.click();
 
@@ -273,12 +276,12 @@ public class Home extends Page{
 
 	public void gotoReports() throws Exception{
         ExtJSTree casesListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
-        casesListsTree.gotoNode("Documents/Reports");
+        casesListsTree.getTreeNode("Documents/Reports");
 		//selectMenuTreePanelOption("Documents/Reports");
 	}
-
+    /*
 	public void openCase(int numCase)throws Exception{
-        /*
+
         caseNum = ""+Integer.toString(numCase);
         ExtJSGrid grid;
 		Actions action = new Actions(browser.getInstanceDriver());
@@ -291,8 +294,8 @@ public class Home extends Page{
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
 		action.doubleClick(row.findElement(By.xpath("table/tbody/tr/td[div='"+Integer.toString(numCase)+"']/div")));
-        action.perform();*/
-	}
+        action.perform();
+	}*/
 
     public int openFirstCase()throws Exception{
 
@@ -329,7 +332,7 @@ public class Home extends Page{
 		browser.switchToDefaultContent();
 		browser.switchToFrame("casesFrame");
 		browser.switchToFrame("casesSubFrame");
-		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser);
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null){
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
@@ -348,7 +351,7 @@ public class Home extends Page{
 		browser.switchToDefaultContent();
 		browser.switchToFrame("casesFrame");
 		browser.switchToFrame("casesSubFrame");
-		grid = new ExtJSGrid(browser.findElementById("reassign-form"), browser.getInstanceDriver(),45);
+		grid = new ExtJSGrid(browser.findElementById("reassign-form"), browser,45);
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		if(row==null)
 			throw new Exception("Case # "+Integer.toString(numCase)+" not found in Inbox folder");
@@ -392,7 +395,7 @@ public class Home extends Page{
         inputText.sendKeys(caseNum);
         inputText.sendKeys(Keys.RETURN);
         inputText.clear();*/
-		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser);
 		WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
 		
 		if(row==null)
@@ -405,7 +408,7 @@ public class Home extends Page{
 		ExtJSGrid grid;
 		browser.switchToFrame("casesFrame");
 		browser.switchToFrame("casesSubFrame");
-		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser.getInstanceDriver());
+		grid = new ExtJSGrid(browser.findElementById("casesGrid"), browser);
 		
 		WebElement row = grid.getRowByColumnsValue("#", "Status", Integer.toString(numCase), statusCase);
 		
@@ -423,7 +426,7 @@ public class Home extends Page{
 
 	public boolean isGridPresent(String grd) throws Exception{
 		ExtJSGrid grid = null;
-		grid = new ExtJSGrid(browser.findElementById(grd), browser.getInstanceDriver());
+		grid = new ExtJSGrid(browser.findElementById(grd), browser);
 		if(grid==null)
 			throw new Exception("Grid: "+grd+" not found");
 		else

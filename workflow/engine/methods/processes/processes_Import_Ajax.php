@@ -105,6 +105,7 @@ if ($action == "uploadFileNewProcess") {
                 $tempName = $_FILES['form']['tmp_name']['PROCESS_FILENAME'];
                 //$action = "none";
                 G::uploadFile( $tempName, $path, $filename );
+
             }
         }
 
@@ -148,6 +149,7 @@ if ($action == "uploadFileNewProcess") {
                 $oNewGroup = $oProcess->mergeExistingGroups( $oData->groupwfs );
                 $oData->groupwfs = $oNewGroup;
                 $oData->taskusers = $oProcess->mergeExistingUsers( $oBaseGroup, $oNewGroup, $oData->taskusers );
+                $oData->objectPermissions = $oProcess->mergeExistingUsers( $oBaseGroup, $oNewGroup, $oData->objectPermissions );
             }
             $result->ExistGroupsInDatabase = 0;
         } else {
@@ -156,15 +158,9 @@ if ($action == "uploadFileNewProcess") {
             }
         }
 
-        //replacing a nonexistent user for the current user
-        $UsrUid = $oData->process['PRO_CREATE_USER'];
+        //replacing the processOwner user for the current user
 
-        G::LoadClass( 'Users' );
-        $user = new Users();
-        if (!$user->userExists( $UsrUid ))
-        {
-            $oData->process['PRO_CREATE_USER'] = $_SESSION['USER_LOGGED'];
-        }
+        $oData->process['PRO_CREATE_USER'] = $_SESSION['USER_LOGGED'];
 
         //!respect of the groups
 
@@ -274,7 +270,7 @@ if ($action == "uploadFileNewProcessExist") {
                 //krumo ($oData); die;
                 $sNewProUid = $oProcess->getUnusedProcessGUID();
                 $oProcess->setProcessGuid( $oData, $sNewProUid );
-                $oData->process['PRO_TITLE'] = "Copy of  - " . $oData->process['PRO_TITLE'] . ' - ' . date( 'M d, H:i' );
+                $oData->process['PRO_TITLE'] = G::LoadTranslation('ID_COPY_OF'). ' - ' . $oData->process['PRO_TITLE'] . ' - ' . date( 'M d, H:i' );
                 $oProcess->renewAll( $oData );
 
                 if ($processFileType == "pm") {

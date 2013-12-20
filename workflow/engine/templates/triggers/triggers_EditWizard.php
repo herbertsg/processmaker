@@ -120,6 +120,7 @@ try {
 
     $sPMfunction = $sNameFun . " (";
     $methodParametersOnlyNames = array ();
+    $methodParametersNamesType = array ();
     if (count ( $aParametersFun ) > 0) {
         $template->newBlock ( 'paremetersTriggersGroup' );
         $template->assign ( 'PARAMETERS_LABEL', G::LoadTranslation ( 'ID_PARAMETERS' ) );
@@ -127,6 +128,7 @@ try {
             if ($v != '') {
                 $aParametersFunA = explode ( "|", $v );
                 $paramType = $aParametersFunA [0];
+                $methodParametersNamesType[] = $paramType;
                 $paramDefinition = $aParametersFunA [1];
                 $paramDefinitionA = explode ( "=", $paramDefinition );
                 $paramName = $paramDefinitionA [0];
@@ -151,7 +153,7 @@ try {
                 $template->assign ( 'ADD_TRI_VARIABLE', $tri_Button );
                 // $template->assign ( 'ADD_TRI_VALUE', str_replace ( "'", "",
                 //                     str_replace ( '"', '', $paramDefaultValue ) ) );
-                $paramValue = $_GET[trim( str_replace( "$", "", $paramName ) )];
+                $paramValue = isset($_GET[trim( str_replace( "$", "", $paramName ) )]) ? $_GET[trim( str_replace( "$", "", $paramName ) )] : '';
                 $template->assign ( 'ADD_TRI_VALUE', str_replace("\'", "&apos;", $paramValue) );
                 //turn single quotes to double quotes into an array asignation
                 $template->assign ( 'ADD_TRI_VALUE', str_replace("'", "&#34;", $paramValue) );
@@ -172,6 +174,7 @@ try {
     }
     $template->gotoBlock ( '_ROOT' );
     $template->assign ('FIELDS_REQUIRED', implode ( ",", $fieldRequired ));
+    $template->assign ( 'ALLFUNCTION_TYPE', implode ( ",", $methodParametersNamesType ) );
     $template->assign ( 'ALLFUNCTION', implode ( ",", $methodParametersOnlyNames ) );
     $sPMfunction .= ");";
     $content = $template->getOutputContent ();

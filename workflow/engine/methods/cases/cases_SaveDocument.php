@@ -93,27 +93,8 @@ if ($_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] > 0) {
     $_SESSION["TRIGGER_DEBUG"]["TRIGGERS_VALUES"] = $arrayTrigger;
 }
 
-if ($_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] > 0) {
-    //Trigger - Execute after - Start
-    $arrayField["APP_DATA"] = $case->executeTriggers(
-        $_SESSION["TASK"],
-        "INPUT_DOCUMENT",
-        $inputDocumentUid,
-        "AFTER",
-        $arrayField["APP_DATA"]
-    );
-    //Trigger - Execute after - End
-}
 
-//Save data
-$arrayData = array();
-$arrayData["APP_NUMBER"] = $arrayField["APP_NUMBER"];
-$arrayData["APP_PROC_STATUS"] = $arrayField["APP_PROC_STATUS"];
-$arrayData["APP_DATA"]  = $arrayField["APP_DATA"];
-$arrayData["DEL_INDEX"] = $_SESSION["INDEX"];
-$arrayData["TAS_UID"]   = $_SESSION["TASK"];
 
-$case->updateCase($_SESSION["APPLICATION"], $arrayData);
 
 //Add Input Document
 if (isset($_FILES) && isset($_FILES["form"]) && count($_FILES["form"]) > 0) {
@@ -134,6 +115,28 @@ if (isset($_FILES) && isset($_FILES["form"]) && count($_FILES["form"]) > 0) {
         $_FILES["form"]["tmp_name"]["APP_DOC_FILENAME"]
     );
 }
+
+if ($_SESSION["TRIGGER_DEBUG"]["NUM_TRIGGERS"] > 0) {
+    //Trigger - Execute after - Start
+    $arrayField["APP_DATA"] = $case->executeTriggers(
+        $_SESSION["TASK"],
+        "INPUT_DOCUMENT",
+        $inputDocumentUid,
+        "AFTER",
+        $arrayField["APP_DATA"]
+    );
+    //Trigger - Execute after - End
+}
+
+//Save data
+$arrayData = array();
+$arrayData["APP_NUMBER"] = $arrayField["APP_NUMBER"];
+//$arrayData["APP_PROC_STATUS"] = $arrayField["APP_PROC_STATUS"];
+$arrayData["APP_DATA"]  = $arrayField["APP_DATA"];
+$arrayData["DEL_INDEX"] = $_SESSION["INDEX"];
+$arrayData["TAS_UID"]   = $_SESSION["TASK"];
+
+$case->updateCase($_SESSION["APPLICATION"], $arrayData);
 
 //go to the next step
 //if (!isset($_POST['form']['MORE'])) {

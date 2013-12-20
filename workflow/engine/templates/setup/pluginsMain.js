@@ -15,7 +15,7 @@ new Ext.KeyMap(document, {
         document.location = document.location;
       }
       else
-        Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        Ext.Msg.alert( _('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE') );
   }
 });
 
@@ -72,7 +72,7 @@ Ext.onReady(function(){
     width:'',
     title : '',
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridPluginMain',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,
@@ -94,7 +94,7 @@ Ext.onReady(function(){
         {header: '', dataIndex: 'namespace', width: 100, hidden:true, hideable:false},
         {header: 'classname', dataIndex: 'className', width: 300, hidden:true, hideable:false},
         {header: _('ID_TITLE'), dataIndex: 'title'},
-        {header: _('ID_VERSION'), dataIndex: 'version', width: 50},
+        {header: _('ID_VERSION'), dataIndex: 'version', width: 50, sortable: false},
         {header: _('ID_STATUS'), dataIndex: 'status_label', width: 40, renderer:function(v,p,r){
           color = r.get('status') == '1'? 'green': 'red';
           return String.format("<font color='{0}'>{1}</font>", color, v);
@@ -140,7 +140,7 @@ Ext.onReady(function(){
     ],
     listeners: {
       render: function(){
-        this.loadMask = new Ext.LoadMask(this.body, {msg:'Loading...'});
+        this.loadMask = new Ext.LoadMask(this.body, {msg: _('ID_LOADING_GRID')});
         //this.ownerCt.doLayout();
         Grid.getSelectionModel().on('rowselect', function(){
 

@@ -27,6 +27,52 @@
  * this file is used initialize main variables, redirect and dispatch all requests
  */
 
+
+function transactionLog($transactionName){
+    if (extension_loaded('newrelic')) {
+        $baseName="ProcessMaker";
+
+        //Application base name
+        newrelic_set_appname ($baseName);
+
+
+        //Custom parameters
+        if(defined("SYS_SYS")){
+            newrelic_add_custom_parameter ("workspace", SYS_SYS);
+        }
+        if(defined("SYS_LANG")){
+            newrelic_add_custom_parameter ("lang", SYS_LANG);
+        }
+        if(defined("SYS_SKIN")){
+            newrelic_add_custom_parameter ("skin", SYS_SKIN);
+        }
+        if(defined("SYS_COLLECTION")){
+            newrelic_add_custom_parameter ("collection", SYS_COLLECTION);
+        }
+        if(defined("SYS_TARGET")){
+            newrelic_add_custom_parameter ("target", SYS_TARGET);
+        }
+        if(defined("SYS_URI")){
+            newrelic_add_custom_parameter ("uri", SYS_URI);
+        }
+        if(defined("PATH_CORE")){
+            newrelic_add_custom_parameter ("path_core", PATH_CORE);
+        }
+        if(defined("PATH_DATA_SITE")){
+            newrelic_add_custom_parameter ("path_site", PATH_DATA_SITE);
+        }
+
+        //Show correct transaction name
+        if(defined("SYS_SYS")){
+            newrelic_set_appname ("PM-".SYS_SYS.";$baseName");
+        }
+        if(defined("PATH_CORE")){
+            $transactionName=str_replace(PATH_CORE,"",$transactionName);
+        }
+        newrelic_name_transaction ($transactionName);
+    }
+}
+
 // Defining the PATH_SEP constant, he we are defining if the the path separator symbol will be '\\' or '/'
 define( 'PATH_SEP', '/' );
 
@@ -223,10 +269,21 @@ define( 'PML_WSDL_URL', PML_SERVER . '/syspmLibrary/en/green/services/wsdl' );
 define( 'PML_UPLOAD_URL', PML_SERVER . '/syspmLibrary/en/green/services/uploadProcess' );
 define( 'PML_DOWNLOAD_URL', PML_SERVER . '/syspmLibrary/en/green/services/download' );
 
+$config = Bootstrap::getSystemConfiguration();
 // starting session
+if (isset($config['session.gc_maxlifetime'])) {
+    $timelife = $config['session.gc_maxlifetime'];
+} else {
+    $timelife = ini_get('session.gc_maxlifetime');
+}
+if (is_null($timelife)) {
+    $timelife = 1440;
+}
+ini_set('session.gc_maxlifetime', $timelife);
+ini_set('session.cookie_lifetime', $timelife);
 session_start();
 
-$config = Bootstrap::getSystemConfiguration();
+
 
 $e_all = defined( 'E_DEPRECATED' ) ? E_ALL & ~ E_DEPRECATED : E_ALL;
 $e_all = defined( 'E_STRICT' ) ? $e_all & ~ E_STRICT : $e_all;
@@ -260,6 +317,18 @@ if (! defined( 'PATH_C' )) {
     define( 'PATH_LANGUAGECONT', PATH_HOME . 'engine/content/languages/' );
 }
 
+//Call Gulliver Classes
+Bootstrap::LoadThirdParty("smarty/libs", "Smarty.class");
+
+//Loading the autoloader libraries feature
+spl_autoload_register(array("Bootstrap", "autoloadClass"));
+
+Bootstrap::registerClass("G",      PATH_GULLIVER . "class.g.php");
+Bootstrap::registerClass("System", PATH_HOME . "engine/classes/class.system.php");
+
+$skinPathErrors = G::skinGetPathToSrcByVirtualUri("errors", $config);
+$skinPathUpdate = G::skinGetPathToSrcByVirtualUri("update", $config);
+
 // defining Virtual URLs
 $virtualURITable = array ();
 $virtualURITable['/plugin/(*)'] = 'plugin';
@@ -275,7 +344,7 @@ if (defined( 'PATH_C' )) {
 $virtualURITable['/htmlarea/(*)'] = PATH_THIRDPARTY . 'htmlarea/';
 //$virtualURITable['/sys[a-zA-Z][a-zA-Z0-9]{0,}()/'] = 'sysNamed';
 $virtualURITable['/(sys*)'] = FALSE;
-$virtualURITable['/errors/(*)'] = PATH_GULLIVER_HOME . 'methods/errors/';
+$virtualURITable["/errors/(*)"] = ($skinPathErrors != "")? $skinPathErrors : PATH_GULLIVER_HOME . "methods" . PATH_SEP . "errors" . PATH_SEP;
 $virtualURITable['/gulliver/(*)'] = PATH_GULLIVER_HOME . 'methods/';
 $virtualURITable['/controls/(*)'] = PATH_GULLIVER_HOME . 'methods/controls/';
 $virtualURITable['/html2ps_pdf/(*)'] = PATH_THIRDPARTY . 'html2ps_pdf/';
@@ -283,10 +352,12 @@ $virtualURITable['/html2ps_pdf/(*)'] = PATH_THIRDPARTY . 'html2ps_pdf/';
 //$virtualURITable['/skins/'] = 'errorFile';
 //$virtualURITable['/files/'] = 'errorFile';
 $virtualURITable['/rest/(*)'] = 'rest-service';
-$virtualURITable['/update/(*)'] = PATH_GULLIVER_HOME . 'methods/update/';
+$virtualURITable["/update/(*)"] = ($skinPathUpdate != "")? $skinPathUpdate : PATH_GULLIVER_HOME . "methods" . PATH_SEP . "update" . PATH_SEP;
 //$virtualURITable['/(*)'] = PATH_HTML;
 $virtualURITable['/css/(*)'] = PATH_HTML . 'css/'; //ugly
 $virtualURITable['/skin/(*)'] = PATH_HTML;
+$virtualURITable['/skins/(*)'] = PATH_HTML . 'skins/'; //ugly
+$virtualURITable['/images/(*)'] = PATH_HTML . 'images/'; //ugly
 $virtualURITable['/[a-zA-Z][a-zA-Z0-9]{0,}/'] = 'errorFile';
 
 $isRestRequest = false;
@@ -315,7 +386,10 @@ if (Bootstrap::virtualURI( $_SERVER['REQUEST_URI'], $virtualURITable, $realPath 
         $pluginFilename = PATH_PLUGINS . $pluginFolder . PATH_SEP . 'public_html' . PATH_SEP . $filePath;
 
         if (file_exists( $pluginFilename )) {
-            Bootstrap::streamFile( $pluginFilename );
+            //NewRelic Snippet - By JHL
+            transactionLog($pluginFilename);
+
+            Bootstrap::streamFile( $pluginFilename, false, '', true );
         }
         die();
     }
@@ -334,17 +408,25 @@ if (Bootstrap::virtualURI( $_SERVER['REQUEST_URI'], $virtualURITable, $realPath 
 
         //Get that path in array
         $paths = explode( PATH_SEP, $forQuery[0] );
-        $fileToBeStreamed = str_replace( "/skin/", PATH_CUSTOM_SKINS, $_SERVER['REQUEST_URI'] );
+        $url = (preg_match("/^(.*)\?.*$/", $_SERVER["REQUEST_URI"], $arrayMatch))? $arrayMatch[1] : $_SERVER["REQUEST_URI"];
+
+        $fileToBeStreamed = str_replace("/skin/", PATH_CUSTOM_SKINS, $url);
 
         if (file_exists( $fileToBeStreamed )) {
+            //NewRelic Snippet - By JHL
+            transactionLog($fileToBeStreamed);
+
             Bootstrap::streamFile( $fileToBeStreamed );
         }
         die();
     }
+
     switch ($realPath) {
         case 'jsMethod':
             Bootstrap::parseURI( getenv( "REQUEST_URI" ) );
             $filename = PATH_METHODS . SYS_COLLECTION . '/' . SYS_TARGET . '.js';
+            //NewRelic Snippet - By JHL
+            transactionLog($filename);
             Bootstrap::streamFile( $filename );
             die();
             break;
@@ -355,29 +437,25 @@ if (Bootstrap::virtualURI( $_SERVER['REQUEST_URI'], $virtualURITable, $realPath 
             die();
             break;
         default:
+            //Process files loaded with tag head in HTML
             if (substr( $realPath, 0, 12 ) == 'rest-service') {
                 $isRestRequest = true;
             } else {
                 $realPath = explode( '?', $realPath );
                 $realPath[0] .= strpos( basename( $realPath[0] ), '.' ) === false ? '.php' : '';
+                //NewRelic Snippet - By JHL
+                transactionLog($realPath[0]);
+
                 Bootstrap::streamFile( $realPath[0] );
                 die();
             }
     }
 } //virtual URI parser
 
-// Call Gulliver Classes
-Bootstrap::LoadThirdParty( 'smarty/libs', 'Smarty.class' );
-//loading the autoloader libraries feature
-spl_autoload_register(array('Bootstrap', 'autoloadClass'));
-Bootstrap::registerClass('G', PATH_GULLIVER . "class.g.php");
-Bootstrap::registerClass('System',        PATH_HOME . "engine/classes/class.system.php");
-
 // the request correspond to valid php page, now parse the URI
 Bootstrap::parseURI( getenv( "REQUEST_URI" ), $isRestRequest );
 
-//Bootstrap::mylog("sys_temp: ".SYS_TEMP);
-
+// Bootstrap::mylog("sys_temp: ".SYS_TEMP);
 if (Bootstrap::isPMUnderUpdating()) {
     header( "location: /update/updating.php" );
     if (DEBUG_TIME_LOG)
@@ -422,9 +500,6 @@ Bootstrap::registerClass('Controller',          PATH_GULLIVER . "class.controlle
 Bootstrap::registerClass('HttpProxyController', PATH_GULLIVER . "class.httpProxyController.php");
 Bootstrap::registerClass('templatePower',            PATH_GULLIVER . "class.templatePower.php");
 Bootstrap::registerClass('XmlForm_Field_SimpleText', PATH_GULLIVER . "class.xmlformExtension.php");
-Bootstrap::registerClass('Propel',          PATH_THIRDPARTY . "propel/Propel.php");
-Bootstrap::registerClass('Creole',          PATH_THIRDPARTY . "creole/Creole.php");
-Bootstrap::registerClass('Criteria',        PATH_THIRDPARTY . "propel/util/Criteria.php");
 Bootstrap::registerClass('Groups',       PATH_HOME . "engine/classes/class.groups.php");
 Bootstrap::registerClass('Tasks',        PATH_HOME . "engine/classes/class.tasks.php");
 Bootstrap::registerClass('Calendar',     PATH_HOME . "engine/classes/class.calendar.php");
@@ -444,6 +519,8 @@ $oHeadPublisher = & headPublisher::getSingleton();
 if (! defined( 'PATH_DATA' ) || ! file_exists( PATH_DATA )) {
     // new installer, extjs based
     define( 'PATH_DATA', PATH_C );
+    //NewRelic Snippet - By JHL
+    transactionLog(PATH_CONTROLLERS.'installer.php');
     require_once (PATH_CONTROLLERS . 'installer.php');
     $controller = 'Installer';
 
@@ -461,6 +538,9 @@ if (! defined( 'PATH_DATA' ) || ! file_exists( PATH_DATA )) {
     ) )) {
         $installer = new $controller();
         $installer->setHttpRequestData( $_REQUEST );
+        //NewRelic Snippet - By JHL
+        transactionLog($controllerAction);
+
         $installer->call( $controllerAction );
     } else {
         $_SESSION['phpFileNotFound'] = $_SERVER['REQUEST_URI'];
@@ -494,13 +574,19 @@ if (defined( 'SYS_TEMP' ) && SYS_TEMP != '') {
         // including workspace shared classes -> particularlly for pmTables
         set_include_path( get_include_path() . PATH_SEPARATOR . PATH_WORKSPACE );
     } else {
-        Bootstrap::SendTemporalMessage( 'ID_NOT_WORKSPACE', "error" );
-        Bootstrap::header( 'location: /sys/' . SYS_LANG . '/' . SYS_SKIN . '/main/sysLogin?errno=2' );
+        if (SYS_LANG != '' && SYS_SKIN != '') {
+            Bootstrap::SendTemporalMessage( 'ID_NOT_WORKSPACE', "error" );
+            Bootstrap::header( 'location: /sys/' . SYS_LANG . '/' . SYS_SKIN . '/main/sysLogin?errno=2' );
+        } else {
+            header('location: /errors/error404.php?url=' . urlencode($_SERVER['REQUEST_URI']));
+        }
         die();
     }
 } else { //when we are in global pages, outside any valid workspace
     if (SYS_TARGET === 'newSite') {
         $phpFile = G::ExpandPath( 'methods' ) . SYS_COLLECTION . "/" . SYS_TARGET . '.php';
+        //NewRelic Snippet - By JHL
+        transactionLog($phpFile);
         require_once ($phpFile);
         die();
     } else {
@@ -542,6 +628,8 @@ define( 'PATH_IMAGES_ENVIRONMENT_USERS', PATH_DATA_SITE . 'usersPhotographies' .
 define( 'SERVER_NAME', $_SERVER['SERVER_NAME'] );
 define( 'SERVER_PORT', $_SERVER['SERVER_PORT'] );
 
+
+
 // create memcached singleton
 Bootstrap::LoadClass( 'memcached' );
 $memcache = & PMmemcached::getSingleton( SYS_SYS );
@@ -579,6 +667,8 @@ $oPluginRegistry = & PMPluginRegistry::getSingleton();
 
 if (file_exists( $sSerializedFile )) {
     $oPluginRegistry->unSerializeInstance( file_get_contents( $sSerializedFile ) );
+    $attributes = $oPluginRegistry->getAttributes();
+    Bootstrap::LoadTranslationPlugins( defined( 'SYS_LANG' ) ? SYS_LANG : "en" , $attributes);
 }
 
 // setup propel definitions and logging
@@ -677,6 +767,8 @@ if (SYS_COLLECTION == 'login' && SYS_TARGET == 'login') {
 
 $bWE = false;
 $isControllerCall = false;
+$isPluginController = false;
+
 if (substr( SYS_COLLECTION, 0, 8 ) === 'gulliver') {
     $phpFile = PATH_GULLIVER_HOME . 'methods/' . substr( SYS_COLLECTION, 8 ) . SYS_TARGET . '.php';
 } else {
@@ -693,6 +785,8 @@ if (substr( SYS_COLLECTION, 0, 8 ) === 'gulliver') {
         $phpFile = $aAux[0];
 
         if ($extension != 'php') {
+            //NewRelic Snippet - By JHL
+            transactionLog($phpFile);
             Bootstrap::streamFile( $phpFile );
             die();
         }
@@ -713,7 +807,45 @@ if (substr( SYS_COLLECTION, 0, 8 ) === 'gulliver') {
         if (is_callable( Array ($controllerClass,$controllerAction ) )) {
             $isControllerCall = true;
         }
+
+        if (substr(SYS_SKIN, 0, 2) != "ux" && $controllerClass == "main") {
+            $isControllerCall = false;
+        }
     }
+
+    if (is_dir(PATH_PLUGINS . SYS_COLLECTION) && $oPluginRegistry->isRegisteredFolder(SYS_COLLECTION)) {
+        $pluginName = SYS_COLLECTION;
+        $pluginResourceRequest = explode('/', rtrim(SYS_TARGET, '/'));
+        $isPluginController = true;
+
+        if ($pluginResourceRequest > 0) {
+            $controllerClass = $pluginResourceRequest[0];
+
+            if (count($pluginResourceRequest) == 1) {
+                $controllerAction = 'index';
+            } else {
+                $controllerAction = $pluginResourceRequest[1];
+            }
+        }
+
+        $pluginControllerPath = PATH_PLUGINS . $pluginName . PATH_SEP . 'controllers' . PATH_SEP;
+
+        if (is_file($pluginControllerPath. $controllerClass . '.php')) {
+            require_once $pluginControllerPath. $controllerClass . '.php';
+        } elseif (is_file($pluginControllerPath. ucfirst($controllerClass) . '.php')) {
+            $controllerClass = ucfirst($controllerClass);
+            require_once $pluginControllerPath. $controllerClass . '.php';
+        } elseif (is_file($pluginControllerPath. ucfirst($controllerClass) . 'Controller.php')) {
+            $controllerClass = ucfirst($controllerClass) . 'Controller';
+            require_once $pluginControllerPath. $controllerClass . '.php';
+        }
+
+        //if the method exists
+        if (is_callable(array($controllerClass, $controllerAction))) {
+            $isControllerCall = true;
+        }
+    }
+
     if (! $isControllerCall && ! file_exists( $phpFile ) && ! $isRestRequest) {
         $_SESSION['phpFileNotFound'] = $_SERVER['REQUEST_URI'];
         header( "location: /errors/error404.php?url=" . urlencode( $_SERVER['REQUEST_URI'] ) );
@@ -749,6 +881,11 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
     define( 'SYS_LANG_DIRECTION', $oServerConf->getLanDirection() );
 
     if ((isset( $_SESSION['USER_LOGGED'] )) && (! (isset( $_GET['sid'] )))) {
+        if (PHP_VERSION < 5.2) {
+            setcookie(session_name(), session_id(), time() + $timelife, '/', '; HttpOnly');
+        } else {
+            setcookie(session_name(), session_id(), time() + $timelife, '/', null, false, true);
+        }
         $RBAC->initRBAC();
         //using optimization with memcache, the user data will be in memcache 8 hours, or until session id goes invalid
         $memKey = 'rbacSession' . session_id();
@@ -774,6 +911,25 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
         $noLoginFiles[] = 'retrivePassword';
         $noLoginFiles[] = 'defaultAjaxDynaform';
         $noLoginFiles[] = 'dynaforms_checkDependentFields';
+        $noLoginFiles[] = 'fields_Ajax';
+        $noLoginFiles[] = 'appFolderAjax';
+        $noLoginFiles[] = 'steps_Ajax';
+        $noLoginFiles[] = 'proxyCasesList';
+        $noLoginFiles[] = 'casesStartPage_Ajax';
+        $noLoginFiles[] = 'appProxy';
+        $noLoginFiles[] = 'cases_Ajax';
+        $noLoginFiles[] = 'casesList_Ajax';
+        $noLoginFiles[] = 'proxyReassignCasesList';
+        $noLoginFiles[] = 'ajaxListener';
+        $noLoginFiles[] = 'cases_Step';
+        $noLoginFiles[] = 'cases_ShowOutputDocument';
+        $noLoginFiles[] = 'cases_ShowDocument';
+        $noLoginFiles[] = 'cases_CatchExecute';
+        $noLoginFiles[] = 'cases_SaveData';
+        $noLoginFiles[] = 'cases_Derivate';
+        $noLoginFiles[] = 'cases_NextStep';
+        $noLoginFiles[] = 'genericAjax';
+        $noLoginFiles[] = 'casesSaveDataView';
 
         $noLoginFolders[] = 'services';
         $noLoginFolders[] = 'tracker';
@@ -792,6 +948,11 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
                     $_SESSION['USER_LOGGED'] = $aUser['USR_UID'];
                     $_SESSION['USR_USERNAME'] = $aUser['USR_USERNAME'];
                     $bRedirect = false;
+                    if (PHP_VERSION < 5.2) {
+                        setcookie(session_name(), session_id(), time() + $timelife, '/', '; HttpOnly');
+                    } else {
+                        setcookie(session_name(), session_id(), time() + $timelife, '/', null, false, true);
+                    }
                     $RBAC->initRBAC();
                     $RBAC->loadUserRolePermission( $RBAC->sSystem, $_SESSION['USER_LOGGED'] );
                     $memKey = 'rbacSession' . session_id();
@@ -831,11 +992,22 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
      */
     if ($isControllerCall) { //Instance the Controller object and call the request method
         $controller = new $controllerClass();
-        $controller->setHttpRequestData( $_REQUEST );
-        $controller->call( $controllerAction );
+        $controller->setHttpRequestData($_REQUEST);//NewRelic Snippet - By JHL
+        transactionLog($controllerAction);
+
+        if ($isPluginController) {
+            $controller->setPluginName($pluginName);
+            $controller->setPluginHomeDir(PATH_PLUGINS . $pluginName . PATH_SEP);
+        }
+
+        $controller->call($controllerAction);
     } elseif ($isRestRequest) {
+        //NewRelic Snippet - By JHL
+        transactionLog($restConfig.$restApiClassPath.SYS_TARGET);
         Bootstrap::dispatchRestService( SYS_TARGET, $restConfig, $restApiClassPath );
     } else {
+        //NewRelic Snippet - By JHL
+        transactionLog($phpFile);
         require_once $phpFile;
     }
 

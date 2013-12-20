@@ -21,6 +21,7 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
 	public void executeProcess() throws FileNotFoundException, IOException, Exception{
         int caseNumber = 0;
         boolean caseExists = false;
+        String result;
 		//Open process
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
@@ -33,9 +34,11 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
             //the inbox list is display later
             //the case must be found in the inbox list
             //The task is derivated directly without displaying assign task
-            caseExists = pages.Inbox().existCase(caseNumber);
+            pages.Inbox().openCase(caseNumber);
 
-            Assert.assertTrue("PMFDerivateCase (CallBeforeDynaform): The case does not exist in Inbox",caseExists);
+            result = pages.DynaformExecution().getFieldValue("result");
+
+            Assert.assertEquals("PMFDerivateCase (CallBeforeDynaform): The case was not derivated.", "OK CallBeforeDynaform", result);
         }catch (Exception ex){
             Assert.assertTrue("Function PMFDerivateCase->CallBeforeDynaform is causing an exception.", false);
         }
@@ -43,12 +46,16 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
         try{
             caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallAfterDynaform)");
             pages.DynaformExecution().intoDynaform();
-            pages.DynaformExecution().setFieldValue("nombre", "User");
-            pages.DynaformExecution().setFieldValue("monto", "3000");
+            //pages.DynaformExecution().setFieldValue("nombre", "User");
+            //pages.DynaformExecution().setFieldValue("monto", "3000");
             pages.DynaformExecution().clickButton("send");
 
-            caseExists = pages.Inbox().existCase(caseNumber);
-            Assert.assertTrue("PMFDerivateCase (CallAfterDynaform): The case does not exist in Inbox",caseExists);
+            //caseExists = pages.Inbox().existCase(caseNumber);
+            pages.Inbox().openCase(caseNumber);
+            result = pages.DynaformExecution().getFieldValue("result");
+
+            Assert.assertEquals("PMFDerivateCase (CallAfterDynaform): The case was not derivated.", "OK CallAfterDynaform", result);
+            //Assert.assertTrue("PMFDerivateCase (CallAfterDynaform): The case does not exist in Inbox",caseExists);
         }catch (Exception ex){
             Assert.assertTrue("Function PMFDerivateCase->CallAfterDynaform is causing an exception.", false);
         }
@@ -56,16 +63,21 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
         try{
             caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallBeforeAssignment)");
             pages.DynaformExecution().intoDynaform();
-            pages.DynaformExecution().setFieldValue("nombre", "User");
-            pages.DynaformExecution().setFieldValue("monto", "3000");
+            //pages.DynaformExecution().setFieldValue("nombre", "User");
+            //pages.DynaformExecution().setFieldValue("monto", "3000");
             pages.DynaformExecution().clickButton("send");
 
-            caseExists = pages.Inbox().existCase(caseNumber);
-            Assert.assertTrue("PMFDerivateCase (CallBeforeAssignment): The case does not exist in Inbox",caseExists);
+            //caseExists = pages.Inbox().existCase(caseNumber);
+            //Assert.assertTrue("PMFDerivateCase (CallBeforeAssignment): The case does not exist in Inbox",caseExists);
+            pages.Inbox().openCase(caseNumber);
+            result = pages.DynaformExecution().getFieldValue("result");
+
+            Assert.assertEquals("PMFDerivateCase (CallBeforeAssignment): The case was not derivated.", "OK CallBeforeAssignment", result);
         }catch (Exception ex){
             Assert.assertTrue("Function PMFDerivateCase->CallBeforeAssignment is causing an exception. " + ex.getMessage(), false);
         }
 
+        /*
         try{
             caseNumber = pages.Home().gotoNewCase().startCase("PMFDerivateCase (CallBeforeRouting)");
             pages.AssignTask().pressContinueButton();
@@ -84,7 +96,7 @@ public class TestFunctionPMFDerivateCase extends com.colosa.qa.automatization.te
             Assert.assertTrue("PMFDerivateCase (CallAfterRouting): The case does not exist in Inbox",caseExists);
         }catch (Exception ex){
             Assert.assertTrue("Function PMFDerivateCase->CallAfterRouting is causing an exception.", false);
-        }
+        }*/
 
 
 		/*pages.InputDocProcess().openCaseFrame();

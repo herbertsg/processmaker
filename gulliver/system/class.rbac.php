@@ -313,6 +313,7 @@ class RBAC
      */
     public function VerifyLogin ($strUser, $strPass)
     {
+
         if (strlen( $strPass ) == 0) {
             return - 2;
         }
@@ -336,7 +337,6 @@ class RBAC
         }
         //Hook for RBAC plugins
         if ($sAuthType != "mysql" && $sAuthType != "") {
-
             $res = $this->VerifyWithOtherAuthenticationSource( $sAuthType, $this->userObj->fields, $strPass );
             return $res;
         } else {
@@ -487,7 +487,7 @@ class RBAC
      */
     public function changeUserStatus ($sUserUID = '', $sStatus = 'ACTIVE')
     {
-        if ($sStatus == 'ACTIVE') {
+        if ($sStatus === 'ACTIVE') {
             $sStatus = 1;
         }
 
@@ -558,8 +558,7 @@ class RBAC
      */
     public function createPermision ($sCode)
     {
-        return $this->permissionsObj->create( array ('PER_CODE' => $sCode
-        ) );
+        return $this->permissionsObj->create( array ('PER_CODE' => $sCode) );
     }
 
     /**
@@ -1170,6 +1169,45 @@ class RBAC
                 $count ++;
             }
         }
+    }
+    /**
+     * this function permissions
+     *
+     *
+     * @access public
+     *
+     */
+    public function verifyPermissions ()
+    {
+        $message = array();
+        $listPermissions = $this->loadPermissionAdmin();
+        $criteria = new Criteria( 'rbac' );
+        $dataset = PermissionsPeer::doSelectRS( $criteria );
+        $dataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
+        $dataset->next();
+        $aRow = $dataset->getRow();
+        while (is_array( $aRow )) {
+            foreach($listPermissions as $key => $item) {
+                if ($aRow['PER_UID'] == $item['PER_UID'] ) {
+                    unset($listPermissions[$key]);
+                    break;
+                }
+            }
+            $dataset->next();
+            $aRow = $dataset->getRow();
+        }
+        foreach($listPermissions as $key => $item) {
+            $data['PER_UID']         = $item['PER_UID'];
+            $data['PER_CODE']        = $item['PER_CODE'];
+            $data['PER_CREATE_DATE'] = date('Y-m-d H:i:s');
+            $data['PER_UPDATE_DATE'] = $data['PER_CREATE_DATE'];
+            $data['PER_STATUS']      = 1;
+            $permission              = new Permissions();
+            $permission->fromArray($data, BasePeer::TYPE_FIELDNAME);
+            $permission->save();
+            $message[] = 'Add permission missing ' . $item['PER_CODE'];
+        }
+        return $message;
     }
 }
 

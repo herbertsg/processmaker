@@ -143,6 +143,7 @@ if (aTaskFlag[1])
         if (oTaskData.TAS_ASSIGN_TYPE == "SELF_SERVICE") {
             getField("TAS_ASSIGN_TYPE][SELF_SERVICE").checked = true;
         } else {
+            getField("TAS_GROUP_VARIABLE").value = oTaskData.TAS_GROUP_VARIABLE;
             if (getField("TAS_ASSIGN_TYPE][SELF_SERVICE_EVALUATE")) {
                 getField("TAS_ASSIGN_TYPE][SELF_SERVICE_EVALUATE").checked = true;
             }
@@ -289,7 +290,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 var insertFormVar = function(sFieldName, sValue) {
 	oAux = document.getElementById(sFieldName);
 	if (oAux.setSelectionRange) {
-	  //oAux.value     = '';
+	  oAux.value     = '';
 		var rangeStart = oAux.selectionStart;
     var rangeEnd   = oAux.selectionEnd;
     var tempStr1   = oAux.value.substring(0,rangeStart);
@@ -299,6 +300,7 @@ var insertFormVar = function(sFieldName, sValue) {
 	else {
 	  if (document.selection) {
 	    oAux.focus();
+      oAux.value   = '';
       document.selection.createRange().text = sValue;
 	  }
 	}

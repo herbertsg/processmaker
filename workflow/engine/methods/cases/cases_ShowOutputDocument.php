@@ -1,4 +1,17 @@
 <?php
+if (!isset($_SESSION['USER_LOGGED'])) {
+    if ((isset( $_POST['request'] )) && ($_POST['request'] == true)) {
+        $response = new stdclass();
+        $response->message = G::LoadTranslation('ID_LOGIN_AGAIN1');
+        $response->lostSession = true;
+        print G::json_encode( $response );
+        die();
+    } else {
+        G::SendMessageText( G::LoadTranslation('ID_LOGIN_TO_SEE_OUTPUTDOCS'), "WARNING" );
+        G::header("location: " . "/");
+        die();
+    }
+}
 /**
  * cases_ShowOutputDocument.php
  *
@@ -30,7 +43,7 @@
 require_once ("classes/model/AppDocumentPeer.php");
 
 $oAppDocument = new AppDocument();
-$oAppDocument->Fields = $oAppDocument->load( $_GET['a'], (isset( $_GET['v'] )) ? $_GET['v'] : NULL );
+$oAppDocument->Fields = $oAppDocument->load( $_GET['a'], (isset( $_GET['v'] )) ? $_GET['v'] : null );
 
 $sAppDocUid = $oAppDocument->getAppDocUid();
 $info = pathinfo( $oAppDocument->getAppDocFilename() );
@@ -48,9 +61,10 @@ $ver = (isset( $_GET['v'] ) && $_GET['v'] != '') ? '_' . $_GET['v'] : '';
 if (! $ver) //This code is in the case the outputdocument won't be versioned
     $ver = '_1';
 
-$realPath = PATH_DOCUMENT . $oAppDocument->Fields['APP_UID'] . '/outdocs/' . $sAppDocUid . $ver . '.' . $ext;
-$realPath1 = PATH_DOCUMENT . $oAppDocument->Fields['APP_UID'] . '/outdocs/' . $info['basename'] . $ver . '.' . $ext;
-$realPath2 = PATH_DOCUMENT . $oAppDocument->Fields['APP_UID'] . '/outdocs/' . $info['basename'] . '.' . $ext;
+$realPath = PATH_DOCUMENT . G::getPathFromUID($oAppDocument->Fields['APP_UID']) . '/outdocs/' . $sAppDocUid . $ver . '.' . $ext;
+$realPath1 = PATH_DOCUMENT . G::getPathFromUID($oAppDocument->Fields['APP_UID']) . '/outdocs/' . $info['basename'] . $ver . '.' . $ext;
+$realPath2 = PATH_DOCUMENT . G::getPathFromUID($oAppDocument->Fields['APP_UID']) . '/outdocs/' . $info['basename'] . '.' . $ext;
+
 $sw_file_exists = false;
 if (file_exists( $realPath )) {
     $sw_file_exists = true;
@@ -61,12 +75,20 @@ if (file_exists( $realPath )) {
     $sw_file_exists = true;
     $realPath = $realPath2;
 }
+
 if (! $sw_file_exists) {
-    $error_message = "'" . $info['basename'] . $ver . '.' . $ext . "' " . G::LoadTranslation( 'ID_ERROR_STREAMING_FILE' );
+
+    $oPluginRegistry = & PMPluginRegistry::getSingleton();
+    if ($oPluginRegistry->existsTrigger( PM_UPLOAD_DOCUMENT )) {
+        $error_message = G::LoadTranslation( 'ID_ERROR_FILE_NOT_EXIST', SYS_LANG, array('filename' => $info['basename'] . $ver . '.' . $ext) ) . ' ' . G::LoadTranslation('ID_CONTACT_ADMIN');
+    } else {
+        $error_message = "'" . $info['basename'] . $ver . '.' . $ext . "' " . G::LoadTranslation( 'ID_ERROR_STREAMING_FILE' );
+    }
+
     if ((isset( $_POST['request'] )) && ($_POST['request'] == true)) {
-        $res['success'] = 'failure';
-        $res['message'] = $error_message;
-        print G::json_encode( $res );
+            $res['success'] = 'failure';
+            $res['message'] = $error_message;
+            print G::json_encode( $res );
     } else {
         G::SendMessageText( $error_message, "ERROR" );
         $backUrlObj = explode( "sys" . SYS_SYS, $_SERVER['HTTP_REFERER'] );

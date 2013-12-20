@@ -3,7 +3,7 @@
  * cases_SaveData.php
  *
  * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
+ * Copyright (C) 2004 - 2008 Colosa Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,12 +22,23 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  */
 //validate the data post
-
-
+if (!isset($_SESSION['USER_LOGGED'])) {
+    G::SendTemporalMessage( 'ID_LOGIN_AGAIN', 'warning', 'labels' );
+    die( '<script type="text/javascript">
+                    try
+                      {
+                        prnt = parent.parent;
+                        top.location = top.location;
+                      }
+                    catch (err)
+                      {
+                        parent.location = parent.location;
+                      }
+                    </script>');
+}
 try {
     if ($_GET['APP_UID'] !== $_SESSION['APPLICATION']) {
-        throw new Exception( G::LoadTranslation( 'ID_INVALID_APPLICATION_ID_MSG', array ('<a href=\'' . $_SERVER['HTTP_REFERER'] . '\'>{1}</a>',G::LoadTranslation( 'ID_REOPEN' )
-        ) ) );
+        throw new Exception( G::LoadTranslation( 'ID_INVALID_APPLICATION_ID_MSG', array ('<a href=\'' . $_SERVER['HTTP_REFERER'] . '\'>{1}</a>',G::LoadTranslation( 'ID_REOPEN' ) ) ) );
     }
 
     $oForm = new Form( $_SESSION["PROCESS"] . "/" . $_GET["UID"], PATH_DYNAFORM );
@@ -45,7 +56,7 @@ try {
     $Fields["APP_DATA"] = array_merge( $Fields["APP_DATA"], $_POST["form"] );
 
     #here we must verify if is a debug session
-    $trigger_debug_session = $_SESSION['TRIGGER_DEBUG']['ISSET']; #here we must verify if is a debugg session
+    $trigger_debug_session = isset($_SESSION['TRIGGER_DEBUG']['ISSET']) ? $_SESSION['TRIGGER_DEBUG']['ISSET'] : null; #here we must verify if is a debugg session
 
     #trigger debug routines...
 
@@ -140,13 +151,13 @@ try {
     //save data
     $aData = array ();
     $aData['APP_NUMBER'] = $Fields['APP_NUMBER'];
-    $aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
+    //$aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
     $aData['APP_DATA'] = $Fields['APP_DATA'];
     $aData['DEL_INDEX'] = $_SESSION['INDEX'];
     $aData['TAS_UID'] = $_SESSION['TASK'];
     $aData['CURRENT_DYNAFORM'] = $_GET['UID'];
     $aData['USER_UID'] = $_SESSION['USER_LOGGED'];
-    $aData['APP_STATUS'] = $Fields['APP_STATUS'];
+    //$aData['APP_STATUS'] = $Fields['APP_STATUS'];
     $aData['PRO_UID'] = $_SESSION['PROCESS'];
 
     $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
@@ -225,12 +236,11 @@ try {
 
                         //Get the Custom Folder ID (create if necessary)
                         $oFolder = new AppFolder();
+                        $documentFileStructure = $oFolder->getFolderStructure();
 
-                        $aFields = array ("APP_UID" => $_SESSION["APPLICATION"],"DEL_INDEX" => $_SESSION["INDEX"],"USR_UID" => $_SESSION["USER_LOGGED"],"DOC_UID" => $indocUid,"APP_DOC_TYPE" => "INPUT","APP_DOC_CREATE_DATE" => date( "Y-m-d H:i:s" ),"APP_DOC_COMMENT" => "","APP_DOC_TITLE" => "","APP_DOC_FILENAME" => $arrayFileName[$i],"FOLDER_UID" => $oFolder->createFromPath( $aID["INP_DOC_DESTINATION_PATH"] ),"APP_DOC_TAGS" => $oFolder->parseTags( $aID["INP_DOC_TAGS"] ),"APP_DOC_FIELDNAME" => $fieldName
-                        );
+                        $aFields = array ("APP_UID" => $_SESSION["APPLICATION"],"DEL_INDEX" => $_SESSION["INDEX"],"USR_UID" => $_SESSION["USER_LOGGED"],"DOC_UID" => $indocUid,"APP_DOC_TYPE" => "INPUT","APP_DOC_CREATE_DATE" => date( "Y-m-d H:i:s" ),"APP_DOC_COMMENT" => "","APP_DOC_TITLE" => "","APP_DOC_FILENAME" => $arrayFileName[$i],"FOLDER_UID" => $oFolder->createFromPath( $aID["INP_DOC_DESTINATION_PATH"] ),"APP_DOC_TAGS" => $oFolder->parseTags( $aID["INP_DOC_TAGS"] ),"APP_DOC_FIELDNAME" => $fieldName);
                     } else {
-                        $aFields = array ("APP_UID" => $_SESSION["APPLICATION"],"DEL_INDEX" => $_SESSION["INDEX"],"USR_UID" => $_SESSION["USER_LOGGED"],"DOC_UID" => - 1,"APP_DOC_TYPE" => "ATTACHED","APP_DOC_CREATE_DATE" => date( "Y-m-d H:i:s" ),"APP_DOC_COMMENT" => "","APP_DOC_TITLE" => "","APP_DOC_FILENAME" => $arrayFileName[$i],"APP_DOC_FIELDNAME" => $fieldName
-                        );
+                        $aFields = array ("APP_UID" => $_SESSION["APPLICATION"],"DEL_INDEX" => $_SESSION["INDEX"],"USR_UID" => $_SESSION["USER_LOGGED"],"DOC_UID" => - 1,"APP_DOC_TYPE" => "ATTACHED","APP_DOC_CREATE_DATE" => date( "Y-m-d H:i:s" ),"APP_DOC_COMMENT" => "","APP_DOC_TITLE" => "","APP_DOC_FILENAME" => $arrayFileName[$i],"APP_DOC_FIELDNAME" => $fieldName);
                     }
 
                     $oAppDocument = new AppDocument();
@@ -240,9 +250,9 @@ try {
                     $sAppDocUid = $oAppDocument->getAppDocUid();
                     $aInfo = pathinfo( $oAppDocument->getAppDocFilename() );
                     $sExtension = ((isset( $aInfo["extension"] )) ? $aInfo["extension"] : "");
-                    $sPathName = PATH_DOCUMENT . $_SESSION["APPLICATION"] . PATH_SEP;
+                    $pathUID = G::getPathFromUID($_SESSION["APPLICATION"]);
+                    $sPathName = PATH_DOCUMENT . $pathUID . PATH_SEP;// . $documentFileStructure;
                     $sFileName = $sAppDocUid . "_" . $iDocVersion . "." . $sExtension;
-
                     G::uploadFile( $arrayFileTmpName[$i], $sPathName, $sFileName );
 
                     //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
@@ -301,6 +311,7 @@ try {
         $_POST['next_step'] = $aNextStep;
         $_POST['previous_step'] = $oCase->getPreviousStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
         $_POST['req_val'] = $missing_req_values;
+        global $G_PUBLISH;
         $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent( 'view', 'cases/missRequiredFields' );
         G::RenderPage( 'publish', 'blank' );

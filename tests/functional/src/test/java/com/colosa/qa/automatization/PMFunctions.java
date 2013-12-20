@@ -54,21 +54,21 @@ com.colosa.qa.automatization.tests.PMFunctions.TestSetCaseTrackerCode.class //er
         com.colosa.qa.automatization.tests.PMFunctions.TestFunctionPMFDerivateCase.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestFunctionUserInfo.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFAddCaseNote.class,
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFCasesList.class, //revisar
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class,//, //fue reestructurado completamente
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetCaseNotes.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFCasesList.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFDeleteCase.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetCaseNotes.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetEmailConfiguration.class,
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetLabel.class, revisar list seleccion multiple
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetNextAssignedUser.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetLabel.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFGetNextAssignedUser.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFInformationUser.class,
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFPauseCase.class,
-        //com.colosa.qa.automatization.tests.PMFunctions.TestPMFProcessList.class,
-        /*com.colosa.qa.automatization.tests.PMFunctions.TestPMFRedirectToStep.class,
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFSendVariables.class, //revisar
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFPauseCase.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFProcessList.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFRedirectToStep.class,
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFSendVariables.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFTaskCase.class,
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFUnpauseCase.class, //revisar, quitar busqueda en paused
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFUnpauseCase.class,
         com.colosa.qa.automatization.tests.PMFunctions.TestPMFUpdateUser.class,
-        com.colosa.qa.automatization.tests.PMFunctions.TestPMFUserList.class*/
+        com.colosa.qa.automatization.tests.PMFunctions.TestPMFUserList.class
 
                          })
 public class PMFunctions {

@@ -20,6 +20,8 @@ var NOTIFIER_FLAG = false;
 var result;
 var _action = '';
 var _CASE_TITLE;
+//@var treeMenuItemsLoaded -> added to flag the "treeMenuItems" tree, to ensure that its onload event is executed just once
+var treeMenuItemsLoaded = false;
 
 Ext.onReady(function(){
   new Ext.KeyMap(document, {
@@ -33,7 +35,8 @@ Ext.onReady(function(){
         updateCasesTree();
       }
       else
-        Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        //Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+       	Ext.Msg.alert(_('ID_REFRESH_LABEL'),_('ID_REFRESH_MESSAGE'));
     }
   });
 
@@ -131,7 +134,7 @@ Ext.onReady(function(){
 
                   },
                   render: function(){
-                    this.loadMask = new Ext.LoadMask(this.body, { msg:'Loading...' });
+                    this.loadMask = new Ext.LoadMask(this.body, { msg:_('ID_LOADING_GRID') });
                   }
                 }
               });
@@ -227,25 +230,30 @@ Ext.onReady(function(){
   });
 
   var loader = treeMenuItems.getLoader();
-  loader.on("load", function(){
-    document.getElementById('casesSubFrame').src = defaultOption;
+  loader.on("load", function() {
+    // it was added since the feature to reload a specific node of tree is now working
+    if (! treeMenuItemsLoaded) { // this section of code should be executed once
+      document.getElementById('casesSubFrame').src = defaultOption;
 
-    // check if a case was open directly
-    if (defaultOption.indexOf('open') > -1) {
-      //if it is, then update cases tree
-      updateCasesTree();
-    }
+      // check if a case was open directly
+      if (defaultOption.indexOf('open') > -1) {
+        //if it is, then update cases trees
+        updateCasesTree();
+      }
 
-    if( _nodeId != '' ){
-      treePanel1 = Ext.getCmp('tree-panel')
-      if(treePanel1)
-        node = treePanel1.getNodeById(_nodeId);
-      if(node) {
-        node.select();
-        if (_nodeId == 'CASES_START_CASE') {
-          updateCasesTree();
+      if( _nodeId != '' ){
+        treePanel1 = Ext.getCmp('tree-panel')
+        if(treePanel1)
+          node = treePanel1.getNodeById(_nodeId);
+        if(node) {
+          node.select();
+          if (_nodeId == 'CASES_START_CASE') {
+            updateCasesTree();
+          }
         }
       }
+
+      treeMenuItemsLoaded = true;
     }
   });
 
@@ -398,7 +406,7 @@ Ext.onReady(function(){
       items: [],
       listeners:{
         show:function() {
-          this.loadMask = new Ext.LoadMask(this.body, { msg:'Loading. Please wait...' });
+          this.loadMask = new Ext.LoadMask(this.body, { msg:_('ID_LOADING') });
         }
       }
     });
@@ -532,10 +540,25 @@ Ext.onReady(function(){
   setTimeout("timer()", parseInt(FORMATS.casesListRefreshTime) * 1000);
 });
 
-function updateCasesView() {
+function updateCasesView(viewList) {
+    var refreshList = viewList || false;
   try{
     if (document.getElementById('casesSubFrame').contentWindow.storeCases) {
-      document.getElementById('casesSubFrame').contentWindow.storeCases.reload();
+        if (refreshList) {
+              document.getElementById('casesSubFrame').contentWindow.storeCases.reload();
+        } else {
+            switch (document.getElementById('casesSubFrame').contentWindow.storeCases.baseParams.action) {
+                case "todo":
+                case "unassigned":
+                case "paused":
+                case "to_revise":
+                case "to_reassign":
+                    document.getElementById('casesSubFrame').contentWindow.storeCases.reload();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
   }
   catch(e){};
@@ -697,13 +720,14 @@ Ext.app.menuLoader = Ext.extend(Ext.ux.tree.XmlTreeLoader, {
         attr.expanded = true;
       //}
     }else if(attr.title){
-      attr.text = attr.title;
+      attr.text = Ext.util.Format.htmlDecode(attr.title);
+      
       if( attr.cases_count )
         attr.text += ' (<label id="NOTIFIER_'+attr.id+'">' + attr.cases_count + '</label>)';
 
       attr.iconCls = 'ICON_' + attr.id;
       attr.loaded = true;
-      attr.expanded = false;
+      attr.expanded = attr.expanded ? true : false;
 
     } else if(attr.PRO_UID){
       attr.loaded = true;

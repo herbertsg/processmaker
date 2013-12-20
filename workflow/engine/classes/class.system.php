@@ -940,7 +940,7 @@ class System
 
         // filtering no public skins (uxs, simplified)
         foreach ($baseSkins as $i => $skinName) {
-            if (strpos( $skinName, 'simplified' ) !== false || strpos( $skinName, 'uxs' ) !== false) {
+            if (strpos( $skinName, 'simplified' ) !== false || strpos( $skinName, 'uxs' ) !== false || strpos( $skinName, 'uxmodern' ) !== false) {
                 unset( $baseSkins[$i] );
             }
         }
@@ -956,6 +956,11 @@ class System
                 $folderId = 'classic';
             }
 
+            $partnerFlag = (defined('PARTNER_FLAG')) ? PARTNER_FLAG : false;
+            if ($partnerFlag && ($folderId == 'classic')){
+                continue;
+            }
+
             $xmlConfiguration = file_get_contents( $configInformation );
             $xmlConfigurationObj = G::xmlParser( $xmlConfiguration );
 
@@ -965,7 +970,7 @@ class System
                 $res['SKIN_FOLDER_ID'] = strtolower( $folderId );
 
                 foreach ($skinInformationArray as $keyInfo => $infoValue) {
-                    $res['SKIN_' . strtoupper( $keyInfo )] = $infoValue['__VALUE__'];
+                    $res['SKIN_' . strtoupper( $keyInfo )] = (isset($infoValue['__VALUE__'])) ? $infoValue['__VALUE__'] : '';
                 }
                 $res['SKIN_CREATEDATE'] = (isset($res['SKIN_CREATEDATE'])) ? $res['SKIN_CREATEDATE']: '';
                 $res['SKIN_MODIFIEDDATE'] = (isset($res['SKIN_MODIFIEDDATE'])) ? $res['SKIN_MODIFIEDDATE']: '';
@@ -1069,8 +1074,7 @@ class System
         }
 
         // default configuration
-        $config = array ('debug' => 0,'debug_sql' => 0,'debug_time' => 0,'debug_calendar' => 0,'wsdl_cache' => 1,'memory_limit' => '128M','time_zone' => 'America/New_York','memcached' => 0,'memcached_server' => '','default_skin' => 'classic','default_lang' => 'en','proxy_host' => '','proxy_port' => '','proxy_user' => '','proxy_pass' => ''
-        );
+        $config = array ('debug' => 0,'debug_sql' => 0,'debug_time' => 0,'debug_calendar' => 0,'wsdl_cache' => 1,'memory_limit' => "256M", 'time_zone' => 'America/New_York','memcached' => 0,'memcached_server' => '','default_skin' => 'neoclassic','default_lang' => 'en','proxy_host' => '','proxy_port' => '','proxy_user' => '','proxy_pass' => '');
 
         // read the global env.ini configuration file
         if ($readGlobalIniFile && ($globalConf = @parse_ini_file( $globalIniFile )) !== false) {
@@ -1091,10 +1095,10 @@ class System
 
         $md5 = array ();
         if ($readGlobalIniFile) {
-            $md5[] = md5_file( $globalIniFile );
+            $md5[] = @md5_file( $globalIniFile );
         }
         if ($readWsIniFile) {
-            $md5[] = md5_file( $wsIniFile );
+            $md5[] = @md5_file( $wsIniFile );
         }
         $hash = implode( '-', $md5 );
 

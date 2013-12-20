@@ -46,7 +46,7 @@ function array_sort ($array, $on, $order = SORT_ASC, $query = '')
             if ($query == '') {
                 $new_array[] = $array[$k];
             } else {
-                if (preg_match( "/" . $query . "/i", $array[$k]['userFullname'] )) {
+                if (preg_match( "/" . preg_quote($query, '/') . "/i", $array[$k]['userFullname'] )) {
                     $new_array[] = $array[$k];
                 }
             }
@@ -58,7 +58,7 @@ function array_sort ($array, $on, $order = SORT_ASC, $query = '')
 
 
 $appUid = isset( $_POST['application'] ) ? $_POST['application'] : '';
-//  $processUid = isset($_POST['process'])     ? $_POST['process'] : '';
+//$processUid = isset($_POST['process'])     ? $_POST['process'] : '';
 $TaskUid = isset( $_POST['task'] ) ? $_POST['task'] : '';
 $sReassignFromUser = isset( $_POST['currentUser'] ) ? $_POST['currentUser'] : '';
 
@@ -70,11 +70,15 @@ $oConf = new Configurations();
 $aUsersInvolved = Array();
 
 $ConfEnv = $oConf->getFormats();
-$rows = $oCases->getUsersToReassign($TaskUid, $sReassignFromUser);
-
-foreach($rows as $row) {
-    $sCaseUser = G::getFormatUserList( $ConfEnv['format'], $row );
-    $aUsersInvolved[] = array ('userUid' => $row['USR_UID'], 'userFullname' => $sCaseUser);
+if ($TaskUid != '') {
+    G::LoadClass( 'tasks' );
+    $task = new Task();
+    $tasks = $task->load($TaskUid);
+    $rows = $oCases->getUsersToReassign($TaskUid, $_SESSION['USER_LOGGED'], $tasks['PRO_UID']);
+    foreach ($rows as $row) {
+        $sCaseUser = G::getFormatUserList( $ConfEnv['format'], $row );
+        $aUsersInvolved[] = array ('userUid' => $row['USR_UID'], 'userFullname' => $sCaseUser);
+    }
 }
 
 //            $oTmp = new stdClass();

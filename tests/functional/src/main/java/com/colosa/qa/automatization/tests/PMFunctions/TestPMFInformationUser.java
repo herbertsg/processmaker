@@ -46,7 +46,7 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
         Assert.assertEquals("Invalid Fax", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "fax"),pages.DynaformExecution().getFieldValue("fax") );
         Assert.assertEquals("Invalid Cellular", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "cellular"),pages.DynaformExecution().getFieldValue("cellular") );
         Assert.assertEquals("Invalid birthday", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "birthday"),pages.DynaformExecution().getFieldValue("birthday") );
-        pages.Main().logout();
+        //pages.Main().logout();
 
 	}
 

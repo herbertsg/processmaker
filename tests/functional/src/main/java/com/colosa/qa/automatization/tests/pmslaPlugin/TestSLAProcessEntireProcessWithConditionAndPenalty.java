@@ -27,7 +27,7 @@ public class TestSLAProcessEntireProcessWithConditionAndPenalty extends com.colo
 		pages.DynaformExecution().setFieldValue("guadar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 

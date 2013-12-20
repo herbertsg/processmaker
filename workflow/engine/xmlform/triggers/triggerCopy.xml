@@ -26,7 +26,7 @@
     </en>
 </PROCESS_UID>
 
-<TRIGGER_UID type="dropdown" dependentfields="TRI_DESCRIPTION,TRI_WEBBOT">
+<TRIGGER_UID type="dropdown" dependentfields="TRI_WEBBOT,TRI_DESCRIPTION,TRIGGER_UID_AUX" >
     <![CDATA[
     SELECT TGR.TRI_UID, CON.CON_VALUE
     FROM   TRIGGERS AS TGR, CONTENT AS CON
@@ -41,11 +41,20 @@
     </en>
 </TRIGGER_UID>
 
-<TRI_TITLE type="text" size="70" maxlength="100" required="1">
+<TRIGGER_UID_AUX type="text" maxlength="64" validate="Any" size="15" mode="edit">
+    <![CDATA[
+    SELECT TGR.TRI_UID
+    FROM   TRIGGERS AS TGR
+    WHERE  TGR.TRI_UID = '@#TRIGGER_UID'
+    ]]>
+    <en></en>
+</TRIGGER_UID_AUX>
+
+<TRI_TITLE type="text" size="70" maxlength="100" required="1" >
     <en>Title of the new trigger</en>
 </TRI_TITLE>
 
-<TRI_DESCRIPTION type="textarea" rows="3" cols="67">
+<TRI_DESCRIPTION type="textarea" rows="3" cols="67" >
     <![CDATA[
     SELECT CON.CON_VALUE
     FROM   CONTENT AS CON
@@ -65,7 +74,7 @@
     <en>Script</en>
 </TRI_WEBBOT>
 
-<BTNCOPYSAVE type="button" onclick="triggerSave1(this.form);">
+<BTNCOPYSAVE type="button" onclick="document.getElementById('form[TRI_WEBBOT]').value = triggerEditor.getValue(); triggerSave1(this.form);">
     <en>Copy/Import and Save</en>
 </BTNCOPYSAVE>
 
@@ -75,13 +84,46 @@
 
 <JS type="javascript">
     <![CDATA[
+    /*var triggerEditor = CodeMirror.fromTextArea('form[TRI_WEBBOT]', {
+    height: "200px",
+    width: "90%",
+    parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js",
+    "../contrib/php/js/tokenizephp.js", "../contrib/php/js/parsephp.js",
+    "../contrib/php/js/parsephphtmlmixed.js"],
+    stylesheet: ["css/xmlcolors.css", "css/jscolors.css", "css/csscolors.css", "css/phpcolors.css" ],
+    path: "js/", lineNumbers: true, continuousScanning: 500, readOnly:true, parserConfig: { phpOnly:true} });
+    */
+    var triggerEditor = CodeMirror.fromTextArea(document.getElementById("form[TRI_WEBBOT]"), {
+	    lineNumbers: true,
+	    matchBrackets: true,
+	    mode: "application/x-httpd-php",
+	    PMEnabled: true,
+	    indentUnit: 2,
+	    indentWithTabs: false,
+	    readOnly: true
+	});
+	triggerEditor.setSize(400,200);
+
     function cancel()
     {
         currentPopupWindow.remove();
     }
 
+    function triggerCheckWebbotTimer()
+    {
+        var triUid = getField("TRIGGER_UID_AUX").value;
+
+        if (triUid != triUidPrev) {
+            triggerEditor.setValue(document.getElementById("form[TRI_WEBBOT]").value);
+            triUidPrev = triUid;
+        } else {
+            setTimeout("triggerCheckWebbotTimer()", 100);
+        }
+    }
+
     var cboTriggerUid = getField("TRIGGER_UID");
     var txtTgrTitle = getField("TRI_TITLE");
+    var triUidPrev = "";
 
     leimnud.event.add(
         getField("PROCESS_UID"),
@@ -89,6 +131,8 @@
         function ()
         {
             txtTgrTitle.value = "";
+            triggerEditor.setValue("");
+            triUidPrev= "";
         }
     );
 
@@ -97,10 +141,13 @@
         "change",
         function ()
         {
-            txtTgrTitle.value = "";
-
             if (cboTriggerUid.value != "") {
                 txtTgrTitle.value = cboTriggerUid.options[cboTriggerUid.selectedIndex].text;
+                setTimeout("triggerCheckWebbotTimer()", 100);
+            } else {
+                txtTgrTitle.value = "";
+                triggerEditor.setValue("");
+                triUidPrev= "";
             }
         }
     );

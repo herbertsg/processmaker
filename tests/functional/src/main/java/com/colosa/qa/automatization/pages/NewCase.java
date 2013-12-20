@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.common.WaitTool;
 import com.colosa.qa.automatization.common.extJs.ExtJSTree;
 import com.colosa.qa.automatization.common.extJs.ExtJSTreeNode;
 import org.openqa.selenium.By;
@@ -83,31 +84,45 @@ public class NewCase extends Page {
         processFilterElement.sendKeys(Keys.RETURN);
 
         //search process in reduced list:
-        WebElement treeWebElement = browser.findElementById("startCaseTreePanel").findElement(By.className("x-panel-body"));
+        WebElement treeWebElement = browser.findElementById("startCaseTreePanel"); //.findElement(By.className("x-panel-body"))
+
         ExtJSTree processListsTree = new ExtJSTree( treeWebElement, browser.getInstanceDriver());
+
+        //ExtJSTreeNode treeNode= processListsTree.getTreeNodeByName(processName);
+
         //get list of root nodes
         List<ExtJSTreeNode> listRootNodes = processListsTree.getListRootNodes();
 
         //build tree path
         ExtJSTreeNode node = null;
-        for(ExtJSTreeNode treeNode:listRootNodes){
-            Logger.addLog("search process path: " + treeNode.getNodeText() + "/" + processName + "...");
-            node = processListsTree.gotoNode(treeNode.getNodeText() + "/" + processName);
+        for(ExtJSTreeNode treeNodeRoot:listRootNodes){
+            Logger.addLog("search process path: " + treeNodeRoot.getNodeText() + "/" + processName + "...");
+            node = processListsTree.getTreeNode(treeNodeRoot.getNodeText() + "/" + processName);
             if(node != null){
                 break;
             }
         }
 
         Logger.addLog("starting case " + processName + "...");
+        //treeNode.doubleClick();
         node.doubleClick();
 
 
         //all the frame is updated
+
         //wait() for WebElement present
         browser.waitForElement(By.xpath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']"), 5);
 
         value = Integer.parseInt(browser.findElementByXPath("//div[@id='caseTabPanel']/div[1]/div[1]/ul/li[@id='caseTabPanel__casesTab']").getText().trim().substring(8));
         Logger.addLog("New case created #:" + value);
+
+        //browser.sleep(5000);
+
+        //wait for case content to be display iframe load
+        //WaitTool.waitForElementPresent(browser.getInstanceDriver(), By.id("openCaseFrame"), 5);
+
+        //wait for toolbar to complete content
+
 
         return value;
     }

@@ -16,7 +16,7 @@ new Ext.KeyMap(document, {
       e.stopEvent();
       document.location = document.location;
     }else{
-      Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+      Ext.Msg.alert( _('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
     }
   }
 });
@@ -205,7 +205,7 @@ Ext.onReady(function(){
     height      : 100,
     autoWidth     : true,
     stateful     : true,
-    stateId     : 'grid',
+    stateId     : 'gridAvailableUG',
     enableColumnResize : true,
     enableHdMenu  : true,
     frame      : false,
@@ -232,7 +232,7 @@ Ext.onReady(function(){
     height      : 100,
     autoWidth     : true,
     stateful     : true,
-    stateId     : 'grid',
+    stateId     : 'gridUsersGAssign',
     enableColumnResize : true,
     enableHdMenu  : true,
     frame      : false,
@@ -586,6 +586,7 @@ RefreshGroups = function(){
 SaveChangesAuthForm = function(){
   viewport.getEl().mask(_('ID_PROCESSING'));
   authForm.getForm().submit({
+    waitTitle : "&nbsp;",
     success: function(f,a){
       LoadAuthForm();
       viewport.getEl().unmask();

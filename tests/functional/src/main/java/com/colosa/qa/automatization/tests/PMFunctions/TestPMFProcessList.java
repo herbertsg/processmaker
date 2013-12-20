@@ -29,10 +29,10 @@ public class TestPMFProcessList extends com.colosa.qa.automatization.tests.commo
 		for(int i=1; i<numProcessList; i++){
 			Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridProcess][" + i + "][guid]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[processQuery][" + i + "][PRO_UID]"));
         }
-		pages.DynaformExecution().setFieldValue("send", "");
-	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
-		pages.Main().logout();
+		//pages.DynaformExecution().setFieldValue("send", "");
+	    //pages.AssignTask().pressContinueButton();
+		//pages.DynaformExecution().outDynaform();
+		//pages.Main().logout();
 	}
 
     @After

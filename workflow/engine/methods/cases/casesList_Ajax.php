@@ -1,4 +1,11 @@
 <?php
+if (!isset($_SESSION['USER_LOGGED'])) {
+    $response = new stdclass();
+    $response->message = G::LoadTranslation('ID_LOGIN_AGAIN');
+    $response->lostSession = true;
+    print G::json_encode( $response );
+    die();
+}
 /**
  * casesList_Ajax.php
  *
@@ -34,6 +41,51 @@ require_once ("classes/model/AppDelay.php");*/
 G::LoadClass( 'case' );
 
 $actionAjax = isset( $_REQUEST['actionAjax'] ) ? $_REQUEST['actionAjax'] : null;
+
+if ($actionAjax == "userValues") {
+    //global $oAppCache;
+    $oAppCache = new AppCacheView();
+    $action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
+    $users = array();
+    $users[] = array ("USR_UID" => "", "USR_FULLNAME" => G::LoadTranslation( "ID_ALL_USERS" ));
+    $users[] = array ("USR_UID" => "CURRENT_USER", "USR_FULLNAME" => G::LoadTranslation( "ID_CURRENT_USER" ));
+
+    //now get users, just for the Search action
+    switch ($action) {
+        case 'search_simple':
+        case 'search':
+            G::LoadClass("configuration");
+
+            $conf = new Configurations();
+
+            $confEnvSetting = $conf->getFormats();
+
+            $cUsers = new Criteria( 'workflow' );
+            $cUsers->clearSelectColumns();
+            $cUsers->addSelectColumn(UsersPeer::USR_UID);
+            $cUsers->addSelectColumn(UsersPeer::USR_USERNAME);
+            $cUsers->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+            $cUsers->addSelectColumn(UsersPeer::USR_LASTNAME);
+            $cUsers->add( UsersPeer::USR_STATUS, 'CLOSED', Criteria::NOT_EQUAL );
+            $cUsers->addAscendingOrderByColumn(UsersPeer::TABLE_NAME . "." . $conf->userNameFormatGetFirstFieldByUsersTable());
+            $oDataset = UsersPeer::doSelectRS( $cUsers );
+            $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
+
+            while ($oDataset->next()) {
+                $row = $oDataset->getRow();
+
+                $usrFullName = $conf->usersNameFormatBySetParameters($confEnvSetting["format"], $row["USR_USERNAME"], $row["USR_FIRSTNAME"], $row["USR_LASTNAME"]);
+
+                $users[] = array("USR_UID" => $row["USR_UID"], "USR_FULLNAME" => $usrFullName);
+            }
+            break;
+        default:
+            return $users;
+            break;
+    }
+    //return $users;
+    return print G::json_encode( $users );
+}
 
 if ($actionAjax == "processListExtJs") {
     $action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
@@ -78,6 +130,8 @@ if ($actionAjax == "processListExtJs") {
             $conds[] = array (ContentPeer::CON_LANG,$del . $lang . $del);
             $cProcess->addJoinMC( $conds, Criteria::LEFT_JOIN );
             $cProcess->add( ProcessPeer::PRO_STATUS, 'ACTIVE' );
+            $cProcess->addAscendingOrderByColumn(ContentPeer::CON_VALUE);
+
             $oDataset = ProcessPeer::doSelectRS( $cProcess );
             $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $oDataset->next();
@@ -100,11 +154,9 @@ if ($actionAjax == "processListExtJs") {
             break;
         case 'to_reassign':
             $cProcess = $oAppCache->getToReassignListCriteria($userUid);
-            $cProcess->addAscendingOrderByColumn( AppCacheViewPeer::APP_PRO_TITLE );
             break;
         case 'gral':
             $cProcess = $oAppCache->getGeneralListCriteria();
-            $cProcess->addAscendingOrderByColumn( AppCacheViewPeer::APP_PRO_TITLE );
             break;
         case 'todo':
         default:
@@ -123,6 +175,9 @@ if ($actionAjax == "processListExtJs") {
         $cProcess->addJoin( AppCacheViewPeer::PRO_UID, 'CP.PRO_UID', Criteria::LEFT_JOIN );
         $cProcess->addAsColumn( 'CATEGORY_UID', 'CP.PRO_CATEGORY' );
     }
+
+    $cProcess->addAscendingOrderByColumn(AppCacheViewPeer::APP_PRO_TITLE);
+
     $oDataset = AppCacheViewPeer::doSelectRS( $cProcess );
     $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
     $oDataset->next();
@@ -138,7 +193,10 @@ if ($actionAjax == "processListExtJs") {
 if ($actionAjax == "getUsersToReassign") {
     $_SESSION['TASK'] = $_REQUEST['TAS_UID'];
     $case = new Cases();
-    $result->data = $case->getUsersToReassign( $_SESSION['TASK'], $_SESSION['USER_LOGGED'] );
+    G::LoadClass( 'tasks' );
+    $task = new Task();
+    $tasks = $task->load($_SESSION['TASK']);
+    $result->data = $case->getUsersToReassign( $_SESSION['TASK'], $_SESSION['USER_LOGGED'], $tasks['PRO_UID'] );
     print G::json_encode( $result );
 }
 if ($actionAjax == 'reassignCase') {

@@ -66,11 +66,11 @@ Ext.onReady(function() {
           });
         }
         else {
-          PMExt.notify('Notice', _('ID_YOU_ARE_NOT_CAN_SELECT_PHOTO'));
+          PMExt.notify( _('ID_NOTICE'), _('ID_YOU_ARE_NOT_CAN_SELECT_PHOTO'));
         } 
       }
       else {
-        PMExt.notify('Notice', _('ID_SELECT_AN_IMAGE'));
+        PMExt.notify( _('ID_NOTICE'), _('ID_SELECT_AN_IMAGE'));
       }
     }
   });
@@ -117,10 +117,10 @@ Ext.onReady(function() {
                                  store.load();
                                  oResponse = Ext.decode( response.responseText );
                                  if (oResponse.success == true) {
-                                   PMExt.notify('Notice', _('ID_SELECTED_IMAGE_DELETED'));
+                                   PMExt.notify( _('ID_NOTICE'), _('ID_SELECTED_IMAGE_DELETED'));
                                  } 
                                  else {
-                                   PMExt.notify('Notice', _('ID_SELECTED_IMAGE_IS_LOGO'));
+                                   PMExt.notify( _('ID_NOTICE'), _('ID_SELECTED_IMAGE_IS_LOGO'));
                                  }
                                }
                             });
@@ -133,11 +133,11 @@ Ext.onReady(function() {
           }
         }
         else {
-          PMExt.notify('Notice', _('ID_YOU_ARE_NOT_CAN_SELECT_PHOTO'));
+          PMExt.notify( _('ID_NOTICE'), _('ID_YOU_ARE_NOT_CAN_SELECT_PHOTO'));
         } 
       }
       else {
-        PMExt.notify('Notice', _('ID_SELECT_AN_IMAGE'));
+        PMExt.notify( _('ID_NOTICE'), _('ID_SELECT_AN_IMAGE'));
       }
     }
   });
@@ -182,6 +182,7 @@ Ext.onReady(function() {
     autoHeight  : false,
     height      : 800,
     multiSelect : true,
+    autoScroll: true,
     overClass   : 'x-view-over', 
     itemSelector: 'div.thumb-wrap',
     emptyText   : _('ID_NO_IMAGES_TO_DISPLAY'),
@@ -253,6 +254,7 @@ Ext.onReady(function() {
           panelRightTop.getForm().submit({
             url     : '../adminProxy/uploadImage',
             waitMsg : _('ID_LOADING'),
+            waitTitle : "&nbsp;",
             success : function(form, o) {
               obj = Ext.util.JSON.decode(o.response.responseText);
               if (obj.failed == '0' && obj.uploaded != '0') {

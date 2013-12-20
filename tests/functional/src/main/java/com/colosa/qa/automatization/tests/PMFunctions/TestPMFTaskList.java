@@ -38,7 +38,7 @@ public class TestPMFTaskList extends com.colosa.qa.automatization.tests.common.T
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		int numTaskList = Integer.parseInt(Value.getValue(browserInstance, FieldKeyType.ID, "form[longTaskList]"));
 		for(int i=1; i<numTaskList; i++){

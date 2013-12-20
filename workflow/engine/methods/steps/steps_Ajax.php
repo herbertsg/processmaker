@@ -21,6 +21,11 @@
  * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  */
+if (!isset($_SESSION['USER_LOGGED'])) {
+    G::SendTemporalMessage('ID_LOGIN_AGAIN', 'warning', 'labels');
+    die('<script type="text/javascript">parent.location = "../login/login";</script>');
+}
+
 try {
     global $RBAC;
     switch ($RBAC->userCanAccess( 'PM_FACTORY' )) {
@@ -58,12 +63,14 @@ try {
             $oProcessMap = new ProcessMap();
             global $G_PUBLISH;
             $G_PUBLISH = new Publisher();
+
+            $oStepTrigger = new StepTrigger();
+            $oStepTrigger->orderPosition( $aData['sStep'], $_SESSION['TASK'], $aData['sType']);
+
             if ($aData['sType'] == 'BEFORE') {
-                $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'steps/triggersBefore_List', $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], $aData['sType'] ), array ('STEP' => $aData['sStep']
-                ) );
+                $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'steps/triggersBefore_List', $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], $aData['sType'] ), array ('STEP' => $aData['sStep']) );
             } else {
-                $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'steps/triggersAfter_List', $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], $aData['sType'] ), array ('STEP' => $aData['sStep']
-                ) );
+                $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'steps/triggersAfter_List',  $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], $aData['sType'] ), array ('STEP' => $aData['sStep']) );
             }
             G::RenderPage( 'publish-twocolumns', 'raw' );
             break;
@@ -111,12 +118,16 @@ try {
             }
             break;
         case 'assignTrigger':
-            $aFields = array ('STEP_UID' => $aData['STEP_UID'],'TAS_UID' => $_SESSION['TASK'],'TRI_UID' => $aData['TRI_UID'],'ST_TYPE' => $aData['ST_TYPE']
+            $aFields = array (
+                'STEP_UID' => $aData['STEP_UID'],
+                'TAS_UID' => $_SESSION['TASK'],
+                'TRI_UID' => $aData['TRI_UID'],
+                'ST_TYPE' => $aData['ST_TYPE']
             );
             $oStepTrigger = new StepTrigger();
             $oStepTrigger->create( $aFields );
             $aFields['ST_CONDITION'] = $aData['ST_CONDITION'];
-            $aFields['ST_POSITION'] = ($oStepTrigger->getNextPosition( $aData['STEP_UID'], $aData['ST_TYPE'] ) - 1);
+            $aFields['ST_POSITION'] = ($oStepTrigger->getNextPosition( $aData['STEP_UID'], $aData['ST_TYPE'], $_SESSION['TASK'] ) - 1 );
             $oStepTrigger->update( $aFields );
             break;
         case 'editTriggerCondition':
@@ -162,17 +173,33 @@ try {
             $oStepTrigger->remove( $aData['sStep'], $_SESSION['TASK'], $aData['sTrigger'], $aData['sType'] );
             break;
         case 'counterTriggers':
-            G::LoadClass( 'processMap' );
-            $oProcessMap = new ProcessMap();
-            $oCriteria1 = $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], $aData['sType'] );
-            if ($aData['sType'] == 'BEFORE') {
-                $oCriteria2 = $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], 'AFTER' );
+            G::LoadClass("processMap");
+
+            $processMap = new ProcessMap();
+
+            $criteria1 = $processMap->getStepTriggersCriteria($aData["sStep"], $_SESSION["TASK"], $aData["sType"]);
+            $cantity = StepTriggerPeer::doCount($criteria1);
+
+            if ($aData["sStep"][0] != "-") {
+                if ($aData["sType"] == "BEFORE") {
+                    $criteria2 = $processMap->getStepTriggersCriteria($aData["sStep"], $_SESSION["TASK"], "AFTER");
+                } else {
+                    $criteria2 = $processMap->getStepTriggersCriteria($aData["sStep"], $_SESSION["TASK"], "BEFORE");
+                }
+
+                $total = $cantity + StepTriggerPeer::doCount($criteria2);
             } else {
-                $oCriteria2 = $oProcessMap->getStepTriggersCriteria( $aData['sStep'], $_SESSION['TASK'], 'BEFORE' );
+                $criteria  = $processMap->getStepTriggersCriteria(-1, $_SESSION["TASK"], "BEFORE");
+                $cantity1 = StepTriggerPeer::doCount($criteria);
+                $criteria  = $processMap->getStepTriggersCriteria(-2, $_SESSION["TASK"], "BEFORE");
+                $cantity2 = StepTriggerPeer::doCount($criteria);
+                $criteria  = $processMap->getStepTriggersCriteria(-2, $_SESSION["TASK"], "AFTER");
+                $cantity3 = StepTriggerPeer::doCount($criteria);
+
+                $total = $cantity1 + $cantity2 + $cantity3;
             }
-            $iCantity = StepTriggerPeer::doCount( $oCriteria1 );
-            $iTotal = $iCantity + StepTriggerPeer::doCount( $oCriteria2 );
-            echo $iTotal . '|' . $iCantity;
+
+            echo $total . "|" . $cantity;
             break;
     }
 } catch (Exception $oException) {

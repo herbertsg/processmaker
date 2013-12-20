@@ -76,7 +76,7 @@ public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatizatio
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		pages.DynaformExecution().intoDynaform();
 		/*for(int values = 0; values<gridData2.length;values++)

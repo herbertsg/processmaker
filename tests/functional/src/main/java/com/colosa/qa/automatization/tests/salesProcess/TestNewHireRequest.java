@@ -77,7 +77,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("pablo", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[2];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[1] = new FormFieldData();
@@ -101,7 +101,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		FormFieldData[] arrayData3 = new FormFieldData[3];
 		arrayData3[0] = new FormFieldData();
@@ -133,7 +133,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("pablo", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		FormFieldData[] arrayData4 = new FormFieldData[5];
 		arrayData4[0] = new FormFieldData();
@@ -180,7 +180,7 @@ public class TestNewHireRequest extends com.colosa.qa.automatization.tests.commo
 	@Test
 	public void endPositionPublication() throws FileNotFoundException, IOException, Exception{*/
 
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		FormFieldData[] arrayData6 = new FormFieldData[3];
 		arrayData6[0] = new FormFieldData();

@@ -74,6 +74,7 @@ CLI::taskOpt("info", "Only shows information about a backup archive.", "i");
 CLI::taskOpt("multiple", "Restore from multiple compresed enumerated files.", "m");
 CLI::taskOpt("workspace", "Select which workspace to restore if multiple workspaces are present in the archive.",
              "w:", "workspace=");
+CLI::taskOpt("lang", "You must specify language on which rebuild of the case cache list builder will be done; if you don't specify this, it will use 'en' by default", "l:","lang=");
 CLI::taskRun(run_workspace_restore);
 
 CLI::taskName('cacheview-repair');
@@ -91,6 +92,7 @@ CLI::taskDescription(<<<EOT
 EOT
 );
 CLI::taskArg('workspace', true, true);
+CLI::taskOpt("lang", "You must specify language on which rebuild of the case cache list builder will be done; if you don't specify this, it will use 'en' by default", "l:","lang=");
 CLI::taskRun(run_cacheview_upgrade);
 
 CLI::taskName('database-upgrade');
@@ -158,6 +160,18 @@ EOT
 CLI::taskArg('workspace-name', true, true);
 CLI::taskRun(run_translation_upgrade);
 
+CLI::taskName('migrate-cases-folders');
+CLI::taskDescription(<<<EOT
+  Migrating cases folders of the workspaces
+
+  Specify the WORKSPACE to migrate from a existing workspace.
+EOT
+);
+//CLI::taskArg('workspace', true);
+CLI::taskOpt("workspace", "Select which workspace to migrate the cases folders, if multiple workspaces are present in the server.",
+             "w:", "workspace=");
+CLI::taskRun(runStructureDirectories);
+
   /**
    * Function run_info
    * access public
@@ -174,9 +188,10 @@ function run_info($args, $opts) {
 function run_workspace_upgrade($args, $opts) {
   $workspaces = get_workspaces_from_args($args);
   $first = true;
+  $lang = array_key_exists("lang", $opts) ? $opts['lang'] : 'en';
   foreach ($workspaces as $workspace) {
     try {
-      $workspace->upgrade($first, false, $workspace->name);
+      $workspace->upgrade($first, false, $workspace->name, $lang);
       $first = false;
     } catch (Exception $e) {
       echo "Errors upgrading workspace " . CLI::info($workspace->name) . ": " . CLI::error($e->getMessage()) . "\n";
@@ -200,10 +215,11 @@ function run_translation_upgrade($args, $opts) {
 
 function run_cacheview_upgrade($args, $opts) {
   $workspaces = get_workspaces_from_args($args);
+  $lang = array_key_exists("lang", $opts) ? $opts['lang'] : 'en';
   foreach ($workspaces as $workspace) {
     try {
       echo "Upgrading cache view for " . pakeColor::colorize($workspace->name, "INFO") . "\n";
-      $workspace->upgradeCacheView();
+      $workspace->upgradeCacheView(true, false, $lang);
     } catch (Exception $e) {
       echo "Errors upgrading translation of workspace " . CLI::info($workspace->name) . ": " . CLI::error($e->getMessage()) . "\n";
     }
@@ -380,7 +396,7 @@ function run_workspace_backup($args, $opts) {
     $filename = PATH_DATA . "backups/$filename";
   }
   CLI::logging("Backing up to $filename\n");
-  
+
   $filesize = array_key_exists("filesize", $opts) ? $opts['filesize'] : -1;
   if($filesize >= 0)
   {
@@ -414,12 +430,16 @@ function run_workspace_backup($args, $opts) {
 
 function run_workspace_restore($args, $opts) {
   $filename = $args[0];
+
+  G::verifyPath(PATH_DATA . 'upgrade', true);
+
   if (strpos($filename, "/") === false && strpos($filename, '\\') === false) {
     $filename = PATH_DATA . "backups/$filename";
     if (!file_exists($filename) && substr_compare($filename, ".tar", -4, 4, true) != 0)
       $filename .= ".tar";
   }
   $info = array_key_exists("info", $opts);
+  $lang = array_key_exists("lang", $opts) ? $opts['lang'] : 'en';
   if ($info) {
     workspaceTools::getBackupInfo($filename);
   } else {
@@ -447,9 +467,27 @@ function run_workspace_restore($args, $opts) {
             CLI::error("Please, you should use -m parameter to restore them.\n");
             return;
         }
-        workspaceTools::restore($filename, $workspace, $dstWorkspace, $overwrite);
+        workspaceTools::restore($filename, $workspace, $dstWorkspace, $overwrite, $lang);
     }
   }
 }
 
-?>
+function runStructureDirectories($command, $args) {
+    $workspaces = get_workspaces_from_args($command);
+    $count = count($workspaces);
+    $errors = false;
+    $countWorkspace = 0;
+    foreach ($workspaces as $index => $workspace) {
+        try {
+            $countWorkspace++;
+            CLI::logging("Updating workspaces ($countWorkspace/$count): " . CLI::info($workspace->name) . "\n");
+            $workspace->updateStructureDirectories($workspace->name);
+            $workspace->close();
+        } catch (Exception $e) {
+            CLI::logging("Errors upgrading workspace " . CLI::info($workspace->name) . ": " . CLI::error($e->getMessage()) . "\n");
+            $errors = true;
+        }
+    }
+}
+
+

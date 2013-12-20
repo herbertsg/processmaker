@@ -44,7 +44,7 @@ public class TestPMFNewCaseTest extends com.colosa.qa.automatization.tests.commo
         pages.Home().gotoDraft();
 
         // open the case generated
-        pages.Home().openCase(Integer.parseInt(numberCaseGenerated));
+        pages.Home().gotoInbox().openCase(Integer.parseInt(numberCaseGenerated));
 
         // switch to frame the dynaform
         //pages.DynaformExecution().intoDynaform();

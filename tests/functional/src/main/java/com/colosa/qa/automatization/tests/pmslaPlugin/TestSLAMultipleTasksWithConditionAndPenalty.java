@@ -27,19 +27,19 @@ public class TestSLAMultipleTasksWithConditionAndPenalty extends com.colosa.qa.a
 		pages.DynaformExecution().setFieldValue("save", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("save", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.OutputDocProcess().downloadDocFile();
 		//pages.OutputDocProcess().downloadPdfFile();
 		pages.DynaformExecution().setFieldValue("NEXT_STEP", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("finalizacion", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());

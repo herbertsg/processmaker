@@ -28,7 +28,7 @@ class Dashboard extends Controller
         try {
             $dashletsExist = $this->getDashletsInstancesForCurrentUser();
             $dashletsHide  = array();
-            $dashletColumns = 3;
+            $dashletColumns = 2;
 
             G::LoadClass( 'configuration' );
             $oConfiguration = new Configurations();
@@ -45,7 +45,7 @@ class Dashboard extends Controller
                     foreach ($dashletsExist as $key => $value) {
                         $listDashletAux[$value['DAS_INS_UID']] = $key;
                     }
-                    
+
                     $dashletsShow['0'] = array();
                     foreach ($aConfiguration['ORDER']['0'] as $value) {
                         if (isset($listDashletAux[$value])) {
@@ -147,7 +147,7 @@ class Dashboard extends Controller
     }
 
     public function renderDashletInstance ($data)
-    {
+    {   
         try {
             if (! isset( $data->DAS_INS_UID )) {
                 $data->DAS_INS_UID = '';
@@ -163,6 +163,7 @@ class Dashboard extends Controller
                 $width = $_REQUEST['w'];
             }
             $this->pmDashlet->render( $width );
+            //G::pr($this->pmDashlet->setup( $width ));die;
         } catch (Exception $error) {
             //ToDo: Show the error message
             echo $error->getMessage();
@@ -173,7 +174,7 @@ class Dashboard extends Controller
     {
         try {
             if (! isset( $_SESSION['USER_LOGGED'] )) {
-                throw new Exception( 'The session has expired.' );
+                throw new Exception( G::LoadTranslation('ID_SESSION_EXPIRED') );
             }
             return $this->pmDashlet->getDashletsInstancesForUser( $_SESSION['USER_LOGGED'] );
         } catch (Exception $error) {
@@ -203,7 +204,7 @@ class Dashboard extends Controller
     }
 
     public function getDashletsInstances ($data)
-    {
+    {   
         $this->setResponseType( 'json' );
         $result = new stdclass();
         $result->status = 'OK';
@@ -215,7 +216,7 @@ class Dashboard extends Controller
                 $data->limit = null;
             }
             $result->dashletsInstances = $this->pmDashlet->getDashletsInstances( $data->start, $data->limit );
-            $result->totalDashletsInstances = $this->pmDashlet->getDashletsInstancesQuantity();
+            $result->totalDashletsInstances = count($result->dashletsInstances);
         } catch (Exception $error) {
             $result->status = 'ERROR';
             $result->message = $error->getMessage();
@@ -226,13 +227,14 @@ class Dashboard extends Controller
     public function dashletInstanceForm ($data)
     {
         try {
-            $this->includeExtJS( 'dashboard/dashletInstanceForm', false );
+            $this->includeExtJS( 'dashboard/dashletInstanceForm', true, true );
             $this->setView( 'dashboard/dashletInstanceForm' );
             if (! isset( $data->DAS_INS_UID )) {
                 $data->DAS_INS_UID = '';
             }
             $dashlets = $this->getDashlets();
             $this->setJSVar( 'storeDasUID', $dashlets );
+            
             if ($data->DAS_INS_UID != '') {
                 $this->pmDashlet->setup( $data->DAS_INS_UID );
                 $this->setJSVar( 'dashletInstance', $this->pmDashlet->getDashletInstance() );
@@ -425,6 +427,7 @@ class Dashboard extends Controller
             $criteria = new Criteria( 'workflow' );
             $criteria->addSelectColumn( DashletPeer::DAS_UID );
             $criteria->addSelectColumn( DashletPeer::DAS_TITLE );
+            $criteria->addSelectColumn( DashletPeer::DAS_CLASS );
             //ORDER BY
             $criteria->addAscendingOrderByColumn( DashletPeer::DAS_TITLE );
 
@@ -432,8 +435,15 @@ class Dashboard extends Controller
             $dataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
             $dataset->next();
             while ($row = $dataset->getRow()) {
-                $dashlets[] = array ($row['DAS_UID'],$row['DAS_TITLE']
-                );
+                if (strstr($row['DAS_TITLE'], '*')) {
+                    $row['DAS_TITLE'] = str_replace('*', '', $row['DAS_TITLE']);
+                    $row['DAS_TITLE'] = G::LoadTranslationPlugin('advancedDashboards', $row['DAS_TITLE']);          
+                }
+
+                if ($this->pmDashlet->verifyPluginDashlet($row['DAS_CLASS'])) {
+                    $dashlets[] = array ($row['DAS_UID'],$row['DAS_TITLE']);
+                
+                }
                 $dataset->next();
             }
 
@@ -445,4 +455,3 @@ class Dashboard extends Controller
 
     // Functions for the dasboards administration module - End
 }
-

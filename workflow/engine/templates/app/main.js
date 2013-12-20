@@ -17,7 +17,7 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle, proUid, taskUid)
 {
   Ext.MessageBox.show({
     msg: _('ID_CASE_NOTES_LOADING'),
-    progressText: 'Saving...',
+    progressText: _('ID_SAVING'),
     width:300,
     wait:true,
     waitConfig: {interval:200},
@@ -42,7 +42,7 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle, proUid, taskUid)
       limit:startRecord+loadSize
     },
     listeners:{
-      load:function(){
+      load:function(response){
         Ext.MessageBox.hide();
         if ( typeof(storeNotes.reader.jsonData.noPerms != 'undefined') &&
            (storeNotes.reader.jsonData.noPerms == '1') ) {
@@ -68,7 +68,30 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle, proUid, taskUid)
         caseNotesWindow.show();
         newNoteAreaActive = false;
         newNoteHandler();
+      },
+      exception: function(dp, type, action, options, response, arg)  {
+      responseObject = Ext.util.JSON.decode(response.responseText);
+      if (responseObject.lostSession) {
+           Ext.Msg.show({
+              title: _('ID_ERROR'),
+              msg: responseObject.message,
+              animEl: 'elId',
+              icon: Ext.MessageBox.ERROR,
+              buttons: Ext.MessageBox.OK,
+              fn : function(btn) {
+                try 
+                     {
+                       prnt = parent.parent;
+                       top.location = top.location;
+                     }
+                   catch (err) 
+                      {
+                       parent.location = parent.location;
+                      }
+              }
+            });
       }
+    }
     }
   });
   storeNotes.load();
@@ -91,7 +114,7 @@ function openCaseNotesWindow(appUid1, modalSw, appTitle, proUid, taskUid)
                       '<td class="x-cnotes-label"><img border="0" src="../users/users_ViewPhotoGrid?pUID={USR_UID}" width="40" height="40"/></td>' +
                       '<td class="x-cnotes-name">'+
                         '<p class="user-from">{user}</p>'+
-                        '<p class="x-editable x-message">{NOTE_CONTENT}</p> '+
+                        '<p style="width: 260px; overflow-x:auto; height: 40px;", class="x-editable x-message">{NOTE_CONTENT}</p> '+
                         '<p class="x-editable"><small>'+_('ID_POSTED_AT')+'<i> {NOTE_DATE}</i></small></p>'+
                       '</td>' +
                     '</tr>' +
@@ -331,6 +354,9 @@ function sendNote()
 
   Ext.getCmp('caseNoteText').focus();
   Ext.getCmp('caseNoteText').reset();
+  Ext.getCmp('caseNoteText').setDisabled(true);
+  Ext.getCmp('sendBtn').setDisabled(true);
+  Ext.getCmp('addCancelBtn').setDisabled(true);
   statusBarMessage( _('ID_CASES_NOTE_POSTING'), true);
   Ext.Ajax.request({
     url : '../appProxy/postNote' ,
@@ -342,10 +368,46 @@ function sendNote()
     success: function ( result, request ) {
       var data = Ext.util.JSON.decode(result.responseText);
       if(data.success=="success"){
-        statusBarMessage( _('ID_CASES_NOTE_POST_SUCCESS'), false,true);
-        storeNotes.load();
-      }
-      else{
+        Ext.getCmp('caseNoteText').setDisabled(false);
+        Ext.getCmp('sendBtn').setDisabled(false);
+        Ext.getCmp('addCancelBtn').setDisabled(false);
+        if (data.message != '') {
+            Ext.Msg.show({
+                title : _('ID_CASES_NOTE_POST_ERROR'),
+                msg : data.message,
+                icon : Ext.MessageBox.WARNING,
+                buttons : Ext.Msg.OK,
+                fn : function(btn) {
+                    statusBarMessage( _('ID_CASES_NOTE_POST_SUCCESS'), false,true);
+                    storeNotes.load();
+                }
+            });
+        } else {
+            statusBarMessage( _('ID_CASES_NOTE_POST_SUCCESS'), false,true);
+            storeNotes.load();
+        }
+      } else if (data.lostSession) {
+        Ext.Msg.show({
+              title : _('ID_CASES_NOTE_POST_ERROR'),
+              msg : data.message,
+              icon : Ext.MessageBox.ERROR,
+              buttons : Ext.Msg.OK,
+              fn : function(btn) {
+                try 
+                     {
+                       prnt = parent.parent;
+                       top.location = top.location;
+                     }
+                   catch (err) 
+                      {
+                       parent.location = parent.location;
+                      }
+              }
+         });
+      } else {
+        Ext.getCmp('caseNoteText').setDisabled(false);
+        Ext.getCmp('sendBtn').setDisabled(false);
+        Ext.getCmp('addCancelBtn').setDisabled(false);
         statusBarMessage( _('ID_CASES_NOTE_POST_ERROR'), false,false);
         Ext.MessageBox.alert(_('ID_CASES_NOTE_POST_ERROR'), data.message);
 
@@ -376,7 +438,7 @@ function statusBarMessage( msg, isLoading, success ) {
       });
     } else {
       statusBar.setStatus({
-        text: 'Error: ' + msg,
+        text: _('ID_ERROR') + ': ' + msg,
         iconCls: 'x-status-error',
         clear: true
       });
@@ -413,7 +475,7 @@ var openSummaryWindow = function(appUid, delIndex, action)
         var summaryWindow = new Ext.Window({
           title: _('ID_SUMMARY'),
           layout: 'fit',
-          width: 600,
+          width: 750,
           height: 450,
           resizable: true,
           closable: true,
@@ -467,8 +529,25 @@ var openSummaryWindow = function(appUid, delIndex, action)
         summaryWindow.add(summaryTabs);
         summaryWindow.doLayout();
         summaryWindow.show();
-      }
-      else {
+      } else if (response.lostSession) {
+          Ext.Msg.show({
+              title : "ERROR",
+              msg : response.message,
+              icon : Ext.MessageBox.ERROR,
+              buttons : Ext.Msg.OK,
+              fn : function(btn) {
+                   try 
+                     {
+                       prnt = parent.parent;
+                       top.location = top.location;
+                     }
+                   catch (err) 
+                      {
+                       parent.location = parent.location;
+                      }
+              }
+          });
+      } else {
         PMExt.warning(_('ID_WARNING'), response.message);
       }
       summaryWindowOpened = false;

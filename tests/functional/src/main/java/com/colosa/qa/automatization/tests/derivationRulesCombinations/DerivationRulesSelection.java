@@ -42,7 +42,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
@@ -60,7 +60,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
 		pages.DynaformExecution().setFieldValue("amount", "3000");
@@ -80,7 +80,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray4 = new FormFieldData[1];
 		fieldArray4[0] = new FormFieldData();
@@ -97,7 +97,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		FormFieldData[] fieldArray5 = new FormFieldData[1];
 		fieldArray5[0] = new FormFieldData();
@@ -114,7 +114,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().intoDynaform();
@@ -134,7 +134,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Main().goHome();
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
 		pages.DynaformExecution().intoDynaform();

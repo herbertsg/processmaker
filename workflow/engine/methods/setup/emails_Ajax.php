@@ -164,11 +164,15 @@ switch ($request) {
                             if ($smtp->Authenticate( $user, $passwd )) {
                                 print (SUCCESSFUL . ',' . $smtp->status) ;
                             } else {
-                                print (FAILED . ',' . $smtp->error['error']) ;
+                                $smtpError = $smtp->getError();
+                                print (FAILED . ',' . $smtpError['error']);
+                                // print (FAILED . ',' . $smtp->error['error']) ;
                             }
 
                         } else {
-                            print (FAILED . ',' . $smtp->error['error']) ;
+                            $smtpError = $smtp->getError();
+                            print (FAILED . ',' . $smtpError['error']);
+                            // print (FAILED . ',' . $smtp->error['error']) ;
                         }
                     } catch (Exception $e) {
                         print (FAILED . ',' . $e->getMessage()) ;
@@ -181,13 +185,13 @@ switch ($request) {
                 if ($send_test_mail == 'yes') {
                     try {
                         //print(SUCCESSFUL.',ok');
-                        $_POST['FROM_NAME'] = 'Process Maker O.S. [Test mail]';
-                        $_POST['FROM_EMAIL'] = $user;
+                        $_POST['FROM_NAME']     = G::LoadTranslation('ID_MESS_TEST_BODY');
+                        $_POST['FROM_EMAIL']    = $user;
 
-                        $_POST['MESS_ENGINE'] = 'PHPMAILER';
-                        $_POST['MESS_SERVER'] = $srv;
-                        $_POST['MESS_PORT'] = $port;
-                        $_POST['MESS_ACCOUNT'] = $user;
+                        $_POST['MESS_ENGINE']   = 'PHPMAILER';
+                        $_POST['MESS_SERVER']   = $srv;
+                        $_POST['MESS_PORT']     = $port;
+                        $_POST['MESS_ACCOUNT']  = $user;
                         $_POST['MESS_PASSWORD'] = $passwd;
                         $_POST['TO'] = $mail_to;
                         if ($auth_required == 'yes') {

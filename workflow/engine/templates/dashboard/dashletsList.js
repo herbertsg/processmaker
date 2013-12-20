@@ -9,7 +9,7 @@ new Ext.KeyMap(document, [{
       document.location = document.location;
     }
     else {
-      Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+      Ext.Msg.alert(_('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
     }
   }
 },
@@ -173,7 +173,7 @@ Ext.onReady(function(){
     columns: [
       {id:'DAS_INS_UID', dataIndex: 'DAS_INS_UID', hidden:true, hideable:false},
       {header: _("ID_TITLE"), dataIndex: "DAS_INS_TITLE", width: 150, hidden: false, align: "left"},
-      {header: "Dashlet", dataIndex: "DAS_TITLE", width: 200, hidden: false, align: "left"},
+      {header: _("ID_DASHLET"), dataIndex: "DAS_TITLE", width: 200, hidden: false, align: "left"},
       {header: _('ID_VERSION'), dataIndex: 'DAS_VERSION', width: 60, hidden: false, align: 'center'},
       {header: _('ID_ASSIGNED_TO'), dataIndex: 'DAS_INS_OWNER_TITLE', width: 200, hidden: false, align: 'center'},
       {header: _('ID_UPDATE_DATE'), dataIndex: 'DAS_INS_UPDATE_DATE', width: 80, hidden: false, align: 'center'},
@@ -225,7 +225,7 @@ Ext.onReady(function(){
     height:100,
     autoWidth : true,
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridDashletList',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,

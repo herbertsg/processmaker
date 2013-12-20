@@ -27,22 +27,22 @@ public class TestSLAEntireProcessWithPenalty extends com.colosa.qa.automatizatio
 		pages.DynaformExecution().setFieldValue("registrar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		

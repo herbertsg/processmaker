@@ -269,8 +269,10 @@ class CaseScheduler extends BaseCaseScheduler
         $oCriteria = $this->getAllCriteria();
         $oCriteria->addAnd( CaseSchedulerPeer::SCH_STATE, 'INACTIVE', Criteria::NOT_EQUAL );
         $oCriteria->addAnd( CaseSchedulerPeer::SCH_STATE, 'PROCESSED', Criteria::NOT_EQUAL );
-        $oCriteria->add( CaseSchedulerPeer::SCH_TIME_NEXT_RUN, $dCurrentDate, Criteria::GREATER_EQUAL );
-        $oCriteria->addAnd( CaseSchedulerPeer::SCH_TIME_NEXT_RUN, $dNextDay, Criteria::LESS_EQUAL );
+        $oCriteria->add( $oCriteria->getNewCriterion(CaseSchedulerPeer::SCH_TIME_NEXT_RUN, $dCurrentDate, Criteria::GREATER_EQUAL )->
+                        addAnd( $oCriteria->getNewCriterion(  CaseSchedulerPeer::SCH_TIME_NEXT_RUN, $dNextDay, Criteria::LESS_EQUAL ) )->
+                        addOr( $oCriteria->getNewCriterion( CaseSchedulerPeer::SCH_OPTION, '5', Criteria::GREATER_EQUAL ) )
+                        );
         $oCriteria->add( CaseSchedulerPeer::SCH_END_DATE, null, Criteria::EQUAL );
         $oCriteria->addOr( CaseSchedulerPeer::SCH_END_DATE, $dCurrentDate, Criteria::GREATER_EQUAL );
         $oDataset = CaseSchedulerPeer::doSelectRS( $oCriteria );
@@ -321,6 +323,7 @@ class CaseScheduler extends BaseCaseScheduler
             $sActualDataHour = date( 'H', strtotime( $aRow['SCH_TIME_NEXT_RUN'] ) );
             $sActualDataMinutes = date( 'i', strtotime( $aRow['SCH_TIME_NEXT_RUN'] ) );
             $dActualSysHour = date( 'H', $nTime );
+            $dActualSysHour = ($dActualSysHour == '00') ? '24' : $dActualSysHour;
             $dActualSysMinutes = date( 'i', $nTime );
             $sActualDataTime = strtotime( $aRow['SCH_TIME_NEXT_RUN'] );
             $sActualSysTime = strtotime( $nTime );
@@ -393,7 +396,12 @@ class CaseScheduler extends BaseCaseScheduler
                         $paramsRouteLogResult = $paramsLogResultFromPlugin['paramsRouteLogResult'];
                     } else {
                         eprint( " - Creating the new case............." );
-                        $result = $client->__SoapCall( 'NewCase', array ($params) );
+
+                        $paramsAux = $params;
+                        $paramsAux["executeTriggers"] = 1;
+
+                        $result = $client->__SoapCall("NewCase", array($paramsAux));
+
                         if ($result->status_code == 0) {
                             eprintln( "OK+ CASE #{$result->caseNumber} was created!", 'green' );
 
@@ -404,17 +412,23 @@ class CaseScheduler extends BaseCaseScheduler
                             $paramsLogResult = 'SUCCESS';
                             $params = array ('sessionId' => $sessionId,'caseId' => $caseId,'delIndex' => "1");
                             eprint( " - Routing the case #$caseNumber.............." );
-                            $result = $client->__SoapCall( 'RouteCase', array ($params) );
-
-                            if ($result->status_code == 0) {
-                                $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
-                                $retMsg = explode( "Debug", $paramsLog['WS_ROUTE_CASE_STATUS'] );
-                                $retMsg = $retMsg[0];
-                                eprintln( "OK+ $retMsg", 'green' );
-                                $paramsRouteLogResult = 'SUCCESS';
-                            } else {
-                                $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
-                                eprintln( "FAILED-> {$paramsLog ['WS_ROUTE_CASE_STATUS']}", 'red' );
+                            try {
+                                $result = $client->__SoapCall( 'RouteCase', array ($params) );
+                                if ($result->status_code == 0) {
+                                    $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
+                                    $retMsg = explode( "Debug", $paramsLog['WS_ROUTE_CASE_STATUS'] );
+                                    $retMsg = $retMsg[0];
+                                    eprintln( "OK+ $retMsg", 'green' );
+                                    $paramsRouteLogResult = 'SUCCESS';
+                                } else {
+                                    $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
+                                    eprintln( "FAILED-> {$paramsLog ['WS_ROUTE_CASE_STATUS']}", 'red' );
+                                    $paramsRouteLogResult = 'FAILED';
+                                }
+                            } catch (Exception $oError) {
+                                setExecutionResultMessage('    WITH ERRORS', 'error');
+                                $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $oError->getMessage());
+                                eprintln("  '-".strip_tags($oError->getMessage()), 'red');
                                 $paramsRouteLogResult = 'FAILED';
                             }
                         } else {
@@ -459,7 +473,17 @@ class CaseScheduler extends BaseCaseScheduler
                     $Fields['SCH_STATE'] = 'PROCESSED';
                     $this->Update( $Fields );
                 } else {
+                    $nSchLastRunTime = $sActualTime;
+                    $Fields = $this->Load( $sSchedulerUid );
+                    $Fields['SCH_LAST_RUN_TIME'] = $Fields['SCH_TIME_NEXT_RUN'];
 
+                    //$nSchTimeNextRun = strtotime( $Fields['SCH_TIME_NEXT_RUN'] );
+                    $nSchTimeNextRun = $nTime;
+                    $nextRun = $Fields['SCH_REPEAT_EVERY'] * 60 * 60;
+                    $nSchTimeNextRun += $nextRun;
+                    $nSchTimeNextRun = date( "Y-m-d H:i", $nSchTimeNextRun );
+
+                    $this->updateDate( $sSchedulerUid, $nSchTimeNextRun, $nSchLastRunTime );
                 }
             } elseif ($sActualDataHour == $dActualSysHour && $sActualDataMinutes <= $dActualSysMinutes) {
                 $_PORT = (isset( $_SERVER['SERVER_PORT'] ) && $_SERVER['SERVER_PORT'] != '80') ? ':' . $_SERVER['SERVER_PORT'] : '';
@@ -486,7 +510,10 @@ class CaseScheduler extends BaseCaseScheduler
                     $paramsLog = array ('PRO_UID' => $processId,'TAS_UID' => $taskId,'SCH_UID' => $sSchedulerUid,'USR_NAME' => $user,'RESULT' => '','EXEC_DATE' => date( 'Y-m-d' ),'EXEC_HOUR' => date( 'H:i:s' ),'WS_CREATE_CASE_STATUS' => '','WS_ROUTE_CASE_STATUS' => ''
                     );
 
-                    $result = $client->__SoapCall( 'NewCase', array ($params) );
+                    $paramsAux = $params;
+                    $paramsAux["executeTriggers"] = 1;
+
+                    $result = $client->__SoapCall("NewCase", array($paramsAux));
 
                     eprint( " - Creating the new case............." );
                     if ($result->status_code == 0) {
@@ -499,21 +526,27 @@ class CaseScheduler extends BaseCaseScheduler
 
                         $params = array ('sessionId' => $sessionId,'caseId' => $caseId,'delIndex' => "1"
                         );
-                        $result = $client->__SoapCall( 'RouteCase', array ($params
-                        ) );
-                        eprint( " - Routing the case #$caseNumber.............." );
-                        if ($result->status_code == 0) {
-                            $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
-                            $retMsg = explode( "Debug", $paramsLog['WS_ROUTE_CASE_STATUS'] );
-                            $retMsg = $retMsg[0];
-                            eprintln( "OK+ $retMsg", 'green' );
-                            $paramsRouteLogResult = 'SUCCESS';
-                        } else {
-                            eprintln( "FAILED-> {$paramsLog ['WS_ROUTE_CASE_STATUS']}", 'red' );
-                            $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
+                        try {
+                            $result = $client->__SoapCall( 'RouteCase', array ($params
+                            ) );
+                            eprint( " - Routing the case #$caseNumber.............." );
+                            if ($result->status_code == 0) {
+                                $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
+                                $retMsg = explode( "Debug", $paramsLog['WS_ROUTE_CASE_STATUS'] );
+                                $retMsg = $retMsg[0];
+                                eprintln( "OK+ $retMsg", 'green' );
+                                $paramsRouteLogResult = 'SUCCESS';
+                            } else {
+                                eprintln( "FAILED-> {$paramsLog ['WS_ROUTE_CASE_STATUS']}", 'red' );
+                                $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $result->message );
+                                $paramsRouteLogResult = 'FAILED';
+                            }
+                        } catch (Exception $oError) {
+                            setExecutionResultMessage('    WITH ERRORS', 'error');
+                            $paramsLog['WS_ROUTE_CASE_STATUS'] = strip_tags( $oError->getMessage());
+                            eprintln("  '-".strip_tags($oError->getMessage()), 'red');
                             $paramsRouteLogResult = 'FAILED';
                         }
-
                     } else {
                         $paramsLog['WS_CREATE_CASE_STATUS'] = strip_tags( $result->message );
                         eprintln( "FAILED->{$paramsLog ['WS_CREATE_CASE_STATUS']}", 'red' );
@@ -557,7 +590,8 @@ class CaseScheduler extends BaseCaseScheduler
                     $Fields = $this->Load( $sSchedulerUid );
                     $Fields['SCH_LAST_RUN_TIME'] = $Fields['SCH_TIME_NEXT_RUN'];
 
-                    $nSchTimeNextRun = strtotime( $Fields['SCH_TIME_NEXT_RUN'] );
+                    //$nSchTimeNextRun = strtotime( $Fields['SCH_TIME_NEXT_RUN'] );
+                    $nSchTimeNextRun = $nTime;
                     $nextRun = $Fields['SCH_REPEAT_EVERY'] * 60 * 60;
                     $nSchTimeNextRun += $nextRun;
                     $nSchTimeNextRun = date( "Y-m-d H:i", $nSchTimeNextRun );

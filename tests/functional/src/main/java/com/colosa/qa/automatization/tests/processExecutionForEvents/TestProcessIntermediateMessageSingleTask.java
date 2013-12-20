@@ -73,7 +73,7 @@ public class TestProcessIntermediateMessageSingleTask extends com.colosa.qa.auto
 		eventStatus = pages.Admin().eventStatus(caseNum);
 		Assert.assertEquals("CLOSE", eventStatus);
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[guardar]";

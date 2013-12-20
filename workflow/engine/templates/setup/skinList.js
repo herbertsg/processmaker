@@ -120,19 +120,25 @@ Ext.onReady(function(){
 
   clearTextButton = new Ext.Action({
     text: 'X',
-    ctCls:'pm_search_x_button',
+    ctCls:"pm_search_x_button_des",
     handler: GridByDefault
   });
-
 
   smodel = new Ext.grid.RowSelectionModel({
     singleSelect: true,
     listeners:{
       rowselect: function(sm){
         rowSelected = infoGrid.getSelectionModel().getSelected();
-        if((rowSelected.data.SKIN_FOLDER_ID)&&((rowSelected.data.SKIN_FOLDER_ID!="classic"))){
+
+        if((rowSelected.data.SKIN_FOLDER_ID)&&(rowSelected.data.SKIN_FOLDER_ID!="classic")&&(rowSelected.data.SKIN_FOLDER_ID!="neoclassic")){
           exportButton.enable();
-          deleteButton.enable();
+
+          if (rowSelected.data.SKIN_STATUS!='Inactive') {
+            deleteButton.disable();
+          } else {
+            deleteButton.enable();
+          }
+
         }else{
           exportButton.disable();
           deleteButton.disable();
@@ -180,9 +186,9 @@ Ext.onReady(function(){
         name : 'SKIN_NAME'
       },
 
-        {
-            name : 'SKIN_WORKSPACE'
-        },
+		{
+		    name : 'SKIN_WORKSPACE'
+		},
 
       {
         name : 'SKIN_DESCRIPTION'
@@ -286,7 +292,7 @@ Ext.onReady(function(){
     height:100,
     autoWidth : true,
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridSkinList',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,
@@ -363,6 +369,7 @@ showdate = function (value){
 
 selectedSkin = function (value){
     if(gotWildCard(value)){
+        deleteButton.disable();
         return setBoldItalic(value.substring(1));
     }
     return value;
@@ -468,8 +475,8 @@ newSkin = function(){
       {
         xtype:'textfield',
         id:'skinAuthor',
-        emptyText :'ProcessMaker Team',
-        value :'ProcessMaker Team',
+        emptyText : _('ID_SKIN_TEAM'),
+        value : _('ID_SKIN_TEAM'),
         allowBlank: false,
         width:200,
         fieldLabel:_('ID_AUTHOR')
@@ -516,6 +523,7 @@ newSkin = function(){
           Ext.getCmp("newform").getForm().submit({
             //reset: true,
             reset: false,
+            waitTitle : "&nbsp;",
             success: function(form, action) {
 
               store.reload();
@@ -531,10 +539,10 @@ newSkin = function(){
               } else {
                 Ext.getCmp("newDialog").destroy();
                 if( !action.result ) {
-                  Ext.MessageBox.alert("error", action.response.responseText);
+                  Ext.MessageBox.alert( _('ID_ERROR') , action.response.responseText);
                   return;
                 }
-                Ext.MessageBox.alert("error", action.result.error);
+                Ext.MessageBox.alert( _('ID_ERROR') , action.result.error);
               }
             },
             scope: Ext.getCmp("newform"),
@@ -640,6 +648,7 @@ importSkin = function(){
           Ext.getCmp("uploadform").getForm().submit({
             //reset: true,
             reset: false,
+            waitTitle : "&nbsp;",
             success: function(form, action) {
 
               store.reload();
@@ -651,10 +660,10 @@ importSkin = function(){
               Ext.getCmp("importDialog").destroy();
 
               if( !action.result ) {
-                Ext.MessageBox.alert("error", _('ID_ERROR'));
+                Ext.MessageBox.alert( _('ID_ERROR') , _('ID_ERROR'));
                 return;
               }
-              Ext.MessageBox.alert("error", action.result.error);
+              Ext.MessageBox.alert( _('ID_ERROR') , action.result.error);
 
             },
             scope: Ext.getCmp("uploadform"),
@@ -721,7 +730,7 @@ exportSkin = function(){
           viewport.getEl().unmask();
         }else{
           viewport.getEl().unmask();
-          Ext.Msg.alert('Alert', resp.message);
+          Ext.Msg.alert( _('ID_ALERT') , resp.message);
         //PMExt.error(_('ID_SKINS'),_('ID_MSG_CANNOT_EXPORT_SKIN'));
         }
       },
@@ -801,7 +810,7 @@ function changeSkin(newSkin,currentSkin){
       success: function(r, o){
         var response = Ext.util.JSON.decode(r.responseText);
         if (response.success) {
-          currentLocation = top.location.href;
+          currentLocation = parent.parent.location.href;
           createCookie ('workspaceSkin', newSkin, '1');
           if (currentSkin.substring(0,2) != 'ux') {
             if (newSkin.substring(0,2) == 'ux') {
@@ -820,9 +829,8 @@ function changeSkin(newSkin,currentSkin){
           if (point == -1) {
             newLocation = newLocation +"?s=SKINS";
           }
-          top.location.href = newLocation;
-        }
-        else {
+          parent.parent.location = newLocation;
+        } else {
           viewport.getEl().unmask();
           PMExt.error(_('ID_SKINS'), response.message);
         }

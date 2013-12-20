@@ -16,7 +16,7 @@ Ext.onReady(function(){
       }),
       valueField     : 'LAN_ID',
       displayField   : 'LAN_NAME', 
-      emptyText      : 'Select',
+      emptyText      : _('ID_SELECT'),
       selectOnFocus  : true,
       editable       : false,
       allowBlank     : false,
@@ -44,17 +44,6 @@ Ext.onReady(function(){
         xtype: 'checkbox',
         checked: forgotPasswd,
         fieldLabel: _('ID_ENABLE_FOTGOT_PASSWORD'),
-        listeners:{
-          check:function(){
-            changeSettings();
-          }
-        }
-      },
-      {
-        name: 'virtualKeyboad',
-        xtype: 'checkbox',
-        checked: virtualKeyboad,
-        fieldLabel: _('ID_ENABLE_VIRTUAL_KEYBOARD'),
         listeners:{
           check:function(){
             changeSettings();
@@ -103,6 +92,7 @@ function saveSettings()
   Ext.getCmp('frm').getForm().submit( {  
     url : 'loginSettingsAjax?request=saveSettings',
     waitMsg : _('ID_SAVING_PROCESS'),
+    waitTitle : "&nbsp;",
     timeout : 36000,
     success : function(obj, resp) {
       //nothing to do

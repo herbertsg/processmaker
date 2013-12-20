@@ -26,7 +26,7 @@ new Ext.KeyMap(document, {
         document.location = document.location;
       }
       else
-        Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        Ext.Msg.alert( _('ID_REFRESH_LABEL') , _('ID_REFRESH_MESSAGE') );
   }
 });
 
@@ -167,7 +167,7 @@ Ext.onReady(function(){
     width:'',
     title : '',
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridProcessMain',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,
@@ -264,12 +264,6 @@ Ext.onReady(function(){
           importProcess();
         }
       },{
-        text: _('ID_BROWSE_LIBRARY'),
-        iconCls: 'button_menu_ext ss_sprite  ss_world',
-        //icon: '/images/icon-pmwebservices.png',
-        handler: browseLibrary
-      },
-      {
         xtype: 'tbfill'
       },{
         xtype: 'tbseparator'
@@ -292,7 +286,7 @@ Ext.onReady(function(){
         }
       }),{
         text:'X',
-        ctCls:'pm_search_x_button',
+        ctCls:'pm_search_x_button_des',
         handler: function(){
           //store.setBaseParam( 'category', '<reset>');
           store.setBaseParam('processName', '');
@@ -311,7 +305,7 @@ Ext.onReady(function(){
         pageSize: 25,
         store: store,
         displayInfo: true,
-        displayMsg: 'Displaying Processes {0} - {1} of {2}',
+        displayMsg: _('ID_DISPLAY_PROCESSES'),
         emptyMsg: "",
         items:[]
     }),
@@ -461,7 +455,7 @@ function newProcess(){
         fieldLabel: _('ID_TITLE'),
         xtype:'textfield',
         width: 260,
-        maskRe: /^(?!^(PRN|AUX|CLOCK\$|NUL|CON|COM\d|LPT\d|\..*)(\..+)?$)[^\x00-\x1f\\?*:\";|/]+$/i,
+        maskRe: /^(?!^(PRN|AUX|CLOCK\$|NUL|CON|COM\d|LPT\d|\...*)(\..+)?$)[^\x00-\x1f\\?*\";|/]+$/i,
         allowBlank: false
       },  {
         id: 'PRO_DESCRIPTION',
@@ -509,6 +503,7 @@ function saveProcess()
   Ext.getCmp('newProcessForm').getForm().submit( {
     url : '../processProxy/saveProcess',
     waitMsg : _('ID_SAVING_PROCESS'),
+    waitTitle : "&nbsp;",
     timeout : 36000,
     success : function(obj, resp) {
       location.href = 'processes_Map?PRO_UID='+resp.result.PRO_UID;
@@ -627,7 +622,7 @@ deleteProcess = function(){
         errMsg += e + '<br/>';
       }
       Ext.MessageBox.show({
-        title: 'Error',
+        title: _('ID_ERROR'),
         msg: errMsg,
         buttons: Ext.MessageBox.OK,
         icon: Ext.MessageBox.ERROR
@@ -709,7 +704,7 @@ importProcessExistGroup = function()
     title       : _('ID_IMPORT_PROCESS') + processFileTypeTitle,
     header      : false,
     width       : 460,
-    height      : 210,
+    height      : 230,
     modal       : true,
     autoScroll  : false,
     maximizable : false,
@@ -796,7 +791,7 @@ importProcessExistGroup = function()
                 uploader.getForm().submit({
                   url     : 'processes_Import_Ajax',
                   waitMsg : _('ID_UPLOADING_PROCESS_FILE'),
-
+                  waitTitle : "&nbsp;",
                   success : function(o, resp) {
                     var resp_            = Ext.util.JSON.decode(resp.response.responseText);
                     var sNewProUid       = resp_.sNewProUid;
@@ -840,8 +835,8 @@ importProcessExistProcess = function()
     title       : _('ID_IMPORT_PROCESS') + processFileTypeTitle,
     header      : false,
     width       : 460,
-    height      : 210,
-    autoHeight : true,
+    height      : 230,
+    autoHeight  : true,
     modal       : true,
     autoScroll  : false,
     maximizable : false,
@@ -925,7 +920,7 @@ importProcessExistProcess = function()
                 uploader.getForm().submit({
                   url     : 'processes_Import_Ajax',
                   waitMsg : _('ID_UPLOADING_PROCESS_FILE'),
-
+                  waitTitle : "&nbsp;",
                   success: function(o, resp) {
                     var resp_      = Ext.util.JSON.decode(resp.response.responseText);
                     var sNewProUid = resp_.sNewProUid;
@@ -1030,6 +1025,7 @@ importProcess = function()
                   uploader.getForm().submit({
                     url     : 'processes_Import_Ajax',
                     waitMsg : _('ID_UPLOADING_PROCESS_FILE'),
+                    waitTitle : "&nbsp;",
                     success : function(o, resp) {
 
                       var resp_ = Ext.util.JSON.decode(resp.response.responseText);
@@ -1090,10 +1086,6 @@ importProcess = function()
       ]
     });
   w.show();
-}
-
-browseLibrary = function(){
-  window.location = 'processes_Library';
 }
 
 function activeDeactive(){

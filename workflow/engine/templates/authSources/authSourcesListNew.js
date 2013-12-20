@@ -30,7 +30,7 @@ var cboxAuthSourse = new Ext.form.ComboBox({
     store: storeAuthSources,
     valueField: 'sType',
     displayField: 'sLabel',
-    emptyText: 'Choose an option...',
+    emptyText: _('ID_CHOOSE_OPTION') + '...',
     width: 160,
     editable: false,
     //value: _('ID_ALL'),
@@ -94,13 +94,14 @@ var cboxAuthSourse = new Ext.form.ComboBox({
        window.location = 'authSources_New?AUTH_SOURCE_PROVIDER='+formAuthSourceOptoins.getForm().findField('AUTH_SOURCE_PROVIDER').getValue();
        return false;*/
     formAuthSourceOptoins.getForm().submit({ 
+    waitTitle : "&nbsp;",
     url: '../adminProxy/testingOption',
     params: {
     action     : 'test',
     optionAuthS: formAuthSourceOptoins.getForm().findField('AUTH_SOURCE_PROVIDER').getValue()
     },
     method: 'POST',
-    waitMsg : 'loading...',
+    waitMsg : _('ID_LOADING_GRID'),
     timeout : 500,
     success: function(f,a){
     resp = Ext.util.JSON.decode(a.response.responseText);
@@ -117,10 +118,10 @@ var cboxAuthSourse = new Ext.form.ComboBox({
     },
     failure: function(f,a){
         if (a.failureType === Ext.form.Action.CONNECT_FAILURE){
-            Ext.Msg.alert('Failure', 'Server reported:'+a.response.status+' '+a.response.statusText);
+            Ext.Msg.alert( _('ID_FAILURE'), _('ID_SERVER_REPORTED')+':'+a.response.status+' '+a.response.statusText);
         }
         if (a.failureType === Ext.form.Action.SERVER_INVALID){
-            Ext.Msg.alert('Warning', 'you have an error');
+            Ext.Msg.alert( _('ID_WARNING'), _('ID_YOU_HAVE_ERROR'));
         }
     }
 });

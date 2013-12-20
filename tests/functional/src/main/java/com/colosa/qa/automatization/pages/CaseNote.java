@@ -2,8 +2,6 @@ package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
-import com.colosa.qa.automatization.common.extJs.ExtJSToolbar;
-import com.colosa.qa.automatization.common.extJs.ExtJSToolbarCell;
 import com.colosa.qa.automatization.common.extJs.ExtJSWindowToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -109,7 +107,8 @@ public class CaseNote extends Page {
         //wait for note to appear
         //WebElement notesStatus =  this.caseNotesStatusPanel.findElement(By.className("x-status-text"));
         //browser.waitForElement(By.cssSelector(":nth-child("+(numCaseNotes+1)+")"), 20);
-        browser.waitForTextToBePresent(By.cssSelector("#notesStatusPanel .x-status-text"), "Note successfully posted", 20);
+        browser.waitForTextToBePresent(By.cssSelector("#notesStatusPanel .x-status-text"), "Note successfully posted", 30);
+        browser.waitForTextToBePresent(By.cssSelector("#notesStatusPanel .x-status-text"), "Ready", 30);
 
         Logger.addLog("Note inserted");
     }

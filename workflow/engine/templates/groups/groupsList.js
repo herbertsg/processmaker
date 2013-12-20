@@ -18,7 +18,7 @@ new Ext.KeyMap(document,
            e.stopEvent();
            document.location = document.location;
          }else{
-           Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        	 Ext.Msg.alert(_('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
          }
        }
      }
@@ -123,10 +123,9 @@ Ext.onReady(function(){
 
   clearTextButton = new Ext.Action({
     text: 'X',
-    ctCls:'pm_search_x_button',
+    ctCls:"pm_search_x_button_des",
     handler: GridByDefault
   });
-
 
   smodel = new Ext.grid.RowSelectionModel({
     singleSelect: true,
@@ -198,6 +197,7 @@ Ext.onReady(function(){
              displayField: 'value',
              valueField:'value',
              allowBlank: false,
+             editable:false,
              triggerAction: 'all',
              emptyText: _('ID_SELECT_STATUS'),
              selectOnFocus:true
@@ -289,7 +289,7 @@ Ext.onReady(function(){
     height:100,
     autoWidth : true,
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridGroupList',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,
@@ -410,6 +410,7 @@ DuplicateGroupName = function(){
 //Save New Group
 SaveNewGroup = function(){
   newForm.getForm().submit({
+    waitTitle : "&nbsp;",
     success: function(f,a){
       CloseWindow(); //Hide popup widow
       newForm.getForm().reset(); //Set empty form to next use
@@ -467,6 +468,7 @@ SaveEditGroupAction = function(){
 //Save Edit Group
 SaveEditGroup = function(){
   editForm.getForm().submit({
+    waitTitle : "&nbsp;",
     success: function(f,a){
       CloseWindow(); //Hide popup widow
       DoSearch(); //Reload store grid

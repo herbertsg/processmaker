@@ -85,6 +85,10 @@ class Main extends Controller
         $this->render();
     }
 
+    function screamFileUpgrades () {
+        G::streamFile( PATH_DATA . 'log/upgrades.log', true );
+    }
+
     function getSystemInfo ()
     {
         $this->setResponseType( 'json' );
@@ -273,10 +277,11 @@ class Main extends Controller
         $this->setVar( 'advise_text', $adviseText );
         $loginScript = $this->getHeadPublisher()->getExtJsLibraries();
         $loginScript .= $this->getHeadPublisher()->getExtJsScripts();
-        $this->setVar( 'login_script', $loginScript );
-        $this->setVar( 'login_vars', $this->getHeadPublisher()->getExtJsVariablesScript() );
+        $this->setVar("login_script", $loginScript);
+        $this->setVar("login_vars", $this->getHeadPublisher()->getExtJsVariablesScript());
+        $this->setVar("URL_TRANSLATION_JS", G::browserCacheFilesUrl("/js/ext/translation.en.js"));
 
-        $this->setLayout( 'pm-modern-login' );
+        $this->setLayout("pm-modern-login");
 
         $this->render();
     }
@@ -319,9 +324,8 @@ class Main extends Controller
         $this->setVar( 'logo_company', $this->getCompanyLogo() );
         $this->setVar( 'pmos_version', System::getVersion() );
 
-        $footerText = 'Copyright &copy; 2003-' . date( 'Y' ) . ' Colosa, Inc. All rights reserved.';
-        $adviseText = 'Supplied free of charge with no support, certification, warranty,
-            maintenance nor indemnity by Colosa and its Certified Partners. ';
+        $footerText = G::LoadTranslation('ID_COPYRIGHT_FROM') . date( 'Y' ) . G::LoadTranslation('ID_COPYRIGHT_COL');
+        $adviseText = G::LoadTranslation('ID_COLOSA_AND_CERTIFIED_PARTNERS');
         $this->setVar( 'footer_text', $footerText );
         $this->setVar( 'advise_text', $adviseText );
 
@@ -339,10 +343,11 @@ class Main extends Controller
 
         $loginScript = $this->getHeadPublisher()->getExtJsLibraries();
         $loginScript .= $this->getHeadPublisher()->getExtJsScripts();
-        $this->setVar( 'login_script', $loginScript );
-        $this->setVar( 'login_vars', $this->getHeadPublisher()->getExtJsVariablesScript() );
+        $this->setVar("login_script", $loginScript);
+        $this->setVar("login_vars", $this->getHeadPublisher()->getExtJsVariablesScript());
+        $this->setVar("URL_TRANSLATION_JS", G::browserCacheFilesUrl("/js/ext/translation.en.js"));
 
-        $this->setLayout( 'pm-modern-login' );
+        $this->setLayout("pm-modern-login");
 
         $this->render();
     }
@@ -431,9 +436,6 @@ class Main extends Controller
         foreach ($menus as $i => $menu) {
             if (strpos( $menu['target'], 'cases/main' ) !== false) {
                 $menus[$i]['target'] = str_replace( 'cases/main', 'cases/main_init', $menus[$i]['target'] );
-            }
-            if (strpos( $menu['target'], 'bpmn/main' ) !== false) {
-                $menus[$i]['target'] = str_replace( 'bpmn/main', 'bpmn/mainInit', $menus[$i]['target'] );
             }
             if (strpos( $menu['target'], 'processes/main' ) !== false) {
                 $menus[$i]['target'] = str_replace( 'processes/main', 'processes/mainInit', $menus[$i]['target'] );
@@ -728,57 +730,67 @@ class Main extends Controller
             }
         }
 
-        $sysSection = G::loadTranslation( 'ID_SYSTEM_INFO' );
-        $pmSection = 'ProcessMaker Information';
+        $sysSection = G::loadTranslation('ID_SYSTEM_INFO' );
+        $pmSection = G::LoadTranslation('ID_PROCESS_INFORMATION');
 
         $properties = array ();
         $ee = class_exists( 'pmLicenseManager' ) ? " - Enterprise Edition" : '';
-        $properties[] = array ('ProcessMaker Ver.',System::getVersion() . $ee,$pmSection
+        $systemName = 'ProcessMaker';
+        if (defined('SYSTEM_NAME')) {
+            $systemName = SYSTEM_NAME;
+        }
+        $properties[] = array ($systemName. ' Ver.', System::getVersion() . $ee, $pmSection);
+
+        if (file_exists(PATH_DATA. 'log/upgrades.log')) {
+            $properties[] = array (G::LoadTranslation('ID_UPGRADES_PATCHES'), '<a href="#" onclick="showUpgradedLogs(); return false;">' . G::LoadTranslation( 'ID_UPGRADE_VIEW_LOG') . '</a>' ,$pmSection);
+        } else {
+            $properties[] = array (G::LoadTranslation('ID_UPGRADES_PATCHES'), G::LoadTranslation( 'ID_UPGRADE_NEVER_UPGRADE') ,$pmSection);
+        }
+
+        $properties[] = array (G::LoadTranslation('ID_OPERATING_SYSTEM') ,$redhat,$sysSection
         );
-        $properties[] = array ('Operating System',$redhat,$sysSection
+        $properties[] = array (G::LoadTranslation('ID_TIME_ZONE') ,(defined( 'TIME_ZONE' )) ? TIME_ZONE : "Unknown",$sysSection
         );
-        $properties[] = array ('Time Zone',(defined( 'TIME_ZONE' )) ? TIME_ZONE : "Unknown",$sysSection
+        $properties[] = array (G::LoadTranslation('ID_WEB_SERVER') ,getenv( 'SERVER_SOFTWARE' ),$sysSection
         );
-        $properties[] = array ('Web Server',getenv( 'SERVER_SOFTWARE' ),$sysSection
+        $properties[] = array (G::LoadTranslation('ID_SERVER_NAME') ,getenv( 'SERVER_NAME' ),$pmSection
         );
-        $properties[] = array ('Server Name',getenv( 'SERVER_NAME' ),$pmSection
+        $properties[] = array (G::LoadTranslation('ID_SERVER_IP') ,$this->lookup( $ip ),$sysSection
         );
-        $properties[] = array ('Server IP Address',$this->lookup( $ip ),$sysSection
-        );
-        $properties[] = array ('PHP Version',phpversion(),$sysSection
+        $properties[] = array (G::LoadTranslation('ID_PHP_VERSION') ,phpversion(),$sysSection
         );
 
         if (defined( "DB_HOST" )) {
-            $properties[] = array ('Data Base',$dbNetView->dbName( DB_ADAPTER ) . ' (Version ' . $sMySQLVersion . ')',$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE') ,$dbNetView->dbName( DB_ADAPTER ) . ' (Version ' . $sMySQLVersion . ')',$pmSection
             );
-            $properties[] = array ('Data Base Server',DB_HOST,$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE_SERVER') ,DB_HOST,$pmSection
             );
-            $properties[] = array ('Data Base Name',DB_NAME,$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE_NAME') ,DB_NAME,$pmSection
             );
-            $properties[] = array ('Available DB Engines',$availdb,$sysSection
+            $properties[] = array (G::LoadTranslation('ID_AVAILABLE_DB') ,$availdb,$sysSection
             );
         } else {
-            $properties[] = array ('Data Base',"Not defined",$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE') ,"Not defined",$pmSection
             );
-            $properties[] = array ('Data Base Server',"Not defined",$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE_SERVER') ,"Not defined",$pmSection
             );
-            $properties[] = array ('Data Base Name',"Not defined",$pmSection
+            $properties[] = array (G::LoadTranslation('ID_DATABASE_NAME') ,"Not defined",$pmSection
             );
-            $properties[] = array ('Available DB Engines',"Not defined",$sysSection
+            $properties[] = array (G::LoadTranslation('ID_AVAILABLE_DB') ,"Not defined",$sysSection
             );
         }
 
-        $properties[] = array ('Workspace',defined( "SYS_SYS" ) ? SYS_SYS : "Not defined",$pmSection
+        $properties[] = array ( G::LoadTranslation('ID_WORKSPACE') ,defined( "SYS_SYS" ) ? SYS_SYS : "Not defined",$pmSection
         );
 
-        $properties[] = array ('Server Protocol',getenv( 'SERVER_PROTOCOL' ),$sysSection
+        $properties[] = array ( G::LoadTranslation('ID_SERVER_PROTOCOL') ,getenv( 'SERVER_PROTOCOL' ),$sysSection
         );
-        $properties[] = array ('Server Port',getenv( 'SERVER_PORT' ),$sysSection
+        $properties[] = array ( G::LoadTranslation('ID_SERVER_PORT') ,getenv( 'SERVER_PORT' ),$sysSection
         );
-        //$properties[] = array('Remote Host', getenv ('REMOTE_HOST'), $sysSection);
-        $properties[] = array ('Server Addr.',getenv( 'SERVER_ADDR' ),$sysSection
+        //$sysSection[] = array('Remote Host', getenv ('REMOTE_HOST'), $sysSection);
+        $properties[] = array ( G::LoadTranslation('ID_SERVER_NAME') , getenv( 'SERVER_ADDR' ),$sysSection
         );
-        $properties[] = array ('User\'s Browser',getenv( 'HTTP_USER_AGENT' ),$sysSection
+        $properties[] = array ( G::LoadTranslation('ID_USER_BROWSER') , getenv( 'HTTP_USER_AGENT' ),$sysSection
         );
 
         return $properties;

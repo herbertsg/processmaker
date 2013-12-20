@@ -17,6 +17,7 @@ var removeAllButton;
 
 var store;
 var editor;
+var selCombo='';
 
 Ext.onReady(function(){
 
@@ -82,7 +83,7 @@ Ext.onReady(function(){
     height          : 100,
     width           : 200,
     stateful        : true,
-    stateId         : 'grid',
+    stateId         : 'gridEdit',
     enableColumnResize : true,
     enableHdMenu  : true,
     frame      : false,
@@ -118,7 +119,21 @@ Ext.onReady(function(){
         }
     }
   });
-  //check column for table columns grid
+
+  var sizeField = new fm.NumberField({
+                      name: 'sizeEdit',
+                      id: 'sizeEdit',
+                      allowBlank: true,
+                      allowDecimals: false,
+                      allowNegative: false,
+                      disabled: true,
+                      nanText: 'This field should content a number',
+                      minValue: 1,
+                      maxValue: 99,
+                      minLength: 0
+                  });
+
+  //check column for tablesizeField columns grid
   var checkColumn = new Ext.grid.CheckColumn({
     header: 'Filter',
     dataIndex: 'FIELD_FILTER',
@@ -128,24 +143,28 @@ Ext.onReady(function(){
   //columns for table columns grid
   var cmColumns = [
       {
-        id: 'uid',
-        dataIndex: 'uid',
-        hidden: true
+          id: 'uid',
+          dataIndex: 'uid',
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_uid',
           dataIndex: 'field_uid',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_key',
           dataIndex: 'field_key',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_null',
           dataIndex: 'field_null',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_dyn',
@@ -162,7 +181,7 @@ Ext.onReady(function(){
             allowBlank: true,
             listeners:{
               change: function(f,e){
-                this.setValue(this.getValue().toUpperCase());
+            	this.setValue(this.getValue().replace(/\s/g,'').toUpperCase());
               }
             }
           }
@@ -181,8 +200,9 @@ Ext.onReady(function(){
           dataIndex: 'field_type',
           width: 75,
           editor: new fm.ComboBox({
+              id: "fieldType",
               typeAhead: true,
-              editable:true,
+              editable: false,
               lazyRender: true,
               mode: 'local',
               displayField:'type',
@@ -192,10 +212,41 @@ Ext.onReady(function(){
               forceSelection: true,
               store: new Ext.data.SimpleStore({
                   fields: ['type_id', 'type'],
-                  //data : [['VARCHAR',_("ID_VARCHAR")],['TEXT',_("ID_TEXT")],['DATE',_("ID_DATE")],['INT',_("ID_INT")],['FLOAT',_("ID_FLOAT")]],
                   data: columnsTypes,
                   sortInfo: {field:'type_id', direction:'ASC'}
-              })
+              }),
+              listeners: {
+                  beforerender: function (combo)
+                  {
+                      if (combo.getValue() == "" && combo.store.getAt(0)) {
+                          combo.setValue(combo.store.getAt(0).get(combo.valueField));
+                      }
+                  },
+                  beforeshow: function (combo)
+                  {
+                        if (combo.getValue() == "" && combo.store.getAt(0)) {
+                            combo.setValue(combo.store.getAt(0).get(combo.valueField));
+                        }
+                  },
+                  'select': function(combo, row, index) {
+                      if( cm && cm instanceof Ext.grid.ColumnModel) {
+                          if(selCombo != combo.getValue()) {
+                              Ext.getCmp('sizeEdit').setValue('');
+                          }
+
+                          selCombo = combo.getValue();
+
+                          var fieldNull = Ext.getCmp("field_null");
+                          var fieldPrimaryKey = Ext.getCmp("field_primary_key");
+                          var fieldInc = Ext.getCmp("field_incre");
+                          var sizeEdit = Ext.getCmp("sizeEdit");
+
+                          editorFieldsEnableDisable(selCombo, fieldNull, fieldPrimaryKey, fieldInc, sizeEdit);
+
+                          flagShowMessageError = 1;
+                      }
+                  }//select
+              }
           })
       }, {
           id: 'field_size',
@@ -203,19 +254,20 @@ Ext.onReady(function(){
           dataIndex: 'field_size',
           width: 50,
           align: 'right',
-          editor: new fm.NumberField({
-            allowBlank: true
-          })
+          editor: sizeField
       }, {
         xtype: 'booleancolumn',
         header: _('ID_NULL'),
         dataIndex: 'field_null',
         align: 'center',
         width: 50,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
-            xtype: 'checkbox'
+            xtype: 'checkbox',
+            id: 'field_null',
+            checked: false,
+            disabled: true
         }
       }, {
         xtype: 'booleancolumn',
@@ -223,10 +275,13 @@ Ext.onReady(function(){
         dataIndex: 'field_key',
         align: 'center',
         width: 80,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
-            xtype: 'checkbox'
+            xtype: 'checkbox',
+            id: 'field_primary_key',
+            disabled: true,
+            inputValue: 'always'
         }
       }, {
         xtype: 'booleancolumn',
@@ -234,10 +289,13 @@ Ext.onReady(function(){
         dataIndex: 'field_autoincrement',
         align: 'center',
         width: 80,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
-            xtype: 'checkbox'
+            xtype: 'checkbox',
+            id: 'field_incre',
+            disabled: true,
+            inputValue: 'always'
         }
       }
   ];
@@ -250,8 +308,8 @@ Ext.onReady(function(){
         dataIndex: 'field_filter',
         align: 'center',
         width: 50,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
             xtype: 'checkbox'
         }
@@ -262,7 +320,8 @@ Ext.onReady(function(){
   var cm = new Ext.grid.ColumnModel({
     // specify any defaults for each column
     defaults: {
-        sortable: true // columns are not sortable by default
+        resizable: false,
+        sortable:  true // columns are not sortable by default
     },
     columns:cmColumns
   });
@@ -282,22 +341,68 @@ Ext.onReady(function(){
       ]
   });
   //row editor for table columns grid
+  var flagShowMessageError = 1;
+
   editor = new Ext.ux.grid.RowEditor({
     saveText: _("ID_UPDATE"),
+    isValid: function ()
+    {
+        var valid = true;
+        this.items.each(function(f) {
+            if(!f.isValid(true)){
+                valid = false;
+
+                if (valid) {
+                    flagShowMessageError = 1;
+                }
+
+                return false;
+            }
+        });
+
+        if (valid) {
+            flagShowMessageError = 1;
+        }
+
+        return valid;
+    },
+    showTooltip: function (msg)
+    {
+        if (flagShowMessageError == 1) {
+            Ext.msgBoxSlider.msgTopCenter("error", _("ID_ERROR"), msg, 3);
+            flagShowMessageError = 0;
+        }
+    },
     listeners: {
       canceledit: function(grid,obj){
         if ( grid.record.data.field_label == '' && grid.record.data.field_name == '') {
           store.remove(grid.record);
         }
+
+        flagShowMessageError = 1;
       }
     }
   });
 
   editor.on({
-    afteredit: function(roweditor, changes, record, rowIndex) {
-      //
+    beforeedit: function(roweditor, rowIndex)
+    {
+        setTimeout(
+            function ()
+            {
+                var fieldTypeValue = Ext.getCmp("fieldType").getValue();
+                var fieldNull = Ext.getCmp("field_null");
+                var fieldPrimaryKey = Ext.getCmp("field_primary_key");
+                var fieldInc = Ext.getCmp("field_incre");
+                var sizeEdit = Ext.getCmp("sizeEdit");
+
+                editorFieldsEnableDisable(fieldTypeValue, fieldNull, fieldPrimaryKey, fieldInc, sizeEdit);
+            },
+            250
+        );
     },
-    afteredit: function(roweditor, rowIndex) {
+    afteredit: function(roweditor, changes, r, rowIndex)
+    {
       row = assignedGrid.getSelectionModel().getSelected();
       //if a column was set as PK so can't be null
       if (row.get('field_key') == true) {
@@ -316,6 +421,7 @@ Ext.onReady(function(){
     ddGroup         : 'availableGridDDGroup',
     enableDragDrop  : true,
     enableColumnResize : true,
+    enableColumnMove: false,
     viewConfig    : {forceFit:true},
     cm: cm,
     sm: sm,
@@ -547,10 +653,11 @@ Ext.onReady(function(){
     xtype:'textfield',
     emptyText: _("ID_SET_A_TABLE_NAME"),
     width: 250,
+    autoCreate: {tag: "input", type: "text", autocomplete: "off", maxlength: sizeTableName },
     stripCharsRe: /(\W+)/g,
     listeners:{
       change: function(){
-        this.setValue(this.getValue().toUpperCase())
+        this.setValue(this.getValue().toUpperCase());
       }
     }
   });
@@ -643,7 +750,7 @@ Ext.onReady(function(){
   if (dataNumRows > 0) {
     var tpl = new Ext.Template(
         '<div id="fb" style="border: 1px solid #FF0000; background-color:#FFAAAA; display:none; padding:15px; color:#000000; font-size:12px;">'+
-        '<b>Warning: </b> ' + dataNumRows + ' ' + _('ID_PMTABLE_DATA_EXISTS_WARNINIG') + ' <a href="#" id="hideWarning">[ '+_('ID_HIDE')+' ]</a></div>'
+        '<b>Warning: </b> ' + dataNumRows + ' ' + _('ID_PMTABLE_DATA_EXISTS_WARNINIG') + ' <a href="#" id="hideWarning" onclick="return false;">[ '+_('ID_HIDE')+' ]</a></div>'
     );
     var newEl = tpl.insertFirst(document.getElementById('assignedGrid'));
 
@@ -786,7 +893,7 @@ function createReportTable()
         if (dbg) {
           _showDebugWin(resp.responseText);
         } else {
-          PMExt.error('ERROR', 'Something was wrong.');
+          PMExt.error( _('ID_ERROR'), _('ID_SOMETHING_WRONG'));
         }
       }
     },
@@ -860,6 +967,95 @@ function removeColumn()
   });
 }
 
+function editorFieldsEnableDisable(fieldTypeValue, fieldNull, fieldPrimaryKey, fieldInc, sizeEdit)
+{
+    var swSize = 1; //Enable
+    var swNull = 1;
+    var swPK = 1;
+    var swAI = 1;
+
+    //Date
+    if (fieldTypeValue == "DATE" || fieldTypeValue == "DATETIME" || fieldTypeValue == "TIME") {
+        swSize = 0; //Disable
+        swPK = 0;
+        swAI = 0;
+    }
+
+    //Numbers
+    if (fieldTypeValue == "INTEGER" || fieldTypeValue == "BIGINT") {
+       //Enable All
+    }
+
+    if (fieldTypeValue == "TINYINT" || fieldTypeValue == "SMALLINT") {
+       swSize = 0;
+    }
+
+    if (fieldTypeValue == "DECIMAL" || fieldTypeValue == "FLOAT") {
+        swPK = 0;
+        swAI = 0;
+    }
+
+    if (fieldTypeValue == "DOUBLE" || fieldTypeValue == "REAL") {
+       swSize = 0;
+       swPK = 0;
+       swAI = 0;
+    }
+
+    //String
+    if (fieldTypeValue == "CHAR" || fieldTypeValue == "VARCHAR") {
+        swAI = 0;
+    }
+
+    if (fieldTypeValue == "LONGVARCHAR") {
+        swPK = 0;
+        swAI = 0;
+    }
+
+    //Boolean
+    if (fieldTypeValue == "BOOLEAN") {
+        swSize = 0;
+        swNull = 0;
+        swPK = 0;
+        swAI = 0;
+    }
+
+    //Set enable/disable
+    if (swNull == 1) {
+        fieldNull.enable();
+    } else {
+        fieldNull.disable();
+        fieldNull.setValue(false);
+    }
+
+    if (swPK == 1) {
+        fieldPrimaryKey.enable();
+    } else {
+        fieldPrimaryKey.disable();
+        fieldPrimaryKey.setValue(false);
+    }
+
+    if (swAI == 1) {
+        fieldInc.enable();
+    } else {
+        fieldInc.disable();
+        fieldInc.setValue(false);
+    }
+
+    if (swSize == 1) {
+        sizeEdit.enable();
+
+        if (fieldTypeValue == "CHAR" || fieldTypeValue == "VARCHAR" || fieldTypeValue == "LONGVARCHAR") {
+            sizeEdit.setMaxValue(((fieldTypeValue == "CHAR") ? 255 : 999));
+            sizeEdit.getEl().dom.maxLength = 3;
+        } else {
+            sizeEdit.setMaxValue(99);
+            sizeEdit.getEl().dom.maxLength = 2;
+        }
+    } else {
+        sizeEdit.disable();
+        sizeEdit.setValue("");
+    }
+}
 
 ////ASSIGNBUTON FUNCTIONALITY
 AssignFieldsAction = function(){
@@ -1003,8 +1199,8 @@ var DDLoadFields = function(){
         var meta = mapPMFieldType(records[i].data['FIELD_UID']);
         var row = new PMRow({
           uid  : '',
-          field_uid  : records[i].data['FIELD_UID'],
-          field_dyn  : records[i].data['FIELD_NAME'],
+          field_uid   : records[i].data['FIELD_UID'],
+          field_dyn   : records[i].data['FIELD_NAME'],
           field_name  : records[i].data['FIELD_NAME'].toUpperCase(),
           field_label : records[i].data['FIELD_NAME'].toUpperCase(),
           field_type  : meta.type,

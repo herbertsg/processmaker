@@ -21,38 +21,21 @@ public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.co
         
         pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
-        pages.DynaformExecution().outDynaform();
-				pages.Main().goHome();
+        //pages.DynaformExecution().outDynaform();
+		pages.Main().goHome();
 				
-				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRedirectToStep (Task 1)");
+		int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRedirectToStep (Task 1)");
         pages.DynaformExecution().intoDynaform();
-        
-        FormFieldData[] fieldArray=new FormFieldData[1];
-		    fieldArray[0]=new FormFieldData();
-				
-				fieldArray[0].fieldPath="form[SUBMIT]";
-		    fieldArray[0].fieldFindType=FieldKeyType.ID;
-		    fieldArray[0].fieldType=FieldType.BUTTON;
-		    fieldArray[0].fieldValue="";
-    		
-    		FormFiller.formFillElements( browserInstance, fieldArray);
-        pages.DynaformExecution().intoDynaform();
-		    FormFieldData[] fieldArray1=new FormFieldData[1];
-		    
-		    fieldArray1[0]=new FormFieldData();
-				fieldArray1[0].fieldPath="form[SUBMIT]";
-		    fieldArray1[0].fieldFindType=FieldKeyType.ID;
-		    fieldArray1[0].fieldType=FieldType.BUTTON;
-		    fieldArray1[0].fieldValue="";
-		    
-		    String fieldSTEP = pages.DynaformExecution().getFieldProperty("STEP","value");
-		    
-		    Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
-		    
-		    FormFiller.formFillElements( browserInstance, fieldArray1);
-		    pages.AssignTask().pressContinueButton();
-			pages.DynaformExecution().outDynaform();
-			pages.Main().logout();
+
+        pages.DynaformExecution().clickButton("SUBMIT");
+
+        String fieldSTEP = pages.DynaformExecution().getFieldValue("STEP"); //.getFieldProperty("STEP","value");
+
+        Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
+
+		    //pages.AssignTask().pressContinueButton();
+			//pages.DynaformExecution().outDynaform();
+			//pages.Main().logout();
 	}
 
     @After

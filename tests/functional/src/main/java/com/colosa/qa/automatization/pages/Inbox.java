@@ -38,10 +38,12 @@ public class Inbox extends Page {
         Logger.addLog("wait for casesgrid ...");
         //browser.waitForElement(By.id("processesFilter"), 10);
 
-        browser.findElementById("casesGrid");
+        browser.waitForElement(By.id("casesGrid"), 10);
+        //browser.findElementById("casesGrid");
     }
 
     public void openCase(Integer numCase)throws Exception{
+        Logger.addLog("Inbox opencase:" + numCase.toString());
         browser.switchToDefaultContent();
         browser.waitForElement(By.id("casesFrame"),120);
         browser.switchToFrame("casesFrame");

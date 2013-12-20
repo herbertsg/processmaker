@@ -75,7 +75,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Login().loginUser("Brianna", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData3 = new FormFieldData[2];
 		arrayData3[0] = new FormFieldData();
 		arrayData3[1] = new FormFieldData();
@@ -101,7 +101,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Login().loginUser("Benjamin", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData7 = new FormFieldData[17];
 		arrayData7[0] = new FormFieldData();
 		arrayData7[1] = new FormFieldData();
@@ -212,7 +212,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Login().loginUser("Ian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData9 = new FormFieldData[3];
 		arrayData9[0] = new FormFieldData();
 		arrayData9[1] = new FormFieldData();
@@ -243,7 +243,7 @@ public class TestExpenseReport extends com.colosa.qa.automatization.tests.common
 		pages.Login().loginUser("Jason", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData10 = new FormFieldData[2];
 		arrayData10[0] = new FormFieldData();
 		arrayData10[1] = new FormFieldData();

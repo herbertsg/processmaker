@@ -35,7 +35,7 @@ public class TestWebEntry extends com.colosa.qa.automatization.tests.common.Test
         pages.Login().loginUser("admin","admin","workflow", "English"); //"cochalo");
         pages.Main().goHome();
         pages.Home().gotoInbox();
-        pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox().openCase(numberNewCase);
 
         // get the value of field NAME after the form
         String fielNAME = pages.DynaformExecution().getFieldValue("NAME");

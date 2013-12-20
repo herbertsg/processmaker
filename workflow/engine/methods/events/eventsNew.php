@@ -46,8 +46,10 @@ foreach ($aAux1 as $aAux2) {
 }
 
 $oProcessMap = new processMap( new DBConnection() );
-$aTriggersList = $oProcessMap->getTriggers( $_SESSION['PROCESS'] );
-$aTriggersFileds = Array ('TRI_UID' => 'char','TRI_TITLE' => 'char');
+$aTriggersList = $oProcessMap->getTriggers( $_GET['PRO_UID'] );
+
+$aTriggersFileds = array();
+$aTriggersFileds[] = array ("TRI_UID" => "char", "TRI_TITLE" => "char");
 
 foreach ($aTriggersList as $i => $v) {
     unset( $aTriggersList[$i]['PRO_UID'] );
@@ -59,7 +61,6 @@ $aTriggersList = array_merge( $aTriggersFileds, $aTriggersList );
 
 $_DBArray['tasks'] = $aTasks;
 $_DBArray['TMP_TRIGGERS'] = $aTriggersList;
-
 $_SESSION['_DBArray'] = $_DBArray;
 
 $G_PUBLISH = new Publisher();

@@ -73,10 +73,18 @@ if(count ($argv) > 3) {
   }
 }
 
+$debug = 1;
 
 ini_set ('display_errors', 1);
-error_reporting (E_ALL);
+//error_reporting (E_ALL);
 ini_set ('memory_limit', '256M'); // set enough memory for the script
+
+$e_all = defined( 'E_DEPRECATED' ) ? E_ALL & ~ E_DEPRECATED : E_ALL;
+$e_all = defined( 'E_STRICT' ) ? $e_all & ~ E_STRICT : $e_all;
+$e_all = $debug ? $e_all : $e_all & ~ E_NOTICE;
+
+ini_set( 'error_reporting', $e_all );
+
 
 if (! defined ('SYS_LANG')) {
   define ('SYS_LANG', 'en');
@@ -104,6 +112,9 @@ if (! defined ('PATH_HOME')) {
   define ('PATH_OUTTRUNK', $pathOutTrunk);
   
   require_once (PATH_HOME . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php');
+  require_once (PATH_GULLIVER . "class.bootstrap.php");
+  Bootstrap::registerSystemClasses();
+  spl_autoload_register(array('Bootstrap', 'autoloadClass'));
   
   G::LoadThirdParty ('pear/json', 'class.json');
   G::LoadThirdParty ('smarty/libs', 'Smarty.class');
@@ -306,7 +317,7 @@ function processWorkspace()
         if($appUid == ""){
           print "Missing -appuid parameter. please complete it with this option.\n";
         }
-        $oAppSolr->updateApplicationSearchIndex ($appUid);
+        $oAppSolr->updateApplicationSearchIndex ($appUid, false);
       }
     }
     else {

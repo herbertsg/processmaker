@@ -41,7 +41,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
         pages.DynaformExecution().intoDynaform();
 
         Assert.assertEquals(lastName, pages.DynaformExecution().getFieldValue("lastname"));
@@ -57,7 +57,7 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("hector", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Send", "");

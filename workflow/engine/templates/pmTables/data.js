@@ -19,16 +19,16 @@ var isReport;
 Ext.onReady(function(){
 
   pageSize = 20; //parseInt(CONFIG.pageSize);
-  
+
   isReport = tableDef.PRO_UID ? true : false;
-  
+
   newButton = new Ext.Action({
     text    : _('ID_ADD_ROW'),
     iconCls : 'button_menu_ext ss_sprite ss_add',
     handler : NewPMTableRow,
     disabled: (isReport ? true : false)
   });
-  
+
   editButton = new Ext.Action({
     text     : _('ID_EDIT'),
     iconCls  : 'button_menu_ext ss_sprite  ss_pencil',
@@ -58,40 +58,76 @@ Ext.onReady(function(){
   });
 
   genDataReportButton = new Ext.Action({
-    text: 'Regenerate Data Report',
+    text: _('ID_REGENERATE_DATA_REPORT'),
     iconCls: 'silk-add',
     icon: '/images/database-tool.png',
     handler: genDataReport,
     disabled: false
   });
-  
+
   backButton = new Ext.Action({
     text    : _('ID_BACK'),
     icon    : '/images/back-icon.png',
     handler : BackPMList
   });
-  
+
+  searchButton = new Ext.Action({
+    text: _('ID_SEARCH'),
+    handler: DoSearch
+  });
+
   contextMenu = new Ext.menu.Menu({
       items : [ editButton, deleteButton ]
   });
   
+  searchText = new Ext.form.TextField ({
+    id: 'searchTxt',
+    ctCls:'pm_search_text_field',
+    allowBlank: true,
+    width: 150,
+    emptyText: _('ID_ENTER_SEARCH_TERM'),
+    listeners: {
+      specialkey: function(f,e){
+        if (e.getKey() == e.ENTER) {
+          DoSearch();
+        }
+      },
+      focus: function(f,e) {
+        var row = infoGrid.getSelectionModel().getSelected();
+        infoGrid.getSelectionModel().deselectRow(infoGrid.getStore().indexOf(row));
+      }
+    }
+  });
+
+  clearTextButton = new Ext.Action({
+    text: 'X',
+    ctCls:'pm_search_x_button',
+    handler: GridByDefault
+  });
+
   //This loop loads columns and fields to store and column model
   _columns    = new Array();
   _fields     = new Array();
   _idProperty = '__index__';
 
- //default generated id
+  //default generated id
   _columns.push({
     id     : _idProperty,
-    hidden : true
+    hidden : true,
+    hideable: false
   });
 
   _fields.push({name: _idProperty});
-  
+
   for (i=0;i<tableDef.FIELDS.length; i++) {
+    if (tableDef.FIELDS[i].FLD_KEY==1) {
+      blank=false;
+    } else{
+      blank=true;
+    };
     switch (tableDef.FIELDS[i].FLD_TYPE) {
       case 'DATE':
-        columnRenderer = function (value) { 
+        columnRenderer = function (value) {
           if (!value) return;
 
           if (!value.dateFormat)
@@ -99,12 +135,12 @@ Ext.onReady(function(){
           else
             return value.dateFormat('Y-m-d');
         }
-        columnAlign = 'left';  
+        columnAlign = 'left';
         columnEditor = {
           xtype      : 'datefield',
           format     : 'Y-m-d',
-          allowBlank : true
-        }; 
+          allowBlank : blank
+        };
         break;
 
       case 'INTEGER': case 'INT': case 'FLOAT': case 'DOUBLE' :
@@ -112,17 +148,24 @@ Ext.onReady(function(){
         columnAlign = 'right';
         columnEditor = {
           xtype      : 'numberfield',
-          format     : 'Y-m-d',
-          allowBlank : true
-        }; 
+          decimalPrecision : 8,
+          allowBlank : blank
+        };
         break;
-      
+
       default:
         columnRenderer = {};
         columnAlign = 'left';
         columnEditor = {
           xtype      : 'textfield',
-          allowBlank : true
+          allowBlank : blank
+        };
+    }
+
+    if (blank == false) {
+        columnEditor.validator = function (text)
+        {
+            return (this.allowBlank == false && Ext.util.Format.trim(text).length == 0)? _("ID_FIELD_REQUIRED") : true;
         };
     }
 
@@ -130,8 +173,8 @@ Ext.onReady(function(){
       id        : tableDef.FIELDS[i].FLD_NAME,
       header    : tableDef.FIELDS[i].FLD_DESCRIPTION,
       dataIndex : tableDef.FIELDS[i].FLD_NAME,
-      width     : 40,
-      align     : 'right',
+      width     : 95,
+      align     : 'center',
       renderer  : columnRenderer
     };
     if (tableDef.FIELDS[i].FLD_AUTO_INCREMENT != 1) {
@@ -144,15 +187,20 @@ Ext.onReady(function(){
       }
     }
     _columns.push(column);
-    
+
     _fields.push({name: tableDef.FIELDS[i].FLD_NAME});
 
     if(_idProperty == '' && tableDef.FIELDS[i].FLD_KEY) {
       _idProperty = tableDef.FIELDS[i].FLD_NAME;
     }
   }
-  
-  
+
+  if (navigator.userAgent.toLowerCase().indexOf("chrome") != -1){
+    if (_columns.length > 7) {
+        _columns.push({header:"", dataIndex:"", width: 30, menuDisabled: true, hideable: false});
+    }
+  }
+
   smodel = new Ext.grid.CheckboxSelectionModel({
     listeners:{
       selectionchange : function(sm){
@@ -167,7 +215,6 @@ Ext.onReady(function(){
            case 1:
              editButton.enable();
              deleteButton.enable();
-             
              break;
            default:
              editButton.disable();
@@ -179,17 +226,51 @@ Ext.onReady(function(){
   });
 
   //row editor for table columns grid
+  var flagShowMessageError = 1;
+
   if (!isReport) {
-    editor = new Ext.ux.grid.RowEditor({
+      editor = new Ext.ux.grid.RowEditor({
       saveText  : _("ID_UPDATE"),
+      isValid: function ()
+      {
+           var valid = true;
+           this.items.each(function(f) {
+               if(!f.isValid(true)){
+                   valid = false;
+
+                   if (valid) {
+                       flagShowMessageError = 1;
+                   }
+
+                   return false;
+               }
+           });
+
+           if (valid) {
+               flagShowMessageError = 1;
+           }
+
+           return valid;
+      },
+      showTooltip: function (msg)
+      {
+           if (flagShowMessageError == 1) {
+               Ext.msgBoxSlider.msgTopCenter("error", _("ID_ERROR"), msg, 3);
+               flagShowMessageError = 0;
+           }
+      },
       listeners : {
-  	    afteredit : {
-  	      fn:function(rowEditor, obj, data, rowIndex ){            	  
-    		    if (data.phantom === true) {
-    			  //store.reload(); // only if it is an insert 
-    	    	}
-  	      }
-  	    }
+        afteredit : {
+          fn:function(rowEditor, obj, data, rowIndex ){
+            if (data.phantom === true) {
+            //store.reload(); // only if it is an insert
+            }
+          }
+        },
+        canceledit: function (grid, obj)
+        {
+            flagShowMessageError = 1;
+        }
       }
     });
   }
@@ -200,19 +281,19 @@ Ext.onReady(function(){
 
   // all exception events
   Ext.data.DataProxy.addListener('exception', function(proxy, type, action, options, res) {
-    
+
     if (typeof res.responseText != 'undefined') {
       response = Ext.util.JSON.decode(res.responseText);
       msg = response.message;
     }
-    
+
     if (typeof res.raw != 'undefined') {
       msg = res.raw.msg;
     }
 
-    if(msg == '$$' || typeof msg == 'undefined') 
+    if(msg == '$$' || typeof msg == 'undefined')
       return false;
-    
+
 
     PMExt.error(_('ID_ERROR'), msg);
     infoGrid.store.reload();
@@ -242,8 +323,9 @@ Ext.onReady(function(){
     idProperty : _idProperty,
     totalProperty: 'count'
   })
-  
+
   store = new Ext.data.Store({
+    remoteSort: true,
     proxy : proxy,
     reader : reader,
     writer : writer, // <-- plug a DataWriter into the store just as you would a Reader
@@ -257,13 +339,13 @@ Ext.onReady(function(){
     },
     columns: _columns
   });
-  
+
   storePageSize = new Ext.data.SimpleStore({
     fields: ['size'],
      data: [['20'],['30'],['40'],['50'],['100']],
      autoLoad: true
   });
-    
+
   comboPageSize = new Ext.form.ComboBox({
     typeAhead     : false,
     mode          : 'local',
@@ -281,9 +363,9 @@ Ext.onReady(function(){
       }
     }
   });
-    
+
   comboPageSize.setValue(pageSize);
-  
+
   bbarpaging = new Ext.PagingToolbar({
     pageSize: pageSize,
     store: store,
@@ -292,21 +374,28 @@ Ext.onReady(function(){
     emptyMsg: _('ID_GRID_PAGE_NO_ROWS_MESSAGE'),
     items: ['-',_('ID_PAGE_SIZE')+':',comboPageSize]
   });
-  
+
   if (!isReport) {
-    tbar = [ 
+    tbar = [
       newButton,
       '-',
       editButton,
       deleteButton,
       '-',
       importButton,
-      exportButton
+      exportButton,
+      '->',
+      searchText,
+      clearTextButton,
+      searchButton
     ];
   }
-  else 
-    tbar = [genDataReportButton];
-  
+  else
+	tbar = [genDataReportButton, 
+       '->',
+       searchText,
+       clearTextButton,
+       searchButton];
 
   infoGridConfig = {
     region: 'center',
@@ -316,13 +405,13 @@ Ext.onReady(function(){
     autoWidth : true,
     //title : _('ID_PM_TABLE') + " : " + tableDef.ADD_TAB_NAME,
     stateful : true,
-    stateId : 'grid',
+    stateId : 'gridData',
     enableColumnResize: true,
     enableHdMenu: true,
     frame:false,
     columnLines: false,
     viewConfig: {
-      forceFit:true
+      forceFit:false
     },
     store: store,
     loadMask: true,
@@ -331,23 +420,23 @@ Ext.onReady(function(){
     tbar: tbar,
     bbar: bbarpaging
   }
-  
+
   if (!isReport) {
     infoGridConfig.plugins = new Array();
     infoGridConfig.plugins.push(editor);
   }
-  
+
   infoGrid = new Ext.grid.GridPanel(infoGridConfig);
-  
+
   if (!isReport) {
-    infoGrid.on('rowcontextmenu', 
+    infoGrid.on('rowcontextmenu',
       function (grid, rowIndex, evt) {
           var sm = grid.getSelectionModel();
           sm.selectRow(rowIndex, sm.isSelected(rowIndex));
       },
       this
     );
-      
+
     infoGrid.on('contextmenu', function(evt){evt.preventDefault();}, this);
     infoGrid.addListener('rowcontextmenu',onMessageContextMenu, this);
   }
@@ -373,6 +462,19 @@ onMessageContextMenu = function (grid, rowIndex, e) {
 
 /////JS FUNCTIONS
 
+//Do Search Function
+DoSearch = function(){
+   infoGrid.store.setBaseParam('textFilter', searchText.getValue());
+   infoGrid.store.load({params: {start : 0 , limit : pageSize }});
+};
+
+//Load Grid By Default
+GridByDefault = function(){
+  searchText.reset();
+  infoGrid.store.setBaseParam('textFilter', searchText.getValue());
+  infoGrid.store.load();
+}; 
+
 //Capitalize String Function
 capitalize = function(s){
   s = s.toLowerCase();
@@ -391,23 +493,41 @@ NewPMTableRow = function(){
   }
   var PMRow = infoGrid.getStore().recordType;
   //var meta = mapPMFieldType(records[i].data['FIELD_UID']);
-  
+
   for(i=0; i<_fields.length; i++) {
     props.prototype[_fields[i].name] = '';
   }
 
   var row = new PMRow(new props);
   len = infoGrid.getStore().data.length;
-  
-  editor.stopEditing();
-  store.insert(len, row);
-  infoGrid.getView().refresh();
-  infoGrid.getSelectionModel().selectRow(len);
-  editor.startEditing(len);
+  if (len>0) {
+      var emptyrow=0;
+      for (var i = 0; i < tableDef.FIELDS.length; i++) {
+        if (infoGrid.store.getAt(len-1).data[tableDef.FIELDS[i].FLD_NAME]=="") {
+          emptyrow++;
+        };
+      };
+      if (emptyrow==tableDef.FIELDS.length) {
+        PMExt.error( _('ID_ERROR'), _('ID_EMPTY_ROW'));
+        store.load();
+      } else{
+        editor.stopEditing();
+        store.insert(len, row);
+        infoGrid.getView().refresh();
+        infoGrid.getSelectionModel().selectRow(len);
+        editor.startEditing(len);
+      }
+    } else{
+      editor.stopEditing();
+      store.insert(len, row);
+      infoGrid.getView().refresh();
+      infoGrid.getSelectionModel().selectRow(len);
+      editor.startEditing(len);
+    }
 };
 
 //Load PM Table Edition Row Form
-EditPMTableRow = function(){ 
+EditPMTableRow = function(){
   var row = Ext.getCmp('infoGrid').getSelectionModel().getSelected();
   var selIndex = store.indexOfId(row.id);
   editor.stopEditing();
@@ -418,7 +538,7 @@ EditPMTableRow = function(){
 
 //Confirm PM Table Row Deletion Tasks
 DeletePMTableRow = function(){
-  
+
   PMExt.confirm(_('ID_CONFIRM'), _('ID_CONFIRM_REMOVE_FIELD'), function(){
     var records = Ext.getCmp('infoGrid').getSelectionModel().getSelections();
     Ext.each(records, Ext.getCmp('infoGrid').store.remove, Ext.getCmp('infoGrid').store);
@@ -432,12 +552,12 @@ DeletePMTableRow = function(){
 //};
 
 ImportPMTableCSV = function(){
-      
+
   var comboDelimiter = new Ext.data.SimpleStore({
                           fields : ['id', 'value'],
                           data   : [[';', 'SemiColon (;)'],
                                     [',', 'Comma (,)']]
-                       });      
+                       });
   var w = new Ext.Window({
     title       : '',
     width       : 440,
@@ -464,8 +584,8 @@ ImportPMTableCSV = function(){
         items : [{
             xtype      : 'fileuploadfield',
             id         : 'csv-file',
-            emptyText  : 'Select a file',
-            fieldLabel : 'CSV File',
+            emptyText  : _('ID_SELECT_FILE'),
+            fieldLabel : _('ID_CSV_FILE'),
             name       : 'form[CSV_FILE]',
             buttonText : '',
             buttonCfg  : {
@@ -474,7 +594,7 @@ ImportPMTableCSV = function(){
         }, {
           xtype         : 'combo',
           id            : 'csv-delimiter',
-          fieldLabel    : 'Delimited by',
+          fieldLabel    : _('ID_DELIMITED_BY'),
           hiddenName    : 'form[CSV_DELIMITER]',
           mode          : 'local',
           store         : comboDelimiter,
@@ -484,7 +604,7 @@ ImportPMTableCSV = function(){
           triggerAction : 'all',
           emptyText     : _('ID_SELECT'),
           selectOnFocus : true
-          
+
         },{
           xtype : 'hidden',
           name  : 'form[ADD_TAB_UID]',
@@ -501,7 +621,8 @@ ImportPMTableCSV = function(){
                 if(uploader.getForm().isValid()){
                   uploader.getForm().submit({
                     url      : '../pmTablesProxy/importCSV',
-                    waitMsg  : 'Uploading file...',
+                    waitMsg  : _('ID_UPLOADING_FILE'),
+                    waitTitle : "&nbsp;",
                     success  : function(o, resp){
                       w.close();
                       infoGrid.store.reload();
@@ -510,21 +631,21 @@ ImportPMTableCSV = function(){
                     },
                     failure: function(o, resp){
                       w.close();
-                      Ext.MessageBox.show({title: '', 
+                      Ext.MessageBox.show({title: '',
                                             msg     : resp.result.message,
-                                            buttons : Ext.MessageBox.OK, 
-                                            animEl  : 'mb9', 
-                                            fn      : function(){}, 
+                                            buttons : Ext.MessageBox.OK,
+                                            animEl  : 'mb9',
+                                            fn      : function(){},
                                             icon    : Ext.MessageBox.ERROR
                                           });
                     }
                   });
                 }
               } else {
-                Ext.MessageBox.show({ title   : '', 
+                Ext.MessageBox.show({ title   : '',
                                       msg     : _('ID_INVALID_EXTENSION') + ' ' + fileType,
                                       buttons : Ext.MessageBox.OK,
-                                      animEl  : 'mb9', 
+                                      animEl  : 'mb9',
                                       fn      : function(){},
                                       icon    : Ext.MessageBox.ERROR
                                     });
@@ -576,7 +697,7 @@ ExportPMTableCSV = function(){
         items : [{
           xtype         : 'combo',
           id            : 'csv_delimiter',
-          fieldLabel    : 'Delimited by',
+          fieldLabel    : _('ID_DELIMITED_BY'),
           hiddenName    : 'form[CSV_DELIMITER]',
           mode          : 'local',
           store         : comboDelimiter,
@@ -646,7 +767,7 @@ ExportPMTableCSV = function(){
         }]
       })
     ]
-    
+
   });
   w.show();
 }

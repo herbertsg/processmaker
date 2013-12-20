@@ -23,8 +23,7 @@ Ext.onReady(function() {
     items: [
       {xtype: 'label', fieldLabel: _('IS_USER_NAME_DISPLAY_FORMAT'), id: 'lblFullName', width: 400},
       {xtype: 'label', fieldLabel: _('ID_GLOBAL_DATE_FORMAT'), id: 'lblDateFormat', width: 400},
-      {xtype: 'label', fieldLabel: _('ID_CASE_LIST') +': '+_('ID_CASES_DATE_MASK'), id: 'lblCasesDateFormat', width: 400}
-      //,
+      {xtype: 'label', fieldLabel: _('ID_CASE_LIST') +': '+_('ID_CASES_DATE_MASK'), id: 'lblCasesDateFormat', width: 400}//,
       //{xtype: "label", fieldLabel: _("ID_CASE_LIST") + ": " +_("ID_CASES_ROW_NUMBER"), id: "lblCasesRowsList", width: 400},
       //{xtype: "label", fieldLabel: _("ID_CASE_LIST") + ": " + _("ID_REFRESH_TIME_SECONDS"), id: "lblCasesRefreshTime", width: 400}
     ]
@@ -97,6 +96,7 @@ Ext.onReady(function() {
   cmbDateFormat = new Ext.form.ComboBox({
     fieldLabel : _('ID_GLOBAL_DATE_FORMAT'),
     hiddenName : 'dateFormat',
+    width: 330,
     store : storeDateFormat,
     mode: 'remote',
     valueField : 'id',
@@ -143,6 +143,7 @@ Ext.onReady(function() {
   cmbCasesDateFormat = new Ext.form.ComboBox({
     fieldLabel : _('ID_CASES_DATE_MASK'),
     hiddenName : 'casesListDateFormat',
+    width: 330,
     store : storeCasesDateFormat,
     valueField : 'id',
     displayField : 'name',
@@ -206,7 +207,7 @@ Ext.onReady(function() {
     }
   });
 
-  txtCasesRefreshTime = new Ext.form.TextField({
+  txtCasesRefreshTime = new Ext.form.NumberField({
       id: "txtCasesRefreshTime",
       name: "txtCasesRefreshTime",
 
@@ -214,6 +215,9 @@ Ext.onReady(function() {
       fieldLabel: _("ID_REFRESH_TIME_SECONDS"),
       maskRe: /^\d*$/,
       enableKeyEvents: true,
+      
+      minValue: 90,
+      maxValue: 14400,
 
       listeners: {
           keyup: function (txt, e)
@@ -271,10 +275,17 @@ Ext.onReady(function() {
       formSettings.getForm().submit({
         url : 'environmentSettingsAjax?request=save&r=' + Math.random(),
         waitMsg : _('ID_SAVING_ENVIRONMENT_SETTINGS')+'...',
+        waitTitle : "&nbsp;",
         timeout : 36000,
         success : function(res, req) {
-        PMExt.notify(_('ID_PM_ENV_SETTINGS_TITLE'), req.result.msg);
-        saveButton.disable();
+            PMExt.notify(_('ID_PM_ENV_SETTINGS_TITLE'), req.result.msg);
+            saveButton.disable();
+            currentLocation = parent.parent.location.href;
+            //frame = parent.location.href;
+            //settingsPage = location.href;
+            //location = settingsPage;
+            //parent.location = frame;
+            parent.parent.location = currentLocation; 
         }
       });
     }

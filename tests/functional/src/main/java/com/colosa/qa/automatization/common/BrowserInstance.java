@@ -122,7 +122,11 @@ public class BrowserInstance {
                 _instanceDriver = new InternetExplorerDriver();
             }
             if(browserName.equals("firefox")){
-			    _instanceDriver = new FirefoxDriver();
+                //FirefoxProfile profile = allProfiles.getProfile("develop");
+                DesiredCapabilities firefox = DesiredCapabilities.firefox();
+                firefox.setCapability("elementScrollBehavior", 1);
+                //firefox.setCapability(FirefoxDriver.PROFILE, profile);
+			    _instanceDriver = new FirefoxDriver(firefox);
             }
 
 		}
@@ -145,7 +149,8 @@ public class BrowserInstance {
 			}else if(browserName.equals("ie")){
 				desiredCapabilities = DesiredCapabilities.internetExplorer();					
 			}else if(browserName.equals("firefox")){
-				desiredCapabilities = DesiredCapabilities.firefox();					
+				desiredCapabilities = DesiredCapabilities.firefox();
+                desiredCapabilities.setCapability("elementScrollBehavior", 1);
 			}
 
 			if(browserVersion != null && !browserVersion.equals("")){
@@ -541,6 +546,15 @@ public class BrowserInstance {
         }
     }
 
+    public void waitForTextNotEqual(final WebElement targetElement, final String oldText, long timeoutSeconds) throws Exception{
+        (new WebDriverWait(_instanceDriver, timeoutSeconds)).until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver d) {
+                if(!targetElement.getText().equals(oldText)){
+                    return true;
+                }else { return false; }
+            }
+        });
+    }
 
 	public void waitForElement(String key, long timeoutSeconds) throws Exception{
 

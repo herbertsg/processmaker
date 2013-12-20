@@ -82,7 +82,7 @@ public class TestMultipleGridsDependentFields extends com.colosa.qa.automatizati
 		pages.InputDocProcess().switchToDefault();
 		pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNumber));
-		pages.Home().openCase(caseNumber);
+		pages.Home().gotoInbox().openCase(caseNumber);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[birthS]"), "BO");
 		Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[countryResidence]"), "AR");

@@ -66,7 +66,7 @@ public class PmslaReport extends Page{
 			browser.switchToFrame("casesFrame");
 			browser.switchToFrame("casesSubFrame");
 			browser.switchToFrame("iframe-id_tab_pmsla");
-			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser);
 			String timesExecuted;
 			String timesExceeded;
 			String averangeExceeded;
@@ -89,7 +89,7 @@ public class PmslaReport extends Page{
 			browser.switchToFrame("casesFrame");
 			browser.switchToFrame("casesSubFrame");
 			browser.switchToFrame("iframe-id_tab_pmsla");
-			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser);
 			WebElement row = grid.getRowByColumnValue("SLA", slaName);
 			if(row==null)
 					throw new Exception("SLA not found");
@@ -104,7 +104,7 @@ public class PmslaReport extends Page{
 			browser.switchToFrame("casesFrame");
 			browser.switchToFrame("casesSubFrame");
 			browser.switchToFrame("iframe-id_tab_pmsla");
-			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser);
 			String exceeded;
 			String startDate;
 			String dueDate;
@@ -135,7 +135,7 @@ public class PmslaReport extends Page{
 			browser.switchToFrame("casesFrame");
 			browser.switchToFrame("casesSubFrame");
 			browser.switchToFrame("iframe-id_tab_pmsla");
-			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser.getInstanceDriver());
+			ExtJSGrid grid = new ExtJSGrid(browser.findElementByXPath("//div[@class='x-panel x-grid-panel']"), browser);
 			String caseNumString = NumberFormat.getIntegerInstance().format(caseNum);
 			if(caseNumString.contains("."))
 			{

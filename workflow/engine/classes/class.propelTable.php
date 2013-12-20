@@ -63,6 +63,7 @@ class propelTable
     public $query;
     public $totPages;
     public $totRows;
+    public $sortable = '1';
 
     //SQL QUERIES
     public $criteria;
@@ -329,6 +330,7 @@ class propelTable
                 $this->style[$r]['showInTable'] = '0';
             }
         }
+
         //Render headers
         $this->colCount = 0;
         $this->shownFields = '[';
@@ -338,9 +340,14 @@ class propelTable
                 $this->tpl->newBlock( "headers" );
                 $sortOrder = (((isset( $this->aOrder[$this->fields[$r]['Name']] )) && ($this->aOrder[$this->fields[$r]['Name']] === 'ASC')) ? 'DESC' : 'ASC');
                 $sortOrder = (((isset( $this->aOrder[$this->fields[$r]['Name']] )) && ($this->aOrder[$this->fields[$r]['Name']] === 'DESC')) ? '' : $sortOrder);
+
                 if ($this->style[$r]['titleVisibility'] != '0') {
                     $this->style[$r]['href'] = $this->ownerPage . '?order=' . ($sortOrder !== '' ? (G::createUID( '', $this->fields[$r]['Name'] ) . '=' . $sortOrder) : '') . '&page=' . $this->currentPage;
-                    $this->style[$r]['onsort'] = $this->id . '.doSort("' . G::createUID( '', $this->fields[$r]['Name'] ) . '" , "' . $sortOrder . '");return false;';
+                    if ($this->sortable == '0') {
+                        $this->style[$r]['onsort'] = $this->id . '.doSort("' . G::createUID( '', $this->fields[$r]['Name'] ) . '" , ""); return false;';;
+                    } else {
+                        $this->style[$r]['onsort'] = $this->id . '.doSort("' . G::createUID( '', $this->fields[$r]['Name'] ) . '" , "' . $sortOrder . '"); return false;';
+                    }
                 } else {
                     $this->style[$r]['href'] = '#';
                     $this->style[$r]['onsort'] = 'return false;';
@@ -440,7 +447,11 @@ class propelTable
         $this->xmlForm->setValues( $result );
         //var_dump($fieldName, $fieldClass );echo '<br /><br />';
         if (array_search( 'renderTable', get_class_methods( $fieldClass ) ) !== false) {
-            $htmlField = $this->xmlForm->fields[$fieldName]->renderTable( $value, $this->xmlForm, true );
+            if ($value == '-') {
+                $htmlField = $value;
+            } else {
+                $htmlField = $this->xmlForm->fields[$fieldName]->renderTable( $value, $this->xmlForm, true );
+            }
             if (is_object( $value )) {
                 $value = '';
             }

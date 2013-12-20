@@ -19,4 +19,8 @@ upgrade.log
 workflow/engine/gulliver
 workflow/public_html/index.html
 .DS_Store
+<<<<<<< HEAD
 
+=======
+.idea
+>>>>>>> upstream/master

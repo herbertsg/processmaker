@@ -18,6 +18,40 @@ require_once 'classes/model/om/BaseAdditionalTables.php';
  *
  * @package    workflow.engine.classes.model
  */
+
+function validateType ($value, $type)
+{
+    switch ($type) {
+        case 'INTEGER':
+            $value = str_replace(",", "", $value);
+            $value = str_replace(".", "", $value);
+            break;
+        case 'FLOAT':
+        case 'DOUBLE':
+            $pos = strrpos($value, ",");
+            $pos = ($pos === false) ? 0 : $pos;
+
+            $posPoint = strrpos($value, ".");
+            $posPoint = ($posPoint === false) ? 0 : $posPoint;
+
+            if ($pos > $posPoint) {
+                $value2 = substr($value, $pos+1);
+                $value1 = substr($value, 0, $pos);
+                $value1 = str_replace(".", "", $value1);
+                $value = $value1.".".$value2;
+            } else {
+                $value2 = substr($value, $posPoint+1);
+                $value1 = substr($value, 0, $posPoint);
+                $value1 = str_replace(",", "", $value1);
+                $value = $value1.".".$value2;
+            }
+            break;
+        default:
+            break;
+    }
+    return $value;
+}
+
 class AdditionalTables extends BaseAdditionalTables
 {
     public $fields = array();
@@ -309,7 +343,7 @@ class AdditionalTables extends BaseAdditionalTables
         }
     }
 
-    public function getAllData($sUID, $start = null, $limit = null, $keyOrderUppercase = true)
+    public function getAllData($sUID, $start = null, $limit = null, $keyOrderUppercase = true, $filter = '')
     {
         $addTab = new AdditionalTables();
         $aData = $addTab->load($sUID, true);
@@ -336,14 +370,60 @@ class AdditionalTables extends BaseAdditionalTables
         if ($keyOrderUppercase == true) {
             foreach ($aData['FIELDS'] as $aField) {
                 eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
-                if ($aField['FLD_KEY'] == '1') {
+                /*if ($aField['FLD_KEY'] == '1') {
                     eval('$oCriteria->addAscendingOrderByColumn('. $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
-                }
+                }*/
             }
         }
         $oCriteriaCount = clone $oCriteria;
         //$count = $sClassPeerName::doCount($oCriteria);
         eval('$count = ' . $sClassPeerName . '::doCount($oCriteria);');
+
+        if ($filter != '' && is_string($filter)) {
+            eval('$fieldsTable = ' . $sClassPeerName . '::getFieldNames(BasePeer::TYPE_FIELDNAME);');
+            $countField = count($fieldsTable);
+            $stringOr = '$oCriteria->add(';
+            $cont = 0;
+            $fieldAppUid = '';
+            foreach ($fieldsTable as $value) {
+            	if ($value != 'APP_UID') {
+	                if (($cont+1) == $countField) {
+	                    if ($aData['FIELDS'][$cont]['FLD_TYPE'] == 'VARCHAR') {
+	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "%' . $filter . '%", Criteria::LIKE)';
+	                    } else {
+	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "' . $filter . '", Criteria::LIKE)';
+	                    }
+	                } else {
+	                    if ($aData['FIELDS'][$cont]['FLD_TYPE'] == 'VARCHAR') {
+	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "%' . $filter . '%", Criteria::LIKE)->addOr(';
+	                    } else {
+	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "' . $filter . '", Criteria::LIKE)->addOr(';
+	                    }
+	                }
+                } else {
+                    $fieldAppUid = $cont;
+                }
+                $cont++;
+            }
+            for ($c = 0; $c < $countField-1; $c++) {            	
+                if ($fieldAppUid !== $c) {
+                	$stringOr .= ')';
+                }
+            }
+            $stringOr .= ');';
+            eval($stringOr);
+
+            $oCriteriaCount = clone $oCriteria;
+            eval('$count = ' . $sClassPeerName . '::doCount($oCriteria);');
+        }
+
+        if (isset($_POST['sort'])) {
+            if ($_POST['dir'] == 'ASC') {
+                eval('$oCriteria->addAscendingOrderByColumn(' . $sClassPeerName . '::' . $_POST['sort'] . ');');
+            } else {
+                eval('$oCriteria->addDescendingOrderByColumn(' . $sClassPeerName . '::' . $_POST['sort'] . ');');
+            }
+        }
 
         if (isset($limit)) {
             $oCriteria->setLimit($limit);
@@ -557,7 +637,7 @@ class AdditionalTables extends BaseAdditionalTables
      * @param string $sGrid
      * @return number
      */
-    public function populateReportTable($tableName, $sConnection = 'rp', $type = 'NORMAL', $processUid = '', $gridKey = '')
+    public function populateReportTable($tableName, $sConnection = 'rp', $type = 'NORMAL', $processUid = '', $gridKey = '', $addTabUid = '')
     {
         require_once "classes/model/Application.php";
 
@@ -588,10 +668,40 @@ class AdditionalTables extends BaseAdditionalTables
             // getting the case data
             $caseData = unserialize($row['APP_DATA']);
 
+            $fieldTypes = array();
+
+            if ($addTabUid != '') {
+                require_once 'classes/model/Fields.php';
+                $criteriaField = new Criteria('workflow');
+                $criteriaField->add(FieldsPeer::ADD_TAB_UID, $addTabUid);
+                $datasetField = FieldsPeer::doSelectRS($criteriaField);
+                $datasetField->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                while ($datasetField->next()) {
+                    $rowfield = $datasetField->getRow();
+                    switch ($rowfield['FLD_TYPE']) {
+                        case 'FLOAT':
+                        case 'DOUBLE':
+                        case 'INTEGER':
+                            $fieldTypes[] = array($rowfield['FLD_NAME']=>$rowfield['FLD_TYPE']);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             // quick fix
             // map all empty values as NULL for Database
             foreach ($caseData as $dKey => $dValue) {
                 if (!is_array($dValue)) {
+                    foreach ($fieldTypes as $key => $fieldType) {
+                        foreach ($fieldType as $name => $theType) {
+                            if (strtoupper($dKey) == $name) {
+                                $caseData[$dKey] = validateType ($dValue, $theType);
+                                unset($name);
+                            }
+                        }
+                    }
                     // normal fields
                     if (trim($dValue) === '') {
                         $caseData[$dKey] = null;
@@ -617,6 +727,9 @@ class AdditionalTables extends BaseAdditionalTables
                     $obj->fromArray($caseData, BasePeer::TYPE_FIELDNAME);
                     $obj->setAppUid($row['APP_UID']);
                     $obj->setAppNumber($row['APP_NUMBER']);
+                    if (method_exists($obj, 'setAppStatus')) {
+                        $obj->setAppStatus($row['APP_STATUS']);
+                    }
                     $obj->fromArray(array_change_key_case($gridRow, CASE_UPPER), BasePeer::TYPE_FIELDNAME);
                     $obj->setRow($i);
                     $obj->save();
@@ -627,6 +740,9 @@ class AdditionalTables extends BaseAdditionalTables
                 $obj->fromArray(array_change_key_case($caseData, CASE_UPPER), BasePeer::TYPE_FIELDNAME);
                 $obj->setAppUid($row['APP_UID']);
                 $obj->setAppNumber($row['APP_NUMBER']);
+                if (method_exists($obj, 'setAppStatus')) {
+                    $obj->setAppStatus($row['APP_STATUS']);
+                }
                 $obj->save();
                 $obj = null;
             }
@@ -640,7 +756,7 @@ class AdditionalTables extends BaseAdditionalTables
      * @param string $appNumber
      * @param string $caseData
      */
-    public function updateReportTables($proUid, $appUid, $appNumber, $caseData)
+    public function updateReportTables($proUid, $appUid, $appNumber, $caseData, $appStatus)
     {
         G::loadClass('pmTable');
         //get all Active Report Tables
@@ -666,11 +782,39 @@ class AdditionalTables extends BaseAdditionalTables
             eval('$c->add(' . $className . 'Peer::APP_UID, \'' . $appUid . '\');');
             eval('$records = ' . $className . 'Peer::doSelect($c);');
 
+            //Select all types
+            require_once 'classes/model/Fields.php';
+            $criteriaField = new Criteria('workflow');
+            $criteriaField->add(FieldsPeer::ADD_TAB_UID, $row['ADD_TAB_UID']);
+            $datasetField = FieldsPeer::doSelectRS($criteriaField);
+            $datasetField->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $fieldTypes = array();
+            while ($datasetField->next()) {
+                $rowfield = $datasetField->getRow();
+                switch ($rowfield['FLD_TYPE']) {
+                    case 'FLOAT':
+                    case 'DOUBLE':
+                    case 'INTEGER':
+                        $fieldTypes[] = array($rowfield['FLD_NAME']=>$rowfield['FLD_TYPE']);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             switch ($row['ADD_TAB_TYPE']) {
                 //switching by report table type
                 case 'NORMAL':
                     // parsing empty values to null
                     foreach ($caseData as $i => $v) {
+                        foreach ($fieldTypes as $key => $fieldType) {
+                            foreach ($fieldType as $name => $type) {
+                                if ( strtoupper ( $i) == $name) {
+                                    $v = validateType ($v, $type);
+                                    unset($name);
+                                }
+                            }
+                        }
                         $caseData[$i] = $v === '' ? null : $v;
                     }
 
@@ -678,6 +822,9 @@ class AdditionalTables extends BaseAdditionalTables
                         // if the record already exists on the report table
                         foreach ($records as $record) {
                             //update all records
+                            if (method_exists($record, 'setAppStatus')) {
+                                $record->setAppStatus($appStatus);
+                            }
                             $record->fromArray(array_change_key_case($caseData, CASE_UPPER), BasePeer::TYPE_FIELDNAME);
                             if ($record->validate()) {
                                 $record->save();
@@ -689,6 +836,9 @@ class AdditionalTables extends BaseAdditionalTables
                         $obj->fromArray(array_change_key_case($caseData, CASE_UPPER), BasePeer::TYPE_FIELDNAME);
                         $obj->setAppUid($appUid);
                         $obj->setAppNumber($appNumber);
+                        if (method_exists($obj, 'setAppStatus')) {
+                            $obj->setAppStatus($appStatus);
+                        }
                         $obj->save();
                     }
                     break;
@@ -705,9 +855,24 @@ class AdditionalTables extends BaseAdditionalTables
                     // save all grid rows on grid type report table
                     foreach ($gridData as $i => $gridRow) {
                         eval('$obj = new ' . $className . '();');
+                        //Parsing values
+                        foreach ($gridRow as $j => $v) {
+                            foreach ($fieldTypes as $key => $fieldType) {
+                                foreach ($fieldType as $name => $type) {
+                                    if ( strtoupper ( $j) == $name) {
+                                        $v = validateType ($v, $type);
+                                        unset($name);
+                                    }
+                                }
+                            }
+                            $gridRow[$j] = $v === '' ? null : $v;
+                        }
                         $obj->fromArray(array_change_key_case($gridRow, CASE_UPPER), BasePeer::TYPE_FIELDNAME);
                         $obj->setAppUid($appUid);
                         $obj->setAppNumber($appNumber);
+                        if (method_exists($obj, 'setAppStatus')) {
+                            $obj->setAppStatus($appStatus);
+                        }
                         $obj->setRow($i);
                         $obj->save();
                     }
@@ -776,6 +941,16 @@ class AdditionalTables extends BaseAdditionalTables
             $oCriteria->getNewCriterion(AdditionalTablesPeer::ADD_TAB_NAME, '%' . $filter . '%', Criteria::LIKE)->addOr(
             $oCriteria->getNewCriterion(AdditionalTablesPeer::ADD_TAB_DESCRIPTION, '%' . $filter . '%', Criteria::LIKE))
             );
+        }
+
+        if (isset($_POST['sort'])) {
+            if ($_POST['dir'] == 'ASC') {
+                eval('$oCriteria->addAscendingOrderByColumn(AdditionalTablesPeer::' . $_POST['sort'] . ');');
+            } else {
+                eval('$oCriteria->addDescendingOrderByColumn(AdditionalTablesPeer::' . $_POST['sort'] . ');');
+            }
+        } else {
+            //$oCriteria->addAscendingOrderByColumn(AdditionalTablesPeer::ADD_TAB_UID);
         }
 
         $criteriaCount = clone $oCriteria;

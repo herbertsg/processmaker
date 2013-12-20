@@ -70,8 +70,8 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		//sleep one second to wait ajax result
 
         //wait for combo to populate
-        pages.DynaformExecution().waitForFieldToBeClickable("state", 2);
-        pages.DynaformExecution().waitForFieldToBeClickable("location", 2);
+        pages.DynaformExecution().waitForFieldToBeClickable("state", 10);
+        pages.DynaformExecution().waitForFieldToBeClickable("location", 10);
 
         //pages.DynaformExecution().sleep(1000);
 
@@ -82,10 +82,10 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		pages.DynaformExecution().setFieldValue("suggest_country", country);
 
 		//pages.DynaformExecution().sleep(1000);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 2);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 2);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state2", 2);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 2);
+        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 10);
+        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 10);
+        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state2", 10);
+        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 10);
 
 		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
 		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
@@ -96,9 +96,10 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		pages.DynaformExecution().setFieldValue("username", userName);
 		//send tab to activate dependent fields
         //pages.DynaformExecution().sendTab("userCompleteName");
-            pages.DynaformExecution().sendTab("username");
-		//pages.DynaformExecution().sleep(1000);
-        browserInstance.waitForDocumentCompleted(20);
+        pages.DynaformExecution().sendTab("username");
+        //pages.DynaformExecution().waitForFieldToChangeText("userCompleteName", "", 15);
+		pages.DynaformExecution().sleep(1000);
+        //browserInstance.waitForDocumentCompleted(20);
         //pages.DynaformExecution().waitForFieldToBeClickable("userCompleteName", 2);
         //pages.DynaformExecution().waitForFieldToBeClickable("userDepartment", 2);
 
@@ -109,18 +110,18 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		//pages.DynaformExecution().setFieldValue("state", state1, FieldType.DROPDOWN);
 		pages.DynaformExecution().setFieldValue("state", state1);
 		//pages.DynaformExecution().sleep(1000);
-        pages.DynaformExecution().waitForFieldToBeClickable("location", 2);
+        //pages.DynaformExecution().waitForFieldToBeClickable("location", 10);
 		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("location"), location1);
 
 		//change fields in suggest
 		//pages.DynaformExecution().setFieldValue("suggest_country", country2, FieldType.SUGGEST);
 		pages.DynaformExecution().setFieldValue("suggest_country", country2);
 		//pages.DynaformExecution().sleep(1000);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 2);
+        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 10);
 		//pages.DynaformExecution().setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
 		pages.DynaformExecution().setFieldValue("suggest_state", state2);
 		//pages.DynaformExecution().sleep(1000);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 2);
+        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 10);
 		//pages.DynaformExecution().setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
 		pages.DynaformExecution().setFieldValue("suggest_location", location2);
 		//pages.DynaformExecution().sleep(1000);
@@ -128,7 +129,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location2);
 		//pages.DynaformExecution().setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
 		pages.DynaformExecution().setFieldValue("suggest_state2", state22);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 2);
+        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 10);
 		//pages.DynaformExecution().setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
 		pages.DynaformExecution().setFieldValue("suggest_location2", location22);
 		//pages.DynaformExecution().sleep(1000);
@@ -149,7 +150,7 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 
 		//test other dependent fields
 		pages.DynaformExecution().setFieldValue("userName2", userName1); //admin
-        pages.DynaformExecution().waitForFieldToBeClickable("textAreaField", 2);
+        //pages.DynaformExecution().waitForFieldToBeClickable("textAreaField", 10);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
 		int listBoxCount = pages.DynaformExecution().getFieldCount("listBoxField");
 		Logger.addLog("ListBox value:" + listBoxCount);
@@ -158,8 +159,9 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 		Logger.addLog("Total logins:" + totalLogins);
 		Assert.assertEquals(listBoxCount, Integer.parseInt(totalLogins));
 
-		//pages..switchToDefault();
-		pages.Main().logout();
+		//pages.DynaformExecution().intoMainFrame();
+		//pages.Main().logout();
+        //pages.DynaformExecution().sleep(5000);
 	}
 
 

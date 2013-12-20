@@ -41,7 +41,7 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
         buttonContinueSubmit.click();
 
         pages.Home().gotoInbox();
-        pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox().openCase(numberNewCase);
 
         // click to button submit
 	pages.DynaformExecution().intoDynaform();
@@ -79,7 +79,7 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
         buttonContinueSubmit.click();
 
         pages.Home().gotoInbox();
-        pages.Home().openCase(numberNewCase);
+        pages.Home().gotoInbox().openCase(numberNewCase);
 
         // click to button submit
 	pages.DynaformExecution().intoDynaform();

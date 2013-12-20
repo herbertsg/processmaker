@@ -7,7 +7,7 @@ Ext.onReady(function() {
         xtype      : 'checkbox',
         checked    : heartBeatChecked,
         name       : 'acceptHB',
-        fieldLabel : 'Terms of Use',
+        fieldLabel : _('ID_TERMS_USE'),
         hideLabel  : true,
         id         : 'ch_ii',
         style      : 'margin-top:15px',
@@ -67,6 +67,7 @@ function saveOption()
   Ext.getCmp('frmHeart').getForm().submit( {  
     url     : 'processHeartBeatAjax?action=saveOption',
     waitMsg : _('ID_SAVING_PROCESS'),
+    waitTitle : "&nbsp;",
     timeout : 36000,
     success : function(obj, resp) {
       //nothing to do

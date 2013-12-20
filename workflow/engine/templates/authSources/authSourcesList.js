@@ -15,7 +15,7 @@ new Ext.KeyMap(document, [
         e.stopEvent();
         document.location = document.location;
       }else{
-        Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+        Ext.Msg.alert( _('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
       }
     }
 },
@@ -123,7 +123,7 @@ Ext.onReady(function(){
 
     clearTextButton = new Ext.Action({
       text: 'X',
-      ctCls:'pm_search_x_button',
+      ctCls:"pm_search_x_button_des",
       handler: GridByDefault
     });
 
@@ -246,7 +246,7 @@ Ext.onReady(function(){
       height:100,
       autoWidth : true,
       stateful : true,
-      stateId : 'grid',
+      stateId : 'gridAuthList',
       enableColumnResize: true,
       enableHdMenu: true,
       frame:false,

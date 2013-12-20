@@ -16,7 +16,8 @@ class Applications
         $callback = null,
         $dir = null,
         $sort = "APP_CACHE_VIEW.APP_NUMBER",
-        $category = null
+        $category = null,
+        $configuration = true
     ) {
         $callback = isset($callback)? $callback : "stcCallback1001";
         $dir = isset($dir)? $dir : "DESC";
@@ -45,11 +46,12 @@ class Applications
 
         $oAppCache = new AppCacheView();
 
-        //get data configuration
-        $conf = new Configurations();
-        $confCasesList = $conf->getConfiguration("casesList", ($action == "search" || $action == "simple_search")? "search" : $action);
-        $oAppCache->confCasesList = $confCasesList;
-
+        if ($configuration == true) {
+            //get data configuration
+            $conf = new Configurations();
+            $confCasesList = $conf->getConfiguration("casesList", ($action == "search" || $action == "simple_search")? "search" : $action);
+            $oAppCache->confCasesList = $confCasesList;
+        }
         // get the action based list
         switch ($action) {
             case "draft":
@@ -154,7 +156,31 @@ class Applications
         $Criteria->addAsColumn( 'USR_LASTNAME', 'CU.USR_LASTNAME' );
         $Criteria->addAsColumn( 'USR_USERNAME', 'CU.USR_USERNAME' );
 
-        // Fix for previous user
+        //Current delegation
+        if ($action == "to_reassign") {
+            $Criteria->addAsColumn("APPCVCR_APP_TAS_TITLE", "APP_CACHE_VIEW.APP_TAS_TITLE");
+        } else {
+            $Criteria->addAsColumn("APPCVCR_APP_TAS_TITLE", "APPCVCR.APP_TAS_TITLE");
+        }
+
+        $Criteria->addAsColumn("USRCR_USR_UID", "USRCR.USR_UID");
+        $Criteria->addAsColumn("USRCR_USR_FIRSTNAME", "USRCR.USR_FIRSTNAME");
+        $Criteria->addAsColumn("USRCR_USR_LASTNAME", "USRCR.USR_LASTNAME");
+        $Criteria->addAsColumn("USRCR_USR_USERNAME", "USRCR.USR_USERNAME");
+
+        $Criteria->addAlias("APPCVCR", AppCacheViewPeer::TABLE_NAME);
+        $Criteria->addAlias("USRCR", UsersPeer::TABLE_NAME);
+
+        $arrayCondition = array();
+        $arrayCondition[] = array(AppCacheViewPeer::APP_UID, "APPCVCR.APP_UID");
+        $arrayCondition[] = array("APPCVCR.DEL_LAST_INDEX", 1);
+        $Criteria->addJoinMC($arrayCondition, Criteria::LEFT_JOIN);
+
+        $arrayCondition = array();
+        $arrayCondition[] = array("APPCVCR.USR_UID", "USRCR.USR_UID");
+        $Criteria->addJoinMC($arrayCondition, Criteria::LEFT_JOIN);
+
+        //Previous user
         if (($action == "todo" || $action == "selfservice" || $action == "unassigned" || $action == "paused" || $action == "to_revise" || $action == "sent") || ($status == "TO_DO" || $status == "DRAFT" || $status == "PAUSED" || $status == "CANCELLED" || $status == "COMPLETED")) {
             $Criteria->addAlias( 'PU', 'USERS' );
             $Criteria->addJoin( AppCacheViewPeer::PREVIOUS_USR_UID, 'PU.USR_UID', Criteria::LEFT_JOIN );
@@ -206,15 +232,28 @@ class Applications
         }
         */
 
-        if ($dateFrom != '') {
-            if ($dateTo != '') {
+        if ($dateFrom != "") {
+            if ($dateTo != "") {
+                if ($dateFrom == $dateTo) {
+                    $dateSame = $dateFrom;
+                    $dateFrom = $dateSame . " 00:00:00";
+                    $dateTo = $dateSame . " 23:59:59";
+                } else {
+                    $dateFrom = $dateFrom . " 00:00:00";
+                    $dateTo = $dateTo . " 23:59:59";
+                }
+
                 $Criteria->add( $Criteria->getNewCriterion( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateFrom, Criteria::GREATER_EQUAL )->addAnd( $Criteria->getNewCriterion( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateTo, Criteria::LESS_EQUAL ) ) );
                 $CriteriaCount->add( $CriteriaCount->getNewCriterion( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateFrom, Criteria::GREATER_EQUAL )->addAnd( $Criteria->getNewCriterion( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateTo, Criteria::LESS_EQUAL ) ) );
             } else {
+                $dateFrom = $dateFrom . " 00:00:00";
+
                 $Criteria->add( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateFrom, Criteria::GREATER_EQUAL );
                 $CriteriaCount->add( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateFrom, Criteria::GREATER_EQUAL );
             }
-        } elseif ($dateTo != '') {
+        } elseif ($dateTo != "") {
+            $dateTo = $dateTo . " 23:59:59";
+
             $Criteria->add( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateTo, Criteria::LESS_EQUAL );
             $CriteriaCount->add( AppCacheViewPeer::DEL_DELEGATE_DATE, $dateTo, Criteria::LESS_EQUAL );
         }
@@ -370,12 +409,24 @@ class Applications
             $totalCount = AppCacheViewPeer::doCount($CriteriaCount, $distinct);
         }
 
-        //add sortable options
-        if ($sort != '') {
-            if ($dir == 'DESC') {
-                $Criteria->addDescendingOrderByColumn( $sort );
+        //Add sortable options
+        if ($sort != "") {
+            //Current delegation (*)
+            if (($action == "sent" || $action == "search" || $action == "simple_search" || $action == "to_revise" || $action == "to_reassign") && ($status != "TO_DO")) {
+                switch ($sort) {
+                    case "APP_CACHE_VIEW.APP_CURRENT_USER":
+                        $sort = "USRCR_" . $conf->userNameFormatGetFirstFieldByUsersTable();
+                        break;
+                    case "APP_CACHE_VIEW.APP_TAS_TITLE":
+                        $sort = "APPCVCR_APP_TAS_TITLE";
+                        break;
+                }
+            }
+
+            if ($dir == "DESC") {
+                $Criteria->addDescendingOrderByColumn($sort);
             } else {
-                $Criteria->addAscendingOrderByColumn( $sort );
+                $Criteria->addAscendingOrderByColumn($sort);
             }
         }
 
@@ -387,16 +438,14 @@ class Applications
         $oDataset = AppCacheViewPeer::doSelectRS( $Criteria );
         $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
         $oDataset->next();
-
+//g::pr($oDataset);
         $result = array ();
         $result['totalCount'] = $totalCount;
         $rows = array ();
-        $aPriorities = array ('1' => 'VL','2' => 'L','3' => 'N','4' => 'H','5' => 'VH'
-        );
+        $aPriorities = array ('1' => 'VL','2' => 'L','3' => 'N','4' => 'H','5' => 'VH');
         $index = $start;
         while ($aRow = $oDataset->getRow()) {
             //$aRow = $oAppCache->replaceRowUserData($aRow);
-
 
             /*
              * For participated cases, we want the last step in the case, not only the last step this user participated. To do that we get every case information again for the last step. (This could be solved by a subquery, but Propel might not support it and subqueries can be slower for larger
@@ -421,8 +470,23 @@ class Applications
              $maxDataset->close();
               }*/
 
+            //Current delegation (*)
+            if (($action == "sent" || $action == "search" || $action == "simple_search" || $action == "to_revise" || $action == "to_reassign") && ($status != "TO_DO")) {
+                //Current task
+                $aRow["APP_TAS_TITLE"] = $aRow["APPCVCR_APP_TAS_TITLE"];
+
+                //Current user
+                if ($action != "to_reassign" ) {
+                    $aRow["USR_UID"] = $aRow["USRCR_USR_UID"];
+                    $aRow["USR_FIRSTNAME"] = $aRow["USRCR_USR_FIRSTNAME"];
+                    $aRow["USR_LASTNAME"] = $aRow["USRCR_USR_LASTNAME"];
+                    $aRow["USR_USERNAME"] = $aRow["USRCR_USR_USERNAME"];
+                }
+            }
+
+            //Unassigned user
             if (! isset( $aRow['APP_CURRENT_USER'] )) {
-                $aRow['APP_CURRENT_USER'] = "[Unassigned]";
+                $aRow['APP_CURRENT_USER'] = "[" . strtoupper(G::LoadTranslation("ID_UNASSIGNED")) . "]";
             }
 
             // replacing the status data with their respective translation

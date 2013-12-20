@@ -162,6 +162,14 @@ switch ($REQUEST) {
         foreach ($aUserIuds as $key => $val) {
             $sData['USR_UID'] = $val;
             $sData['ROL_UID'] = $ROL_UID;
+            if ($sData['USR_UID'] == '00000000000000000000000000000001') {
+                if ($sData['ROL_UID'] != 'PROCESSMAKER_ADMIN') {
+                    $response = new stdclass();
+					$response->userRole = true;
+					echo G::json_encode($response);
+                    break;
+                }
+            }
             $RBAC->assignUserToRole( $sData );
         }
 
@@ -223,6 +231,11 @@ switch ($REQUEST) {
         $arrUsers = explode( ',', $USR_UID );
         foreach ($arrUsers as $aUID) {
             $RBAC->deleteUserRole( $ROL_UID, $aUID );
+            if ($aUID == '00000000000000000000000000000001') {
+                $sData['USR_UID'] = $aUID;
+                $sData['ROL_UID'] = '00000000000000000000000000000002';
+                $RBAC->assignUserToRole( $sData );
+            }
         }
         break;
     case 'rolesList':
@@ -246,13 +259,20 @@ switch ($REQUEST) {
         $content = new Content();
         $rNames = $content->getAllContentsByRole();
         $aUsers = $RBAC->getAllUsersByRole();
-
         $aRows = Array ();
         while ($rs->next()) {
             $aRows[] = $rs->getRow();
             $index = sizeof( $aRows ) - 1;
-            $aRows[$index]['ROL_NAME'] = isset( $rNames[$aRows[$index]['ROL_UID']] ) ? $rNames[$aRows[$index]['ROL_UID']] : '';
-            $aRows[$index]['TOTAL_USERS'] = isset( $aUsers[$aRows[$index]['ROL_UID']] ) ? $aUsers[$aRows[$index]['ROL_UID']] : 0;
+            $roleUid = $aRows[$index]['ROL_UID'];
+            if (!isset($rNames[$roleUid])) {
+                $rol = new Roles();
+                $row = $rol->load($roleUid);
+                $rolname = $row['ROL_NAME'];
+            } else {
+                $rolname = $rNames[$roleUid];
+            }
+            $aRows[$index]['ROL_NAME'] = $rolname;
+            $aRows[$index]['TOTAL_USERS'] = isset( $aUsers[$roleUid] ) ? $aUsers[$roleUid] : 0;
         }
 
         $oData = RolesPeer::doSelectRS( $Criterias['COUNTER'] );
@@ -291,6 +311,18 @@ switch ($REQUEST) {
             $response = 'true';
         }
         echo '{success:' . $response . '}';
+        break;
+    case 'updatePermissionContent':
+        /*
+        $per_code = $_POST['PER_NAME'];
+        $per_uid = isset( $_POST['PER_UID'] ) ? $_POST['PER_UID'] : '';
+        require_once 'classes/model/Content.php';
+        $oCriteria = new Criteria( 'workflow' );
+        $oCriteria->add( ContentPeer::CON_CATEGORY, 'PER_NAME' );
+        $oCriteria->add( ContentPeer::CON_ID, $per_uid );
+        $oCriteria->add( ContentPeer::CON_VALUE, $per_code );
+        $oDataset = ContentPeer::doSelectRS( $oCriteria );
+        */
         break;
     default:
         echo 'default';

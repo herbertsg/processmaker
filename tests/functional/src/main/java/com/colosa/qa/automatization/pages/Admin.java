@@ -249,7 +249,7 @@ public class Admin extends Page{
         browser.switchToFrame("adminFrame");
         browser.switchToFrame("setup-frame");
         browser.waitForElement(By.id("eventsGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("eventsGrid"), browser.getInstanceDriver());
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("eventsGrid"), browser);
         String status;
         WebElement row = grid.getRowByColumnValue("Case Title", "#" + Integer.toString(numCase));
         if(row==null)
@@ -265,7 +265,7 @@ public class Admin extends Page{
         browser.switchToFrame("adminFrame");
         browser.switchToFrame("setup-frame");
         browser.waitForElement(By.id("infoGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser.getInstanceDriver());
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser);
         String status;
         rows = grid.getRows();
         if(rows==null)
@@ -281,7 +281,7 @@ public class Admin extends Page{
         browser.switchToFrame("adminFrame");
         browser.switchToFrame("setup-frame");
         browser.waitForElement(By.id("emailsGrid"),60);
-        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("emailsGrid"), browser.getInstanceDriver());
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("emailsGrid"), browser);
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("#", Integer.toString(numCase));
         if(row==null)
@@ -297,7 +297,7 @@ public class Admin extends Page{
         browser.switchToFrame("adminFrame");
         browser.switchToFrame("setup-frame");
         browser.waitForElement(By.id("infoGrid"),360);
-        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser.getInstanceDriver());
+        ExtJSGrid grid = new ExtJSGrid(browser.findElementById("infoGrid"), browser);
         String emailStatus;
         WebElement row = grid.getRowByColumnValue("User Name", userName);
 

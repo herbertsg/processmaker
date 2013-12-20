@@ -303,7 +303,7 @@ class G
     /**
      * ************* path functions ****************
      */
-    public function mk_dir ($strPath, $rights = 0777)
+    public function mk_dir ($strPath, $rights = 0770)
     {
         $folder_path = array ($strPath);
         $oldumask = umask( 0 );
@@ -313,12 +313,13 @@ class G
 
         while ($parent_folder_path = array_pop( $folder_path )) {
             if (! @is_dir( $parent_folder_path )) {
-                if (! @mkdir( $parent_folder_path, $rights )) {
-                    //trigger_error ("Can't create folder \"$parent_folder_path\".", E_USER_WARNING);
-                    umask( $oldumask );
+                if (! @mkdir( $parent_folder_path, $rights)) {
+                    error_log( "Can't create folder \"$parent_folder_path\"");
+                    //umask( $oldumask );
                 }
             }
         }
+        umask($oldumask);
     }
 
     /**
@@ -339,24 +340,74 @@ class G
                 if ($file == $dirName . '/.' || $file == $dirName . '/..') {
                     continue;
                 }
+
                 if (is_dir( $file )) {
                     G::rm_dir( $file );
-
-                    if (strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN') {
-                        $dirNameWin = str_replace( '/', '\\', $dirName );
-                        exec( 'DEL /F /S /Q ' . $dirNameWin . '', $res );
-                        exec( 'RD /S /Q ' . $dirNameWin . '', $res );
-                    } else {
-                        @rmdir( $file );
-                    }
-
                 } else {
                     @unlink( $file );
                 }
             }
+
+            if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
+                $dirName = str_replace("/", "\\", $dirName);
+
+                exec("DEL /F /S /Q " . $dirName . "", $res);
+                exec("RD /S /Q " . $dirName . "", $res);
+            } else {
+                @rmdir($dirName);
+            }
         } else {
             @unlink( $dirName );
         }
+    }
+
+    /**
+     * Delete all the directory tree cotents.
+     * @param string $dir
+     * @return void
+     */
+    public function delTree($dir)
+    {
+        $files = glob( $dir . '*', GLOB_MARK );
+        foreach ($files as $file ) {
+            if (substr( $file, -1 ) == '/' ) {
+                self::delTree( $file );
+            } else {
+                unlink( $file );
+            }
+        }
+        if (is_dir($dir)) {
+            rmdir( $dir );
+        }
+    }
+
+    /**
+     * Recursive copy
+     * @param string $source
+     * @param string $destination
+     * @return boolean
+     */
+    function recursive_copy ($source, $destination) {
+        if ($source == $destination) {
+            return false;
+        }
+        $dir = opendir($source);
+
+        if (!file_exists($destination)) {
+            G::mk_dir($destination, 0777);
+        }
+
+        while (false !== ( $file = readdir($dir))) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($source . '/' . $file) ) {
+                    self::recursive_copy($source . '/' . $file, $destination . '/' . $file);
+                } else {
+                    copy($source . '/' . $file, $destination . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
+        return true;
     }
 
     /**
@@ -1395,31 +1446,28 @@ class G
         if ($lang === '') {
             $lang = defined( SYS_LANG ) ? SYS_LANG : 'en';
         }
+
         $aux = explode( ' ', $date ); //para dividir la fecha del dia
         $date = explode( '-', isset( $aux[0] ) ? $aux[0] : '00-00-00' ); //para obtener los dias, el mes, y el año.
         $time = explode( ':', isset( $aux[1] ) ? $aux[1] : '00:00:00' ); //para obtener las horas, minutos, segundos.
-
 
         $year = (int) ((isset( $date[0] )) ? $date[0] : '0'); //year
         $month = (int) ((isset( $date[1] )) ? $date[1] : '0'); //month
         $day = (int) ((isset( $date[2] )) ? $date[2] : '0'); //day
 
-
         $h = isset( $time[0] ) ? $time[0] : '00'; //hour
         $i = isset( $time[1] ) ? $time[1] : '00'; //minute
         $s = isset( $time[2] ) ? $time[2] : '00'; //second
 
-
         $MONTHS = Array ();
-        for ($i = 1; $i <= 12; $i ++) {
-            $MONTHS[$i] = G::LoadTranslation( "ID_MONTH_$i", $lang );
+        for ($j = 1; $j <= 12; $j ++) {
+          $MONTHS[$j] = G::LoadTranslation( "ID_MONTH_$j", $lang );
         }
 
         $d = (int) $day;
         $dd = G::complete_field( $day, 2, 1 );
 
         //missing D
-
 
         $M = $MONTHS[$month];
         $m = (int) $month;
@@ -1699,33 +1747,36 @@ class G
             $arrayGrid = array_unique($arrayGrid);
 
             foreach ($arrayGrid as $index => $value) {
-                $grdName = $value;
+                if($value !== "") {
+                    $grdName = $value;
 
-                $strContentAux1 = $strContentAux;
-                $strContentAux  = null;
+                    $strContentAux1 = $strContentAux;
+                    $strContentAux  = null;
 
-                $ereg = "/^(.*)@>" . $grdName . "(.*)@<" . $grdName . "(.*)$/";
+                    $ereg = "/^(.*)@>" . $grdName . "(.*)@<" . $grdName . "(.*)$/";
 
-                while (preg_match($ereg, $strContentAux1, $arrayMatch2)) {
-                    $strData = null;
+                    while (preg_match($ereg, $strContentAux1, $arrayMatch2)) {
+                        $strData = null;
 
-                    if (isset($aFields[$grdName]) && is_array($aFields[$grdName])) {
-                        foreach ($aFields[$grdName] as $aRow) {
-                            foreach ($aRow as $sKey => $vValue) {
-                                if (!is_array($vValue)) {
-                                    $aRow[$sKey] = nl2br($aRow[$sKey]);
+                        if (isset($aFields[$grdName]) && is_array($aFields[$grdName])) {
+                            foreach ($aFields[$grdName] as $aRow) {
+                                foreach ($aRow as $sKey => $vValue) {
+                                    if (!is_array($vValue)) {
+                                        $aRow[$sKey] = nl2br($aRow[$sKey]);
+                                    }
                                 }
-                            }
 
-                            $strData = $strData . G::replaceDataField($arrayMatch2[2], $aRow);
+                                $strData = $strData . G::replaceDataField($arrayMatch2[2], $aRow);
+                            }
                         }
+
+                        $strContentAux1 = $arrayMatch2[1];
+                        $strContentAux  = $strData . $arrayMatch2[3] . $strContentAux;
                     }
 
-                    $strContentAux1 = $arrayMatch2[1];
-                    $strContentAux  = $strData . $arrayMatch2[3] . $strContentAux;
-                }
+                    $strContentAux = $strContentAux1 . $strContentAux;
 
-                $strContentAux = $strContentAux1 . $strContentAux;
+                }
             }
         }
 
@@ -2052,7 +2103,41 @@ class G
             }
             return $untranslatedMark . $msgID . $untranslatedMark;
         }
+    }
 
+    /**
+     * Function LoadTranslation
+     *
+     * @author Brayan Osmar Pereyra Suxo "Cochalo". <brayan@colosa.com>
+     * @access public
+     * @param eter string name plugin
+     * @param eter string id msg
+     * @param eter array data
+     * @return string
+     */
+    public function LoadTranslationPlugin ($namePlugin, $msgID, $data = null)
+    {
+        eval('global $translation' . $namePlugin . ';');
+
+        $existId = false;
+        eval('if (isset( $translation' . $namePlugin . '[$msgID])) { $existId = true; }');
+        if ($existId) {
+            eval('$translationString = preg_replace( "[\n|\r|\n\r]", " ", $translation' . $namePlugin . '[$msgID] );');
+            if (isset( $data ) && is_array( $data )) {
+                foreach ($data as $label => $value) {
+                    $translationString = str_replace( '{' . $label . '}', $value, $translationString );
+                }
+            }
+
+            return $translationString;
+        } else {
+            if (defined( "UNTRANSLATED_MARK" )) {
+                $untranslatedMark = strip_tags( UNTRANSLATED_MARK );
+            } else {
+                $untranslatedMark = "**";
+            }
+            return $untranslatedMark . $msgID . $untranslatedMark;
+        }
     }
 
     /**
@@ -2384,6 +2469,133 @@ class G
     }
 
     /**
+     * Extract the structure version value from serializated table field and check it.
+     * @return true if the version is bigger than 1
+     */
+    public function gotDirectoryStructureVer2()
+    {
+        G::LoadClass( "configuration" );
+        $configuration = new Configurations();
+        if (defined('SYS_SYS') && $configuration->exists("ENVIRONMENT_SETTINGS")) {
+            return ($configuration->getDirectoryStructureVer() > 1);
+        }
+        return false;
+    }
+
+    /**
+     * Get the default blank directory 0 for external files
+     */
+    public function getBlackHoleDir()
+    {
+        //len32:12345678901234567890123456789012
+        return "00000000000000000000000000000000";
+    }
+
+    /**
+     * Funtion used to fix 32K issue related to ext3 max subdirectory storage, but checking Version first.
+     * @param string $uid
+     * @param int $splitSize
+     * @param int $pieces
+     * @return string xxx/xxx/xxx/xxxxxxxxxxxxxxxxxxxxx
+     */
+    public function getPathFromUID($uid, $splitSize = 3, $pieces = 3)
+    {
+        if (! G::gotDirectoryStructureVer2()) {
+            return $uid;
+        }
+        return G::getPathFromUIDPlain($uid, $splitSize, $pieces);
+    }
+
+    /**
+     * Funtion used to fix 32K issue related to ext3 max subdirectory storage.
+     * @param string $uid
+     * @param int $splitSize
+     * @param int $pieces
+     * @return string xxx/xxx/xxx/xxxxxxxxxxxxxxxxxxxxx
+     */
+    public function getPathFromUIDPlain($uid, $splitSize = 3, $pieces = 3)
+    {
+        $dirArray = array();
+        if (is_string($uid) && strlen($uid) >= 32 && $uid != G::getBlackHoleDir()) {
+            for ($i = 0; $i < $pieces; $i++) {
+                $dirArray[] = substr($uid, 0, $splitSize);
+                $len = strlen($uid);
+                $uid = substr($uid, $splitSize, $len);
+            }
+        }
+        $dirArray[] = $uid;
+        $newfileStructure = implode($dirArray, '/');
+        return $newfileStructure;
+    }
+
+    /**
+     * Get the uid from the splitted directory + filename.
+     * @param string $path
+     * @return string
+     */
+    public function getUIDfromPath($path)
+    {
+        $uid = '';
+        $item = explode($path, '/');
+        $len = sizeof($item);
+        for ($i = 0; $i < $len; $i++) {
+            $uid .= $item[$i];
+        }
+        if (strlen($uid) != 32){
+            return "invalid";
+        }
+        return $uid;
+    }
+
+    /**
+     * Get the file stored in '0' dir as splitted, but checking version first.
+     * @param string $appUid
+     * @param string $fileUid
+     * @param int $splitSize
+     * @param int $pieces
+     * @return array index:0 got the path, index:1 got the filename
+     */
+    public function getPathFromFileUID($appUid, $fileUid, $splitSize = 3, $pieces = 3)
+    {
+        if (! G::gotDirectoryStructureVer2()) {
+            $response = array();
+            $response[] = '';
+            $response[] = $fileUid;
+            return $response;
+        }
+        return G::getPathFromFileUIDPlain($appUid, $fileUid, $splitSize, $pieces);
+    }
+
+    /**
+     * Get the file stored in '0' dir as splitted.
+     * @param string $appUid
+     * @param string $fileUid
+     * @param int $splitSize
+     * @param int $pieces
+     * @return array index:0 got the path, index:1 got the filename
+     */
+    public function getPathFromFileUIDPlain($appUid, $fileUid, $splitSize = 3, $pieces = 3)
+    {
+        $response = array();
+        if ($appUid == G::getBlackHoleDir()) {
+            $dirArray = array();
+            if (is_string($fileUid) && strlen($fileUid) >= 32) {
+                for ($i = 0; $i < $pieces; $i++) {
+                    $dirArray[] = substr($fileUid, 0, $splitSize);
+                    $len = strlen($fileUid);
+                    $fileUid = substr($fileUid, $splitSize, $len);
+                }
+            }
+            $response[] = implode($dirArray, '/') . '/';
+            $response[] = $fileUid;
+        } else {
+            $response[] = '';
+            $response[] = $fileUid;
+        }
+        return $response;
+    }
+
+    /**
      * Upload a file and then copy to path+ nameToSave
      *
      * @author Mauricio Veliz <mauricio@colosa.com>
@@ -2394,7 +2606,7 @@ class G
      * @param integer $permission
      * @return void
      */
-    public function uploadFile ($file, $path, $nameToSave, $permission = 0666)
+    public function uploadFile ($file, $path, $nameToSave, $permission = 0660)
     {
         try {
             if ($file == '') {
@@ -2408,7 +2620,7 @@ class G
                 G::verifyPath( $path, true );
             }
             move_uploaded_file( $file, $path . "/" . $nameToSave );
-            chmod( $path . "/" . $nameToSave, $permission );
+            @chmod( $path . "/" . $nameToSave, $permission );
             umask( $oldumask );
         } catch (Exception $oException) {
             throw $oException;
@@ -2470,7 +2682,7 @@ class G
         imagecopyresampled( $image_p, $image, 0, 0, 0, 0, $resWidth, $resHeight, $width, $height );
         $outputFn( $image_p, $saveTo );
 
-        chmod( $saveTo, 0666 );
+        @chmod( $saveTo, 0666 );
     }
 
     /**
@@ -2779,6 +2991,7 @@ class G
 
         self::_del_p( $mnary );
 
+        $obj_resp = new stdclass();
         $obj_resp->code = xml_get_error_code( $parser );
         $obj_resp->message = xml_error_string( $obj_resp->code );
         $obj_resp->result = $mnary;
@@ -4473,8 +4686,8 @@ class G
         $tplExists = true;
 
         // file has absolute path
-        if (substr( $template, 0, 1 ) != PATH_SEP) {
-            $template = PATH_TEMPLATE . $template;
+        if (strpos($template, PATH_TRUNK) === false) {
+            $template = PATH_TPL . $template;
         }
 
         // fix for template that have dot in its name but is not a valid extension
@@ -4594,6 +4807,11 @@ class G
 
         if (@file_put_contents( $file, $content ) === false) {
             throw new Exception( "G::update_php_ini() -> can't update file: $file" );
+         } else {
+            //first a raw permission check
+            if(fileperms($file) != 33200) {
+                @chmod ($file, 0660);
+            }
         }
     }
 
@@ -4861,6 +5079,156 @@ class G
                 $_SESSION["STEP_POSITION"] = $this->sessionVar["STEP_POSITION"];
             }
         }
+    }
+
+    public static function browserCacheFilesGetLibraryJs()
+    {
+        $arrayLibrary = array();
+
+        //Translations /js/ext/translation.en.js
+        //Translations /js/ext/translation.xxx.en.js //xxx is an plugin
+        $arrayLibrary["translation"] = 1; //Not use null
+
+        //Translation environment /jscore/labels/en.js
+        if (file_exists(PATH_DATA . "META-INF" . PATH_SEP . "translations.env")) {
+            $arrayData = unserialize(file_get_contents(PATH_DATA . "META-INF" . PATH_SEP . "translations.env"));
+
+            foreach ($arrayData as $index1 => $value1) {
+                foreach ($value1 as $index2 => $value2) {
+                    $record = $value2;
+
+                    if (file_exists(PATH_CORE . "js" . PATH_SEP . "labels" . PATH_SEP . $record["LOCALE"] . ".js")) {
+                        $arrayLibrary[$record["LOCALE"]] = 1;
+                    }
+                }
+            }
+        }
+
+        //Libraries
+        $library = G::json_decode(file_get_contents(PATH_HOME . "engine" . PATH_SEP . "bin" . PATH_SEP . "tasks" . PATH_SEP . "libraries.json"));
+
+        foreach ($library as $index => $value) {
+            $lib = $value;
+
+            if ($lib->build) {
+                if (substr($lib->build_js_to, -1) != "/") {
+                    $lib->build_js_to = $lib->build_js_to . "/";
+                }
+
+                $arrayLibrary[$lib->name] = 1;
+            }
+        }
+
+        return $arrayLibrary;
+    }
+
+    public static function browserCacheFilesSetUid()
+    {
+        $uid = G::generateUniqueID();
+
+        $arrayData = array();
+        $arrayData["browser_cache_files_uid"] = $uid;
+
+        G::update_php_ini(PATH_CONFIG . "env.ini", $arrayData);
+    }
+
+    public static function browserCacheFilesGetUid()
+    {
+        $sysConf = System::getSystemConfiguration(PATH_CONFIG . "env.ini");
+
+        return (isset($sysConf["browser_cache_files_uid"]))? $sysConf["browser_cache_files_uid"] : null;
+    }
+
+    public static function browserCacheFilesUrl($url)
+    {
+        $browserCacheFilesUid = self::browserCacheFilesGetUid();
+
+        if ($browserCacheFilesUid != null) {
+            $arrayAux = explode("/", $url);
+            $n = count($arrayAux);
+
+            if ($n > 0 && !empty($arrayAux[$n - 1])) {
+                $arrayAux = explode("?", $arrayAux[$n - 1]);
+                $name = $arrayAux[0];
+
+                if (preg_match("/^(.*)\.js$/i", $name, $arrayMatch)) {
+                    $index = $arrayMatch[1];
+                    $index = (preg_match("/^translation\..*$/", $index))? "translation" : $index;
+
+                    $arrayLibrary = G::browserCacheFilesGetLibraryJs();
+
+                    if (isset($arrayLibrary[$index])) {
+                        $url = str_replace($name, $arrayMatch[1] . "." . $browserCacheFilesUid . ".js", $url);
+                    }
+                }
+            }
+        }
+
+        return $url;
+    }
+
+    public static function skinGetPathToSrcByVirtualUri($option, $sysConf)
+    {
+        $path = "";
+        $ereg = "";
+        $strSearch = "";
+
+        switch ($option) {
+            case "errors":
+                $ereg = "/^\/errors\/.*$/";
+                $strSearch = "/errors/";
+                break;
+            case "update":
+                $ereg = "/^\/update\/.*$/";
+                $strSearch = "/update/";
+                break;
+        }
+
+        if (preg_match($ereg, $_SERVER["REQUEST_URI"])) {
+            $strAux = str_replace($strSearch, null, $_SERVER["REQUEST_URI"]);
+
+            if ($strAux != "") {
+                $skin = "base"; //classic
+
+                if (isset($_SESSION["currentSkin"])) {
+                    $skin = $_SESSION["currentSkin"];
+                } else {
+
+                    if (isset($sysConf["default_skin"])) {
+                        $skin = $sysConf["default_skin"];
+                    }
+                }
+
+                $arrayAux = explode("?", $strAux);
+                $fileTemplate = $arrayAux[0];
+
+                if (file_exists(PATH_SKIN_ENGINE . "base" . PATH_SEP . $fileTemplate)) {
+                    $path = PATH_SKIN_ENGINE . "base" . PATH_SEP;
+                }
+
+                if (file_exists(PATH_SKIN_ENGINE . $skin . PATH_SEP . $fileTemplate)) {
+                    $path = PATH_SKIN_ENGINE . $skin . PATH_SEP;
+                }
+
+                if (file_exists(PATH_SKINS . $skin . PATH_SEP . $fileTemplate)) {
+                    $path = PATH_SKINS . $skin . PATH_SEP;
+                }
+
+                if (file_exists(PATH_CUSTOM_SKINS . $skin . PATH_SEP . $fileTemplate)) {
+                    $path = PATH_CUSTOM_SKINS . $skin . PATH_SEP;
+                }
+            }
+        }
+
+        return $path;
+    }
+
+    public function isUserFunction($functionName) {
+        $allFunctions = get_defined_functions();
+        if (!isset($allFunctions['user'])) {
+            $allFunctions['user'] = array();
+        }
+        return in_array(strtolower($functionName), $allFunctions['user']);
     }
 }
 

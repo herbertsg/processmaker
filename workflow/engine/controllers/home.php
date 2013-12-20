@@ -31,7 +31,7 @@ class Home extends Controller
 
         // getting the ux type from user o group conf.
         $this->userUxType = isset( $_SESSION['user_experience'] ) ? $_SESSION['user_experience'] : 'SIMPLIFIED';
-        $this->lastSkin = isset( $_SESSION['user_last_skin'] ) ? $_SESSION['user_last_skin'] : 'classic';
+        $this->lastSkin = isset( $_SESSION['user_last_skin'] ) ? $_SESSION['user_last_skin'] : 'neoclassic';
         $this->userUxBaseTemplate = (is_dir( PATH_CUSTOM_SKINS . 'uxs' )) ? PATH_CUSTOM_SKINS . 'simplified' . PATH_SEP . 'templates' : 'home';
 
         if (isset( $_SESSION['USER_LOGGED'] ) && ! empty( $_SESSION['USER_LOGGED'] )) {
@@ -190,13 +190,13 @@ class Home extends Controller
         // setting main list title
         switch ($httpData->t) {
             case 'todo':
-                $title = 'My Inbox';
+                $title = G::LoadTranslation("ID_MY_INBOX");
                 break;
             case 'draft':
-                $title = 'My Drafts';
+                $title = G::LoadTranslation("ID_MY_DRAFTS");
                 break;
             case 'unassigned':
-                $title = 'Unassigned Inbox';
+                $title = G::LoadTranslation("ID_UNASSIGNED_INBOX");
                 break;
             default:
                 $title = ucwords( $httpData->t );
@@ -213,6 +213,7 @@ class Home extends Controller
         $this->setVar( 'cases', $cases['data'] );
         $this->setVar( 'cases_count', $cases['totalCount'] );
         $this->setVar( 'title', $title );
+        $this->setVar( 'noPerms', G::LoadTranslation( 'ID_CASES_NOTES_NO_PERMISSIONS' ));
         $this->setVar( 'appListStart', $this->appListLimit );
         $this->setVar( 'appListLimit', 10 );
         $this->setVar( 'listType', $httpData->t );
@@ -260,6 +261,7 @@ class Home extends Controller
         $this->setVar( 'cases', $cases['data'] );
         $this->setVar( 'cases_count', $cases['totalCount'] );
         $this->setVar( 'title', $title );
+        $this->setVar( 'noPerms', G::LoadTranslation( 'ID_CASES_NOTES_NO_PERMISSIONS' ));
         $this->setVar( 'appListStart', $this->appListLimit );
         $this->setVar( 'appListLimit', 10 );
         $this->setVar( 'listType', $httpData->t );
@@ -318,7 +320,7 @@ class Home extends Controller
                 break;
         }
 
-        $cases = $apps->getAll( $user, $start, $limit, $type, $filter, $search, $process, $status, $type, $dateFrom, $dateTo, $callback, $dir, $sort, $category);
+        $cases = $apps->getAll( $user, $start, $limit, $type, $filter, $search, $process, $status, $type, $dateFrom, $dateTo, $callback, $dir, $sort, $category, false);
 
         // formating & complitting apps data with 'Notes'
         foreach ($cases['data'] as $i => $row) {
@@ -357,11 +359,6 @@ class Home extends Controller
         $_SESSION['TASK'] = $httpData->id;
         $_SESSION['STEP_POSITION'] = 0;
         $_SESSION['CASES_REFRESH'] = true;
-
-        // Execute Events
-        require_once 'classes/model/Event.php';
-        $event = new Event();
-        $event->createAppEvents( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['TASK'] );
 
         $oCase = new Cases();
         $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
@@ -546,10 +543,10 @@ class Home extends Controller
         switch ($action) {
             case "simple_search":
             case "search":
-                //In search action, the query to obtain all process is too slow, so we need to query directly to 
+                //In search action, the query to obtain all process is too slow, so we need to query directly to
                 //process and content tables, and for that reason we need the current language in AppCacheView.
                 G::loadClass("configuration");
-                $oConf = new Configurations; 
+                $oConf = new Configurations;
                 $oConf->loadConfig($x, "APP_CACHE_VIEW_ENGINE", "", "", "", "");
                 $appCacheViewEngine = $oConf->aConfig;
                 $lang = isset($appCacheViewEngine["LANG"])? $appCacheViewEngine["LANG"] : "en";

@@ -11,6 +11,7 @@ define('SE_LAYOUT_NOT_FOUND', 6);
 
 class SkinEngine
 {
+  private $skinDefault = '';
 
   private $layout   = '';
   private $template = '';
@@ -41,16 +42,16 @@ class SkinEngine
     $this->content = $content;
     $this->skinVariants = array('blank','extjs','raw','tracker','submenu');
     $this->skinsBasePath = G::ExpandPath("skinEngine");
-
+    $sysConf = System::getSystemConfiguration( PATH_CONFIG . 'env.ini' );
+    $this->skinDefault = (isset($sysConf['default_skin']) && $sysConf['default_skin'] != '') ? $sysConf['default_skin'] : 'classic';
     $this->_init();
   }
 
   private function _init()
   {
-
     // setting default skin
     if (!isset($this->skin) || $this->skin == "") {
-      $this->skin = "classic";
+      $this->skin = $this->skinDefault;
     }
 
     // deprecated submenu type ""green-submenu"" now is mapped to "submenu"
@@ -73,7 +74,7 @@ class SkinEngine
 
     // setting default skin
     if (!isset($_SESSION['currentSkin'])) {
-      $_SESSION['currentSkin'] = "classic";
+      $_SESSION['currentSkin'] = $this->skinDefault;
     }
 
     $this->mainSkin = $_SESSION['currentSkin'];
@@ -100,7 +101,13 @@ class SkinEngine
         $skinObject = $this->skinsBasePath . $this->mainSkin;
       }
       else { //Skin doesn't exist
-        $this->mainSkin = "classic";
+        $this->mainSkin = $this->skinDefault;
+        if (defined('PATH_CUSTOM_SKINS') && is_dir(PATH_CUSTOM_SKINS . $this->mainSkin)) { // check this skin on user skins path
+	        $skinObject = PATH_CUSTOM_SKINS . $this->mainSkin;
+	      }
+	      else if (is_dir($this->skinsBasePath . $this->mainSkin)) { // check this skin on core skins path
+	        $skinObject = $this->skinsBasePath . $this->mainSkin;
+	      }
       }
     }
 
@@ -263,7 +270,7 @@ class SkinEngine
     $meta    = null;
     $dirBody = null;
 
-    if (preg_match("/^.*\(.*MSIE (\d+)\..+\).*$/", $_SERVER["HTTP_USER_AGENT"], $arrayMatch)) {
+    if (isset($_SERVER["HTTP_USER_AGENT"]) && preg_match("/^.*\(.*MSIE (\d+)\..+\).*$/", $_SERVER["HTTP_USER_AGENT"], $arrayMatch)) {
         $ie = intval($arrayMatch[1]);
         $swTrident = (preg_match("/^.*Trident.*$/", $_SERVER["HTTP_USER_AGENT"]))? 1 : 0; //Trident only in IE8+
 
@@ -274,6 +281,10 @@ class SkinEngine
         }
 
         if ($sw == 1) {
+            if ($ie == 10) {
+                $ie = 8;
+            }
+
             $doctype = null;
             $meta    = "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=$ie\" />";
         }
@@ -359,10 +370,26 @@ class SkinEngine
 
       if (strpos($_SERVER['REQUEST_URI'], '/login/login') !== false) {
         $freeOfChargeText = "";
-        if (! defined('SKIP_FREE_OF_CHARGE_TEXT')) {
-          $freeOfChargeText = "Supplied free of charge with no support, certification, warranty, <br>maintenance nor indemnity by Colosa and its Certified Partners.";
+        if (! defined('SKIP_FREE_OF_CHARGE_TEXT'))
+        $freeOfChargeText = "Supplied free of charge with no support, certification, warranty, <br>maintenance nor indemnity by Colosa and its Certified Partners.";
+        if(class_exists('pmLicenseManager')) $freeOfChargeText="";
+
+        $fileFooter = PATH_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+        if (file_exists($fileFooter)) {
+          $footer .= file_get_contents($fileFooter);
+        } else {
+          $fileFooter = PATH_SKIN_ENGINE . SYS_SKIN . PATH_SEP . 'footer.html';
+          if (file_exists($fileFooter)) {
+            $footer .= file_get_contents($fileFooter);
+          } else {
+            $fileFooter = PATH_CUSTOM_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+            if (file_exists($fileFooter)) {
+              $footer .= file_get_contents($fileFooter);
+            } else {
+              $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText " . "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"></a>";
+            }
+          }
         }
-        $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText " . "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"><img src=\"/images/PowerdbyProcessMaker.png\" border=\"0\" /></a>";
       }
 
       $oMenu = new Menu();
@@ -390,8 +417,16 @@ class SkinEngine
         $smarty->assign('workspace', defined('SYS_SYS')?SYS_SYS: '');
         $uws = (isset($_SESSION['USR_ROLENAME']) && $_SESSION['USR_ROLENAME'] != '')? strtolower(G::LoadTranslation('ID_WORKSPACE_USING')): G::LoadTranslation('ID_WORKSPACE_USING');
         $smarty->assign('workspace_label', $uws);
-        $smarty->assign('udate', G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG));
 
+        G::LoadClass( "configuration" );
+        $conf = new Configurations();
+        if (defined('SYS_SYS') && $conf->exists("ENVIRONMENT_SETTINGS")) {
+            $smarty->assign('udate', $conf->getSystemDate(date('Y-m-d H:i:s')));
+        } else {
+            $smarty->assign('udate', G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG));
+        }
+        $name = $conf->userNameFormat(isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME']: '', isset($_SESSION['USR_FULLNAME']) ? htmlentities($_SESSION['USR_FULLNAME'] , ENT_QUOTES, 'UTF-8'): '');
+        $smarty->assign('user',$name);
       }
 
       if (defined('SYS_SYS')) {
@@ -451,7 +486,22 @@ class SkinEngine
       $footer = '';
 
       if (strpos($_SERVER['REQUEST_URI'], '/login/login') !== false) {
-        $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " Colosa, Inc. All rights reserved.";
+        $fileFooter = PATH_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+        if (file_exists($fileFooter)) {
+          $footer .= file_get_contents($fileFooter);
+        } else {
+          $fileFooter = PATH_SKIN_ENGINE . SYS_SKIN . PATH_SEP . 'footer.html';
+          if (file_exists($fileFooter)) {
+            $footer .= file_get_contents($fileFooter);
+          } else {
+            $fileFooter = PATH_CUSTOM_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+            if (file_exists($fileFooter)) {
+              $footer .= file_get_contents($fileFooter);
+            } else {
+              $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText " . "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"></a>";
+            }
+          }
+        }
       }
 
       //menu
@@ -493,6 +543,7 @@ class SkinEngine
   private function _mvc()
   {
     require_once PATH_THIRDPARTY . 'smarty/libs/Smarty.class.php'; // put full path to Smarty.class.php
+    require_once PATH_GULLIVER_HOME . 'includes' . PATH_SEP . 'smarty_plugins' . PATH_SEP . 'function.pmos.php';
     G::LoadClass('serverConfiguration');
     $oServerConf =& serverConf::getSingleton();
     $oHeadPublisher =& headPublisher::getSingleton();
@@ -502,6 +553,7 @@ class SkinEngine
     $smarty->compile_dir  = PATH_SMARTY_C;
     $smarty->cache_dir    = PATH_SMARTY_CACHE;
     $smarty->config_dir   = PATH_THIRDPARTY . 'smarty/configs';
+    $smarty->register_function('translate', 'translate');
 
     $viewVars = $oHeadPublisher->getVars();
 
@@ -595,7 +647,19 @@ class SkinEngine
     }
     else {
       $smarty->template_dir = $this->layoutFile['dirname'];
-      $header = '';
+
+      $meta = null;
+      $header = null;
+
+      if (preg_match("/^.*\(.*MSIE (\d+)\..+\).*$/", $_SERVER["HTTP_USER_AGENT"], $arrayMatch)) {
+          $ie = intval($arrayMatch[1]);
+
+          if ($ie == 10) {
+              $ie = 8;
+
+              $meta = "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=$ie\" />";
+          }
+      }
 
       if (isset($oHeadPublisher)) {
         if (defined('SYS_SYS')) {
@@ -605,15 +669,33 @@ class SkinEngine
         $header .= $oHeadPublisher->getExtJsStylesheets($this->cssFileName);
       }
 
+      $smarty->assign("meta", $meta);
+      $smarty->assign("header", $header);
+
       $footer = '';
 
       if (strpos($_SERVER['REQUEST_URI'], '/login/login') !== false) {
-
         $freeOfChargeText = "";
         if (! defined('SKIP_FREE_OF_CHARGE_TEXT'))
         $freeOfChargeText = "Supplied free of charge with no support, certification, warranty, <br>maintenance nor indemnity by Colosa and its Certified Partners.";
         if(class_exists('pmLicenseManager')) $freeOfChargeText="";
-        $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText " . "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"><img src=\"/images/PowerdbyProcessMaker.png\" border=\"0\" /></a>";
+
+        $fileFooter = PATH_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+        if (file_exists($fileFooter)) {
+          $footer .= file_get_contents($fileFooter);
+        } else {
+          $fileFooter = PATH_SKIN_ENGINE . SYS_SKIN . PATH_SEP . 'footer.html';
+          if (file_exists($fileFooter)) {
+            $footer .= file_get_contents($fileFooter);
+          } else {
+            $fileFooter = PATH_CUSTOM_SKINS . SYS_SKIN . PATH_SEP . 'footer.html';
+            if (file_exists($fileFooter)) {
+              $footer .= file_get_contents($fileFooter);
+            } else {
+              $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText " . "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"></a>";
+            }
+          }
+        }
       }
 
       $oMenu = new Menu();
@@ -631,19 +713,25 @@ class SkinEngine
         $switch_interface = isset($_SESSION['user_experience']) && $_SESSION['user_experience'] == 'SWITCHABLE';
 
         $smarty->assign('user_logged', (isset($_SESSION['USER_LOGGED'])? $_SESSION['USER_LOGGED'] : ''));
+        $smarty->assign('tracker', (SYS_COLLECTION == 'tracker') ? ( ($G_PUBLISH->Parts[0]['File'] != 'tracker/login' ) ? true : '') : '');
         $smarty->assign('switch_interface', $switch_interface);
         $smarty->assign('switch_interface_label', G::LoadTranslation('ID_SWITCH_INTERFACE'));
-
-        $smarty->assign('userfullname', isset($_SESSION['USR_FULLNAME']) ? htmlentities($_SESSION['USR_FULLNAME'] , ENT_QUOTES, 'UTF-8'): '');
-        $smarty->assign('user', isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ')' : '');
         $smarty->assign('rolename', isset($_SESSION['USR_ROLENAME']) ? $_SESSION['USR_ROLENAME'] . '' : '');
         $smarty->assign('pipe', isset($_SESSION['USR_USERNAME']) ? ' | ' : '');
         $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
         $smarty->assign('workspace', defined('SYS_SYS')?SYS_SYS: '');
         $uws = (isset($_SESSION['USR_ROLENAME']) && $_SESSION['USR_ROLENAME'] != '')? strtolower(G::LoadTranslation('ID_WORKSPACE_USING')): G::LoadTranslation('ID_WORKSPACE_USING');
         $smarty->assign('workspace_label', $uws);
-        $smarty->assign('udate', G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG));
 
+        G::LoadClass( "configuration" );
+        $conf = new Configurations();
+        if ( defined('SYS_SYS') && $conf->exists("ENVIRONMENT_SETTINGS")) {
+            $smarty->assign('udate', $conf->getSystemDate(date('Y-m-d H:i:s')));
+        } else {
+            $smarty->assign('udate', G::getformatedDate(date('Y-m-d H:i:s'), 'M d, yyyy', SYS_LANG));
+        }
+        $name = $conf->userNameFormat(isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME']: '', isset($_SESSION['USR_FULLNAME']) ? htmlentities($_SESSION['USR_FULLNAME'] , ENT_QUOTES, 'UTF-8'): '');
+        $smarty->assign('user',$name);
       }
       if(class_exists('pmLicenseManager')){
         $pmLicenseManagerO = &pmLicenseManager::getSingleton();
@@ -664,7 +752,6 @@ class SkinEngine
       }
 
       $smarty->assign('linklogout', $logout);
-      $smarty->assign('header', $header);
       $smarty->assign('footer', $footer);
       $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html');
       $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html');
@@ -700,6 +787,4 @@ class SkinEngine
       $smarty->display($this->layoutFile['basename']);
     }
   }
-
 }
-

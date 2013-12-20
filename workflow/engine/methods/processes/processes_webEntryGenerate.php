@@ -29,7 +29,7 @@ try {
     $user = $oTask->assignUsertoTask( $sTASKS );
 
     if ($user == 0) {
-        throw (new Exception( "The task '" . $TaskFields['TAS_TITLE'] . "' doesn't have users." ));
+        throw (new Exception( G::LoadTranslation('ID_TASK') . "'" . $TaskFields['TAS_TITLE'] . "'" . G::LoadTranslation('ID_NOT_HAVE_USERS')));
     }
 
     if (G::is_https())
@@ -138,16 +138,18 @@ try {
         $oStep = new Step();
         $sUidGrids = $oStep->lookingforUidGrids( $sPRO_UID, $sDYNAFORM );
 
-        $template->assign( 'siteUrl', $http . $_SERVER['HTTP_HOST'] );
-        $template->assign( 'sysSys', SYS_SYS );
-        $template->assign( 'sysLang', SYS_LANG );
-        $template->assign( 'sysSkin', SYS_SKIN );
-        $template->assign( 'processUid', $sPRO_UID );
-        $template->assign( 'dynaformUid', $sDYNAFORM );
-        $template->assign( 'taskUid', $sTASKS );
-        $template->assign( 'dynFileName', $sPRO_UID . '/' . $sDYNAFORM );
-        $template->assign( 'formId', $G_FORM->id );
-        $template->assign( 'scriptCode', $scriptCode );
+        $template->assign("URL_MABORAK_JS", G::browserCacheFilesUrl("/js/maborak/core/maborak.js"));
+        $template->assign("URL_TRANSLATION_ENV_JS", G::browserCacheFilesUrl("/jscore/labels/" . SYS_LANG . ".js"));
+        $template->assign("siteUrl", $http . $_SERVER["HTTP_HOST"]);
+        $template->assign("sysSys", SYS_SYS);
+        $template->assign("sysLang", SYS_LANG);
+        $template->assign("sysSkin", SYS_SKIN);
+        $template->assign("processUid", $sPRO_UID);
+        $template->assign("dynaformUid", $sDYNAFORM);
+        $template->assign("taskUid", $sTASKS);
+        $template->assign("dynFileName", $sPRO_UID . "/" . $sDYNAFORM);
+        $template->assign("formId", $G_FORM->id);
+        $template->assign("scriptCode", $scriptCode);
 
         if (sizeof( $sUidGrids ) > 0) {
             foreach ($sUidGrids as $k => $v) {
@@ -166,5 +168,4 @@ try {
     $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
     G::RenderPage( 'publish', 'raw' );
 }
-
 

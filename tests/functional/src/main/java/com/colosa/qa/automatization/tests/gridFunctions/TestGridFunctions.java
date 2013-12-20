@@ -93,7 +93,7 @@ public class TestGridFunctions extends com.colosa.qa.automatization.tests.common
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		String porcen;
 

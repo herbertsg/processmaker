@@ -33,7 +33,7 @@ CREATE TABLE `APPLICATION`
 	KEY `indexAppNumber`(`APP_NUMBER`),
 	KEY `indexAppStatus`(`APP_STATUS`),
 	KEY `indexAppCreateDate`(`APP_CREATE_DATE`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='The application';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='The application';
 #-----------------------------------------------------------------------------
 #-- APP_DELEGATION
 #-----------------------------------------------------------------------------
@@ -46,6 +46,7 @@ CREATE TABLE `APP_DELEGATION`
 	`APP_UID` VARCHAR(32) default '' NOT NULL,
 	`DEL_INDEX` INTEGER default 0 NOT NULL,
 	`DEL_PREVIOUS` INTEGER default 0 NOT NULL,
+	`DEL_LAST_INDEX` INTEGER default 0 NOT NULL,
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
 	`TAS_UID` VARCHAR(32) default '' NOT NULL,
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
@@ -66,7 +67,7 @@ CREATE TABLE `APP_DELEGATION`
 	`DEL_DATA` MEDIUMTEXT  NOT NULL,
 	`APP_OVERDUE_PERCENTAGE` DOUBLE default 0 NOT NULL,
 	PRIMARY KEY (`APP_UID`,`DEL_INDEX`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
 #-----------------------------------------------------------------------------
 #-- APP_DOCUMENT
 #-----------------------------------------------------------------------------
@@ -93,7 +94,7 @@ CREATE TABLE `APP_DOCUMENT`
 	`APP_DOC_FIELDNAME` VARCHAR(150),
 	PRIMARY KEY (`APP_DOC_UID`,`DOC_VERSION`),
 	KEY `indexAppDocument`(`FOLDER_UID`, `APP_DOC_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Documents in an Application';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Documents in an Application';
 #-----------------------------------------------------------------------------
 #-- APP_MESSAGE
 #-----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ CREATE TABLE `APP_MESSAGE`
 	`APP_MSG_SEND_DATE` DATETIME  NOT NULL,
 	`APP_MSG_SHOW_MESSAGE` TINYINT default 1 NOT NULL,
 	PRIMARY KEY (`APP_MSG_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Messages in an Application';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Messages in an Application';
 #-----------------------------------------------------------------------------
 #-- APP_OWNER
 #-----------------------------------------------------------------------------
@@ -135,7 +136,7 @@ CREATE TABLE `APP_OWNER`
 	`OWN_UID` VARCHAR(32) default '' NOT NULL,
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`APP_UID`,`OWN_UID`,`USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- CONFIGURATION
 #-----------------------------------------------------------------------------
@@ -152,7 +153,7 @@ CREATE TABLE `CONFIGURATION`
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	`APP_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`CFG_UID`,`OBJ_UID`,`PRO_UID`,`USR_UID`,`APP_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Stores the users, processes and/or applications configuratio';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Stores the users, processes and/or applications configuratio';
 #-----------------------------------------------------------------------------
 #-- CONTENT
 #-----------------------------------------------------------------------------
@@ -169,7 +170,7 @@ CREATE TABLE `CONTENT`
 	`CON_VALUE` MEDIUMTEXT  NOT NULL,
 	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
 	KEY `indexUid`(`CON_ID`, `CON_CATEGORY`, `CON_LANG`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- DEPARTMENT
 #-----------------------------------------------------------------------------
@@ -189,7 +190,7 @@ CREATE TABLE `DEPARTMENT`
 	PRIMARY KEY (`DEP_UID`),
 	KEY `DEP_BYPARENT`(`DEP_PARENT`),
 	KEY `BY_DEP_LDAP_DN`(`DEP_LDAP_DN`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Departments';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Departments';
 #-----------------------------------------------------------------------------
 #-- DYNAFORM
 #-----------------------------------------------------------------------------
@@ -204,7 +205,7 @@ CREATE TABLE `DYNAFORM`
 	`DYN_TYPE` VARCHAR(20) default 'xmlform' NOT NULL,
 	`DYN_FILENAME` VARCHAR(100) default '' NOT NULL,
 	PRIMARY KEY (`DYN_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Forms required';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Forms required';
 #-----------------------------------------------------------------------------
 #-- GROUPWF
 #-----------------------------------------------------------------------------
@@ -219,7 +220,7 @@ CREATE TABLE `GROUPWF`
 	`GRP_LDAP_DN` VARCHAR(255) default '' NOT NULL,
 	`GRP_UX` VARCHAR(128) default 'NORMAL',
 	PRIMARY KEY (`GRP_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- GROUP_USER
 #-----------------------------------------------------------------------------
@@ -232,7 +233,7 @@ CREATE TABLE `GROUP_USER`
 	`GRP_UID` VARCHAR(32) default '0' NOT NULL,
 	`USR_UID` VARCHAR(32) default '0' NOT NULL,
 	PRIMARY KEY (`GRP_UID`,`USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- HOLIDAY
 #-----------------------------------------------------------------------------
@@ -246,7 +247,7 @@ CREATE TABLE `HOLIDAY`
 	`HLD_DATE` VARCHAR(10) default '0000-00-00' NOT NULL,
 	`HLD_DESCRIPTION` VARCHAR(200) default '' NOT NULL,
 	PRIMARY KEY (`HLD_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- INPUT_DOCUMENT
 #-----------------------------------------------------------------------------
@@ -265,7 +266,7 @@ CREATE TABLE `INPUT_DOCUMENT`
 	`INP_DOC_DESTINATION_PATH` MEDIUMTEXT,
 	`INP_DOC_TAGS` MEDIUMTEXT,
 	PRIMARY KEY (`INP_DOC_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Documentation required';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Documentation required';
 #-----------------------------------------------------------------------------
 #-- ISO_COUNTRY
 #-----------------------------------------------------------------------------
@@ -279,7 +280,7 @@ CREATE TABLE `ISO_COUNTRY`
 	`IC_NAME` VARCHAR(255),
 	`IC_SORT_ORDER` VARCHAR(255),
 	PRIMARY KEY (`IC_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- ISO_LOCATION
 #-----------------------------------------------------------------------------
@@ -295,7 +296,7 @@ CREATE TABLE `ISO_LOCATION`
 	`IL_NORMAL_NAME` VARCHAR(255),
 	`IS_UID` VARCHAR(4),
 	PRIMARY KEY (`IC_UID`,`IL_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- ISO_SUBDIVISION
 #-----------------------------------------------------------------------------
@@ -309,7 +310,7 @@ CREATE TABLE `ISO_SUBDIVISION`
 	`IS_UID` VARCHAR(4) default '' NOT NULL,
 	`IS_NAME` VARCHAR(255) default '' NOT NULL,
 	PRIMARY KEY (`IC_UID`,`IS_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- LANGUAGE
 #-----------------------------------------------------------------------------
@@ -327,7 +328,7 @@ CREATE TABLE `LANGUAGE`
 	`LAN_ENABLED` CHAR(1) default '1' NOT NULL,
 	`LAN_CALENDAR` VARCHAR(30) default 'GREGORIAN' NOT NULL,
 	PRIMARY KEY (`LAN_ID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- LEXICO
 #-----------------------------------------------------------------------------
@@ -342,7 +343,7 @@ CREATE TABLE `LEXICO`
 	`LEX_VALUE` VARCHAR(128) default '' NOT NULL,
 	`LEX_CAPTION` VARCHAR(128) default '' NOT NULL,
 	PRIMARY KEY (`LEX_TOPIC`,`LEX_KEY`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='LEXICOS, una tabla que contiene tablas';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='LEXICOS, una tabla que contiene tablas';
 #-----------------------------------------------------------------------------
 #-- OUTPUT_DOCUMENT
 #-----------------------------------------------------------------------------
@@ -373,7 +374,7 @@ CREATE TABLE `OUTPUT_DOCUMENT`
 	`OUT_DOC_PDF_SECURITY_OWNER_PASSWORD` VARCHAR(32) default '',
 	`OUT_DOC_PDF_SECURITY_PERMISSIONS` VARCHAR(150) default '',
 	PRIMARY KEY (`OUT_DOC_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- PROCESS
 #-----------------------------------------------------------------------------
@@ -414,7 +415,7 @@ CREATE TABLE `PROCESS`
 	`PRO_DYNAFORMS` MEDIUMTEXT,
 	`PRO_DERIVATION_SCREEN_TPL` VARCHAR(128) default '',
 	PRIMARY KEY (`PRO_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Store process Information';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Store process Information';
 #-----------------------------------------------------------------------------
 #-- PROCESS_OWNER
 #-----------------------------------------------------------------------------
@@ -427,7 +428,7 @@ CREATE TABLE `PROCESS_OWNER`
 	`OWN_UID` VARCHAR(32) default '' NOT NULL,
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`OWN_UID`,`PRO_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- REPORT_TABLE
 #-----------------------------------------------------------------------------
@@ -446,7 +447,7 @@ CREATE TABLE `REPORT_TABLE`
 	`REP_TAB_CREATE_DATE` DATETIME  NOT NULL,
 	`REP_TAB_STATUS` CHAR(8) default 'ACTIVE' NOT NULL,
 	PRIMARY KEY (`REP_TAB_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- REPORT_VAR
 #-----------------------------------------------------------------------------
@@ -462,7 +463,7 @@ CREATE TABLE `REPORT_VAR`
 	`REP_VAR_NAME` VARCHAR(255) default '' NOT NULL,
 	`REP_VAR_TYPE` VARCHAR(20) default '' NOT NULL,
 	PRIMARY KEY (`REP_VAR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- ROUTE
 #-----------------------------------------------------------------------------
@@ -490,7 +491,7 @@ CREATE TABLE `ROUTE`
 	`ROU_EVN_UID` VARCHAR(32) default '' NOT NULL,
 	`GAT_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`ROU_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Differents flows for a flow in business process';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Differents flows for a flow in business process';
 #-----------------------------------------------------------------------------
 #-- STEP
 #-----------------------------------------------------------------------------
@@ -509,7 +510,7 @@ CREATE TABLE `STEP`
 	`STEP_POSITION` INTEGER default 0 NOT NULL,
 	`STEP_MODE` VARCHAR(10) default 'EDIT',
 	PRIMARY KEY (`STEP_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- STEP_TRIGGER
 #-----------------------------------------------------------------------------
@@ -526,7 +527,7 @@ CREATE TABLE `STEP_TRIGGER`
 	`ST_CONDITION` VARCHAR(255) default '' NOT NULL,
 	`ST_POSITION` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`STEP_UID`,`TAS_UID`,`TRI_UID`,`ST_TYPE`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- SWIMLANES_ELEMENTS
 #-----------------------------------------------------------------------------
@@ -545,7 +546,7 @@ CREATE TABLE `SWIMLANES_ELEMENTS`
 	`SWI_HEIGHT` INTEGER default 0 NOT NULL,
 	`SWI_NEXT_UID` VARCHAR(32) default '',
 	PRIMARY KEY (`SWI_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- TASK
 #-----------------------------------------------------------------------------
@@ -567,7 +568,7 @@ CREATE TABLE `TASK`
 	`TAS_PRIORITY_VARIABLE` VARCHAR(100) default '' NOT NULL,
 	`TAS_ASSIGN_TYPE` VARCHAR(30) default 'BALANCED' NOT NULL,
 	`TAS_ASSIGN_VARIABLE` VARCHAR(100) default '@@SYS_NEXT_USER_TO_BE_ASSIGNED' NOT NULL,
-	`TAS_GROUP_VARIABLE` VARCHAR(100) default '@@SYS_GROUP_TO_BE_ASSIGNED',
+	`TAS_GROUP_VARIABLE` VARCHAR(100) default '',
 	`TAS_MI_INSTANCE_VARIABLE` VARCHAR(100) default '@@SYS_VAR_TOTAL_INSTANCE' NOT NULL,
 	`TAS_MI_COMPLETE_VARIABLE` VARCHAR(100) default '@@SYS_VAR_TOTAL_INSTANCES_COMPLETE' NOT NULL,
 	`TAS_ASSIGN_LOCATION` VARCHAR(20) default 'FALSE' NOT NULL,
@@ -602,7 +603,7 @@ CREATE TABLE `TASK`
 	`TAS_SELFSERVICE_TIME_UNIT` VARCHAR(15) default '',
 	`TAS_SELFSERVICE_TRIGGER_UID` VARCHAR(32) default '',
 	PRIMARY KEY (`TAS_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Task of workflow';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Task of workflow';
 #-----------------------------------------------------------------------------
 #-- TASK_USER
 #-----------------------------------------------------------------------------
@@ -617,7 +618,7 @@ CREATE TABLE `TASK_USER`
 	`TU_TYPE` INTEGER default 1 NOT NULL,
 	`TU_RELATION` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`TAS_UID`,`USR_UID`,`TU_TYPE`,`TU_RELATION`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- TRANSLATION
 #-----------------------------------------------------------------------------
@@ -633,7 +634,7 @@ CREATE TABLE `TRANSLATION`
 	`TRN_VALUE` MEDIUMTEXT  NOT NULL,
 	`TRN_UPDATE_DATE` DATE,
 	PRIMARY KEY (`TRN_CATEGORY`,`TRN_ID`,`TRN_LANG`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- TRIGGERS
 #-----------------------------------------------------------------------------
@@ -649,7 +650,7 @@ CREATE TABLE `TRIGGERS`
 	`TRI_WEBBOT` MEDIUMTEXT  NOT NULL,
 	`TRI_PARAM` MEDIUMTEXT,
 	PRIMARY KEY (`TRI_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- USERS
 #-----------------------------------------------------------------------------
@@ -686,7 +687,7 @@ CREATE TABLE `USERS`
 	`USR_REPLACED_BY` VARCHAR(32) default '',
 	`USR_UX` VARCHAR(128) default 'NORMAL',
 	PRIMARY KEY (`USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Users';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Users';
 #-----------------------------------------------------------------------------
 #-- APP_THREAD
 #-----------------------------------------------------------------------------
@@ -702,7 +703,7 @@ CREATE TABLE `APP_THREAD`
 	`APP_THREAD_STATUS` VARCHAR(32) default 'OPEN' NOT NULL,
 	`DEL_INDEX` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`APP_UID`,`APP_THREAD_INDEX`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_THREAD';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='APP_THREAD';
 #-----------------------------------------------------------------------------
 #-- APP_DELAY
 #-----------------------------------------------------------------------------
@@ -727,8 +728,9 @@ CREATE TABLE `APP_DELAY`
 	`APP_DISABLE_ACTION_DATE` DATETIME,
 	`APP_AUTOMATIC_DISABLED_DATE` DATETIME,
 	PRIMARY KEY (`APP_DELAY_UID`),
-	KEY `indexAppDelay`(`PRO_UID`, `APP_UID`, `APP_THREAD_INDEX`, `APP_DEL_INDEX`, `APP_NEXT_TASK`, `APP_DELEGATION_USER`, `APP_DISABLE_ACTION_USER`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_DELAY';
+	KEY `indexAppDelay`(`PRO_UID`, `APP_UID`, `APP_THREAD_INDEX`, `APP_DEL_INDEX`, `APP_NEXT_TASK`, `APP_DELEGATION_USER`, `APP_DISABLE_ACTION_USER`),
+    KEY `indexAppUid`(`APP_UID`)
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='APP_DELAY';
 #-----------------------------------------------------------------------------
 #-- PROCESS_USER
 #-----------------------------------------------------------------------------
@@ -743,7 +745,7 @@ CREATE TABLE `PROCESS_USER`
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	`PU_TYPE` VARCHAR(20) default '' NOT NULL,
 	PRIMARY KEY (`PU_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- SESSION
 #-----------------------------------------------------------------------------
@@ -762,7 +764,7 @@ CREATE TABLE `SESSION`
 	`SES_END_DATE` VARCHAR(19) default '' NOT NULL,
 	PRIMARY KEY (`SES_UID`),
 	KEY `indexSession`(`SES_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='SESSION';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='SESSION';
 #-----------------------------------------------------------------------------
 #-- DB_SOURCE
 #-----------------------------------------------------------------------------
@@ -783,7 +785,7 @@ CREATE TABLE `DB_SOURCE`
 	`DBS_ENCODE` VARCHAR(32) default '',
 	PRIMARY KEY (`DBS_UID`,`PRO_UID`),
 	KEY `indexDBSource`(`PRO_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='DB_SOURCE';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='DB_SOURCE';
 #-----------------------------------------------------------------------------
 #-- STEP_SUPERVISOR
 #-----------------------------------------------------------------------------
@@ -800,7 +802,7 @@ CREATE TABLE `STEP_SUPERVISOR`
 	`STEP_POSITION` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`STEP_UID`),
 	KEY `indexStepSupervisor`(`PRO_UID`, `STEP_TYPE_OBJ`, `STEP_UID_OBJ`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='STEP_SUPERVISOR';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='STEP_SUPERVISOR';
 #-----------------------------------------------------------------------------
 #-- OBJECT_PERMISSION
 #-----------------------------------------------------------------------------
@@ -823,7 +825,7 @@ CREATE TABLE `OBJECT_PERMISSION`
 	`OP_CASE_STATUS` VARCHAR(10) default '0',
 	PRIMARY KEY (`OP_UID`),
 	KEY `indexObjctPermission`(`PRO_UID`, `TAS_UID`, `USR_UID`, `OP_TASK_SOURCE`, `OP_OBJ_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='OBJECT_PERMISSION';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='OBJECT_PERMISSION';
 #-----------------------------------------------------------------------------
 #-- CASE_TRACKER
 #-----------------------------------------------------------------------------
@@ -838,7 +840,7 @@ CREATE TABLE `CASE_TRACKER`
 	`CT_DERIVATION_HISTORY` INTEGER default 0 NOT NULL,
 	`CT_MESSAGE_HISTORY` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`PRO_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='CASE_TRACKER';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='CASE_TRACKER';
 #-----------------------------------------------------------------------------
 #-- CASE_TRACKER_OBJECT
 #-----------------------------------------------------------------------------
@@ -856,7 +858,7 @@ CREATE TABLE `CASE_TRACKER_OBJECT`
 	`CTO_POSITION` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`CTO_UID`),
 	KEY `indexCaseTrackerObject`(`PRO_UID`, `CTO_UID_OBJ`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- STAGE
 #-----------------------------------------------------------------------------
@@ -872,7 +874,7 @@ CREATE TABLE `STAGE`
 	`STG_POSY` INTEGER default 0 NOT NULL,
 	`STG_INDEX` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`STG_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- SUB_PROCESS
 #-----------------------------------------------------------------------------
@@ -896,7 +898,7 @@ CREATE TABLE `SUB_PROCESS`
 	`SP_GRID_IN` VARCHAR(50) default '' NOT NULL,
 	PRIMARY KEY (`SP_UID`),
 	KEY `indexSubProcess`(`PRO_UID`, `PRO_PARENT`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- SUB_APPLICATION
 #-----------------------------------------------------------------------------
@@ -916,7 +918,7 @@ CREATE TABLE `SUB_APPLICATION`
 	`SA_INIT_DATE` DATETIME,
 	`SA_FINISH_DATE` DATETIME,
 	PRIMARY KEY (`APP_UID`,`APP_PARENT`,`DEL_INDEX_PARENT`,`DEL_THREAD_PARENT`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- LOGIN_LOG
 #-----------------------------------------------------------------------------
@@ -936,7 +938,7 @@ CREATE TABLE `LOGIN_LOG`
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`LOG_UID`),
 	KEY `indexLoginLog`(`USR_UID`, `LOG_INIT_DATE`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- USERS_PROPERTIES
 #-----------------------------------------------------------------------------
@@ -951,7 +953,7 @@ CREATE TABLE `USERS_PROPERTIES`
 	`USR_LOGGED_NEXT_TIME` INTEGER default 0,
 	`USR_PASSWORD_HISTORY` MEDIUMTEXT,
 	PRIMARY KEY (`USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- ADDITIONAL_TABLES
 #-----------------------------------------------------------------------------
@@ -978,7 +980,7 @@ CREATE TABLE `ADDITIONAL_TABLES`
 	`ADD_TAB_GRID` VARCHAR(256) default '',
 	`ADD_TAB_TAG` VARCHAR(256) default '',
 	PRIMARY KEY (`ADD_TAB_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- FIELDS
 #-----------------------------------------------------------------------------
@@ -1004,7 +1006,7 @@ CREATE TABLE `FIELDS`
 	`FLD_DYN_UID` VARCHAR(128) default '',
 	`FLD_FILTER` TINYINT default 0,
 	PRIMARY KEY (`FLD_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- SHADOW_TABLE
 #-----------------------------------------------------------------------------
@@ -1023,7 +1025,7 @@ CREATE TABLE `SHADOW_TABLE`
 	`SHD_DATE` DATETIME,
 	PRIMARY KEY (`SHD_UID`),
 	KEY `indexShadowTable`(`SHD_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- EVENT
 #-----------------------------------------------------------------------------
@@ -1055,7 +1057,7 @@ CREATE TABLE `EVENT`
 	`TAS_EVN_UID` VARCHAR(32) default '',
 	PRIMARY KEY (`EVN_UID`),
 	KEY `indexEventTable`(`EVN_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- GATEWAY
 #-----------------------------------------------------------------------------
@@ -1073,7 +1075,7 @@ CREATE TABLE `GATEWAY`
 	`GAT_Y` INTEGER default 0 NOT NULL,
 	`GAT_TYPE` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`GAT_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- APP_EVENT
 #-----------------------------------------------------------------------------
@@ -1091,7 +1093,7 @@ CREATE TABLE `APP_EVENT`
 	`APP_EVN_LAST_EXECUTION_DATE` DATETIME,
 	`APP_EVN_STATUS` VARCHAR(32) default 'OPEN' NOT NULL,
 	PRIMARY KEY (`APP_UID`,`DEL_INDEX`,`EVN_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- APP_CACHE_VIEW
 #-----------------------------------------------------------------------------
@@ -1103,6 +1105,7 @@ CREATE TABLE `APP_CACHE_VIEW`
 (
 	`APP_UID` VARCHAR(32) default '' NOT NULL,
 	`DEL_INDEX` INTEGER default 0 NOT NULL,
+	`DEL_LAST_INDEX` INTEGER default 0 NOT NULL,
 	`APP_NUMBER` INTEGER default 0 NOT NULL,
 	`APP_STATUS` VARCHAR(32) default '' NOT NULL,
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
@@ -1133,8 +1136,11 @@ CREATE TABLE `APP_CACHE_VIEW`
 	`APP_OVERDUE_PERCENTAGE` DOUBLE  NOT NULL,
 	PRIMARY KEY (`APP_UID`,`DEL_INDEX`),
 	KEY `indexAppNumber`(`APP_NUMBER`),
+	KEY `protitle`(`APP_PRO_TITLE`),
+	KEY `appupdatedate`(`APP_UPDATE_DATE`),
+	KEY `tastitle`(`APP_TAS_TITLE`),
 	KEY `indexAppUser`(`USR_UID`, `APP_STATUS`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Application cache view';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Application cache view';
 #-----------------------------------------------------------------------------
 #-- DIM_TIME_DELEGATE
 #-----------------------------------------------------------------------------
@@ -1153,7 +1159,7 @@ CREATE TABLE `DIM_TIME_DELEGATE`
 	`QTR_NAME` VARCHAR(4) default '' NOT NULL,
 	`QTR_DESC` VARCHAR(9) default '' NOT NULL,
 	PRIMARY KEY (`TIME_ID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='The application';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='The application';
 #-----------------------------------------------------------------------------
 #-- DIM_TIME_COMPLETE
 #-----------------------------------------------------------------------------
@@ -1172,7 +1178,7 @@ CREATE TABLE `DIM_TIME_COMPLETE`
 	`QTR_NAME` VARCHAR(4) default '' NOT NULL,
 	`QTR_DESC` VARCHAR(9) default '' NOT NULL,
 	PRIMARY KEY (`TIME_ID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='The application';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='The application';
 #-----------------------------------------------------------------------------
 #-- APP_HISTORY
 #-----------------------------------------------------------------------------
@@ -1192,7 +1198,7 @@ CREATE TABLE `APP_HISTORY`
 	`HISTORY_DATE` DATETIME,
 	`HISTORY_DATA` MEDIUMTEXT  NOT NULL,
 	KEY `indexAppHistory`(`APP_UID`, `TAS_UID`, `USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='History table for Dynaforms';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='History table for Dynaforms';
 #-----------------------------------------------------------------------------
 #-- APP_FOLDER
 #-----------------------------------------------------------------------------
@@ -1208,7 +1214,7 @@ CREATE TABLE `APP_FOLDER`
 	`FOLDER_CREATE_DATE` DATETIME  NOT NULL,
 	`FOLDER_UPDATE_DATE` DATETIME  NOT NULL,
 	PRIMARY KEY (`FOLDER_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Folder System PM Documents';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Folder System PM Documents';
 #-----------------------------------------------------------------------------
 #-- FIELD_CONDITION
 #-----------------------------------------------------------------------------
@@ -1227,7 +1233,7 @@ CREATE TABLE `FIELD_CONDITION`
 	`FCD_STATUS` VARCHAR(10),
 	`FCD_DYN_UID` VARCHAR(32)  NOT NULL,
 	PRIMARY KEY (`FCD_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Conditions store to show or hide dynaform fields..';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Conditions store to show or hide dynaform fields..';
 #-----------------------------------------------------------------------------
 #-- LOG_CASES_SCHEDULER
 #-----------------------------------------------------------------------------
@@ -1248,7 +1254,7 @@ CREATE TABLE `LOG_CASES_SCHEDULER`
 	`WS_CREATE_CASE_STATUS` MEDIUMTEXT  NOT NULL,
 	`WS_ROUTE_CASE_STATUS` MEDIUMTEXT  NOT NULL,
 	PRIMARY KEY (`LOG_CASE_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Cases Launched with Case Scheduler';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Cases Launched with Case Scheduler';
 #-----------------------------------------------------------------------------
 #-- CASE_SCHEDULER
 #-----------------------------------------------------------------------------
@@ -1284,7 +1290,7 @@ CREATE TABLE `CASE_SCHEDULER`
 	`SCH_REPEAT_STOP_IF_RUNNING` TINYINT default 0,
 	`CASE_SH_PLUGIN_UID` VARCHAR(100),
 	PRIMARY KEY (`SCH_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Conditions store to show or hide dynaform fields..';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Conditions store to show or hide dynaform fields..';
 #-----------------------------------------------------------------------------
 #-- CALENDAR_DEFINITION
 #-----------------------------------------------------------------------------
@@ -1302,7 +1308,7 @@ CREATE TABLE `CALENDAR_DEFINITION`
 	`CALENDAR_DESCRIPTION` MEDIUMTEXT  NOT NULL,
 	`CALENDAR_STATUS` VARCHAR(8) default 'ACTIVE' NOT NULL,
 	PRIMARY KEY (`CALENDAR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Calendar Definition used by PM';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Calendar Definition used by PM';
 #-----------------------------------------------------------------------------
 #-- CALENDAR_BUSINESS_HOURS
 #-----------------------------------------------------------------------------
@@ -1317,7 +1323,7 @@ CREATE TABLE `CALENDAR_BUSINESS_HOURS`
 	`CALENDAR_BUSINESS_START` VARCHAR(10) default '' NOT NULL,
 	`CALENDAR_BUSINESS_END` VARCHAR(10) default '' NOT NULL,
 	PRIMARY KEY (`CALENDAR_UID`,`CALENDAR_BUSINESS_DAY`,`CALENDAR_BUSINESS_START`,`CALENDAR_BUSINESS_END`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Calendar Business Hours';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Calendar Business Hours';
 #-----------------------------------------------------------------------------
 #-- CALENDAR_HOLIDAYS
 #-----------------------------------------------------------------------------
@@ -1332,7 +1338,7 @@ CREATE TABLE `CALENDAR_HOLIDAYS`
 	`CALENDAR_HOLIDAY_START` DATETIME  NOT NULL,
 	`CALENDAR_HOLIDAY_END` DATETIME  NOT NULL,
 	PRIMARY KEY (`CALENDAR_UID`,`CALENDAR_HOLIDAY_NAME`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
 #-----------------------------------------------------------------------------
 #-- CALENDAR_ASSIGNMENTS
 #-----------------------------------------------------------------------------
@@ -1346,7 +1352,7 @@ CREATE TABLE `CALENDAR_ASSIGNMENTS`
 	`CALENDAR_UID` VARCHAR(32) default '' NOT NULL,
 	`OBJECT_TYPE` VARCHAR(100) default '' NOT NULL,
 	PRIMARY KEY (`OBJECT_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
 #-----------------------------------------------------------------------------
 #-- PROCESS_CATEGORY
 #-----------------------------------------------------------------------------
@@ -1361,7 +1367,7 @@ CREATE TABLE `PROCESS_CATEGORY`
 	`CATEGORY_NAME` VARCHAR(100) default '' NOT NULL,
 	`CATEGORY_ICON` VARCHAR(100) default '',
 	PRIMARY KEY (`CATEGORY_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Calendar Holidays';
 #-----------------------------------------------------------------------------
 #-- APP_NOTES
 #-----------------------------------------------------------------------------
@@ -1383,7 +1389,7 @@ CREATE TABLE `APP_NOTES`
 	`NOTE_RECIPIENTS` MEDIUMTEXT,
 	KEY `indexAppNotesDate`(`APP_UID`, `NOTE_DATE`),
 	KEY `indexAppNotesUser`(`APP_UID`, `USR_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Application Notes';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Application Notes';
 #-----------------------------------------------------------------------------
 #-- DASHLET
 #-----------------------------------------------------------------------------
@@ -1402,7 +1408,7 @@ CREATE TABLE `DASHLET`
 	`DAS_UPDATE_DATE` DATETIME,
 	`DAS_STATUS` TINYINT default 1 NOT NULL,
 	PRIMARY KEY (`DAS_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Dashblets definitions';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Dashblets definitions';
 #-----------------------------------------------------------------------------
 #-- DASHLET_INSTANCE
 #-----------------------------------------------------------------------------
@@ -1421,7 +1427,7 @@ CREATE TABLE `DASHLET_INSTANCE`
 	`DAS_INS_UPDATE_DATE` DATETIME,
 	`DAS_INS_STATUS` TINYINT default 1 NOT NULL,
 	PRIMARY KEY (`DAS_INS_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Dashblets definitions';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Dashblets definitions';
 #-----------------------------------------------------------------------------
 #-- APP_SOLR_QUEUE
 #-----------------------------------------------------------------------------
@@ -1432,8 +1438,23 @@ DROP TABLE IF EXISTS `APP_SOLR_QUEUE`;
 CREATE TABLE `APP_SOLR_QUEUE`
 (
 	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`APP_CHANGE_DATE` DATETIME  NOT NULL,
+	`APP_CHANGE_TRACE` VARCHAR(500)  NOT NULL,
 	`APP_UPDATED` TINYINT default 1 NOT NULL,
 	PRIMARY KEY (`APP_UID`)
-)ENGINE=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_SOLR_QUEUE';
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='APP_SOLR_QUEUE';
+#-----------------------------------------------------------------------------
+#-- SEQUENCES
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SEQUENCES`;
+
+
+CREATE TABLE `SEQUENCES`
+(
+	`SEQ_NAME` VARCHAR(50) default '' NOT NULL,
+	`SEQ_VALUE` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`SEQ_NAME`)
+)ENGINE=InnoDB  DEFAULT CHARSET='utf8' COMMENT='Sequences, Controls the numerical sequence of a table';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

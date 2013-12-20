@@ -1,8 +1,9 @@
 /*
-Pensado y Desarrollado por Daniel Canedo
-para Colosa QA
-http://duhnnie.net
-last update: 2012-10-22 Hrs. 14:34
+ * Created with IntelliJ IDEA.
+ * Author: Herbert Saal
+ * Date: 5/16/13
+ * Time: 11:40 AM
+ *
 */
 
 package com.colosa.qa.automatization.common.extJs;
@@ -12,7 +13,9 @@ import java.util.List;
 //import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
 
+import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.common.WaitTool;
 import org.openqa.selenium.*;
 //import org.openqa.selenium.Keys;
 //import org.openqa.selenium.JavascriptExecutor;
@@ -29,8 +32,11 @@ public class ExtJSGrid{
     private WebElement searchInput;
     private WebElement gridBody;
     private ExtJSGridHeader gridBodyHeader;
+    private ExtJSToolbar bottomToolbar = null;
+    private WebElement bottomCellCounterText;
     //private List<ExtJSGridHeader> gridHeaders;
     private List<WebElement> rows;
+    private List<WebElement> auxListElements;
 
 	private List<WebElement> pager;
 	private WebElement btn_first;
@@ -46,18 +52,24 @@ public class ExtJSGrid{
     /**
      * Creates an ExtJsGrid class.
      * @param grid The element that has the class = x-grid-panel
-     * @param driver The browser driver
+     * @param browserInstance The browser driver
      * @param timeout
      */
-	public ExtJSGrid(WebElement grid, WebDriver driver, int timeout){
+	public ExtJSGrid(WebElement grid, BrowserInstance browserInstance, int timeout) throws Exception {
 		//verify x-grid-panel class
 
-        this.driver = driver;
+        this.driver = browserInstance.getInstanceDriver();
 		this.grid = grid;
 		this.timeout = timeout;
         this.headerToolbar = this.grid.findElement(By.cssSelector("div.x-panel-tbar"));
         this.headerToolbarCells = this.headerToolbar.findElements(By.cssSelector("td.x-toolbar-cell"));
         this.gridBody = this.grid.findElement(By.cssSelector("div.x-grid3"));
+        this.auxListElements = this.grid.findElements(By.cssSelector("div.x-panel-bbar"));
+        if(this.auxListElements.size()>0){
+            this.bottomToolbar = new ExtJSToolbar(this.auxListElements.get(0), browserInstance);
+            this.bottomCellCounterText = this.bottomToolbar.findToolbarCell(11).getWebElement();
+            Logger.addLog("Bottom Toolbar found, cell 11:" + this.bottomCellCounterText.getText());
+        }
         //this.gridBodyHeader = this.gridBody.findElement(By.cssSelector("div.x-grid3-header"));
 
         //this.gridHeaders = this.gridBodyHeader.findElements(By.cssSelector("td.x-grid3-hd.x-grid3-cell:not([style='display:none'])"));
@@ -68,15 +80,17 @@ public class ExtJSGrid{
 		this.btn_last = this.pager.get(8).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 		this.btn_refresh = this.pager.get(10).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 		this.init();
+
+        WaitTool.waitForJavaScriptCondition(this.driver, "return (document.readyState == 'complete');", 15);
 	}
 
     /**
      *
      * @param grid
-     * @param driver
+     * @param browserInstance
      */
-	public ExtJSGrid(WebElement grid, WebDriver driver){
-		this(grid, driver, 30);
+	public ExtJSGrid(WebElement grid, BrowserInstance browserInstance) throws Exception {
+		this(grid, browserInstance, 30);
 	}
 
 	private void init(){
@@ -137,14 +151,15 @@ public class ExtJSGrid{
 
     public void setSearchFieldGrid(Boolean headerToolBar, Integer cellNumber){
         this.searchInput = null;
-
+        /*
+        Logger.addLog("setSearchFieldGrid search cells: " + cellNumber);
         //list of toolbar CELLS
-        Logger.addLog("Total toolbar cells: " + headerToolbarCells.size());
+        Logger.addLog("setSearchFieldGrid Total toolbar cells: " + headerToolbarCells.size());
         Integer counter = 0;
         for(WebElement toolbarElement: headerToolbarCells){
             counter++;
-            Logger.addLog("  Toolbar cells[" + counter + "]: " + toolbarElement.getText());
-        }
+            Logger.addLog("  setSearchFieldGrid Toolbar cells[" + counter + "]: " + toolbarElement.getText());
+        }*/
 
         //pm_search_text_field
 
@@ -160,6 +175,8 @@ public class ExtJSGrid{
         //div#ext-gen25.x-grid3 div#ext-gen26.x-grid3-viewport div#ext-gen28.x-grid3-scroller div#ext-gen30.x-grid3-body div.x-grid3-row
         List<WebElement> listRows = this.gridBody.findElements(By.cssSelector("div.x-grid3-body div.x-grid3-row"));
         Logger.addLog("Get current list of rows total: " + listRows.size());
+
+        //WaitTool.waitForJavaScriptCondition(this.driver, "return (document.readyState == 'complete');", 15);
 
 
         List<ExtJSGridRow> listGridRows = new ArrayList<ExtJSGridRow>(listRows.size());
@@ -178,28 +195,18 @@ public class ExtJSGrid{
             throw new Exception("Search field not defined, define it with setSearchFieldGrid function.");
         }
 
+        String currentTextStatus = this.bottomCellCounterText.getText().trim();
+
         this.searchInput.sendKeys(searchCriteria);
         this.searchInput.sendKeys(Keys.RETURN);
 
-        //wait for list to update
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        /*Boolean returnExpectedCondition = (new WebDriverWait(this.driver, timeoutSeconds))
-                .until(new ExpectedCondition<Boolean>(){
-                    @Override
-                    public Boolean apply(WebDriver d) {
-                        return (((JavascriptExecutor)this.driver).executeScript("return document.readyState;")).equals("complete");
-                        //return ((JavascriptExecutor)_instanceDriver).executeScript("return jQuery.active;") == 0;
-                    }
-                }
-                );*/
+        //wait for counter of grid changes to one if the row is found.
+        //only wait for one, wait for text to change
+        //WaitTool.waitForTextPresent(this.driver, this.bottomCellCounterText, "Display Items 1 - 1 of 1", 15);
+        WaitTool.waitForTextToChange(this.driver, this.bottomCellCounterText, currentTextStatus, 15);
 
         //return list of rows, only the filtered list is returned
         return this.getCurrentListRows();
-
     }
 
     public ExtJSGridRow searchAndReturnRow(String searchCriteria, String columnName) throws Exception {
@@ -210,24 +217,14 @@ public class ExtJSGrid{
             throw new Exception("Search field not defined, define it with setSearchFieldGrid function.");
         }
 
+        String currentTextStatus = this.bottomCellCounterText.getText().trim();
+
         this.searchInput.sendKeys(searchCriteria);
         this.searchInput.sendKeys(Keys.RETURN);
 
-        //wait for list to update
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        /*Boolean returnExpectedCondition = (new WebDriverWait(this.driver, timeoutSeconds))
-                .until(new ExpectedCondition<Boolean>(){
-                    @Override
-                    public Boolean apply(WebDriver d) {
-                        return (((JavascriptExecutor)this.driver).executeScript("return document.readyState;")).equals("complete");
-                        //return ((JavascriptExecutor)_instanceDriver).executeScript("return jQuery.active;") == 0;
-                    }
-                }
-                );*/
+        //wait for counter of grid changes to one if the row is found.
+        //wait for text to change
+        WaitTool.waitForTextToChange(this.driver, this.bottomCellCounterText, currentTextStatus, 15);
 
         //return list of rows, only the filtered list is returned
         List<ExtJSGridRow> listFoundRows = this.getCurrentListRows();
@@ -240,7 +237,7 @@ public class ExtJSGrid{
         for (ExtJSGridRow gridRow:listFoundRows){
             //get the number of the column of the header
             Integer headerIndex =  this.gridBodyHeader.getHeaderColumnNumber(columnName);
-            Logger.addLog("   Header with name: " + columnName + " = " + headerIndex);
+            Logger.addLog("   Header with name: " + columnName + " Index:" + headerIndex);
 
             Logger.addLog("   Row Data: " + gridRow.getRowColumnText(headerIndex));
 

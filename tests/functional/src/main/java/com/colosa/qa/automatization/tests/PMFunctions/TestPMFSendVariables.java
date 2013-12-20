@@ -24,34 +24,34 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		caseNum=pages.Home().gotoNewCase().startCase("Proceso1 (Task 1)");
+		caseNum=pages.Home().gotoNewCase().startCase("Test PMFSendVariables 1 (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("Nombre", "Angela");
 		pages.DynaformExecution().setFieldValue("Apellido", "Villegas");
 		pages.DynaformExecution().setFieldValue("Salario", "1,321,323,131,313,213.312313213");
 		pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba  Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		pages.DynaformExecution().setFieldValue("Enviar", "");
-		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		pages.DynaformExecution().clickButton("Enviar");
+		pages.AssignTask().pressContinueButton();
 
-		pages.Home().gotoNewCase().startCase("Proceso2 (Task 1)");
+		pages.Home().gotoNewCase().startCase("Test PMFSendVariables 2 (Task 1)");
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("CaseNum", Integer.toString(caseNum));
 		pages.DynaformExecution().setFieldValue("Direccion", dir);
 		pages.DynaformExecution().setFieldValue("Telefono", tel);
 		pages.DynaformExecution().setFieldValue("Email", mail);
-		pages.DynaformExecution().setFieldValue("Enviar", "");
-		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+        pages.DynaformExecution().clickButton("Enviar");
+		pages.AssignTask().pressContinueButton();
 
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Direccion"), dir);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Telefono"), tel);
 		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Email"), mail);
-		pages.DynaformExecution().setFieldValue("Enviar", "");
-		Assert.assertTrue(pages.InputDocProcess().continuebtn());
+		//pages.DynaformExecution().setFieldValue("Enviar", "");
+		//Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.DynaformExecution().outDynaform();
-		pages.Main().logout();
+		//pages.DynaformExecution().outDynaform();
+		//pages.Main().logout();
 	}
 
     @After

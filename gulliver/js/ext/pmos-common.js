@@ -5,12 +5,6 @@ PMExtJSCommon = function() {
 
   this.confirm = function(title, msg, fnYes, fnNo)
   {
-    if (typeof(_) != 'undefined') {
-      Ext.MessageBox.buttonText = {
-        yes     : _('ID_YES'),
-        no      : _('ID_NO')
-      };
-    }
     Ext.MessageBox.confirm(title, msg, function(btn, text){
       if ( btn == 'yes' )
         setTimeout(fnYes, 0)
@@ -119,19 +113,22 @@ PMExtJSCommon = function() {
         }),
         groupField: 'section'
       }),
-      columns : [{
-        width : labelColumnWidth,
-        dataIndex : 'label',
-        renderer: function(v){return '<b><font color="#465070">'+v+'</font></b>'},
-        align: 'right'
-      },
-      {
-        width : valueColumnWidth,
-        dataIndex : 'value'
-      },{
-        hidden: true,
-        dataIndex : 'section'
-      }],
+      columns : [
+        {
+            width : labelColumnWidth,
+            dataIndex : "label",
+            renderer: function(v){return "<b><font color=\"#465070\">"+v+"</font></b>"},
+            align: "right"
+        },
+        {
+            width : valueColumnWidth,
+            dataIndex : "value"
+        },
+        {
+            hidden: true,
+            dataIndex : "section"
+        }
+      ],
       autoHeight : true,
       columnLines: true,
       trackMouseOver:false,
@@ -350,6 +347,42 @@ function _()
 }
 
 /**
+ * Translator function for internationalization to plugins
+ */
+function __()
+{
+  var argv = __.arguments;
+  var argc = argv.length;
+
+  //argv[0] => NAME PLUGIN
+  //argv[1] => ID
+  //argv[2] => VARIABLES
+
+  var existTranslations = true;
+  var existIdLabel = true;
+  eval("if( typeof TRANSLATIONS_" + argv[0].toUpperCase() + " != 'undefined' && TRANSLATIONS_" + argv[0].toUpperCase() + ") { existTranslations = true; } else { existTranslations = false; }");
+  if (existTranslations) {
+    eval("if( typeof TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[1]] != 'undefined' ) { existIdLabel = true; } else { existIdLabel = false; }");
+    if (existIdLabel) {
+      if (argc > 2) {
+        eval("trn = TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[0]];");
+        for (i = 2; i < argv.length; i++) {
+          trn = trn.replace('{'+(i-2)+'}', argv[i]);
+        }
+      } else {
+        eval("trn = TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[1]];");
+      }
+    } else {
+      trn = '**' + argv[1] + '**';
+    }
+  } else {
+    PMExt.error('Processmaker JS Core Error', 'The TRANSLATIONS ' + argv[0].toUpperCase() + ' global object is not loaded!');
+    trn = '';
+  }
+  return trn;
+}
+
+/**
  * Environment Formats function for full name
  */
 function _FNF(USER_NAME, FIRST_NAME, LAST_NAME, FN_FORMAT)
@@ -396,6 +429,10 @@ function _DF(DATE_TIME, D_FORMAT)
       else {
         D_FORMAT = 'm/d/Y';
       }
+    }
+
+    if (D_FORMAT.indexOf(' \\d\\e ')) {
+        D_FORMAT = D_FORMAT.replace(/ \\d\\e /gi, " [of] ");
     }
 
     if (!(DATE_TIME != '')) {
@@ -469,6 +506,11 @@ function _DF(DATE_TIME, D_FORMAT)
          aux = aux + values[aDate[i]];
        }
     }
+
+    if (aux.indexOf(" [of] ")) {
+        aux = aux.replace(/\[of\]/g, "de");
+    }
+
     return aux;
   }
 

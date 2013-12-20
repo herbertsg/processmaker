@@ -34,7 +34,7 @@ public class TestCaseTrackerStageMap extends com.colosa.qa.automatization.tests.
 		pages.Main().goHome();
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "");
 		pages.InputDocProcess().switchToDefault();

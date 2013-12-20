@@ -44,7 +44,7 @@ public class ProcessList extends Page{
         el.sendKeys(Keys.RETURN);
 				
 		WebElement grid = browser.findElement("designerList.webelement.Process");
-		ExtJSGrid extGrid = new ExtJSGrid(grid, browser.getInstanceDriver());
+		ExtJSGrid extGrid = new ExtJSGrid(grid, browser);
 		WebElement pager = browser.findElementByXPath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr");
 		List<WebElement> wl;
 		int index = 1;
@@ -90,7 +90,7 @@ public class ProcessList extends Page{
 		List<WebElement> menulist = grid.findElements(By.xpath("div/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td"));
 		WebElement exportbtn = menulist.get(6).findElement(By.xpath("table/tbody/tr[2]/td[2]/em/button"));
 
-		ExtJSGrid extGrid = new ExtJSGrid(grid, browser.getInstanceDriver());
+		ExtJSGrid extGrid = new ExtJSGrid(grid, browser);
 		WebElement pager = browser.findElementByXPath("//div[@id='processesGrid']/div/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr");//no funciona al crear su variable en el default.conf
 		List<WebElement> wl;
 		int index = 1;

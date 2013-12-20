@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -18,10 +19,16 @@ public class TestPMFUserList extends com.colosa.qa.automatization.tests.common.T
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().gotoNewCase().startCase("PMF User List (Task 1)");
-		pages.DynaformExecution().sleep(15000);
-		pages.DynaformExecution().outDynaform();
-		pages.Main().logout();
+		pages.Home().gotoNewCase().startCase("PMFUserList (Task 1)");
+        pages.DynaformExecution().intoDynaform();
+
+        //verify returned data of grids
+        String countUsersFunction = pages.DynaformExecution().getFieldValue("countUsersFunction");
+        String countUsersQuery = pages.DynaformExecution().getFieldValue("countUsers");
+
+        Assert.assertEquals("Invalid number of users returned PMFUserList", countUsersFunction, countUsersQuery);
+
+		//pages.Main().logout();
 	}
 
     @After

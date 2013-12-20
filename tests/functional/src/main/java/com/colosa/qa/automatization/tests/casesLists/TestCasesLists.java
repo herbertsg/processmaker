@@ -28,7 +28,7 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
         pages.DynaformExecution().outDynaform();
         
         pages.Home().gotoDraft();
-        pages.Home().openCase(casenumber);
+        pages.Home().gotoInbox().openCase(casenumber);
         pages.DynaformExecution().intoDynaform();
     
         FormFieldData[] fieldArray1=new FormFieldData[2];
@@ -50,13 +50,13 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
     		
     		pages.Home().gotoParticipated();
 		   // Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(casenumber));
-		    pages.Home().openCase(casenumber);
+		    pages.Home().gotoInbox().openCase(casenumber);
 		    pages.DynaformExecution().outDynaform();
 		        		
     		pages.Home().gotoInbox();
 		   // Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(casenumber));
 		    
-		    pages.Home().openCase(casenumber);
+		    pages.Home().gotoInbox().openCase(casenumber);
 		    pages.DynaformExecution().intoDynaform();
 		    
 		    FormFieldData[] fieldArray3=new FormFieldData[2];
@@ -78,7 +78,7 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		    
 		    pages.Home().gotoUnassigned();
 		    //Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(casenumber));
-		    pages.Home().openCase(casenumber);
+		    pages.Home().gotoInbox().openCase(casenumber);
 		    pages.DynaformExecution().intoDynaform();
 		    
 		    FormFieldData[] fieldArray4=new FormFieldData[1];

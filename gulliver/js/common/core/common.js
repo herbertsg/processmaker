@@ -494,6 +494,7 @@ function popupWindow ( title , url, width, height, callbackFn , autoSizeWidth, a
 	var myPanel = new leimnud.module.panel();
 	currentPopupWindow = myPanel;
 	myPanel.options = {
+	    limit: true,
 		size:{w:width,h:height},
 		position:{center:true},
 		title: title,
@@ -2020,6 +2021,8 @@ function removeValue(id){
   fireEvent(document.getElementById(id), 'change');
 }
 
+var countButtonDone = 0;
+
 function datePicker4(obj, id, mask, startDate, endDate, showTIme, idIsoDate)
 {
     var aux = id.replace(/[\[\]]/g, '_');
@@ -2028,6 +2031,8 @@ function datePicker4(obj, id, mask, startDate, endDate, showTIme, idIsoDate)
   if (showTIme=='false') {
     showTIme = false;
   }
+
+  countButtonDone = countButtonDone + 1;
 
   Calendar.setup({
     inputField: id,
@@ -2038,15 +2043,53 @@ function datePicker4(obj, id, mask, startDate, endDate, showTIme, idIsoDate)
     max:endDate,
     animation: _BROWSER.name =='msie'? false: true,
     showTime: showTIme,
+    showButtonDone: (showTIme)? 1 : 0,
+    iButtonDone: countButtonDone,
     opacity: 1,
-    onSelect: function() {
-        this.hide();
+    onSelect: function ()
+    {
         /* disabled temporarily by wrong functionality
         auxid     = id;
         idIsoDate = auxid.substring(0,auxid.length-1)+'_isodate]';
         var field= document.getElementById(idIsoDate);
         field.value=this.selection.print("%Y-%m-%d", ""); */
-        fireEvent(document.getElementById(id), 'change');
+
+        if (!this.args.showButtonDone || this.args.showButtonDone == 0) {
+            this.hide();
+
+            fireEvent(document.getElementById(id), "change");
+        }
+    },
+    onFocus: function ()
+    {
+        if (this.args.showButtonDone && this.args.showButtonDone == 1) {
+            var thisAux = this;
+
+            document.getElementById("btnDone" + thisAux.args.iButtonDone).onclick = function ()
+            {
+                var v;
+
+                if (thisAux.selection.sel.length == 0) {
+                    //thisAux.args.showTime //default false //true for 24h //12 for am/pm
+
+                    if (thisAux.args.showTime) {
+                        thisAux.date.setHours(thisAux.selection.cal.getHours());
+                        thisAux.date.setMinutes(thisAux.selection.cal.getMinutes());
+                    }
+
+                    v = Calendar.printDate(Calendar.intToDate(thisAux.date), thisAux.args.dateFormat);
+                } else {
+                    v = thisAux.selection.print(thisAux.args.dateFormat);
+                }
+
+                document.getElementById(thisAux.args.inputField).value = v;
+
+                //Event
+                thisAux.hide();
+
+                fireEvent(document.getElementById(id), "change");
+            };
+        }
     }
   });
 }
@@ -2112,6 +2155,42 @@ function _()
   }
   else {
     PMExt.error('Processmaker JS Core Error', 'The TRANSLATIONS global object is not loaded!');
+    trn = '';
+  }
+  return trn;
+}
+
+/**
+ * Translator function for internationalization to plugins
+ */
+function __()
+{
+  var argv = __.arguments;
+  var argc = argv.length;
+
+  //argv[0] => NAME PLUGIN
+  //argv[1] => ID
+  //argv[2] => VARIABLES
+
+  var existTranslations = true;
+  var existIdLabel = true;
+  eval("if( typeof TRANSLATIONS_" + argv[0].toUpperCase() + " != 'undefined' && TRANSLATIONS_" + argv[0].toUpperCase() + ") { existTranslations = true; } else { existTranslations = false; }");
+  if (existTranslations) {
+    eval("if( typeof TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[1]] != 'undefined' ) { existIdLabel = true; } else { existIdLabel = false; }");
+    if (existIdLabel) {
+      if (argc > 2) {
+        eval("trn = TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[0]];");
+        for (i = 2; i < argv.length; i++) {
+          trn = trn.replace('{'+(i-2)+'}', argv[i]);
+        }
+      } else {
+        eval("trn = TRANSLATIONS_" + argv[0].toUpperCase() + "[argv[1]];");
+      }
+    } else {
+      trn = '**' + argv[1] + '**';
+    }
+  } else {
+    PMExt.error('Processmaker JS Core Error', 'The TRANSLATIONS ' + argv[0].toUpperCase() + ' global object is not loaded!');
     trn = '';
   }
   return trn;

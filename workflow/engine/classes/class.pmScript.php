@@ -335,9 +335,18 @@ class PMScript
             for ($i = 0; $i < $iOcurrences; $i ++) {
                 // if the variables for that condition has not been previously defined then $variableIsDefined
                 // is set to false
-                if (! isset( $this->aFields[$aMatch[2][$i][0]] )) {
-                    // $variableIsDefined = false;
+                if (!isset($this->aFields[$aMatch[2][$i][0]]) && !isset($aMatch[5][$i][0])) {
                     $this->aFields[$aMatch[2][$i][0]] = '';
+                } else {
+                    if (!isset($this->aFields[$aMatch[2][$i][0]])) {
+                        eval("\$this->aFields['" . $aMatch[2][$i][0] . "']" . $aMatch[5][$i][0] . " = '';");
+                    } else {
+                        if (isset($aMatch[5][$i][0])) {
+                            eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "']" . $aMatch[5][$i][0] . ")) {\$this->aFields['" . $aMatch[2][$i][0] . "']" . $aMatch[5][$i][0] . " = '';}");
+                        } else {
+                            eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "'])) {\$this->aFields['" . $aMatch[2][$i][0] . "'] = '';}");
+                        }
+                    }
                 }
                 $sAux = substr( $this->sScript, $iAux, $aMatch[0][$i][1] - $iAux );
                 if (! $bEqual) {
@@ -566,7 +575,7 @@ function handleFatalErrors ($buffer)
     if (preg_match( '/(error<\/b>:)(.+)(<br)/', $buffer, $regs )) {
         $err = preg_replace( '/<.*?>/', '', $regs[2] );
         $aAux = explode( ' in ', $err );
-        $sCode = $_SESSION['_CODE_'];
+        $sCode = isset($_SESSION['_CODE_']) ? $_SESSION['_CODE_'] : null;
         unset( $_SESSION['_CODE_'] );
         registerError( 2, $aAux[0], 0, $sCode );
         if (strpos( $_SERVER['REQUEST_URI'], '/cases/cases_Step' ) !== false) {
@@ -595,7 +604,7 @@ function handleFatalErrors ($buffer)
             die();
         } else {
             $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
-            if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+            if (isset($_SESSION['TRIGGER_DEBUG']['ISSET']) && $_SESSION['TRIGGER_DEBUG']['ISSET']) {
                 $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
                 $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
                 $aNextStep['PAGE'] = $aNextStep['PAGE'] . '&breakpoint=triggerdebug';

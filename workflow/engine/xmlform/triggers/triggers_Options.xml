@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm type="xmlmenu">
 
-<MNU_ADD type="link" value='' link="#" onclick="triggerFromLibrary(); return false;" colAlign="left" colWidth="100">
+<MNU_ADD type="link" value='' link="#" onclick="if('@%PARTNER_FLAG' == '' || '@%PARTNER_FLAG' == 0) { triggerFromLibrary(); } else { triggerNewCustom(); } return false;" colAlign="left" colWidth="100">
   <en>New</en>
 </MNU_ADD>
 
@@ -9,6 +9,7 @@
 
 
 <PRO_UID type="private"/>
+<PARTNER_FLAG type="private"/>
 <FIELDS_REQUIRED type="private"/>
 
 <triggersEdit type="private" defaultValue="../triggers/triggers_Edit"/>
@@ -46,6 +47,20 @@
 	  }
 	}
 */
+    //Add css Codemirror
+    var head = document.getElementsByTagName('head')[0];
+    var s = document.createElement('link');
+    s.setAttribute('href', '/js/codemirror/lib/codemirror.css');
+    s.setAttribute('type', 'text/css');
+    s.setAttribute('rel', 'stylesheet');
+    head.appendChild(s);
+
+    var s = document.createElement('link');
+    s.setAttribute('href', '/js/codemirror/addon/hint/show-hint.css');
+    s.setAttribute('type', 'text/css');
+    s.setAttribute('rel', 'stylesheet');
+    head.appendChild(s);
+
   var windowWidth = 600;
   var windowHeight = 460;
 
@@ -106,11 +121,12 @@
     if(document.getElementById('TRI_UID')) {
         var triUid = document.getElementById('TRI_UID').value;
     }
-    var triTitle =document.getElementById('TRI_TITLE').value;
+    var triTitle = document.getElementById('TRI_TITLE').value;
 
     triTitle = triTitle.replace(/^\s*|\s*$/g,"");
     if (triTitle == '') {
-      alert(G_STRINGS.ID_REQUIRED_NAME_TRIGGERS);return false;
+        document.getElementById('TRI_TITLE').focus();
+        alert(G_STRINGS.ID_REQUIRED_NAME_TRIGGERS);return false;
     }
     document.getElementById('TRI_TITLE').value = triTitle;
 
@@ -119,9 +135,12 @@
     for (i=0; i<fieldsRequired.length; i++)
     {
         var field = document.getElementById(fieldsRequired[i]).value;
+        field = field.replace(/^\s*|\s*$/g,"");
         if (field == '') {
+            document.getElementById(fieldsRequired[i]).focus();
             alert(_('ID_REQUIRED_FIELDS_ERROR'));return false;
         }
+        document.getElementById(fieldsRequired[i]).value = field;
     }
     if(triUid==''){
         reqName=ajax_function("../triggers/triggers_Save",'lookforNameTrigger','NAMETRIGGER='+encodeURIComponent(triTitle)+'&proUid='+(document.getElementById('PRO_UID').value),'POST') ;

@@ -3,27 +3,72 @@ package com.colosa.qa.automatization.pages;
 //import java.util.List;
 //import java.lang.Boolean;
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.common.extJs.ExtJSFloatingMenu;
 import com.colosa.qa.automatization.common.extJs.ExtJSToolbar;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DynaformExecution extends Page {
+    ExtJSToolbar openCaseToolbar = null;
+    BrowserInstance browser = null;
+    WebElement casesSubFrame = null;
 
     public DynaformExecution(BrowserInstance browser) throws Exception {
         super(browser);
+        this.browser = browser;
 
         verifyPage();
+
+        //switch again to frame to get toolbar
+        browser.switchToDefaultContent();
+        browser.switchToFrame("casesFrame");
+        this.casesSubFrame = browser.findElementById("casesSubFrame");
+
+        browser.switchToFrame("casesSubFrame");
+        //get toolbar for open dynaform
+        WebElement toolbarParent = browser.findElementById("navPanel");
+
+        //search navPanel
+        if(toolbarParent == null){
+            Logger.addLog("Nav Panel not found");
+        }
+        Logger.addLog("Nav Panel found");
+
+        //toolbar
+        this.openCaseToolbar = new  ExtJSToolbar(toolbarParent, browser);
+
     }
 
     @Override
     public void verifyPage() throws Exception {
+        //verify that we are in a dynaform (execution) status
+        //wait for page
+        browser.switchToDefaultContent();
+        //browser.waitForElement(By.id("casesFrame"),120);
+        browser.switchToFrame("casesFrame");
+        //Logger.addLog("goto subcaseFrame ...");
+        browser.switchToFrame("casesSubFrame");
+        //browser.waitForElement(By.id("casesSubFrame"), 10);
+
+
+        //browser.switchToFrame("casesSubFrame");
+        browser.switchToFrame("openCaseFrame");
+
+        browser.waitForElement(By.cssSelector("form div.content"), 5);
+
+        Logger.addLog("wait form of open case ...");
+        //browser.waitForElement(By.id("processesFilter"), 10);
+
         //return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+
     }
 
 
@@ -61,22 +106,10 @@ public class DynaformExecution extends Page {
     }
 
     public CaseNote openCasesNotes() throws Exception {
-        intoCasesSubFrame();
 
-
-        WebElement ttoolbar = browser.findElementById("navPanel");
-
-        //search navPanel
-        if(ttoolbar == null){
-            Logger.addLog("Nav Panel not found");
-        }
-        Logger.addLog("Nav Panel found");
-
-        //toolbar
-        ExtJSToolbar toolbar = new  ExtJSToolbar(ttoolbar, browser);
-
+        //click case note button
         //toolbar.findToolbarCell("  Case Notes").click();
-        toolbar.findToolbarCell(3).click();
+        this.openCaseToolbar.findToolbarCell(3).clickButton();
 
         //wait for case notes window to appear
         CaseNote caseNote = new CaseNote(browser);
@@ -87,28 +120,28 @@ public class DynaformExecution extends Page {
         Logger.addLog("Case Note window open");
 
         return caseNote;
+    }
 
-        //Thread.sleep(2000);
-        /*
-        Thread.sleep(2000);
-        WebElement tableMenus = browser.findElementById("caseNotes");
-        WebElement buttonInformation = tableMenus.findElement(By.tagName("button"));
-        buttonInformation.click();
-          */
+    public PauseCase pauseCase() throws Exception {
+        //click toolbar actions/pause
+        openCaseToolbar.findToolbarCell(2).clickButton();
 
-        /*List<WebElement> windowCaseNotes = browser.findElements(By.id("caseNotesWindowPanel"));
-        
-        for(WebElement myWindow:windowCaseNotes)
-        {
-            return true;
-        }*/
-        /*
-        WebElement windowCaseNote = browser.findElementById("caseNotesWindowPanel");
-        if(windowCaseNote != null){
-            return true;
-        }*/
+        //intoCasesSubFrame();
+        //find float menu
+        ExtJSFloatingMenu actionsMenu = new ExtJSFloatingMenu(browser);
+        //wait for case notes window to appear
+        if(actionsMenu == null){
+            throw new Exception("Error opening Actions Float Menu.");
+        }
 
-        //return false;
+        Logger.addLog("Actions Float Menu open");
+
+        actionsMenu.findMenuItem("Pause").click();
+
+        //detect pause window
+        PauseCase pauseWindow = new PauseCase(browser);
+
+        return pauseWindow;
     }
 
     public Boolean openInformationDynaforms() throws Exception {
@@ -202,6 +235,7 @@ public class DynaformExecution extends Page {
     }
 
     public FieldType detectFieldType(WebElement element) throws Exception{
+        intoDynaform();
         FieldType elementFieldType = null;
 
         Logger.addLog("detectFieldType:");
@@ -315,14 +349,21 @@ public class DynaformExecution extends Page {
     public WebElement getField(String fieldName) throws Exception{
         Logger.addLog("getField: " + fieldName);
 
-       // intoDynaform();
+        intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
 
         Logger.addLog(" Element to search for: " + str);
 
-        return browser.findElement(str);
+        WebElement resultWebElement = browser.findElement(str);
+
+        //scroll to element
+        Actions actions = new Actions(browser.getInstanceDriver());
+
+        actions.moveToElement(resultWebElement);
+
+        return resultWebElement;
     }
 
     public WebElement getFieldWithoutForm(String fieldName) throws Exception{
@@ -431,7 +472,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValue(String fieldName, String value) throws Exception{
-       // intoDynaform();
+        intoDynaform();
         String str = "";
         FieldType fieldType;
 
@@ -464,7 +505,7 @@ public class DynaformExecution extends Page {
     }
 
     public void setFieldValue(WebElement element, String value, FieldType fieldType) throws Exception{
-        Logger.addLog("setFieldValue (WebElement): ");
+        Logger.addLog("setFieldValue (WebElement): " + value + " type:" + fieldType.toString());
 
         switch(fieldType)
         {
@@ -829,6 +870,7 @@ public class DynaformExecution extends Page {
     }
 
     public String getGridFieldValue(String gridName, int row, String fieldName) throws Exception{
+        intoDynaform();
         Logger.addLog("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
 
         String elementValue = "";
@@ -876,6 +918,7 @@ public class DynaformExecution extends Page {
 
 
     public String getDropdownFieldText(String fieldName) throws Exception{
+        intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
@@ -888,6 +931,7 @@ public class DynaformExecution extends Page {
     }
 
     public String getFieldText(String fieldName) throws Exception{
+        intoDynaform();
         Logger.addLog("getFieldText: " + fieldName);
 
         FieldType fieldType;
@@ -971,6 +1015,7 @@ public class DynaformExecution extends Page {
     }
 
     public String getGridFieldText(String gridName, int row, String fieldName) throws Exception{
+        intoDynaform();
         Logger.addLog("getGridFieldValue: " + gridName + "[" + row + "][" + fieldName + "]");
 
         String elementText = "";
@@ -1108,6 +1153,7 @@ public class DynaformExecution extends Page {
     }
 
     public int getFieldCount(String fieldName) throws Exception{
+        intoDynaform();
         Logger.addLog("getFieldCount: " + fieldName);
 
         FieldType fieldType;
@@ -1171,7 +1217,7 @@ public class DynaformExecution extends Page {
      }
 
      public void sendTab(String fieldName) throws Exception {
-        
+        intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
@@ -1204,6 +1250,7 @@ public class DynaformExecution extends Page {
     }
 
     public void waitForFieldToBeClickable(String fieldName, long timeoutSeconds) throws Exception {
+        intoDynaform();
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
         str = str.replace("replaceNameFieldDynaform", fieldName);
@@ -1211,5 +1258,20 @@ public class DynaformExecution extends Page {
         By bySearchCriteria = browser.getBySearchCriteria(str);
 
         browser.waitForElementToBeClickable(bySearchCriteria, timeoutSeconds);
+    }
+
+    public void waitForFieldToChangeText(String fieldName, String currentText,  long timeoutSeconds) throws Exception {
+        intoDynaform();
+        String str = "";
+        str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.fieldDynaform");
+        str = str.replace("replaceNameFieldDynaform", fieldName);
+
+        By bySearchCriteria = browser.getBySearchCriteria(str);
+
+        WebElement myElement = browser.getInstanceDriver().findElement(bySearchCriteria);
+
+        browser.waitForTextNotEqual(myElement, currentText, timeoutSeconds);
+
+        //browser.waitForElementToBeClickable(bySearchCriteria, timeoutSeconds);
     }
 }

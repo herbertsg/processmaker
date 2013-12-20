@@ -5,6 +5,7 @@
 
 //grids define
 var availableGrid;
+var selCombo='';
 
 var assignedGrid;
 var editor; // row editor for assignedGrid
@@ -17,11 +18,11 @@ var removeButton;
 var removeAllButton;
 var tmp1 = new Array();
 var pageSize = 50;
-var mainMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
+var mainMask = new Ext.LoadMask(Ext.getBody(), {msg: _('ID_PLEASE_WAIT') });
 var bbarpaging;
 //main
 Ext.onReady(function(){
-  mainMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
+  mainMask = new Ext.LoadMask(Ext.getBody(), {msg: _('ID_PLEASE_WAIT') });
   var fm = Ext.form;
   var fieldsCount = 0;
 
@@ -35,6 +36,7 @@ Ext.onReady(function(){
       totalProperty: 'count',
       fields : [
         {name : 'FIELD_UID'},
+        {name : 'FIELD_VALIDATE'},
         {name : 'FIELD_NAME'},
         {name : '_index'},
         {name : '_isset'}
@@ -69,6 +71,11 @@ Ext.onReady(function(){
         hidden:true,
         hideable:false
       }, {
+        dataIndex:'FIELD_VALIDATE',
+        hidden:true,
+        hideable:false
+      }
+      , {
         dataIndex:'_index',
         hidden:true,
         hideable:false
@@ -128,8 +135,8 @@ Ext.onReady(function(){
       pageSize: pageSize,
       store: storeA,
       displayInfo: true,
-      displayMsg: '{0} - {1} of {2}',
-      emptyMsg: 'No records'/*,
+      displayMsg: '{0} - {1} ' + _('ID_DISPLAY_OF') + ' {2}',
+      emptyMsg: _('ID_NO_RECORDS')/*,
       items: ['-',_('ID_PAGE_SIZE')+':',comboPageSize]*/
   });
 
@@ -146,7 +153,7 @@ Ext.onReady(function(){
     height         : 100,
     width          : 290,
     stateful       : true,
-    stateId        : 'grid',
+    stateId        : 'gridEditReport',
     enableHdMenu   : false,
     columnLines    : false,
     viewConfig     : {forceFit:true},
@@ -229,35 +236,56 @@ Ext.onReady(function(){
     id: 'FIELD_FILTER',
     width: 55
   });
+
+  var sizeField = new fm.NumberField({
+                      name: 'sizeEdit',
+                      id: 'sizeEdit',
+                      allowBlank: true,
+                      allowDecimals: false,
+                      allowNegative: false,
+                      disabled: true,
+                      nanText: 'This field should content a number',
+                      minValue: 1,
+                      maxValue: 99,
+                      minLength: 0
+                  });
+
+
   //columns for table columns grid
   var cmColumns = [
       {
-        id: 'uid',
-        dataIndex: 'uid',
-        hidden: true
+          id: 'uid',
+          dataIndex: 'uid',
+          hidden: true,
+          hideable:false
       },
       {
-        dataIndex: '_index',
-        hidden: true
+          dataIndex: '_index',
+          hidden: true,
+          hideable:false
       },
       {
-        dataIndex: '_isset',
-        hidden: true
+          dataIndex: '_isset',
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_uid',
           dataIndex: 'field_uid',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_key',
           dataIndex: 'field_key',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_null',
           dataIndex: 'field_null',
-          hidden: true
+          hidden: true,
+          hideable:false
       },
       {
           id: 'field_dyn',
@@ -300,7 +328,7 @@ Ext.onReady(function(){
           editor: new fm.ComboBox({
               typeAhead: true,
               triggerAction: 'all',
-              editable: true,
+              editable: false,
               lazyRender: true,
               mode: 'local',
               displayField:'type',
@@ -310,7 +338,82 @@ Ext.onReady(function(){
                   //data : [['VARCHAR',_("ID_VARCHAR")],['TEXT',_("ID_TEXT")],['DATE',_("ID_DATE")],['INT',_("ID_INT")],['FLOAT',_("ID_FLOAT")]],
                   data: columnsTypes,
                   sortInfo: {field:'type_id', direction:'ASC'}
-              })
+              }),
+              listeners: {
+                  beforerender: function (combo)
+                  {
+                      if (combo.getValue() == "" && combo.store.getAt(0)) {
+                          combo.setValue(combo.store.getAt(0).get(combo.valueField));
+                      }
+                  },
+                  beforeshow: function (combo)
+                  {
+                      if (combo.getValue() == "" && combo.store.getAt(0)) {
+                          combo.setValue(combo.store.getAt(0).get(combo.valueField));
+                      }
+                  },
+                  'select': function(combo, row, index) {
+                      if( cm && cm instanceof Ext.grid.ColumnModel) {
+                          if(selCombo != combo.getValue()) {
+                              Ext.getCmp('sizeEdit').setValue('');
+                          }
+                          selCombo = combo.getValue();
+
+                          var swSize = 1;  //Enable
+                          var swAI = 1;
+
+                          //Date
+                          if (selCombo == "TIME" || selCombo == "DATE" || selCombo == "DATETIME") {
+                              swSize = 0;  //Disable
+                              swAI = 0;
+                          }
+
+                          //Numbers
+                          if (selCombo == "BIGINT" || selCombo == "INTEGER" || selCombo == "SMALLINT" || selCombo == "TINYINT") {
+                              //Enable All
+                          }
+
+                          if (selCombo == "DECIMAL" || selCombo == "FLOAT" || selCombo == "REAL" || selCombo == "DOUBLE") {
+                              swSize = 0;
+                              swAI = 0;
+                          }
+
+                          if (selCombo == "CHAR" || selCombo =="VARCHAR" || selCombo == "LONGVARCHAR") {
+                             var swAI = 0;
+                          }
+
+                          //Boolean
+                          if (selCombo == "BOOLEAN") {
+                              swSize = 0;
+                              swAI = 0;
+                          }
+
+                          if (swAI == 1) {
+                              Ext.getCmp("field_incre").enable();
+                          } else {
+                              Ext.getCmp("field_incre").disable();
+                              Ext.getCmp("field_incre").setValue(false);
+                          }
+
+                          if (swSize == 1) {
+                              Ext.getCmp("sizeEdit").enable();
+
+                              if (selCombo == "CHAR" || selCombo =="VARCHAR" || selCombo == "LONGVARCHAR") {
+                                  Ext.getCmp("sizeEdit").setMaxValue(((selCombo == "CHAR") ? 255 : 999));
+                                  sizeField.getEl().dom.maxLength = 3;
+                              } else {
+                                  Ext.getCmp("sizeEdit").setMaxValue(99);
+                                  sizeField.getEl().dom.maxLength = 2;
+                              }
+                          } else {
+                              Ext.getCmp("sizeEdit").disable();
+                              Ext.getCmp("sizeEdit").setValue("");
+                          }
+
+                          flagShowMessageError = 1;
+                      }
+                  }//select
+              }
           })
       }, {
           id: 'field_size',
@@ -318,19 +421,21 @@ Ext.onReady(function(){
           dataIndex: 'field_size',
           width: 50,
           align: 'right',
-          editor: new fm.NumberField({
-            allowBlank: true
-          })
+          editor: sizeField
       }, {
+
         xtype: 'booleancolumn',
         header: _('ID_AUTO_INCREMENT'),
         dataIndex: 'field_autoincrement',
         align: 'center',
         width: 100,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
-            xtype: 'checkbox'
+            xtype: 'checkbox',
+            id: 'field_incre',
+            disabled: true,
+            inputValue: 'always'
         }
       }
   ];
@@ -343,8 +448,8 @@ Ext.onReady(function(){
         dataIndex: 'field_filter',
         align: 'center',
         width: 50,
-        trueText: 'Yes',
-        falseText: 'No',
+        trueText: _('ID_YES'),
+        falseText: _('ID_NO'),
         editor: {
             xtype: 'checkbox'
         }
@@ -355,7 +460,8 @@ Ext.onReady(function(){
   var cm = new Ext.grid.ColumnModel({
     // specify any defaults for each column
     defaults: {
-        sortable: true // columns are not sortable by default
+        resizable: false,
+        sortable:  true // columns are not sortable by default
     },
     columns:cmColumns
   });
@@ -377,13 +483,45 @@ Ext.onReady(function(){
       ]
   });
   //row editor for table columns grid
+  var flagShowMessageError = 1;
+
   editor = new Ext.ux.grid.RowEditor({
     saveText: _("ID_UPDATE"),
+
+    isValid: function()
+    {
+        var valid = true;
+        this.items.each(function(f) {
+            if(!f.isValid(true)){
+                valid = false;
+
+                if (valid) {
+                    flagShowMessageError = 1;
+                }
+                return false;
+            }
+        });
+
+        if (valid) {
+            flagShowMessageError = 1;
+        }
+        return valid;
+    },
+    showTooltip: function (msg)
+    {
+        if (flagShowMessageError == 1) {
+            Ext.msgBoxSlider.msgTopCenter("error", _("ID_ERROR"), msg, 3);
+            flagShowMessageError = 0;
+        }
+    },
+
     listeners: {
       canceledit: function(grid,obj){
         if ( grid.record.data.field_label == '' && grid.record.data.field_name == '') {
           store.remove(grid.record);
         }
+
+        flagShowMessageError = 1;
       }
     }
   });
@@ -412,7 +550,7 @@ Ext.onReady(function(){
     sm             : sm,
     store          : store,
     plugins        : [editor, checkColumn],
-    loadMask: {message:'Loading...'},
+    loadMask: {message: _('ID_LOADING_GRID')},
     tbar           : [
       {
         icon: '/images/add-row-after.png',
@@ -790,6 +928,7 @@ Ext.onReady(function(){
     xtype:'textfield',
     emptyText: _("ID_SET_A_TABLE_NAME"),
     width: 250,
+    autoCreate: {tag: "input", type: "text", autocomplete: "off", maxlength: sizeTableName },
     stripCharsRe: /(\W+)/g,
     listeners:{
       change: function(){
@@ -851,8 +990,8 @@ Ext.onReady(function(){
       }, {
         text:_("ID_CANCEL"),
         handler: function() {
-          proParam = PRO_UID !== false ? '?PRO_UID='+PRO_UID : '';
-          location.href = '../pmTables' + proParam; //history.back();
+            proParam = (typeof('flagProcessmap') != 'undefined' && flagProcessmap == 1) ? (PRO_UID !== false ? '?flagProcessmap=1&PRO_UID='+PRO_UID : '') : '';
+            location.href = '../pmTables' + proParam; //history.back();
         }
     }]
   });
@@ -881,7 +1020,6 @@ Ext.onReady(function(){
       if(TABLE.ADD_TAB_TYPE != 'GRID')
         loadFieldNormal();
     }
-
   }
 
   DDLoadFields();
@@ -907,6 +1045,16 @@ function createReportTable()
     });
     return false;
   }
+
+    //validate process
+    PRO_UID = (PRO_UID !== false) ? PRO_UID : ((Ext.getCmp('PROCESS').getValue().trim() != '') ? Ext.getCmp('PROCESS').getValue().trim() : '');
+    if(PRO_UID == '') {
+        Ext.getCmp('PROCESS').focus();
+        PMExt.error(_('ID_ERROR'), _('ID_PROCESS_IS_REQUIRED'), function(){
+            Ext.getCmp('PROCESS').focus();
+        });
+        return false;
+    }
 
   // validate table name length
   if(tableName.length < 4) {
@@ -993,7 +1141,7 @@ function createReportTable()
       Ext.MessageBox.hide();
 
       if (result.success) {
-        proParam = PRO_UID !== false ? '?PRO_UID='+PRO_UID : '';
+        proParam = (typeof('flagProcessmap') != 'undefined' && flagProcessmap == 1) ? (PRO_UID !== false ? '?flagProcessmap=1&PRO_UID='+PRO_UID : '') : '';
         location.href = '../pmTables' + proParam; //history.back();
       } else {
         PMExt.error(_('ID_ERROR'), result.type +': '+result.msg);
@@ -1102,7 +1250,14 @@ loadFieldNormal = function(){
       limit: pageSize
     }
   });
-  Ext.getCmp('assignedGrid').store.removeAll();
+  var assignedGridGotData = Ext.getCmp('assignedGrid').getStore().getCount() > 0;
+  if(assignedGridGotData) {
+      Ext.MessageBox.confirm(_('ID_CONFIRM'), _('ID_CONFIRM_ASSIGNED_GRID'), function(button) {
+          if(button=='yes'){
+            Ext.getCmp('assignedGrid').store.removeAll();
+          }
+      });
+  }
 };
 
 loadFieldsGrids = function(){
@@ -1175,6 +1330,15 @@ function setReportFields(records) {
     }
 
     var meta = mapPMFieldType(records[i].data['FIELD_UID']);
+    var typeField = meta.type;
+    var sizeField = meta.size;
+    if (records[i].data['FIELD_VALIDATE'].toUpperCase() == 'REAL') {
+      typeField = 'DOUBLE';
+      sizeField = '';
+    }
+    if (records[i].data['FIELD_VALIDATE'].toUpperCase() == 'INT') {
+      typeField = 'INTEGER';
+    }
     var row = new PMRow({
       uid  : '',
       _index      : records[i].data['_index'] !== '' ? records[i].data['_index'] : records[i].data['FIELD_DYN'],
@@ -1182,8 +1346,8 @@ function setReportFields(records) {
       field_dyn   : records[i].data['FIELD_NAME'],
       field_name  : records[i].data['FIELD_NAME'].toUpperCase(),
       field_label : records[i].data['FIELD_NAME'].toUpperCase(),
-      field_type  : meta.type,
-      field_size  : meta.size,
+      field_type  : typeField,
+      field_size  : sizeField,
       field_key   : 0,
       field_null  : 1,
       field_filter: 0,

@@ -1,11 +1,26 @@
 <?php
+if (! isset ($_SESSION ['USER_LOGGED'])) {
+    $res ['success'] = false;
+    $res ['error'] = G::LoadTranslation('ID_LOGIN_AGAIN');
+    $res ['login'] = true;
+    print G::json_encode ($res);
+    die ();
+}
+
+if (isset ($_REQUEST ['action']) && isset($_REQUEST['sort']) && isset($_REQUEST['dir'])) {
+    if ($_REQUEST['sort'] == "appDocCreateDate" && ($_REQUEST['dir'] == 'ASC' || $_REQUEST['dir'] == 'DESC')) {
+        sortContent();
+    }
+}
+
+
 if (! isset ($_REQUEST ['action'])) {
     $res ['success'] = false;
     $res ['message'] = 'You may request an action';
     print G::json_encode ($res);
     die ();
 }
-if (! function_exists ($_REQUEST ['action'])) {
+if (! function_exists ($_REQUEST['action']) || !G::isUserFunction($_REQUEST['action'])) {
     $res ['success'] = false;
     $res ['message'] = 'The requested action does not exist';
     print G::json_encode ($res);
@@ -277,12 +292,14 @@ function expandNode()
 
     if (isset($folderContent)) {
         foreach ($folderContent as $key => $obj) {
-            $tempTree ['text'] = $obj['APP_DOC_FILENAME'];
-            $tempTree ['name'] = $obj['APP_DOC_FILENAME'];
-            $mimeInformation=getMime($obj['APP_DOC_FILENAME']);
-            $tempTree ['type'] = $mimeInformation['description'];
-            $tempTree ['icon'] = $mimeInformation['icon'];
+            $mimeInformation = getMime($obj["APP_DOC_FILENAME"]);
 
+            $tempTree["text"] = $obj["APP_DOC_FILENAME"];
+            $tempTree["name"] = $obj["APP_DOC_FILENAME"];
+            $tempTree["type"] = $mimeInformation["description"];
+            $tempTree["icon"] = $mimeInformation["icon"];
+
+            /*
             if (isset($obj['OUT_DOC_GENERATE'])) {
                 if ($obj['OUT_DOC_GENERATE'] == "BOTH") {
                     $arrayType=array("PDF","DOC");
@@ -297,6 +314,7 @@ function expandNode()
                     $tempTree ['icon'.$fileType] = $mimeInformation['icon'];
                 }
             }
+            */
 
             $tempTree ['appdocid'] = $obj['APP_DOC_UID'];
             $tempTree ['id'] = $obj['APP_DOC_UID_VERSION'];
@@ -371,20 +389,53 @@ function expandNode()
                 $tempTree ['expanded'] = true;
             }
             */
-            if (isset($obj['OUT_DOC_GENERATE'])) {
-                foreach ($arrayType as $keyType => $fileType) {
-                    $tempTree ['text'] = $tempTree ['text'.$fileType];
-                    $tempTree ['name'] = $tempTree ['name'.$fileType];
 
-                    $tempTree ['type'] = $tempTree ['type'.$fileType];
-                    $tempTree ['icon'] = $tempTree ['icon'.$fileType];
-                    $tempTree ['appDocFileName'] = $tempTree ['name'.$fileType];
+            $tempTree["outDocGenerate"] = "";
 
-                    $tempTree ['downloadLabel'] = $tempTree ['downloadLabel'.$fileType];
-                    $tempTree ['downloadLink'] = $tempTree ['downloadLink'.$fileType];
+            if (isset($obj["OUT_DOC_GENERATE"])) {
+                switch ($obj["OUT_DOC_GENERATE"]) {
+                    case "PDF":
+                    case "DOC":
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]));
 
-                    $tempTree ['id']=$tempTree ['id']."_".$fileType;
-                    $processListTree [] = $tempTree;
+                        $tempTree["text"] = $obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]);
+                        $tempTree["name"] = $obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]);
+                        $tempTree["type"] = $mimeInformation["description"];
+                        $tempTree["icon"] = $mimeInformation["icon"];
+                        $tempTree["appDocFileName"] = $tempTree["name"];
+
+                        $tempTree["downloadLabel"] = $tempTree["downloadLabel" . $obj["OUT_DOC_GENERATE"]];
+                        $tempTree["downloadLink"] = $tempTree["downloadLink" . $obj["OUT_DOC_GENERATE"]];
+
+                        $tempTree["id"] = $tempTree["id"] . "_" . $obj["OUT_DOC_GENERATE"];
+
+                        $processListTree[] = $tempTree;
+                        break;
+                    case "BOTH":
+                        $strExpander = null;
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . ".pdf");
+                        $strExpander = $strExpander . "<a href=\"javascript:;\" onclick=\"openActionDialog(this, 'download', 'pdf'); return false;\" style=\"color: #000000; text-decoration: none;\"><img src=\"/images/documents/extension/pdf.png\" style=\"margin-left: 25px; border: 0;\" alt=\"\" /> <b>" . $obj["APP_DOC_FILENAME"] . ".pdf</b> (" . $mimeInformation["description"] . ")</a>";
+                        $strExpander = $strExpander . "<br />";
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . ".doc");
+                        $strExpander = $strExpander . "<a href=\"javascript:;\" onclick=\"openActionDialog(this, 'download', 'doc'); return false;\" style=\"color: #000000; text-decoration: none;\"><img src=\"/images/documents/extension/doc.png\" style=\"margin-left: 25px; border: 0;\" alt=\"\" /> <b>" . $obj["APP_DOC_FILENAME"] . ".doc</b> (" . $mimeInformation["description"] . ")</a>";
+
+                        $tempTree["outDocGenerate"] = $strExpander;
+
+                        $tempTree["text"] = $obj["APP_DOC_FILENAME"];
+                        $tempTree["name"] = $obj["APP_DOC_FILENAME"];
+                        $tempTree["type"] = "";
+                        $tempTree["icon"] = "/images/documents/extension/document.png";
+                        $tempTree["appDocFileName"] = $tempTree["name"];
+
+                        //$tempTree["downloadLabel"] = $obj["DOWNLOAD_LABEL"];
+                        //$tempTree["downloadLink"] = $obj["DOWNLOAD_LINK"];
+
+                        $tempTree["id"] = $tempTree["id"] . "_" . $obj["OUT_DOC_GENERATE"];
+
+                        $processListTree[] = $tempTree;
+                        break;
+                    //case "NOFILE":
+                    //    break;
                 }
             } else {
                 if ($obj["APP_DOC_TYPE"] == "OUTPUT" &&
@@ -400,9 +451,256 @@ function expandNode()
                     $tempTree["icon"] = $mimeInformation["icon"];
                 }
 
-                $processListTree [] = $tempTree;
+                $processListTree[] = $tempTree;
             }
+
+            $tempTree = array();
+        }
+    }
+
+    if ((isset($_POST['option'])) && ($_POST['option'] == "gridDocuments")) {
+        $processListTreeTemp["totalCount"] = $totalFolders + $totalDocuments;
+        $processListTreeTemp['msg']='correct reload';
+        $processListTreeTemp['items']=$processListTree;
+        $processListTree = $processListTreeTemp;
+    }
+
+    echo G::json_encode($processListTree);
+}
+
+function sortContent()
+{
+    extract(getExtJSParams());
+
+    $rootFolder = "/";
+
+    $oPMFolder = new AppFolder();
+
+    global $RBAC;
+
+    $user = ($RBAC->userCanAccess('PM_ALLCASES') == 1)? '' : $_SESSION['USER_LOGGED'];
+
+    $totalItems = 0;
+    $totalFolders = 0;
+    $totalDocuments = 0;
+
+    if (!(isset($_POST['sendWhat']))) {
+        $_POST['sendWhat'] = "both";
+    }
+
+    if (isset($_POST['renderTree'])) {
+        $limit = 1000000;
+    }
+
+    $direction = "DESC";
+    if (isset($_POST['dir'])) {
+        $direction = $_POST['dir'];
+    }
+
+    if (($_POST['sendWhat'] == "dirs") || ($_POST['sendWhat'] == "both")) {
+        $folderListObj = $oPMFolder->getFolderList(
+                        ($_POST["node"] != "root")? (($_POST["node"] == "NA")? "" : $_POST["node"]) : $rootFolder,
+                        $limit,
+                        $start
+        );
+
+        $folderList=$folderListObj['folders'];
+        $totalFolders=$folderListObj['totalFoldersCount'];
+        $totalItems+=count($folderList);
+    }
+
+    if (($_POST['sendWhat'] == "files") || ($_POST['sendWhat'] == "both")) {
+        global $RBAC;
+
+        $user = ($RBAC->userCanAccess('PM_ALLCASES') == 1)? '' : $_SESSION['USER_LOGGED'];
+
+        $folderContentObj = $oPMFolder->getDirectoryContentSortedBy(
+                        ($_POST["node"] != "root")? (($_POST["node"] == "NA")? "" : $_POST["node"]) : $rootFolder,
+                        array(),
+                        null,
+                        null,
+                        $limit,
+                        $start,
+                        $user,
+                        true,
+                        $direction,
+                        (isset($_POST["sort"]))? $_POST["sort"]:"appDocCreateDate"
+        );
+
+        $folderContent = $folderContentObj['documents'];
+        $totalDocuments = $folderContentObj['totalDocumentsCount'];
+        $totalItems += count($folderContent);
+    }
+
+    $processListTree = array();
+    $tempTree = array();
+
+    if (isset($folderList) && sizeof($folderList)>0) {
+        //$tempTree=array();
+        foreach ($folderList as $key => $obj) {
+            //$tempTree ['all-obj'] = $obj;
+            $tempTree ['text'] = $obj['FOLDER_NAME'];
+            $tempTree ['id'] = $obj['FOLDER_UID'];
+            $tempTree ['folderID'] = $obj['FOLDER_UID'];
+            $tempTree ['cls'] = 'folder';
+            $tempTree ['draggable'] = true;
+            $tempTree ['name'] = $obj['FOLDER_NAME'];
+            $tempTree ['type'] = "Directory";
+            $tempTree ['is_file'] = false;
+            $tempTree ['appDocCreateDate'] = $obj['FOLDER_CREATE_DATE'];
+            $tempTree ['qtip'] ='<strong>Directory: </strong>'.$obj['FOLDER_NAME'].
+            '<br /><strong>Create Date:</strong> '.$obj['FOLDER_CREATE_DATE'].'';
+            $tempTree ['is_writable'] =true;
+            $tempTree ['is_chmodable'] =true;
+            $tempTree ['is_readable'] =true;
+            $tempTree ['is_deletable'] =true;
+
+            if ((isset($_POST['option']) )&& ($_POST['option'] == "gridDocuments")) {
+                $tempTree ['icon'] = "/images/documents/extension/folder.png";
+            }
+            $processListTree [] = $tempTree;
             $tempTree=array();
+        }
+    } else {
+        if ($_POST ['node'] == '/') {
+        }
+    }
+
+    if (isset($folderContent)) {
+        foreach ($folderContent as $key => $obj) {
+            $mimeInformation = getMime($obj["APP_DOC_FILENAME"]);
+
+            $tempTree["text"] = $obj["APP_DOC_FILENAME"];
+            $tempTree["name"] = $obj["APP_DOC_FILENAME"];
+            $tempTree["type"] = $mimeInformation["description"];
+            $tempTree["icon"] = $mimeInformation["icon"];
+
+            $tempTree ['appdocid'] = $obj['APP_DOC_UID'];
+            $tempTree ['id'] = $obj['APP_DOC_UID_VERSION'];
+            $tempTree ['cls'] = 'file';
+            //$tempTree ['draggable'] = true;
+            $tempTree ['leaf'] = true;
+            $tempTree ['is_file'] = true;
+            //if ((isset($_POST['option']))&&($_POST['option']=="gridDocuments")) {
+            //}
+            $tempTree ['docVersion'] = $obj['DOC_VERSION'];
+            $tempTree ['appUid'] = $obj['APP_UID'];
+            $tempTree ['usrUid'] = $obj['USR_UID'];
+            $tempTree ['appDocType'] = ucfirst(strtolower($obj['APP_DOC_TYPE']));
+            $tempTree ['appDocCreateDate'] = $obj['APP_DOC_CREATE_DATE'];
+            $tempTree ['appDocPlugin'] = $obj['APP_DOC_PLUGIN'];
+            $tempTree ['appDocTags'] = $obj['APP_DOC_TAGS'];
+            $tempTree ['appDocTitle'] = $obj['APP_DOC_TITLE'];
+            $tempTree ['appDocComment'] = $tempTree ['qtip'] = $obj['APP_DOC_COMMENT'];
+            $tempTree ['appDocFileName'] = $obj['APP_DOC_FILENAME'];
+            if (isset($obj['APP_NUMBER'])) {
+                $tempTree ['appLabel'] = sprintf("%s '%s' (%s)",$obj['APP_NUMBER'],$obj['APP_TITLE'],$obj['STATUS']);
+            } else {
+                $tempTree ['appLabel'] = "No case related";
+            }
+            $tempTree ['proTitle'] = $obj['PRO_TITLE'];
+            $tempTree ['appDocVersionable'] = 0;
+            if (isset($obj['OUT_DOC_VERSIONING'])) {
+                $tempTree ['appDocVersionable'] = $obj['OUT_DOC_VERSIONING'];
+            } elseif (isset($obj['INP_DOC_VERSIONING'])) {
+                $tempTree ['appDocVersionable'] = $obj['INP_DOC_VERSIONING'];
+            }
+            if (isset($obj['USR_LASTNAME']) && isset($obj['USR_LASTNAME'])) {
+                $tempTree ['owner'] = $obj['USR_USERNAME'];
+                $tempTree ['owner_firstname'] = $obj['USR_FIRSTNAME'];
+                $tempTree ['owner_lastname'] = $obj['USR_LASTNAME'];
+            } else {
+                $tempTree ['owner'] = $obj['USR_USERNAME'];
+                $tempTree ['owner_firstname'] = "";
+                $tempTree ['owner_lastname'] = "";
+            }
+            $tempTree ['deletelabel'] = $obj['DELETE_LABEL'];
+
+            if ((isset($obj['DOWNLOAD_LABEL'])) && ($obj['DOWNLOAD_LABEL']!="")) {
+                $labelgen=strtoupper(str_replace(".","",$obj['DOWNLOAD_LABEL']));
+                $tempTree ['downloadLabel'.$labelgen] = $obj['DOWNLOAD_LABEL'];
+                $tempTree ['downloadLink'.$labelgen] = $obj['DOWNLOAD_LINK'];
+            }
+            $tempTree ['downloadLabel'] = $obj['DOWNLOAD_LABEL'];
+            $tempTree ['downloadLink'] = $obj['DOWNLOAD_LINK'];
+
+            if ((isset($obj['DOWNLOAD_LABEL1'])) && ($obj['DOWNLOAD_LABEL1']!="")) {
+                $labelgen=strtoupper(str_replace(".","",$obj['DOWNLOAD_LABEL1']));
+                $tempTree ['downloadLabel'.$labelgen] = $obj['DOWNLOAD_LABEL1'];
+                $tempTree ['downloadLink'.$labelgen] = $obj['DOWNLOAD_LINK1'];
+            }
+            $tempTree ['downloadLabel1'] = $obj['DOWNLOAD_LABEL1'];
+            $tempTree ['downloadLink1'] = $obj['DOWNLOAD_LINK1'];
+
+            $tempTree ['appDocUidVersion'] = $obj['APP_DOC_UID_VERSION'];
+
+            $tempTree ['is_readable'] = true;
+            $tempTree ['is_file'] = true;
+            $tempTree["outDocGenerate"] = "";
+
+            if (isset($obj["OUT_DOC_GENERATE"])) {
+                switch ($obj["OUT_DOC_GENERATE"]) {
+                    case "PDF":
+                    case "DOC":
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]));
+
+                        $tempTree["text"] = $obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]);
+                        $tempTree["name"] = $obj["APP_DOC_FILENAME"] . "." . strtolower($obj["OUT_DOC_GENERATE"]);
+                        $tempTree["type"] = $mimeInformation["description"];
+                        $tempTree["icon"] = $mimeInformation["icon"];
+                        $tempTree["appDocFileName"] = $tempTree["name"];
+
+                        $tempTree["downloadLabel"] = $tempTree["downloadLabel" . $obj["OUT_DOC_GENERATE"]];
+                        $tempTree["downloadLink"] = $tempTree["downloadLink" . $obj["OUT_DOC_GENERATE"]];
+
+                        $tempTree["id"] = $tempTree["id"] . "_" . $obj["OUT_DOC_GENERATE"];
+
+                        $processListTree[] = $tempTree;
+                        break;
+                    case "BOTH":
+                        $strExpander = null;
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . ".pdf");
+                        $strExpander = $strExpander . "<a href=\"javascript:;\" onclick=\"openActionDialog(this, 'download', 'pdf'); return false;\" style=\"color: #000000; text-decoration: none;\"><img src=\"/images/documents/extension/pdf.png\" style=\"margin-left: 25px; border: 0;\" alt=\"\" /> <b>" . $obj["APP_DOC_FILENAME"] . ".pdf</b> (" . $mimeInformation["description"] . ")</a>";
+                        $strExpander = $strExpander . "<br />";
+                        $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . ".doc");
+                        $strExpander = $strExpander . "<a href=\"javascript:;\" onclick=\"openActionDialog(this, 'download', 'doc'); return false;\" style=\"color: #000000; text-decoration: none;\"><img src=\"/images/documents/extension/doc.png\" style=\"margin-left: 25px; border: 0;\" alt=\"\" /> <b>" . $obj["APP_DOC_FILENAME"] . ".doc</b> (" . $mimeInformation["description"] . ")</a>";
+
+                        $tempTree["outDocGenerate"] = $strExpander;
+
+                        $tempTree["text"] = $obj["APP_DOC_FILENAME"];
+                        $tempTree["name"] = $obj["APP_DOC_FILENAME"];
+                        $tempTree["type"] = "";
+                        $tempTree["icon"] = "/images/documents/extension/document.png";
+                        $tempTree["appDocFileName"] = $tempTree["name"];
+
+                        //$tempTree["downloadLabel"] = $obj["DOWNLOAD_LABEL"];
+                        //$tempTree["downloadLink"] = $obj["DOWNLOAD_LINK"];
+
+                        $tempTree["id"] = $tempTree["id"] . "_" . $obj["OUT_DOC_GENERATE"];
+
+                        $processListTree[] = $tempTree;
+                        break;
+                        //case "NOFILE":
+                        //    break;
+                }
+            } else {
+                if ($obj["APP_DOC_TYPE"] == "OUTPUT" &&
+                                $tempTree["type"] == G::LoadTranslation("MIME_DES_FILE") &&
+                                preg_match("/^.+&ext=(.+)&.+$/", $tempTree["downloadLink"], $arrayMatch)
+                ) {
+                    $ext = $arrayMatch[1];
+                    $mimeInformation = getMime($obj["APP_DOC_FILENAME"] . ".$ext");
+
+                    $tempTree["text"] = $obj["APP_DOC_FILENAME"] . ".$ext";
+                    $tempTree["name"] = $obj["APP_DOC_FILENAME"] . ".$ext";
+                    $tempTree["type"] = $mimeInformation["description"];
+                    $tempTree["icon"] = $mimeInformation["icon"];
+                }
+
+                $processListTree[] = $tempTree;
+            }
+
+            $tempTree = array();
         }
     }
 
@@ -688,6 +986,7 @@ function uploadDocument()
                 Ext.getCmp("uploadform").getForm().submit({
                     //reset: true,
                     reset: false,
+                    waitTitle : "&nbsp;",
                     success: function(form, action) {
 
                         datastore.reload();
@@ -865,12 +1164,18 @@ function copyMoveAction($type)
     $paths = array();
     $folderResult = findChilds('/', '', $paths);
     $withCombo = 30;
+    $folderSelected = $oPMFolder->load($dir);
+
+    $root = array("/","/");
+    array_unshift ($folderResult, $root);
+    $folderResultSel = array();
     foreach ($folderResult as $key => $value) {
         $count = strlen($value[1]);
         $withCombo = ($count>$withCombo) ? $count : $withCombo;
+        if ($folderSelected['FOLDER_PARENT_UID'] != $value[0] && $dir != $value[0]) {
+            $folderResultSel[] = $value;
+        }
     }
-    $root = array("/","/");
-    array_unshift ($folderResult,$root);
 
     $dirCompletePath=$oPMFolder->getFolderStructure($dir);
     $copyDialog["xtype"]        = "form";
@@ -895,13 +1200,14 @@ function copyMoveAction($type)
     $itemField["name"]          = "new_dir_label";
     $itemField["mode"]          = "local";
     $itemField["triggerAction"] = "all";
-    $itemField["store"]         = $folderResult;
+    $itemField["store"]         = $folderResultSel;
     $itemField["valueField"]    = "FOLDER_UID";
+    $itemField["editable"]    = false;
     $itemField["displayField"]  = "FOLDER_NAME";
     $itemField["selectOnFocus"] = true;
     $itemField["tpl"]           = '<tpl for="."><div ext:qtip="{field2}" class="x-combo-list-item">{field2}</div></tpl>';
-    $itemField["fieldLabel"]    = "Destination";
-    $itemField["emptyText"]     = "Select a directory...";
+    $itemField["fieldLabel"]    = G::LoadTranslation('ID_DESTINATION');
+    $itemField["emptyText"]     = G::LoadTranslation('ID_SELECT_DIRECTORY');
     $itemField["width"] = 390;
     $itemField["allowBlank"]=false;
     $copyDialog["items"][]=$itemField;
@@ -1055,6 +1361,11 @@ function copyMoveExecuteTree($uidFolder, $newUidFolder)
     $appFoder = new AppFolder ();
     $folderContent = $appFoder->getFolderContent($uidFolder);
     $folderOrigin = $appFoder->getFolderStructure($uidFolder);
+
+    if ($newUidFolder == $folderOrigin[$uidFolder]['PARENT'] && $_REQUEST['action'] == 'moveExecute') {
+        return $uidFolder;
+    }
+
     $FolderParentUid = trim($newUidFolder);//$form['FOLDER_PARENT_UID'];
     $FolderName = $folderOrigin[$uidFolder]['NAME'];
     $newFolderContent = $appFoder->createFolder ($FolderName, $FolderParentUid, "new");
@@ -1202,7 +1513,7 @@ function uploadExternalDocument()
                 $aID=array('INP_DOC_DESTINATION_PATH'=>$folderStructure['PATH']);
             }
 
-            $oAppDocument = new AppDocument();
+
 
             //Get the Custom Folder ID (create if necessary)
             $oFolder=new AppFolder();
@@ -1216,6 +1527,7 @@ function uploadExternalDocument()
                 $fileTags="EXTERNAL";
             }
             foreach ($quequeUpload as $key => $fileObj) {
+                $oAppDocument = new AppDocument();
                 switch ($actionType) {
                     case "R":
                         //replace
@@ -1277,15 +1589,18 @@ function uploadExternalDocument()
                 }
                 $sAppDocUid = $oAppDocument->getAppDocUid();
                 $iDocVersion = $oAppDocument->getDocVersion();
+
                 $info = pathinfo($oAppDocument->getAppDocFilename());
                 $ext = (isset($info['extension']) ? $info['extension'] : '');
-
                 //save the file
                 //if (!empty($_FILES['form'])) {
                 //if ($_FILES['form']['error']['APP_DOC_FILENAME'] == 0) {
-                $sPathName = PATH_DOCUMENT . $appId . PATH_SEP;
-                $sFileName = $sAppDocUid . "_".$iDocVersion. '.' . $ext;
-                G::uploadFile($fileObj['tempName'], $sPathName, $sFileName);
+                $sPathName = PATH_DOCUMENT . G::getPathFromUID($appId) . PATH_SEP;
+                $file = G::getPathFromFileUID($appId, $sAppDocUid);
+                $sPathName .= $file[0];
+                $sFileName = $file[1] . "_" . $iDocVersion . '.' . $ext;
+
+                G::uploadFile($fileObj['tempName'], $sPathName, $sFileName); //upload
 
                 //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
                 $oPluginRegistry =& PMPluginRegistry::getSingleton();
@@ -1315,11 +1630,11 @@ function uploadExternalDocument()
                     $response['message']=$err_msg;
                     $response['success']=false;
                 } elseif ($emptyInstances==$uploadedInstances) {
-                    $response['error']="You may upload at least one file";
-                    $response['message']="You may upload at least one file";
+                    $response['error']= G::LoadTranslation('ID_UPLOAD_LEAST_FILE');
+                    $response['message']= G::LoadTranslation('ID_UPLOAD_LEAST_FILE');
                     $response['success']=false;
                 } else {
-                    $response['error']="Upload complete";
+                    $response['error']= G::LoadTranslation('ID_UPLOAD_COMPLETE');
                     $response['message']="Upload complete";
                     $response['success']=true;
                 }
@@ -1365,7 +1680,7 @@ function newFolder()
     $formNewFolder["id"]= "simpleform";
     $formNewFolder["labelWidth"]=125;
     $formNewFolder["url"]="../appFolder/appFolderAjax.php";
-    $formNewFolder["dialogtitle"]= "Create New Folder";
+    $formNewFolder["dialogtitle"]= G::LoadTranslation('ID_CREATE_FOLDER');
     $formNewFolder["frame"]= true;
     $formNewFolder["items"]= array();
 
@@ -1426,6 +1741,7 @@ function newFolder()
                 Ext.getCmp("simpleform").getForm().submit({
                     //reset: true,
                     reset: false,
+                    waitTitle : "&nbsp;",
                     success: function(form, action) {
                         statusBarMessage(action.result.message, false, true);
                         try{

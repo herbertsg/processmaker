@@ -23,7 +23,21 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
-		pages.DynaformExecution().intoDynaform();
+
+        pages.DynaformExecution().pauseCase().clickPauseButton();
+
+        Assert.assertTrue("The case does not exist in Paused", pages.Home().gotoPaused().existCase(caseNum));
+
+        pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Unpause Case)");
+
+        pages.DynaformExecution().intoDynaform();
+        pages.DynaformExecution().setFieldValue("caseNumber", Integer.toString(caseNum));
+        pages.DynaformExecution().clickButton("ok");
+
+        //the case must be unpaused and returned to draft list
+        Assert.assertTrue("The case was not unpaused",pages.Home().gotoDraft().existCase(caseNum));
+
+		/*pages.DynaformExecution().intoDynaform();
 		pages.Home().pauseCase(caseNum);
 		pages.DynaformExecution().outDynaform();
 		pages.Home().gotoPaused();
@@ -45,6 +59,7 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
   		Assert.assertFalse("The case exist in Paused", pages.Home().existCase(caseNum-1));
 		pages.DynaformExecution().outDynaform();
 		pages.Main().logout();
+		*/
 	}
 
     @After

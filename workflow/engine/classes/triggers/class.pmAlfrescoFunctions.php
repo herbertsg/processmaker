@@ -23,7 +23,6 @@
  * @icon /images/triggers/alfrescoIcon.png
  * @className class.pmTrAlfresco.pmFunctions.php
  */
-
 /**
  * @method
  *
@@ -37,18 +36,20 @@
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return object | $result | Response |
  *
  */
 G::LoadSystem('restClient');
+
 // Validation left
-function cancelCheckout($alfrescoServerUrl, $docUid, $user="", $pwd="") {
-  //require_once(PATH_CORE. 'classes' . PATH_SEP.'triggers' . PATH_SEP . 'class.pmTrAlfresco.php');
-$alfresco_url = "$alfrescoServerUrl/s/cmis/pwc/s/workspace:SpacesStore/i/$docUid";
-$domapi_exec = RestClient::delete($alfresco_url,$user,$pwd,"application/atom+xml;type=entry");
-//$alfrescoMessage = $domapi_exec['header'];
-$domapi_res = G::json_decode($domapi_exec->getResponse());
-return $domapi_res;
+function cancelCheckout($alfrescoServerUrl, $docUid, $user = "", $pwd = "")
+{
+    //require_once(PATH_CORE. 'classes' . PATH_SEP.'triggers' . PATH_SEP . 'class.pmTrAlfresco.php');
+    $alfresco_url = "$alfrescoServerUrl/s/cmis/pwc/s/workspace:SpacesStore/i/$docUid";
+    $domapi_exec = RestClient::delete($alfresco_url, $user, $pwd, "application/atom+xml;type=entry");
+    //$alfrescoMessage = $domapi_exec['header'];
+    $domapi_res = G::json_decode($domapi_exec->getResponse());
+    return $domapi_res;
 }
 
 /**
@@ -65,25 +66,26 @@ return $domapi_res;
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return string | $result | Response |
  *
  */
-// Validation done
-function checkIn($alfrescoServerUrl, $docUid, $comments, $user="", $pwd="") {
-$alfresco_url = "$alfrescoServerUrl/s/cmis/pwc/i/$docUid?checkin=true&checkinComment=$comments";
-$xmlData = array();
-$xmlData = '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom"/>';
 
-$alfresco_exec = RestClient::put($alfresco_url,$xmlData,$user,$pwd,"application/atom+xml");
-$alfrescoMessage = $alfresco_exec->getResponseMessage();
-if($alfrescoMessage === 'OK' )
-    return "The Document has been Checkedin";
-elseif ($alfrescoMessage === 'Internal Server Error')
+function checkIn($alfrescoServerUrl, $docUid, $comments, $user = "", $pwd = "")
+{
+    $alfresco_url = "$alfrescoServerUrl/s/cmis/pwc/i/$docUid?checkin=true&checkinComment=$comments";
+    $xmlData = array();
+    $xmlData = '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom"/>';
+
+    $alfresco_exec = RestClient::put($alfresco_url, $xmlData, $user, $pwd, "application/atom+xml");
+    $alfrescoMessage = $alfresco_exec->getResponseMessage();
+    if ($alfrescoMessage === 'OK') {
+        return "The Document has been Checkedin";
+    } elseif ($alfrescoMessage === 'Internal Server Error') {
         return "Please enter a Valid Document Id";
-else
-return $alfrescoMessage;
+    } else {
+        return $alfrescoMessage;
+    }
 }
-
 
 /**
  * @method
@@ -98,23 +100,25 @@ return $alfrescoMessage;
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return string | $result | Response |
  *
  */
 // Validation done
-function checkOut($alfrescoServerUrl, $docUid, $user="", $pwd="") {
-$alfresco_url = "$alfrescoServerUrl/s/cmis/checkedout";
-$xmlData = array();
-$xmlData = '<?xml version="1.0" encoding="utf-8"?>'.'<entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">'.'<cmisra:object>'.'<cmis:properties>'.'<cmis:propertyId propertyDefinitionId="cmis:objectId">'.'<cmis:value>workspace://SpacesStore/'.$docUid.'</cmis:value>'.'</cmis:propertyId>'.'</cmis:properties>'.'</cmisra:object>'.'</entry>';
+function checkOut($alfrescoServerUrl, $docUid, $user = "", $pwd = "")
+{
+    $alfresco_url = "$alfrescoServerUrl/s/cmis/checkedout";
+    $xmlData = array();
+    $xmlData = '<?xml version="1.0" encoding="utf-8"?>' . '<entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">' . '<cmisra:object>' . '<cmis:properties>' . '<cmis:propertyId propertyDefinitionId="cmis:objectId">' . '<cmis:value>workspace://SpacesStore/' . $docUid . '</cmis:value>' . '</cmis:propertyId>' . '</cmis:properties>' . '</cmisra:object>' . '</entry>';
 
-$alfresco_exec = RestClient::post($alfresco_url,$xmlData,$user,$pwd,"application/atom+xml;type=entry");
-$alfrescoMessage = $alfresco_exec->getResponseMessage();
-if($alfrescoMessage === 'Created' )
-    return "The Document has been Checkedout";
-elseif ($alfrescoMessage === 'Conflict')
+    $alfresco_exec = RestClient::post($alfresco_url, $xmlData, $user, $pwd, "application/atom+xml;type=entry");
+    $alfrescoMessage = $alfresco_exec->getResponseMessage();
+    if ($alfrescoMessage === 'Created') {
+        return "The Document has been Checkedout";
+    } elseif ($alfrescoMessage === 'Conflict') {
         return "The Document you are trying to checkout has already been Checkedout";
-else
-return $alfrescoMessage;
+    } else {
+        return $alfrescoMessage;
+    }
 }
 
 /**
@@ -131,25 +135,26 @@ return $alfrescoMessage;
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return string | $result | Response |
  *
  */
-function createFolder($alfrescoServerUrl, $parentFolder, $folderName, $user, $pwd) {
+function createFolder($alfrescoServerUrl, $parentFolder, $folderName, $user, $pwd)
+{
     $name = explode("/", $folderName);
-    $init = substr($parentFolder,0,1);
-    $parentFolder = ($init == "/")? substr($parentFolder, 1)."/": $parentFolder."/";
-    $alfresco_url = "$alfrescoServerUrl/s/cmis/p/".$parentFolder."children";
+    $init = substr($parentFolder, 0, 1);
+    $parentFolder = ($init == "/") ? substr($parentFolder, 1) . "/" : $parentFolder . "/";
+    $alfresco_url = "$alfrescoServerUrl/s/cmis/p/" . $parentFolder . "children";
     $xmlData = array();
-    $xmlData = '<?xml version="1.0" encoding="utf-8"?>'.'<entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">'.'<title>'.$name[0].'</title>'.'<cmisra:object>'.'<cmis:properties>'.'<cmis:propertyId propertyDefinitionId="cmis:objectTypeId"><cmis:value>cmis:folder</cmis:value></cmis:propertyId>'.'</cmis:properties>'.'</cmisra:object>'.'</entry>';
-    $alfresco_exec = RestClient::post($alfresco_url,$xmlData,$user,$pwd,"application/atom+xml");
+    $xmlData = '<?xml version="1.0" encoding="utf-8"?>' . '<entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/">' . '<title>' . $name[0] . '</title>' . '<cmisra:object>' . '<cmis:properties>' . '<cmis:propertyId propertyDefinitionId="cmis:objectTypeId"><cmis:value>cmis:folder</cmis:value></cmis:propertyId>' . '</cmis:properties>' . '</cmisra:object>' . '</entry>';
+    $alfresco_exec = RestClient::post($alfresco_url, $xmlData, $user, $pwd, "application/atom+xml");
     $alfrescoMessage = $alfresco_exec->getResponseMessage();
-    $folderName = substr(strstr($folderName, "/"),1);
-    $parentFolder = $parentFolder."".$name[0];
+    $folderName = substr(strstr($folderName, "/"), 1);
+    $parentFolder = $parentFolder . "" . $name[0];
 
     if ($folderName != null) {
         createFolder($alfrescoServerUrl, $parentFolder, $folderName, $user, $pwd);
     }
-    if($alfrescoMessage === 'Created') {
+    if ($alfrescoMessage === 'Created') {
         return "The Folder has been Created";
     } else {
         return $alfrescoMessage;
@@ -169,15 +174,16 @@ function createFolder($alfrescoServerUrl, $parentFolder, $folderName, $user, $pw
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return object | $result | Response |
  *
  */
-function deleteObject($alfrescoServerUrl, $objetcId, $user, $pwd) {
-    $alfresco_url = "$alfrescoServerUrl/s/cmis/s/workspace:SpacesStore/i/$objetcId";
-    $alfresco_exec = RestClient::delete($alfresco_url,$user,$pwd,"application/atom+xml");
+function deleteObject($alfrescoServerUrl, $objetcId, $user, $pwd)
+{
+    $alfresco_url  = "$alfrescoServerUrl/s/cmis/s/workspace:SpacesStore/i/$objetcId";
+    $alfresco_exec = RestClient::delete($alfresco_url, $user, $pwd, "application/atom+xml");
 
     $alfresco_res = G::json_decode($alfresco_exec->getResponse());
-    echo($alfresco_res);
+
     return $alfresco_res;
 }
 
@@ -194,37 +200,39 @@ function deleteObject($alfrescoServerUrl, $objetcId, $user, $pwd) {
  * @param string | $pathFolder | Folder Name
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
+ * @param string | $mainFolder | The main folder in alfreco to save the files
  *
- * @return string | $result | Response
+ * @return string | $result | Response |
  *
  */
-function downloadDoc($alfrescoServerUrl, $pathFile , $pathFolder, $user, $pwd) {
+function downloadDoc($alfrescoServerUrl, $pathFile, $pathFolder, $user, $pwd, $mainFolder = 'Sites')
+{
     if (!(G::verifyPath($pathFolder))) {
-        G::SendTemporalMessage('ID_FILE_PLUGIN_NOT_EXISTS', 'error', 'labels', null, null, array('pluginFile' => $pathFolder));
-        G::header('Location: '.$_SERVER['HTTP_REFERER']);
-        die;
+        $result = new stdclass();
+        $result->error = G::Loadtranslation('ID_FILE_PLUGIN_NOT_EXISTS', SYS_LANG, array('pluginFile' => $pathFolder));
+        return $result;
     }
 
     $dataPathFile = pathinfo($pathFile);
     $nameFile = $dataPathFile['basename'];
 
-    $alfresco_url = "$alfrescoServerUrl" . PATH_SEP . "s" . PATH_SEP . "cmis" . PATH_SEP . "p" . PATH_SEP . "Sites" . PATH_SEP . "$pathFile";
-    $alfresco_exec = RestClient::get($alfresco_url,$user,$pwd,'application/atom+xml');
-    $sXmlArray = $alfresco_exec->getResponse();
-    $sXmlArray = eregi_replace("[\n|\r|\n\r]", '', $sXmlArray);
-    $xmlObject = simplexml_load_string((string)$sXmlArray);
+    $alfresco_url = "$alfrescoServerUrl" . PATH_SEP . "s" . PATH_SEP . "cmis" . PATH_SEP . "p" . PATH_SEP . $mainFolder . PATH_SEP . "$pathFile";
+    $alfresco_exec = RestClient::get($alfresco_url, $user, $pwd, 'application/atom+xml');
+    $sXmlArray = $alfresco_exec->getResponse(); 
+    $sXmlArray = preg_replace("[\n|\r|\n\r]", '', $sXmlArray);
+    $xmlObject = simplexml_load_string((string) $sXmlArray);
 
     if (!isset($xmlObject->content)) {
-        G::SendTemporalMessage('ID_FILE_PLUGIN_NOT_EXISTS', 'error', 'labels', null, null, array('pluginFile' => $nameFile . ' in Alfresco'));
-        G::header('Location: '.$_SERVER['HTTP_REFERER']);
-        die;
+        $result = new stdclass();
+        $result->error = G::Loadtranslation('ID_FILE_PLUGIN_NOT_EXISTS', SYS_LANG, array('pluginFile' => $nameFile));
+        return $result;
     }
 
-    $linkContent = (string)$xmlObject->content->attributes()->src;
-    $alfresco_exec = RestClient::get($linkContent,$user,$pwd,'application/atom+xml');
+    $linkContent = (string) $xmlObject->content->attributes()->src;
+    $alfresco_exec = RestClient::get($linkContent, $user, $pwd, 'application/atom+xml');
     $sXmlArray = $alfresco_exec->getResponse();
-    $content = eregi_replace("[\n|\r|\n\r]", '', $sXmlArray);
-    
+    $content = preg_replace("[^\x0A|^\x0D|\x0Ax0D|\x0Dx0A]", '', $sXmlArray);
+
     if ('/' != substr($pathFolder, -1)) {
         $pathFolder .= '/';
     }
@@ -247,19 +255,20 @@ function downloadDoc($alfrescoServerUrl, $pathFile , $pathFolder, $user, $pwd) {
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return object | $result | Response |
  *
  */
-function getCheckedoutFiles($alfrescoServerUrl, $user, $pwd) {
-   $getChildrenUrl = "$alfrescoServerUrl/s/cmis/checkedout";
+function getCheckedoutFiles($alfrescoServerUrl, $user, $pwd)
+{
+    $getChildrenUrl = "$alfrescoServerUrl/s/cmis/checkedout";
 
-   $domapi_exec = RestClient::get($getChildrenUrl,$user,$pwd,'application/atom+xml');
-   $sXmlArray = G::json_decode($domapi_exec->getResponse());
-   $sXmlArray = trim($sXmlArray);
-   $xXmlArray = simplexml_load_string($sXmlArray);
-   $aXmlArray = @G::json_decode(@G::json_encode($xXmlArray),1);
+    $domapi_exec = RestClient::get($getChildrenUrl, $user, $pwd, 'application/atom+xml');
+    $sXmlArray = G::json_decode($domapi_exec->getResponse());
+    $sXmlArray = trim($sXmlArray);
+    $xXmlArray = simplexml_load_string($sXmlArray);
+    $aXmlArray = @G::json_decode(@G::json_encode($xXmlArray), 1);
 
-   return $alfresco_res;
+    return $alfresco_res;
 }
 
 /**
@@ -275,16 +284,17 @@ function getCheckedoutFiles($alfrescoServerUrl, $user, $pwd) {
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  *
- * @return string | $result | Response
+ * @return object | $result | Response |
  *
  */
-function getFolderChildren($alfrescoServerUrl, $folderId,  $user, $pwd) {
+function getFolderChildren($alfrescoServerUrl, $folderId, $user, $pwd)
+{
     $getChildrenUrl = "$alfrescoServerUrl/service/api/node/workspace/SpacesStore/$folderId/children";
-    $alfresco_exec = RestClient::get($getChildrenUrl,$user,$pwd);
+    $alfresco_exec = RestClient::get($getChildrenUrl, $user, $pwd);
     $sXmlArray = $alfresco_exec->getResponse();
     $sXmlArray = trim($sXmlArray);
     $xXmlArray = simplexml_load_string($sXmlArray);
-    $aXmlArray = @G::json_decode(@G::json_encode($xXmlArray),1);
+    $aXmlArray = @G::json_decode(@G::json_encode($xXmlArray), 1);
 
     return $aXmlArray;
 }
@@ -305,36 +315,49 @@ function getFolderChildren($alfrescoServerUrl, $folderId,  $user, $pwd) {
  * @param string | $user | Valid Admin username to connect to Alfresco server
  * @param string | $pwd | Valid Admin password to connect to Alfresco server
  * @param string | $path | Path of document to be Uploaded
+ * @param string | $mainFolder | The main folder in alfreco to save the files
  *
- * @return string | $result | Response
+ * @return object | $result | Response |
  *
  */
-function uploadDoc($alfrescoServerUrl, $fileSource, $title, $description, $docType, $user, $pwd, $path = '') {
-    if (!(file_exists($fileSource)))
-    {
-        G::SendTemporalMessage('ID_FILE_PLUGIN_NOT_EXISTS', 'error', 'labels', null, null, array('pluginFile' => $fileSource));
-        G::header('Location: '.$_SERVER['HTTP_REFERER']);
-        die;
+function uploadDoc($alfrescoServerUrl, $fileSource, $title, $description, $docType, $user, $pwd, $path = '', $mainFolder= 'Sites')
+{
+    if (!(file_exists($fileSource))) {
+        $result = new stdclass();
+        $result->error = G::Loadtranslation('ID_FILE_PLUGIN_NOT_EXISTS', SYS_LANG, array('pluginFile' => $fileSource));
+        return $result;
     }
-    $filep          =  fopen($fileSource,"r");
-    $fileLength     =  filesize($fileSource);
-    $fileContent    =  fread($filep,$fileLength);
-    $fileContent    =  base64_encode($fileContent);
-    
+    $filep       = fopen($fileSource, "r");
+    $fileLength  = filesize($fileSource);
+    $fileContent = fread($filep, $fileLength);
+    $fileContent = base64_encode($fileContent);
+
     if ($path != '') {
-        createFolder($alfrescoServerUrl, 'Sites', $path, $user, $pwd);
+        createFolder($alfrescoServerUrl, $mainFolder, $path, $user, $pwd);
         $path = $path . PATH_SEP;
     }
 
-    $alfresco_url = "$alfrescoServerUrl/s/cmis/p/Sites/" . $path . "children";
+    $alfresco_url = "$alfrescoServerUrl/s/cmis/p/$mainFolder/" . $path . "children";
     $xmlData = array();
-    $xmlData = '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"><title>'.$title.'</title><summary>'.$description.'</summary><content type="application/'.$docType.'">'.$fileContent.'</content><cmisra:object><cmis:properties><cmis:propertyId propertyDefinitionId="cmis:objectTypeId"><cmis:value>cmis:document</cmis:value></cmis:propertyId></cmis:properties></cmisra:object></entry>';
+    $xmlData = '<?xml version="1.0" encoding="utf-8"?><entry xmlns="http://www.w3.org/2005/Atom" xmlns:cmisra="http://docs.oasis-open.org/ns/cmis/restatom/200908/" xmlns:cmis="http://docs.oasis-open.org/ns/cmis/core/200908/"><title>' . $title . '</title><summary>' . $description . '</summary><content type="application/' . $docType . '">' . $fileContent . '</content><cmisra:object><cmis:properties><cmis:propertyId propertyDefinitionId="cmis:objectTypeId"><cmis:value>cmis:document</cmis:value></cmis:propertyId></cmis:properties></cmisra:object></entry>';
 
-    $alfresco_exec = RestClient::post($alfresco_url,$xmlData,$user,$pwd,"application/atom+xml");
-    $sXmlArray = $alfresco_exec->getResponse();
-    $sXmlArray = trim($sXmlArray);
-    $xXmlArray = simplexml_load_string($sXmlArray);
-    $aXmlArray = @G::json_decode(@G::json_encode($xXmlArray),1);
-
+    $alfresco_exec = RestClient::post($alfresco_url, $xmlData, $user, $pwd, "application/atom+xml");
+    $response = $alfresco_exec->getHeaders();
+    switch ($response['code']) {
+        case '201':
+            //Created
+            $sXmlArray     = $alfresco_exec->getResponse();
+            $sXmlArray     = trim($sXmlArray);
+            $xXmlArray     = simplexml_load_string($sXmlArray);
+            $aXmlArray     = @G::json_decode(@G::json_encode($xXmlArray), 1);
+            break;
+        case '409':
+            //file exists
+            $aXmlArray = 'There is already a file with the same name:   ' . $title;
+            break;
+        default:
+            $aXmlArray = $response['message'];
+            break;
+    }
     return $aXmlArray;
 }

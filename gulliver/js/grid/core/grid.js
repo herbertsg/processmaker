@@ -266,7 +266,7 @@ var G_Grid = function(oForm, sGridName){
     for (i = 0; i <= arrayAux1.length - 1; i++) {
         arrayAux2 = arrayAux1[i].split("=");
 
-        if (typeof arrayAux2[1] != "undefined") {
+        if (typeof(arrayAux2[1]) != "undefined") {
             a = arrayAux2[0].trim();
             v = stringReplace("\\\"", "", arrayAux2[1]);
 
@@ -400,7 +400,7 @@ var G_Grid = function(oForm, sGridName){
               aObjects[0].name = newID;
               attributes = elementAttributesNS(aObjects[0], 'pm');
 
-              if (typeof attributes.defaultvalue != "undefined" && attributes.defaultvalue != "") {
+              if (typeof(attributes.defaultvalue) != "undefined" && attributes.defaultvalue != "") {
                   defaultValue = attributes.defaultvalue;
               } else {
                   defaultValue = "";
@@ -409,6 +409,7 @@ var G_Grid = function(oForm, sGridName){
               for(n=0; n < aObjects.length; n++){
                 switch(aObjects[n].type){
                   case 'text': //TEXTBOX, CURRENCY, PERCENTAGE, DATEPICKER
+                  case 'password': // PASSWORD
                     aObjects[n].className = "module_app_input___gray";
 
                     tags = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('a');
@@ -432,11 +433,11 @@ var G_Grid = function(oForm, sGridName){
                       var a2 = document.createElement('a');
 
                         if( a2.style.setAttribute ) {
-                          var styleText = "position:relative;top:0px;left:-19px;";
+                          var styleText = "position: relative; top: 2px; left: -13px;";
                           a2.style.setAttribute("cssText", styleText );
                         }
                         else {
-                          var styleText = "position:relative;top:0px;left:-22px;";
+                          var styleText = "position: relative; top: 2px; left: -16px;";
                           a2.setAttribute("style", styleText );
                         }
 
@@ -468,8 +469,9 @@ var G_Grid = function(oForm, sGridName){
                     var aObjectsScript = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('script');
 
                     var sObjectType = this.aFields[i-1].sType;
+
                     if (aObjectsScript[0] != 'undefined' && sObjectType == 'suggest') {
-						if ( this.determineBrowser() == "MSIE" ) {
+                        if (this.determineBrowser() == "MSIE") {
 
                             var firstNode = aCells[i];
 
@@ -489,27 +491,25 @@ var G_Grid = function(oForm, sGridName){
                             scriptElement.text = sScriptAdjustRow;
                             parentScript.removeChild(elementScript);
                             parentScript.appendChild(scriptElement);
-
-						} else {
- 	                        var sObjScript = aObjectsScript[0].innerHTML;
-    	                    var sNewObjScript = sObjScript.replace(/\[1\]/g, '\[' + currentRow + '\]');
-            	            aObjectsScript[0].innerHTML = sNewObjScript;
-                	        eval(aObjectsScript[0].innerHTML);
-						}
+                        } else {
+                            var sObjScript = aObjectsScript[0].innerHTML;
+                            var sNewObjScript = sObjScript.replace(/\[1\]/g, "\[" + currentRow + "\]");
+                            aObjectsScript[0].innerHTML = sNewObjScript;
+                            eval(aObjectsScript[0].innerHTML);
+                        }
                     }
-
                     break;
                   case 'checkbox': //CHECKBOX
                       var attributeCheckBox = elementAttributesNS(aObjects[n], "");
 
-                      if (defaultValue == "" || (typeof attributeCheckBox.falseValue != "undefined" && defaultValue == attributeCheckBox.falseValue) || (typeof attributeCheckBox.falsevalue != "undefined" && defaultValue == attributeCheckBox.falsevalue)) {
+                      if (defaultValue == "" || (typeof(attributeCheckBox.falseValue) != "undefined" && defaultValue == attributeCheckBox.falseValue) || (typeof(attributeCheckBox.falsevalue) != "undefined" && defaultValue == attributeCheckBox.falsevalue)) {
                           aObjects[n].checked = false;
                       } else {
                           aObjects[n].checked = true;
                       }
                       break;
                   case 'hidden': //HIDDEN
-                    if ((attributes.gridtype != 'yesno' && attributes.gridtype != 'dropdown') || typeof attributes.gridtype == 'undefined') {
+                    if ((attributes.gridtype != "yesno" && attributes.gridtype != "dropdown") || typeof(attributes.gridtype) == "undefined") {
                         aObjects[n].value = defaultValue;
                         newID = aObjects[n].id.replace(/\[1\]/g, '\[' + currentRow + '\]');
                         aObjects[n].id = newID;
@@ -594,15 +594,21 @@ var G_Grid = function(oForm, sGridName){
               }
               var aDependents = this.allDependentFields.split(',');
               sObject = this.getObjectName(newID);
+
               //Check if dropdow is dependent
               var sw = false;
               for (x=0; x < aDependents.length; x++){
                 if (aDependents[x] == sObject) sw = true;
               }
+
               //Delete Options if dropdow is dependent
               //only remains empty value
-              if (sw){
+              if (sw) {
+                /*
+                oNewSelect.options.length = 0; //Delete options
+
                 var oAux = document.createElement(aObjects[0].tagName);
+
                 for ( var j = 0; j < aObjects[0].options.length; j++) {
                   if (aObjects[0].options[j].value == ''){
                     var oOption = document.createElement('OPTION');
@@ -611,8 +617,9 @@ var G_Grid = function(oForm, sGridName){
                     oAux.options.add(oOption);
                   }
                 }
-                oNewSelect.innerHTML = ''; //Delete options
+
                 //aObjects[0].innerHTML = ''; //Delete options
+
                 for (var r =0; r < oAux.options.length; r++){
                   var xOption = document.createElement('OPTION');
                   xOption.value = oAux.options[r].value;
@@ -620,49 +627,20 @@ var G_Grid = function(oForm, sGridName){
                   //aObjects[0].options.add(xOption);
                   oNewSelect.options.add(xOption);
                 }
-              }else{
-                //Set Default Value if it's not a Dependent Field
-                if (defaultValue != ''){
-                  var oAux = document.createElement(aObjects[0].tagName);
-                  for ( var j = 0; j < aObjects[0].options.length; j++) {
-                    var oOption = document.createElement('OPTION');
-                    oOption.value = aObjects[0].options[j].value;
-                    oOption.text = aObjects[0].options[j].text;
-                    if (aObjects[0].options[j].value === defaultValue){
-                      oOption.setAttribute('selected','selected');
-                    }
-                    oAux.options.add(oOption);
+                */
+                  //oNewSelect.options.length = 0; //Delete options
+                  oNewSelect.innerHTML = "";
+
+                  if (oNewSelect.options.length == 0) {
+                      oNewSelect.options[0] = new Option("", "");
                   }
-                  //aObjects[0].innerHTML = ''; //Delete options
-                  oNewSelect.innerHTML = ''; //Delete options
-                  for (var r =0; r < oAux.options.length; r++){
-                    var xOption = document.createElement('OPTION');
-                    xOption.value = oAux.options[r].value;
-                    xOption.text = oAux.options[r].text;
-                    if (_BROWSER.name == 'msie'){
-                      if (oAux.options[r].getAttribute('selected') != ''){
-                        xOption.setAttribute('selected','selected');
-                      }
-                    }else{
-                      if (oAux.options[r].getAttribute('selected') == 'selected'){
-                        xOption.setAttribute('selected','selected');
-                      }
-                    }
-                    //aObjects[0].options.add(xOption);
-                    oNewSelect.options.add(xOption);
-                  }
-                }else{
-                  //Copy all options
-                  var oAux = document.createElement(aObjects[0].tagName);
-                  for ( var j = 0; j < aObjects[0].options.length; j++) {
-                    var oOption = document.createElement('OPTION');
-                    oOption.value = aObjects[0].options[j].value;
-                    oOption.text = aObjects[0].options[j].text;
-                    oNewSelect.options.add(oOption);
-                  }
-                }
-                //TODO: Implement Default Value and Dependent Fields Trigger for grid dropdowns
+              } else {
+                  //Set Default Value if it's not a Dependent Field
+                  selectCloneOption.call(oNewSelect, aObjects[0], defaultValue);
+
+                  //TODO: Implement Default Value and Dependent Fields Trigger for grid dropdowns
               }
+
               var parentSelect = aObjects[0].parentNode;
               parentSelect.removeChild(aObjects[0]);
               parentSelect.appendChild(oNewSelect);
@@ -757,32 +735,41 @@ var G_Grid = function(oForm, sGridName){
     }
   };
 
-  this.deleteGridRow = function (sRow, bWithoutConfirm)
-  {
-      if (typeof bWithoutConfirm == "undefined") {
-          bWithoutConfirm = false;
-      }
-
-      if (this.oGrid.rows.length == 3) {
-          new leimnud.module.app.alert().make({
-              label: G_STRINGS.ID_MSG_NODELETE_GRID_ITEM
-          });
-
-          return false;
-      }
-
-      if (bWithoutConfirm) {
-          this.deleteRowWC(this, sRow);
-      } else {
-          new leimnud.module.app.confirm().make({
-              label: G_STRINGS.ID_MSG_DELETE_GRID_ITEM,
-              action: function ()
-                {
-                    this.deleteRowWC(this, sRow);
-                }.extend(this)
-          });
-      }
-  };
+    this.deleteGridRow = function (sRow, bWithoutConfirm)
+    {
+        if (typeof(bWithoutConfirm) == "undefined") {
+            bWithoutConfirm = false;
+        }
+        if (this.oGrid.rows.length == 2) {
+            new leimnud.module.app.alert().make({
+                label: G_STRINGS.ID_MSG_NODELETE_GRID_ITEM
+            });
+            return false;
+        }
+        if (bWithoutConfirm) {
+            if (this.oGrid.rows.length == 3) {
+                this.clearRowWC(this, sRow);
+            } else {
+                this.deleteRowWC(this, sRow);
+            }
+        } else {
+            if (this.oGrid.rows.length == 3) {
+                new leimnud.module.app.confirm().make({
+                    label: _('ID_MSG_CLEAR_GRID_FIRST_ITEM'),
+                    action: function () {
+                        this.clearRowWC(this, sRow);
+                    }.extend(this)
+                });
+            } else {
+                new leimnud.module.app.confirm().make({
+                    label: G_STRINGS.ID_MSG_DELETE_GRID_ITEM,
+                    action: function () {
+                        this.deleteRowWC(this, sRow);
+                    }.extend(this)
+                });
+            }
+        }
+    };
 
   this.deleteRowWC = function (oObj, aRow)
   {
@@ -792,6 +779,7 @@ var G_Grid = function(oForm, sGridName){
     var iRow = Number(sRow);
     var iRowAux = iRow + 1;
     var lastItem = oObj.oGrid.rows.length - 2;
+    var elemNodeName = "";
     var elem2ParentNode;
     var elem2Id   = "";
     var elem2Name = "";
@@ -799,13 +787,17 @@ var G_Grid = function(oForm, sGridName){
 
     deleteRowOnDynaform(oObj, iRow);
 
+    var i = 0;
+
     while (iRowAux <= (lastItem)) {
       for (i = 1; i < oObj.oGrid.rows[iRowAux - 1].cells.length; i++) {
         var oCell1 = oObj.oGrid.rows[iRowAux - 1].cells[i];
         var oCell2 = oObj.oGrid.rows[iRowAux].cells[i];
 
-        switch (oCell1.innerHTML.replace(/^\s+|\s+$/g, '').substr(0, 6).toLowerCase()){
-          case '<input':
+        elemNodeName = oCell1.innerHTML.substring(oCell1.innerHTML.indexOf("<") + 1, oCell1.innerHTML.indexOf(" ")).toLowerCase();
+
+        switch (elemNodeName) {
+          case "input":
             aObjects1 = oCell1.getElementsByTagName('input');
             aObjects2 = oCell2.getElementsByTagName('input');
 
@@ -861,28 +853,18 @@ var G_Grid = function(oForm, sGridName){
             }
 
             break;
-          case '<selec':
-            aObjects1 = oCell1.getElementsByTagName('select');
-            aObjects2 = oCell2.getElementsByTagName('select');
-            if (aObjects1 && aObjects2) {
-              var vValue = aObjects2[0].value;
-              /*
-               * for (var j = (aObjects1[0].options.length-1);
-               * j >= 0; j--) { aObjects1[0].options[j] =
-               * null; }
-               */
-              aObjects1[0].options.length = 0;
-              for ( var j = 0; j < aObjects2[0].options.length; j++) {
-                var optn = $dce("OPTION");
-                optn.text = aObjects2[0].options[j].text;
-                optn.value = aObjects2[0].options[j].value;
-                aObjects1[0].options[j] = optn;
+          case "select":
+              aObjects1 = oCell1.getElementsByTagName("select");
+              aObjects2 = oCell2.getElementsByTagName("select");
+
+              if (aObjects1 && aObjects2) {
+                  selectCloneOption.call(aObjects1[0], aObjects2[0], "");
+
+                  aObjects1[0].value = aObjects2[0].value;
+                  aObjects1[0].className = aObjects2[0].className;
               }
-              aObjects1[0].value = vValue;
-              aObjects1[0].className = aObjects2[0].className;
-            }
-            break;
-          case '<texta':
+              break;
+          case "textarea":
             aObjects1 = oCell1.getElementsByTagName('textarea');
             aObjects2 = oCell2.getElementsByTagName('textarea');
             if (aObjects1 && aObjects2) {
@@ -890,13 +872,34 @@ var G_Grid = function(oForm, sGridName){
               aObjects1[0].className = aObjects2[0].className;
             }
             break;
+          case "a":
+              aObjects1 = oCell1.getElementsByTagName("a");
+              aObjects2 = oCell2.getElementsByTagName("a");
+
+              if (aObjects1 && aObjects2) {
+                  if (oCell1.innerHTML.indexOf("deleteGridRow") == -1) {
+                      var iAux = 0;
+                      var swLink = 0;
+
+                      for (iAux = 0; iAux <= aObjects1[0].attributes.length - 1; iAux++) {
+                          if (aObjects1[0].attributes[iAux].name == "pm:field" && aObjects1[0].attributes[iAux].value == "pm:field") {
+                              swLink = 1;
+                              break;
+                          }
+                      }
+
+                      if (swLink == 1) {
+                          aObjects1[0].href = aObjects2[0].href;
+                          aObjects1[0].innerHTML = aObjects2[0].innerHTML;
+                      } else {
+                          oCell1.innerHTML = oCell2.innerHTML;
+                      }
+                  }
+              }
+              break;
           default:
             if (( oCell2.innerHTML.indexOf('changeValues') == 111 || oCell2.innerHTML.indexOf('changeValues') == 115 ) ) {
               break;
-            }
-
-            if (oCell2.innerHTML.toLowerCase().indexOf('deletegridrow') == -1) {
-              oCell1.innerHTML = oCell2.innerHTML;
             }
           break;
         }
@@ -906,8 +909,6 @@ var G_Grid = function(oForm, sGridName){
 
     //Delete row
     this.oGrid.deleteRow(lastItem);
-
-    var i = 0;
 
     for (i = 0; i <= this.aFields.length - 1; i++) {
         this.aElements.pop();
@@ -939,6 +940,67 @@ var G_Grid = function(oForm, sGridName){
     }
   };
 
+    this.clearRowWC = function (oObj, aRow)
+    {
+        var i = 0;
+        var j = 0;
+        var iAux = 0;
+        var pmLabel = '';
+        var elemNodeName = '';
+        var objects = '';
+        for (i = 1; i < oObj.oGrid.rows[1].cells.length; i++) {
+            var oCell1 = oObj.oGrid.rows[1].cells[i];
+            elemNodeName = oCell1.innerHTML.substring(oCell1.innerHTML.indexOf("<") + 1, oCell1.innerHTML.indexOf(" ")).toLowerCase();
+            switch (elemNodeName) {
+                case "input":
+                    objects = oCell1.getElementsByTagName('input');
+                    if (objects[0].type == 'checkbox') {
+                        document.getElementById(objects[0].id).checked = false ;
+                    } else {
+                        document.getElementById(objects[0].id).value = '';
+                        fieldSuggest = (objects[0].id).substring(0, (objects[0].id).length-7) + "]";
+                        if ( document.getElementById(fieldSuggest) != null) {
+                            document.getElementById(fieldSuggest).value = '';
+                        }
+                    }
+                    if (oObj.aFunctions.length>0) {
+                        pmLabel = '';
+                        for (iAux = 0; iAux <= objects[0].attributes.length - 1; iAux++) {
+                            if ( objects[0].attributes[iAux].name == "pm:label" ) {
+                                pmLabel = objects[0].attributes[iAux].nodeValue;
+                                break;
+                            }
+                        }
+                        for (j = 0; j < oObj.aFunctions.length; j++) {
+                            if ( pmLabel != '' && pmLabel == oObj.aFunctions[j].sFieldName) {
+                                switch (oObj.aFunctions[j].sFunction) {
+                                    case "sum":
+                                        oObj.sum(false, document.getElementById(objects[0].id));
+                                        break;
+                                    case "avg":
+                                        oObj.avg(false, document.getElementById(objects[0].id));
+                                        break;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    oObj.aElements[i-1].updateDepententFields();
+                    break;
+                case "select":
+                    objects = oCell1.getElementsByTagName("select");
+                    document.getElementById(objects[0].id).selectedIndex = "" ;
+                    oObj.aElements[i-1].updateDepententFields();
+                    break;
+                case "textarea":
+                    objects = oCell1.getElementsByTagName('textarea');
+                    document.getElementById(objects[0].id).value = '' ;
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
   ///////////////////////////////////////////////////////////////////////////////////
 
   this.assignFunctions = function (aFields, sEvent, iRow)
@@ -1154,25 +1216,25 @@ var G_Grid = function(oForm, sGridName){
         oAux = this.getElementByName(aAux[1], aFields[i]);
         sAux = sAux.replace(new RegExp(aFields[i], "g"), "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value().replace(/[$|a-zA-Z\s]/g,'') || 0, '" + (oAux.sMask ? oAux.sMask : '')
         + "').result.replace(/,/g, ''))");
-        
+
         eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + aFields[i] + "]')) { oContinue = false; }");
       }
     }
     eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]')) { oContinue = false; }");
 
     var swReal=0;
-    
+
     if (oContinue) {
       //we're selecting the mask to put in the field with the formula
       for (i = 0; i < this.aFields.length; i++) {
         if(oField.sFieldName==this.aFields[i].sFieldName) {
         	maskformula=this.aFields[i].oProperties.mask;
-        	
+
         	if(this.aFields[i].oProperties.validate=='Real')
         		swReal=1;
         }
       }
-      
+
       if(maskformula!=''){
         maskDecimal=maskformula.split(";");
         if(maskDecimal.length > 1) {
@@ -1192,17 +1254,17 @@ var G_Grid = function(oForm, sGridName){
     	  else
     		  maskToPut=0;
       }
-      
+
       // clean the field and load mask execute event keypress
       document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']').value = '';
       this.executeEvent(document.getElementById(aAux[0]+']['+ aAux[1] + '][' + oField.sFieldName + ']'), 'keypress');
 
       // execute formula and set decimal
       eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = (" + sAux + ').toFixed('+maskToPut+');');
-      
+
       // trim value
       document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value = document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value.replace(/^\s*|\s*$/g,"");
-      
+
       // set '' to field if response is NaN
       if (document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value =='NaN')
         document.getElementById(aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']').value = '';
@@ -1313,26 +1375,16 @@ var G_Grid = function(oForm, sGridName){
             }
             //oCell1.innerHTML= aux.innerHTM;
             break;
-          case '<selec':
-            aObjects1 = oCell1.getElementsByTagName('select');
-            aObjects2 = oCell2.getElementsByTagName('select');
-            if (aObjects1 && aObjects2) {
-              var vValue = aObjects2[0].value;
-              /*
-               * for (var j = (aObjects1[0].options.length-1);
-               * j >= 0; j--) { aObjects1[0].options[j] =
-               * null; }
-               */
-              aObjects1[0].options.length = 0;
-              for ( var j = 0; j < aObjects2[0].options.length; j++) {
-                var optn = $dce("OPTION");
-                optn.text = aObjects2[0].options[j].text;
-                optn.value = aObjects2[0].options[j].value;
-                aObjects1[0].options[j] = optn;
+          case "<selec":
+              aObjects1 = oCell1.getElementsByTagName("select");
+              aObjects2 = oCell2.getElementsByTagName("select");
+
+              if (aObjects1 && aObjects2) {
+                  selectCloneOption.call(aObjects1[0], aObjects2[0], "");
+
+                  aObjects1[0].value = aObjects2[0].value;
               }
-              aObjects1[0].value = vValue;
-            }
-            break;
+              break;
           case '<texta':
             aObjects1 = oCell1.getElementsByTagName('textarea');
             aObjects2 = oCell2.getElementsByTagName('textarea');
@@ -1479,5 +1531,85 @@ function deleteRowOnDynaform(grid, sRow) {
     }
   }.extend(this);
   oRPC.make();
+}
+
+function selectCloneOption(selectOrigin, defaultValue)
+{
+    var arrayOption = [];
+    var arrayOptGroup = [];
+    var arrayOptGroupOption = [];
+    var arrayAux = [];
+    var optGroupAux;
+    var optionAux;
+    var i1 = 0;
+    var i2 = 0;
+    var i3 = 0;
+    var swSelected = 0;
+
+    //this.options.length = 0; //Delete options
+    this.innerHTML = "";
+
+    for (i1 = 0; i1 <= selectOrigin.options.length - 1; i1++) {
+        if (selectOrigin.options[i1].parentNode.nodeName.toLowerCase() != "optgroup") {
+            arrayOption.push(["option", selectOrigin.options[i1].value, selectOrigin.options[i1].text]);
+        } else {
+            if (typeof(arrayAux[selectOrigin.options[i1].parentNode.label]) == "undefined") {
+                arrayAux[selectOrigin.options[i1].parentNode.label] = 1;
+                arrayOption.push(["optgroup", 1, selectOrigin.options[i1].parentNode.label]);
+            }
+        }
+    }
+
+    for (i1 = 0; i1 <= arrayOption.length - 1; i1++) {
+        if (arrayOption[i1][0] == "option") {
+            //this.appendChild(new Option(arrayOption[i1][2], arrayOption[i1][1]));
+            optionAux = document.createElement("option");
+
+            this.appendChild(optionAux);
+
+            optionAux.value = arrayOption[i1][1];
+            optionAux.text = arrayOption[i1][2];
+
+            if (swSelected == 0 && defaultValue != "" && arrayOption[i1][1] == defaultValue) {
+                optionAux.setAttribute("selected", "selected");
+                swSelected = 1;
+            }
+        } else {
+            arrayOptGroup = selectOrigin.getElementsByTagName("optgroup");
+
+            for (i2 = 0; i2 <= arrayOptGroup.length - 1; i2++) {
+                if (arrayOptGroup[i2].label == arrayOption[i1][2]) {
+                    arrayOptGroupOption = arrayOptGroup[i2].getElementsByTagName("option");
+
+                    if (arrayOptGroupOption.length > 0) {
+                        optGroupAux = document.createElement("optgroup");
+
+                        this.appendChild(optGroupAux);
+
+                        optGroupAux.label = arrayOptGroup[i2].label;
+
+                        for (i3 = 0; i3 <= arrayOptGroupOption.length - 1; i3++) {
+                            //optGroupAux.appendChild(new Option(arrayOptGroupOption[i3].text, arrayOptGroupOption[i3].value));
+                            optionAux = document.createElement("option");
+
+                            optGroupAux.appendChild(optionAux);
+
+                            optionAux.value = arrayOptGroupOption[i3].value;
+                            optionAux.text = arrayOptGroupOption[i3].text;
+
+                            if (swSelected == 0 && defaultValue != "" && arrayOptGroupOption[i3].value == defaultValue) {
+                                optionAux.setAttribute("selected", "selected");
+                                swSelected = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (this.options.length == 0) {
+        this.options[0] = new Option("", "");
+    }
 }
 

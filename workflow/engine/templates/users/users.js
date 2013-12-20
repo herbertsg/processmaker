@@ -33,6 +33,9 @@ var canEdit = true;
 var flagPoliciesPassword = false;
 var flagValidateUsername = false;
 //var rendeToPage='document.body';
+var userRoleLoad = '';
+
+var PROCESSMAKER_ADMIN = 'PROCESSMAKER_ADMIN';
 
 global.IC_UID        = '';
 global.IS_UID        = '';
@@ -421,6 +424,7 @@ Ext.onReady(function () {
         xtype      : 'textfield',
         width      : 260,
         allowBlank : false,
+        hidden     : (typeof EDITPROFILE != "undefined" && EDITPROFILE == 1)? true : false,
         listeners: {
           blur : function(ob)
           {
@@ -501,6 +505,15 @@ Ext.onReady(function () {
   var passwordFields = new Ext.form.FieldSet({
     title : _('ID_CHANGE_PASSWORD'),
     items : [
+       {
+          xtype      : "textfield",
+          id         : "currentPassword",
+          name       : "currentPassword",
+          fieldLabel : _("ID_PASSWORD_CURRENT"),
+          inputType  : "password",
+          hidden     : (typeof EDITPROFILE != "undefined" && EDITPROFILE == 1)? false : true,
+          width      : 260
+      },
       {
         id         : 'USR_NEW_PASS',
         fieldLabel : _('ID_NEW_PASSWORD'),
@@ -544,8 +557,8 @@ Ext.onReady(function () {
               },
               failure: function () {
                 Ext.MessageBox.show({
-                  title: 'Error',
-                  msg: 'Failed to store data',
+                  title: _('ID_ERROR'),
+                  msg: _('ID_FAILED_STORE_DATA'),
                   buttons: Ext.MessageBox.OK,
                   animEl: 'mb9',
                   icon: Ext.MessageBox.ERROR
@@ -1015,8 +1028,8 @@ function validateUserName() {
     },
     failure: function () {
       Ext.MessageBox.show({
-        title: 'Error',
-        msg: 'Failed to store data',
+        title: _('ID_ERROR'),
+        msg: _('ID_FAILED_STORE_DATA'),
         buttons: Ext.MessageBox.OK,
         animEl: 'mb9',
         icon: Ext.MessageBox.ERROR
@@ -1026,6 +1039,50 @@ function validateUserName() {
     }
   });
 }
+
+function userFrmEditSubmit()
+{
+    Ext.getCmp("USR_STATUS").setDisabled(readMode);
+    Ext.getCmp("frmDetails").getForm().submit({
+      url    : "usersAjax",
+      params : {
+        action   : "saveUser",
+        USR_UID  : USR_UID,
+        USR_CITY : global.IS_UID
+      },
+      waitMsg : _("ID_SAVING"),
+      waitTitle : "&nbsp;",
+      timeout : 36000,
+      success : function (obj, resp) {
+        if (!infoMode) {
+          location.href = "users_List";
+        } else {
+         location.href = "../users/myInfo?type=reload";
+        }
+
+      },
+      failure : function (obj, resp) {
+        if (typeof resp.result  == "undefined")
+        {
+          Ext.Msg.alert(_("ID_ERROR"), _("ID_SOME_FIELDS_REQUIRED"));
+        } else{
+          if (resp.result.msg){
+            var message = resp.result.msg.split(",");
+            Ext.Msg.alert(_("ID_WARNING"), "<strong>"+message[0]+"<strong><br/><br/>"+message[1]+"<br/><br/>"+message[2]);
+          }
+
+          if (resp.result.fileError) {
+            Ext.Msg.alert(_("ID_ERROR"), _("ID_FILE_TOO_BIG"));
+          }
+
+          if (resp.result.error) {
+            Ext.Msg.alert(_("ID_ERROR"), resp.result.error);
+          }
+        }
+      }
+    });
+}
+
 
 function saveUser()
 {
@@ -1045,7 +1102,7 @@ function saveUser()
     }
 
     if (USR_UID == '00000000000000000000000000000001') {
-    	if (Ext.getCmp('USR_ROLE').getValue() != 'PROCESSMAKER_ADMIN') {
+        if (Ext.getCmp('USR_ROLE').getValue() != PROCESSMAKER_ADMIN) {
     		Ext.Msg.alert( _('ID_ERROR'), _('ID_ADMINISTRATOR_ROLE_CANT_CHANGED'));
             return false;
     	}
@@ -1069,46 +1126,89 @@ function saveUser()
   var confPass = frmDetails.getForm().findField('USR_CNF_PASS').getValue();
 
   if (confPass === newPass) {
-    Ext.getCmp('USR_STATUS').setDisabled(readMode);
-    Ext.getCmp('frmDetails').getForm().submit({
-      url    : 'usersAjax',
-      params : {
-        action   : 'saveUser',
-        USR_UID  : USR_UID,
-        USR_CITY : global.IS_UID
-      },
-      waitMsg : _('ID_SAVING'),
-      timeout : 36000,
-      success : function (obj, resp) {
-        if (!infoMode) {
-          location.href = 'users_List';
+      if(typeof(EDITPROFILE) != "undefined" && EDITPROFILE == 1 && newPass != "") {
+        var currentPassword = Ext.getCmp("currentPassword").getValue();
+
+        if(currentPassword != "") {
+            Ext.Ajax.request({
+                url:    "usersAjax",
+                method: "POST",
+
+                params: {
+                    action:   "passwordValidate",
+                    password: currentPassword
+                },
+
+                success: function (response, opts) {
+                    var dataRespuesta = Ext.util.JSON.decode(response.responseText);
+
+                    if (dataRespuesta.result == "OK") {
+                        Ext.Ajax.request({
+                            url:    "usersAjax",
+                            method: "POST",
+                            params: {
+                                action: "getUserLogedRole"
+                            },
+                            success: function (response, opts) {
+                                var dataRetval = Ext.util.JSON.decode(response.responseText);
+                                if (typeof(userRoleLoad) != 'undefined') {
+                                    if (Ext.getCmp('USR_ROLE').getValue() != userRoleLoad ) {
+                                        if (dataRetval.USR_ROLE != PROCESSMAKER_ADMIN && Ext.getCmp('USR_ROLE').getValue() == PROCESSMAKER_ADMIN) {
+                                            Ext.Msg.alert( _('ID_ERROR'), dataRetval.USR_USERNAME + ' ' + _('ID_USER_ROLE_CANT_CHANGED_TO_ADMINISTRATOR'));
+                                            return false;
+                                        } else {
+                                            userFrmEditSubmit();
+                                        }
+                                    } else {
+                                        // Another field changed
+                                        userFrmEditSubmit();
+                                    }
+                                }
+                            },
+                            failure: function (response, opts) {
+                            }
+                        });
+
+                    } else {
+                        Ext.MessageBox.alert(_("ID_ERROR"), _("ID_PASSWORD_CURRENT_INCORRECT"));
+                    }
+                },
+                failure: function (response, opts){
+                  //
+                }
+           });
         } else {
-         location.href = '../users/myInfo?type=reload';
+            Ext.MessageBox.alert(_("ID_ERROR"), _("ID_PASSWORD_CURRENT_ENTER"));
         }
+    } else {
+        Ext.Ajax.request({
+            url:    "usersAjax",
+            method: "POST",
+            params: {
+                action: "getUserLogedRole"
+            },
+            success: function (response, opts) {
+                var dataRetval = Ext.util.JSON.decode(response.responseText);
+                if (typeof(userRoleLoad) != 'undefined') {
+                    if (Ext.getCmp('USR_ROLE').getValue() != userRoleLoad ) {
+                        if (dataRetval.USR_ROLE != PROCESSMAKER_ADMIN && Ext.getCmp('USR_ROLE').getValue() == PROCESSMAKER_ADMIN) {
+                            Ext.Msg.alert( _('ID_ERROR'), dataRetval.USR_USERNAME + ' ' + _('ID_USER_ROLE_CANT_CHANGED_TO_ADMINISTRATOR'));
+                            return false;
+                        } else {
+                            userFrmEditSubmit();
+                        }
+                    } else {
+                        // Another field changed
+                        userFrmEditSubmit();
+                    }
+                }
+            },
+            failure: function (response, opts) {
+            }
+        });
+    }
 
-      },
-      failure : function (obj, resp) {
-        if (typeof resp.result  == "undefined")
-        {
-          Ext.Msg.alert(_('ID_ERROR'), _('ID_SOME_FIELDS_REQUIRED'));
-        } else{
-          if (resp.result.msg){
-            var message = resp.result.msg.split(',');
-            Ext.Msg.alert(_('ID_WARNING'), '<strong>'+message[0]+'<strong><br/><br/>'+message[1]+'<br/><br/>'+message[2]);
-          }
-
-          if (resp.result.fileError) {
-            Ext.Msg.alert(_('ID_ERROR'), _('ID_FILE_TOO_BIG'));
-          }
-
-          if (resp.result.error) {
-            Ext.Msg.alert(_('ID_ERROR'), resp.result.error);
-          }
-        }
-      }
-    });
-  }
-  else {
+  } else {
     Ext.Msg.alert(_('ID_ERROR'), _('ID_PASSWORDS_DONT_MATCH'));
   }
 }
@@ -1116,6 +1216,7 @@ function saveUser()
 //Load data
 function loadData()
 {
+
     comboCountry.store.load();
 
 
@@ -1196,7 +1297,7 @@ function loadUserData()
                 Ext.getCmp("USR_REPLACED_BY2").setText(data.user.REPLACED_NAME);
                 Ext.getCmp("USR_DUE_DATE2").setText(data.user.USR_DUE_DATE);
                 Ext.getCmp("USR_STATUS2").setText(_('ID_' + data.user.USR_STATUS));
-                Ext.getCmp("USR_ROLE2").setText(data.user.USR_ROLE);
+                Ext.getCmp("USR_ROLE2").setText(data.user.USR_ROLE_NAME);
 
                 Ext.getCmp("PREF_DEFAULT_MAIN_MENU_OPTION2").setText(data.user.MENUSELECTED_NAME);
                 Ext.getCmp("PREF_DEFAULT_CASES_MENUSELECTED2").setText(data.user.CASES_MENUSELECTED_NAME);
@@ -1204,30 +1305,7 @@ function loadUserData()
                 //
             }
 
-            storeCountry.load();
-
-            storeRegion.load({
-                params: {
-                    IC_UID : data.user.USR_COUNTRY
-                }
-            });
-
-            storeLocation.load({
-                params: {
-                    IC_UID : data.user.USR_COUNTRY,
-                    IS_UID : data.user.USR_CITY
-                }
-            });
-
-            storeReplacedBy.load();
-
-            storeCalendar.load();
-
-            storeRole.load();
-
-            storeDefaultMainMenuOption.load();
-
-            storeDefaultCasesMenuOption.load();
+            userRoleLoad  = data.user.USR_ROLE;
 
             comboCountry.store.on("load", function(store) {
                 comboCountry.setValue(data.user.USR_COUNTRY);
@@ -1261,9 +1339,15 @@ function loadUserData()
             if (infoMode) {
                 comboDefaultMainMenuOption.store.on("load", function (store) {
                     comboDefaultMainMenuOption.setValue(data.user.PREF_DEFAULT_MENUSELECTED);
+
+                    storeDefaultCasesMenuOption.load();
                 });
 
                 comboDefaultCasesMenuOption.store.on("load", function (store) {
+                    if (comboDefaultMainMenuOption.getValue() == 'PM_CASES') {
+                        comboDefaultCasesMenuOption.enable();
+                    }
+
                     comboDefaultCasesMenuOption.setValue(data.user.PREF_DEFAULT_CASES_MENUSELECTED);
                 });
             } else {
@@ -1277,6 +1361,31 @@ function loadUserData()
             }
 
             previousUsername = Ext.getCmp("USR_USERNAME").getValue();
+
+            storeCountry.load();
+
+            storeRegion.load({
+                params: {
+                    IC_UID : data.user.USR_COUNTRY
+                }
+            });
+
+            storeLocation.load({
+                params: {
+                    IC_UID : data.user.USR_COUNTRY,
+                    IS_UID : data.user.USR_CITY
+                }
+            });
+
+            storeReplacedBy.load();
+
+            storeCalendar.load();
+
+            storeRole.load();
+
+            storeDefaultMainMenuOption.load();
+
+            //storeDefaultCasesMenuOption.load();
         },
         failure: function (r, o) {
             //viewport.getEl().unmask();

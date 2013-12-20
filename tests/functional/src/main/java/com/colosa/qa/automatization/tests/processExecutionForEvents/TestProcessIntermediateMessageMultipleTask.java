@@ -67,7 +67,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 		eventStatus = pages.Admin().eventStatus(caseNum);
 		Assert.assertEquals("CLOSE", eventStatus);
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[guardar]";
@@ -86,7 +86,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData3 = new FormFieldData[1];
 		arrayData3[0] = new FormFieldData();
 		arrayData3[0].fieldPath = "form[guardar]";
@@ -106,7 +106,7 @@ public class TestProcessIntermediateMessageMultipleTask extends com.colosa.qa.au
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("ronald", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
         pages.InputDocProcess().switchToDefault();

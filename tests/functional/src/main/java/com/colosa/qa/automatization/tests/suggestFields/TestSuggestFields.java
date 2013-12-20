@@ -64,7 +64,7 @@ public class TestSuggestFields extends com.colosa.qa.automatization.tests.common
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 
 		FormFieldData[] arrayData1 = new FormFieldData[3];
 		arrayData1[0] = new FormFieldData();

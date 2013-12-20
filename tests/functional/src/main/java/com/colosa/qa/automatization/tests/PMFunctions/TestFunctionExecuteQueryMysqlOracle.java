@@ -45,7 +45,7 @@ public class TestFunctionExecuteQueryMysqlOracle extends com.colosa.qa.automatiz
 		pages.InputDocProcess().switchToDefault();
 		pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.DynaformExecution().intoDynaform();
 		pages.DynaformExecution().setFieldValue("userFirstName", firstNameMysql);
 		pages.DynaformExecution().setFieldValue("userLastName", lastNameMysql);
@@ -68,7 +68,7 @@ public class TestFunctionExecuteQueryMysqlOracle extends com.colosa.qa.automatiz
 		pages.InputDocProcess().switchToDefault();
 		pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		pages.InputDocProcess().openCaseFrame();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().logout();

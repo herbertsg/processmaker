@@ -1,6 +1,8 @@
 package com.colosa.qa.automatization.pages;
 
 import com.colosa.qa.automatization.common.BrowserInstance;
+import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.common.WaitTool;
 import com.colosa.qa.automatization.common.extJs.ExtJSGrid;
 import com.colosa.qa.automatization.common.extJs.ExtJSGridRow;
 import org.openqa.selenium.By;
@@ -26,9 +28,14 @@ public class CasesListAction {
     public CasesListAction(BrowserInstance browser, WebElement grid){
         this.browser = browser;
         this.grid = grid;
+
+        //wait for list of cases to update
+        WaitTool.waitForJavaScriptCondition(this.browser.getInstanceDriver(), "return (document.readyState == 'complete');", 15);
     }
 
     public void openCase(Integer numCase, Integer searchFieldNumber)throws Exception{
+
+        Logger.addLog("CasesListAction opencase:" + numCase.toString() + " field number:" + searchFieldNumber.toString());
 
         ExtJSGrid grid;
         Actions action = new Actions(browser.getInstanceDriver());
@@ -37,7 +44,7 @@ public class CasesListAction {
         browser.switchToFrame("casesFrame");
         browser.switchToFrame("casesSubFrame");
 
-        grid = new ExtJSGrid(this.grid, browser.getInstanceDriver());
+        grid = new ExtJSGrid(this.grid, browser);
         grid.setSearchFieldGrid(true, searchFieldNumber);
         ExtJSGridRow foundRow = grid.searchAndReturnRow(numCase.toString(), "#");
 
@@ -53,7 +60,7 @@ public class CasesListAction {
         browser.switchToFrame("casesFrame");
         browser.switchToFrame("casesSubFrame");
 
-        grid = new ExtJSGrid(this.grid, browser.getInstanceDriver());
+        grid = new ExtJSGrid(this.grid, browser);
         grid.setSearchFieldGrid(true, searchFieldNumber);
         ExtJSGridRow foundRow = grid.searchAndReturnRow(numCase.toString(), "#");
 

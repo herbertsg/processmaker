@@ -28,7 +28,7 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
 		pages.DynaformExecution().setFieldValue("guardar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 
 		pages.DynaformExecution().setFieldValue("seleccion", seleccion);
@@ -41,11 +41,11 @@ public class TestSLAProcessWithManySlas extends com.colosa.qa.automatization.tes
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		pages.Home().openCase(numCase);
+		pages.Home().gotoInbox().openCase(numCase);
 		pages.DynaformExecution().intoDynaform();
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		

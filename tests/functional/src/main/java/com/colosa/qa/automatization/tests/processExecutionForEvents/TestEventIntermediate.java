@@ -66,7 +66,7 @@ public void openTask2(int casenumber) throws Exception{ */
         eventStatus = pages.Admin().eventStatus(casenumber);
         Assert.assertEquals("CLOSE", eventStatus);
         pages.Main().goHome();
-        pages.Home().openCase(casenumber);
+        pages.Home().gotoInbox().openCase(casenumber);
         pages.DynaformExecution().intoDynaform();
         FormFieldData[] fieldArray2=new FormFieldData[2];
         fieldArray2[0]=new FormFieldData();
@@ -93,7 +93,7 @@ public void openTask3(int casenumber) throws Exception{ */
 	pages.gotoDefaultUrl();
     pages.Login().loginUser("hector","sample","workflow", "English");
     pages.Main().goHome();
-    pages.Home().openCase(casenumber);
+    pages.Home().gotoInbox().openCase(casenumber);
     pages.DynaformExecution().intoDynaform();
     FormFieldData[] fieldArray3=new FormFieldData[1];
     fieldArray3[0]=new FormFieldData();
@@ -114,7 +114,7 @@ public void openTask4(int casenumber) throws Exception{   */
 	 pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
-    pages.Home().openCase(casenumber);
+    pages.Home().gotoInbox().openCase(casenumber);
     pages.DynaformExecution().intoDynaform();
 	 FormFieldData[] fieldArray4=new FormFieldData[2];
 	 fieldArray4[0]=new FormFieldData();

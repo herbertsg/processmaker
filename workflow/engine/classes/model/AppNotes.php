@@ -64,7 +64,7 @@ class AppNotes extends BaseAppNotes
         $oDataset->next();
 
         while ($aRow = $oDataset->getRow()) {
-            $aRow['NOTE_CONTENT'] = stripslashes( $aRow['NOTE_CONTENT'] );
+            $aRow['NOTE_CONTENT'] = htmlentities(stripslashes($aRow['NOTE_CONTENT']), ENT_QUOTES, 'UTF-8');
             $response['notes'][] = $aRow;
             $oDataset->next();
         }
@@ -102,11 +102,11 @@ class AppNotes extends BaseAppNotes
             //return array ( 'codError' => -100, 'rowsAffected' => 0, 'message' => $msg );
         }
         if ($msg != "") {
-            $response['success'] = 'failure';
+            $response['success'] = G::LoadTranslation("ID_FAILURE");
             $response['message'] = $msg;
         } else {
             $response['success'] = 'success';
-            $response['message'] = 'Saved...';
+            $response['message'] = '';
         }
 
         if ($notify) {
@@ -140,10 +140,10 @@ class AppNotes extends BaseAppNotes
             $oCriteria->add( ConfigurationPeer::USR_UID, '' );
             $oCriteria->add( ConfigurationPeer::APP_UID, '' );
             if (ConfigurationPeer::doCount( $oCriteria ) == 0) {
-                $oConfiguration->create( array ('CFG_UID' => 'Emails','OBJ_UID' => '','CFG_VALUE' => '','PRO_UID' => '','USR_UID' => '','APP_UID' => '') );
+                $oConfiguration->create( array ('CFG_UID' => 'Emails', 'OBJ_UID' => '','CFG_VALUE' => '','PRO_UID' => '','USR_UID' => '','APP_UID' => '') );
                 $aConfiguration = array ();
             } else {
-                $aConfiguration = $oConfiguration->load( 'Emails', '', '', '', '' );
+                $aConfiguration = $oConfiguration->load('Emails', '', '', '', '' );
                 if ($aConfiguration['CFG_VALUE'] != '') {
                     $aConfiguration = unserialize( $aConfiguration['CFG_VALUE'] );
                     $passwd = $aConfiguration['MESS_PASSWORD'];
@@ -177,8 +177,13 @@ class AppNotes extends BaseAppNotes
             $configNoteNotification['subject'] = G::LoadTranslation( 'ID_MESSAGE_SUBJECT_NOTE_NOTIFICATION' ) . " @#APP_TITLE ";
             $configNoteNotification['body'] = G::LoadTranslation( 'ID_CASE' ) . ": @#APP_TITLE<br />" . G::LoadTranslation( 'ID_AUTHOR' ) . ": $authorName<br /><br />$noteContent";
 
+            /*
             if ($sFrom == '') {
                 $sFrom = '"ProcessMaker"';
+            }
+            */
+            if (isset($aConfiguration['MESS_FROM_NAME']) && $aConfiguration['MESS_FROM_NAME'] != '') {
+                $sFrom = $aConfiguration['MESS_FROM_NAME'];
             }
 
             $hasEmailFrom = preg_match( '/(.+)@(.+)\.(.+)/', $sFrom, $match );
@@ -224,7 +229,7 @@ class AppNotes extends BaseAppNotes
                 }
 
                 $oSpool->setConfig( array ('MESS_ENGINE' => $aConfiguration['MESS_ENGINE'],'MESS_SERVER' => $aConfiguration['MESS_SERVER'],'MESS_PORT' => $aConfiguration['MESS_PORT'],'MESS_ACCOUNT' => $aConfiguration['MESS_ACCOUNT'],'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],'SMTPAuth' => $aConfiguration['MESS_RAUTH'] == '1' ? true : false,'SMTPSecure' => isset( $aConfiguration['SMTPSecure'] ) ? $aConfiguration['SMTPSecure'] : '') );
-                $oSpool->create( array ('msg_uid' => '','app_uid' => $appUid,'del_index' => 1,'app_msg_type' => 'DERIVATION','app_msg_subject' => $sSubject,'app_msg_from' => $sFrom,'app_msg_to' => $sTo,'app_msg_body' => $sBody,'app_msg_cc' => '','app_msg_bcc' => '','app_msg_attach' => '','app_msg_template' => '','app_msg_status' => 'pending') );
+                $oSpool->create( array ('msg_uid' => '','app_uid' => $appUid,'del_index' => 0,'app_msg_type' => 'DERIVATION','app_msg_subject' => $sSubject,'app_msg_from' => $sFrom,'app_msg_to' => $sTo,'app_msg_body' => $sBody,'app_msg_cc' => '','app_msg_bcc' => '','app_msg_attach' => '','app_msg_template' => '','app_msg_status' => 'pending') );
                 if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
                     $oSpool->sendMail();
                 }

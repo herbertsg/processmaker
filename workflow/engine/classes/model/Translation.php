@@ -177,8 +177,12 @@ class Translation extends BaseTranslation
 
             //$json = new Services_JSON(); DEPRECATED
             $f = fopen( $cacheFileJS, 'w' );
-            fwrite( $f, "var G_STRINGS =" . Bootstrap::json_encode( $translationJS ) . ";\n" );
-            fclose( $f );
+            if ($f == false) {
+               error_log("Error: Cannot write into cachefilejs: $cacheFileJS\n"); 
+            } else {
+              fwrite( $f, "var G_STRINGS =" . Bootstrap::json_encode( $translationJS ) . ";\n");
+              fclose( $f );
+            }
 
             $res['cacheFile'] = $cacheFile;
             $res['cacheFileJS'] = $cacheFileJS;
@@ -223,6 +227,116 @@ class Translation extends BaseTranslation
         }
         return array ('codError' => 0,'rowsAffected' => $res,'message' => '');
         //to do: uniform  coderror structures for all classes
+    }
+
+    /* Load strings from plugin translation.php.
+     * @parameter $languageId   (es|en|...).
+    */
+    public function generateFileTranslationPlugin ($plugin, $languageId = '')
+    {
+        if (!file_exists(PATH_PLUGINS . $plugin . PATH_SEP . 'translations' . PATH_SEP . 'translations.php')) {
+            return;
+        }
+
+        if (!file_exists(PATH_PLUGINS . $plugin . PATH_SEP . 'translations' . PATH_SEP . $plugin . '.' . $languageId . '.po')) {
+            return;
+        }
+        $translation = Array ();
+        $translationJS = Array ();
+
+        if ($languageId === '') {
+            $languageId = defined( 'SYS_LANG' ) ? SYS_LANG : 'en';
+        }
+        include PATH_PLUGINS . $plugin . PATH_SEP . 'translations'. PATH_SEP . 'translations.php';
+
+        $cacheFile = PATH_LANGUAGECONT . $plugin . "." . $languageId;
+        $cacheFileJS = PATH_CORE . 'js' . PATH_SEP . 'labels' . PATH_SEP . $languageId . ".js";
+
+        foreach ($translations as $key => $row) {
+            $translation[$key] = $row;
+        }
+        $languageFile = PATH_PLUGINS . $plugin . PATH_SEP . 'translations' . PATH_SEP . $plugin . '.' . $languageId . '.po' ;
+        G::LoadSystem( 'i18n_po' );
+        $POFile = new i18n_PO( $languageFile );
+        $POFile->readInit();
+        while ($rowTranslation = $POFile->getTranslation()) {
+            $context = '';
+            foreach ($POFile->translatorComments as $a => $aux) {
+                $aux = trim( $aux );
+                if ($aux == 'TRANSLATION') {
+                    $identifier = $aux;
+                } else {
+                    $var = explode( '/', $aux );
+                    if ($var[0] == 'LABEL') {
+                        $context = $aux;
+                    }
+                    if ($var[0] == 'JAVASCRIPT') {
+                        $context = $aux;
+                    }
+                }
+                if (preg_match( '/^([\w-]+)\/([\w-]+\/*[\w-]*\.xml\?)/', $aux, $match )) {
+                    $identifier = $aux;
+                } else {
+                    if (preg_match( '/^([\w-]+)\/([\w-]+\/*[\w-]*\.xml$)/', $aux, $match )) {
+                        $context = $aux;
+                    }
+                }
+            }
+            if ($identifier == 'TRANSLATION' && $context != '') {
+                list ($category, $id) = explode( '/', $context );
+                $translation[$id] = $rowTranslation['msgstr'] ;
+            }
+        }
+
+        try {
+            if (! is_dir( dirname( $cacheFile ) )) {
+                G::mk_dir( dirname( $cacheFile ) );
+            }
+            if (! is_dir( dirname( $cacheFileJS ) )) {
+                G::mk_dir( dirname( $cacheFileJS ) );
+            }
+
+            $f = fopen( $cacheFile, 'w+' );
+            fwrite( $f, "<?php\n" );
+            fwrite( $f, '$translation' . $plugin . ' =' . 'unserialize(\'' . addcslashes( serialize( $translation ), '\\\'' ) . "');\n" );
+            fwrite( $f, "?>" );
+            fclose( $f );
+
+            $res['cacheFile'] = $cacheFile;
+            $res['cacheFileJS'] = $cacheFileJS;
+            $res['rows'] = count( $translation );
+            $res['rowsJS'] = count( $translationJS );
+            return $res;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function addTranslationEnvironmentPlugins ($plugin, $locale, $headers, $numRecords)
+    {
+        $filePath = PATH_DATA . "META-INF" . PATH_SEP . $plugin . ".env";
+        $environments = Array ();
+
+        if (file_exists( $filePath )) {
+            $environments = unserialize( file_get_contents( $filePath ) );
+        }
+
+        $environment['LOCALE'] = $locale;
+        $environment['HEADERS'] = $headers;
+        $environment['DATE'] = date( 'Y-m-d H:i:s' );
+        $environment['NUM_RECORDS'] = $numRecords;
+        $environment['LANGUAGE'] = $headers['X-Poedit-Language'];
+
+        if (strpos( $locale, self::$localeSeparator ) !== false) {
+            list ($environment['LAN_ID'], $environment['IC_UID']) = explode( self::$localeSeparator, strtoupper( $locale ) );
+            $environments[$environment['LAN_ID']][$environment['IC_UID']] = $environment;
+        } else {
+            $environment['LAN_ID'] = strtoupper( $locale );
+            $environment['IC_UID'] = '';
+            $environments[$locale]['__INTERNATIONAL__'] = $environment;
+        }
+
+        file_put_contents( $filePath, serialize( $environments ) );
     }
 
     public function remove ($sCategory, $sId, $sLang)
@@ -297,7 +411,6 @@ class Translation extends BaseTranslation
         if (! file_exists( $filePath )) {
             //the transaltions table file doesn't exist, then build it
 
-
             if (! is_dir( dirname( $this->envFilePath ) )) {
                 G::mk_dir( dirname( $this->envFilePath ) );
             }
@@ -306,7 +419,7 @@ class Translation extends BaseTranslation
 
             $params = self::getInfoFromPOFile( $basePOFile );
             $this->addTranslationEnvironment( $params['LOCALE'], $params['HEADERS'], $params['COUNT'] );
-            //getting more lanuguage translations
+            //getting more language translations
             $files = glob( $translationsPath . "*.po" );
             foreach ($files as $file) {
                 $params = self::getInfoFromPOFile( $file );

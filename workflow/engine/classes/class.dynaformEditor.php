@@ -164,9 +164,6 @@ class dynaformEditor extends WebResource
             $sName = 'dynaformEditor';
             $G_PUBLISH->publisherId = $sName;
             $oHeadPublisher = & headPublisher::getSingleton();
-            $labesTrans = G::getTranslations(Array('ID_FIELD_DYNAFORM_TEXT', 'ID_FIELD_DYNAFORM_CURRENCY', 'ID_FIELD_DYNAFORM_PERCENTAGE', 'ID_FIELD_DYNAFORM_PASSWORD', 'ID_FIELD_DYNAFORM_SUGGEST', 'ID_FIELD_DYNAFORM_TEXTAREA', 'ID_FIELD_DYNAFORM_TITLE', 'ID_FIELD_DYNAFORM_SUBTITLE', 'ID_FIELD_DYNAFORM_BUTTON', 'ID_FIELD_DYNAFORM_SUBMIT', 'ID_FIELD_DYNAFORM_RESET', 'ID_FIELD_DYNAFORM_DROPDOWN', 'ID_FIELD_DYNAFORM_YESNO', 'ID_FIELD_DYNAFORM_LISTBOX', 'ID_FIELD_DYNAFORM_CHECKBOX', 'ID_FIELD_DYNAFORM_CHECKGROUP', 'ID_FIELD_DYNAFORM_RADIOGROUP', 'DATE_LABEL', 'ID_FIELD_DYNAFORM_HIDDEN', 'ID_FIELD_DYNAFORM_LINK', 'ID_FIELD_DYNAFORM_LINK', 'ID_FIELD_DYNAFORM_FILE', 'ID_FIELD_DYNAFORM_JAVASCRIPT', 'ID_FIELD_DYNAFORM_GRID', 'ID_INDEX'
-                    ));
-            $oHeadPublisher->addScriptCode("var TRANSLATIONS = " . G::json_encode($labesTrans) . ";");
             $oHeadPublisher->setTitle(G::LoadTranslation('ID_DYNAFORM_EDITOR') . ' - ' . $Properties['DYN_TITLE']);
             $G_PUBLISH->AddContent('blank');
             $this->panelConf['title'] = '';
@@ -212,25 +209,38 @@ class dynaformEditor extends WebResource
         $G_PUBLISH->AddContent('blank');
         $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_PREVIEW"), $sName . '[3]', 'dynaformEditor.changeToPreview', 'dynaformEditor.saveCurrentView');
         $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_XML"), $sName . '[4]', 'dynaformEditor.changeToXmlCode', 'dynaformEditor.saveCurrentView');
-        $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_HTML"), $sName . '[5]', 'dynaformEditor.changeToHtmlCode', 'dynaformEditor.saveCurrentView');
+        if ($Properties['DYN_TYPE'] != 'grid') {
+            $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_HTML"), $sName . '[5]', 'dynaformEditor.changeToHtmlCode', 'dynaformEditor.saveCurrentView');
+        }
         $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_FIELDS_LIST"), $sName . '[6]', 'dynaformEditor.changeToFieldsList', 'dynaformEditor.saveCurrentView');
         $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_JAVASCRIPTS"), $sName . '[7]', 'dynaformEditor.changeToJavascripts', 'dynaformEditor.saveCurrentView');
         $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_PROPERTIES"), $sName . '[8]', 'dynaformEditor.changeToProperties', 'dynaformEditor.saveCurrentView');
+
         //for showHide tab option @Neyek
-        $G_PUBLISH->AddContent('panel-tab', G::LoadTranslation("ID_CONDITIONS_EDITOR"), $sName . '[9]', 'dynaformEditor.changeToShowHide', 'dynaformEditor.saveShowHide');
+        if ($Properties["DYN_TYPE"] != "grid") {
+            $G_PUBLISH->AddContent("panel-tab", G::LoadTranslation("ID_CONDITIONS_EDITOR"), $sName . "[9]", "dynaformEditor.changeToShowHide", "dynaformEditor.saveShowHide");
+        }
+
         $G_PUBLISH->AddContent('panel-close');
         $oHeadPublisher->addScriptFile("/js/maborak/core/maborak.loader.js",2);
         $oHeadPublisher->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
         //$oHeadPublisher->addScriptFile('/js/dveditor/core/dveditor.js');
         //$oHeadPublisher->addScriptFile('/codepress/codepress.js',1);
-        $oHeadPublisher->addScriptFile('/js/codemirror/js/codemirror.js', 1);
+        $oHeadPublisher->addScriptFile('/js/codemirror/lib/codemirror.js', 1);
+        //Xml codemirror 3.13
+        $oHeadPublisher->addScriptFile('/js/codemirror/mode/xml/xml.js', 1);
+        $oHeadPublisher->addScriptFile('/js/codemirror/addon/selection/active-line.js', 1);
+        //Javascript codemirror 3.13
+        $oHeadPublisher->addScriptFile('/js/codemirror/addon/edit/closebrackets.js', 1);
+        $oHeadPublisher->addScriptFile('/js/codemirror/mode/javascript/javascript.js', 1);
 
         $oHeadPublisher->addScriptFile('/js/grid/core/grid.js');
         $oHeadPublisher->addScriptCode('
     var DYNAFORM_URL="' . $Parameters['URL'] . '";
     leimnud.event.add(window,"load",function(){ loadEditor(); });
     ');
-        $oHeadPublisher->addScriptCode(' var jsMeta;var usernameLogged = "' . (isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '') . '";var SYS_LANG = "' . SYS_LANG . '";');
+        $oHeadPublisher->addScriptCode(' var jsMeta;var __usernameLogged__ = "' . (isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '') . '";var SYS_LANG = "' . SYS_LANG . '";var __DYN_UID__ = "' . $this->dyn_uid . '";');
+        $oHeadPublisher->addScriptCode('var dynaformEditorParams = \'' . serialize($Parameters) . '\';');
         G::RenderPage("publish", 'blank');
     }
 
@@ -533,6 +543,18 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
     public function set_htmlcode($A, $htmlcode)
     {
         try {
+            $iOcurrences = preg_match_all('/\{\$.*?\}/im', $htmlcode, $matches);
+            if ($iOcurrences) {
+                if (isset($matches[0])) {
+                    $tagsHtml = $matches[0];
+                    foreach ($tagsHtml as $value) {
+                        $aTagVar = strip_tags($value);
+                        if ($value != $aTagVar) {
+                            $htmlcode = str_replace($value, $aTagVar, $htmlcode);
+                        }
+                    }
+                }
+            }
             $file = G::decrypt($A, URL_KEY);
             $form = new Form($file, PATH_DYNAFORM, SYS_LANG, true);
             $filename = substr($form->fileName, 0, - 3) . ($form->type === 'xmlform' ? '' : '.' . $form->type) . 'html';

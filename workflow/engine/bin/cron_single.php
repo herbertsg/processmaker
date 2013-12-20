@@ -5,7 +5,8 @@
  */
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-ini_set('memory_limit', '128M');
+
+ini_set("memory_limit", "256M");
 
 if (!defined('SYS_LANG')) {
     define('SYS_LANG', 'en');
@@ -839,6 +840,10 @@ function executeCaseSelfService()
 
                         $appFields["APP_DATA"] = array_merge($appFields["APP_DATA"], $oPMScript->aFields);
 
+                        unset($appFields['APP_STATUS']);
+                        unset($appFields['APP_PROC_STATUS']);
+                        unset($appFields['APP_PROC_CODE']);
+                        unset($appFields['APP_PIN']);
                         $case->updateCase($appFields["APP_UID"], $appFields);
 
                         saveLog("unassignedCase", "action", "OK Executed tigger to the case $appcacheAppNumber");

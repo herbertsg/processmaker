@@ -135,7 +135,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Login().loginUser("Julian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[15];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -233,7 +233,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Login().loginUser("Joshua", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -268,7 +268,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Login().loginUser("Ian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[3];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();
@@ -298,7 +298,7 @@ public class TestEmployeeOnboarding extends com.colosa.qa.automatization.tests.c
 		pages.Login().loginUser("Jacob", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[1];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[0].fieldPath = "form[NEXT_STEP]";

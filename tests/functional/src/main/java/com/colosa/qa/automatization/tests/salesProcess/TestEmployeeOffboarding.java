@@ -79,7 +79,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 		pages.Login().loginUser("Jacob", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData8 = new FormFieldData[3];
 		arrayData8[0] = new FormFieldData();
 		arrayData8[1] = new FormFieldData();
@@ -109,7 +109,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 		pages.Login().loginUser("Julian", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData2 = new FormFieldData[10];
 		arrayData2[0] = new FormFieldData();
 		arrayData2[1] = new FormFieldData();
@@ -174,7 +174,7 @@ public class TestEmployeeOffboarding extends com.colosa.qa.automatization.tests.
 		pages.Login().loginUser("Jason", "sample", "workflow", "English");
 		pages.Main().goHome();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
-		pages.Home().openCase(caseNum);
+		pages.Home().gotoInbox().openCase(caseNum);
 		FormFieldData[] arrayData = new FormFieldData[4];
 		arrayData[0] = new FormFieldData();
 		arrayData[1] = new FormFieldData();

@@ -61,7 +61,7 @@ public class TestInputDocument extends com.colosa.qa.automatization.tests.common
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		pages.InputDocProcess().uploadFile("C:\\test.pdf", "Test File");
 		pages.AssignTask().pressContinueButton();
-		pages.Home().openCase(caseNumber);
+		pages.Home().gotoInbox().openCase(caseNumber);
 		pages.InputDocProcess().openCaseFrame();
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();

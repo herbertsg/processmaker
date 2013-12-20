@@ -59,6 +59,7 @@ $tabItems = array ();
 $i = 0;
 
 foreach ($menuTypes as $menuType) {
+    $tabItems[$i] = new stdclass();
     $tabItems[$i]->id = $menuType;
     $LABEL_TRANSLATION = G::LoadTranslation( "ID_" . strtoupper( $menuType ) );
 
@@ -91,6 +92,16 @@ $oHeadPublisher->addContent( "setup/main" ); //adding a html file .html.
 $oHeadPublisher->assign( "tabActive", $tabActive );
 $oHeadPublisher->assign( "tabItems", $tabItems );
 $oHeadPublisher->assign( "_item_selected", (($adminSelected != null) ? $adminSelected : "") );
+
+$oServerConf = & serverConf::getSingleton();
+if ($oServerConf->isRtl( SYS_LANG )) {
+    $regionTreePanel = 'east';
+    $regionDebug = 'west';
+} else {
+    $regionTreePanel = 'west';
+    $regionDebug = 'east';
+}
+$oHeadPublisher->assign( 'regionTreePanel', $regionTreePanel );
 
 G::RenderPage( "publish", "extJs" );
 

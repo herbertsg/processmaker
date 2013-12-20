@@ -15,7 +15,7 @@ new Ext.KeyMap(document, {
       e.stopEvent();
       document.location = document.location;
     }else{
-      Ext.Msg.alert('Refresh', 'You clicked: CTRL-F5');
+      Ext.Msg.alert(_('ID_REFRESH_LABEL'), _('ID_REFRESH_MESSAGE'));
     }
   }
 });
@@ -200,12 +200,12 @@ Ext.onReady(function(){
   });
 
   availableGrid = new Ext.grid.GridPanel({
-    layout      : 'fit',
+    layout    : 'fit',
     title : _('ID_AVAILABLE_USERS'),
-    region          : 'center',
-    ddGroup         : 'assignedGridDDGroup',
-    store           : storeA,
-    cm            : cmodelP,
+    region    : 'center',
+    ddGroup   : 'assignedGridDDGroup',
+    store     : storeA,
+    cm        : cmodelP,
     sm        : smodelA,
     enableDragDrop  : true,
     stripeRows      : true,
@@ -215,7 +215,7 @@ Ext.onReady(function(){
     height      : 100,
     autoWidth     : true,
     stateful     : true,
-    stateId     : 'grid',
+    stateId     : 'gridDepartmentUsersAva',
     enableColumnResize : true,
     enableHdMenu  : true,
     frame      : false,
@@ -242,7 +242,7 @@ Ext.onReady(function(){
     height      : 100,
     autoWidth     : true,
     stateful     : true,
-    stateId     : 'grid',
+    stateId     : 'gridDepartmentUsersAssign',
     enableColumnResize : true,
     enableHdMenu  : true,
     frame      : false,
@@ -305,8 +305,6 @@ Ext.onReady(function(){
     tbar: ['<b>'+_('ID_DEPARTMENT') + ' : ' + DEPARTMENT.DEP_TITLE  + '</b>',{xtype: 'tbfill'},backButton]
   });
 
-
-
   //LOAD ALL PANELS
   viewport = new Ext.Viewport({
     layout: 'border',
@@ -343,10 +341,13 @@ DDLoadUsers = function(){
     var records =  ddSource.dragData.selections;
     var arrAux = new Array();
     for (var r=0; r < records.length; r++){
-      arrAux[r] = records[r].data['USR_UID'];
+      if (records[r].data['USR_SUPERVISOR']==false) {
+        arrAux[r] = records[r].data['USR_UID'];
+      }else{
+        PMExt.notify(_('ID_DEPARTMENTS'),_('ID_DELETE_SUPERVISOR'));
+      };
     }
     DeleteDepartmentUser(arrAux,RefreshUsers,FailureProcess);
-    return true;
   }
 });
 
@@ -429,7 +430,11 @@ RemoveGroupsAction = function(){
   rowsSelected = assignedGrid.getSelectionModel().getSelections();
   var arrAux = new Array();
   for(var a=0; a < rowsSelected.length; a++){
-    arrAux[a] = rowsSelected[a].get('USR_UID');
+    if (rowsSelected[a].get('USR_SUPERVISOR')==false) {
+      arrAux[a] = rowsSelected[a].get('USR_UID');
+    }else{
+      PMExt.notify(_('ID_DEPARTMENTS'),_('ID_DELETE_SUPERVISOR'));
+    };
   }
   DeleteDepartmentUser(arrAux,RefreshUsers,FailureProcess);
 };
@@ -534,7 +539,7 @@ UpdateSupervisor = function(){
 render_status = function(v){
   switch(v){
   case 'ACTIVE': return '<font color="green">' + _('ID_ACTIVE') + '</font>'; break;
-  case 'INACTIVE': return '<font color="red">' + _('ID_INACTIVE') + '</font>';; break;
-  case 'VACATION': return '<font color="blue">' + _('ID_VACATION') + '</font>';; break;
+  case 'INACTIVE': return '<font color="red">' + _('ID_INACTIVE') + '</font>'; break;
+  case 'VACATION': return '<font color="blue">' + _('ID_VACATION') + '</font>'; break;
   }
 };

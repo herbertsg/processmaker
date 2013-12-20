@@ -172,6 +172,20 @@ switch ($_POST['action']) {
         $oCriteria = new Criteria( 'workflow' );
         $oCriteria->add( TaskUserPeer::USR_UID, $_POST['GRP_UID'] );
         TaskUserPeer::doDelete( $oCriteria );
+
+        //Delete permissions
+        require_once 'classes/model/ObjectPermission.php';
+        $criteria = new Criteria( 'workflow' );
+        $criteria->add(ObjectPermissionPeer::USR_UID, $_POST['GRP_UID']);
+        ObjectPermissionPeer::doDelete( $criteria );
+        
+        //Delete supervisors assignments
+        require_once 'classes/model/ProcessUser.php';
+        $criteria = new Criteria( 'workflow' );
+        $criteria->add(ProcessUserPeer::USR_UID, $_POST['GRP_UID']);
+        $criteria->add(ProcessUserPeer::PU_TYPE, 'GROUP_SUPERVISOR');
+        ProcessUserPeer::doDelete( $criteria );
+
         echo '{success: true}';
         break;
     case 'assignedMembers':
@@ -288,6 +302,7 @@ switch ($_POST['action']) {
         if ($filter != '') {
             $oCriteria->add( $oCriteria->getNewCriterion( UsersPeer::USR_USERNAME, '%' . $filter . '%', Criteria::LIKE )->addOr( $oCriteria->getNewCriterion( UsersPeer::USR_FIRSTNAME, '%' . $filter . '%', Criteria::LIKE )->addOr( $oCriteria->getNewCriterion( UsersPeer::USR_LASTNAME, '%' . $filter . '%', Criteria::LIKE ) ) ) );
         }
+        $oCriteria->addAscendingOrderByColumn( UsersPeer::USR_USERNAME );
         $oCriteria->setOffset( $start );
         $oCriteria->setLimit( $limit );
         $oDataset = UsersPeer::doSelectRS( $oCriteria );
