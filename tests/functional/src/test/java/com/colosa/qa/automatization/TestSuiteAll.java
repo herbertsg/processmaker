@@ -62,10 +62,10 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
                 dependentFields.class,
                 javascriptExecution.class,
-                notifications.class/*,
+                notifications.class,
                 ////outputDocuments.class,*/ //mejorar asserts  3
                 //PMFields.class/*,   //3 se deben añadir mas tests de mascaras fechas, etc
-                /*PMFunctions.class /*, //18 fallados=15
+                PMFunctions.class /*, //18 fallados=15
                 /*pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
                 pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
                 process.class, //3
