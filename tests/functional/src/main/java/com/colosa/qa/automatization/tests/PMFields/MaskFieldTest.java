@@ -58,11 +58,11 @@ public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Tes
         Assert.assertEquals("Mask other value does not exist", "123,456,789.02", fieldMASK_OTHER1);
         Assert.assertEquals("Mask other value(,) does not exist", "123,02", fieldMASK_OTHER2);
 
-        pages.DynaformExecution().clickButton("SUBMIT");
+        //pages.DynaformExecution().clickButton("SUBMIT");
 
-        pages.AssignTask().pressContinueButton();
+        //pages.AssignTask().pressContinueButton();
 
-        pages.Main().logout();
+        //pages.Main().logout();
     }
 
     @After

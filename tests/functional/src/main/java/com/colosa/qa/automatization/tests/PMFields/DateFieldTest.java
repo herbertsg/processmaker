@@ -158,7 +158,7 @@ public class DateFieldTest extends com.colosa.qa.automatization.tests.common.Tes
         Assert.assertEquals("Error in date mask", pages.DynaformExecution().getFieldValue("fechahoraymdhms4"), dateymd4+hourhms2);
         Assert.assertEquals("Error in date mask", pages.DynaformExecution().getFieldValue("fechahoramdyhms4"), datemdy4+hourhms2);
 
-        pages.Main().logout();
+        //pages.Main().logout();
     }
 
     @After

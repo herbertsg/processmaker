@@ -174,8 +174,8 @@ public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Tes
 		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridDateField");
 		Assert.assertEquals(gridValue, "2013-04-05");
 
-		pages.InputDocProcess().switchToDefault();
-		pages.Main().logout();
+		//pages.InputDocProcess().switchToDefault();
+		//pages.Main().logout();
 	}
 
     @After

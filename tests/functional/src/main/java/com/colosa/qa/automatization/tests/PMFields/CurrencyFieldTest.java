@@ -68,11 +68,11 @@ public class CurrencyFieldTest extends com.colosa.qa.automatization.tests.common
         Assert.assertEquals("String Mask does not exist", "$us 123.456.789,02 AB", pages.DynaformExecution().getFieldProperty("CURRENCY_OTHER2","value"));
         Assert.assertEquals("Negative Mask does not exist", "-123.456.789,02 $", pages.DynaformExecution().getFieldProperty("CURRENCY_NEGATIVE2","value"));
 
-        pages.DynaformExecution().clickButton("SUBMIT");
+        //pages.DynaformExecution().clickButton("SUBMIT");
 
-        pages.AssignTask().pressContinueButton();
+        //pages.AssignTask().pressContinueButton();
 
-        pages.Main().logout();
+        //pages.Main().logout();
     }
 
     @After

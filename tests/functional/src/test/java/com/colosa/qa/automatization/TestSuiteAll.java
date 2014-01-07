@@ -63,12 +63,12 @@ import org.junit.runners.Suite.SuiteClasses;
                 dependentFields.class,
                 javascriptExecution.class,
                 notifications.class,
-                ////outputDocuments.class,*/ //mejorar asserts  3
-                //PMFields.class/*,   //3 se deben añadir mas tests de mascaras fechas, etc
-                PMFunctions.class /*, //18 fallados=15
-                /*pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
-                pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
-                process.class, //3
+                ////outputDocuments.class, //mejorar asserts  3
+                PMFields.class,
+                PMFunctions.class/*,
+                ////pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
+                ////pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
+                /*process.class/*, //3
                 suggestDependentFields.class,
                 suggestFields.class, //mismo código que  suggestDependentFields? revisar
                 TestCaseTracker.class,  //2  fallado=1

@@ -1140,6 +1140,7 @@ public class DynaformExecution extends Page {
     }
 
     public int gridAddNewRow(String gridName) throws Exception{
+        intoDynaform();
         //return the total number of rows
         String str = "";
         str = ConfigurationSettings.getInstance().getSetting("DynaformExecution.webElement.gridNewRowLink");
