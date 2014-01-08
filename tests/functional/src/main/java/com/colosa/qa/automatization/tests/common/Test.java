@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.After;
+import org.junit.runners.Suite;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,6 +27,18 @@ public abstract class Test {
     protected String browserName;
     protected BrowserInstance browserInstance;
     protected Pages pages;
+
+    /*public Test() throws IOException {
+
+        String browserName = "firefox";
+
+        this.browserName = browserName;
+        Logger.addLog("Test with browser:" + browserName);
+        //initialize test pages
+        initializeTest(browserName);
+        //initialize pages
+        pages = new Pages(browserInstance);
+    } */
 
     public Test(String browserName) throws IOException {
 
@@ -56,7 +69,7 @@ public abstract class Test {
         }
 
         //Object[][] data = new Object[][] { { "firefox" }, { "chrome" }, { "ie" } };
-        Logger.addLog("Browsers to test with:" + Arrays.toString(data));
+        //Logger.addLog("Browsers to test with:" + Arrays.toString(data));
 
         return Arrays.asList(data);
 
