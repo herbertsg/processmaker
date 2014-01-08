@@ -30,7 +30,7 @@ public abstract class Test {
     public Test(String browserName) throws IOException {
 
         this.browserName = browserName;
-
+        Logger.addLog("Test with browser:" + browserName);
         //initialize test pages
         initializeTest(browserName);
         //initialize pages
@@ -49,14 +49,14 @@ public abstract class Test {
             for (int i = 0; i< browserCount; i++){
                 String browserName = ConfigurationSettings.getInstance().getSetting("browser.browser" + (i + 1));
                 data[i][0] = browserName;
-                //Logger.addLog("Browser: "+browserName);
+                Logger.addLog("Add Browser for test: "+browserName);
             }
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
         //Object[][] data = new Object[][] { { "firefox" }, { "chrome" }, { "ie" } };
-        //Logger.addLog(Arrays.toString(data));
+        Logger.addLog("Browsers to test with:" + Arrays.toString(data));
 
         return Arrays.asList(data);
 

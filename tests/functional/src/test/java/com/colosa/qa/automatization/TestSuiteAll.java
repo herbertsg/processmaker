@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization;
 
+import com.colosa.qa.automatization.common.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -60,7 +61,7 @@ import org.junit.runners.Suite.SuiteClasses;
                   */
 @RunWith(Suite.class)
 @SuiteClasses({
-                dependentFields.class,
+                dependentFields.class/*,
                 javascriptExecution.class,
                 notifications.class,
                 ////outputDocuments.class, //mejorar asserts  3
@@ -92,7 +93,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class TestSuiteAll {
     @BeforeClass
     public static void setUpClass() {
-        //Logger.addLog("Master setup");
+        Logger.addLog("Master setup");
 
     }
 
