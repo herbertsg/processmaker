@@ -7,13 +7,14 @@ public abstract class Page{
 	protected String url;
 	protected String pageTitle;
     protected BrowserInstance browser;
+    protected Integer implicitWaitSeconds = 0;
 
 	public Page(BrowserInstance browser) throws Exception  {
         this.browser = browser;
 
 		//init implicit wait time
-        String implicitWaitSeconds = ConfigurationSettings.getInstance().getSetting("implicit.wait.seconds");
-        browser.setImplicitWait(Integer.parseInt(implicitWaitSeconds));
+        implicitWaitSeconds = Integer.parseInt(ConfigurationSettings.getInstance().getSetting("implicit.wait.seconds"));
+        browser.setImplicitWait(implicitWaitSeconds);
 
 		url = "";
 		pageTitle = "";	

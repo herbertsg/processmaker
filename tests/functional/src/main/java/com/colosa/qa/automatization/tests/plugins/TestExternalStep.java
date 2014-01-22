@@ -1,24 +1,14 @@
 package com.colosa.qa.automatization.tests.plugins;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import java.lang.Exception;
 
 import org.junit.Assert;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import com.colosa.qa.automatization.pages.*;
 import com.colosa.qa.automatization.common.*;
 
-import com.colosa.qa.automatization.common.controlOptions.input.*;
-import com.colosa.qa.automatization.common.controlOptions.selection.*;
-import com.colosa.qa.automatization.common.controlOptions.ControlOptions;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TestExternalStep extends com.colosa.qa.automatization.tests.common.Test{
@@ -44,7 +34,8 @@ public class TestExternalStep extends com.colosa.qa.automatization.tests.common.
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         int numberNewCase = pages.Home().gotoNewCase().startCase("Testeo external step (Tarea Inicial)");
         
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
         FormFieldData[] fieldArray = new FormFieldData[2];
         fieldArray[0]=new FormFieldData();
@@ -62,12 +53,9 @@ public class TestExternalStep extends com.colosa.qa.automatization.tests.common.
         FormFiller.formFillElements( browserInstance, fieldArray);
 
         // get button submit
-        WebElement linkSiguiente = pages.DynaformExecution().getField("SIGUIENTE");
-        
-        // click to button submit
-        linkSiguiente.click();
-        
-        pages.DynaformExecution().intoDynaform();
+        form.clickButton("SIGUIENTE");
+
+        form.intoDynaform();
 
         fieldArray[0]=new FormFieldData();
         fieldArray[1]=new FormFieldData();
@@ -84,18 +72,15 @@ public class TestExternalStep extends com.colosa.qa.automatization.tests.common.
         FormFiller.formFillElements( browserInstance, fieldArray);
 
         // get button submit
-        WebElement buttonSUBMIT = pages.DynaformExecution().getField("SUBMIT");
+        form.clickButton("SUBMIT");
 
-        // click to button submit
-        buttonSUBMIT.click();
-
-        pages.DynaformExecution().intoDynaform();
+        form.intoDynaform();
 
         // get value of case generated in field NUM_CASE
-        String fieldNOMBRE = pages.DynaformExecution().getFieldProperty("NONBRE","value");
+        String fieldNOMBRE = form.getFieldAttribute("NONBRE", "value");
         
         // get value of case generated in field APELLIDO
-        String fieldAPELLIDO = pages.DynaformExecution().getFieldProperty("APELLIDO","value");
+        String fieldAPELLIDO = form.getFieldAttribute("APELLIDO", "value");
         
         // verify if the field NOMBRE is validate
         Assert.assertEquals("No case has created with field NOMBRE ", fieldNOMBRE, "BRAYAN");

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,10 +29,11 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         pages.Main().goHome();
         int casenumber = pages.Home().gotoNewCase().startCase("Test PMFAddCaseNote (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-        pages.DynaformExecution().setFieldValue("CASE_NOTE", "Test Case Note");
-        pages.DynaformExecution().clickButton("SUBMIT");
+        form.setFieldValue("CASE_NOTE", "Test Case Note");
+        form.clickButton("SUBMIT");
 
         String fieldCASE_NOTE = "Test Case Note";
 
@@ -41,12 +43,13 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         //pages.Home().gotoInbox().existCase(casenumber);
         pages.Home().gotoInbox().openCase(casenumber);
-        pages.DynaformExecution().intoDynaform();
 
-        String fieldRESULT_CASE_NOTE = pages.DynaformExecution().getFieldProperty("RESULT_CASE_NOTE","value");
-        String fieldTEST_RESULT = pages.DynaformExecution().getFieldProperty("TEST_RESULT","value");
+        form.intoDynaform();
 
-        //pages.DynaformExecution().clickButton("SUBMIT");
+        String fieldRESULT_CASE_NOTE = form.getFieldAttribute("RESULT_CASE_NOTE", "value");
+        String fieldTEST_RESULT = form.getFieldAttribute("TEST_RESULT", "value");
+
+        //form.clickButton("SUBMIT");
 
         Assert.assertEquals("PMFAddCaseNote function return 1", fieldTEST_RESULT, "1");
         Assert.assertEquals("PMFAddCaseNote function not working properly", fieldRESULT_CASE_NOTE, fieldCASE_NOTE);

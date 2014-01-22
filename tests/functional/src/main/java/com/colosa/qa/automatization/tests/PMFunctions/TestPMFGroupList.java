@@ -19,7 +19,7 @@ public class TestPMFGroupList extends com.colosa.qa.automatization.tests.common.
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PMF Group List (Task 1)");
-		//pages.DynaformExecution().sleep(15000);
+		//form.sleep(15000);
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}

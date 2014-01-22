@@ -30,9 +30,10 @@ public class TestSLAProcesstaskWithPenalty extends com.colosa.qa.automatization.
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Task whit penalty (Reclamo)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("text", "123456");
-		pages.DynaformExecution().setFieldValue("enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("text", "123456");
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");

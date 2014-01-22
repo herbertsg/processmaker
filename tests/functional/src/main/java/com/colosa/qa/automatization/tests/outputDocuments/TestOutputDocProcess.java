@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.outputDocuments;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Test;
 
@@ -20,7 +21,8 @@ public class TestOutputDocProcess extends com.colosa.qa.automatization.tests.com
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("outputDocProcess (Task 1)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 		pages.OutputDocProcess().downloadDocFile();
 		pages.OutputDocProcess().downloadPdfFile();
 		pages.OutputDocProcess().nextbtn();

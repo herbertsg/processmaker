@@ -8,6 +8,8 @@ public enum FieldType{
 	FILE,
 	TEXTBOX,
 	BUTTON,
+    SUBMITBUTTON,
+    RESETBUTTON,
 	TEXTAREA,
 	DROPDOWN,
 	LISTBOX,
@@ -16,6 +18,10 @@ public enum FieldType{
 	DATEPICKER,
 	READONLY,
 	SUGGEST,
-	HIDDEN;
+    CURRENCY,
+    PERCENTAGE,
+    YESNO,
+	HIDDEN,
+    PASSWORD;
 
 }

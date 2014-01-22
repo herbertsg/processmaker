@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.gridFunctionsBetweenColumns;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldType;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,38 +34,39 @@ public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatizatio
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Grillas Funciones Entre Columnas (Task 1)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 		for(int rows = 1;rows<addRow;rows++)
 		{
-			pages.DynaformExecution().gridAddNewRow("grd1");
+			form.gridAddNewRow("grd1");
 		}	
 		int count = 0;
 
 		for(int rows = 0; rows<addRow;rows++)
 		{
 			count = rows + 1;
-			pages.DynaformExecution().setGridFieldValue("grd1", count, "Cantidad", cant[rows]);
-			pages.DynaformExecution().setGridFieldValue("grd1", count, "Precio", prec1[rows]);
-			pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor1", perc1[rows]);
-			pages.DynaformExecution().setGridFieldValue("grd1", count, "Valor2", perc2[rows]);
+			form.setGridFieldValue("grd1", count, "Cantidad", cant[rows]);
+			form.setGridFieldValue("grd1", count, "Precio", prec1[rows]);
+			form.setGridFieldValue("grd1", count, "Valor1", perc1[rows]);
+			form.setGridFieldValue("grd1", count, "Valor2", perc2[rows]);
 			
 		}
 
 		/*Random rand = new Random();
 		int aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		form.gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		form.gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		form.gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		form.gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);
+		form.gridDeleteRow("grid1", aleat);
 		aleat = rand.nextInt(30);
-		pages.DynaformExecution().gridDeleteRow("grid1", aleat);   */
+		form.gridDeleteRow("grid1", aleat);   */
 		
-		pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
+		form.clickButton("Send");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.Main().logout();
 	
@@ -78,20 +80,21 @@ public class TestGridFunctionsBetweenColumns extends com.colosa.qa.automatizatio
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(caseNum);
 
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		/*for(int values = 0; values<gridData2.length;values++)
 		{
-			Assert.assertEquals(cant[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Cantidad"));
-			Assert.assertEquals(prec1[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Precio"));
-			Assert.assertEquals(total[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Total"));
-			Assert.assertEquals(perc1[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor1"));
-			Assert.assertEquals(perc2[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Valor2"));
-			Assert.assertEquals(prom[values], pages.DynaformExecution().getGridFieldValue("grd1",values, "Promedio"));
+			Assert.assertEquals(cant[values], form.getGridFieldValue("grd1",values, "Cantidad"));
+			Assert.assertEquals(prec1[values], form.getGridFieldValue("grd1",values, "Precio"));
+			Assert.assertEquals(total[values], form.getGridFieldValue("grd1",values, "Total"));
+			Assert.assertEquals(perc1[values], form.getGridFieldValue("grd1",values, "Valor1"));
+			Assert.assertEquals(perc2[values], form.getGridFieldValue("grd1",values, "Valor2"));
+			Assert.assertEquals(prom[values], form.getGridFieldValue("grd1",values, "Promedio"));
 			
 		}*/
 
-		//Assert.assertEquals(Double.toString(sum), pages.DynaformExecution().getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
-		pages.DynaformExecution().setFieldValue("Send", "", FieldType.BUTTON);
+		//Assert.assertEquals(Double.toString(sum), form.getFieldValue("SYS_GRID_AGGREGATE_grd1_Total"));
+		form.clickButton("Send");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();

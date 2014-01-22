@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,23 +37,25 @@ public class TestPMFGetNextAssignedUser extends com.colosa.qa.automatization.tes
 
         caseNum = pages.Home().gotoNewCase().startCase("Test PMFGetNextAssignedUser (Task 1)");
 
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         //FormFiller.formFillElements(browserInstance, fieldArray);
 
-        pages.DynaformExecution().clickButton("SUBMIT");
+        form.clickButton("SUBMIT");
 
         pages.AssignTask().pressContinueButton();
         //pages.Home().gotoInbox();
         // pages.Home().openCase(caseNum);
-        // pages.DynaformExecution().intoDynaform();
+        // form.intoDynaform();
         pages.gotoDefaultUrl();
         pages.Login().loginUser("aaron ", "sample", "workflow", "English");
         pages.Main().goHome();
         pages.Home().gotoInbox().openCase(caseNum);
-        pages.DynaformExecution().intoDynaform();
 
-        String fieldNEXT_USER_UID = pages.DynaformExecution().getFieldProperty("NEXT_USER_UID","value");
-        String fieldQUERY_NEXT_USER = pages.DynaformExecution().getFieldProperty("QUERY_NEXT_USER","value");
+        form.intoDynaform();
+
+        String fieldNEXT_USER_UID = form.getFieldAttribute("NEXT_USER_UID", "value");
+        String fieldQUERY_NEXT_USER = form.getFieldAttribute("QUERY_NEXT_USER", "value");
 
         Assert.assertEquals("Different user id detected. Could not get the next Assigned user Aaron.", fieldNEXT_USER_UID, fieldQUERY_NEXT_USER);
 

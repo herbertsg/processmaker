@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
@@ -25,16 +26,17 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFAssignUserToGroup (Assign to group)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("user", "zachary");
-		pages.DynaformExecution().setFieldValue("group", "Accounting");
-		pages.DynaformExecution().setFieldValue("send", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("user", "zachary");
+		form.setFieldValue("group", "Accounting");
+		form.setFieldValue("send", "");
 		Assert.assertEquals("User assigned", Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
 		Logger.addLog(Value.getValue(browserInstance, FieldKeyType.ID, "form[verifyuser]"));
 		Assert.assertEquals("1", Value.getValue(browserInstance, FieldKeyType.ID, "form[statusFunction]"));
-		pages.DynaformExecution().setFieldValue("continue", "");
+		form.setFieldValue("continue", "");
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Open report task for check
 		pages.gotoDefaultUrl();
@@ -43,12 +45,13 @@ public class TestPMFAssignUserToGroup extends com.colosa.qa.automatization.tests
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		pages.DynaformExecution().outDynaform();
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_CATCH", "");
+		form.outDynaform();
+		form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 
     }

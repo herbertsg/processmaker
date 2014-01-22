@@ -103,8 +103,8 @@
           <includes>
               <include>**/TestSuiteAll.java</include>
           </includes>
-          <parallel>classes</parallel>
-          <threadCount>2</threadCount>
+          <!--<parallel>classes</parallel>
+          <threadCount>2</threadCount>-->
         </configuration>
         <dependencies>
           <dependency>

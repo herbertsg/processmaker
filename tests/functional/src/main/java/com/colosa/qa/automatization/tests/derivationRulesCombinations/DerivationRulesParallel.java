@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,13 +23,14 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Login().loginUser("ezequiel", "sample", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - Parallel (Init)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		pages.DynaformExecution().setFieldValue("amount", "3000");
-		pages.DynaformExecution().setFieldValue("send", "");
-		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("name", "Charles Puyol");
+		form.setFieldValue("amount", "3000");
+		form.setFieldValue("send", "");
+		form.setFieldValue("TASKS][2][USR_UID", "Swan, William");
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 	    //cyclical task
 		pages.gotoDefaultUrl();
@@ -37,9 +39,10 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Manual task
 		pages.gotoDefaultUrl();
@@ -48,9 +51,10 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Value based task
 		pages.gotoDefaultUrl();
@@ -59,9 +63,10 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Report to task
 		pages.gotoDefaultUrl();
@@ -70,9 +75,10 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Self service task
 		pages.gotoDefaultUrl();
@@ -81,12 +87,13 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		pages.DynaformExecution().outDynaform();
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_CATCH", "");
+		form.outDynaform();
+		form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
 		pages.gotoDefaultUrl();
@@ -95,35 +102,38 @@ public class DerivationRulesParallel extends com.colosa.qa.automatization.tests.
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		pages.DynaformExecution().outDynaform();
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_CATCH", "");
+		form.outDynaform();
+		form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - Parallel (Init)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		pages.DynaformExecution().setFieldValue("amount", "3000");
-		pages.DynaformExecution().setFieldValue("send", "");
-		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
+
+        form.intoDynaform();
+		form.setFieldValue("name", "Charles Puyol");
+		form.setFieldValue("amount", "3000");
+		form.setFieldValue("send", "");
+		form.setFieldValue("TASKS][2][USR_UID", "Swan, William");
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - Parallel (Init)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		pages.DynaformExecution().setFieldValue("amount", "3000");
-		pages.DynaformExecution().setFieldValue("send", "");
-		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
+
+        form.intoDynaform();
+		form.setFieldValue("name", "Charles Puyol");
+		form.setFieldValue("amount", "3000");
+		form.setFieldValue("send", "");
+		form.setFieldValue("TASKS][2][USR_UID", "Swan, William");
 	    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();

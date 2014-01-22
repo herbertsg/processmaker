@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
@@ -27,30 +28,32 @@ public class TestSetCaseTrackerCode extends com.colosa.qa.automatization.tests.c
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("setCaseTrackerCode (Task 1)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.Main().goHome();
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		//init Case tracker
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
 		pin = Value.getValue(browserInstance, FieldKeyType.ID, "form[pin]");
 		code = Value.getValue(browserInstance, FieldKeyType.ID, "form[code]");
-		pages.DynaformExecution().setFieldValue("continue", "");
-		pages.DynaformExecution().intoDynaform();
+		form.setFieldValue("continue", "");
+		form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
 		pages.InputDocProcess().switchToDefault();
 		pages.CaseTracker().goTo("workflow");
-		pages.DynaformExecution().setFieldValue("CASE", code);
-		pages.DynaformExecution().setFieldValue("PIN", pin);
-		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
+		form.setFieldValue("CASE", code);
+		form.setFieldValue("PIN", pin);
+		form.setFieldValue("BSUBMIT", "");
 		Logger.addLog(pages.Designer().getTaskColorStatus("Task 1"));
 		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatus("Task 1"));
 		Logger.addLog(pages.Designer().getTaskColorStatus("Task 2"));
 		Assert.assertEquals("Pending Task / Not Executed", pages.Designer().getTaskColorStatus("Task 2"));
 
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 	}
 

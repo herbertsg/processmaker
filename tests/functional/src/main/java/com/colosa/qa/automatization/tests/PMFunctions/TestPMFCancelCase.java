@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
@@ -24,7 +25,8 @@ public class TestPMFCancelCase extends com.colosa.qa.automatization.tests.common
 				pages.Main().goHome();
 				
 				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFCancelCase (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[1];
 		    fieldArray[0]=new FormFieldData();
@@ -34,7 +36,7 @@ public class TestPMFCancelCase extends com.colosa.qa.automatization.tests.common
 		    fieldArray[0].fieldType=FieldType.BUTTON;
 		    fieldArray[0].fieldValue="";
     		
-    		String fieldAPPLICATION = pages.DynaformExecution().getFieldProperty("APPLICATION","value");
+    		String fieldAPPLICATION = form.getFieldAttribute("APPLICATION", "value");
     		String status = "Cancelled";
     		
     		FormFiller.formFillElements(browserInstance, fieldArray);

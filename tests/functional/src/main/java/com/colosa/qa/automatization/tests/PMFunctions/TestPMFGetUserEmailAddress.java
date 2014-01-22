@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,16 +22,17 @@ public class TestPMFGetUserEmailAddress extends com.colosa.qa.automatization.tes
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("Test PMFGetUserEmailAddress (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		pages.DynaformExecution().setFieldValue("Email", "felipe@empresaxxx.com");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("Nombre", "Felipe");
+		form.setFieldValue("Apellido", "Hernandez");
+		form.setFieldValue("Email", "felipe@empresaxxx.com");
 				
-		pages.DynaformExecution().setFieldValue("Enviar", "");
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Envio"), "qatest@colosa.com");
-		pages.DynaformExecution().setFieldValue("Enviar", "");
+		form.setFieldValue("Enviar", "");
+		Assert.assertEquals(form.getFieldValue("Envio"), "qatest@colosa.com");
+		form.setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
-		//pages.DynaformExecution().sleep(15000);
+		//form.sleep(15000);
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}

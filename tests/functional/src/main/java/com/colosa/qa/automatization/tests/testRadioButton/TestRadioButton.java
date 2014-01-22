@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.testRadioButton;
 
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Test;
 
@@ -24,13 +25,14 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Test RB and CB (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setRadioButtonGroup("Radio1", "Val2");
-		pages.DynaformExecution().setRadioButtonGroup("Radio1", "Val3");
-		pages.DynaformExecution().setCheckBoxGroup("chkgroup", "Val2");
-		pages.DynaformExecution().setCheckBoxGroup("chkgroup", "Val3");
-		//pages.DynaformExecution().getCheckBoxSelected("chkgroup");
-		List<String> chGroup = pages.DynaformExecution().getCheckBoxGroupSelected("chkgroup");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setRadioButtonGroupField("Radio1", "Val2");
+		form.setRadioButtonGroupField("Radio1", "Val3");
+		form.setCheckBoxGroupField("chkgroup", "Val2");
+		form.setCheckBoxGroupField("chkgroup", "Val3");
+		//form.getCheckBoxSelected("chkgroup");
+		List<String> chGroup = form.getCheckBoxGroupSelected("chkgroup");
 
 		Iterator it = chGroup.iterator();
 		while(it.hasNext())
@@ -39,7 +41,7 @@ public class TestRadioButton extends com.colosa.qa.automatization.tests.common.T
 
         	Logger.addLog("Value :" + value);
 		}
-		String rbGroup = pages.DynaformExecution().getRadioButtonGroupSelected("Radio1");
+		String rbGroup = form.getRadioButtonGroupSelected("Radio1");
 		Logger.addLog("RadioButton selected:"+rbGroup);
 
 		pages.InputDocProcess().switchToDefault();

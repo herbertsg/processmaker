@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,13 +23,14 @@ public class TestPMFPauseCase extends com.colosa.qa.automatization.tests.common.
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("Test PMFPauseCase (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		pages.DynaformExecution().setFieldValue("Ingreso", "2004-08-17");
-		pages.DynaformExecution().setFieldValue("Salario", "2,687,886.9976");
-		pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		pages.DynaformExecution().setFieldValue("Enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("Nombre", "Felipe");
+		form.setFieldValue("Apellido", "Hernandez");
+		form.setFieldValue("Ingreso", "2004-08-17");
+		form.setFieldValue("Salario", "2,687,886.9976");
+		form.setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
+		form.setFieldValue("Enviar", "");
 		pages.Home().gotoPaused();
 		Assert.assertTrue(pages.Home().selectCase(numCase));
         //pages.InputDocProcess().switchToDefault();

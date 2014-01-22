@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.dependentFields;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Logger;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,6 +36,10 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 	protected String completeName1 = "Administrator  ";
 	protected String userDepartment1 = "";
 
+    protected String userName2 = "aaron";
+    protected String completeName2 = "Aaron Laughlin";
+    protected String userDepartment2 = "";
+
     public TestDependentFields(String browser) throws IOException {
         super(browser);
     }
@@ -61,107 +66,125 @@ public class TestDependentFields extends com.colosa.qa.automatization.tests.comm
 
 		caseNum = pages.Home().gotoNewCase().startCase("TestDependentFields (Task 1)");
 
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-		//pages.DynaformExecution().setFieldValue("country", country, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("country", country);
+		//form.setFieldValue("country", country, FieldType.DROPDOWN);
+        form.setFieldValue("country", country);
 
-		//pages.DynaformExecution().setGridFieldValue("gridname", numerofila, "country", country, FieldType.DROPDOWN);
+		//form.setGridFieldValue("gridname", numerofila, "country", country, FieldType.DROPDOWN);
 		//sleep one second to wait ajax result
 
         //wait for combo to populate
-        pages.DynaformExecution().waitForFieldToBeClickable("state", 10);
-        pages.DynaformExecution().waitForFieldToBeClickable("location", 10);
+        form.waitForFieldToChangeText("state", "", 20);
+        //.waitForFieldToBeClickable("state", 10);
+        //form.waitForFieldToBeClickable("location", 10);
+        //form.waitForFieldToChangeText("location", "", 20);
 
-        //pages.DynaformExecution().sleep(1000);
+        //form.sleep(1000);
 
-        Assert.assertEquals(pages.DynaformExecution().getFieldText("state"), state);
-		Assert.assertEquals(pages.DynaformExecution().getFieldText("location"), location);
+        Assert.assertEquals(form.getFieldText("state"), state);
+		Assert.assertEquals(form.getFieldText("location"), location);
 
-		//pages.DynaformExecution().setFieldValue("suggest_country", country, FieldType.SUGGEST);
-		pages.DynaformExecution().setFieldValue("suggest_country", country);
+		//form.setFieldValue("suggest_country", country, FieldType.SUGGEST);
+		form.setFieldValue("suggest_country", country);
 
-		//pages.DynaformExecution().sleep(1000);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 10);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 10);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_state2", 10);
-        pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 10);
+		//form.sleep(1000);
+        //form.waitForFieldToBeClickable("suggest_state", 10);
+        //form.waitForFieldToBeClickable("suggest_location", 10);
+        //form.waitForFieldToBeClickable("suggest_state2", 10);
+        //form.waitForFieldToBeClickable("suggest_location2", 10);
+        form.waitForFieldToChangeText("suggest_state", "", 10);
+        form.waitForFieldToChangeText("suggest_location", "", 10);
+        form.waitForFieldToChangeText("suggest_state2", "", 10);
+        form.waitForFieldToChangeText("suggest_location2", "", 10);
 
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state"), state);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location);
+		Assert.assertEquals(form.getFieldText("suggest_state"), state);
+		Assert.assertEquals(form.getFieldText("suggest_location"), location);
+		Assert.assertEquals(form.getFieldText("suggest_state2"), state);
+		Assert.assertEquals(form.getFieldText("suggest_location2"), location);
 
-		//pages.DynaformExecution().setFieldValue("username", userName, FieldType.TEXTBOX);
-		pages.DynaformExecution().setFieldValue("username", userName);
+
+		//form.setFieldValue("username", userName, FieldType.TEXTBOX);
+		form.setFieldValue("username", userName);
 		//send tab to activate dependent fields
-        //pages.DynaformExecution().sendTab("userCompleteName");
-        pages.DynaformExecution().sendTab("username");
-        //pages.DynaformExecution().waitForFieldToChangeText("userCompleteName", "", 15);
-		pages.DynaformExecution().sleep(1000);
-        //browserInstance.waitForDocumentCompleted(20);
-        //pages.DynaformExecution().waitForFieldToBeClickable("userCompleteName", 2);
-        //pages.DynaformExecution().waitForFieldToBeClickable("userDepartment", 2);
+        //form.sendTab("userCompleteName");
+        form.sendTab("username");
+        //form.waitForFieldToChangeText("userCompleteName", "", 15);
 
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userCompleteName"), completeName);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment);
-		
+        //form.sleep(1000);
+        //browserInstance.waitForDocumentCompleted(20);
+        //form.waitForFieldToBeClickable("userCompleteName", 2);
+        //form.waitForFieldToBeClickable("userDepartment", 2);
+        form.waitForFieldToChangeValue("userCompleteName", "", 10);
+        form.waitForFieldToChangeValue("userDepartment", "", 10);
+
+		Assert.assertEquals(completeName, form.getFieldValue("userCompleteName"));
+		Assert.assertEquals(userDepartment, form.getFieldValue("userDepartment"));
+
 		//change values in fields
-		//pages.DynaformExecution().setFieldValue("state", state1, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("state", state1);
-		//pages.DynaformExecution().sleep(1000);
-        //pages.DynaformExecution().waitForFieldToBeClickable("location", 10);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("location"), location1);
+		//form.setFieldValue("state", state1, FieldType.DROPDOWN);
+		form.setFieldValue("state", state1);
+		//form.sleep(1000);
+        //form.waitForFieldToBeClickable("location", 10);
+        form.waitForFieldToChangeText("location", location, 10);
+		Assert.assertEquals(form.getFieldText("location"), location1);
 
 		//change fields in suggest
-		//pages.DynaformExecution().setFieldValue("suggest_country", country2, FieldType.SUGGEST);
-		pages.DynaformExecution().setFieldValue("suggest_country", country2);
-		//pages.DynaformExecution().sleep(1000);
-        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_state", 10);
-		//pages.DynaformExecution().setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("suggest_state", state2);
-		//pages.DynaformExecution().sleep(1000);
-        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_location", 10);
-		//pages.DynaformExecution().setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("suggest_location", location2);
-		//pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state"), state2);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location"), location2);
-		//pages.DynaformExecution().setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("suggest_state2", state22);
-        //pages.DynaformExecution().waitForFieldToBeClickable("suggest_location2", 10);
-		//pages.DynaformExecution().setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
-		pages.DynaformExecution().setFieldValue("suggest_location2", location22);
-		//pages.DynaformExecution().sleep(1000);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_state2"), state22);
-		Assert.assertEquals(pages.DynaformExecution().getDropdownFieldText("suggest_location2"), location22);
+		//form.setFieldValue("suggest_country", country2, FieldType.SUGGEST);
+		form.setFieldValue("suggest_country", country2);
+		//form.sleep(1000);
+        //form.waitForFieldToBeClickable("suggest_state", 10);
+		//form.setFieldValue("suggest_state", state2, FieldType.DROPDOWN);
+        form.waitForFieldToChangeText("suggest_state", state, 10);
+		form.setFieldValue("suggest_state", state2);
+		//form.sleep(1000);
+        //form.waitForFieldToBeClickable("suggest_location", 10);
+		//form.setFieldValue("suggest_location", location2, FieldType.DROPDOWN);
+        form.waitForFieldToChangeText("suggest_location", "Arrecifes", 10);
+		form.setFieldValue("suggest_location", location2);
+		//form.sleep(1000);
+		Assert.assertEquals(form.getFieldText("suggest_state"), state2);
+		Assert.assertEquals(form.getFieldText("suggest_location"), location2);
+		//form.setFieldValue("suggest_state2", state22, FieldType.DROPDOWN);
+		form.setFieldValue("suggest_state2", state22);
+        //form.waitForFieldToBeClickable("suggest_location2", 10);
+		//form.setFieldValue("suggest_location2", location22, FieldType.DROPDOWN);
+        form.waitForFieldToChangeText("suggest_location2", "Arrecifes", 10);
+		form.setFieldValue("suggest_location2", location22);
+		//form.sleep(1000);
+		Assert.assertEquals(form.getFieldText("suggest_state2"), state22);
+		Assert.assertEquals(form.getFieldText("suggest_location2"), location22);
 
 		//change fields in textbox
-		//pages.DynaformExecution().setFieldValue("username", userName1, FieldType.TEXTBOX);
-		pages.DynaformExecution().setFieldValue("username", userName1);
+		//form.setFieldValue("username", userName1, FieldType.TEXTBOX);
+		form.setFieldValue("username", userName1);
 		//send tab to activate dependent fields
-		pages.DynaformExecution().sendTab("username");
-		//pages.DynaformExecution().sleep(1000);
-        //pages.DynaformExecution().waitForFieldToBeClickable("userCompleteName", 2);
-        //pages.DynaformExecution().waitForFieldToBeClickable("userDepartment", 2);
-        browserInstance.waitForDocumentCompleted(20);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userCompleteName"), completeName1);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("userDepartment"), userDepartment1);
+		form.sendTab("username");
+		//form.sleep(1000);
+        //form.waitForFieldToBeClickable("userCompleteName", 2);
+        //form.waitForFieldToBeClickable("userDepartment", 2);
+        //browserInstance.waitForDocumentCompleted(20);
+        form.waitForFieldToChangeValue("userCompleteName", completeName, 10);
+		Assert.assertEquals(form.getFieldValue("userCompleteName"), completeName1);
+		Assert.assertEquals(form.getFieldValue("userDepartment"), userDepartment1);
 
 		//test other dependent fields
-		pages.DynaformExecution().setFieldValue("userName2", userName1); //admin
-        //pages.DynaformExecution().waitForFieldToBeClickable("textAreaField", 10);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("textAreaField"), completeName1);
-		int listBoxCount = pages.DynaformExecution().getFieldCount("listBoxField");
+		form.setFieldValue("userName2", userName2); //admin
+        //form.waitForFieldToBeClickable("textAreaField", 10);
+        form.waitForFieldToChangeValue("textAreaField", "Administrator  ", 10);
+		Assert.assertEquals(form.getFieldValue("textAreaField"), completeName2);
+		int listBoxCount = form.getFieldCount("listBoxField");
 		Logger.addLog("ListBox value:" + listBoxCount);
-		//Assert.assertFalse(pages.DynaformExecution().getFieldValue("listBoxField").equals("")); //at least one login
-		String totalLogins = pages.DynaformExecution().getFieldValue("hiddenField");
+		//Assert.assertFalse(form.getFieldValue("listBoxField").equals("")); //at least one login
+		String totalLogins = form.getFieldValue("totalLogins");
 		Logger.addLog("Total logins:" + totalLogins);
 		Assert.assertEquals(listBoxCount, Integer.parseInt(totalLogins));
 
-		//pages.DynaformExecution().intoMainFrame();
+		//form.intoMainFrame();
 		//pages.Main().logout();
-        //pages.DynaformExecution().sleep(5000);
+        //form.sleep(5000);
+        /**/
 	}
 
 

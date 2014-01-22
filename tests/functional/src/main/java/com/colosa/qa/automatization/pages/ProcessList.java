@@ -37,10 +37,12 @@ public class ProcessList extends Page{
 
 		browser.switchToFrame("frameMain");
 
-        DynaformExecution dynex = new DynaformExecution(browser);
 
-        dynex.setFieldValueWithoutForm("searchTxt", processName);
+        //DynaformExecution dynex = new DynaformExecution(browser);
+
+        //dynex.setFieldValueWithoutForm("searchTxt", processName);
         WebElement el = browser.findElementById("searchTxt");
+        el.sendKeys(processName);
         el.sendKeys(Keys.RETURN);
 				
 		WebElement grid = browser.findElement("designerList.webelement.Process");

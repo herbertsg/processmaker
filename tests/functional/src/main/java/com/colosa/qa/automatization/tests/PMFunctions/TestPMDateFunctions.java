@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +27,8 @@ public class TestPMDateFunctions extends com.colosa.qa.automatization.tests.comm
 				pages.Main().goHome();
         
         int casenumber = pages.Home().gotoNewCase().startCase("Test PMDate Functions (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[8];
 		    fieldArray[0]=new FormFieldData();
@@ -71,13 +73,13 @@ public class TestPMDateFunctions extends com.colosa.qa.automatization.tests.comm
 		    fieldArray[7].fieldType=FieldType.BUTTON;
 		    fieldArray[7].fieldValue="";
     		
-    		String fieldFORMAT_DATE1 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE1","value");
-    		String fieldFORMAT_DATE2 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE2","value");
-    		String fieldFORMAT_DATE3 = pages.DynaformExecution().getFieldProperty("FORMAT_DATE3","value");
-    		String fieldCURRENT_DATE = pages.DynaformExecution().getFieldProperty("CURRENT_DATE","value");
-    		String fieldCURRENT_TIME = pages.DynaformExecution().getFieldProperty("CURRENT_TIME","value");
-    		String fieldLITERAL_DATE_EN = pages.DynaformExecution().getFieldProperty("LITERAL_DATE_EN","value");
-    		String fieldLITERAL_DATE_ES = pages.DynaformExecution().getFieldProperty("LITERAL_DATE_ES","value");
+    		String fieldFORMAT_DATE1 = form.getFieldAttribute("FORMAT_DATE1", "value");
+    		String fieldFORMAT_DATE2 = form.getFieldAttribute("FORMAT_DATE2", "value");
+    		String fieldFORMAT_DATE3 = form.getFieldAttribute("FORMAT_DATE3", "value");
+    		String fieldCURRENT_DATE = form.getFieldAttribute("CURRENT_DATE", "value");
+    		String fieldCURRENT_TIME = form.getFieldAttribute("CURRENT_TIME", "value");
+    		String fieldLITERAL_DATE_EN = form.getFieldAttribute("LITERAL_DATE_EN", "value");
+    		String fieldLITERAL_DATE_ES = form.getFieldAttribute("LITERAL_DATE_ES", "value");
     		/*
     		@@FORMAT_DATE1 = formatDate('2013-01-09','d m yy');
 				@@FORMAT_DATE2 = formatDate('2013-01-09','d de M del yyyy','es');

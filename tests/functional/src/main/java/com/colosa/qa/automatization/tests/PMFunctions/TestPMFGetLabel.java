@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,22 +39,23 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PMF GetLabel (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("dropdwn", dropdwn);
-		pages.DynaformExecution().setFieldValue("List", list);
-		pages.DynaformExecution().setCheckBoxGroup("radio1", radio);
-		pages.DynaformExecution().setCheckBoxGroup("check1", check);
-		pages.DynaformExecution().setCheckBoxGroup("check1", check2);
-		pages.DynaformExecution().setCheckBoxGroup("check1", check3);
-		pages.DynaformExecution().clickButton("Enviar");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("dropdwn", dropdwn);
+		form.setFieldValue("List", list);
+		form.setCheckBoxGroupField("radio1", radio);
+		form.setCheckBoxGroupField("check1", check);
+		form.setCheckBoxGroupField("check1", check2);
+		form.setCheckBoxGroupField("check1", check3);
+		form.clickButton("Enviar");
 		checkGroup = check + " " + check2 + " " + check3 + " ";
 
-        pages.DynaformExecution().intoDynaform();
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Recover"), dropdwn);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("lstValue"), list);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("rdValue"), radio);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("chkValue"), checkGroup);
-		//pages.DynaformExecution().sleep(15000);
+        form.intoDynaform();
+		Assert.assertEquals(form.getFieldValue("Recover"), dropdwn);
+		Assert.assertEquals(form.getFieldValue("lstValue"), list);
+		Assert.assertEquals(form.getFieldValue("rdValue"), radio);
+		Assert.assertEquals(form.getFieldValue("chkValue"), checkGroup);
+		//form.sleep(15000);
 		//pages.InputDocProcess().switchToDefault();
 		//pages.Main().logout();
 	}

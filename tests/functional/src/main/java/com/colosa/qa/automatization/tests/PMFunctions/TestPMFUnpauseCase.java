@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,41 +24,43 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
-
-        pages.DynaformExecution().pauseCase().clickPauseButton();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+        form.pauseCase().clickPauseButton();
 
         Assert.assertTrue("The case does not exist in Paused", pages.Home().gotoPaused().existCase(caseNum));
 
         pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Unpause Case)");
 
-        pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("caseNumber", Integer.toString(caseNum));
-        pages.DynaformExecution().clickButton("ok");
+
+        form.intoDynaform();
+        form.setFieldValue("caseNumber", Integer.toString(caseNum));
+        form.clickButton("ok");
 
         //the case must be unpaused and returned to draft list
         Assert.assertTrue("The case was not unpaused",pages.Home().gotoDraft().existCase(caseNum));
 
-		/*pages.DynaformExecution().intoDynaform();
+		/*form.intoDynaform();
 		pages.Home().pauseCase(caseNum);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Home().gotoPaused();
 		Assert.assertTrue("The case does not exist in Paused", pages.Home().existCase(caseNum));
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().goHome();
 		//Init casa again	
 		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
-		pages.DynaformExecution().intoDynaform();
+		form.intoDynaform();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().goHome();
     		pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+		form.intoDynaform();
 		Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		pages.Main().goHome();
      		pages.Home().gotoPaused();
   		Assert.assertFalse("The case exist in Paused", pages.Home().existCase(caseNum-1));
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		*/
 	}

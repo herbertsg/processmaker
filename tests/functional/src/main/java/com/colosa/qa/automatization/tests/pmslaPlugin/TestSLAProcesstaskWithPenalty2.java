@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,12 +24,13 @@ public class TestSLAProcesstaskWithPenalty2 extends com.colosa.qa.automatization
 		pages.Main().goHome();
 		
 		caseNum = pages.Home().openFirstCase();
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");
-		pages.DynaformExecution().sleep(5000);
+		form.sleep(5000);
 
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");

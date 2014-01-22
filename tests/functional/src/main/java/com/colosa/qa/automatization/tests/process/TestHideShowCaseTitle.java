@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.process;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -29,8 +30,10 @@ public class TestHideShowCaseTitle extends com.colosa.qa.automatization.tests.co
         int numberNewCase = pages.Home().gotoNewCase().startCase("Process Hide Title and case number (Task 1)");
         
         // switch to frame the dynaform
-        //pages.DynaformExecution().intoDynaform();
-        boolean showCaseTitle = pages.DynaformExecution().activeCaseTitle();
+        //form.intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+        boolean showCaseTitle = form.activeCaseTitle();
 
         // verify if the case title is show
         Assert.assertEquals("The case title is hidden :'(", showCaseTitle, true);
@@ -48,8 +51,8 @@ public class TestHideShowCaseTitle extends com.colosa.qa.automatization.tests.co
         numberNewCase = pages.Home().gotoNewCase().startCase("Process Hide Title and case number (Task 1)");
         
         // switch to frame the dynaform
-        //pages.DynaformExecution().intoDynaform();
-        showCaseTitle = pages.DynaformExecution().activeCaseTitle();
+        //form.intoDynaform();
+        showCaseTitle = form.activeCaseTitle();
 
         // verify if the case title is show
         Assert.assertEquals("The case title is show :'(", showCaseTitle, false);

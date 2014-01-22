@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +26,8 @@ public class TestPMFNewCaseImpersonate extends com.colosa.qa.automatization.test
 				pages.Main().goHome();
 				
 				int casenumber = pages.Home().gotoNewCase().startCase("Test PMFNewCaseImpersonate (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[1];
 		    fieldArray[0]=new FormFieldData();
@@ -41,7 +43,8 @@ public class TestPMFNewCaseImpersonate extends com.colosa.qa.automatization.test
 		    pages.Home().gotoInbox();
 		    //Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
 		    pages.Home().gotoInbox().openCase(casenumber);
-		    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		    
 		    FormFieldData[] fieldArray1=new FormFieldData[1];
 		    
@@ -51,7 +54,7 @@ public class TestPMFNewCaseImpersonate extends com.colosa.qa.automatization.test
 		    fieldArray1[0].fieldType=FieldType.BUTTON;
 		    fieldArray1[0].fieldValue="";
 		    
-		    String fieldRESULT = pages.DynaformExecution().getFieldProperty("RESULT","value");
+		    String fieldRESULT = form.getFieldAttribute("RESULT", "value");
 		    
 		    Assert.assertEquals("The function does not work", "1", fieldRESULT);
 		    

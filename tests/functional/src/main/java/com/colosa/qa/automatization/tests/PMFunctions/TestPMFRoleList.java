@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
@@ -24,9 +25,10 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
 				pages.Main().goHome();
         
         int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRoleList (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
-        Integer fieldROLES = Integer.parseInt(pages.DynaformExecution().getFieldProperty("ROLES","value"));
+        Integer fieldROLES = Integer.parseInt(form.getFieldAttribute("ROLES", "value"));
         
         FormFieldData[] fieldArray=new FormFieldData[1];
 		    fieldArray[0]=new FormFieldData();
@@ -45,7 +47,7 @@ public class TestPMFRoleList extends com.colosa.qa.automatization.tests.common.T
         Assert.assertEquals("PMFRoleList function not working properly", roles, fieldROLES);
         
         //Logger.addLog("LOS ROLES  "+roles);
-        pages.DynaformExecution().outDynaform();
+        form.outDynaform();
         pages.Main().logout();
     }
 

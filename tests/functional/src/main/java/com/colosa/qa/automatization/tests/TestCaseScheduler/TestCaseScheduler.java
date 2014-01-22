@@ -25,7 +25,7 @@ public class TestCaseScheduler extends com.colosa.qa.automatization.tests.common
 		pages.Admin().goToLogs();
 		pages.Admin().showCaseScheduler();
 		pages.CronExecute().execute("workflow");
-		//pages.DynaformExecution().sleep(20000);
+		//form.sleep(20000);
 
 
 	}

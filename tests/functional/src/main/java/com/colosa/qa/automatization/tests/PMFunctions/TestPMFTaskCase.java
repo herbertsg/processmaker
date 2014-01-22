@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,27 +25,29 @@ public class TestPMFTaskCase extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFTaskCase (Init)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		pages.DynaformExecution().setFieldValue("amount", "3000");
-        pages.DynaformExecution().clickButton("send");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("name", "Charles Puyol");
+		form.setFieldValue("amount", "3000");
+        form.clickButton("send");
 
         pages.AssignTask().selectManualAssignedUser(2, "Swan, William");
 	    pages.AssignTask().pressContinueButton();
 
     	pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		//int numListCases = Integer.parseInt(Value.getValue(browserInstance, FieldKeyType.ID, "form[longTasksCases]"));
-        int numListCases = Integer.parseInt(pages.DynaformExecution().getFieldValue("longTasksCases"));
+        int numListCases = Integer.parseInt(form.getFieldValue("longTasksCases"));
 		for(int i=1; i<numListCases; i++){
 			//Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[taskList]["+ i + "][guid]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[tasksQuery][" + i + "][TAS_UID]"));
-            Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("taskList",i,"guid"),
-                    pages.DynaformExecution().getGridFieldValue("tasksQuery", i, "TAS_UID"));
+            Assert.assertEquals(form.getGridFieldValue("taskList",i,"guid"),
+                    form.getGridFieldValue("tasksQuery", i, "TAS_UID"));
         }
-		//pages.DynaformExecution().clickButton("continue");
+		//form.clickButton("continue");
 
 	    //pages.AssignTask().pressContinueButton();
-		//pages.DynaformExecution().outDynaform();
+		//form.outDynaform();
 		//pages.Main().logout();
 	}
 

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.TestValidate;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
@@ -22,7 +23,8 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
    	pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     int casenumber=pages.Home().gotoNewCase().startCase("TestValidate (Task 1)");
-    pages.DynaformExecution().intoDynaform();
+    DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
     
     FormFieldData[] fieldArray=new FormFieldData[12];
 
@@ -108,7 +110,8 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
     //pages.Home().gotoInbox();
     Assert.assertTrue("The case does not exist in inbox", pages.Home().gotoInbox().existCase(casenumber));
     pages.Home().gotoInbox().openCase(casenumber);
-    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
     FormFieldData[] fieldArray1=new FormFieldData[1];
     fieldArray1[0]=new FormFieldData();
 		
@@ -117,19 +120,19 @@ public class ValidateFieldsTest extends com.colosa.qa.automatization.tests.commo
     fieldArray1[0].fieldType=FieldType.BUTTON;
     fieldArray1[0].fieldValue="";
 		
-		String fieldTEXT_ANY = pages.DynaformExecution().getFieldProperty("TEXT_ANY","value");
-		String fieldTEXT_ALPHABETIC = pages.DynaformExecution().getFieldProperty("TEXT_ALPHABETIC","value");
-		String fieldTEXT_ALPHANUMERIC = pages.DynaformExecution().getFieldProperty("TEXT_ALPHANUMERIC","value");
-		String fieldTEXT_INTEGER = pages.DynaformExecution().getFieldProperty("TEXT_INTEGER","value");
-		String fieldTEXT_REAL = pages.DynaformExecution().getFieldProperty("TEXT_REAL","value");
-		String fieldTEXT_EMAIL = pages.DynaformExecution().getFieldProperty("TEXT_EMAIL","value");
-		String fieldTEXT_LOGIN = pages.DynaformExecution().getFieldProperty("TEXT_LOGIN","value");
+		String fieldTEXT_ANY = form.getFieldAttribute("TEXT_ANY", "value");
+		String fieldTEXT_ALPHABETIC = form.getFieldAttribute("TEXT_ALPHABETIC", "value");
+		String fieldTEXT_ALPHANUMERIC = form.getFieldAttribute("TEXT_ALPHANUMERIC", "value");
+		String fieldTEXT_INTEGER = form.getFieldAttribute("TEXT_INTEGER", "value");
+		String fieldTEXT_REAL = form.getFieldAttribute("TEXT_REAL", "value");
+		String fieldTEXT_EMAIL = form.getFieldAttribute("TEXT_EMAIL", "value");
+		String fieldTEXT_LOGIN = form.getFieldAttribute("TEXT_LOGIN", "value");
 		
-		String fieldCURRENCY_REAL = pages.DynaformExecution().getFieldProperty("CURRENCY_REAL","value");
-		String fieldCURRENCY_INTEGER = pages.DynaformExecution().getFieldProperty("CURRENCY_INTEGER","value");
+		String fieldCURRENCY_REAL = form.getFieldAttribute("CURRENCY_REAL", "value");
+		String fieldCURRENCY_INTEGER = form.getFieldAttribute("CURRENCY_INTEGER", "value");
 		
-		String fieldPERCENTAJE_REAL = pages.DynaformExecution().getFieldProperty("PERCENTAJE_REAL","value");
-		String fieldPERCENTAJE_INTEGER = pages.DynaformExecution().getFieldProperty("PERCENTAJE_INTEGER","value");
+		String fieldPERCENTAJE_REAL = form.getFieldAttribute("PERCENTAJE_REAL", "value");
+		String fieldPERCENTAJE_INTEGER = form.getFieldAttribute("PERCENTAJE_INTEGER", "value");
 		
 	  FormFiller.formFillElements(browserInstance, fieldArray1);
     

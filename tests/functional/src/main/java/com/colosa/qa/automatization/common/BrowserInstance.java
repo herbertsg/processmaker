@@ -216,6 +216,10 @@ public class BrowserInstance {
         return _instanceDriver.switchTo().alert();
     }
 
+    public int getImplicitWaitSeconds(){
+        return _implicitWaitSeconds;
+    }
+
     public void setImplicitWait(int seconds){
         _implicitWaitSeconds = seconds;
 

@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Test;
 
@@ -23,13 +24,15 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		pages.Main().goHome();
         
         int casenumber = pages.Home().gotoNewCase().startCase("TestCasesStatus (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
                 
-        pages.DynaformExecution().outDynaform();
+        form.outDynaform();
         
         pages.Home().gotoDraft();
         pages.Home().gotoInbox().openCase(casenumber);
-        pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
     
         FormFieldData[] fieldArray1=new FormFieldData[2];
 		    fieldArray1[0]=new FormFieldData();
@@ -51,13 +54,14 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
     		pages.Home().gotoParticipated();
 		   // Assert.assertTrue("The case does not exist in Participated", pages.Home().existCase(casenumber));
 		    pages.Home().gotoInbox().openCase(casenumber);
-		    pages.DynaformExecution().outDynaform();
+		    form.outDynaform();
 		        		
     		pages.Home().gotoInbox();
 		   // Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(casenumber));
 		    
 		    pages.Home().gotoInbox().openCase(casenumber);
-		    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		    
 		    FormFieldData[] fieldArray3=new FormFieldData[2];
 		    fieldArray3[0]=new FormFieldData();
@@ -79,7 +83,8 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		    pages.Home().gotoUnassigned();
 		    //Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(casenumber));
 		    pages.Home().gotoInbox().openCase(casenumber);
-		    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		    
 		    FormFieldData[] fieldArray4=new FormFieldData[1];
 		    fieldArray4[0]=new FormFieldData();
@@ -90,10 +95,11 @@ public class TestCasesLists extends com.colosa.qa.automatization.tests.common.Te
 		    fieldArray4[0].fieldValue="";
 		    
 		    FormFiller.formFillElements(browserInstance, fieldArray4);
-		    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		    pages.Home().pauseCase(casenumber);
 		    
-		    pages.DynaformExecution().outDynaform();
+		    form.outDynaform();
 		    pages.Home().gotoPaused();
 		   // Assert.assertTrue("The case does not exist in Paused", pages.Home().existCase(casenumber));
 			pages.InputDocProcess().switchToDefault();

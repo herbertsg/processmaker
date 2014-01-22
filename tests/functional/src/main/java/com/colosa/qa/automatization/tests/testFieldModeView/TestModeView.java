@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.testFieldModeView;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldType;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,19 +28,22 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
-        pages.DynaformExecution().outDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        //form.intoDynaform();
+        form.outDynaform();
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Testeo Modo Vista (Task 1)");
 
 	
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Campo1", textVal);
-		pages.DynaformExecution().setFieldValue("Precio1", prec);
-		pages.DynaformExecution().setFieldValue("Porcentaje1", perc);
-		//pages.DynaformExecution().setFieldValue("Text1", textArea);
-		pages.DynaformExecution().setFieldValue("Combo1", drpdwn);
-		pages.DynaformExecution().setFieldValue("Lista1", lstBx);
-		pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
+
+        form.intoDynaform();
+		form.setFieldValue("Campo1", textVal);
+		form.setFieldValue("Precio1", prec);
+		form.setFieldValue("Porcentaje1", perc);
+		//form.setFieldValue("Text1", textArea);
+		form.setFieldValue("Combo1", drpdwn);
+		form.setFieldValue("Lista1", lstBx);
+		form.clickButton("Enviar");
 
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.Main().logout();
@@ -55,15 +59,16 @@ public class TestModeView extends com.colosa.qa.automatization.tests.common.Test
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(caseNum);
 
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		
-		Assert.assertEquals(textVal, pages.DynaformExecution().getFieldValue("Campo1"));
-		Assert.assertEquals(prec, pages.DynaformExecution().getFieldValue("Precio1"));
-		Assert.assertEquals(perc, pages.DynaformExecution().getFieldValue("Porcentaje1"));
-		//Assert.assertEquals(textArea, pages.DynaformExecution().getFieldValue("Text1"));
-		//Assert.assertEquals(drpdwn, pages.DynaformExecution().getDropdownFieldText("Combo1"));
-		//Assert.assertEquals(lstBx, pages.DynaformExecution().getDropdownFieldText("List1"));
-		pages.DynaformExecution().setFieldValue("Enviar", "", FieldType.BUTTON);
+		Assert.assertEquals(textVal, form.getFieldValue("Campo1"));
+		Assert.assertEquals(prec, form.getFieldValue("Precio1"));
+		Assert.assertEquals(perc, form.getFieldValue("Porcentaje1"));
+		//Assert.assertEquals(textArea, form.getFieldValue("Text1"));
+		//Assert.assertEquals(drpdwn, form.getDropdownFieldText("Combo1"));
+		//Assert.assertEquals(lstBx, form.getDropdownFieldText("List1"));
+		form.clickButton("Enviar");
 
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.InputDocProcess().switchToDefault();

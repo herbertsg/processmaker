@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.process;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -30,7 +31,8 @@ public class TestTriggersSteps extends com.colosa.qa.automatization.tests.common
         int numberNewCase = pages.Home().gotoNewCase().startCase("Process Debug (Task 1)");
         
         // switch to frame the dynaform
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         pages.DebugExecution().goTabVariables();
 
         String beforeDynaform = pages.DebugExecution().getValue("BEFORE_DYNAFORM");
@@ -40,11 +42,9 @@ public class TestTriggersSteps extends com.colosa.qa.automatization.tests.common
         // trigger after the form working
         
         // get button submit
-        pages.DynaformExecution().intoDynaform();
-        WebElement buttonSUBMIT = pages.DynaformExecution().getField("Submit");
+        form.intoDynaform();
+        form.clickButton("Submit");
 
-        // click to button submit
-        buttonSUBMIT.click();
 
         // get the value of field AFTER_DYNAFORM after the form
         String afterDynaform = pages.DebugExecution().getValue("AFTER_DYNAFORM");
@@ -54,8 +54,9 @@ public class TestTriggersSteps extends com.colosa.qa.automatization.tests.common
         // trigger after the form working
         
         // get button continue
-        pages.DynaformExecution().intoDynaform();
-        WebElement buttonContinue = pages.DynaformExecution().getObject("//*[@id='publisherContent[2]']/div/input");
+        form.intoDynaform();
+
+        WebElement buttonContinue = form.getObject("//*[@id='publisherContent[2]']/div/input");
 
         // click to button continue
         buttonContinue.click();
@@ -68,11 +69,12 @@ public class TestTriggersSteps extends com.colosa.qa.automatization.tests.common
         // trigger after the form working
         
         // get button continue
-        pages.DynaformExecution().intoDynaform();
-        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        form.intoDynaform();
+        form.clickButton("btnContinue");
+        /*WebElement buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
-        buttonContinueSubmit.click();
+        buttonContinueSubmit.click();*/
 
         // get the value of field AFTER_ROUTING after the form
         String afterRouting = pages.DebugExecution().getValue("AFTER_ROUTING");
@@ -89,7 +91,7 @@ public class TestTriggersSteps extends com.colosa.qa.automatization.tests.common
         // trigger after the form working
         
         // get button continue
-        buttonContinue = pages.DynaformExecution().getObject("//*[@id='publisherContent[2]']/div/input");
+        buttonContinue = form.getObject("//*[@id='publisherContent[2]']/div/input");
 
         // click to button continue
         buttonContinue.click(); 

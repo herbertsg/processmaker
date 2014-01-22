@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,25 +30,27 @@ public class TestFunctionUserInfo extends com.colosa.qa.automatization.tests.com
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("UserInfo (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("usernameHold", "admin");
-		pages.DynaformExecution().setFieldValue("send", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("usernameHold", "admin");
+		form.setFieldValue("send", "");
 		//Verify results
 
         //Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "username"), pages.DynaformExecution().getFieldValue("userName"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "firstname"), pages.DynaformExecution().getFieldValue("firstName"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "lastname"), pages.DynaformExecution().getFieldValue("lastName"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "mail"), pages.DynaformExecution().getFieldValue("mail"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "status"), pages.DynaformExecution().getFieldValue("status"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "address"), pages.DynaformExecution().getFieldValue("address"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "phone"), pages.DynaformExecution().getFieldValue("phone"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "fax"), pages.DynaformExecution().getFieldValue("fax"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "cellular"), pages.DynaformExecution().getFieldValue("cellular"));
-        Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("userInfoGrid",1, "birthday"), pages.DynaformExecution().getFieldValue("birthday"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "username"), form.getFieldValue("userName"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "firstname"), form.getFieldValue("firstName"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "lastname"), form.getFieldValue("lastName"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "mail"), form.getFieldValue("mail"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "status"), form.getFieldValue("status"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "address"), form.getFieldValue("address"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "phone"), form.getFieldValue("phone"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "fax"), form.getFieldValue("fax"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "cellular"), form.getFieldValue("cellular"));
+        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "birthday"), form.getFieldValue("birthday"));
 
-		//pages.DynaformExecution().intoDynaform();
-		//pages.DynaformExecution().clickButton("send");
+		//DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		//form.clickButton("send");
 		//Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		//pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();

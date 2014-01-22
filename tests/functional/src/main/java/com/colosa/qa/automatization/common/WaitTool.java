@@ -3,6 +3,7 @@ package com.colosa.qa.automatization.common;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -285,6 +286,48 @@ public class WaitTool {
         return false;
     }
 
+
+    /**
+     * Wait for the Text to change in the given element, regardless of being displayed or not.
+     *
+     * @param driver        The driver object to be used to wait and find the element
+     * @param element        selector of the given element, which should contain the value
+     * @param currentText        The text we are looking
+     * @param timeOutInSeconds        The time in seconds to wait until returning a failure
+     *
+     * @return boolean
+     */
+    public static boolean waitForValueToChange(WebDriver driver, final WebElement element, final String currentText, int timeOutInSeconds) {
+
+        boolean isPresent = false;
+        try{
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); //nullify implicitlyWait()
+            new WebDriverWait(driver, timeOutInSeconds) {
+            }.until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver driverObject) {
+                    Logger.addLog("waitForValueToChange element value:" + element.getAttribute("value") + " != " + currentText + " => " + !element.getAttribute("value").equals(""));
+                    if(currentText.equals("")){
+                        return !(element.getAttribute("value").equals(""));
+                    }else{
+                        return !(element.getAttribute("value").contains(currentText));
+                    }
+                }
+            });
+            if(currentText.equals("")){
+                isPresent = !(element.getAttribute("value").equals(""));
+            }else{
+                isPresent = !(element.getAttribute("value").contains(currentText));
+            }
+            //isPresent = !element.getText().contains(currentText);
+            driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_4_PAGE, TimeUnit.SECONDS); //reset implicitlyWait
+            return isPresent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * Wait for the Text to change in the given element, regardless of being displayed or not.
      *
@@ -296,18 +339,28 @@ public class WaitTool {
      * @return boolean
      */
     public static boolean waitForTextToChange(WebDriver driver, final WebElement element, final String currentText, int timeOutInSeconds) {
+
         boolean isPresent = false;
         try{
             driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); //nullify implicitlyWait()
             new WebDriverWait(driver, timeOutInSeconds) {
             }.until(new ExpectedCondition<Boolean>() {
-
                 @Override
                 public Boolean apply(WebDriver driverObject) {
-                    return !element.getText().contains(currentText);
+                    Logger.addLog("waitForTextToChange element text:" + element.getText() + " != " + currentText + " => " + !element.getText().equals(""));
+                    if(currentText.equals("")){
+                        return !(element.getText().equals(""));
+                    }else{
+                        return !(element.getText().contains(currentText));
+                    }
                 }
             });
-            isPresent = !element.getText().contains(currentText);
+            if(currentText.equals("")){
+                isPresent = !(element.getText().equals(""));
+            }else{
+                isPresent = !(element.getText().contains(currentText));
+            }
+            //isPresent = !element.getText().contains(currentText);
             driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_4_PAGE, TimeUnit.SECONDS); //reset implicitlyWait
             return isPresent;
         } catch (Exception e) {
@@ -316,6 +369,105 @@ public class WaitTool {
         return false;
     }
 
+    /**
+     * Wait for selected element to change in the given select element, regardless of being displayed or not.
+     *
+     * @param driver        The driver object to be used to wait and find the element
+     * @param selectElement        selector of the given element, which should contain the text
+     * @param currentText        The text we are looking
+     * @param timeOutInSeconds        The time in seconds to wait until returning a failure
+     *
+     * @return boolean
+     */
+    public static boolean waitForSelectedTextToChange(WebDriver driver, final WebElement selectElement, final String currentText, int timeOutInSeconds) {
+
+        boolean isPresent = false;
+        try{
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); //nullify implicitlyWait()
+            new WebDriverWait(driver, timeOutInSeconds) {
+            }.until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver driverObject) {
+                    Select selectList = new Select(selectElement);
+                    String selectedText = "";
+                    try{
+                        WebElement selectedOption = selectList.getFirstSelectedOption();
+                        selectedText = selectedOption.getText();
+                    }catch (NoSuchElementException ex){
+                        //no selected element
+                        selectedText = "";
+                    }
+                    Logger.addLog("waitForSelectedTextToChange Element Text:" + selectedText + " != " + currentText);
+                    return (!selectedText.equals(currentText));
+                }
+            });
+            Select selectList = new Select(selectElement);
+            String selectedText = "";
+            try{
+                WebElement selectedOption = selectList.getFirstSelectedOption();
+                selectedText = selectedOption.getText();
+            }catch (NoSuchElementException ex){
+                //no selected element
+                selectedText = "";
+            }
+            isPresent = !(selectedText.equals(currentText));
+            driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_4_PAGE, TimeUnit.SECONDS); //reset implicitlyWait
+            return isPresent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Wait for selected element to change in the given select element, regardless of being displayed or not.
+     *
+     * @param driver        The driver object to be used to wait and find the element
+     * @param selectElement        selector of the given element, which should contain the text
+     * @param currentValue        The text we are looking
+     * @param timeOutInSeconds        The time in seconds to wait until returning a failure
+     *
+     * @return boolean
+     */
+    public static boolean waitForSelectedValueToChange(WebDriver driver, final WebElement selectElement, final String currentValue, int timeOutInSeconds) {
+
+        boolean isPresent = false;
+        try{
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); //nullify implicitlyWait()
+            new WebDriverWait(driver, timeOutInSeconds) {
+            }.until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver driverObject) {
+                    Select selectList = new Select(selectElement);
+                    String selectedValue = "";
+                    try{
+                        WebElement selectedOption = selectList.getFirstSelectedOption();
+                        selectedValue = selectedOption.getAttribute("value");
+                    }catch (NoSuchElementException ex){
+                        //no selected element
+                        selectedValue = "";
+                    }
+                    Logger.addLog("waitForSelectedValueToChange Element Value:" + selectedValue + " != " + currentValue);
+                    return (!selectedValue.equals(currentValue));
+                }
+            });
+            Select selectList = new Select(selectElement);
+            String selectedValue = "";
+            try{
+                WebElement selectedOption = selectList.getFirstSelectedOption();
+                selectedValue = selectedOption.getAttribute("value");
+            }catch (NoSuchElementException ex){
+                //no selected element
+                selectedValue = "";
+            }
+            isPresent = !(selectedValue.equals(currentValue));
+            driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_4_PAGE, TimeUnit.SECONDS); //reset implicitlyWait
+            return isPresent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * Waits for the Condition of JavaScript.

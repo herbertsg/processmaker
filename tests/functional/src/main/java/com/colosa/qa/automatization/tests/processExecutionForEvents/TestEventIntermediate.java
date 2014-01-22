@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -22,7 +23,8 @@ public class TestEventIntermediate extends com.colosa.qa.automatization.tests.co
 		pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     int casenumber=pages.Home().gotoNewCase().startCase("Event Process - Intermediate Conditional_Multple Task (Task 1)");
-    pages.DynaformExecution().intoDynaform();
+    DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
     FormFieldData[] fieldArray=new FormFieldData[4];
     fieldArray[0]=new FormFieldData();
     fieldArray[1]=new FormFieldData();
@@ -67,7 +69,8 @@ public void openTask2(int casenumber) throws Exception{ */
         Assert.assertEquals("CLOSE", eventStatus);
         pages.Main().goHome();
         pages.Home().gotoInbox().openCase(casenumber);
-        pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
         FormFieldData[] fieldArray2=new FormFieldData[2];
         fieldArray2[0]=new FormFieldData();
         fieldArray2[1]=new FormFieldData();
@@ -94,7 +97,8 @@ public void openTask3(int casenumber) throws Exception{ */
     pages.Login().loginUser("hector","sample","workflow", "English");
     pages.Main().goHome();
     pages.Home().gotoInbox().openCase(casenumber);
-    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
     FormFieldData[] fieldArray3=new FormFieldData[1];
     fieldArray3[0]=new FormFieldData();
 
@@ -115,7 +119,8 @@ public void openTask4(int casenumber) throws Exception{   */
         pages.Login().loginUser("admin","admin","workflow", "English");
     pages.Main().goHome();
     pages.Home().gotoInbox().openCase(casenumber);
-    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 	 FormFieldData[] fieldArray4=new FormFieldData[2];
 	 fieldArray4[0]=new FormFieldData();
      fieldArray4[1]=new FormFieldData();

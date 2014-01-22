@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,32 +26,35 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum=pages.Home().gotoNewCase().startCase("Test PMFSendVariables 1 (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Nombre", "Angela");
-		pages.DynaformExecution().setFieldValue("Apellido", "Villegas");
-		pages.DynaformExecution().setFieldValue("Salario", "1,321,323,131,313,213.312313213");
-		pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba  Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		pages.DynaformExecution().clickButton("Enviar");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("Nombre", "Angela");
+		form.setFieldValue("Apellido", "Villegas");
+		form.setFieldValue("Salario", "1,321,323,131,313,213.312313213");
+		form.setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba  Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
+		form.clickButton("Enviar");
 		pages.AssignTask().pressContinueButton();
 
 		pages.Home().gotoNewCase().startCase("Test PMFSendVariables 2 (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("CaseNum", Integer.toString(caseNum));
-		pages.DynaformExecution().setFieldValue("Direccion", dir);
-		pages.DynaformExecution().setFieldValue("Telefono", tel);
-		pages.DynaformExecution().setFieldValue("Email", mail);
-        pages.DynaformExecution().clickButton("Enviar");
+
+        form.intoDynaform();
+		form.setFieldValue("CaseNum", Integer.toString(caseNum));
+		form.setFieldValue("Direccion", dir);
+		form.setFieldValue("Telefono", tel);
+		form.setFieldValue("Email", mail);
+        form.clickButton("Enviar");
 		pages.AssignTask().pressContinueButton();
 
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Direccion"), dir);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Telefono"), tel);
-		Assert.assertEquals(pages.DynaformExecution().getFieldValue("Email"), mail);
-		//pages.DynaformExecution().setFieldValue("Enviar", "");
+
+        form.intoDynaform();
+		Assert.assertEquals(form.getFieldValue("Direccion"), dir);
+		Assert.assertEquals(form.getFieldValue("Telefono"), tel);
+		Assert.assertEquals(form.getFieldValue("Email"), mail);
+		//form.setFieldValue("Enviar", "");
 		//Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
-		//pages.DynaformExecution().outDynaform();
+		//form.outDynaform();
 		//pages.Main().logout();
 	}
 

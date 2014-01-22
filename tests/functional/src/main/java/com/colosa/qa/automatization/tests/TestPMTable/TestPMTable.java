@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -21,7 +22,7 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
         
         pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
-        pages.DynaformExecution().outDynaform();
+        //form.outDynaform();
 				pages.Main().goAdmin();
         pages.Admin().newPMTable("TESTTABLE","description Table");
         pages.Admin().addField("ID","ID","VARCHAR","32",true,false,false);
@@ -31,9 +32,10 @@ public class TestPMTable extends com.colosa.qa.automatization.tests.common.Test{
         
         pages.Main().goHome();
         int casenumber = pages.Home().gotoNewCase().startCase("TestPMTables (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
-        String fieldRESULT = pages.DynaformExecution().getFieldProperty("RESULT_TEST","value");
+        String fieldRESULT = form.getFieldAttribute("RESULT_TEST", "value");
         Assert.assertEquals("PMTable does not exist in Database.", "0", fieldRESULT);
         
         FormFieldData[] fieldArray=new FormFieldData[1];

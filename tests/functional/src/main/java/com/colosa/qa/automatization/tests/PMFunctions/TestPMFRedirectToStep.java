@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,20 +22,21 @@ public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.co
         
         pages.gotoDefaultUrl();
         pages.Login().loginUser("admin","admin","workflow", "English");
-        //pages.DynaformExecution().outDynaform();
+        //form.outDynaform();
 		pages.Main().goHome();
 				
 		int casenumber = pages.Home().gotoNewCase().startCase("Test PMFRedirectToStep (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-        pages.DynaformExecution().clickButton("SUBMIT");
+        form.clickButton("SUBMIT");
 
-        String fieldSTEP = pages.DynaformExecution().getFieldValue("STEP"); //.getFieldProperty("STEP","value");
+        String fieldSTEP = form.getFieldValue("STEP"); //.getFieldAttribute("STEP","value");
 
         Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
 
 		    //pages.AssignTask().pressContinueButton();
-			//pages.DynaformExecution().outDynaform();
+			//form.outDynaform();
 			//pages.Main().logout();
 	}
 

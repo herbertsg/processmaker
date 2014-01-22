@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -25,20 +26,23 @@ public class TestPMFNewCaseTest extends com.colosa.qa.automatization.tests.commo
         int numberNewCase = pages.Home().gotoNewCase().startCase("Testeo de funciones PMFNewCase (Creador de casos)");
         
         // switch to frame the dynaform
-        //pages.DynaformExecution().intoDynaform();
+        //DynaformExecution form = pages.DynaformExecution();
+        //form.intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
         // get count value of field UID_CASE
-        int countIdCase = pages.DynaformExecution().getFieldProperty("UID_CASE","value").length();
+        int countIdCase = form.getFieldAttribute("UID_CASE", "value").length();
 
         // get number of case generated in field NUM_CASE
-        String numberCaseGenerated = pages.DynaformExecution().getFieldProperty("NUM_CASE","value");
+        String numberCaseGenerated = form.getFieldAttribute("NUM_CASE", "value");
 
         // verify if the code is validate
         Assert.assertTrue("No case has created ", (countIdCase == 32) );
         // case was create correctly
         
         // out of frame of dynaform
-        pages.DynaformExecution().outDynaform();
+        form.outDynaform();
         
         // go submenu draft
         pages.Home().gotoDraft();
@@ -47,19 +51,20 @@ public class TestPMFNewCaseTest extends com.colosa.qa.automatization.tests.commo
         pages.Home().gotoInbox().openCase(Integer.parseInt(numberCaseGenerated));
 
         // switch to frame the dynaform
-        //pages.DynaformExecution().intoDynaform();
+        //DynaformExecution form = pages.DynaformExecution();
+        //form.intoDynaform();
 
         // get value of case generated in field NUM_CASE
-        String fieldNOMBRE = pages.DynaformExecution().getFieldProperty("NOMBRE","value");
+        String fieldNOMBRE = form.getFieldAttribute("NOMBRE", "value");
 
         // get value of case generated in field APELLIDO
-        String fieldAPELLIDO = pages.DynaformExecution().getFieldProperty("APELLIDO","value");
+        String fieldAPELLIDO = form.getFieldAttribute("APELLIDO", "value");
 
         // get value of case generated in field CELULAR
-        String fieldCELULAR = pages.DynaformExecution().getFieldProperty("CELULAR","value");
+        String fieldCELULAR = form.getFieldAttribute("CELULAR", "value");
 
         // get value of case generated in field OBSERVACIONES
-        String fieldOBSERVACIONES = pages.DynaformExecution().getFieldProperty("OBSERVACIONES","value");
+        String fieldOBSERVACIONES = form.getFieldAttribute("OBSERVACIONES", "value");
 
 
         // verify if the field NOMBRE is validate

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.dynaform;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.junit.After;
@@ -22,20 +23,18 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         int numberNewCase = pages.Home().gotoNewCase().startCase("Process Conditional Show Hide (Task 1)");
-	pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("opcion", "opcion A");
-        pages.DynaformExecution().setFieldValue("profesion", "Yes");
-        pages.DynaformExecution().setFieldValue("fecha", "201399");
-        pages.DynaformExecution().setFieldValue("porcentaje", "35");
+	DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+        form.setFieldValue("opcion", "opcion A");
+        form.setFieldValue("profesion", "Yes");
+        form.setFieldValue("fecha", "201399");
+        form.setFieldValue("porcentaje", "35");
 
         // get button submit
-        WebElement buttonSUBMIT = pages.DynaformExecution().getField("send");
-
-        // click to button submit
-        buttonSUBMIT.click();
+        form.clickButton("send");
 
         // get button continue
-        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -44,11 +43,12 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
         pages.Home().gotoInbox().openCase(numberNewCase);
 
         // click to button submit
-	pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("send", "click");
+
+        form.intoDynaform();
+        form.setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -60,20 +60,21 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
 
         // create case the process and task : Testeo de funciones PMFNewCase (Creador de casos)
         numberNewCase = pages.Home().gotoNewCase().startCase("Process Conditional Show Hide (Task 1)");
-	pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("opcion", "opcion B");
-        pages.DynaformExecution().setFieldValue("titulacion][sistemas", "click");
-        
-        pages.DynaformExecution().setFieldValue("beca][conv", "click");
-        pages.DynaformExecution().setFieldValue("beca][paa", "click");
 
-        pages.DynaformExecution().setFieldValue("salario", "1000");
+        form.intoDynaform();
+        form.setFieldValue("opcion", "opcion B");
+        form.setFieldValue("titulacion][sistemas", "click");
+        
+        form.setFieldValue("beca][conv", "click");
+        form.setFieldValue("beca][paa", "click");
+
+        form.setFieldValue("salario", "1000");
 
         // click to button submit
-        pages.DynaformExecution().setFieldValue("send", "click");
+        form.setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -82,11 +83,12 @@ public class TestConditionalShowHide extends com.colosa.qa.automatization.tests.
         pages.Home().gotoInbox().openCase(numberNewCase);
 
         // click to button submit
-	pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("send", "click");
+
+        form.intoDynaform();
+        form.setFieldValue("send", "click");
 
         // get button continue
-        buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();

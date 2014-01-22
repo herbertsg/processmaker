@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmGridFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,11 +37,12 @@ public class TestPMGridFunctions extends com.colosa.qa.automatization.tests.comm
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("Test Grid Functions (Task 1)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 		for(int count=0;count<19;count++)
 		{
-			pages.DynaformExecution().gridAddNewRow("grid1");
-			pages.DynaformExecution().gridAddNewRow("grid2");
+			form.gridAddNewRow("grid1");
+			form.gridAddNewRow("grid2");
 		}
 
 		int numRow = 0;
@@ -50,28 +52,28 @@ public class TestPMGridFunctions extends com.colosa.qa.automatization.tests.comm
 		for(int count2=0;count2<20;count2++)
 		{
 			numRow = count2+1;
-			pages.DynaformExecution().setGridFieldValue("grid1", numRow, "Campo1", campo1[count2]);
-			pages.DynaformExecution().setGridFieldValue("grid1", numRow, "Salario", salario[count2]);
-			pages.DynaformExecution().setGridFieldValue("grid1", numRow, "Porcentaje", porcent[count2]);
-			pages.DynaformExecution().setGridFieldValue("grid1", numRow, "Descripcion", desc[count2]);
-			pages.DynaformExecution().setGridFieldValue("grid1", numRow, "Dropdown", drop[count2]);
+			form.setGridFieldValue("grid1", numRow, "Campo1", campo1[count2]);
+			form.setGridFieldValue("grid1", numRow, "Salario", salario[count2]);
+			form.setGridFieldValue("grid1", numRow, "Porcentaje", porcent[count2]);
+			form.setGridFieldValue("grid1", numRow, "Descripcion", desc[count2]);
+			form.setGridFieldValue("grid1", numRow, "Dropdown", drop[count2]);
 		}
 
 		for(int count3=0;count3<20;count3++)
 		{
 			numRow2 = count3+1;
-			pages.DynaformExecution().setGridFieldValue("grid2", numRow2, "Nombre", nombre[count3]);
-			pages.DynaformExecution().setGridFieldValue("grid2", numRow2, "salary", salario[count3]);
-			pages.DynaformExecution().setGridFieldValue("grid2", numRow2, "discount", descuento[count3]);
+			form.setGridFieldValue("grid2", numRow2, "Nombre", nombre[count3]);
+			form.setGridFieldValue("grid2", numRow2, "salary", salario[count3]);
+			form.setGridFieldValue("grid2", numRow2, "discount", descuento[count3]);
 		}
 
-		pages.DynaformExecution().setFieldValue("Enviar", "");
+		form.setFieldValue("Enviar", "");
 
 		for(int count4=0;count4<20;count4++)
 		{
 			numRow3 = count4+1;
 			total = Double.parseDouble(salario2[count4])-Double.parseDouble(descuento2[count4]);
-			Assert.assertEquals(fmt.format(Double.parseDouble(pages.DynaformExecution().getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
+			Assert.assertEquals(fmt.format(Double.parseDouble(form.getGridFieldValue("grid2", numRow3, "total"))), fmt.format(total));
 		}
 	}
 

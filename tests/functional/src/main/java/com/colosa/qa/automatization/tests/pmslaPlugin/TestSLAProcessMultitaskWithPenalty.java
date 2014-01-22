@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,20 +23,22 @@ public class TestSLAProcessMultitaskWithPenalty extends com.colosa.qa.automatiza
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("SLA Process - Multitask with penalty (Solicitud)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("nombre", "John");
-		pages.DynaformExecution().setFieldValue("enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("nombre", "John");
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("nombres", "John Due");
-		pages.DynaformExecution().setFieldValue("ci", "3333333");
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("nombres", "John Due");
+		form.setFieldValue("ci", "3333333");
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");
-		pages.DynaformExecution().sleep(5000);
+		form.sleep(5000);
 
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");

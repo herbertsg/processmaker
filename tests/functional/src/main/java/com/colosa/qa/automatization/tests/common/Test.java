@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.common;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.BrowserSettings;
 import com.colosa.qa.automatization.common.BrowserInstance;
 import com.colosa.qa.automatization.common.ConfigurationSettings;

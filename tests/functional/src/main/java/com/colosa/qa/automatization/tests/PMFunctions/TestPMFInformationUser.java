@@ -2,6 +2,7 @@ package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Value;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,18 +35,19 @@ public class TestPMFInformationUser extends com.colosa.qa.automatization.tests.c
         pages.Login().loginUser("admin", "admin", "workflow", "English");
         pages.Main().goHome();
         caseNum = pages.Home().gotoNewCase().startCase("PMFInformationUser (Get Information user)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 		//Verify results
-        Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "username"), pages.DynaformExecution().getFieldValue("userName"));
-        Assert.assertEquals("Invalid UserName.", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "firstname"), pages.DynaformExecution().getFieldValue("firstName"));
-        Assert.assertEquals("Invalid LastName", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "lastname"),pages.DynaformExecution().getFieldValue("lastName") );
-        Assert.assertEquals("Invalid Mail", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "mail"),pages.DynaformExecution().getFieldValue("mail") );
-        Assert.assertEquals("Invalid status", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "status"),pages.DynaformExecution().getFieldValue("status") );
-        Assert.assertEquals("Invalid Address", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "address"),pages.DynaformExecution().getFieldValue("address") );
-        Assert.assertEquals("Invalid Phone", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "phone"),pages.DynaformExecution().getFieldValue("phone") );
-        Assert.assertEquals("Invalid Fax", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "fax"),pages.DynaformExecution().getFieldValue("fax") );
-        Assert.assertEquals("Invalid Cellular", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "cellular"),pages.DynaformExecution().getFieldValue("cellular") );
-        Assert.assertEquals("Invalid birthday", pages.DynaformExecution().getGridFieldValue("userInfoGrid", 1, "birthday"),pages.DynaformExecution().getFieldValue("birthday") );
+        Assert.assertEquals("Invalid UserName.", form.getGridFieldValue("userInfoGrid", 1, "username"), form.getFieldValue("userName"));
+        Assert.assertEquals("Invalid UserName.", form.getGridFieldValue("userInfoGrid", 1, "firstname"), form.getFieldValue("firstName"));
+        Assert.assertEquals("Invalid LastName", form.getGridFieldValue("userInfoGrid", 1, "lastname"),form.getFieldValue("lastName") );
+        Assert.assertEquals("Invalid Mail", form.getGridFieldValue("userInfoGrid", 1, "mail"),form.getFieldValue("mail") );
+        Assert.assertEquals("Invalid status", form.getGridFieldValue("userInfoGrid", 1, "status"),form.getFieldValue("status") );
+        Assert.assertEquals("Invalid Address", form.getGridFieldValue("userInfoGrid", 1, "address"),form.getFieldValue("address") );
+        Assert.assertEquals("Invalid Phone", form.getGridFieldValue("userInfoGrid", 1, "phone"),form.getFieldValue("phone") );
+        Assert.assertEquals("Invalid Fax", form.getGridFieldValue("userInfoGrid", 1, "fax"),form.getFieldValue("fax") );
+        Assert.assertEquals("Invalid Cellular", form.getGridFieldValue("userInfoGrid", 1, "cellular"),form.getFieldValue("cellular") );
+        Assert.assertEquals("Invalid birthday", form.getGridFieldValue("userInfoGrid", 1, "birthday"),form.getFieldValue("birthday") );
         //pages.Main().logout();
 
 	}

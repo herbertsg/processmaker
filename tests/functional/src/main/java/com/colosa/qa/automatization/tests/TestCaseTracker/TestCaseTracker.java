@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.TestCaseTracker;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.Logger;
 import com.colosa.qa.automatization.common.Value;
@@ -26,22 +27,24 @@ public class TestCaseTracker extends com.colosa.qa.automatization.tests.common.T
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Process Case Tracker - Process Map (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("nombre", "Ian");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("nombre", "Ian");
 		pin = Value.getValue(browserInstance, FieldKeyType.ID, "form[pin]");
-		pages.DynaformExecution().setFieldValue("save", "");
+		form.setFieldValue("save", "");
 	    pages.AssignTask().pressContinueButton();
 		pages.Main().goHome();
 		pages.InputDocProcess().switchToDefault();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "");
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_SUBMIT", "");
 		pages.InputDocProcess().switchToDefault();
 		pages.CaseTracker().goTo("workflow");
-		pages.DynaformExecution().setFieldValue("CASE", String.valueOf(caseNum));
-		pages.DynaformExecution().setFieldValue("PIN", pin);
-		pages.DynaformExecution().setFieldValue("BSUBMIT", "");
+		form.setFieldValue("CASE", String.valueOf(caseNum));
+		form.setFieldValue("PIN", pin);
+		form.setFieldValue("BSUBMIT", "");
 		Logger.addLog(pages.Designer().getTaskColorStatus("Task 1"));
 		Assert.assertEquals("Completed Task", pages.Designer().getTaskColorStatus("Task 1"));
 		Logger.addLog(pages.Designer().getTaskColorStatus("Task 2"));

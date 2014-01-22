@@ -63,7 +63,7 @@ public class Profile extends Page {
                 Pages pages = new Pages(browser);
 
                 pages.InputDocProcess().switchToDefault();
-                pages.DynaformExecution().intoMainFrame();
+                //ojo form.intoMainFrame();
 
                 switch(listCases)
                 {

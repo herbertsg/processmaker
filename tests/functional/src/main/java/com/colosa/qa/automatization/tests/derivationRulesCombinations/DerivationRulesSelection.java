@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.derivationRulesCombinations;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
@@ -26,7 +27,8 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 		FormFieldData[] fieldArray = new FormFieldData[1];
 		fieldArray[0] = new FormFieldData();
 		fieldArray[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -34,7 +36,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray[0].fieldType = FieldType.BUTTON;
 		fieldArray[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 	    //cyclical task
 		pages.gotoDefaultUrl();
@@ -43,8 +45,9 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("TASKS][2][USR_UID", "Swan, William");
+
+        form.intoDynaform();
+		form.setFieldValue("TASKS][2][USR_UID", "Swan, William");
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();
 		fieldArray2[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[13]/td/input";
@@ -52,7 +55,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray2[0].fieldType = FieldType.BUTTON;
 		fieldArray2[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray2);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Manual task
 		pages.gotoDefaultUrl();
@@ -61,10 +64,11 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("name", "Charles Puyol");
-		pages.DynaformExecution().setFieldValue("amount", "3000");
-		pages.DynaformExecution().setFieldValue("send", "");
+
+        form.intoDynaform();
+		form.setFieldValue("name", "Charles Puyol");
+		form.setFieldValue("amount", "3000");
+		form.setFieldValue("send", "");
 		FormFieldData[] fieldArray3 = new FormFieldData[1];
 		fieldArray3[0] = new FormFieldData();
 		fieldArray3[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -72,7 +76,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray3[0].fieldType = FieldType.BUTTON;
 		fieldArray3[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray3);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Value based task
 		pages.gotoDefaultUrl();
@@ -81,7 +85,8 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		FormFieldData[] fieldArray4 = new FormFieldData[1];
 		fieldArray4[0] = new FormFieldData();
 		fieldArray4[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -89,7 +94,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray4[0].fieldType = FieldType.BUTTON;
 		fieldArray4[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray4);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Report to task
 		pages.gotoDefaultUrl();
@@ -98,7 +103,8 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
     	pages.Home().gotoInbox();
 		Assert.assertTrue("The case does not exist in Inbox", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		FormFieldData[] fieldArray5 = new FormFieldData[1];
 		fieldArray5[0] = new FormFieldData();
 		fieldArray5[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -106,7 +112,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray5[0].fieldType = FieldType.BUTTON;
 		fieldArray5[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray5);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Self service task
 		pages.gotoDefaultUrl();
@@ -115,10 +121,11 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("send", "");
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_CATCH", "");
+		form.intoDynaform();
+		form.setFieldValue("send", "");
 		FormFieldData[] fieldArray6 = new FormFieldData[1];
 		fieldArray6[0] = new FormFieldData();
 		fieldArray6[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -126,7 +133,7 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray6[0].fieldType = FieldType.BUTTON;
 		fieldArray6[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray6);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Self Service Value Based task
 		pages.gotoDefaultUrl();
@@ -135,18 +142,20 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		pages.Home().gotoUnassigned();
 		Assert.assertTrue("The case does not exist in Unassigned", pages.Home().existCase(caseNum));
 		pages.Home().gotoInbox().openCase(caseNum);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("BTN_CATCH", "");
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
+		form.setFieldValue("BTN_CATCH", "");
+		form.intoDynaform();
 	    pages.AssignTask().pressContinueButton();
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		//Open cases to verify Cyclical assigmnent
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		FormFieldData[] fieldArray8 = new FormFieldData[1];
 		fieldArray8[0] = new FormFieldData();
 		fieldArray8[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";
@@ -154,13 +163,14 @@ public class DerivationRulesSelection extends com.colosa.qa.automatization.tests
 		fieldArray8[0].fieldType = FieldType.BUTTON;
 		fieldArray8[0].fieldValue = "";
 		FormFiller.formFillElements( browserInstance, fieldArray8);
-		pages.DynaformExecution().outDynaform();
+		form.outDynaform();
 		pages.Main().logout();
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Derivation rules - selection (Init)");
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		FormFieldData[] fieldArray9 = new FormFieldData[1];
 		fieldArray9[0] = new FormFieldData();
 		fieldArray9[0].fieldPath = "//*[@id='frmDerivation']/div/div[2]/table/tbody/tr/td/table/tbody/tr[8]/td/input";

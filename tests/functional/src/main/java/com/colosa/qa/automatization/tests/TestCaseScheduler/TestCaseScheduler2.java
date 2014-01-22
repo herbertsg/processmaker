@@ -34,10 +34,10 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
 		String[] toArray = caseStatus.split(" ");
 		int lastCaseNum = Integer.parseInt(toArray[1]);
 		int currentCaseNum = lastCaseNum + 1;
-		pages.DynaformExecution().sleep(20000);
+		//form.sleep(20000);
 		pages.CronExecute().execute("workflow");
 		Logger.addLog("run cron.php");
-		pages.DynaformExecution().sleep(20000);
+		//form.sleep(20000);
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
@@ -46,7 +46,7 @@ public class TestCaseScheduler2 extends com.colosa.qa.automatization.tests.commo
 		pages.Admin().showCaseScheduler();
 		caseStatus = pages.Admin().lastCreateCaseStatus();
 		Assert.assertEquals("Case " + Integer.toString(currentCaseNum) + " Started successfully", caseStatus);
-		pages.DynaformExecution().sleep(20000);
+		//form.sleep(20000);
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}

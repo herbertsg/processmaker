@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.processPermissions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.ConfigurationSettings;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,22 +32,20 @@ public class TestPermissions extends com.colosa.qa.automatization.tests.common.T
         int numberNewCase = pages.Home().gotoNewCase().startCase("Process Permissions (Task 1)");
 
         // get button submit
-	pages.DynaformExecution().intoDynaform();
-        WebElement buttonSUBMIT = pages.DynaformExecution().getField("Submit");
-
-        // click to button submit
-        buttonSUBMIT.click();
+	DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+        form.clickButton("Submit");
 
         String pathFile = ConfigurationSettings.getInstance().getSetting("permissions.file.upload");
-	pages.DynaformExecution().intoDynaform();
-        pages.DynaformExecution().setFieldValue("MNU_NEW", "click");
-        pages.DynaformExecution().setFieldValue("APP_DOC_FILENAME", pathFile);
-        pages.DynaformExecution().setFieldValue("SAVE", "click");
-        pages.DynaformExecution().setFieldValue("BTN_SUBMIT", "click");
-        pages.DynaformExecution().setFieldValue("NEXT_STEP", "click");
+	form.intoDynaform();
+        form.setFieldValue("MNU_NEW", "click");
+        form.setFieldValue("APP_DOC_FILENAME", pathFile);
+        form.setFieldValue("SAVE", "click");
+        form.setFieldValue("BTN_SUBMIT", "click");
+        form.setFieldValue("NEXT_STEP", "click");
 
         // get button continue
-        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();
@@ -62,25 +61,25 @@ public class TestPermissions extends com.colosa.qa.automatization.tests.common.T
         pages.Home().gotoParticipated();
         pages.Home().gotoInbox().openCase(numberNewCase);
 
-        Boolean existDynaforms = pages.DynaformExecution().openInformationDynaforms();
+        Boolean existDynaforms = form.openInformationDynaforms();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in dynaforms not work :'(", false, existDynaforms);
         // case was create with field CELULAR correctly
         
-        Boolean existUploaded = pages.DynaformExecution().openInformationUploaded();
+        Boolean existUploaded = form.openInformationUploaded();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in inputs not work :'(", false, existUploaded);
         // case was create with field CELULAR correctly
         
-        Boolean existGenerated = pages.DynaformExecution().openInformationGenerated();
+        Boolean existGenerated = form.openInformationGenerated();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in outputs not work :'(", false, existGenerated);
         // case was create with field CELULAR correctly
 
-        pages.DynaformExecution().openCasesNotes();
+        form.openCasesNotes();
 
         //ojo valida si se abre el formulario de case notes
         Boolean existCaseNote = true;
@@ -96,25 +95,25 @@ public class TestPermissions extends com.colosa.qa.automatization.tests.common.T
         pages.Home().gotoParticipated();
         pages.Home().gotoInbox().openCase(numberNewCase);
 
-        existDynaforms = pages.DynaformExecution().openInformationDynaforms();
+        existDynaforms = form.openInformationDynaforms();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in dynaforms not work :'(", true, existDynaforms);
         // case was create with field CELULAR correctly
         
-        existUploaded = pages.DynaformExecution().openInformationUploaded();
+        existUploaded = form.openInformationUploaded();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in inputs not work :'(", true, existUploaded);
         // case was create with field CELULAR correctly
         
-        existGenerated = pages.DynaformExecution().openInformationGenerated();
+        existGenerated = form.openInformationGenerated();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in outputs not work :'(", true, existGenerated);
         // case was create with field CELULAR correctly
 
-        pages.DynaformExecution().openCasesNotes();
+        form.openCasesNotes();
 
         // verify if the field CELULAR is validate
         Assert.assertEquals("The Permissions in case notes not work :'(", true, existCaseNote);

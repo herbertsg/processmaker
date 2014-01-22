@@ -1,5 +1,5 @@
 package com.colosa.qa.automatization.tests.PMFields;
-import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,15 +19,16 @@ public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Tes
         pages.Main().goHome();
         int casenumber=pages.Home().gotoNewCase().startCase("TestMask (Task 1)");
 
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-        pages.DynaformExecution().setFieldValue("MASK1", "123456789.02");
-        pages.DynaformExecution().setFieldValue("MASK2", "123,02");
-        pages.DynaformExecution().setFieldValue("MASK_BEFORE", "123456789.02");
-        pages.DynaformExecution().setFieldValue("MASK_AFTER", "123,12");
-        pages.DynaformExecution().setFieldValue("MASK_OTHER1", "123456789.023");
-        pages.DynaformExecution().setFieldValue("MASK_OTHER2", "123,023");
-        pages.DynaformExecution().clickButton("SUBMIT");
+        form.setFieldValue("MASK1", "123456789.02");
+        form.setFieldValue("MASK2", "123,02");
+        form.setFieldValue("MASK_BEFORE", "123456789.02");
+        form.setFieldValue("MASK_AFTER", "123,12");
+        form.setFieldValue("MASK_OTHER1", "123456789.023");
+        form.setFieldValue("MASK_OTHER2", "123,023");
+        form.clickButton("SUBMIT");
 
         pages.AssignTask().pressContinueButton();
 
@@ -35,18 +36,17 @@ public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Tes
         //Assert.assertTrue("The case does not exist in inbox", pages.Home().gotoInbox().existCase(casenumber));
         pages.Home().gotoInbox().openCase(casenumber);
 
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
 
-        pages.DynaformExecution().intoDynaform();
-
-
-		String fieldMASK1 = pages.DynaformExecution().getFieldProperty("MASK1","value");
-		String fieldMASK2 = pages.DynaformExecution().getFieldProperty("MASK2","value");
+		String fieldMASK1 = form2.getFieldAttribute("MASK1", "value");
+		String fieldMASK2 = form2.getFieldAttribute("MASK2", "value");
 		
-		String fieldMASK_BEFORE = pages.DynaformExecution().getFieldProperty("MASK_BEFORE","value");
-		String fieldMASK_AFTER = pages.DynaformExecution().getFieldProperty("MASK_AFTER","value");
+		String fieldMASK_BEFORE = form2.getFieldAttribute("MASK_BEFORE", "value");
+		String fieldMASK_AFTER = form2.getFieldAttribute("MASK_AFTER", "value");
 		
-		String fieldMASK_OTHER1 = pages.DynaformExecution().getFieldProperty("MASK_OTHER1","value");
-		String fieldMASK_OTHER2 = pages.DynaformExecution().getFieldProperty("MASK_OTHER2","value");
+		String fieldMASK_OTHER1 = form2.getFieldAttribute("MASK_OTHER1", "value");
+		String fieldMASK_OTHER2 = form2.getFieldAttribute("MASK_OTHER2", "value");
 				
 
         Assert.assertEquals("Mask does not exist", "123,456,789.02", fieldMASK1);
@@ -58,7 +58,7 @@ public class MaskFieldTest extends com.colosa.qa.automatization.tests.common.Tes
         Assert.assertEquals("Mask other value does not exist", "123,456,789.02", fieldMASK_OTHER1);
         Assert.assertEquals("Mask other value(,) does not exist", "123,02", fieldMASK_OTHER2);
 
-        //pages.DynaformExecution().clickButton("SUBMIT");
+        //form.clickButton("SUBMIT");
 
         //pages.AssignTask().pressContinueButton();
 

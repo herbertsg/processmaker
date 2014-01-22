@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,30 +23,34 @@ public class TestSLAMultipleTasksWithConditionAndPenalty extends com.colosa.qa.a
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process - Multiple Task with Condition and Penalty (Requerimiento de Personal)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("eleccion", "first");
-		pages.DynaformExecution().setFieldValue("save", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("eleccion", "first");
+		form.setFieldValue("save", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("save", "");
+
+        form.intoDynaform();
+		form.setFieldValue("save", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		pages.OutputDocProcess().downloadDocFile();
 		//pages.OutputDocProcess().downloadPdfFile();
-		pages.DynaformExecution().setFieldValue("NEXT_STEP", "");
+		form.setFieldValue("NEXT_STEP", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("finalizacion", "");
+
+        form.intoDynaform();
+		form.setFieldValue("finalizacion", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");
-		pages.DynaformExecution().sleep(5000);
+		form.sleep(5000);
 
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,10 +23,11 @@ public class TestSLAProcessByParalellEvaluation extends com.colosa.qa.automatiza
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process Paralell by Evaluation (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("nombre", "Roberto Hernandez");
-		pages.DynaformExecution().setFieldValue("seleccion", "tarea 3");
-		pages.DynaformExecution().setFieldValue("enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("nombre", "Roberto Hernandez");
+		form.setFieldValue("seleccion", "tarea 3");
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");
@@ -34,19 +36,22 @@ public class TestSLAProcessByParalellEvaluation extends com.colosa.qa.automatiza
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("ci", "15648796");
-		pages.DynaformExecution().setFieldValue("verificar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("ci", "15648796");
+		form.setFieldValue("verificar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");

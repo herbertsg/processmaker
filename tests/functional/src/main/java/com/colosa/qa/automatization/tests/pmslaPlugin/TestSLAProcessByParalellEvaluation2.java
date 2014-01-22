@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,19 +24,22 @@ public class TestSLAProcessByParalellEvaluation2 extends com.colosa.qa.automatiz
 		pages.Main().goHome();
 		
 		numCase = pages.Home().openFirstCase();
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("ci", "15648796");
-		pages.DynaformExecution().setFieldValue("verificar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("ci", "15648796");
+		form.setFieldValue("verificar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");

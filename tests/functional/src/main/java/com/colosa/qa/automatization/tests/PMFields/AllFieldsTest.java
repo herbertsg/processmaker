@@ -1,5 +1,8 @@
 package com.colosa.qa.automatization.tests.PMFields;
 
+import com.colosa.qa.automatization.common.WaitTool;
+import com.colosa.qa.automatization.pages.DynaformExecution;
+import com.colosa.qa.automatization.pages.Home;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,143 +42,183 @@ public class AllFieldsTest extends com.colosa.qa.automatization.tests.common.Tes
 
 		pages.gotoDefaultUrl();
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
-		pages.Main().goHome();
-		caseNum = pages.Home().gotoNewCase().startCase("FormularioTodosCampos (Task 1)");
+		Home home = pages.Main().goHome();
+		caseNum = home.gotoNewCase().startCase("FormularioTodosCampos (Task 1)");
 		
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.addPMFieldToForm("hiddenField");
+        form.intoDynaform();
 
 		//test textfield
-		pages.DynaformExecution().setFieldValue("textField", "Herbert");
-		String fieldValue = pages.DynaformExecution().getFieldValue("textField");
+		form.setFieldValue("textField", "Herbert");
+		String fieldValue = form.getFieldValue("textField");
 		Assert.assertEquals(fieldValue, "Herbert");
 
 		//test currencyfield
-		pages.DynaformExecution().setFieldValue("currencyField", "43.14");
-		fieldValue = pages.DynaformExecution().getFieldValue("currencyField");
+		form.setFieldValue("currencyField", "43.14");
+		fieldValue = form.getFieldValue("currencyField");
 		Assert.assertEquals(fieldValue, "43.14");
 
 		//test percentageField
-		pages.DynaformExecution().setFieldValue("percentageField", "43");
-		fieldValue = pages.DynaformExecution().getFieldValue("percentageField");
+		form.setFieldValue("percentageField", "43");
+		fieldValue = form.getFieldValue("percentageField");
 		Assert.assertEquals(fieldValue, "43 %");
 
 		//test passwordField
-		pages.DynaformExecution().setFieldValue("passwordField", "herbert");
-		fieldValue = pages.DynaformExecution().getFieldValue("passwordField");
+		form.setFieldValue("passwordField", "herbert");
+		fieldValue = form.getFieldValue("passwordField");
 		Assert.assertEquals(fieldValue, "herbert");
 		
 		//test suggestField
-		pages.DynaformExecution().setFieldValue("suggestField", "Bolivia");
-		fieldValue = pages.DynaformExecution().getFieldValue("suggestField");
+		form.setFieldValue("suggestField", "Bolivia");
+        WaitTool.waitForValueToChange(browserInstance.getInstanceDriver(), form.getPMField("suggestField").getWebElement(), "", 5);
+        fieldValue = form.getFieldValue("suggestField");
 		Assert.assertEquals(fieldValue, "BO");
-		fieldValue = pages.DynaformExecution().getFieldText("suggestField");
+		fieldValue = form.getFieldText("suggestField");
 		Assert.assertEquals(fieldValue, "Bolivia");
 
 		//test textAreaField
-		pages.DynaformExecution().setFieldValue("textAreaField", "Bolivia linda \\n");
-		fieldValue = pages.DynaformExecution().getFieldValue("textAreaField");
+		form.setFieldValue("textAreaField", "Bolivia linda \\n");
+		fieldValue = form.getFieldValue("textAreaField");
 		Assert.assertEquals(fieldValue, "Bolivia linda \\n");
 
 		//test buttonField
-		pages.DynaformExecution().setFieldValue("buttonField", "");
+		form.setFieldValue("buttonField", "");
 		
 		//test dropdownField
-		pages.DynaformExecution().setFieldValue("dropdownField", "dos");
-		fieldValue = pages.DynaformExecution().getFieldValue("dropdownField");
+		form.setFieldValue("dropdownField", "dos");
+		fieldValue = form.getFieldValue("dropdownField");
 		Assert.assertEquals(fieldValue, "2");		
 
 		//test yesNoField
-		pages.DynaformExecution().setFieldValue("yesNoField", "Yes");
-		fieldValue = pages.DynaformExecution().getFieldValue("yesNoField");
+		form.setFieldValue("yesNoField", "Yes");
+		fieldValue = form.getFieldValue("yesNoField");
 		Assert.assertEquals(fieldValue, "1");
 
 		//test listBoxField
-		pages.DynaformExecution().setFieldValue("listBoxField", "tres");
-		fieldValue = pages.DynaformExecution().getFieldValue("listBoxField");
+		form.setFieldValue("listBoxField", "tres");
+		fieldValue = form.getFieldValue("listBoxField");
 		Assert.assertEquals(fieldValue, "3");	
 
 		//test checkBoxField
-		pages.DynaformExecution().setFieldValue("checkBoxField", "");
-		fieldValue = pages.DynaformExecution().getFieldValue("checkBoxField");
+		form.setFieldValue("checkBoxField", "");
+		fieldValue = form.getFieldValue("checkBoxField");
 		Assert.assertEquals(fieldValue, "true");
 
+        //test checkgroup
+        form.setCheckBoxGroupField("checkGroupField", "1");
+        form.setCheckBoxGroupField("checkGroupField", "2");
+        form.setCheckBoxGroupField("checkGroupField", "2");
+        form.setCheckBoxGroupField("checkGroupField", "3");
+        Assert.assertEquals(form.getCheckBoxGroupFieldValue("checkGroupField","1"), "true");
+        Assert.assertEquals(form.getCheckBoxGroupFieldValue("checkGroupField","2"), "false");
+        Assert.assertEquals(form.getCheckBoxGroupFieldValue("checkGroupField","3"), "true");
+
+        form.setRadioButtonGroupField("radioGroupField", "1");
+        form.setRadioButtonGroupField("radioGroupField", "2");
+        form.setRadioButtonGroupField("radioGroupField", "3");
+        Assert.assertEquals(form.getRadioButtonGroupFieldValue("radioGroupField","1"), "false");
+        Assert.assertEquals(form.getCheckBoxGroupFieldValue("radioGroupField","2"), "false");
+        Assert.assertEquals(form.getCheckBoxGroupFieldValue("radioGroupField","3"), "true");
+
 		//test datefield
-		pages.DynaformExecution().setFieldValue("dateField", "2013-01-18");
-		String dateValue = pages.DynaformExecution().getFieldValue("dateField");
+		form.setFieldValue("dateField", "2013-01-18");
+		String dateValue = form.getFieldValue("dateField");
 		Assert.assertEquals(dateValue, "2013-01-18");
 
 		//test hiddenField
-		pages.DynaformExecution().setFieldValue("hiddenField", "Herbert");
-		fieldValue = pages.DynaformExecution().getFieldValue("hiddenField");
+		form.setFieldValue("hiddenField", "Herbert");
+		fieldValue = form.getFieldValue("hiddenField");
 		Assert.assertEquals(fieldValue, "hiddenField");
 
 		//test linkField
-		pages.DynaformExecution().setFieldValue("linkField", "");
+		form.clickButton("linkField");
 
 		//test fileField
-		//pages.DynaformExecution().setFieldValue("fileField", "c:\\herbert\\Saal");
+		//form.setFieldValue("fileField", "c:\\herbert\\Saal");
 
-
-		pages.DynaformExecution().gridAddNewRow("gridField");
+		form.gridAddNewRow("gridField");
 
 		//form[gridField][1][gridTextField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 1, "gridTextField", "hola");
+		form.setGridFieldValue("gridField", 1, "gridTextField", "hola");
 
-		String gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 1, "gridTextField");
+		String gridValue =  form.getGridFieldValue("gridField", 1, "gridTextField");
 
 		Assert.assertEquals(gridValue, "hola");
 
 		//form[gridField][2][gridCurrencyField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 2, "gridCurrencyField", "43.14");
+		form.setGridFieldValue("gridField", 2, "gridCurrencyField", "43.14");
 
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridCurrencyField");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridCurrencyField");
 
 		Assert.assertEquals(gridValue, "43.14");
 
 		//form[gridField][1][gridPercentageField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 2, "gridPercentageField", "43.14");
+		form.setGridFieldValue("gridField", 2, "gridPercentageField", "43.14");
 
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridPercentageField");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridPercentageField");
 
 		Assert.assertEquals(gridValue, "43.14 %");
 
 		//form[gridField][1][gridTextAreaField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 2, "gridTextAreaField", "Hola Mundo!!!!");
+		form.setGridFieldValue("gridField", 2, "gridTextAreaField", "Hola Mundo!!!!");
 
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridTextAreaField");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridTextAreaField");
 
 		Assert.assertEquals(gridValue, "Hola Mundo!!!!");
 
 
 		//form[gridField][1][gridDropDownField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 2, "gridDropDownField", "dos");
+		form.setGridFieldValue("gridField", 2, "gridDropDownField", "dos");
 
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridDropDownField");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridDropDownField");
 
 		Assert.assertEquals(gridValue, "2");
 
 		//form[gridField][1][gridYesNoField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 1, "gridYesNoField", "Yes");
+		form.setGridFieldValue("gridField", 1, "gridYesNoField", "Yes");
 
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 1, "gridYesNoField");
+		gridValue =  form.getGridFieldValue("gridField", 1, "gridYesNoField");
 
 		Assert.assertEquals(gridValue, "1");
 
 
 		//form[gridField][1][gridCheckBoxField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 1, "gridCheckBoxField", "Yes");
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 1, "gridCheckBoxField");
+		form.setGridFieldValue("gridField", 1, "gridCheckBoxField", "Yes");
+		gridValue =  form.getGridFieldValue("gridField", 1, "gridCheckBoxField");
 		Assert.assertEquals(gridValue, "true");
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridCheckBoxField");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridCheckBoxField");
 		Assert.assertEquals(gridValue, "false");
 
 		//form[gridField][1][gridDateField]
-		pages.DynaformExecution().setGridFieldValue("gridField", 2, "gridDateField", "2013-04-05");
-		gridValue =  pages.DynaformExecution().getGridFieldValue("gridField", 2, "gridDateField");
+		form.setGridFieldValue("gridField", 2, "gridDateField", "2013-04-05");
+		gridValue =  form.getGridFieldValue("gridField", 2, "gridDateField");
 		Assert.assertEquals(gridValue, "2013-04-05");
+
+		//test the second grid
+        form.gridAddNewRow("grid2");
+        form.gridAddNewRow("grid2");
+        form.gridAddNewRow("grid2");
+
+        //test suggest field
+        form.setGridFieldValue("grid2", 2, "gridSuggestField", "Argentina");
+        //WaitTool.waitForValueToChange(browserInstance.getInstanceDriver(), form.getPMField("suggestField").getWebElement(), "", 5);
+        Assert.assertEquals(form.getGridFieldValue("grid2", 2, "gridSuggestField"), "AR");
+        //fieldValue = form.getFieldText("suggestField");
+        Assert.assertEquals(form.getGridFieldtext("grid2", 2, "gridSuggestField"), "Argentina");
+
+        //test hidden field
+        form.setGridFieldValue("grid2", 1, "gridHiddenField", "Herbert");
+        Assert.assertEquals(form.getGridFieldValue("grid2", 1, "gridHiddenField"), "Herbert");
+
+        //test link field
+        //form[grid2][1][gridLinkField]
+
 
 		//pages.InputDocProcess().switchToDefault();
 		//pages.Main().logout();
+
+
 	}
 
     @After

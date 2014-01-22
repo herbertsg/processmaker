@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.subprocessesTest;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -26,11 +27,12 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("Subprocess Test 1 (Task 1)");
        	caseNum++;
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Nombre", "");
-        pages.DynaformExecution().setFieldValue("Nombre", lastName);
-        pages.DynaformExecution().setFieldValue("Salario", salary);
-        pages.DynaformExecution().setFieldValue("Enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("Nombre", "");
+        form.setFieldValue("Nombre", lastName);
+        form.setFieldValue("Salario", salary);
+        form.setFieldValue("Enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.Main().logout();
 	/*}
@@ -42,12 +44,13 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.Login().loginUser("iver", "sample", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(caseNum);
-        pages.DynaformExecution().intoDynaform();
 
-        Assert.assertEquals(lastName, pages.DynaformExecution().getFieldValue("lastname"));
-        Assert.assertEquals(salary, pages.DynaformExecution().getFieldValue("salary"));
-        Assert.assertEquals(desc, pages.DynaformExecution().getField("descripcion"));
-		pages.DynaformExecution().setFieldValue("Send", "");
+        form.intoDynaform();
+
+        Assert.assertEquals(lastName, form.getFieldValue("lastname"));
+        Assert.assertEquals(salary, form.getFieldValue("salary"));
+        Assert.assertEquals(desc, form.getFieldValue("descripcion"));
+		form.setFieldValue("Send", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.Main().logout();
 	/*}
@@ -59,8 +62,9 @@ public class SubprocessesTest extends com.colosa.qa.automatization.tests.common.
 		pages.Main().goHome();
 		pages.Home().gotoInbox().openCase(caseNum);
 
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("Send", "");
+
+        form.intoDynaform();
+		form.setFieldValue("Send", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();

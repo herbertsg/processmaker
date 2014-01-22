@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.testsJavascript;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.After;
@@ -20,18 +21,19 @@ public class TestJSGetRow extends com.colosa.qa.automatization.tests.common.Test
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("JS GetRow (Task 1)");
-		pages.DynaformExecution().intoDynaform();
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-		pages.DynaformExecution().setFieldValue("Nombre", "Favian");
-		pages.DynaformExecution().setFieldValue("Salario", "231,321,321,321,231,321,321.4564");
-		pages.DynaformExecution().setFieldValue("Dropdwn", "Value4");
-		pages.DynaformExecution().setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
-		pages.DynaformExecution().setFieldValue("Cargar", "");
+		form.setFieldValue("Nombre", "Favian");
+		form.setFieldValue("Salario", "231,321,321,321,231,321,321.4564");
+		form.setFieldValue("Dropdwn", "Value4");
+		form.setFieldValue("Descripcion", "Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba Prueba");
+		form.setFieldValue("Cargar", "");
 
-		Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("grd1", 1, "Nombre"), pages.DynaformExecution().getFieldValue("Nombre"));
-		Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("grd1", 1, "Salario"), pages.DynaformExecution().getFieldValue("Salario"));
-		Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("grd1", 1, "Dropdwn"), pages.DynaformExecution().getFieldValue("Dropdwn"));
-		Assert.assertEquals(pages.DynaformExecution().getGridFieldValue("grd1", 1, "Descripcion"), pages.DynaformExecution().getFieldValue("Descripcion"));
+		Assert.assertEquals(form.getGridFieldValue("grd1", 1, "Nombre"), form.getFieldValue("Nombre"));
+		Assert.assertEquals(form.getGridFieldValue("grd1", 1, "Salario"), form.getFieldValue("Salario"));
+		Assert.assertEquals(form.getGridFieldValue("grd1", 1, "Dropdwn"), form.getFieldValue("Dropdwn"));
+		Assert.assertEquals(form.getGridFieldValue("grd1", 1, "Descripcion"), form.getFieldValue("Descripcion"));
 		pages.InputDocProcess().switchToDefault();
 		pages.Main().logout();
 	}

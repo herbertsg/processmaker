@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmslaPlugin;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
@@ -26,9 +27,10 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("SLA Process Selection Routing Rule (Monto)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("monto", "123165465");
-		pages.DynaformExecution().setFieldValue("convertir", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("monto", "123165465");
+		form.setFieldValue("convertir", "");
 		
 		FormFieldData[] fieldArray2 = new FormFieldData[1];
 		fieldArray2[0] = new FormFieldData();
@@ -40,13 +42,15 @@ public class TestSLAProcessSelectionRoutingRule extends com.colosa.qa.automatiza
 
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("convertir", "");
+
+        form.intoDynaform();
+		form.setFieldValue("convertir", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.Home().gotoInbox().openCase(numCase);
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("enviar", "");
+
+        form.intoDynaform();
+		form.setFieldValue("enviar", "");
 		Assert.assertTrue(pages.InputDocProcess().continuebtn());
 
 		pages.CronExecute().execute("workflow");

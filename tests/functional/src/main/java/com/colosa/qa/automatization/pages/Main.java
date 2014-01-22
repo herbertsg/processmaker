@@ -52,7 +52,7 @@ public class Main extends Page{
         this.weSectionButton.click();
     }*/
 
-    public void goHome() throws FileNotFoundException, IOException, Exception{
+    public Home goHome() throws FileNotFoundException, IOException, Exception{
 
         //verify that we are in the correct page
         verifyPage();
@@ -71,6 +71,7 @@ public class Main extends Page{
         //browser.waitForDocumentCompleted(15);
 
         //Logger.addLog("Main.gotoHome4");
+        return new Home(browser);
     }
 
     public void goDesigner() throws FileNotFoundException, IOException, Exception{

@@ -28,13 +28,14 @@ public class TestPMFCreateUsers extends com.colosa.qa.automatization.tests.commo
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		numCase = pages.Home().gotoNewCase().startCase("Test PMFCreateUsers (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("userName", "felipe");
-		pages.DynaformExecution().setFieldValue("Nombre", "Felipe");
-		pages.DynaformExecution().setFieldValue("Apellido", "Hernandez");
-		pages.DynaformExecution().setFieldValue("Email", "felipe@empresa.com");
-		pages.DynaformExecution().setFieldValue("Password", "azsxdcfv");
-		pages.DynaformExecution().setFieldValue("Enviar", "");
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("userName", "felipe");
+		form.setFieldValue("Nombre", "Felipe");
+		form.setFieldValue("Apellido", "Hernandez");
+		form.setFieldValue("Email", "felipe@empresa.com");
+		form.setFieldValue("Password", "azsxdcfv");
+		form.setFieldValue("Enviar", "");
 			
 		pages.Main().goAdmin();
 		pages.Admin().goToUsers();

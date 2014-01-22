@@ -4,6 +4,7 @@ import com.colosa.qa.automatization.common.FieldKeyType;
 import com.colosa.qa.automatization.common.FieldType;
 import com.colosa.qa.automatization.common.FormFieldData;
 import com.colosa.qa.automatization.common.FormFiller;
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +25,8 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 				pages.Main().goHome();
         
         int casenumber = pages.Home().gotoNewCase().startCase("TestPMFSendMessage (Task 1)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
         
         FormFieldData[] fieldArray=new FormFieldData[4];
 		    fieldArray[0]=new FormFieldData();
@@ -54,12 +56,13 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
     		
     		FormFiller.formFillElements(browserInstance, fieldArray);
 		    pages.AssignTask().pressContinueButton();
-        pages.DynaformExecution().outDynaform();
+        form.outDynaform();
 
     		pages.Home().gotoInbox();
 		    Assert.assertTrue("The case does not exist in inbox", pages.Home().existCase(casenumber));
 		    pages.Home().gotoInbox().openCase(casenumber);
-		    pages.DynaformExecution().intoDynaform();
+
+        form.intoDynaform();
 		    FormFieldData[] fieldArray1=new FormFieldData[1];
 		    fieldArray1[0]=new FormFieldData();
 				fieldArray1[0].fieldPath="form[SUBMIT]";
@@ -67,19 +70,19 @@ public class TestPMFSendMessageTest extends com.colosa.qa.automatization.tests.c
 		    fieldArray1[0].fieldType=FieldType.BUTTON;
 		    fieldArray1[0].fieldValue="";
 								
-				String fieldSEND = pages.DynaformExecution().getFieldProperty("SEND","value");
+				String fieldSEND = form.getFieldAttribute("SEND", "value");
 				Assert.assertEquals("Mail not sent", fieldSEND, "1");
 		    
 		    FormFiller.formFillElements(browserInstance, fieldArray1);
 		    pages.AssignTask().pressContinueButton();
-        pages.DynaformExecution().outDynaform();
+        form.outDynaform();
 		    pages.Main().goAdmin();
 				pages.Admin().goToLogs();
 				pages.Admin().showEmailLogs();
 				
 		    String emStatus = pages.Admin().emailStatus(casenumber);
 		    Assert.assertEquals("Mail not sent", emStatus, "Sent");
-			pages.DynaformExecution().outDynaform();
+			form.outDynaform();
 			pages.Main().logout();
 	}
 

@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.webEntry;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -38,10 +39,12 @@ public class TestWebEntry extends com.colosa.qa.automatization.tests.common.Test
         pages.Home().gotoInbox().openCase(numberNewCase);
 
         // get the value of field NAME after the form
-        String fielNAME = pages.DynaformExecution().getFieldValue("NAME");
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+        String fielNAME = form.getFieldValue("NAME");
 
         // get the value of field LAST_NAME after the form
-        String fielLAST_NAME = pages.DynaformExecution().getFieldValue("LAST_NAME");
+        String fielLAST_NAME = form.getFieldValue("LAST_NAME");
 
         // verify if the field NAME is validate
         Assert.assertEquals("The variables the webentry not work :'(", fielNAME, "Brayan");
@@ -52,10 +55,10 @@ public class TestWebEntry extends com.colosa.qa.automatization.tests.common.Test
         // trigger after the form working
 
         // click to button submit
-        pages.DynaformExecution().setFieldValue("Submit", "click");
+        form.setFieldValue("Submit", "click");
 
         // get button continue
-        WebElement buttonContinueSubmit = pages.DynaformExecution().getObject("//*[@id='btnContinue']");
+        WebElement buttonContinueSubmit = form.getObject("//*[@id='btnContinue']");
 
         // click to button continue
         buttonContinueSubmit.click();

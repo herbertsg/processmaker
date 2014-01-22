@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class AssignTask extends Page {
     WebElement frmDerivation;
+    List<WebElement> auxListElements = null;
 
     public AssignTask(BrowserInstance browser) throws Exception {
         super(browser);
@@ -41,12 +42,13 @@ public class AssignTask extends Page {
         Logger.addLog("wait for casesgrid ...");
         //browser.waitForElement(By.id("processesFilter"), 10);
 
-        WebElement frmDerivation = browser.findElementById("frmDerivation");
+        WebElement frmDerivation = browser.getInstanceDriver().findElement(By.id("frmDerivation"));
 
-        String assignTaskText = browser.findElementByCssSelector("td.FormTitle").getText();
-
-        if(!assignTaskText.equals("Assign Task")){
-            throw new  Exception("Not valid page, we are not in Assign Task page");
+        auxListElements = frmDerivation.findElements(By.cssSelector("td.FormTitle"));
+        if(auxListElements.size() > 0){
+            if(!auxListElements.get(0).getText().equals("Assign Task")){
+                throw new  Exception("Not valid page, we are not in Assign Task page");
+            }
         }
     }
 

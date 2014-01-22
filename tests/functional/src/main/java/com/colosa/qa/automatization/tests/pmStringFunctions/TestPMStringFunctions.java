@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.pmStringFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Test;
 
@@ -23,12 +24,13 @@ public class TestPMStringFunctions extends com.colosa.qa.automatization.tests.co
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		pages.Home().gotoNewCase().startCase("PM String Functions (Task 1)");
-		pages.DynaformExecution().intoDynaform();
-		pages.DynaformExecution().setFieldValue("upperC", str1);
-		pages.DynaformExecution().setFieldValue("lowC", str2);
-		pages.DynaformExecution().setFieldValue("capital", str3);
-		pages.DynaformExecution().setFieldValue("Send", "");
-		//pages.DynaformExecution().sleep(15000);
+		DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
+		form.setFieldValue("upperC", str1);
+		form.setFieldValue("lowC", str2);
+		form.setFieldValue("capital", str3);
+		form.setFieldValue("Send", "");
+		//form.sleep(15000);
         pages.InputDocProcess().switchToDefault();
         pages.Main().logout();
 

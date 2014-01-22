@@ -1,5 +1,6 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
+import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,13 +22,14 @@ public class TestPMFDeleteCase extends com.colosa.qa.automatization.tests.common
         caseNum = pages.Home().gotoNewCase().startCase("PMFDeleteCase (Create case)");
 
         pages.Home().gotoNewCase().startCase("PMFDeleteCase (Delete case)");
-        pages.DynaformExecution().intoDynaform();
+        DynaformExecution form = pages.DynaformExecution();
+        form.intoDynaform();
 
-        pages.DynaformExecution().setFieldValue("numcase", Integer.toString(caseNum));
+        form.setFieldValue("numcase", Integer.toString(caseNum));
 
-        pages.DynaformExecution().clickButton("send");
+        form.clickButton("send");
 
-        Assert.assertEquals("Error Case not deleted.", pages.DynaformExecution().getFieldValue("result"), "BORRADO");
+        Assert.assertEquals("Error Case not deleted.", form.getFieldValue("result"), "BORRADO");
 
         pages.Main().logout();
     }
