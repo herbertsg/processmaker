@@ -61,11 +61,11 @@ import org.junit.runners.Suite.SuiteClasses;
                   */
 @RunWith(value = Suite.class)
 @SuiteClasses({
-                //dependentFields.class,
-                //javascriptExecution.class,
-                //notifications.class,
+                dependentFields.class,
+                javascriptExecution.class,
+                notifications.class,
                 ////outputDocuments.class, //mejorar asserts  3
-                //PMFields.class/*,
+                PMFields.class,
                 PMFunctions.class/*,
                 ////pmGridFunctions.class, //mejorar test, añadir formato comas, order grid, evaluate function
                 ////pmStringFunctions.class, //mejorar asserts, no tiene, mejorar las cadenas de pruebas
