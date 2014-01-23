@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.pages.DynaformExecution;
+import com.colosa.qa.automatization.pages.EndOfProcess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,18 +25,16 @@ public class TestPMFUnpauseCase extends com.colosa.qa.automatization.tests.commo
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Init)");
-        DynaformExecution form = pages.DynaformExecution();
-        form.intoDynaform();
-        form.pauseCase().clickPauseButton();
+        pages.EndOfProcess().pauseCase().clickPauseButton();
 
         Assert.assertTrue("The case does not exist in Paused", pages.Home().gotoPaused().existCase(caseNum));
 
         pages.Home().gotoNewCase().startCase("PMFUnpauseCase (Unpause Case)");
 
-
-        form.intoDynaform();
-        form.setFieldValue("caseNumber", Integer.toString(caseNum));
-        form.clickButton("ok");
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
+        form2.setFieldValue("caseNumber", Integer.toString(caseNum));
+        form2.clickButton("ok");
 
         //the case must be unpaused and returned to draft list
         Assert.assertTrue("The case was not unpaused",pages.Home().gotoDraft().existCase(caseNum));

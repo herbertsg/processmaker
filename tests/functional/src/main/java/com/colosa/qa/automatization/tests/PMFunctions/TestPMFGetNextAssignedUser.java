@@ -52,14 +52,15 @@ public class TestPMFGetNextAssignedUser extends com.colosa.qa.automatization.tes
         pages.Main().goHome();
         pages.Home().gotoInbox().openCase(caseNum);
 
-        form.intoDynaform();
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
 
-        String fieldNEXT_USER_UID = form.getFieldAttribute("NEXT_USER_UID", "value");
-        String fieldQUERY_NEXT_USER = form.getFieldAttribute("QUERY_NEXT_USER", "value");
+        String fieldNEXT_USER_UID = form2.getFieldAttribute("NEXT_USER_UID", "value");
+        String fieldQUERY_NEXT_USER = form2.getFieldAttribute("QUERY_NEXT_USER", "value");
 
         Assert.assertEquals("Different user id detected. Could not get the next Assigned user Aaron.", fieldNEXT_USER_UID, fieldQUERY_NEXT_USER);
 
-        pages.Main().logout();
+        //pages.Main().logout();
 
 	}
 

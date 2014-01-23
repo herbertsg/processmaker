@@ -50,11 +50,12 @@ public class TestPMFGetLabel extends com.colosa.qa.automatization.tests.common.T
 		form.clickButton("Enviar");
 		checkGroup = check + " " + check2 + " " + check3 + " ";
 
-        form.intoDynaform();
-		Assert.assertEquals(form.getFieldValue("Recover"), dropdwn);
-		Assert.assertEquals(form.getFieldValue("lstValue"), list);
-		Assert.assertEquals(form.getFieldValue("rdValue"), radio);
-		Assert.assertEquals(form.getFieldValue("chkValue"), checkGroup);
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
+		Assert.assertEquals(form2.getFieldValue("Recover"), dropdwn);
+		Assert.assertEquals(form2.getFieldValue("lstValue"), list);
+		Assert.assertEquals(form2.getFieldValue("rdValue"), radio);
+		Assert.assertEquals(form2.getFieldValue("chkValue"), checkGroup);
 		//form.sleep(15000);
 		//pages.InputDocProcess().switchToDefault();
 		//pages.Main().logout();

@@ -36,13 +36,14 @@ public class TestPMFTaskCase extends com.colosa.qa.automatization.tests.common.T
 
     	pages.Home().gotoInbox().openCase(caseNum);
 
-        form.intoDynaform();
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
 		//int numListCases = Integer.parseInt(Value.getValue(browserInstance, FieldKeyType.ID, "form[longTasksCases]"));
-        int numListCases = Integer.parseInt(form.getFieldValue("longTasksCases"));
+        int numListCases = Integer.parseInt(form2.getFieldValue("longTasksCases"));
 		for(int i=1; i<numListCases; i++){
 			//Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[taskList]["+ i + "][guid]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[tasksQuery][" + i + "][TAS_UID]"));
-            Assert.assertEquals(form.getGridFieldValue("taskList",i,"guid"),
-                    form.getGridFieldValue("tasksQuery", i, "TAS_UID"));
+            Assert.assertEquals(form2.getGridFieldValue("taskList",i,"guid"),
+                    form2.getGridFieldValue("tasksQuery", i, "TAS_UID"));
         }
 		//form.clickButton("continue");
 

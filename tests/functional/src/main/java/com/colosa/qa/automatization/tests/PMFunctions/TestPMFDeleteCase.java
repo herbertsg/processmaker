@@ -29,9 +29,11 @@ public class TestPMFDeleteCase extends com.colosa.qa.automatization.tests.common
 
         form.clickButton("send");
 
-        Assert.assertEquals("Error Case not deleted.", form.getFieldValue("result"), "BORRADO");
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
+        Assert.assertEquals("Error Case not deleted.", form2.getFieldValue("result"), "BORRADO");
 
-        pages.Main().logout();
+        //pages.Main().logout();
     }
 
     public TestPMFDeleteCase(String browserName) throws IOException {

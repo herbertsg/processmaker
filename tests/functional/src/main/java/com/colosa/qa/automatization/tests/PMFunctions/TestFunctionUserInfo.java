@@ -33,27 +33,28 @@ public class TestFunctionUserInfo extends com.colosa.qa.automatization.tests.com
 		DynaformExecution form = pages.DynaformExecution();
         form.intoDynaform();
 		form.setFieldValue("usernameHold", "admin");
-		form.setFieldValue("send", "");
+		form.clickButton("send");
 		//Verify results
-
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
         //Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[userInfoGrid][1][username]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[userName]"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "username"), form.getFieldValue("userName"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "firstname"), form.getFieldValue("firstName"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "lastname"), form.getFieldValue("lastName"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "mail"), form.getFieldValue("mail"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "status"), form.getFieldValue("status"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "address"), form.getFieldValue("address"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "phone"), form.getFieldValue("phone"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "fax"), form.getFieldValue("fax"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "cellular"), form.getFieldValue("cellular"));
-        Assert.assertEquals(form.getGridFieldValue("userInfoGrid",1, "birthday"), form.getFieldValue("birthday"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "username"), form2.getFieldValue("userName"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "firstname"), form2.getFieldValue("firstName"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "lastname"), form2.getFieldValue("lastName"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "mail"), form2.getFieldValue("mail"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "status"), form2.getFieldValue("status"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "address"), form2.getFieldValue("address"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "phone"), form2.getFieldValue("phone"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "fax"), form2.getFieldValue("fax"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "cellular"), form2.getFieldValue("cellular"));
+        Assert.assertEquals(form2.getGridFieldValue("userInfoGrid",1, "birthday"), form2.getFieldValue("birthday"));
 
 		//DynaformExecution form = pages.DynaformExecution();
-        form.intoDynaform();
+        //form.intoDynaform();
 		//form.clickButton("send");
 		//Assert.assertTrue("The button Continue does not exit in this form", pages.InputDocProcess().continuebtn());
 		//pages.InputDocProcess().switchToDefault();
-		pages.Main().logout();
+		//pages.Main().logout();
 }
 
     @After

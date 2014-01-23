@@ -345,10 +345,11 @@ public class DynaformExecution extends Page {
     }
 
     public PauseCase pauseCase() throws Exception {
+        intoCasesSubFrame();
         //click toolbar actions/pause
         openCaseToolbar.findToolbarCell(2).clickButton();
 
-        //intoCasesSubFrame();
+        //
         //find float menu
         ExtJSFloatingMenu actionsMenu = new ExtJSFloatingMenu(browser);
         //wait for case notes window to appear

@@ -30,8 +30,9 @@ public class TestPMFRedirectToStep extends com.colosa.qa.automatization.tests.co
         form.intoDynaform();
 
         form.clickButton("SUBMIT");
-
-        String fieldSTEP = form.getFieldValue("STEP"); //.getFieldAttribute("STEP","value");
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
+        String fieldSTEP = form2.getFieldValue("STEP"); //.getFieldAttribute("STEP","value");
 
         Assert.assertEquals("The function does not work properly", "3", fieldSTEP);
 

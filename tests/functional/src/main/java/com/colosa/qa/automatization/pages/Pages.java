@@ -143,6 +143,12 @@ public class Pages{
         return assignTask;
     }
 
+    public EndOfProcess EndOfProcess() throws Exception{
+        EndOfProcess endOfProcess = new EndOfProcess(_browserInstance);
+
+        return endOfProcess;
+    }
+
 	public Profile Profile() throws Exception{
 		Profile profile = new Profile(_browserInstance);
 

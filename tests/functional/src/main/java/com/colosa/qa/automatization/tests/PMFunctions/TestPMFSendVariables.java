@@ -37,20 +37,23 @@ public class TestPMFSendVariables extends com.colosa.qa.automatization.tests.com
 
 		pages.Home().gotoNewCase().startCase("Test PMFSendVariables 2 (Task 1)");
 
-        form.intoDynaform();
-		form.setFieldValue("CaseNum", Integer.toString(caseNum));
-		form.setFieldValue("Direccion", dir);
-		form.setFieldValue("Telefono", tel);
-		form.setFieldValue("Email", mail);
-        form.clickButton("Enviar");
-		pages.AssignTask().pressContinueButton();
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
+		form2.setFieldValue("CaseNum", Integer.toString(caseNum));
+		form2.setFieldValue("Direccion", dir);
+		form2.setFieldValue("Telefono", tel);
+		form2.setFieldValue("Email", mail);
+        form2.clickButton("Enviar");
+
+		pages.EndOfProcess().pressFinishButton();
 
 		pages.Home().gotoInbox().openCase(caseNum);
 
-        form.intoDynaform();
-		Assert.assertEquals(form.getFieldValue("Direccion"), dir);
-		Assert.assertEquals(form.getFieldValue("Telefono"), tel);
-		Assert.assertEquals(form.getFieldValue("Email"), mail);
+        DynaformExecution form3 = pages.DynaformExecution();
+        form3.intoDynaform();
+		Assert.assertEquals(form3.getFieldValue("Direccion"), dir);
+		Assert.assertEquals(form3.getFieldValue("Telefono"), tel);
+		Assert.assertEquals(form3.getFieldValue("Email"), mail);
 		//form.setFieldValue("Enviar", "");
 		//Assert.assertTrue(pages.InputDocProcess().continuebtn());
 

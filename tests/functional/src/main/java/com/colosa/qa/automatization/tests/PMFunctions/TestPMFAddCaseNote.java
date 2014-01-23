@@ -43,11 +43,11 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         //pages.Home().gotoInbox().existCase(casenumber);
         pages.Home().gotoInbox().openCase(casenumber);
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
 
-        form.intoDynaform();
-
-        String fieldRESULT_CASE_NOTE = form.getFieldAttribute("RESULT_CASE_NOTE", "value");
-        String fieldTEST_RESULT = form.getFieldAttribute("TEST_RESULT", "value");
+        String fieldRESULT_CASE_NOTE = form2.getFieldAttribute("RESULT_CASE_NOTE", "value");
+        String fieldTEST_RESULT = form2.getFieldAttribute("TEST_RESULT", "value");
 
         //form.clickButton("SUBMIT");
 
@@ -56,7 +56,7 @@ public class TestPMFAddCaseNote extends com.colosa.qa.automatization.tests.commo
 
         //pages.AssignTask().pressContinueButton();
 
-        pages.Main().logout();
+        //pages.Main().logout();
     }
 
 

@@ -1,6 +1,7 @@
 package com.colosa.qa.automatization.tests.PMFunctions;
 
 import com.colosa.qa.automatization.common.*;
+import com.colosa.qa.automatization.pages.AssignTask;
 import com.colosa.qa.automatization.pages.CaseNote;
 import com.colosa.qa.automatization.pages.DynaformExecution;
 import org.junit.After;
@@ -26,25 +27,25 @@ public class TestPMFGetCaseNotes extends com.colosa.qa.automatization.tests.comm
 		pages.Login().loginUser("admin", "admin", "workflow", "English");
 		pages.Main().goHome();
 		caseNum = pages.Home().gotoNewCase().startCase("PMFGetCaseNotes (Add notes)");
-        DynaformExecution form = pages.DynaformExecution();
-        form.intoDynaform();
-        CaseNote caseNotePage = form.openCasesNotes();
+        AssignTask assignTask = pages.AssignTask();
+        CaseNote caseNotePage = assignTask.openCasesNotes();
         caseNotePage.addCaseNote("Test1");
         caseNotePage.addCaseNote("Test2");
         caseNotePage.addCaseNote("Test3");
         caseNotePage.addCaseNote("Test4");
         caseNotePage.closeWindow();
-        pages.AssignTask().pressContinueButton();
+        assignTask.pressContinueButton();
+
         pages.Inbox().openCase(caseNum);
 
-
-        form.intoDynaform();
+        DynaformExecution form2 = pages.DynaformExecution();
+        form2.intoDynaform();
         //Verify results
 
-        Assert.assertEquals(form.getGridFieldValue("gridNotes", 1, "NOTE_CONTENT"), form.getGridFieldValue("gridQuery", 4, "NOTE_CONTENT"));
-        Assert.assertEquals(form.getGridFieldValue("gridNotes", 2, "NOTE_CONTENT"), form.getGridFieldValue("gridQuery", 3, "NOTE_CONTENT"));
-        Assert.assertEquals(form.getGridFieldValue("gridNotes", 3, "NOTE_CONTENT"), form.getGridFieldValue("gridQuery", 2, "NOTE_CONTENT"));
-        Assert.assertEquals(form.getGridFieldValue("gridNotes", 4, "NOTE_CONTENT"), form.getGridFieldValue("gridQuery", 1, "NOTE_CONTENT"));
+        Assert.assertEquals(form2.getGridFieldValue("gridNotes", 1, "NOTE_CONTENT"), form2.getGridFieldValue("gridQuery", 4, "NOTE_CONTENT"));
+        Assert.assertEquals(form2.getGridFieldValue("gridNotes", 2, "NOTE_CONTENT"), form2.getGridFieldValue("gridQuery", 3, "NOTE_CONTENT"));
+        Assert.assertEquals(form2.getGridFieldValue("gridNotes", 3, "NOTE_CONTENT"), form2.getGridFieldValue("gridQuery", 2, "NOTE_CONTENT"));
+        Assert.assertEquals(form2.getGridFieldValue("gridNotes", 4, "NOTE_CONTENT"), form2.getGridFieldValue("gridQuery", 1, "NOTE_CONTENT"));
 
         /*Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][1][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][4][NOTE_CONTENT]"));
         Assert.assertEquals(Value.getValue(browserInstance, FieldKeyType.ID, "form[gridNotes][2][NOTE_CONTENT]"), Value.getValue(browserInstance, FieldKeyType.ID, "form[gridQuery][3][NOTE_CONTENT]"));
