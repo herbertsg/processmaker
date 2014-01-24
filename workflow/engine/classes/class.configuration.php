@@ -27,9 +27,7 @@
  */
 //
 // It works with the table CONFIGURATION in a WF dataBase
-//
 // Copyright (C) 2007 COLOSA
-//
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
 
@@ -315,26 +313,16 @@ class Configurations // extends Configuration
         }
     }
 
-    public function userNameFormat($username, $fullname)
+    public function userNameFormat($username, $fullname, $usrUid = '')
     {
-
-        try {
-            if (!isset($this->UserConfig)) {
-                $this->UserConfig = $this->getConfiguration('ENVIRONMENT_SETTINGS', '');
-            }
-            if (isset($this->UserConfig['format'])) {
-                $name = explode(' ',$fullname);
-                $aux = '';
-                $aux = str_replace('@userName', trim($username), $this->UserConfig['format']);
-                $aux = str_replace('@firstName', isset($name[0])?$name[0]:'', $aux);
-                $aux = str_replace('@lastName', isset($name[1])?$name[1]:'', $aux);
-                return $aux;
-            } else {
-                return $username;
-            }
-        } catch (Exception $oError) {
-            return null;
+        $aux = '';
+        if ($usrUid != '') {
+            $oUser = UsersPeer::retrieveByPK($usrUid);
+            $aux = str_replace('@userName', trim($username), $this->UserConfig['format']);
+            $aux = str_replace('@firstName', $oUser->getUsrFirstname(), $aux);
+            $aux = str_replace('@lastName', $oUser->getUsrLastname(), $aux);
         }
+        return $aux;
     }
 
     public function usersNameFormatBySetParameters($formatUserName, $userName, $firstName, $lastName)
@@ -545,12 +533,13 @@ class Configurations // extends Configuration
         return $formats;
     }
 
-    public function getSystemDate($dateTime)
+    public function getSystemDate($dateTime, $type='dateFormat')
     {
         $oConf = new Configurations();
-        $dateFormat = 'M d, Y';
+        $oConf->getFormats();
+        $dateFormat = $oConf->UserConfig['dateFormat'];
         $oConf->loadConfig($obj, 'ENVIRONMENT_SETTINGS', '');
-        $creationDateMask = isset($oConf->aConfig['dateFormat']) ? $oConf->aConfig['dateFormat'] : '';
+        $creationDateMask = isset($oConf->aConfig[$type]) ? $oConf->aConfig[$type] : '';
         $creationDateMask = ($creationDateMask == '') ? $dateFormat : $creationDateMask;
         if ($creationDateMask != '') {
             if (strpos($dateTime, ' ') !== false) {
@@ -565,7 +554,6 @@ class Configurations // extends Configuration
                     $creationDateMask = str_replace(' \\d\\e ', ' [xx] ', $creationDateMask);
                 }
 
-
                 for ($i = 0; $i < strlen($creationDateMask); $i++) {
                     if ($creationDateMask[$i] != ' ' && isset($maskTime[$creationDateMask[$i]])) {
                         $newCreation .= $maskTime[$creationDateMask[$i]];
@@ -575,11 +563,19 @@ class Configurations // extends Configuration
                 }
 
                 $langLocate = SYS_LANG;
+
+                require_once 'model/Language.php';
+                $language = new language();
+                $lanLocation = $language->findLocationByLanId(SYS_LANG);
+                $location = isset($lanLocation['LAN_LOCATION']) ? $lanLocation['LAN_LOCATION'] : '';    
+
                 if (G::toLower(PHP_OS) == 'linux' || G::toLower(PHP_OS) == 'darwin') {
                     if (SYS_LANG == 'es') {
                         $langLocate = 'es_ES';
                     } else if (strlen(SYS_LANG) > 2) {
                         $langLocate = str_replace('-', '_', SYS_LANG);
+                    } else if ($location != '') {
+                        $langLocate = SYS_LANG.'_'.$location;
                     } else {
                         $langLocate = 'en_US';
                     }
@@ -601,8 +597,8 @@ class Configurations // extends Configuration
                     }
                 }
 
-                setlocale(LC_TIME, $langLocate);
-                $dateTime = utf8_encode(strftime($newCreation, mktime($h, $i, $s, $m, $d, $y)));
+                setlocale(LC_TIME, $langLocate . ".utf8");
+                $dateTime = strftime($newCreation, mktime($h, $i, $s, $m, $d, $y));
 
                 if (strpos($dateTime, ' ') !== false) {
                     $dateTime = ucwords($dateTime);

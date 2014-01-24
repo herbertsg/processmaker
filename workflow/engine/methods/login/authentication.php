@@ -81,6 +81,9 @@ try {
             case -5:
                 $errLabel = 'ID_AUTHENTICATION_SOURCE_INVALID';
                 break;
+            case -6:
+                $errLabel = 'ID_ROLE_INACTIVE';
+                break;
         }
 
         //to avoid empty string in user field.  This will avoid a weird message "this row doesn't exist"
@@ -240,14 +243,14 @@ try {
             if (strpos($_SERVER['HTTP_REFERER'], 'processes/processes_Map?PRO_UID=') !== false) {
                 $sLocation = $_SERVER['HTTP_REFERER'];
             } else {
-                $sLocation = $_REQUEST['form']['URL'];
+                $sLocation = G::sanitizeInput($_REQUEST['form']['URL']);
             }
         } else {
-            $sLocation = $_REQUEST['form']['URL'];
+            $sLocation = G::sanitizeInput($_REQUEST['form']['URL']);
         }
     } else {
         if (isset($_REQUEST['u']) && $_REQUEST['u'] != '') {
-            $sLocation = $_REQUEST['u'];
+            $sLocation = G::sanitizeInput($_REQUEST['u']);
         } else {
             $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
         }

@@ -71,6 +71,8 @@ class Cases
 {
 
     private $appSolr = null;
+    public $dir = 'ASC';
+    public $sort = 'APP_MSG_DATE';
 
     public function __construct()
     {
@@ -3904,7 +3906,7 @@ class Cases
         if (AppDelegationPeer::doCount($oCriteria) == 1) {
             $aFields['APP_STATUS'] = 'CANCELLED';
             $oApplication->update($aFields);
-                                    
+
             G::LoadClass('reportTables');
             require_once 'classes/model/AdditionalTables.php';
             $oReportTables = new ReportTables();
@@ -4930,9 +4932,9 @@ class Cases
                     throw (new Exception("Template file \"$fileTemplate\" does not exist."));
                 }
 
-                $sBody = G::replaceDataGridField(file_get_contents($fileTemplate), $aFields);
+                $sBody = G::replaceDataGridField(file_get_contents($fileTemplate), $aFields, false);
             } else {
-                $sBody = nl2br(G::replaceDataGridField($aTaskInfo["TAS_DEF_MESSAGE"], $aFields));
+                $sBody = nl2br(G::replaceDataGridField($aTaskInfo["TAS_DEF_MESSAGE"], $aFields, false));
             }
 
             G::LoadClass("tasks");
@@ -5908,12 +5910,7 @@ class Cases
             $oCriteria->add(AppMessagePeer::APP_MSG_SHOW_MESSAGE, 1);
         }
         $oCriteria->addAscendingOrderByColumn(AppMessagePeer::APP_MSG_DATE);
-        if (!is_null($start)) {
-            $oCriteria->setOffset($start);
-        }
-        if (!is_null($limit)) {
-            $oCriteria->setLimit($limit);
-        }
+
         $oDataset = AppMessagePeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
@@ -5947,6 +5944,7 @@ class Cases
         $oCriteria = new Criteria('dbarray');
         $oCriteria->setDBArrayTable('messages');
 
+        usort( $aMessages, array($this, "ordProcess") );
         return $aMessages;
     }
 
@@ -6757,6 +6755,30 @@ class Cases
 
             } catch (Exception $e) {
                 throw $e;
+            }
+        }
+    }
+
+    public function ordProcess ($a, $b)
+    {
+    	if ($this->sort == '') {
+    		$this->sort = 'APP_MSG_DATE';
+    	}
+	    if ($this->dir=='ASC') {
+		    if ($a[$this->sort] > $b[$this->sort]) {
+		        return 1;
+            } elseif ($a[$this->sort] < $b[$this->sort]) {
+                return - 1;
+            } else {
+                return 0;
+            }
+        } else {
+            if ($a[$this->sort] > $b[$this->sort]) {
+               return - 1;
+            } elseif ($a[$this->sort] < $b[$this->sort]) {
+               return 1;
+            } else {
+               return 0;
             }
         }
     }

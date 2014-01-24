@@ -446,7 +446,11 @@ class AppSolr
           $delegationIndexes[] = "APP_UNASSIGNED_USER_GROUP_DEL_INDEX_" . trim ($group ['GRP_UID']) . '_txt';
         }        
       }
-      
+        // Paused, add condition
+        if ($userUid != null && $action == 'paused') {
+            $solrSearchText .= "APP_PAUSED_USERS:" . $userUid . ' AND ';
+            $delegationIndexes[] = "APP_PAUSED_USER_DEL_INDEX_" . trim ($userUid) . '_txt';
+        }
       //search action
       if ($action == 'search'){
         if($dateFrom != "" || $dateTo != "") {
@@ -514,13 +518,11 @@ class AppSolr
           'includeCols' => $columsToIncludeFinal,
           'resultFormat' => 'json' 
       );
-      
       $solrRequestData = Entity_SolrRequestData::createForRequestPagination ($data);
       // use search index to return list of cases
       $searchIndex = new BpmnEngine_Services_SearchIndex ($this->_solrIsEnabled, $this->_solrHost);
       // execute query
       $solrQueryResult = $searchIndex->getDataTablePaginatedList ($solrRequestData);
-      
       if($this->debug)
       {
         $this->afterSolrQueryTime = microtime (true);
@@ -618,7 +620,6 @@ class AppSolr
           }
           /*elseif ($action == 'search') {
             // get all the indexes
-
             //$delIndexes = $this->getApplicationDelegationsIndex ($appUID);
             $indexes = $this->aaSearchRecords ($aaappsDBData, array (
                 'APP_UID' => $appUID
@@ -640,9 +641,8 @@ class AppSolr
         }
         //remove duplicated
         $delIndexes = array_unique($delIndexes);
-        
-        //var_dump($delIndexes);
 
+        //var_dump($delIndexes);
 
         foreach ($delIndexes as $delIndex) {
           $aRow = array ();
@@ -674,25 +674,25 @@ class AppSolr
           $localDate = date ('Y-m-d H:i:s', strtotime ($solrdate));
           $aRow ['APP_UPDATE_DATE'] = $localDate;
           */
-          
+
           // get delegation data from DB
           //filter data from db
           $indexes = $this->aaSearchRecords ($aaappsDBData, array (
               'APP_UID' => $appUID,
               'DEL_INDEX' => $delIndex
           ));
-          
+          $row = '';
           foreach ($indexes as $index) {
             $row = $aaappsDBData [$index];
-          }          
-          
-          if(!isset($row))
+          }
+
+          if (empty($row))
           {
             $fh = fopen("SolrAppWithoutDelIndex.txt", 'a') or die("can't open file to store Solr search time.");
             fwrite($fh, sprintf("Solr AppUid: %s DelIndex: %s not found.\r\n", $appUID, $delIndex));
             fclose($fh);
             continue;
-          }          
+          }
           //$row = $this->getAppDelegationData ($appUID, $delIndex);
           $aRow ['APP_CREATE_DATE'] = $row ['APP_CREATE_DATE'];
           $aRow ['APP_UPDATE_DATE'] = $row ['APP_UPDATE_DATE'];
@@ -770,7 +770,7 @@ class AppSolr
   public function getCasesCount($userUid)
   {
     $casesCount = array ();
-    
+
     // get number of records in todo list
     $data = $this->getAppGridData ($userUid, 0, 0, 'todo', null, null, null, null, null, 
         null, null, null, null, null, null, true);
@@ -787,7 +787,10 @@ class AppSolr
     $data = $this->getAppGridData ($userUid, 0, 0, 'unassigned', null, null, null, null, 
         null, null, null, null, null, null, null, true);
     $casesCount ['selfservice'] = $data ['totalCount'];
-    
+    $data = $this->getAppGridData ($userUid, 0, 0, 'paused', null, null, null, null, 
+        null, null, null, null, null, null, null, true);
+    $casesCount ['paused'] = $data ['totalCount'];
+
     return $casesCount;
   }
   
@@ -1309,7 +1312,6 @@ class AppSolr
    */
   public function updateApplicationSearchIndex($aaAPPUIDs, $saveDBRecord = false)
   {
-
     if (empty ($aaAPPUIDs))
       return;
 
@@ -1378,7 +1380,6 @@ class AppSolr
           'workspace' => $this->_solrInstance,
           'document' => $xmlDoc 
       );
-      
       $oSolrUpdateDocument = Entity_SolrUpdateDocument::createForRequest ($data);
       
       G::LoadClass ('searchIndex');
@@ -1386,7 +1387,6 @@ class AppSolr
       $oSearchIndex = new BpmnEngine_Services_SearchIndex ($this->_solrIsEnabled, $this->_solrHost);
 
       $oSearchIndex->updateIndexDocument ($oSolrUpdateDocument);
-
           
       if($this->debug)
       {
@@ -1395,11 +1395,11 @@ class AppSolr
       // commit changes no required because of the commitwithin option
       //$oSearchIndex->commitIndexChanges ($this->_solrInstance);
       //change status in db to indexed
-      if ($saveDBRecord) {
-        foreach ($aaAPPUIDs as $aAPPUID) {
-          $this->applicationChangedUpdateSolrQueue ($aAPPUID ['APP_UID'], 0);
-        }      
-      }
+        if ($saveDBRecord) {
+            foreach ($aaAPPUIDs as $aAPPUID) {
+                $this->applicationChangedUpdateSolrQueue ($aAPPUID ['APP_UID'], 0);
+            }
+        }
 
     }
     catch(Exception $ex) {
@@ -1582,8 +1582,8 @@ class AppSolr
         
         foreach ($indexes as $index) {
           $aaAppData[] = $aaAllAppDelData [$index];
-        }        
-                
+        }
+
         $result = $this->getApplicationIndexData ($aAPPUID ['APP_UID'], $aaAppData);
         
         if($this->debug)
@@ -1642,6 +1642,7 @@ class AppSolr
       $participatedUsersCompletedByUser = $result [11];
       $unassignedUsers = $result [12];
       $unassignedGroups = $result [13];
+      $pausedtUser = $result [14];
 
       try {
         
@@ -1649,7 +1650,7 @@ class AppSolr
         $xmlCurrentDoc = $this->buildSearchIndexDocumentPMOS2 ($documentInformation, $dynaformFieldTypes, 
             $lastUpdateDate, $maxPriority, $delLastIndex, $assignedUsers, $assignedUsersRead, $assignedUsersUnread, 
             $draftUser, $participatedUsers, $participatedUsersStartedByUser, $participatedUsersCompletedByUser, 
-            $unassignedUsers, $unassignedGroups);
+            $unassignedUsers, $unassignedGroups,$pausedtUser);
 
         //concat doc to the list of docs
         $xmlDoc .= $xmlCurrentDoc;
@@ -1749,7 +1750,7 @@ class AppSolr
   public function buildSearchIndexDocumentPMOS2($documentData, $dynaformFieldTypes, $lastUpdateDate, 
     $maxPriority, $delLastIndex, $assignedUsers, $assignedUsersRead, $assignedUsersUnread, $draftUser, 
     $participatedUsers, $participatedUsersStartedByUser, $participatedUsersCompletedByUser, 
-    $unassignedUsers, $unassignedGroups)
+    $unassignedUsers, $unassignedGroups,$pausedtUser)
   {
     // build xml document
     
@@ -1889,7 +1890,7 @@ class AppSolr
       $writer->text ($draftUser ['USR_UID']);
       $writer->endElement ();
     }
-    
+
     if (is_array ($participatedUsers) && ! empty ($participatedUsers)) {
       foreach ($participatedUsers as $userUID) {
         $writer->startElement ("field");
@@ -1963,6 +1964,19 @@ class AppSolr
         $writer->text ($groupUID ['DEL_INDEX']);
         $writer->endElement ();
       }
+    }
+    if (! empty ($pausedtUser)) {
+        foreach ($pausedtUser as $paused) {
+            $writer->startElement ("field");
+            $writer->writeAttribute ('name', 'APP_PAUSED_USERS');
+            $writer->text ($paused ['USR_UID']);
+            $writer->endElement ();
+
+            $writer->startElement ("field");
+            $writer->writeAttribute ('name', 'APP_PAUSED_USER_DEL_INDEX_' . trim ($paused ['USR_UID']) . '_txt');
+            $writer->text ($paused ['DEL_INDEX']);
+            $writer->endElement ();
+        }
     }
 
     // get the serialized fields
@@ -2074,17 +2088,59 @@ class AppSolr
                   break;
               }
               if ($typeSufix != '*') {
+                $value = trim($value);
+                $pairs = array(
+                    "\x03" => "",
+                    "\x04" => "",
+                    "\x05" => "",
+                    "\x06" => "",
+                    "\x07" => "",
+                    "\x08" => "",
+                    "\x0E" => "",
+                    "\x16" => "",
+                    "\x00-" => "",
+                    "\x09" => "",
+                    "\x11" => "",
+                    "\x12" => "",
+                    "\x14-" => "",
+                    "\x1f" => "",
+                    "\x7f" => "",
+                );
+                $value = strtr($value, $pairs);
                 $writer->startElement ("field");
                 $writer->writeAttribute ('name', trim ($k) . $typeSufix);
+                $writer->startCData ();
                 $writer->text ($value);
+                $writer->endCData();
                 $writer->endElement ();
               }
             }
             else {
-              $writer->startElement ("field");
-              $writer->writeAttribute ('name', trim ($k) . '_t');
-              $writer->text ($value);
-              $writer->endElement ();
+                $value = trim($value);
+                $pairs = array(
+                    "\x03" => "",
+                    "\x04" => "",
+                    "\x05" => "",
+                    "\x06" => "",
+                    "\x07" => "",
+                    "\x08" => "",
+                    "\x0E" => "",
+                    "\x16" => "",
+                    "\x00-" => "",
+                    "\x09" => "",
+                    "\x11" => "",
+                    "\x12" => "",
+                    "\x14-" => "",
+                    "\x1f" => "",
+                    "\x7f" => "",
+                );
+                $value = strtr($value, $pairs);
+                $writer->startElement ("field");
+                $writer->writeAttribute ('name', trim ($k) . '_t');
+                $writer->startCData ();
+                $writer->text ($value);
+                $writer->endCData();
+                $writer->endElement ();
             }
           }
         } // foreach unserialized data
@@ -2184,7 +2240,8 @@ class AppSolr
     $indexes = $this->aaSearchRecords ($allAppDbData, array (
         'DEL_THREAD_STATUS' => 'OPEN',
         'DEL_FINISH_DATE' => 'NULL',
-        'APP_STATUS' => 'TO_DO' //, 'APP_THREAD_STATUS' => 'OPEN' 
+        'APP_STATUS' => 'TO_DO', //, 'APP_THREAD_STATUS' => 'OPEN'
+        'APP_TYPE' => ''
     ));
     foreach ($indexes as $index) {
       $assignedUsers [] = array (
@@ -2262,6 +2319,19 @@ class AppSolr
           'USR_UID' => $allAppDbData [$index] ['USR_UID'],
           'DEL_INDEX' => $allAppDbData [$index] ['DEL_INDEX'] 
       );
+    }
+
+    $pausedUsers = array ();
+    $indexes = $this->aaSearchRecords ($allAppDbData, array (
+        'APP_TYPE' => 'PAUSE'
+    ));
+    foreach ($indexes as $index) {
+        if ($allAppDbData [$index] ['APP_DISABLE_ACTION_USER'] == null || $allAppDbData [$index] ['APP_DISABLE_ACTION_USER'] == 0) {
+            $pausedUsers [] = array (
+                'USR_UID' => $allAppDbData [$index] ['USR_UID'],
+                'DEL_INDEX' => $allAppDbData [$index] ['DEL_INDEX'] 
+            );
+        }
     }
     // search information of unassigned users
     // the unassigned users are the self service users and groups.
@@ -2369,7 +2439,8 @@ class AppSolr
         $participatedUsersStartedByUser,
         $participatedUsersCompletedByUser,
         $unassignedUsers,
-        $unassignedGroups 
+        $unassignedGroups,
+        $pausedUsers
     );
     
     return $result;
@@ -2649,7 +2720,6 @@ class AppSolr
    */
   public function getListApplicationUpdateDelegationData($aaAppUIDs)
   {
-  
     $allAppDbData = array ();
   
     $c = new Criteria ();
@@ -2685,17 +2755,22 @@ class AppSolr
     $c->addSelectColumn ('ad.DEL_FINISHED');
     $c->addSelectColumn ('ad.DEL_DELAYED');
     $c->addSelectColumn ('ad.APP_OVERDUE_PERCENTAGE');
-  
+
     $c->addSelectColumn ('at.APP_THREAD_INDEX');
     $c->addSelectColumn ('at.APP_THREAD_PARENT');
     $c->addSelectColumn ('at.APP_THREAD_STATUS');
 
+    $c->addSelectColumn ('ade.APP_DELAY_UID');
+    $c->addSelectColumn ('ade.APP_TYPE');
+    $c->addSelectColumn ('ade.APP_DISABLE_ACTION_USER');
+
     $c->addAsColumn("PRO_CATEGORY_UID", "pro.PRO_CATEGORY");
-  
+
     $c->addAlias ('capp', 'CONTENT');
     $c->addAlias ('cpro', 'CONTENT');
     $c->addAlias ('ad', 'APP_DELEGATION');
     $c->addAlias ('at', 'APP_THREAD');
+    $c->addAlias ('ade', 'APP_DELAY');
     $c->addAlias ("pro", ProcessPeer::TABLE_NAME);
   
     $aConditions = array ();
@@ -2740,29 +2815,52 @@ class AppSolr
         'at.APP_THREAD_INDEX'
     );
     $c->addJoinMC ($aConditions, Criteria::JOIN);
+    
+    $aConditions = array ();
+    $aConditions [] = array (
+        'ad.APP_UID',
+        'ade.APP_UID'
+    );
+    $aConditions [] = array (
+        'ad.DEL_INDEX',
+        'ade.APP_DEL_INDEX'
+    );
+    //$aConditions [] = array (
+    //    'ade.APP_DISABLE_ACTION_USER',
+    //    DBAdapter::getStringDelimiter () . 'null' . DBAdapter::getStringDelimiter ()
+    //);
+    $aConditions [] = array (
+        'ade.APP_DISABLE_ACTION_USER',
+        DBAdapter::getStringDelimiter () . '0' . DBAdapter::getStringDelimiter ()
+    );
+    $aConditions [] = array (
+        'ade.APP_TYPE',
+        DBAdapter::getStringDelimiter () . 'PAUSE' . DBAdapter::getStringDelimiter ()
+    );
+    $c->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    
 
     $arrayCondition = array();
     $arrayCondition[] = array(ApplicationPeer::PRO_UID, "pro.PRO_UID");
     $c->addJoinMC($arrayCondition, Criteria::LEFT_JOIN);
   
     $c->add (ApplicationPeer::APP_UID, $aaAppUIDs, Criteria::IN);
-  
+
     $rs = ApplicationPeer::doSelectRS ($c);
     $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
-  
+
     $rs->next ();
     $row = $rs->getRow ();
-  
+
     while (is_array ($row)) {
       $allAppDbData [] = $row;
       $rs->next ();
       $row = $rs->getRow ();
     }
-
     //Propel::close();
 
     return $allAppDbData;
-  }  
+  }
   
   /**
    * Get the list of groups of unassigned users of the specified task from

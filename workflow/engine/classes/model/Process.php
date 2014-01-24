@@ -48,6 +48,8 @@ class Process extends BaseProcess
      * @var string
      */
     protected $pro_title = '';
+    public $dir = 'ASC';
+    public $sort = 'PRO_TITLE';
 
     /**
      * Get the [Pro_title] column value.
@@ -387,7 +389,12 @@ class Process extends BaseProcess
             }
         }
 
-        usort( $processes, 'ordProcessByProTitle' );
+        if ($this->dir=='ASC') {
+        	usort( $processes, array($this, "ordProcessAsc") );
+        } else {
+        	usort( $processes, array($this, "ordProcessDesc") );
+        }
+
         return $processes;
     }
 
@@ -589,7 +596,7 @@ class Process extends BaseProcess
 
     public function getAllProcesses ($start, $limit, $category = null, $processName = null, $counters = true, $reviewSubProcess = false)
     {
-        require_once PATH_RBAC . "model/RbacUsers.php";
+    	require_once PATH_RBAC . "model/RbacUsers.php";
         require_once "classes/model/ProcessCategory.php";
         require_once "classes/model/Users.php";
 
@@ -629,14 +636,7 @@ class Process extends BaseProcess
 
         $this->tmpCriteria = clone $oCriteria;
 
-        if ($start != '') {
-            $oCriteria->setOffset( $start );
-        }
-        if ($limit != '' && ! isset( $category ) && ! isset( $processName )) {
-            $oCriteria->setLimit( $limit );
-        }
-
-            //execute a query to obtain numbers, how many cases there are by process
+        //execute a query to obtain numbers, how many cases there are by process
         if ($counters) {
             $casesCnt = $this->getCasesCountInAllProcesses();
         }
@@ -721,7 +721,7 @@ class Process extends BaseProcess
                 $process['PRO_CREATE_DATE'] = date( $creationDateMask, mktime( $h, $i, $s, $m, $d, $y ) );
             }
 
-            $process['PRO_CATEGORY_LABEL'] = trim( $process['PRO_CATEGORY'] ) != '' ? $process['CATEGORY_NAME'] : G::LoadTranslation( 'ID_PROCESS_NO_CATEGORY' );
+            $process['PRO_CATEGORY_LABEL'] = trim( $process['PRO_CATEGORY'] ) != '' ? $process['CATEGORY_NAME'] : '- ' . G::LoadTranslation( 'ID_PROCESS_NO_CATEGORY' ) . ' -';
             $process['PRO_TITLE'] = $proTitle;
             $process['PRO_DESCRIPTION'] = $proDescription;
             $process['PRO_DEBUG'] = $process['PRO_DEBUG'];
@@ -741,8 +741,21 @@ class Process extends BaseProcess
             $aProcesses[] = $process;
 
         }
+        
+        $memcache = & PMmemcached::getSingleton( SYS_SYS );
+        if (isset($memcache) && $memcache->enabled == 1 ) {
+        	return $aProcesses;
+        }
 
-        usort( $aProcesses, 'ordProcessByProTitle' );
+        if ($limit == '') {
+        	$limit = count($aProcesses);
+        }
+        if ($this->dir=='ASC') {
+            usort( $aProcesses, array($this, "ordProcessAsc") );
+        } else {
+            usort( $aProcesses, array($this, "ordProcessDesc") );
+        }
+
         return $aProcesses;
     }
 
@@ -848,16 +861,47 @@ class Process extends BaseProcess
             $r = $memcache->delete( $memkeyTotal );
         }
     }
-}
+    
+    public function orderMemcache($dataMemcache, $start, $limit)
+    {
+    	if ($this->dir=='ASC') {
+    	    usort( $dataMemcache, array($this, "ordProcessAsc") );
+    	} else {
+    		usort( $dataMemcache, array($this, "ordProcessDesc") );
+    	}
+    	$response = new stdclass();
+        $response->totalCount = count($dataMemcache);
+        $dataMemcache = array_splice($dataMemcache, $start, $limit);
+        $response->dataMemcache = $dataMemcache;
+    	return $response;
+    }
 
-function ordProcessByProTitle ($a, $b)
-{
-    if ($a['PRO_TITLE'] > $b['PRO_TITLE']) {
-        return 1;
-    } elseif ($a['PRO_TITLE'] < $b['PRO_TITLE']) {
-        return - 1;
-    } else {
-        return 0;
+    public function ordProcessAsc ($a, $b)
+    {
+    	if (($this->sort) == '')  {
+    		$this->sort = 'PRO_TITLE'; 
+    	}
+        if (strtolower($a[$this->sort]) > strtolower($b[$this->sort])) {
+            return 1;
+        } elseif (strtolower($a[$this->sort]) < strtolower($b[$this->sort])) {
+            return - 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function ordProcessDesc ($a, $b)
+    {
+    	if (($this->sort) == '')  {
+    		$this->sort = 'PRO_TITLE';
+    	}
+		if (strtolower($a[$this->sort]) > strtolower($b[$this->sort])) {
+			return - 1;
+		} elseif (strtolower($a[$this->sort]) < strtolower($b[$this->sort])) {
+			return 1;
+		} else {
+			return 0;
+		}
     }
 }
 

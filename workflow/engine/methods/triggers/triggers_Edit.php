@@ -42,8 +42,12 @@ if (isset( $_GET['TRI_UID'] )) {
         // if the trigger has been modified manually, it cant be edited with the wizard.
         if (md5( $aFields['TRI_WEBBOT'] ) == $aTriggerData['hash']) {
             $triUid = $_GET['TRI_UID'];
+            $STEP_UID = isset($_GET['STEP_UID'])?$_GET['STEP_UID']:'';
+            $ST_TYPE = isset($_GET['ST_TYPE'])?$_GET['ST_TYPE']:'';
             $_GET = $aTriggerData['params'];
             $_GET['TRI_UID'] = $triUid;
+            $_GET['STEP_UID']=$STEP_UID;
+            $_GET['ST_TYPE']=$ST_TYPE;
             require_once ('triggers_EditWizard.php');
             die();
         } else {
@@ -63,11 +67,15 @@ if (isset( $_GET['TRI_UID'] )) {
     $xmlform = 'triggers/triggersProperties';
     $xmlform_action = '../triggers/triggers_Save';
 }
+$aFields['STEP_UID'] = isset($_GET['STEP_UID'])?$_GET['STEP_UID']:'';
+$aFields['ST_TYPE'] = isset($_GET['ST_TYPE'])?$_GET['ST_TYPE']:'';
 G::LoadClass( 'xmlfield_InputPM' );
 $G_PUBLISH = new Publisher();
 $G_PUBLISH->AddContent( 'xmlform', 'xmlform', $xmlform, '', $aFields, $xmlform_action );
 $oHeadPublisher =& headPublisher::getSingleton();
 //$oHeadPublisher->addScriptFile('/js/codemirror/js/codemirror.js', 1);
+$oHeadPublisher->addCssFile('/js/codemirror/lib/codemirror.css', 1);
+$oHeadPublisher->addCssFile('/js/codemirror/addon/hint/show-hint.css', 1);
 $oHeadPublisher->addScriptFile('/js/codemirror/lib/codemirror.js', 1);
 $oHeadPublisher->addScriptFile("/js/codemirror/addon/edit/matchbrackets.js",1);
 $oHeadPublisher->addScriptFile("/js/codemirror/mode/htmlmixed/htmlmixed.js",1);
@@ -79,5 +87,11 @@ $oHeadPublisher->addScriptFile("/js/codemirror/addon/hint/show-hint.js",1);
 $oHeadPublisher->addScriptFile("/js/codemirror/addon/hint/php-hint.js",1);
 $oHeadPublisher->addScriptFile("/js/codemirror/mode/php/php.js",1);
 
-G::RenderPage( 'publish', 'raw' );
+//Hack: CodeMirror needed to run Internet Explorer
+$ie = (strrpos($_SERVER['HTTP_USER_AGENT'], "MSIE") === false ) ? false : true;
+if ($ie) {
+    echo "<!DOCTYPE html>\n";
+}
+
+G::RenderPage( 'publish', 'blank' );
 

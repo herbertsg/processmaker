@@ -1727,7 +1727,7 @@ class G
     * @param type Array $aFields
     * @return type String
     */
-    public function replaceDataGridField($sContent, $aFields)
+    public function replaceDataGridField($sContent, $aFields, $nl2brRecursive = true)
     {
         $nrt     = array("\n",    "\r",    "\t");
         $nrthtml = array("(n /)", "(r /)", "(t /)");
@@ -1760,12 +1760,13 @@ class G
 
                         if (isset($aFields[$grdName]) && is_array($aFields[$grdName])) {
                             foreach ($aFields[$grdName] as $aRow) {
-                                foreach ($aRow as $sKey => $vValue) {
-                                    if (!is_array($vValue)) {
-                                        $aRow[$sKey] = nl2br($aRow[$sKey]);
+                                if ($nl2brRecursive) {
+                                    foreach ($aRow as $sKey => $vValue) {
+                                        if (!is_array($vValue)) {
+                                            $aRow[$sKey] = nl2br($aRow[$sKey]);
+                                        }
                                     }
                                 }
-
                                 $strData = $strData . G::replaceDataField($arrayMatch2[2], $aRow);
                             }
                         }
@@ -1784,9 +1785,11 @@ class G
 
         $sContent = $strContentAux;
 
-        foreach ($aFields as $sKey => $vValue) {
-            if (!is_array($vValue)) {
-                $aFields[$sKey] = nl2br($aFields[$sKey]);
+        if ($nl2brRecursive) {
+            foreach ($aFields as $sKey => $vValue) {
+                if (!is_array($vValue)) {
+                    $aFields[$sKey] = nl2br($aFields[$sKey]);
+                }
             }
         }
 
@@ -5229,6 +5232,42 @@ class G
             $allFunctions['user'] = array();
         }
         return in_array(strtolower($functionName), $allFunctions['user']);
+    }
+
+    /**
+      * Constructor for inputFilter class. Only first parameter is required.
+      * @access constructor
+      * @data Mixed - input string/array-of-string to be 'cleaned'
+      * @param Array $tagsArray - list of user-defined tags
+      * @param Array $attrArray - list of user-defined attributes
+      * @param int $tagsMethod - 0= allow just user-defined, 1= allow all but user-defined
+      * @param int $attrMethod - 0= allow just user-defined, 1= allow all but user-defined
+      * @param int $xssAuto - 0= only auto clean essentials, 1= allow clean blacklisted tags/attr
+      */
+    public function sanitizeInput($data, $tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
+    {
+        G::LoadSystem('inputfilter');
+        $filtro = new InputFilter($tagsArray , $attrArray, $tagsMethod, $attrMethod, $xssAuto);
+        return $filtro->process($data);
+    }
+
+    /**
+     * Stores a message in the log file, if the file size exceeds
+     * specified log file is renamed and a new one is created.
+     *
+     * @param type $message
+     * @param type $pathData
+     * @param type $file
+     */
+    public function log($message, $pathData = PATH_DATA, $file = 'cron.log')
+    {
+        $config = System::getSystemConfiguration();
+        G::LoadSystem('logger');
+
+        $oLogger =& Logger::getSingleton($pathData, PATH_SEP, $file);
+        $oLogger->limitFile = $config['number_log_file'];
+        $oLogger->limitSize = $config['size_log_file'];
+        $oLogger->write($message);
     }
 }
 

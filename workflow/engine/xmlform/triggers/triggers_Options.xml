@@ -37,35 +37,11 @@
 
 <JS type="javascript" replaceTags="1">
 <![CDATA[
-/*
-	document.onkeypress=function(e){
-	var esIE=(document.all);
-	var esNS=(document.layers);
-	tecla=(esIE) ? event.keyCode : e.which;
-	if(tecla==13){
-		return false;
-	  }
-	}
-*/
-    //Add css Codemirror
-    var head = document.getElementsByTagName('head')[0];
-    var s = document.createElement('link');
-    s.setAttribute('href', '/js/codemirror/lib/codemirror.css');
-    s.setAttribute('type', 'text/css');
-    s.setAttribute('rel', 'stylesheet');
-    head.appendChild(s);
-
-    var s = document.createElement('link');
-    s.setAttribute('href', '/js/codemirror/addon/hint/show-hint.css');
-    s.setAttribute('type', 'text/css');
-    s.setAttribute('rel', 'stylesheet');
-    head.appendChild(s);
-
   var windowWidth = 600;
   var windowHeight = 460;
 
   function triggerEditWizardSource (sUID){
-    popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID +'&BYPASS=1' , 770, 510);
+    window.open('@G::encryptlink(@#triggersEdit)?TRI_UID='+ sUID +'&BYPASS=1','@G::LoadTranslation(ID_EDIT_TRIGGERS)'.replace(/\s/g,'_')+(function(s){var r='';for(var i in s)if(typeof s[i]=='string')r+=s[i].charCodeAt(0);return r;})(document.cookie)+sUID,'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=570,top='+((screen.height-570)/2)+',left='+((screen.width-950)/2)).focus();
   }
 
   function triggerNew() {
@@ -79,7 +55,7 @@
 
   function triggerCopy()
   {
-      popupWindow("@G::LoadTranslation(ID_TRIGGER_COPY_TITLE)", "@G::encryptlink(@#triggerCopy)?PRO_UID=@%PRO_UID" , windowWidth, windowHeight);
+      popupWindow("@G::LoadTranslation(ID_TRIGGER_COPY_TITLE)", "@G::encryptlink(@#triggerCopy)?PRO_UID=@%PRO_UID" , 900, 460);
   }
 
   function triggerFromLibrary() {
@@ -95,8 +71,19 @@
     }
   }
 
-  function triggerEdit(sUID) {
-    popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID='+ sUID , 930, 600);
+  var windowCode = new Array();
+  function triggerEdit( sUID, modified) {
+    if(parseInt(modified) == 0){
+        if ( !windowCode[sUID] ) {
+            var windowOpen = window.open('@G::encryptlink(@#triggersEdit)?TRI_UID='+ sUID,'@G::LoadTranslation(ID_EDIT_TRIGGERS)'.replace(/\s/g,'_')+(function(s){var r='';for(var i in s)if(typeof s[i]=='string')r+=s[i].charCodeAt(0);return r;})(document.cookie)+sUID,'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=950,height=570,top='+((screen.height-570)/2)+',left='+((screen.width-950)/2));
+            windowOpen.focus();
+            windowCode[sUID]=windowOpen;
+        } else {
+            windowCode[sUID].focus();
+        }
+    } else {
+        popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID='+ sUID, 930, 600);
+    }
   }
 
   function triggerProperties( sUID ) {
@@ -221,6 +208,13 @@
 
   function triggerNewWizard(nameFunction, library) {//alert('@G::encryptlink(@#triggerNewWizard)?PRO_UID=@%PRO_UID&amp;NAME_FUN='+nameFunction+'&amp;	PARAMETERS_FUN='+parametersFunct+'&amp;PAGED_TABLE_ID='+@#PAGED_TABLE_ID);return;
     popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggerNewWizard)?PRO_UID=@%PRO_UID&NAME_FUN='+nameFunction+'&LIBRARY='+library+'&PAGED_TABLE_ID='+@#PAGED_TABLE_ID , 600, 600);
+  }
+  
+  function reloadTriggersShortList(){
+    //@#PAGED_TABLE_ID.refresh();
+    if(Pm.panels.buildingBlocks){
+      Pm.data.render.buildingBlocks.injector('triggers');
+    }
   }
 
 ]]>

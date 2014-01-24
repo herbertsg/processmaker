@@ -89,6 +89,13 @@ class workspaceTools
         $stop = microtime(true);
         $final = $stop - $start;
         CLI::logging("<*>   Updating cache view Process took $final seconds.\n");
+
+        $start = microtime(true);
+        CLI::logging("> Backup log files...\n");
+        $this->backupLogFiles();
+        $stop = microtime(true);
+        $final = $stop - $start;
+        CLI::logging("<*>   Backup log files Process took $final seconds.\n");
     }
 
     /**
@@ -134,6 +141,12 @@ class workspaceTools
         $this->dbHost = $values["DB_HOST"];
         $this->dbUser = $values["DB_USER"];
         $this->dbPass = $values["DB_PASS"];
+
+        $this->dbRbacHost = $values["DB_RBAC_HOST"];
+        $this->dbRbacName = $values["DB_RBAC_NAME"];
+        $this->dbRbacUser = $values["DB_RBAC_USER"];
+        $this->dbRbacPass = $values["DB_RBAC_PASS"];
+
         return $this->dbInfo = $values;
     }
 
@@ -330,13 +343,18 @@ class workspaceTools
      *
      * @return database connection
      */
-    private function getDatabase()
+    private function getDatabase($rbac = false)
     {
-        if (isset($this->db) && $this->db->isConnected()) {
+        if (isset($this->db) && $this->db->isConnected() &&  $rbac == false) {
             return $this->db;
         }
+
         G::LoadSystem('database_' . strtolower($this->dbAdapter));
-        $this->db = new database($this->dbAdapter, $this->dbHost, $this->dbUser, $this->dbPass, $this->dbName);
+        if ($rbac == true){
+            $this->db = new database($this->dbAdapter, $this->dbRbacHost, $this->dbRbacUser, $this->dbRbacPass, $this->dbRbacName);
+        } else {
+        	$this->db = new database($this->dbAdapter, $this->dbHost, $this->dbUser, $this->dbPass, $this->dbName);
+        }
         if (!$this->db->isConnected()) {
             $this->db->logQuery('No available connection to database!');
             throw new Exception("Could not connect to database");
@@ -370,9 +388,9 @@ class workspaceTools
      *
      * @return array with the database schema
      */
-    public function getSchema()
+    public function getSchema($rbac = false)
     {
-        $oDataBase = $this->getDatabase();
+    	$oDataBase = $this->getDatabase($rbac);
 
         $aOldSchema = array();
 
@@ -474,7 +492,7 @@ class workspaceTools
         $RBAC->initRBAC();
         $result = $RBAC->verifyPermissions();
         if (count($result) > 1) {
-            foreach($result as $item) {
+            foreach ($result as $item) {
                 CLI::logging("    $item... \n");
             }
         } else {
@@ -632,7 +650,9 @@ class workspaceTools
         $this->initPropel( true );
         p11835::isApplicable();
         $systemSchema = System::getSystemSchema();
+        $systemSchemaRbac = System::getSystemSchemaRbac();// obtiene el Schema de Rbac
         $this->upgradeSchema( $systemSchema );
+        $this->upgradeSchema( $systemSchemaRbac, false, true );// Hace Upgrade de Rbac
         $this->upgradeData();
         p11835::execute();
         return true;
@@ -646,7 +666,7 @@ class workspaceTools
      * @return array bool the changes if checkOnly is true, else return
      * true on success
      */
-    public function upgradeSchema($schema, $checkOnly = false)
+    public function upgradeSchema($schema, $checkOnly = false, $rbac = false)
     {
         $dbInfo = $this->getDBInfo();
 
@@ -654,9 +674,12 @@ class workspaceTools
             throw new Exception("Only MySQL is supported");
         }
 
-        $workspaceSchema = $this->getSchema();
+        $workspaceSchema = $this->getSchema($rbac);
+
         $changes = System::compareSchema($workspaceSchema, $schema);
+
         $changed = (count($changes['tablesToAdd']) > 0 || count($changes['tablesToAlter']) > 0 || count($changes['tablesWithNewIndex']) > 0 || count($changes['tablesToAlterIndex']) > 0);
+
         if ($checkOnly || (!$changed)) {
             if ($changed) {
                 return $changes;
@@ -666,7 +689,8 @@ class workspaceTools
             }
         }
 
-        $oDataBase = $this->getDatabase();
+        $oDataBase = $this->getDatabase($rbac);
+
         $oDataBase->iFetchType = MYSQL_NUM;
 
         $oDataBase->logQuery(count($changes));
@@ -1077,7 +1101,6 @@ class workspaceTools
             . ' --default_character_set utf8'
             . ' --execute="SOURCE '.$filename.'"';
             shell_exec($command);
-
         } else {
             //If the safe mode of the server is actived
             try {
@@ -1100,6 +1123,7 @@ class workspaceTools
                         $line = $previous . " " . $line;
                     }
                     $previous = null;
+
                     // If the current line doesnt end with ; then put this line together
                     // with the next one, thus supporting multi-line statements.
                     if (strrpos($line, ";") != strlen($line) - 1) {
@@ -1107,18 +1131,33 @@ class workspaceTools
                         continue;
                     }
                     $line = substr($line, 0, strrpos($line, ";"));
+
+                    if (strrpos($line, "INSERT INTO") !== false) {
+                        if ($insert) {
+                            $result = mysql_query("START TRANSACTION");
+                            $insert = false;
+                        }
+                        $result = mysql_query($line);
+                        continue;
+                    } else {
+                        if (!$insert) {
+                            $result = mysql_query("COMMIT");
+                            $insert = true;
+                        }
+                    }
+
                     $result = mysql_query($line);
                     if ($result === false) {
                         throw new Exception("Error when running script '$filename', line $j, query '$line': " . mysql_error());
                     }
                 }
+                if (!$insert) {
+                    $result = mysql_query("COMMIT");
+                }
             } catch (Exception $e) {
                 CLI::logging(CLI::error("Error:" . "There are problems running script '$filename': " . $e));
             }
-
         }
-
-
     }
 
     static public function restoreLegacy($directory)
@@ -1268,10 +1307,10 @@ class workspaceTools
             foreach ($metadata->directories as $dir) {
                 CLI::logging("+> Restoring directory '$dir'\n");
 
-                if(file_exists("$tempDirectory/$dir" . "/ee")) {
+                if (file_exists("$tempDirectory/$dir" . "/ee")) {
                     G::rm_dir("$tempDirectory/$dir" . "/ee");
                 }
-                if(file_exists("$tempDirectory/$dir" . "/plugin.singleton")) {
+                if (file_exists("$tempDirectory/$dir" . "/plugin.singleton")) {
                     G::rm_dir("$tempDirectory/$dir" . "/plugin.singleton");
                 }
                 if (!rename("$tempDirectory/$dir", $workspace->path)) {
@@ -1317,13 +1356,6 @@ class workspaceTools
                 $stop = microtime(true);
                 $final = $stop - $start;
                 CLI::logging("<*>   Database Upgrade Process took $final seconds.\n");
-
-                $start = microtime(true);
-                CLI::logging("> Updating cases directories structure...\n");
-                $workspace->upgradeCasesDirectoryStructure($workspaceName);
-                $stop = microtime(true);
-                $final = $stop - $start;
-                CLI::logging("<*>   Database Upgrade Structure Process took $final seconds.\n");
             }
             $start = microtime(true);
             CLI::logging("> Updating cache view...\n");
@@ -1376,7 +1408,7 @@ class workspaceTools
             //Extract
             $tar = new Archive_Tar($f);
 
-            $swTar = $tar->extract(PATH_OUTTRUNK); //true on success, false on error
+            $swTar = $tar->extractModify(PATH_TRUNK, "processmaker"); //true on success, false on error
 
             if ($swTar) {
                 $result["status"] = 1;
@@ -1391,6 +1423,22 @@ class workspaceTools
         }
 
         return $result;
+    }
+
+    public function backupLogFiles()
+    {
+        $config = System::getSystemConfiguration();
+
+        clearstatcache();
+        $path = PATH_DATA . "log" . PATH_SEP;
+        $filePath = $path . "cron.log";
+        if (file_exists($filePath)) {
+            $size = filesize($filePath);
+            /* $config['size_log_file'] has the value 5000000 -> approximately 5 megabytes */
+            if ($size > $config['size_log_file']) {
+                rename($filePath, $filePath . ".bak");
+            }
+        }
     }
 }
 

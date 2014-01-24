@@ -1,5 +1,7 @@
 <?php
-$action = isset( $_GET['action'] ) ? $_GET['action'] : 'default';
+
+$action = isset( $_GET['action'] ) ? G::sanitizeInput($_GET['action'])  : 'default';
+
 G::LoadClass( 'case' );
 G::LoadClass( 'configuration' );
 $userId = isset( $_SESSION['USER_LOGGED'] ) ? $_SESSION['USER_LOGGED'] : '00000000000000000000000000000000';
@@ -289,7 +291,7 @@ function getAllCounters ()
         $aCount = $ApplicationSolrIndex->getCasesCount( $userUid );
 
         //get paused count
-        $aCountMissing = $oAppCache->getAllCounters( array ('paused','completed','cancelled'), $userUid );
+        $aCountMissing = $oAppCache->getAllCounters( array ('completed','cancelled'), $userUid );
 
         $aCount = array_merge( $aCount, $aCountMissing );
     } else {

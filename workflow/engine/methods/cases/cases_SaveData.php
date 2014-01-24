@@ -165,9 +165,12 @@ try {
     // saving the data ina pm table in case that is a new record
     if (! empty( $newValues )) {
         $id = key( $newValues );
-        if (! $oAdditionalTables->updateDataInTable( $oForm->fields[$oForm->fields[$id]->pmconnection]->pmtable, $newValues )) {
+       	$newValues[$id] = $aData['APP_DATA'][$id];
+       	$idPmtable = $oForm->fields[$id]->pmconnection->pmtable != '' ? $oForm->fields[$id]->pmconnection->pmtable : $oForm->fields[$id]->owner->tree->children[0]->attributes['pmtable'];
+
+        if (!($oAdditionalTables->updateDataInTable($idPmtable, $newValues ))) {
             //<--This is to know if it is a new registry on the PM Table
-            $oAdditionalTables->saveDataInTable( $oForm->fields[$oForm->fields[$id]->pmconnection]->pmtable, $newValues );
+            $oAdditionalTables->saveDataInTable($idPmtable, $newValues );
         }
     }
 
@@ -236,7 +239,6 @@ try {
 
                         //Get the Custom Folder ID (create if necessary)
                         $oFolder = new AppFolder();
-                        $documentFileStructure = $oFolder->getFolderStructure();
 
                         $aFields = array ("APP_UID" => $_SESSION["APPLICATION"],"DEL_INDEX" => $_SESSION["INDEX"],"USR_UID" => $_SESSION["USER_LOGGED"],"DOC_UID" => $indocUid,"APP_DOC_TYPE" => "INPUT","APP_DOC_CREATE_DATE" => date( "Y-m-d H:i:s" ),"APP_DOC_COMMENT" => "","APP_DOC_TITLE" => "","APP_DOC_FILENAME" => $arrayFileName[$i],"FOLDER_UID" => $oFolder->createFromPath( $aID["INP_DOC_DESTINATION_PATH"] ),"APP_DOC_TAGS" => $oFolder->parseTags( $aID["INP_DOC_TAGS"] ),"APP_DOC_FIELDNAME" => $fieldName);
                     } else {
@@ -251,7 +253,7 @@ try {
                     $aInfo = pathinfo( $oAppDocument->getAppDocFilename() );
                     $sExtension = ((isset( $aInfo["extension"] )) ? $aInfo["extension"] : "");
                     $pathUID = G::getPathFromUID($_SESSION["APPLICATION"]);
-                    $sPathName = PATH_DOCUMENT . $pathUID . PATH_SEP;// . $documentFileStructure;
+                    $sPathName = PATH_DOCUMENT . $pathUID . PATH_SEP;
                     $sFileName = $sAppDocUid . "_" . $iDocVersion . "." . $sExtension;
                     G::uploadFile( $arrayFileTmpName[$i], $sPathName, $sFileName );
 
