@@ -198,7 +198,7 @@ try {
     $weblog=new LoginLog();
     $aLog['LOG_UID']            = G::generateUniqueID();
     $aLog['LOG_STATUS']         = 'ACTIVE';
-    $aLog['LOG_IP']             = $_SERVER['REMOTE_ADDR'];
+    $aLog['LOG_IP']             = G::getIpAddress();
     $aLog['LOG_SID']            = session_id();
     $aLog['LOG_INIT_DATE']      = date('Y-m-d H:i:s');
     //$aLog['LOG_END_DATE']       = '0000-00-00 00:00:00';
@@ -262,9 +262,9 @@ try {
     }
 
     $aUserProperty = $oUserProperty->loadOrCreateIfNotExists($_SESSION['USER_LOGGED'], array('USR_PASSWORD_HISTORY' => serialize(array(md5($pwd)))));
-    $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_PASSWORD'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME']);
+    $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_PASSWORD'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME'], true);
 
-    if (!empty($aErrors)) {
+    if (!empty($aErrors) && in_array("ID_PPP_CHANGE_PASSWORD_AFTER_NEXT_LOGIN", $aErrors)) {
         if (!defined('NO_DISPLAY_USERNAME')) {
             define('NO_DISPLAY_USERNAME', 1);
         }
@@ -276,10 +276,12 @@ try {
                 case 'ID_PPP_MINIMUM_LENGTH':
                     $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MINIMUM_LENGTH . '<br />';
                     $aFields[substr($sError, 3)] = PPP_MINIMUM_LENGTH;
+                    $aFields['PPP_MINIMUN_LENGTH'] = PPP_MINIMUM_LENGTH;
                     break;
                 case 'ID_PPP_MAXIMUM_LENGTH':
                     $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MAXIMUM_LENGTH . '<br />';
                     $aFields[substr($sError, 3)] = PPP_MAXIMUM_LENGTH;
+                    $aFields['PPP_MAXIMUN_LENGTH'] = PPP_MAXIMUM_LENGTH;
                     break;
                 case 'ID_PPP_EXPIRATION_IN':
                     $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).' ' . PPP_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';

@@ -501,18 +501,23 @@ function newProcess(){
 
 function saveProcess()
 {
-  Ext.getCmp('newProcessForm').getForm().submit( {
-    url : '../processProxy/saveProcess',
-    waitMsg : _('ID_SAVING_PROCESS'),
-    waitTitle : "&nbsp;",
-    timeout : 36000,
-    success : function(obj, resp) {
-      location.href = 'processes_Map?PRO_UID='+resp.result.PRO_UID;
-    },
-    failure: function(obj, resp) {
-      PMExt.error( _('ID_ERROR'), resp.result.msg);
+    Ext.getCmp('PRO_TITLE').setValue((Ext.getCmp('PRO_TITLE').getValue()).trim());
+    if (Ext.getCmp('newProcessForm').getForm().isValid()) {
+        Ext.getCmp('newProcessForm').getForm().submit( {
+            url : '../processProxy/saveProcess',
+            waitMsg : _('ID_SAVING_PROCESS'),
+            waitTitle : "&nbsp;",
+            timeout : 36000,
+            success : function(obj, resp) {
+                location.href = 'processes_Map?PRO_UID='+resp.result.PRO_UID;
+            },
+            failure: function(obj, resp) {
+                PMExt.error( _('ID_ERROR'), resp.result.msg);
+            }
+        });
+    } else {
+        PMExt.error( _('ID_ERROR'), _('ID_INVALID_PROCESS_NAME'));
     }
-  });
 }
 
 function doSearch(){
@@ -1106,7 +1111,7 @@ function activeDeactive(){
         store.reload();
         var activator = Ext.getCmp('activator');
         activator.setDisabled(true);
-        activator.setText('Status');
+        activator.setText(_('ID_STATUS'));
         activator.setIcon('');
       },
       failure: function ( result, request) {
@@ -1142,7 +1147,7 @@ function enableDisableDebug()
         store.reload();
         var activator = Ext.getCmp('activator');
         activator.setDisabled(true);
-        activator.setText('Status');
+        activator.setText(_('ID_STATUS'));
         activator.setIcon('');
       },
       failure: function ( result, request) {

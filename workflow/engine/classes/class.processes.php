@@ -1411,6 +1411,22 @@ class Processes
     }
 
     /**
+     * Remove All Fields Conditions from an array of Field Conditions and Dynaforms,
+     * from the arrays data.
+     *
+     * @param $aDynaform array
+     * @return void
+     */
+    public function removeAllFieldCondition ($aDynaform)
+    {
+        foreach ($aDynaform as $key => $row) {
+            $oCriteria = new Criteria();
+            $oCriteria->add( FieldConditionPeer::FCD_DYN_UID, $row['DYN_UID'] );
+            FieldConditionPeer::doDelete( $oCriteria );
+        }
+    }
+
+    /**
      * Create Field Conditions from an array of Field Conditions and Dynaforms,
      * removing those Objects with the same UID, and recreaiting the records
      * from the arrays data.
@@ -1548,7 +1564,11 @@ class Processes
         foreach ($oData->inputs as $key => $val) {
             $newGuid = $this->getUnusedInputGUID();
             $map[$val['INP_DOC_UID']] = $newGuid;
+            $oData->inputFiles[$oData->inputs[$key]['INP_DOC_UID']] = $newGuid;
             $oData->inputs[$key]['INP_DOC_UID'] = $newGuid;
+        }
+        if (!isset($oData->inputFiles)) {
+        	$oData->inputFiles = array();
         }
         foreach ($oData->steps as $key => $val) {
             if (isset( $val['STEP_TYPE_OBJ'] )) {
@@ -3130,6 +3150,12 @@ class Processes
                         $XmlContent = str_replace( $oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent );
                         $XmlContent = str_replace( $XmlGuid, $newXmlGuid, $XmlContent );
 
+                        foreach($oData->inputFiles as $input => $valInput){
+                        	$oldInput = $input;
+                        	$newInput = $oData->inputFiles[$oldInput];
+                        	$XmlContent = str_replace( $oldInput, $newInput, $XmlContent );
+                        }
+
                         //foreach
                         if (isset( $oData->gridFiles )) {
                             if (is_array( $oData->gridFiles )) {
@@ -3606,6 +3632,7 @@ class Processes
     {
         $this->updateProcessRow( $oData->process );
         $this->removeProcessRows( $oData->process['PRO_UID'] );
+        $this->removeAllFieldCondition($oData->dynaforms );
         $this->createTaskRows( $oData->tasks );
         $this->createRouteRows( $oData->routes );
         $this->createLaneRows( $oData->lanes );

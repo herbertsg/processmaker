@@ -334,8 +334,9 @@ class Ajax
             $processData['PRO_AUTHOR'] = '(USER DELETED)';
         }
 
-        $processData['PRO_CREATE_DATE'] = date('F j, Y', strtotime($processData['PRO_CREATE_DATE']));
-
+        $conf = new Configurations();
+        $conf->getFormats();
+        $processData['PRO_CREATE_DATE'] = $conf->getSystemDate($processData['PRO_CREATE_DATE']);
         print (G::json_encode($processData));
     }
 
@@ -426,6 +427,7 @@ class Ajax
         $conf = new Configurations();
         $oHeadPublisher->addExtJsScript('cases/casesUploadedDocumentsPage', true); //adding a javascript file .js
         $oHeadPublisher->addContent('cases/casesUploadedDocumentsPage'); //adding a html file  .html.
+        $oHeadPublisher->assign("FORMATS", $conf->getFormats());
         $oHeadPublisher->assign('pageSize', $conf->getEnvSetting('casesListRowNumber'));
         G::RenderPage('publish', 'extJs');
     }
@@ -439,6 +441,7 @@ class Ajax
         $conf = new Configurations();
         $oHeadPublisher->addExtJsScript('cases/casesGenerateDocumentPage', true); //adding a javascript file .js
         $oHeadPublisher->addContent('cases/casesGenerateDocumentPage'); //adding a html file  .html.
+        $oHeadPublisher->assign("FORMATS", $conf->getFormats());
         $oHeadPublisher->assign('pageSize', $conf->getEnvSetting('casesListRowNumber'));
         G::RenderPage('publish', 'extJs');
     }
@@ -452,6 +455,7 @@ class Ajax
         $conf = new Configurations();
         $oHeadPublisher->addExtJsScript('cases/casesGenerateDocumentPage', true); //adding a javascript file .js
         $oHeadPublisher->addContent('cases/casesGenerateDocumentPage'); //adding a html file  .html.
+        $oHeadPublisher->assign("FORMATS", $conf->getFormats());
         $oHeadPublisher->assign('pageSize', $conf->getEnvSetting('casesListRowNumber'));
         G::RenderPage('publish', 'extJs');
     }

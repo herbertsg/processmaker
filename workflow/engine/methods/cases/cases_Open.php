@@ -90,6 +90,7 @@ try {
                 $_SESSION['PROCESS'] = $aFields['PRO_UID'];
                 $_SESSION['TASK'] = - 1;
                 $_SESSION['STEP_POSITION'] = 0;
+                $_SESSION['CURRENT_TASK'] = $aFields['TAS_UID'];
 
                 require_once (PATH_METHODS . 'cases' . PATH_SEP . 'cases_Resume.php');
                 exit();
@@ -98,10 +99,10 @@ try {
             /**
              * these routine is to verify if the case was acceded from advaced search list
              */
-            
+
             if ($_action == 'search') {
                 //verify if the case is with teh current user
-                
+
                 $c = new Criteria( 'workflow' );
                 $c->add( AppDelegationPeer::APP_UID, $sAppUid );
                 $c->addAscendingOrderByColumn( AppDelegationPeer::DEL_INDEX );
@@ -109,7 +110,7 @@ try {
                 $oDataset->setFetchmode( ResultSet::FETCHMODE_ASSOC );
                 $oDataset->next();
                 $aData = $oDataset->getRow();
-                
+
                 if ($aData['USR_UID'] != $_SESSION['USER_LOGGED'] && $aData['USR_UID'] != "") {
                     //distinct "" for selfservice
                     //so we show just the resume
@@ -185,10 +186,22 @@ try {
                 $row = $rs->getRow();
 
                 $_SESSION['APPLICATION'] = $sAppUid;
-                $_SESSION['INDEX'] = $row['DEL_INDEX'];
+                if($_action=='search'){
+                    $_SESSION['INDEX'] = $iDelIndex;
+                } else {
+                    $_SESSION['INDEX'] = $row['DEL_INDEX'];
+                }
                 $_SESSION['PROCESS'] = $aFields['PRO_UID'];
                 $_SESSION['TASK'] = - 1;
-                $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
+                //$Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
+                if ($_action == 'jump') {
+                    $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'], 1);
+                    $_SESSION['ACTION'] = 'jump';
+                } else {
+                    $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX']);
+                    unset($_SESSION['ACTION']);
+                }
+
                 $_SESSION['CURRENT_TASK'] = $Fields['TAS_UID'];
                 $_SESSION['STEP_POSITION'] = 0;
                 require_once (PATH_METHODS . 'cases' . PATH_SEP . 'cases_Resume.php');
@@ -196,10 +209,12 @@ try {
             break;
         default: //APP_STATUS <> DRAFT and TO_DO
             $_SESSION['APPLICATION'] = $sAppUid;
-            $_SESSION['INDEX'] = $iDelIndex != "" ? $iDelIndex : $oCase->getCurrentDelegationCase( $_GET['APP_UID'] );
+            $_SESSION['INDEX'] = $oCase->getCurrentDelegationCase( $_GET['APP_UID'] );
             $_SESSION['PROCESS'] = $aFields['PRO_UID'];
             $_SESSION['TASK'] = - 1;
             $_SESSION['STEP_POSITION'] = 0;
+            $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX']);
+            $_SESSION['CURRENT_TASK'] = $Fields['TAS_UID'];
 
             require_once (PATH_METHODS . 'cases' . PATH_SEP . 'cases_Resume.php');
     }

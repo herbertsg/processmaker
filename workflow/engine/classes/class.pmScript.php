@@ -151,7 +151,42 @@ class PMScript
      */
     public function setScript ($sScript = '')
     {
-        $this->sScript = $sScript;
+        if (!defined("T_ML_COMMENT")) {
+            define("T_ML_COMMENT", T_COMMENT);
+        } else {
+            if (!defined("T_DOC_COMMENT")) {
+                define("T_DOC_COMMENT", T_ML_COMMENT);
+            }
+        }
+
+        $script = "<?php " . $sScript;
+        $tokens = token_get_all($script);
+        $result = "";
+
+        foreach ($tokens as $token) {
+            if (is_string($token)) {
+                $result .= $token;
+            } else {
+                list($id, $text) = $token;
+
+                switch ($id) {
+                    case T_OPEN_TAG:
+                    case T_CLOSE_TAG:
+                    case T_COMMENT:
+                    case T_ML_COMMENT:  //we've defined this
+                    case T_DOC_COMMENT: //and this
+                        if ($text != '<?php ' && $text != '<?php' && $text != '<? ' && $text != '<?' && $text != '<% ' && $text != '<%') {
+                            $result .= $text;
+                        }
+                        break;
+                    default:
+                        $result .= $text;
+                        break;
+                }
+            }
+        }
+
+        $this->sScript = trim($result);
     }
 
     /**
@@ -211,6 +246,22 @@ class PMScript
                     }
                 }
                 $sScript .= $sAux;
+                /** patch1: support for the expression: @@a = @@b = @@c = @@d; */
+                $bEqual = true;
+                if ($i < $iOcurrences - 1) {
+                    $ii = $aMatch[0][$i][1] + strlen($aMatch[0][$i][0]);
+                    $ss = trim(substr($this->sScript, $ii, $aMatch[0][$i + 1][1] - $ii));
+                } else {
+                    $ii = $aMatch[0][$i][1] + strlen($aMatch[0][$i][0]);
+                    $ss = trim(substr($this->sScript, $ii));
+                }
+                $sw0 = strpos($ss, '=') === 0 || strpos($ss, '+=') === 0 || strpos($ss, '-=') === 0;
+                $sw1 = strpos($ss, '==') === 0 || strpos($ss, '===') === 0 || strpos($ss, '!=') === 0 || strpos($ss, '!==') === 0 || strpos($ss, '<=') === 0 || strpos($ss, '>=') === 0;
+                $sw3 = substr(trim($sAux), strlen(trim($sAux)) - 6, strlen(trim($sAux))) === "empty(";
+                if (($sw0 && !$sw1) || $sw3) {
+                    $bEqual = false;
+                }
+                /** patch1 end */
                 $iAux = $aMatch[0][$i][1] + strlen( $aMatch[0][$i][0] );
                 switch ($aMatch[1][$i][0]) {
                     case '@':
@@ -582,7 +633,7 @@ function handleFatalErrors ($buffer)
             if (strpos( $_SERVER['REQUEST_URI'], '&ACTION=GENERATE' ) !== false) {
                 $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
                 if ($_SESSION['TRIGGER_DEBUG']['ISSET']) {
-                    $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+                    $_SESSION['TRIGGER_DEBUG']['TIME'] = G::toUpper(G::loadTranslation('ID_AFTER'));
                     $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
                     $aNextStep['PAGE'] = $aNextStep['PAGE'] . '&breakpoint=triggerdebug';
                 }
@@ -605,7 +656,7 @@ function handleFatalErrors ($buffer)
         } else {
             $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
             if (isset($_SESSION['TRIGGER_DEBUG']['ISSET']) && $_SESSION['TRIGGER_DEBUG']['ISSET']) {
-                $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+                $_SESSION['TRIGGER_DEBUG']['TIME'] = G::toUpper(G::loadTranslation('ID_AFTER'));
                 $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
                 $aNextStep['PAGE'] = $aNextStep['PAGE'] . '&breakpoint=triggerdebug';
             }
@@ -659,8 +710,8 @@ function getEngineDataBaseName ($connection)
  */
 function executeQueryOci ($sql, $connection, $aParameter = array())
 {
-
     $aDNS = $connection->getDSN();
+
     $sUsername = $aDNS["username"];
     $sPassword = $aDNS["password"];
     $sHostspec = $aDNS["hostspec"];
@@ -668,8 +719,14 @@ function executeQueryOci ($sql, $connection, $aParameter = array())
     $sPort = $aDNS["port"];
 
     if ($sPort != "1521") {
-        // if not default port
-        $conn = oci_connect( $sUsername, $sPassword, $sHostspec . ":" . $sPort . "/" . $sDatabse );
+        $flagTns = ($sDatabse == "" && ($sPort . "" == "" || $sPort . "" == "0"))? 1 : 0;
+
+        if ($flagTns == 0) {
+            // if not default port
+            $conn = oci_connect($sUsername, $sPassword, $sHostspec . ":" . $sPort . "/" . $sDatabse);
+        } else {
+            $conn = oci_connect($sUsername, $sPassword, $sHostspec);
+        }
     } else {
         $conn = oci_connect( $sUsername, $sPassword, $sHostspec . "/" . $sDatabse );
     }
@@ -683,6 +740,7 @@ function executeQueryOci ($sql, $connection, $aParameter = array())
     switch (true) {
         case preg_match( "/^(SELECT|SHOW|DESCRIBE|DESC|WITH)\s/i", $sql ):
             $stid = oci_parse( $conn, $sql );
+
             if (count( $aParameter ) > 0) {
                 foreach ($aParameter as $key => $val) {
                     oci_bind_by_name( $stid, $key, $val );

@@ -347,7 +347,7 @@ class AdditionalTables extends BaseAdditionalTables
         }
     }
 
-    public function getAllData($sUID, $start = null, $limit = null, $keyOrderUppercase = true, $filter = '')
+    public function getAllData($sUID, $start = null, $limit = null, $keyOrderUppercase = true, $filter = '', $appUid = false)
     {
         $addTab = new AdditionalTables();
         $aData = $addTab->load($sUID, true);
@@ -371,9 +371,21 @@ class AdditionalTables extends BaseAdditionalTables
         $oCriteria = new Criteria($aData['DBS_UID']);
 
         //eval('$oCriteria->addSelectColumn("\'1\' AS DUMMY");');
+
+        /*
+         * data type:
+         * 'INTEGER'  'BIGINT'  'SMALLINT'  'TINYINT'  'DECIMAL'  'DOUBLE'  'FLOAT'  'REAL'
+         * 'CHAR'  'VARCHAR'  'LONGVARCHAR'  'BOOLEAN'  'DATE'  'DATETIME'  'TIME'
+         */
+        $types = array('DECIMAL', 'DOUBLE', 'FLOAT', 'REAL');
+
         if ($keyOrderUppercase == true) {
             foreach ($aData['FIELDS'] as $aField) {
-                eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
+                $field = '$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');';
+                if (in_array($aField['FLD_TYPE'], $types)) {
+                    $field = '$oCriteria->addAsColumn("' . $aField['FLD_NAME'] . '", "round(" . ' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ' . ", 2)" );';
+                }
+                eval($field);
                 /*if ($aField['FLD_KEY'] == '1') {
                     eval('$oCriteria->addAscendingOrderByColumn('. $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
                 }*/
@@ -384,37 +396,23 @@ class AdditionalTables extends BaseAdditionalTables
         eval('$count = ' . $sClassPeerName . '::doCount($oCriteria);');
 
         if ($filter != '' && is_string($filter)) {
-            eval('$fieldsTable = ' . $sClassPeerName . '::getFieldNames(BasePeer::TYPE_FIELDNAME);');
-            $countField = count($fieldsTable);
-            $stringOr = '$oCriteria->add(';
-            $cont = 0;
-            $fieldAppUid = '';
-            foreach ($fieldsTable as $value) {
-            	if ($value != 'APP_UID') {
-	                if (($cont+1) == $countField) {
-	                    if ($aData['FIELDS'][$cont]['FLD_TYPE'] == 'VARCHAR') {
-	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "%' . $filter . '%", Criteria::LIKE)';
-	                    } else {
-	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "' . $filter . '", Criteria::LIKE)';
+            $stringOr = '';
+            $closure = '';
+            $types = array('INTEGER', 'BIGINT', 'SMALLINT', 'TINYINT', 'DECIMAL', 'DOUBLE', 'FLOAT', 'REAL');
+            foreach ($aData['FIELDS'] as $aField) {
+	            if (($appUid == false && $aField['FLD_NAME'] != 'APP_UID') || ($appUid == true)) {
+	                if (in_array($aField['FLD_TYPE'], $types)) {
+	                    if (is_numeric($filter)) {
+	                        $stringOr = $stringOr . '$a = $oCriteria->getNewCriterion(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', "' . $filter . '", Criteria::EQUAL)' . $closure . ';';
+	                        $closure = '->addOr($a)';
 	                    }
 	                } else {
-	                    if ($aData['FIELDS'][$cont]['FLD_TYPE'] == 'VARCHAR') {
-	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "%' . $filter . '%", Criteria::LIKE)->addOr(';
-	                    } else {
-	                        $stringOr .= '$oCriteria->getNewCriterion(' . $sClassPeerName . '::' . strtoupper($value) . ', "' . $filter . '", Criteria::LIKE)->addOr(';
-	                    }
+	                    $stringOr = $stringOr . '$a = $oCriteria->getNewCriterion(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', "%' . $filter . '%", Criteria::LIKE)' . $closure . ';';
+	                    $closure = '->addOr($a)';
 	                }
-                } else {
-                    $fieldAppUid = $cont;
-                }
-                $cont++;
+	            }
             }
-            for ($c = 0; $c < $countField-1; $c++) {            	
-                if ($fieldAppUid !== $c) {
-                	$stringOr .= ')';
-                }
-            }
-            $stringOr .= ');';
+            $stringOr = $stringOr . '$oCriteria->add($a);';
             eval($stringOr);
 
             $oCriteriaCount = clone $oCriteria;
@@ -954,7 +952,7 @@ class AdditionalTables extends BaseAdditionalTables
                 eval('$oCriteria->addDescendingOrderByColumn(AdditionalTablesPeer::' . $_POST['sort'] . ');');
             }
         } else {
-            //$oCriteria->addAscendingOrderByColumn(AdditionalTablesPeer::ADD_TAB_UID);
+            $oCriteria->addAscendingOrderByColumn(AdditionalTablesPeer::ADD_TAB_NAME);
         }
 
         $criteriaCount = clone $oCriteria;

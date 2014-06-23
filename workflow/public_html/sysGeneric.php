@@ -285,7 +285,10 @@ if (is_null($timelife)) {
     $timelife = 1440;
 }
 ini_set('session.gc_maxlifetime', $timelife);
-if (preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 || $config['ie_cookie_lifetime'] == 1) {
+if ((preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 ||
+   $config['ie_cookie_lifetime'] == 1) &&
+   (!(preg_match("/safari/i", $_SERVER ['HTTP_USER_AGENT']) == 1 && preg_match("/chrome/i", $_SERVER ['HTTP_USER_AGENT']) == 0) ||
+   $config['safari_cookie_lifetime'] == 1)) {
     ini_set('session.cookie_lifetime', $timelife);
 }
 session_start();
@@ -306,6 +309,7 @@ ini_set( 'soap.wsdl_cache_enabled', $config['wsdl_cache'] );
 ini_set( 'date.timezone', $config['time_zone'] );
 
 define( 'DEBUG_SQL_LOG', $config['debug_sql'] );
+define( 'DEBUG_SQL', $config['debug'] );
 define( 'DEBUG_TIME_LOG', $config['debug_time'] );
 define( 'DEBUG_CALENDAR_LOG', $config['debug_calendar'] );
 define( 'MEMCACHED_ENABLED', $config['memcached'] );
@@ -888,7 +892,10 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
     define( 'SYS_LANG_DIRECTION', $oServerConf->getLanDirection() );
 
     if ((isset( $_SESSION['USER_LOGGED'] )) && (! (isset( $_GET['sid'] )))) {
-        if (preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 || $config['ie_cookie_lifetime'] == 1) {
+        if ((preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 ||
+            $config['ie_cookie_lifetime'] == 1) &&
+            (!(preg_match("/safari/i", $_SERVER ['HTTP_USER_AGENT']) == 1 && preg_match("/chrome/i", $_SERVER ['HTTP_USER_AGENT']) == 0) ||
+            $config['safari_cookie_lifetime'] == 1)) {
             if (PHP_VERSION < 5.2) {
                 setcookie(session_name(), session_id(), time() + $timelife, '/', '; HttpOnly');
             } else {
@@ -957,7 +964,10 @@ if (! defined( 'EXECUTE_BY_CRON' )) {
                     $_SESSION['USER_LOGGED'] = $aUser['USR_UID'];
                     $_SESSION['USR_USERNAME'] = $aUser['USR_USERNAME'];
                     $bRedirect = false;
-                    if (preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 || $config['ie_cookie_lifetime'] == 1) {
+                    if ((preg_match("/msie/i", $_SERVER ['HTTP_USER_AGENT']) != 1 ||
+                        $config['ie_cookie_lifetime'] == 1) &&
+                        (!(preg_match("/safari/i", $_SERVER ['HTTP_USER_AGENT']) == 1 && preg_match("/chrome/i", $_SERVER ['HTTP_USER_AGENT']) == 0) ||
+                        $config['safari_cookie_lifetime'] == 1)) {
                         if (PHP_VERSION < 5.2) {
                             setcookie(session_name(), session_id(), time() + $timelife, '/', '; HttpOnly');
                         } else {

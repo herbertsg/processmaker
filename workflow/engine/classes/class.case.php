@@ -507,7 +507,7 @@ class Cases
      * @return Fields
      */
 
-    public function loadCase($sAppUid, $iDelIndex = 0)
+    public function loadCase($sAppUid, $iDelIndex = 0, $jump = '')
     {
         try {
             $oApp = new Application;
@@ -575,9 +575,25 @@ class Cases
                 $aFields['DEL_FINISH_DATE'] = $aAppDel['DEL_FINISH_DATE'];
                 $aFields['CURRENT_USER_UID'] = $aAppDel['USR_UID'];
                 try {
+                    //$oCurUser = new Users();
+                    //$oCurUser->load($aAppDel['USR_UID']);
+                    //$aFields['CURRENT_USER'] = $oCurUser->getUsrFirstname() . ' ' . $oCurUser->getUsrLastname();
                     $oCurUser = new Users();
-                    $oCurUser->load($aAppDel['USR_UID']);
-                    $aFields['CURRENT_USER'] = $oCurUser->getUsrFirstname() . ' ' . $oCurUser->getUsrLastname();
+                    if ($jump != '') {
+                        $aCases = $oAppDel->LoadParallel($sAppUid);
+                        $aFields['TAS_UID'] = '';
+                        $aFields['CURRENT_USER'] = '';
+                        foreach ($aCases as $key => $value) {
+                            $oCurUser->load($value['USR_UID']);
+                            $aFields['CURRENT_USER'][]= $oCurUser->getUsrFirstname() . ' ' . $oCurUser->getUsrLastname();
+                            $aFields['TAS_UID'].= $value['TAS_UID'].'-';
+                        }
+                       $aFields['CURRENT_USER'] = implode(" - ", array_values($aFields['CURRENT_USER']));
+                    } else {
+                        $oCurUser->load($aAppDel['USR_UID']);
+                        $aFields['CURRENT_USER'] = $oCurUser->getUsrFirstname() . ' ' . $oCurUser->getUsrLastname();
+                    }
+
                 } catch (Exception $oError) {
                     $aFields['CURRENT_USER'] = '';
                 }
@@ -4820,44 +4836,10 @@ class Cases
             $applicationData = $this->loadCase($sApplicationUID);
             $aFields["APP_NUMBER"] = $applicationData["APP_NUMBER"];
 
-            $oConfiguration = new Configuration();
-            $sDelimiter = DBAdapter::getStringDelimiter();
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
-            $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
-            $oCriteria->add(ConfigurationPeer::PRO_UID, '');
-            $oCriteria->add(ConfigurationPeer::USR_UID, '');
-            $oCriteria->add(ConfigurationPeer::APP_UID, '');
-            if (ConfigurationPeer::doCount($oCriteria) == 0) {
-                $oConfiguration->create(array(
-                    'CFG_UID' => 'Emails',
-                    'OBJ_UID' => '',
-                    'CFG_VALUE' => '',
-                    'PRO_UID' => '',
-                    'USR_UID' => '',
-                    'APP_UID' => ''
-                ));
-                $aConfiguration = array();
-            } else {
-                $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
-                if ($aConfiguration['CFG_VALUE'] != '') {
-                    $aConfiguration = unserialize($aConfiguration["CFG_VALUE"]);
-                    $passwd = $aConfiguration["MESS_PASSWORD"];
-                    $passwdDec = G::decrypt($passwd, "EMAILENCRYPT");
-                    $auxPass = explode('hash:', $passwdDec);
-                    if (count($auxPass) > 1) {
-                        if (count($auxPass) == 2) {
-                            $passwd = $auxPass[1];
-                        } else {
-                            array_shift($auxPass);
-                            $passwd = implode('', $auxPass);
-                        }
-                    }
-                    $aConfiguration["MESS_PASSWORD"] = $passwd;
-                } else {
-                    $aConfiguration = array();
-                }
+            if (!class_exists('System')) {
+                G::LoadClass('system');
             }
+            $aConfiguration = System::getEmailConfiguration();
 
             if (!isset($aConfiguration['MESS_ENABLED']) || $aConfiguration['MESS_ENABLED'] != '1') {
                 return false;
@@ -4870,36 +4852,8 @@ class Cases
             if ($aTaskInfo['TAS_SEND_LAST_EMAIL'] != 'TRUE') {
                 return false;
             }
-            /*
-            if ($sFrom == '') {
-                $sFrom = '"ProcessMaker"';
-            }
-            */
-            if (isset($aConfiguration['MESS_FROM_NAME']) && $aConfiguration['MESS_FROM_NAME'] != '') {
-                $sFrom = $aConfiguration['MESS_FROM_NAME'];
-            }
 
-            $hasEmailFrom = preg_match('/(.+)@(.+)\.(.+)/', $sFrom, $match);
-
-            if (!$hasEmailFrom || strpos($sFrom, $aConfiguration['MESS_ACCOUNT']) === false) {
-                if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
-                    $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
-                } else {
-                    if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
-                        $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
-                    } else {
-                        if ($aConfiguration['MESS_SERVER'] != '') {
-                            if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
-                                $sFrom .= ' <info@' . $sAux . '>';
-                            } else {
-                                $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
-                            }
-                        } else {
-                            $sFrom .= ' <info@processmaker.com>';
-                        }
-                    }
-                }
-            }
+            $sFrom = G::buildFrom($aConfiguration, $sFrom);
 
             if (isset($aTaskInfo['TAS_DEF_SUBJECT_MESSAGE']) && $aTaskInfo['TAS_DEF_SUBJECT_MESSAGE'] != '') {
                 $sSubject = G::replaceDataField($aTaskInfo['TAS_DEF_SUBJECT_MESSAGE'], $aFields);
@@ -5030,22 +4984,8 @@ class Cases
 
                 if ($sTo != null) {
                     $oSpool = new spoolRun();
-                    if ($aConfiguration['MESS_RAUTH'] == false || (is_string($aConfiguration['MESS_RAUTH']) && $aConfiguration['MESS_RAUTH'] == 'false')) {
-                        $aConfiguration['MESS_RAUTH'] = 0;
-                    } else {
-                        $aConfiguration['MESS_RAUTH'] = 1;
-                    }
 
-                    $oSpool->setConfig(array(
-                        "MESS_ENGINE" => $aConfiguration["MESS_ENGINE"],
-                        "MESS_SERVER" => $aConfiguration["MESS_SERVER"],
-                        "MESS_PORT" => $aConfiguration["MESS_PORT"],
-                        "MESS_ACCOUNT" => $aConfiguration["MESS_ACCOUNT"],
-                        "MESS_PASSWORD" => $aConfiguration["MESS_PASSWORD"],
-                        "SMTPAuth" => ($aConfiguration["MESS_RAUTH"] == "1") ? true : false,
-                        "SMTPSecure" => (isset($aConfiguration["SMTPSecure"])) ? $aConfiguration["SMTPSecure"] : ""
-                    ));
-
+                    $oSpool->setConfig($aConfiguration);
                     $oSpool->create(array(
                         "msg_uid" => "",
                         "app_uid" => $sApplicationUID,
@@ -6479,7 +6419,6 @@ class Cases
         $oTasks = new Tasks();
         $aAux = $oTasks->getGroupsOfTask($TAS_UID, 1);
         $row = array();
-
         $groups = new Groups();
         foreach ($aAux as $aGroup) {
             $aUsers = $groups->getUsersOfGroup($aGroup['GRP_UID']);
@@ -6516,6 +6455,14 @@ class Cases
             if ($aUser['USR_UID'] != $USR_UID) {
                 $row[] = $aUser['USR_UID'];
             }
+        }
+        
+        global $RBAC;
+        //Adding the actual user if this has the PM_REASSIGNCASE permission assigned.
+        if ($RBAC->userCanAccess('PM_REASSIGNCASE') == 1){
+        	if(!in_array($RBAC->aUserInfo['USER_INFO']['USR_UID'], $row)){
+        	    $row[] = $RBAC->aUserInfo['USER_INFO']['USR_UID'];
+        	}
         }
 
         require_once 'classes/model/Users.php';
@@ -6587,7 +6534,6 @@ class Cases
                 }
             }
         }
-
         return $rows;
     }
 

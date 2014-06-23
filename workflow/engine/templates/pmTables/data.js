@@ -76,6 +76,11 @@ Ext.onReady(function(){
     handler: DoSearch
   });
 
+  appUidSearch = new Ext.form.Checkbox ({
+	  id: 'appUidSearch',
+      boxLabel : 'Search also in the APP_UID field'
+  });
+
   contextMenu = new Ext.menu.Menu({
       items : [ editButton, deleteButton ]
   });
@@ -277,6 +282,7 @@ Ext.onReady(function(){
 
   Ext.data.DataProxy.addListener('write', function(proxy, action, result, res, rs) {
     //PMExt.notify(_('ID_UPDATE'), res.raw.message)
+	  infoGrid.store.reload();
   });
 
   // all exception events
@@ -385,6 +391,7 @@ Ext.onReady(function(){
       importButton,
       exportButton,
       '->',
+      appUidSearch,
       searchText,
       clearTextButton,
       searchButton
@@ -393,6 +400,7 @@ Ext.onReady(function(){
   else
 	tbar = [genDataReportButton, 
        '->',
+       appUidSearch,
        searchText,
        clearTextButton,
        searchButton];
@@ -465,12 +473,13 @@ onMessageContextMenu = function (grid, rowIndex, e) {
 //Do Search Function
 DoSearch = function(){
    infoGrid.store.setBaseParam('textFilter', searchText.getValue());
-   infoGrid.store.load({params: {start : 0 , limit : pageSize }});
+   infoGrid.store.load({params: {start : 0 , limit : pageSize , appUid : appUidSearch.getValue() }});
 };
 
 //Load Grid By Default
 GridByDefault = function(){
   searchText.reset();
+  appUidSearch.reset();
   infoGrid.store.setBaseParam('textFilter', searchText.getValue());
   infoGrid.store.load();
 }; 
@@ -542,8 +551,8 @@ DeletePMTableRow = function(){
   PMExt.confirm(_('ID_CONFIRM'), _('ID_CONFIRM_REMOVE_FIELD'), function(){
     var records = Ext.getCmp('infoGrid').getSelectionModel().getSelections();
     Ext.each(records, Ext.getCmp('infoGrid').store.remove, Ext.getCmp('infoGrid').store);
+    infoGrid.store.reload();
   });
-
 };
 
 //Load Import PM Table From CSV Source
@@ -559,6 +568,7 @@ ImportPMTableCSV = function(){
                                     [',', 'Comma (,)']]
                        });
   var w = new Ext.Window({
+    id: 'windowImportUploader',
     title       : '',
     width       : 440,
     height      : 180,
@@ -672,6 +682,7 @@ ExportPMTableCSV = function(){
                                     [',', 'Comma (,)']]
                        });
   var w = new Ext.Window({
+    id: 'windowExportUploader',
     title       : '',
     width       : 320,
     height      : 140,

@@ -7,10 +7,10 @@ if (! isset ($_SESSION ['USER_LOGGED'])) {
     die ();
 }
 
+$search = isset($_REQUEST ['search']) ? $_REQUEST ['search'] : null;
+
 if (isset ($_REQUEST ['action']) && isset($_REQUEST['sort']) && isset($_REQUEST['dir'])) {
-    if ($_REQUEST['sort'] == "appDocCreateDate" && ($_REQUEST['dir'] == 'ASC' || $_REQUEST['dir'] == 'DESC')) {
-        sortContent();
-    }
+    sortContent();
 }
 
 
@@ -20,6 +20,9 @@ if (! isset ($_REQUEST ['action'])) {
     print G::json_encode ($res);
     die ();
 }
+
+$_REQUEST['action'] = ($_REQUEST['action'] == 'rename') ? 'renameFolder' : $_REQUEST['action'];
+
 if (! function_exists ($_REQUEST['action']) || !G::isUserFunction($_REQUEST['action'])) {
     $res ['success'] = false;
     $res ['message'] = 'The requested action does not exist';
@@ -27,7 +30,7 @@ if (! function_exists ($_REQUEST['action']) || !G::isUserFunction($_REQUEST['act
     die ();
 }
 
-if (($_REQUEST['action']) != 'rename') {
+if (($_REQUEST['action']) != 'renameFolder') {
     $functionName = $_REQUEST ['action'];
     $functionParams = isset ($_REQUEST ['params']) ? $_REQUEST ['params'] : array ();
 
@@ -179,7 +182,9 @@ function expandNode()
         $folderListObj = $oPMFolder->getFolderList(
             ($_POST["node"] != "root")? (($_POST["node"] == "NA")? "" : $_POST["node"]) : $rootFolder,
             $limit,
-            $start
+            $start,
+            'ASC',
+            'name'
         );
 
         $folderList=$folderListObj['folders'];
@@ -200,7 +205,8 @@ function expandNode()
             $limit,
             $start,
             $user,
-            true
+            true,
+            $search
         );
 
         $folderContent=$folderContentObj['documents'];
@@ -501,7 +507,10 @@ function sortContent()
         $folderListObj = $oPMFolder->getFolderList(
                         ($_POST["node"] != "root")? (($_POST["node"] == "NA")? "" : $_POST["node"]) : $rootFolder,
                         $limit,
-                        $start
+                        $start,
+                        $direction,
+                        (isset($_POST["sort"]))? $_POST["sort"]:"appDocCreateDate",
+                        $search
         );
 
         $folderList=$folderListObj['folders'];
@@ -524,7 +533,8 @@ function sortContent()
                         $user,
                         true,
                         $direction,
-                        (isset($_POST["sort"]))? $_POST["sort"]:"appDocCreateDate"
+                        (isset($_POST["sort"]))? $_POST["sort"]:"appDocCreateDate",
+                        $search
         );
 
         $folderContent = $folderContentObj['documents'];

@@ -198,6 +198,7 @@ class pmTablesProxy extends HttpProxyController
         //require_once 'classes/model/Fields.php';
 
         try {
+            $result = new stdClass();
             ob_start();
             $data = (array) $httpData;
             $data['PRO_UID'] = trim( $data['PRO_UID'] );
@@ -326,6 +327,7 @@ class pmTablesProxy extends HttpProxyController
             $result->success = true;
             $result->message = $result->msg = $buildResult;
         } catch (Exception $e) {
+            $result = new stdClass();
             $buildResult = ob_get_contents();
             ob_end_clean();
             $result->success = false;
@@ -352,6 +354,7 @@ class pmTablesProxy extends HttpProxyController
      */
     public function delete ($httpData)
     {
+        $result = new stdClass();
         $rows = G::json_decode( stripslashes( $httpData->rows ) );
         $errors = '';
         $count = 0;
@@ -405,6 +408,7 @@ class pmTablesProxy extends HttpProxyController
      * @param string $httpData->id
      * @param string $httpData->start
      * @param string $httpData->limit
+     * @param string $httpData->appUid
      */
     public function dataView ($httpData)
     {
@@ -416,13 +420,14 @@ class pmTablesProxy extends HttpProxyController
         $limit_size = isset( $config['pageSize'] ) ? $config['pageSize'] : 20;
         $start = isset( $httpData->start ) ? $httpData->start : 0;
         $limit = isset( $httpData->limit ) ? $httpData->limit : $limit_size;
+        $appUid = isset( $httpData->appUid ) ? $httpData->appUid : false;
+        $appUid = ($appUid == "true") ? true : false;
         $filter = isset( $httpData->textFilter ) ? $httpData->textFilter : '';
-
         $additionalTables = new AdditionalTables();
         $table = $additionalTables->load( $httpData->id, true );
 
         if ($filter != '') {
-            $result = $additionalTables->getAllData( $httpData->id, $start, $limit, true, $filter);
+            $result = $additionalTables->getAllData( $httpData->id, $start, $limit, true, $filter, $appUid);
         } else {
             $result = $additionalTables->getAllData( $httpData->id, $start, $limit );
         }
@@ -735,6 +740,7 @@ class pmTablesProxy extends HttpProxyController
     {
         require_once 'classes/model/AdditionalTables.php';
         try {
+            $result = new stdClass();
             $errors = '';
 
             $overWrite = isset( $_POST['form']['OVERWRITE'] ) ? true : false;
@@ -765,6 +771,7 @@ class pmTablesProxy extends HttpProxyController
             $sType = fread( $fp, $fsData );
 
             // first create the tables structures
+
             while (! feof( $fp )) {
                 switch ($sType) {
                     case '@META':
@@ -873,9 +880,8 @@ class pmTablesProxy extends HttpProxyController
             $fp = fopen( $PUBLIC_ROOT_PATH . $filename, "rb" );
             $fsData = intval( fread( $fp, 9 ) );
             $sType = fread( $fp, $fsData );
+
             // data processing
-
-
             while (! feof( $fp )) {
 
                 switch ($sType) {
@@ -962,6 +968,7 @@ class pmTablesProxy extends HttpProxyController
 
             $result->message = $msg;
         } catch (Exception $e) {
+            $result = new stdClass();
             $result->errorType = 'error';
             $result->buildResult = ob_get_contents();
             ob_end_clean();
@@ -993,6 +1000,7 @@ class pmTablesProxy extends HttpProxyController
         $tablesToExport = G::json_decode( stripslashes( $httpData->rows ) );
 
         try {
+            $result = new stdClass();
             G::LoadCLass( 'net' );
             $net = new NET( G::getIpAddress() );
 
@@ -1093,6 +1101,7 @@ class pmTablesProxy extends HttpProxyController
             $result->link = $link;
             $result->message = "Generated file: $filenameOnly, size: $size";
         } catch (Exception $e) {
+            $result = new stdClass();
             $result->success = false;
             $result->message = $e->getMessage();
         }
@@ -1225,6 +1234,7 @@ class pmTablesProxy extends HttpProxyController
 
     public function genDataReport ($httpData)
     {
+        $result = new stdClass();
         G::loadClass( 'pmTable' );
         require_once 'classes/model/AdditionalTables.php';
         $result->message = '';

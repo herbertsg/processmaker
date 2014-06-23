@@ -1,3 +1,4 @@
+var menu_edit_items = [];
 var stagesmap=function(){
 	this.data={
 		load:function(){
@@ -22,6 +23,7 @@ var stagesmap=function(){
 					    {image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_STAGE,launch:this.addStage.extend(this)}
 					  ]
 				  });
+				  menu_add = this.menu;
 				  this.observers.menu.register(this.parent.closure({instance:this.menu,method:this.menu.remove}),this.menu);
 				}
 				this.data.render.title();
@@ -226,8 +228,8 @@ var stagesmap=function(){
 				});
 				if(this.options.rw===true)
 				{
-				  var menu = new this.parent.module.app.menuRight();
-				  menu.make({
+				  this.menuEdit = new this.parent.module.app.menuRight();
+				  this.menuEdit.make({
 				  	target:a,
 				  	width:201,
 				  	theme:this.options.theme,
@@ -318,7 +320,8 @@ var stagesmap=function(){
 				  	},args:index})}
 				  	]
 				  });
-				  this.observers.menu.register(menu.remove,menu);
+				  menu_edit_items.push(this.menuEdit);	  
+				  this.observers.menu.register(this.menuEdit.remove,this.menuEdit);
 				}
 				this.panels.editor.elements.content.appendChild(a);
 				a.appendChild(b);
@@ -452,8 +455,8 @@ stagesmap.prototype={
 		this.panels.editor=new leimnud.module.panel();
 		this.panels.editor.options={
 			limit:true,
-			size:{w:this.options.size.w,h:this.options.size.h},
-			position:{x:200,y:0,centerX:true},
+			size:{w:this.options.size.w,h:this.options.size.h - 10},
+			position:{x:0,y:0},
 			title:"",
 			titleBar:false,
 			control:{

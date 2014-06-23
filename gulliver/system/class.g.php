@@ -177,7 +177,7 @@ class G
      * getIpAddress
      * @return string $ip
      */
-    public function getIpAddress ()
+    public static function getIpAddress ()
     {
         if (getenv( 'HTTP_CLIENT_IP' )) {
             $ip = getenv( 'HTTP_CLIENT_IP' );
@@ -689,7 +689,7 @@ class G
      * @param string $strClass
      * @return void
      */
-    public function LoadClass ($strClass)
+    public static function LoadClass ($strClass)
     {
         $classfile = G::ExpandPath( "classes" ) . 'class.' . $strClass . '.php';
         if (! file_exists( $classfile )) {
@@ -1763,7 +1763,7 @@ class G
                                 if ($nl2brRecursive) {
                                     foreach ($aRow as $sKey => $vValue) {
                                         if (!is_array($vValue)) {
-                                            $aRow[$sKey] = nl2br($aRow[$sKey]);
+                                            $aRow[$sKey] = str_replace($nrt, $nrthtml, nl2br($aRow[$sKey]));
                                         }
                                     }
                                 }
@@ -3294,7 +3294,7 @@ class G
      *
      * @author Erik A.O. <erik@colosa.com>
      */
-    public function json_encode($Json)
+    public static function json_encode($Json)
     {
         if ( function_exists('json_encode') ) {
             return json_encode($Json);
@@ -5231,6 +5231,7 @@ class G
         if (!isset($allFunctions['user'])) {
             $allFunctions['user'] = array();
         }
+        $allFunctions['user'][] = 'sort';
         return in_array(strtolower($functionName), $allFunctions['user']);
     }
 
@@ -5268,6 +5269,43 @@ class G
         $oLogger->limitFile = $config['number_log_file'];
         $oLogger->limitSize = $config['size_log_file'];
         $oLogger->write($message);
+    }
+
+    public static function buildFrom($configuration, $from = '') {
+        if (!isset($configuration['MESS_FROM_NAME'])) {
+            $configuration['MESS_FROM_NAME'] = '';
+        }
+        if (!isset($configuration['MESS_FROM_MAIL'])) {
+            $configuration['MESS_FROM_MAIL'] = '';
+        }
+        if ($from != '') {
+            if (!preg_match('/(.+)@(.+)\.(.+)/', $from, $match)) {
+                if ($configuration['MESS_FROM_MAIL'] != '') {
+                    $from .= ' <' . $configuration['MESS_FROM_MAIL'] . '>';
+                } else if ($configuration['MESS_ENGINE'] == 'PHPMAILER' && preg_match('/(.+)@(.+)\.(.+)/', $configuration['MESS_ACCOUNT'], $match)) {
+                    $from .= ' <' . $configuration['MESS_ACCOUNT'] . '>';
+                } else {
+                    $from .= ' <info@' . ((isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] != '')? $_SERVER['HTTP_HOST'] : 'processmaker.com') . '>';
+                }
+            }
+        } else {
+            if ($configuration['MESS_FROM_NAME'] != '' && $configuration['MESS_FROM_MAIL'] != '') {
+                $from = $configuration['MESS_FROM_NAME'] . ' <' . $configuration['MESS_FROM_MAIL'] . '>';
+            } else if ($configuration['MESS_FROM_NAME'] != '' && $configuration['MESS_ENGINE'] == 'PHPMAILER' && preg_match('/(.+)@(.+)\.(.+)/', $configuration['MESS_ACCOUNT'], $match)) {
+                $from = $configuration['MESS_FROM_NAME'] . ' <' . $configuration['MESS_ACCOUNT'] . '>';
+            } else if ($configuration['MESS_FROM_NAME'] != '') {
+                $from = $configuration['MESS_FROM_NAME'] . ' <info@' . ((isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] != '')? $_SERVER['HTTP_HOST'] : 'processmaker.com') . '>';
+            } else if ($configuration['MESS_FROM_MAIL'] != '') {
+                $from = $configuration['MESS_FROM_MAIL'];
+            } else if ($configuration['MESS_ENGINE'] == 'PHPMAILER' && preg_match('/(.+)@(.+)\.(.+)/', $configuration['MESS_ACCOUNT'], $match)) {
+                $from = $configuration['MESS_ACCOUNT'];
+            } else if ($configuration['MESS_ENGINE'] == 'PHPMAILER' && $configuration['MESS_ACCOUNT'] != '' && !preg_match('/(.+)@(.+)\.(.+)/', $configuration['MESS_ACCOUNT'], $match)) {
+                $from = $configuration['MESS_ACCOUNT'] . ' <info@' . ((isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] != '')? $_SERVER['HTTP_HOST'] : 'processmaker.com') . '>';
+            } else {
+                $from = 'info@' . ((isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] != '')? $_SERVER['HTTP_HOST'] : 'processmaker.com');
+            }
+        }
+        return $from;
     }
 }
 

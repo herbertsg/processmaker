@@ -155,6 +155,7 @@ class processMap
                 $oTask->position->x = (int) $aRow1['TAS_POSX'];
                 $oTask->position->y = (int) $aRow1['TAS_POSY'];
                 $oTask->derivation = null;
+                $oTask->derivation->type = '';
                 $oTask->derivation->to = array();
                 $oCriteria = new Criteria('workflow');
                 $oCriteria->add(RoutePeer::PRO_UID, $sProcessUID);
@@ -775,7 +776,7 @@ class processMap
             $aFields['CONFIRM'] = G::LoadTranslation('ID_MSG_CONFIRM_DELETE_STEP');
             global $G_PUBLISH;
             $G_PUBLISH = new Publisher();
-            $G_PUBLISH->AddContent('propeltable', 'paged-table', 'steps/steps_List', $this->getStepsCriteria($sTaskUID), $aFields);
+            $G_PUBLISH->AddContent('propeltable', 'steps/paged-table', 'steps/steps_List', $this->getStepsCriteria($sTaskUID), $aFields);
             G::RenderPage('publish', 'raw');
             return true;
         } catch (Exception $oError) {
@@ -1906,7 +1907,7 @@ class processMap
         $aConditions[] = array('C2.CON_LANG', $sDelimiter . SYS_LANG . $sDelimiter );
         $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
         $oCriteria->add(DynaformPeer::PRO_UID, $sProcessUID);
-
+        $oCriteria->addAscendingOrderByColumn('DYN_TITLE');
         $oDataset = DynaformPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
@@ -3452,6 +3453,7 @@ class processMap
         $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
         $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::IN);
+        $oCriteria->add(UsersPeer::USR_STATUS, array('ACTIVE', 'VACATION'), Criteria::IN);
         $oCriteria->addAscendingOrderByColumn(UsersPeer::USR_FIRSTNAME);
         $oDataset = UsersPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
